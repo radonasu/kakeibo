@@ -61,7 +61,12 @@ function updateSidebarTitle() {
 // ── ナビゲーション ─────────────────────────────────────────
 function navigate(page) {
   appState.page = page;
+  // サイドバーナビ同期
   document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.page === page);
+  });
+  // ボトムナビ同期
+  document.querySelectorAll('.bottom-nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.page === page);
   });
   renderCurrentPage();
@@ -1934,11 +1939,14 @@ function initApp() {
   // サイドバー下部ユーザー情報
   renderSidebarUser();
 
-  // PWA インストールプロンプト（Android Chrome）をキャプチャ
-  window.pwaInstallEvent = null;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    window.pwaInstallEvent = e;
+  // ボトムナビゲーション（モバイル）
+  document.querySelectorAll('.bottom-nav-item').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      navigate(el.dataset.page);
+      // 触覚フィードバック（Android対応、iOSは無視）
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
   });
 
   // 初期ページ描画

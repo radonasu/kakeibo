@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>家族家計簿</title>
 
   <!-- PWA -->
@@ -12,9 +12,22 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="家計簿">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <!-- iOS Touch Icons -->
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="icons/splash-750x1334.png"
+    media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png"
+    media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="icons/splash-828x1792.png"
+    media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="icons/splash-1170x2532.png"
+    media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
 
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=5.2">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -71,24 +84,41 @@
     </main>
 
   </div>
+
+  <!-- ─── ボトムナビ（モバイル） ─── -->
+  <nav id="bottom-nav">
+    <button class="bottom-nav-item active" data-page="dashboard">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">ホーム</span>
+    </button>
+    <button class="bottom-nav-item" data-page="transactions">
+      <span class="bottom-nav-icon">📋</span>
+      <span class="bottom-nav-label">収支</span>
+    </button>
+    <button class="bottom-nav-item" data-page="reports">
+      <span class="bottom-nav-icon">📊</span>
+      <span class="bottom-nav-label">レポート</span>
+    </button>
+    <button class="bottom-nav-item" data-page="categories">
+      <span class="bottom-nav-icon">🏷️</span>
+      <span class="bottom-nav-label">カテゴリ</span>
+    </button>
+    <button class="bottom-nav-item" data-page="settings">
+      <span class="bottom-nav-icon">⚙️</span>
+      <span class="bottom-nav-label">設定</span>
+    </button>
+  </nav>
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/config.js?v=5"></script>
-<script src="js/data.js?v=5"></script>
-<script src="js/export.js?v=5"></script>
-<script src="js/charts.js?v=5"></script>
-<script src="js/sync.js?v=5"></script>
-<script src="js/app.js?v=5"></script>
-
-<!-- Service Worker 登録 -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
-  }
-</script>
+<script src="js/config.js?v=5.2"></script>
+<script src="js/data.js?v=5.2"></script>
+<script src="js/export.js?v=5.2"></script>
+<script src="js/charts.js?v=5.2"></script>
+<script src="js/sync.js?v=5.2"></script>
+<script src="js/app.js?v=5.2"></script>
+<!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
+<script src="js/pwa.js?v=5.2"></script>
 
 </body>
 </html>

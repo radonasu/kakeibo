@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.1'; // v5.1: config.js追加
+const CACHE_NAME = 'kakeibo-v5.2'; // v5.2: PWA強化
 const ASSETS = [
   './index.html',
   './css/style.css',
@@ -12,6 +12,7 @@ const ASSETS = [
   './js/charts.js',
   './js/sync.js',
   './js/app.js',
+  './js/pwa.js',
   './manifest.json',
   'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
 ];
@@ -21,7 +22,14 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
-  self.skipWaiting();
+  // 注: skipWaiting()はここでは呼ばない（更新トーストで手動制御するため）
+});
+
+// メッセージ：pwa.jsからのSKIP_WAITING指示
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // アクティベート時：古いキャッシュを削除
