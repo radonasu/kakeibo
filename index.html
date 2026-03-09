@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家族家計簿</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="家計簿">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Supabase SDK（クラウド同期用） -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ─── サイドバー ─── -->
+  <nav id="sidebar">
+    <div id="sidebar-brand">
+      <span id="sidebar-icon">💰</span>
+      <!-- アカウント切替バー（JSで描画） -->
+      <div id="account-bar"></div>
+    </div>
+
+    <div id="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">🏠</span> ダッシュボード
+      </button>
+      <button class="nav-item" data-page="transactions">
+        <span class="nav-icon">📋</span> 収支一覧
+      </button>
+      <button class="nav-item" data-page="reports">
+        <span class="nav-icon">📊</span> レポート
+      </button>
+      <button class="nav-item" data-page="categories">
+        <span class="nav-icon">🏷️</span> カテゴリ
+      </button>
+      <button class="nav-item" data-page="settings">
+        <span class="nav-icon">⚙️</span> 設定
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── メインエリア ─── -->
+  <div id="main-wrapper">
+
+    <header id="mobile-header">
+      <button id="hamburger">☰</button>
+      <span id="mobile-title">家族家計簿</span>
+      <!-- クラウド同期ステータスインジケーター -->
+      <span id="sync-status-dot-header" class="header-sync-dot" title="クラウド同期: 未接続"></span>
+    </header>
+
+    <main id="main-content">
+      <p style="color:#64748b;padding:40px;text-align:center">読み込み中...</p>
+    </main>
+
+  </div>
+</div>
+
+<!-- JS: 読み込み順序が重要 -->
+<script src="js/data.js?v=4"></script>
+<script src="js/export.js?v=4"></script>
+<script src="js/charts.js?v=4"></script>
+<script src="js/sync.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
+
+<!-- Service Worker 登録 -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+
+</body>
+</html>
