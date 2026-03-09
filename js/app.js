@@ -967,51 +967,86 @@ function renderSettings() {
 </div>
 
 <div class="card">
-  <h3 class="card-title">☁️ クラウド同期（Supabase）</h3>
+  <h3 class="card-title">☁️ クラウドアカウント</h3>
   <div class="sync-status-row">
     <span id="sync-status-dot" class="sync-dot"></span>
     <span id="sync-status-text" style="font-size:13px;color:var(--text-muted)">未接続</span>
   </div>
-  <p class="hint">家族全員が同じルームコードを使うと、複数の端末でデータをリアルタイム同期できます。</p>
-  <div class="form-group">
-    <label>Supabase Project URL</label>
-    <input type="url" id="set-supabase-url" value="${esc2(cfg.url||'')}" placeholder="https://xxxx.supabase.co">
-  </div>
-  <div class="form-group">
-    <label>Anon（公開）Key</label>
-    <div class="api-key-row">
-      <input type="password" id="set-supabase-key" value="${esc2(cfg.anonKey||'')}" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-      <button class="btn btn-ghost btn-sm" id="toggle-supabase-key">表示</button>
+
+  ${(typeof isLoggedIn === 'function' && isLoggedIn()) ? (() => {
+    const user = getCurrentUser();
+    return `
+  <div id="sync-logged-info" class="sync-user-card">
+    <div class="sync-user-avatar" id="sync-user-avatar">${user ? user.email[0].toUpperCase() : '?'}</div>
+    <div class="sync-user-info">
+      <span id="sync-user-email" style="font-size:13px;font-weight:600">${esc2(user ? user.email : '')}</span>
+      <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
     </div>
   </div>
-  <div class="form-group">
-    <label>ルームコード（家族で共有する合言葉）</label>
-    <input type="text" id="set-supabase-room" value="${esc2(cfg.roomCode||'')}" placeholder="例: tanaka-family-2024">
-    <small class="hint">家族全員が同じコードを入力してください。英数字・ハイフン推奨。</small>
-  </div>
   <div class="sync-btn-row">
-    <button class="btn btn-primary" id="btn-sync-connect">接続開始</button>
-    <button class="btn btn-ghost" id="btn-sync-disconnect" style="display:none">切断</button>
-    <button class="btn btn-ghost" id="btn-sync-pull">今すぐ同期</button>
+    <button class="btn btn-ghost btn-sm" id="btn-sync-pull">↓ 今すぐ同期</button>
+    <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
+  </div>`;
+  })() : `
+  <div id="sync-logged-info" style="display:none">
+    <div class="sync-user-card">
+      <div class="sync-user-avatar" id="sync-user-avatar">?</div>
+      <div class="sync-user-info">
+        <span id="sync-user-email" style="font-size:13px;font-weight:600"></span>
+        <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
+      </div>
+    </div>
+    <div class="sync-btn-row">
+      <button class="btn btn-ghost btn-sm" id="btn-sync-pull">↓ 今すぐ同期</button>
+      <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
+    </div>
   </div>
+  <div id="sync-login-prompt" style="margin-top:10px">
+    ${(cfg.url && cfg.anonKey) ? `
+    <button class="btn btn-primary" id="btn-sync-login-show">✉️ ログイン / 新規登録</button>
+    ` : `<p class="hint">Supabase接続設定を行うと、メールアドレスでアカウント作成してクラウド同期できます。</p>`}
+  </div>`}
+
+  <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
+    <summary style="cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
+      <span>⚙️ Supabase接続設定</span>
+      ${(cfg.url && cfg.anonKey) ? '<span style="font-size:11px;background:#d1fae5;color:#059669;padding:2px 8px;border-radius:20px;font-weight:700">設定済み</span>' : '<span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 8px;border-radius:20px;font-weight:700">未設定</span>'}
+    </summary>
+    <div style="margin-top:14px">
+      <div class="form-group">
+        <label>Supabase Project URL</label>
+        <input type="url" id="set-supabase-url" value="${esc2(cfg.url||'')}" placeholder="https://xxxx.supabase.co">
+      </div>
+      <div class="form-group">
+        <label>Anon（公開）Key</label>
+        <div class="api-key-row">
+          <input type="password" id="set-supabase-key" value="${esc2(cfg.anonKey||'')}" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+          <button class="btn btn-ghost btn-sm" id="toggle-supabase-key">表示</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" id="save-supabase-config">設定を保存</button>
+    </div>
+  </details>
+
   <details style="margin-top:14px">
-    <summary style="cursor:pointer;color:var(--primary);font-size:13px;user-select:none">Supabaseの初期設定手順（クリックで展開）</summary>
-    <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin-top:8px">
-      <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料アカウントを作成し、新しいプロジェクトを作る</li>
-      <li>Project Settings → API から <b>Project URL</b> と <b>anon public Key</b> をコピーして上に貼り付ける</li>
-      <li>SQL Editor で以下のSQLを実行してテーブルを作成する：</li>
+    <summary style="cursor:pointer;color:var(--text-muted);font-size:12px;user-select:none;list-style:none">▶ Supabase初期設定手順（クリックで展開）</summary>
+    <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+      <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料プロジェクトを作成</li>
+      <li>SQL Editorで以下を実行してテーブルを作成：</li>
     </ol>
-    <pre class="sql-block">CREATE TABLE household_sync (
-  sync_id   TEXT PRIMARY KEY,
-  data      JSONB NOT NULL,
-  device_id TEXT,
+    <pre class="sql-block">CREATE TABLE household_data (
+  user_id UUID REFERENCES auth.users NOT NULL PRIMARY KEY,
+  data JSONB DEFAULT '{}',
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-ALTER TABLE household_sync ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "public_access" ON household_sync
-  FOR ALL USING (true) WITH CHECK (true);
-ALTER PUBLICATION supabase_realtime ADD TABLE household_sync;</pre>
-    <p style="font-size:12px;color:var(--text-muted);margin-top:6px">4. URL・Key・ルームコードを入力して「接続開始」をクリックすれば完了です。</p>
+ALTER TABLE household_data ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "own_data" ON household_data
+  FOR ALL USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);</pre>
+    <ol start="3" style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+      <li>Settings → API から Project URL と anon key をコピーして上の入力欄に貼り付け</li>
+      <li>「設定を保存」→「ログイン / 新規登録」でアカウント作成</li>
+    </ol>
   </details>
 </div>
 
@@ -1220,7 +1255,6 @@ function bindSettings() {
   let editingMemId = null;
 
   // ── クラウド同期 ──────────────────────────────────────────
-  // 設定ページ描画直後にSync UIを現在のステータスで更新
   if (typeof refreshSyncUI === 'function') refreshSyncUI();
 
   on('toggle-supabase-key', 'click', () => {
@@ -1230,31 +1264,32 @@ function bindSettings() {
     else                           { input.type = 'password'; btn.textContent = '表示'; }
   });
 
-  on('btn-sync-connect', 'click', () => {
-    const url      = document.getElementById('set-supabase-url').value.trim();
-    const anonKey  = document.getElementById('set-supabase-key').value.trim();
-    const roomCode = document.getElementById('set-supabase-room').value.trim();
-    if (!url || !anonKey || !roomCode) {
-      alert('URL・Anon Key・ルームコードをすべて入力してください');
+  on('save-supabase-config', 'click', () => {
+    const url     = document.getElementById('set-supabase-url').value.trim();
+    const anonKey = document.getElementById('set-supabase-key').value.trim();
+    if (!url || !anonKey) {
+      alert('Project URLとAnon Keyを入力してください');
       return;
     }
-    updateSettings({ syncConfig: { url, anonKey, roomCode, enabled: true } });
-    if (typeof connectSync === 'function') connectSync();
+    if (typeof resetSupabaseClient === 'function') resetSupabaseClient();
+    const existing = appData.settings.syncConfig || {};
+    updateSettings({ syncConfig: { ...existing, url, anonKey } });
+    renderCurrentPage();
+    alert('設定を保存しました。「ログイン / 新規登録」でアカウントにサインインしてください。');
   });
 
-  on('btn-sync-disconnect', 'click', () => {
-    if (typeof disconnectSync === 'function') disconnectSync();
-    const existing = appData.settings.syncConfig || {};
-    updateSettings({ syncConfig: { ...existing, enabled: false } });
-    if (typeof refreshSyncUI === 'function') refreshSyncUI();
+  on('btn-sync-login-show', 'click', () => {
+    if (typeof showAuthScreen === 'function') showAuthScreen();
+  });
+
+  on('btn-sync-logout', 'click', async () => {
+    if (!confirm('ログアウトしますか？')) return;
+    if (typeof authSignOut === 'function') await authSignOut();
+    renderCurrentPage();
   });
 
   on('btn-sync-pull', 'click', async () => {
-    if (typeof pullFromCloud !== 'function' || !window._supabaseClient) {
-      alert('先に接続してください');
-      return;
-    }
-    await pullFromCloud();
+    if (typeof pullFromCloud === 'function') await pullFromCloud();
   });
 
   // ── PWA インストール ───────────────────────────────────────
@@ -1690,6 +1725,169 @@ function setFormValue(id, val) {
 }
 
 // ============================================================
+// サイドバー ユーザー表示
+// ============================================================
+function renderSidebarUser() {
+  const footer = document.getElementById('sidebar-footer');
+  if (!footer) return;
+
+  if (typeof isLoggedIn === 'function' && isLoggedIn()) {
+    const user = getCurrentUser();
+    const email = user ? user.email : '';
+    const initial = email ? email[0].toUpperCase() : '?';
+    footer.innerHTML = `
+      <div class="sidebar-user-card">
+        <div class="sidebar-avatar">${initial}</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-email" title="${esc2(email)}">${esc2(email)}</div>
+          <div class="sidebar-user-status">● 同期中</div>
+        </div>
+        <button class="btn-sidebar-logout" id="sidebar-logout-btn" title="ログアウト">⏏</button>
+      </div>`;
+    on('sidebar-logout-btn', 'click', async () => {
+      if (!confirm('ログアウトしますか？')) return;
+      if (typeof authSignOut === 'function') await authSignOut();
+    });
+  } else if (typeof isSyncConfigured === 'function' && isSyncConfigured()) {
+    footer.innerHTML = `
+      <div style="padding:4px 0">
+        <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" id="sidebar-login-btn">ログイン / 登録</button>
+      </div>`;
+    on('sidebar-login-btn', 'click', () => {
+      if (typeof showAuthScreen === 'function') showAuthScreen();
+    });
+  } else {
+    footer.innerHTML = '<div class="sidebar-offline-badge">オフラインモード</div>';
+  }
+}
+
+// ============================================================
+// 認証スクリーン
+// ============================================================
+let _authTab = 'login';
+
+function showAuthScreen() {
+  let overlay = document.getElementById('auth-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'auth-overlay';
+    overlay.className = 'auth-overlay';
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = renderAuthScreen();
+  overlay.style.display = 'flex';
+  bindAuthScreen();
+}
+
+function hideAuthScreen() {
+  const overlay = document.getElementById('auth-overlay');
+  if (overlay) overlay.style.display = 'none';
+  renderSidebarUser();
+  renderCurrentPage();
+}
+
+function renderAuthScreen() {
+  const isLogin = _authTab === 'login';
+  return `
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">💰</div>
+        <h1 class="auth-title">家族家計簿</h1>
+        <p class="auth-subtitle">家族みんなで使えるクラウド家計簿</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab ${isLogin ? 'active' : ''}" data-tab="login">ログイン</button>
+        <button class="auth-tab ${!isLogin ? 'active' : ''}" data-tab="signup">新規登録</button>
+      </div>
+
+      <form id="auth-form" class="auth-form">
+        <div id="auth-error" class="auth-error" style="display:none"></div>
+        <div class="form-group">
+          <label>メールアドレス</label>
+          <input type="email" id="auth-email" placeholder="example@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>パスワード${!isLogin ? '（8文字以上）' : ''}</label>
+          <input type="password" id="auth-password" placeholder="パスワード" required autocomplete="${isLogin ? 'current-password' : 'new-password'}">
+        </div>
+        ${!isLogin ? `
+        <div class="form-group">
+          <label>家族名（任意）</label>
+          <input type="text" id="auth-family" placeholder="例：山田家の家計簿" maxlength="20">
+        </div>` : ''}
+        <button type="submit" class="btn btn-primary auth-submit" id="auth-submit">
+          ${isLogin ? 'ログイン' : 'アカウントを作成'}
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p class="auth-hint">🔒 Supabaseで安全に管理されます</p>
+        <button class="auth-offline-mode" id="auth-skip">スキップしてオフラインで使う</button>
+      </div>
+    </div>`;
+}
+
+function bindAuthScreen() {
+  document.querySelectorAll('.auth-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      _authTab = btn.dataset.tab;
+      showAuthScreen();
+    });
+  });
+
+  on('auth-skip', 'click', () => {
+    document.getElementById('auth-overlay').style.display = 'none';
+    renderCurrentPage();
+  });
+
+  const form = document.getElementById('auth-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email    = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const submit   = document.getElementById('auth-submit');
+    const errEl    = document.getElementById('auth-error');
+
+    submit.disabled = true;
+    submit.textContent = '処理中...';
+    errEl.style.display = 'none';
+
+    try {
+      if (_authTab === 'login') {
+        await authSignIn(email, password);
+      } else {
+        const familyInput = document.getElementById('auth-family');
+        await authSignUp(email, password);
+        if (familyInput && familyInput.value.trim()) {
+          appData.settings.familyName = familyInput.value.trim();
+          saveData();
+        }
+      }
+      hideAuthScreen();
+    } catch (err) {
+      errEl.textContent = translateAuthError(err.message || String(err));
+      errEl.style.display = 'block';
+      submit.disabled = false;
+      submit.textContent = _authTab === 'login' ? 'ログイン' : 'アカウントを作成';
+    }
+  });
+}
+
+function translateAuthError(msg) {
+  if (msg.includes('Invalid login credentials'))      return 'メールアドレスまたはパスワードが違います';
+  if (msg.includes('Email not confirmed'))            return 'メール確認が必要です。受信トレイをご確認ください';
+  if (msg.includes('User already registered'))        return 'このメールアドレスは既に登録されています';
+  if (msg.includes('Password should be at least'))   return 'パスワードは8文字以上にしてください';
+  if (msg.includes('Unable to validate'))             return '接続エラー。Supabase設定を確認してください';
+  if (msg.includes('Failed to fetch'))                return 'ネットワークエラー。接続を確認してください';
+  if (msg.includes('Supabase未設定'))                 return 'Supabase設定が必要です。設定画面で入力してください';
+  return msg;
+}
+
+// ============================================================
 // アプリ初期化
 // ============================================================
 function initApp() {
@@ -1726,6 +1924,9 @@ function initApp() {
   // アカウントバー描画
   renderAccountBar();
 
+  // サイドバー下部ユーザー情報
+  renderSidebarUser();
+
   // PWA インストールプロンプト（Android Chrome）をキャプチャ
   window.pwaInstallEvent = null;
   window.addEventListener('beforeinstallprompt', e => {
@@ -1733,11 +1934,11 @@ function initApp() {
     window.pwaInstallEvent = e;
   });
 
-  // クラウド同期初期化
-  if (typeof initSync === 'function') initSync();
-
   // 初期ページ描画
   navigate('dashboard');
+
+  // クラウド同期初期化（非同期・描画後に実行）
+  if (typeof initSync === 'function') initSync();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

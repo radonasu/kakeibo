@@ -1,139 +1,211 @@
 // ============================================================
-// sync.js - Supabase リアルタイム同期
+// sync.js - Supabase Auth + リアルタイム同期 v5
 // ============================================================
 
 let _supabaseClient = null;
 let _syncChannel    = null;
-let _syncStatus     = 'disconnected'; // disconnected | connecting | connected | error
+let _authSession    = null;
+let _syncStatus     = 'disconnected';
 let _pushTimer      = null;
 
-const PUSH_DEBOUNCE = 2500; // ms
-const SYNC_TABLE    = 'household_sync';
+const PUSH_DEBOUNCE = 2500;
+const SYNC_TABLE    = 'household_data';
 
+// ── 設定取得 ────────────────────────────────────────────────
 function getSyncCfg() {
   return (appData && appData.settings && appData.settings.syncConfig) || {};
+}
+
+function isSyncConfigured() {
+  const cfg = getSyncCfg();
+  return !!(cfg.url && cfg.anonKey);
+}
+
+function getCurrentUser() {
+  return _authSession ? _authSession.user : null;
+}
+
+function isLoggedIn() {
+  return !!getCurrentUser();
+}
+
+// ── Supabaseクライアント取得（遅延初期化）──────────────────
+function getSupabaseClient() {
+  if (_supabaseClient) return _supabaseClient;
+  const cfg = getSyncCfg();
+  if (!cfg.url || !cfg.anonKey || !window.supabase) return null;
+  try {
+    _supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true },
+    });
+  } catch (e) {
+    console.error('[sync] クライアント初期化失敗:', e);
+    return null;
+  }
+  return _supabaseClient;
+}
+
+// 設定変更時にクライアントをリセット
+function resetSupabaseClient() {
+  if (_syncChannel && _supabaseClient) {
+    try { _supabaseClient.removeChannel(_syncChannel); } catch (_) {}
+    _syncChannel = null;
+  }
+  _supabaseClient = null;
+  _authSession    = null;
+  setSyncStatus('disconnected');
+  if (typeof renderSidebarUser === 'function') renderSidebarUser();
 }
 
 // ── ステータス管理 ─────────────────────────────────────────
 function setSyncStatus(s) {
   _syncStatus = s;
   const STATUS = {
-    disconnected: { bg: '#94a3b8', label: '未接続'   },
+    disconnected: { bg: '#94a3b8', label: '未接続' },
     connecting:   { bg: '#f59e0b', label: '接続中...' },
-    connected:    { bg: '#10b981', label: '同期中'    },
-    error:        { bg: '#ef4444', label: 'エラー'    },
+    connected:    { bg: '#10b981', label: '同期中' },
+    error:        { bg: '#ef4444', label: 'エラー' },
   };
   const m = STATUS[s] || STATUS.disconnected;
 
-  // ヘッダーのインジケーター（常時表示）
   const headerDot = document.getElementById('sync-status-dot-header');
   if (headerDot) {
     headerDot.style.background = m.bg;
     headerDot.title = 'クラウド同期: ' + m.label;
   }
-
-  // 設定ページのインジケーター（設定ページ表示中のみ存在）
   const dot = document.getElementById('sync-status-dot');
   const txt = document.getElementById('sync-status-text');
   if (dot) dot.style.background = m.bg;
   if (txt) txt.textContent = m.label;
-
-  // 設定ページの接続/切断ボタン切り替え
-  const btnConn = document.getElementById('btn-sync-connect');
-  const btnDisc = document.getElementById('btn-sync-disconnect');
-  if (btnConn) btnConn.style.display = (s === 'disconnected' || s === 'error') ? '' : 'none';
-  if (btnDisc) btnDisc.style.display = (s === 'connected' || s === 'connecting') ? '' : 'none';
 }
 
-// 設定ページ描画後にUI再適用
 function refreshSyncUI() {
   setSyncStatus(_syncStatus);
-}
-
-// ── 接続 ──────────────────────────────────────────────────
-async function connectSync() {
-  const cfg = getSyncCfg();
-  if (!cfg.url || !cfg.anonKey || !cfg.roomCode) {
-    alert('Supabase URL・Anon Key・ルームコードをすべて入力してください');
-    return;
+  const emailEl = document.getElementById('sync-user-email');
+  if (emailEl) {
+    const user = getCurrentUser();
+    emailEl.textContent = user ? user.email : '';
   }
-  if (!window.supabase) {
-    alert('Supabase SDKの読み込みに失敗しました。\nインターネット接続を確認して再読み込みしてください。');
-    return;
+  const avatarEl = document.getElementById('sync-user-avatar');
+  if (avatarEl) {
+    const user = getCurrentUser();
+    avatarEl.textContent = user ? user.email[0].toUpperCase() : '?';
   }
-
-  disconnectSync();
-  setSyncStatus('connecting');
-
-  try {
-    _supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey);
-
-    // リアルタイム購読
-    _syncChannel = _supabaseClient
-      .channel('kakeibo_' + cfg.roomCode)
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: SYNC_TABLE,
-        filter: 'sync_id=eq.' + cfg.roomCode,
-      }, onRemoteChange)
-      .subscribe(status => {
-        if (status === 'SUBSCRIBED')    setSyncStatus('connected');
-        if (status === 'CHANNEL_ERROR') setSyncStatus('error');
-        if (status === 'TIMED_OUT')     setSyncStatus('error');
-        if (status === 'CLOSED')        setSyncStatus('disconnected');
-      });
-
-    // 初期プル（クラウドの最新データを取得）
-    await pullFromCloud();
-    showSyncToast('☁️ クラウド同期を開始しました');
-
-  } catch (e) {
-    console.error('Sync connect error:', e);
-    setSyncStatus('error');
-    alert('接続に失敗しました: ' + (e.message || String(e)));
+  const loggedInfo  = document.getElementById('sync-logged-info');
+  const loginPrompt = document.getElementById('sync-login-prompt');
+  if (isLoggedIn()) {
+    if (loggedInfo)  loggedInfo.style.display  = '';
+    if (loginPrompt) loginPrompt.style.display = 'none';
+  } else {
+    if (loggedInfo)  loggedInfo.style.display  = 'none';
+    if (loginPrompt) loginPrompt.style.display = '';
   }
 }
 
-function disconnectSync() {
-  if (_pushTimer) { clearTimeout(_pushTimer); _pushTimer = null; }
-  if (_syncChannel && _supabaseClient) {
-    try { _supabaseClient.removeChannel(_syncChannel); } catch (_) {}
-    _syncChannel = null;
+// ── 認証 ───────────────────────────────────────────────────
+async function authSignUp(email, password) {
+  const client = getSupabaseClient();
+  if (!client) throw new Error('Supabase未設定');
+  const { data, error } = await client.auth.signUp({ email, password });
+  if (error) throw error;
+  if (data.session) {
+    _authSession = data.session;
+    await onAuthSuccess();
   }
-  _supabaseClient = null;
+  return data;
+}
+
+async function authSignIn(email, password) {
+  const client = getSupabaseClient();
+  if (!client) throw new Error('Supabase未設定');
+  const { data, error } = await client.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  _authSession = data.session;
+  await onAuthSuccess();
+  return data;
+}
+
+async function authSignOut() {
+  const client = getSupabaseClient();
+  if (client) {
+    if (_syncChannel) {
+      try { client.removeChannel(_syncChannel); } catch (_) {}
+      _syncChannel = null;
+    }
+    try { await client.auth.signOut(); } catch (_) {}
+  }
+  _authSession = null;
   setSyncStatus('disconnected');
+  if (typeof renderSidebarUser === 'function') renderSidebarUser();
+  refreshSyncUI();
 }
 
-// ── プル（クラウド → ローカル） ───────────────────────────
-async function pullFromCloud() {
-  if (!_supabaseClient) return;
-  const cfg = getSyncCfg();
+async function onAuthSuccess() {
+  setSyncStatus('connecting');
+  subscribeToChanges();
+  await pullFromCloud();
+  setSyncStatus('connected');
+  if (typeof renderSidebarUser === 'function') renderSidebarUser();
+  refreshSyncUI();
+  showSyncToast('✅ ログインしました');
+}
 
-  const { data, error } = await _supabaseClient
+// ── リアルタイム購読 ───────────────────────────────────────
+function subscribeToChanges() {
+  const client = getSupabaseClient();
+  if (!client || !_authSession) return;
+
+  if (_syncChannel) {
+    try { client.removeChannel(_syncChannel); } catch (_) {}
+  }
+
+  const userId = _authSession.user.id;
+  _syncChannel = client
+    .channel('user_data_' + userId.slice(0, 8))
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: SYNC_TABLE,
+      filter: 'user_id=eq.' + userId,
+    }, onRemoteChange)
+    .subscribe(status => {
+      if (status === 'SUBSCRIBED')    setSyncStatus('connected');
+      if (status === 'CHANNEL_ERROR') setSyncStatus('error');
+      if (status === 'TIMED_OUT')     setSyncStatus('error');
+      if (status === 'CLOSED')        setSyncStatus('disconnected');
+    });
+}
+
+// ── プル（クラウド → ローカル）────────────────────────────
+async function pullFromCloud() {
+  const client = getSupabaseClient();
+  if (!client || !_authSession) return;
+
+  const userId = _authSession.user.id;
+  const { data, error } = await client
     .from(SYNC_TABLE)
-    .select('data, device_id')
-    .eq('sync_id', cfg.roomCode)
+    .select('data')
+    .eq('user_id', userId)
     .maybeSingle();
 
-  if (error || !data) return;
-  if (data.device_id === getDeviceId()) return; // 自分のデータはスキップ
-
-  applyRemoteData(data.data, '☁️ クラウドから最新データを取得しました');
+  if (error) { console.warn('[sync] pull error:', error.message); return; }
+  if (!data || !data.data) return;
+  applyRemoteData(data.data, null);
 }
 
-// ── プッシュ（ローカル → クラウド）debounced ─────────────
+// ── プッシュ（ローカル → クラウド）────────────────────────
 function schedulePush() {
-  if (!_supabaseClient) return;
+  const client = getSupabaseClient();
+  if (!client || !_authSession) return;
   if (_pushTimer) clearTimeout(_pushTimer);
   _pushTimer = setTimeout(pushToCloud, PUSH_DEBOUNCE);
 }
 
 async function pushToCloud() {
-  if (!_supabaseClient) return;
-  const cfg = getSyncCfg();
-  if (!cfg.roomCode) return;
+  const client = getSupabaseClient();
+  if (!client || !_authSession) return;
 
+  const userId = _authSession.user.id;
   const payload = {
     transactions: appData.transactions,
     categories:   appData.categories,
@@ -143,25 +215,21 @@ async function pushToCloud() {
     familyName:   appData.settings.familyName,
   };
 
-  const { error } = await _supabaseClient
+  const { error } = await client
     .from(SYNC_TABLE)
     .upsert(
-      { sync_id: cfg.roomCode, data: payload, device_id: getDeviceId() },
-      { onConflict: 'sync_id' }
+      { user_id: userId, data: payload, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id' }
     );
 
-  if (error) console.warn('Cloud push failed:', error.message);
+  if (error) console.warn('[sync] push error:', error.message);
 }
 
 // ── リモート変更ハンドラ ───────────────────────────────────
 function onRemoteChange(payload) {
   const row = payload.new;
-  if (!row) return;
-  if (row.device_id === getDeviceId()) return; // 自分の更新は無視
-  if (!row.data) return;
-
-  const name = row.data.familyName || '家族';
-  applyRemoteData(row.data, '🔄 ' + name + 'から同期しました');
+  if (!row || !row.data) return;
+  applyRemoteData(row.data, '🔄 データを同期しました');
 }
 
 function applyRemoteData(d, toastMsg) {
@@ -172,24 +240,15 @@ function applyRemoteData(d, toastMsg) {
   if (d.budgets)      appData.budgets      = d.budgets;
   if (d.templates)    appData.templates    = d.templates;
 
-  // localStorageへ直接書き込み（saveData()呼出しによるループを防ぐ）
-  localStorage.setItem(getStorageKey(), JSON.stringify(appData));
+  // saveData() を呼ばず直接書き込み（無限ループ防止）
+  try { localStorage.setItem(getStorageKey(), JSON.stringify(appData)); } catch (e) {}
 
   if (toastMsg) showSyncToast(toastMsg);
   if (typeof updateSidebarTitle === 'function') updateSidebarTitle();
   if (typeof renderCurrentPage  === 'function') renderCurrentPage();
 }
 
-// ── ユーティリティ ────────────────────────────────────────
-function getDeviceId() {
-  let id = localStorage.getItem('kakeibo_device_id');
-  if (!id) {
-    id = 'dev_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-    localStorage.setItem('kakeibo_device_id', id);
-  }
-  return id;
-}
-
+// ── トースト通知 ───────────────────────────────────────────
 function showSyncToast(msg) {
   let el = document.getElementById('sync-toast');
   if (!el) {
@@ -205,9 +264,25 @@ function showSyncToast(msg) {
 }
 
 // ── 初期化 ────────────────────────────────────────────────
-function initSync() {
-  const cfg = getSyncCfg();
-  if (cfg.enabled && cfg.url && cfg.anonKey && cfg.roomCode) {
-    connectSync();
+async function initSync() {
+  if (!isSyncConfigured()) return;
+
+  const client = getSupabaseClient();
+  if (!client) return;
+
+  setSyncStatus('connecting');
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (session) {
+      _authSession = session;
+      await onAuthSuccess();
+    } else {
+      setSyncStatus('disconnected');
+      if (typeof showAuthScreen === 'function') showAuthScreen();
+    }
+  } catch (e) {
+    console.error('[sync] session restore failed:', e);
+    setSyncStatus('error');
   }
 }

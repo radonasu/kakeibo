@@ -37,7 +37,7 @@ const DEFAULT_SETTINGS = {
   fiscalYearStart: 1,
   defaultMemberId: 'm1',
   claudeApiKey: '',
-  syncConfig: { url: '', anonKey: '', roomCode: '', enabled: false },
+  syncConfig: { url: '', anonKey: '' },
 };
 
 // ── マルチアカウント管理 ───────────────────────────────────
@@ -138,7 +138,10 @@ function loadData() {
     const data = JSON.parse(raw);
     if (!data.settings) data.settings = { ...DEFAULT_SETTINGS };
     if (!data.settings.claudeApiKey) data.settings.claudeApiKey = '';
-    if (!data.settings.syncConfig)   data.settings.syncConfig   = { url: '', anonKey: '', roomCode: '', enabled: false };
+    if (!data.settings.syncConfig)   data.settings.syncConfig   = { url: '', anonKey: '' };
+    // 旧形式マイグレーション（roomCode/enabled削除）
+    if (data.settings.syncConfig.roomCode !== undefined) delete data.settings.syncConfig.roomCode;
+    if (data.settings.syncConfig.enabled  !== undefined) delete data.settings.syncConfig.enabled;
     if (!data.budgets)   data.budgets = {};
     if (!data.templates) data.templates = [];
     return data;

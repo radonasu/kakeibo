@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v4'; // v4: クラウド同期・PWAインストールガイド追加
+const CACHE_NAME = 'kakeibo-v5'; // v5: UI刷新・Supabase Auth対応
 const ASSETS = [
   './index.html',
   './css/style.css',

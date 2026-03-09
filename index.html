@@ -7,16 +7,16 @@
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#6366f1">
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="家計簿">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=5">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- Supabase SDK（クラウド同期用） -->
+  <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
@@ -26,7 +26,10 @@
   <!-- ─── サイドバー ─── -->
   <nav id="sidebar">
     <div id="sidebar-brand">
-      <span id="sidebar-icon">💰</span>
+      <div class="brand-row">
+        <div class="brand-icon">💰</div>
+        <span class="brand-name">家族家計簿</span>
+      </div>
       <!-- アカウント切替バー（JSで描画） -->
       <div id="account-bar"></div>
     </div>
@@ -48,6 +51,9 @@
         <span class="nav-icon">⚙️</span> 設定
       </button>
     </div>
+
+    <!-- ユーザー情報（JSで描画） -->
+    <div id="sidebar-footer" class="sidebar-footer"></div>
   </nav>
 
   <!-- ─── メインエリア ─── -->
@@ -68,11 +74,11 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/data.js?v=4"></script>
-<script src="js/export.js?v=4"></script>
-<script src="js/charts.js?v=4"></script>
-<script src="js/sync.js?v=4"></script>
-<script src="js/app.js?v=4"></script>
+<script src="js/data.js?v=5"></script>
+<script src="js/export.js?v=5"></script>
+<script src="js/charts.js?v=5"></script>
+<script src="js/sync.js?v=5"></script>
+<script src="js/app.js?v=5"></script>
 
 <!-- Service Worker 登録 -->
 <script>
