@@ -13,12 +13,24 @@ const SYNC_TABLE    = 'household_data';
 
 // ── 設定取得 ────────────────────────────────────────────────
 function getSyncCfg() {
+  // APP_CONFIG（config.js）が設定されている場合はそちらを最優先
+  if (typeof APP_CONFIG !== 'undefined' &&
+      APP_CONFIG.supabase && APP_CONFIG.supabase.url && APP_CONFIG.supabase.anonKey) {
+    return APP_CONFIG.supabase;
+  }
+  // フォールバック：ユーザーが設定画面で入力した値
   return (appData && appData.settings && appData.settings.syncConfig) || {};
 }
 
 function isSyncConfigured() {
   const cfg = getSyncCfg();
   return !!(cfg.url && cfg.anonKey);
+}
+
+// APP_CONFIGで設定済みかどうか（設定画面の表示制御用）
+function isAdminConfigured() {
+  return typeof APP_CONFIG !== 'undefined' &&
+    APP_CONFIG.supabase && !!APP_CONFIG.supabase.url && !!APP_CONFIG.supabase.anonKey;
 }
 
 function getCurrentUser() {

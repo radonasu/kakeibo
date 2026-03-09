@@ -2,10 +2,11 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5'; // v5: UI刷新・Supabase Auth対応
+const CACHE_NAME = 'kakeibo-v5.1'; // v5.1: config.js追加
 const ASSETS = [
   './index.html',
   './css/style.css',
+  './js/config.js',
   './js/data.js',
   './js/export.js',
   './js/charts.js',

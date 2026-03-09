@@ -902,7 +902,9 @@ function bindCategories() {
 // ============================================================
 function renderSettings() {
   const s   = appData.settings;
-  const cfg = s.syncConfig || {};
+  // APP_CONFIGが設定済みの場合はそちらを優先表示
+  const adminCfg = (typeof isAdminConfigured === 'function' && isAdminConfigured());
+  const cfg = adminCfg ? (APP_CONFIG.supabase || {}) : (s.syncConfig || {});
   const templates = appData.templates || [];
   const templateRows = templates.map(t => {
     const cat = getCategoryById(t.categoryId);
@@ -1007,6 +1009,11 @@ function renderSettings() {
     ` : `<p class="hint">Supabase接続設定を行うと、メールアドレスでアカウント作成してクラウド同期できます。</p>`}
   </div>`}
 
+  ${adminCfg ? `
+  <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;font-size:13px">
+    <span style="font-weight:700;color:#059669">✓ Supabase接続設定済み</span>
+    <span style="color:#64748b;margin-left:8px">（管理者によって設定されています）</span>
+  </div>` : `
   <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
     <summary style="cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
       <span>⚙️ Supabase接続設定</span>
@@ -1026,7 +1033,7 @@ function renderSettings() {
       </div>
       <button class="btn btn-primary btn-sm" id="save-supabase-config">設定を保存</button>
     </div>
-  </details>
+  </details>`}
 
   <details style="margin-top:14px">
     <summary style="cursor:pointer;color:var(--text-muted);font-size:12px;user-select:none;list-style:none">▶ Supabase初期設定手順（クリックで展開）</summary>
