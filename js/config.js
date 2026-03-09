@@ -15,8 +15,8 @@ const APP_CONFIG = {
   // ── Supabase接続設定 ────────────────────────────────────
   // 未設定の場合、ユーザーは設定画面で自分で入力できます
   supabase: {
-    url: '',       // 例: 'https://abcdefgh.supabase.co'
-    anonKey: '',   // 例: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    url: 'https://xiafublrejxdegmdoyfg.supabase.co',
+    anonKey: 'sb_publishable_fxo0mVQTq1fZhdS1RLWgDQ_-v2REvfn',
   },
 
   // ── アプリ設定 ──────────────────────────────────────────
