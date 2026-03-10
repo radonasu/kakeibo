@@ -31,6 +31,20 @@
   --shadow-md:     0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
   --shadow-lg:     0 8px 32px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
 
+  /* ── セマンティックカラートークン (v5.14) ──────────────── */
+  --success:          #059669;
+  --success-bg:       #f0fdf4;
+  --success-border:   #86efac;
+  --warning:          #d97706;
+  --warning-bg:       #fffbeb;
+  --warning-border:   #fde68a;
+  --danger-text:      #dc2626;
+  --danger-bg:        #fef2f2;
+  --danger-border:    #fecaca;
+  /* インタラクション */
+  --surface-hover:    #eef2f7;
+  --focus-ring:       rgba(99,102,241,.13);
+
   /* ── タイポグラフィスケール ─────────────────────────── */
   /* フォントサイズ（8pxグリッドベース） */
   --fs-2xs:     10px;   /* 最小：セクションラベル、ステータス */
@@ -405,7 +419,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
   border: 1px solid var(--border);
 }
-.btn-ghost:hover { background: #e9eef5; }
+.btn-ghost:hover { background: var(--surface-hover); }
 
 .btn-danger  { background: var(--expense-light); color: var(--expense); }
 .btn-danger:hover { background: #ffc9d0; }
@@ -468,7 +482,7 @@ a { color: inherit; text-decoration: none; }
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99,102,241,.12);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 .hint {
   font-size: var(--fs-xs);
@@ -803,7 +817,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── 危険ゾーン ──────────────────────────────────────── */
-.danger-zone { border: 1.5px solid #fecaca; }
+.danger-zone { border: 1.5px solid var(--danger-border); }
 
 /* ── クイックカテゴリ追加 ────────────────────────────── */
 .btn-inline-add {
@@ -920,13 +934,13 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
   transition: background .15s;
 }
-.btn-receipt-file:hover    { background: #e2e8f0; }
+.btn-receipt-file:hover    { background: var(--surface-hover); }
 .btn-receipt-file.disabled { opacity: .5; pointer-events: none; }
 
 .scan-result {
   width: 100%;
-  background: #f0fdf4;
-  border: 1.5px solid #86efac;
+  background: var(--success-bg);
+  border: 1.5px solid var(--success-border);
   border-radius: var(--radius-sm);
   padding: 10px 14px;
   font-size: var(--fs-xs);
@@ -937,7 +951,7 @@ a { color: inherit; text-decoration: none; }
 .scan-ok     { font-weight: 700; color: var(--income); }
 .scan-detail { color: var(--text); }
 .scan-note   { color: var(--text-muted); }
-.scan-err    { font-weight: 600; color: var(--expense); background: #fef2f2; border-color: #fca5a5; }
+.scan-err    { font-weight: 600; color: var(--expense); background: var(--danger-bg); border-color: var(--danger-border); }
 
 /* APIキー設定 */
 .api-key-row {
@@ -1007,7 +1021,7 @@ a { color: inherit; text-decoration: none; }
   transition: width 0.4s ease;
   min-width: 2px;
 }
-.budget-fill.warn { background: #f59e0b; }
+.budget-fill.warn { background: var(--warning); }
 .budget-fill.over { background: var(--expense); }
 
 .budget-over-msg {
@@ -1092,8 +1106,8 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
-  background: linear-gradient(135deg, #f0fdf4, #d1fae5);
-  border: 1px solid #86efac;
+  background: linear-gradient(135deg, var(--success-bg), var(--income-light));
+  border: 1px solid var(--success-border);
   border-radius: 12px;
 }
 
@@ -1258,12 +1272,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 .auth-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
   border-radius: 10px;
   padding: 11px 14px;
   font-size: var(--fs-sm);
-  color: #dc2626;
+  color: var(--danger-text);
   margin-bottom: 16px;
 }
 
@@ -1400,8 +1414,8 @@ body {
 .offline-indicator {
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: #f59e0b;
-  color: #1e293b;
+  background: var(--warning);
+  color: #fff;
   text-align: center;
   padding: 6px 12px;
   padding-top: calc(6px + env(safe-area-inset-top));
@@ -1649,6 +1663,18 @@ body {
   --shadow:        0 1px 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.25);
   --shadow-md:     0 4px 16px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
   --shadow-lg:     0 8px 32px rgba(0,0,0,.6), 0 4px 12px rgba(0,0,0,.4);
+  /* セマンティックカラー（ダーク） */
+  --success:          #34d399;
+  --success-bg:       #022c22;
+  --success-border:   #065f46;
+  --warning:          #fbbf24;
+  --warning-bg:       #1c1500;
+  --warning-border:   #78350f;
+  --danger-text:      #fb7185;
+  --danger-bg:        #4c0519;
+  --danger-border:    #be123c;
+  --surface-hover:    #1e2d3d;
+  --focus-ring:       rgba(99,102,241,.22);
 }
 
 /* ダークモード — コンポーネント固有の上書き */
@@ -1661,18 +1687,10 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,.3);
 }
 [data-theme="dark"] .sync-user-card {
-  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-  border-color: #059669;
+  background: linear-gradient(135deg, var(--success-bg) 0%, var(--success-border) 100%);
+  border-color: var(--success);
 }
-[data-theme="dark"] .scan-result {
-  background: #064e3b;
-  border-color: #059669;
-}
-[data-theme="dark"] .auth-error {
-  background: #4c0519;
-  border-color: #be123c;
-  color: #fca5a5;
-}
+/* .scan-result, .auth-error → セマンティックトークンで自動対応 */
 [data-theme="dark"] .install-tab {
   background: var(--surface-2);
   border-color: var(--border);
@@ -1680,11 +1698,12 @@ body {
 [data-theme="dark"] .export-block {
   background: var(--surface-2);
 }
-[data-theme="dark"] .tx-table tbody tr:hover { background: #1e2d3d; }
+[data-theme="dark"] .card { border-color: var(--border); }
+[data-theme="dark"] .tx-table tbody tr:hover { background: var(--surface-hover); }
 [data-theme="dark"] .modal-footer { background: var(--surface-2); }
 [data-theme="dark"] .filter-bar { background: var(--surface); }
 [data-theme="dark"] .btn-ghost { background: var(--surface-2); color: var(--text); }
-[data-theme="dark"] .btn-ghost:hover { background: #1e2d3d; }
+[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); }
 [data-theme="dark"] .budget-item { background: var(--surface-2); }
 
 /* ============================================================
