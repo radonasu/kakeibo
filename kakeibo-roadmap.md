@@ -13,6 +13,7 @@
 | 7 | v5.11 | 機能 | 繰り返し取引：テンプレートに「毎月自動追加」設定を追加（isRecurring・recurringDay・lastApplied）・アプリ起動時に当月未適用の繰り返しテンプレートを自動で取引追加・トースト通知で自動追加件数を表示・設定画面テンプレート一覧に「🔁 X日」バッジ表示 |
 | 8 | v5.12 | デザイン | 空状態デザイン：初回ユーザー（取引ゼロ）向けグラデーションヒーロー+3ステップオンボーディングカード（カテゴリ確認→予算設定→収支入力）・今月データなし時の空状態改善（アイコン+CTA付き）・ダークモード対応 |
 | 9 | v5.13 | 機能 | 月次サマリー共有：ダッシュボードに「📤 シェア」ボタン追加・Canvas APIで800×450pxの月次サマリー画像を生成（収支3カード＋支出上位4カテゴリバー）・Web Share APIでSNS共有（モバイル）＋PNGダウンロード（PC）・ダークモード非依存のブランドグラデーション背景 |
+| 10 | v5.14 | デザイン | カラーシステム統一：セマンティックトークン（--success/--success-bg/--success-border・--warning/--warning-bg/--warning-border・--danger-text/--danger-bg/--danger-border）と--surface-hover・--focus-ringを:rootに追加・[data-theme="dark"]に全トークンのダーク版を定義・ハードコード色（#f0fdf4・#fecaca・#f59e0b・#e9eef5・#1e2d3d等）をCSS変数に置換・ダークモードのcard border不可視問題修正・scan-result/auth-errorの重複dark override削除 |
 
 ## 次スプリント候補
 
