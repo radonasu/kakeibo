@@ -122,7 +122,68 @@ function renderCurrentPage() {
 // ============================================================
 // ダッシュボード
 // ============================================================
+
+// 初回ユーザー向けオンボーディング画面
+function renderOnboarding() {
+  return `
+<div class="onboarding-hero">
+  <span class="onboarding-icon">💰</span>
+  <div class="onboarding-title">家計簿をはじめましょう！</div>
+  <div class="onboarding-subtitle">家族みんなの収支を一元管理。<br>3ステップで今すぐスタートできます。</div>
+  <button class="onboarding-cta" id="onboarding-add-btn">
+    ＋ 最初の収支を入力する
+  </button>
+</div>
+
+<div class="onboarding-steps">
+  <div class="step-card" id="step-categories">
+    <div class="step-num">1</div>
+    <div class="step-icon">🏷️</div>
+    <div>
+      <div class="step-title">カテゴリを確認</div>
+      <div class="step-desc">食費・光熱費など、よく使うカテゴリが最初から用意されています。</div>
+    </div>
+    <div class="step-action">カテゴリを見る →</div>
+  </div>
+  <div class="step-card" id="step-budget">
+    <div class="step-num">2</div>
+    <div class="step-icon">🎯</div>
+    <div>
+      <div class="step-title">予算を設定</div>
+      <div class="step-desc">カテゴリごとに月の予算を決めると、使いすぎを防げます。</div>
+    </div>
+    <div class="step-action">予算を設定する →</div>
+  </div>
+  <div class="step-card" id="step-add-tx">
+    <div class="step-num">3</div>
+    <div class="step-icon">📝</div>
+    <div>
+      <div class="step-title">収支を入力</div>
+      <div class="step-desc">右下の「＋」ボタンからいつでも収支を追加できます。</div>
+    </div>
+    <div class="step-action">今すぐ追加する →</div>
+  </div>
+</div>`;
+}
+
+function bindOnboarding() {
+  const addBtn = document.getElementById('onboarding-add-btn');
+  if (addBtn) addBtn.addEventListener('click', () => document.getElementById('global-fab').click());
+
+  const stepCat = document.getElementById('step-categories');
+  if (stepCat) stepCat.addEventListener('click', () => navigate('categories'));
+
+  const stepBudget = document.getElementById('step-budget');
+  if (stepBudget) stepBudget.addEventListener('click', () => navigate('categories'));
+
+  const stepAdd = document.getElementById('step-add-tx');
+  if (stepAdd) stepAdd.addEventListener('click', () => document.getElementById('global-fab').click());
+}
+
 function renderDashboard() {
+  // 初回ユーザー（データなし）→ オンボーディング画面
+  if (appData.transactions.length === 0) return renderOnboarding();
+
   const txs = getTransactionsByMonth(appState.month);
   const income  = calcTotal(txs, 'income');
   const expense = calcTotal(txs, 'expense');
@@ -242,13 +303,16 @@ ${budgetSection}
   <div class="table-wrap">
     <table class="tx-table">
       <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>担当者</th><th>金額</th></tr></thead>
-      <tbody>${recentRows || '<tr><td colspan="5" class="empty">取引がありません</td></tr>'}</tbody>
+      <tbody>${recentRows || `<tr><td colspan="5"><div class="empty-month-state"><span class="empty-month-icon">📭</span><span class="empty-month-msg">今月の取引はまだありません</span><button class="empty-month-btn" onclick="document.getElementById('global-fab').click()">＋ 収支を追加する</button></div></td></tr>`}</tbody>
     </table>
   </div>
 </div>`;
 }
 
 function bindDashboard() {
+  // オンボーディング（データなし）
+  if (appData.transactions.length === 0) { bindOnboarding(); return; }
+
   // 月セレクター
   const sel = document.getElementById('dash-month');
   if (sel) sel.addEventListener('change', e => {
