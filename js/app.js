@@ -258,7 +258,10 @@ function renderDashboard() {
   return `
 <div class="page-header">
   <h1 class="page-title">${esc2(appData.settings.familyName)}</h1>
-  ${monthSel}
+  <div class="page-header-right">
+    ${monthSel}
+    <button class="btn btn-share" id="btn-share-summary" title="月次サマリーをシェア">📤 シェア</button>
+  </div>
 </div>
 
 <div class="summary-cards">
@@ -319,6 +322,9 @@ function bindDashboard() {
     appState.month = e.target.value;
     renderCurrentPage();
   });
+
+  // シェアボタン
+  on('btn-share-summary', 'click', () => openShareModal(appState.month));
   // サマリーカード数値カウントアップ
   document.querySelectorAll('.js-countup').forEach(el => {
     animateCountUp(el, Number(el.dataset.value));

@@ -2054,6 +2054,90 @@ body {
   .step-icon { font-size: 22px; }
 }
 
+/* ── 月次シェア機能 (v5.13) ── */
+.page-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(99,102,241,.1);
+  color: var(--primary);
+  border: 1.5px solid rgba(99,102,241,.35);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  transition: background .2s, border-color .2s, transform .15s;
+  white-space: nowrap;
+}
+.btn-share:hover {
+  background: rgba(99,102,241,.18);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.btn-share:active { transform: translateY(0); }
+
+.modal-share { max-width: 540px; width: calc(100% - 32px); }
+
+.share-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px 24px;
+}
+
+.share-canvas-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  line-height: 0;
+}
+.share-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.share-hint {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.share-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ダークモード */
+[data-theme="dark"] .btn-share {
+  background: rgba(99,102,241,.15);
+  border-color: rgba(165,180,252,.35);
+  color: #a5b4fc;
+}
+[data-theme="dark"] .btn-share:hover {
+  background: rgba(99,102,241,.25);
+  border-color: #a5b4fc;
+}
+
+/* モバイル */
+@media (max-width: 640px) {
+  .modal-share { width: calc(100% - 24px); }
+  .share-modal-body { padding: 8px 14px 20px; gap: 12px; }
+  .share-hint { display: none; }
+}
+
 /* ── トースト通知 ── */
 .kk-toast {
   position: fixed;

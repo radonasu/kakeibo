@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.12'; // v5.12: 空状態デザイン（初回ユーザー向けオンボーディング・今月データなし空状態）
+const CACHE_NAME = 'kakeibo-v5.13'; // v5.13: 月次サマリー共有（Canvas画像生成・Web Share API・PNG保存）
 const ASSETS = [
   './index.html',
   './css/style.css',
