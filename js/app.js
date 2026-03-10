@@ -1957,3 +1957,47 @@ function initApp() {
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
+
+// ============================================================
+// ダークモード（prefers-color-scheme + 手動トグル）
+// ============================================================
+(function initDarkMode() {
+  const STORAGE_KEY = 'kakeibo-theme';
+  const root = document.documentElement;
+
+  function getInitialTheme() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === 'dark' || saved === 'light') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    document.querySelectorAll('.btn-dark-toggle').forEach(btn => {
+      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      btn.title = theme === 'dark' ? 'ライトモードに切替' : 'ダークモードに切替';
+    });
+  }
+
+  function toggleTheme() {
+    const current = root.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORAGE_KEY, next);
+    applyTheme(next);
+  }
+
+  // 初期テーマを即時適用（FOUC防止）
+  applyTheme(getInitialTheme());
+
+  // ボタンイベント（委譲）
+  document.addEventListener('click', e => {
+    if (e.target.closest('.btn-dark-toggle')) toggleTheme();
+  });
+
+  // OS設定変更に追従（手動設定がない場合のみ）
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();

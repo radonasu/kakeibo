@@ -1478,3 +1478,78 @@ body {
   .modal-overlay { align-items: flex-end; padding: 0; }
   .auth-card { padding: 28px 24px; }
 }
+
+/* ============================================================
+   ダークモードトグルボタン
+   ============================================================ */
+.btn-dark-toggle {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background .15s;
+  color: rgba(241,245,249,.75);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.btn-dark-toggle:hover { background: rgba(255,255,255,.12); color: #f1f5f9; }
+
+/* ============================================================
+   ダークモード — CSS変数オーバーライド
+   ============================================================ */
+[data-theme="dark"] {
+  --bg:            #0f172a;
+  --surface:       #1e293b;
+  --surface-2:     #162032;
+  --text:          #f1f5f9;
+  --text-muted:    #94a3b8;
+  --text-faint:    #64748b;
+  --border:        #334155;
+  --border-strong: #475569;
+  --primary-light: #312e81;
+  --income-light:  #064e3b;
+  --expense-light: #4c0519;
+  --shadow-sm:     0 1px 2px rgba(0,0,0,.3);
+  --shadow:        0 1px 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.25);
+  --shadow-md:     0 4px 16px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  --shadow-lg:     0 8px 32px rgba(0,0,0,.6), 0 4px 12px rgba(0,0,0,.4);
+}
+
+/* ダークモード — コンポーネント固有の上書き */
+[data-theme="dark"] .auth-card {
+  background: var(--surface);
+}
+[data-theme="dark"] .auth-tab.active {
+  background: var(--surface-2);
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+[data-theme="dark"] .sync-user-card {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  border-color: #059669;
+}
+[data-theme="dark"] .scan-result {
+  background: #064e3b;
+  border-color: #059669;
+}
+[data-theme="dark"] .auth-error {
+  background: #4c0519;
+  border-color: #be123c;
+  color: #fca5a5;
+}
+[data-theme="dark"] .install-tab {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .export-block {
+  background: var(--surface-2);
+}
+[data-theme="dark"] .tx-table tbody tr:hover { background: #1e2d3d; }
+[data-theme="dark"] .modal-footer { background: var(--surface-2); }
+[data-theme="dark"] .filter-bar { background: var(--surface); }
+[data-theme="dark"] .btn-ghost { background: var(--surface-2); color: var(--text); }
+[data-theme="dark"] .btn-ghost:hover { background: #1e2d3d; }
+[data-theme="dark"] .budget-item { background: var(--surface-2); }

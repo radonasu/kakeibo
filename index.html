@@ -27,7 +27,15 @@
   <link rel="apple-touch-startup-image" href="icons/splash-1170x2532.png"
     media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
 
-  <link rel="stylesheet" href="css/style.css?v=5.2">
+  <!-- ダークモード FOUC防止（CSS読み込み前に即時適用） -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('kakeibo-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=5.3">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -42,6 +50,7 @@
       <div class="brand-row">
         <div class="brand-icon">💰</div>
         <span class="brand-name">家族家計簿</span>
+        <button class="btn-dark-toggle" id="dark-toggle-side" title="ダークモード切替">🌙</button>
       </div>
       <!-- アカウント切替バー（JSで描画） -->
       <div id="account-bar"></div>
@@ -77,6 +86,7 @@
       <span id="mobile-title">家族家計簿</span>
       <!-- クラウド同期ステータスインジケーター -->
       <span id="sync-status-dot-header" class="header-sync-dot" title="クラウド同期: 未接続"></span>
+      <button class="btn-dark-toggle" id="dark-toggle-mobile" title="ダークモード切替">🌙</button>
     </header>
 
     <main id="main-content">
@@ -111,14 +121,14 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/config.js?v=5.2"></script>
-<script src="js/data.js?v=5.2"></script>
-<script src="js/export.js?v=5.2"></script>
-<script src="js/charts.js?v=5.2"></script>
-<script src="js/sync.js?v=5.2"></script>
-<script src="js/app.js?v=5.2"></script>
+<script src="js/config.js?v=5.3"></script>
+<script src="js/data.js?v=5.3"></script>
+<script src="js/export.js?v=5.3"></script>
+<script src="js/charts.js?v=5.3"></script>
+<script src="js/sync.js?v=5.3"></script>
+<script src="js/app.js?v=5.3"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=5.2"></script>
+<script src="js/pwa.js?v=5.3"></script>
 
 </body>
 </html>
