@@ -23,7 +23,7 @@ const APP_CONFIG = {
   // Cloudflare Workers にデプロイしたプロキシのURL
   // デプロイ手順は cloudflare-worker/worker.js を参照
   geminiProxy: {
-    url: '',  // 例: 'https://kakeibo-gemini-proxy.xxxxx.workers.dev'
+    url: 'https://kakeibo-gemini-proxy.ccffdmw.workers.dev',
   },
 
   // ── アプリ設定 ──────────────────────────────────────────
