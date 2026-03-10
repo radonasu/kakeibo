@@ -342,7 +342,12 @@ function bindTransactions() {
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
   on('filter-type',   'change', e => { appState.txFilter.type     = e.target.value; renderCurrentPage(); });
-  on('filter-search', 'input',  e => { appState.txFilter.search   = e.target.value; renderCurrentPage(); });
+  let _searchTimer = null;
+  on('filter-search', 'input', e => {
+    appState.txFilter.search = e.target.value;
+    clearTimeout(_searchTimer);
+    _searchTimer = setTimeout(() => renderCurrentPage(), 300);
+  });
   // 追加ボタン
   on('open-add-modal', 'click', () => openTxModal(null));
   // 編集・削除
@@ -406,6 +411,13 @@ function renderTxModal() {
       <div class="form-group">
         <label>金額（円）</label>
         <input type="number" id="tx-amount" value="${src ? src.amount : ''}" placeholder="0" min="1" required>
+        <div class="amount-presets">
+          <button type="button" class="btn-preset" data-amount="500">¥500</button>
+          <button type="button" class="btn-preset" data-amount="1000">¥1,000</button>
+          <button type="button" class="btn-preset" data-amount="3000">¥3,000</button>
+          <button type="button" class="btn-preset" data-amount="5000">¥5,000</button>
+          <button type="button" class="btn-preset" data-amount="10000">¥10,000</button>
+        </div>
       </div>
       <div class="form-group">
         <label>カテゴリ
@@ -512,12 +524,22 @@ function bindTxModal() {
   // 保存
   on('modal-save', 'click', saveTxFromModal);
 
-  // Enterキーで保存（テキスト入力中）
+  // Enterキーで保存 / Escapeで閉じる
   modal.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey && e.target.tagName !== 'SELECT' && e.target.tagName !== 'BUTTON') {
+    if (e.key === 'Escape') {
+      closeTxModal();
+    } else if (e.key === 'Enter' && !e.shiftKey && e.target.tagName !== 'SELECT' && e.target.tagName !== 'BUTTON') {
       e.preventDefault();
       saveTxFromModal();
     }
+  });
+
+  // 金額プリセットボタン
+  modal.querySelectorAll('.btn-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById('tx-amount');
+      if (el) { el.value = btn.dataset.amount; el.focus(); }
+    });
   });
 
   // クイックカテゴリ追加

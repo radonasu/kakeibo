@@ -811,6 +811,33 @@ a { color: inherit; text-decoration: none; }
 }
 .quick-cat-form input:focus { outline: none; border-color: var(--primary); }
 
+/* ── 金額プリセットボタン ────────────────────────────────── */
+.amount-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.btn-preset {
+  padding: 4px 12px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  white-space: nowrap;
+}
+.btn-preset:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.btn-preset:active { transform: scale(0.95); }
+
 /* アカウント管理 */
 .badge-active {
   display: inline-block;
