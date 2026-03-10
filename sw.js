@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.9'; // v5.9: 予算アラート通知（Notification API）
+const CACHE_NAME = 'kakeibo-v5.10'; // v5.10: タイポグラフィ統一（CSS変数ベースのタイプスケール）
 const ASSETS = [
   './index.html',
   './css/style.css',
