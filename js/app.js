@@ -437,7 +437,9 @@ function renderTxModal() {
       </div>
       <div class="form-group">
         <label>摘要（メモ）</label>
-        <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物">
+        <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物"
+               list="memo-suggestions" autocomplete="off">
+        <datalist id="memo-suggestions"></datalist>
       </div>
 
       <!-- 詳細設定（折りたたみ） -->
@@ -495,6 +497,8 @@ function openTxModal(id, template) {
   document.getElementById('tx-modal').style.display = 'flex';
   // タイプボタンによるカテゴリ表示切替
   updateCatGroups();
+  // 初期サジェスト（編集・テンプレート時はカテゴリが選択済みなので即反映）
+  updateMemoSuggestions();
   // 金額フィールドにオートフォーカス
   setTimeout(() => {
     const amountInput = document.getElementById('tx-amount');
@@ -518,8 +522,13 @@ function bindTxModal() {
       modal.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active','expense-btn','income-btn'));
       btn.classList.add('active', btn.dataset.type === 'expense' ? 'expense-btn' : 'income-btn');
       updateCatGroups();
+      updateMemoSuggestions();
     });
   });
+
+  // カテゴリ変更でメモサジェスト更新
+  const catSelForSuggest = document.getElementById('tx-category');
+  if (catSelForSuggest) catSelForSuggest.addEventListener('change', updateMemoSuggestions);
 
   // 保存
   on('modal-save', 'click', saveTxFromModal);
@@ -612,6 +621,28 @@ function updateCatGroups() {
     const selOpt = catSel.options[catSel.selectedIndex];
     if (selOpt && selOpt.parentElement === expG) catSel.value = '';
   }
+}
+
+// メモサジェスト：選択カテゴリの直近ユニークメモを datalist に反映
+function updateMemoSuggestions() {
+  const catSel = document.getElementById('tx-category');
+  const dl = document.getElementById('memo-suggestions');
+  if (!catSel || !dl) return;
+  const catId = catSel.value;
+  if (!catId) { dl.innerHTML = ''; return; }
+  const seen = new Set();
+  const opts = appData.transactions
+    .filter(t => t.categoryId === catId && t.memo && t.memo.trim())
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .reduce((arr, t) => {
+      const m = t.memo.trim();
+      if (!seen.has(m)) { seen.add(m); arr.push(m); }
+      return arr;
+    }, [])
+    .slice(0, 8)
+    .map(m => `<option value="${esc2(m)}">`)
+    .join('');
+  dl.innerHTML = opts;
 }
 
 function closeTxModal() {
