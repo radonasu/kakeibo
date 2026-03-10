@@ -1480,6 +1480,78 @@ body {
 }
 
 /* ============================================================
+   グローバルFAB（クイック追加ボタン）
+   ============================================================ */
+#global-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  border: none;
+  box-shadow: 0 4px 16px rgba(99,102,241,.45), 0 2px 6px rgba(0,0,0,.12);
+  z-index: 130;
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#global-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(99,102,241,.55), 0 3px 8px rgba(0,0,0,.14);
+}
+#global-fab:active { transform: scale(0.93); }
+
+@media (max-width: 768px) {
+  #global-fab {
+    bottom: 80px; /* ボトムナビの上 */
+    right: 16px;
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+  }
+}
+
+/* モーダル詳細折りたたみ */
+.modal-details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+.modal-details summary {
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+.modal-details summary:hover { color: var(--text); }
+.modal-details summary::before {
+  content: '▶';
+  font-size: 9px;
+  transition: transform .2s;
+}
+.modal-details[open] summary::before { transform: rotate(90deg); }
+.modal-details .modal-details-body {
+  padding: 12px 12px 4px;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
    ダークモードトグルボタン
    ============================================================ */
 .btn-dark-toggle {

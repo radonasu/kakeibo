@@ -395,16 +395,6 @@ function renderTxModal() {
       <button class="modal-close" id="modal-close">✕</button>
     </div>
     <div class="modal-body">
-      <div class="receipt-scan-area">
-        <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
-          📷 レシートから読み込む
-        </button>
-        <label class="btn btn-receipt-file" id="receipt-file-label" title="ファイルから選択">
-          🖼️
-          <input type="file" id="receipt-file-input" accept="image/*" style="display:none">
-        </label>
-        <div id="scan-result" class="scan-result" style="display:none"></div>
-      </div>
       <div class="type-toggle">
         <button class="type-btn ${type === 'expense' ? 'active expense-btn' : ''}" data-type="expense">支出</button>
         <button class="type-btn ${type === 'income' ? 'active income-btn' : ''}" data-type="income">収入</button>
@@ -434,28 +424,45 @@ function renderTxModal() {
         </div>
       </div>
       <div class="form-group">
-        <label>支払方法</label>
-        <select id="tx-payment">
-          ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
-            `<option value="${p}" ${src && src.paymentMethod === p ? 'selected' : !src && p === '現金' ? 'selected' : ''}>${p}</option>`).join('')}
-        </select>
-      </div>
-      <div class="form-group">
-        <label>担当者</label>
-        <select id="tx-member"><option value="">—</option>${memOptions}</select>
-      </div>
-      <div class="form-group">
-        <label>消費税率（青色申告用）</label>
-        <select id="tx-tax">
-          <option value="0"  ${!src || src.taxRate == 0  ? 'selected' : ''}>対象外（0%）</option>
-          <option value="10" ${src && src.taxRate == 10  ? 'selected' : ''}>課税 10%</option>
-          <option value="8"  ${src && src.taxRate == 8   ? 'selected' : ''}>課税 8%（軽減）</option>
-        </select>
-      </div>
-      <div class="form-group">
         <label>摘要（メモ）</label>
         <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物">
       </div>
+
+      <!-- 詳細設定（折りたたみ） -->
+      <details class="modal-details" ${src ? 'open' : ''}>
+        <summary>詳細設定</summary>
+        <div class="modal-details-body">
+          <div class="form-group">
+            <label>支払方法</label>
+            <select id="tx-payment">
+              ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
+                `<option value="${p}" ${src && src.paymentMethod === p ? 'selected' : !src && p === '現金' ? 'selected' : ''}>${p}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>担当者</label>
+            <select id="tx-member"><option value="">—</option>${memOptions}</select>
+          </div>
+          <div class="form-group">
+            <label>消費税率（青色申告用）</label>
+            <select id="tx-tax">
+              <option value="0"  ${!src || src.taxRate == 0  ? 'selected' : ''}>対象外（0%）</option>
+              <option value="10" ${src && src.taxRate == 10  ? 'selected' : ''}>課税 10%</option>
+              <option value="8"  ${src && src.taxRate == 8   ? 'selected' : ''}>課税 8%（軽減）</option>
+            </select>
+          </div>
+          <div class="receipt-scan-area">
+            <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
+              📷 レシートから読み込む
+            </button>
+            <label class="btn btn-receipt-file" id="receipt-file-label" title="ファイルから選択">
+              🖼️
+              <input type="file" id="receipt-file-input" accept="image/*" style="display:none">
+            </label>
+            <div id="scan-result" class="scan-result" style="display:none"></div>
+          </div>
+        </div>
+      </details>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="modal-cancel">キャンセル</button>
@@ -476,6 +483,11 @@ function openTxModal(id, template) {
   document.getElementById('tx-modal').style.display = 'flex';
   // タイプボタンによるカテゴリ表示切替
   updateCatGroups();
+  // 金額フィールドにオートフォーカス
+  setTimeout(() => {
+    const amountInput = document.getElementById('tx-amount');
+    if (amountInput) amountInput.focus();
+  }, 80);
 }
 
 function bindTxModal() {
@@ -499,6 +511,14 @@ function bindTxModal() {
 
   // 保存
   on('modal-save', 'click', saveTxFromModal);
+
+  // Enterキーで保存（テキスト入力中）
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey && e.target.tagName !== 'SELECT' && e.target.tagName !== 'BUTTON') {
+      e.preventDefault();
+      saveTxFromModal();
+    }
+  });
 
   // クイックカテゴリ追加
   on('btn-quick-cat', 'click', () => {
@@ -1948,6 +1968,10 @@ function initApp() {
       if (navigator.vibrate) navigator.vibrate(10);
     });
   });
+
+  // グローバルFAB（どのページからでも取引追加）
+  const fab = document.getElementById('global-fab');
+  if (fab) fab.addEventListener('click', () => openTxModal(null));
 
   // 初期ページ描画
   navigate('dashboard');
