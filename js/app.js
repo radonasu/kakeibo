@@ -716,6 +716,8 @@ function saveTxFromModal() {
   // 一覧に月が合わせてあることを確認
   appState.month = date.slice(0, 7);
   renderCurrentPage();
+  // 予算アラートチェック
+  checkBudgetAlerts(appState.month);
 }
 
 // ============================================================
@@ -1340,6 +1342,12 @@ CREATE POLICY "own_data" ON household_data
   <p style="font-size:12px;color:var(--text-muted);margin-top:10px">💡 インストール後はオフラインでも使用できます。データはこのデバイスに保存されます。</p>
 </div>
 
+<div class="card">
+  <h3 class="card-title">🔔 予算アラート通知</h3>
+  <p class="hint" style="margin-bottom:12px">予算の80%到達・超過時にブラウザ通知でお知らせします。</p>
+  <div id="notif-status-area"></div>
+</div>
+
 <div class="card danger-zone">
   <h3 class="card-title">危険ゾーン</h3>
   <p class="hint">現在のアカウントのデータをすべて削除します。この操作は元に戻せません。</p>
@@ -1690,6 +1698,51 @@ function bindSettings() {
       }
     });
   });
+
+  // ── 予算アラート通知 ─────────────────────────────────────
+  const notifArea = document.getElementById('notif-status-area');
+  if (notifArea) {
+    function renderNotifStatus() {
+      if (!('Notification' in window)) {
+        notifArea.innerHTML = '<p class="hint">このブラウザは通知に対応していません</p>';
+        return;
+      }
+      const perm    = Notification.permission;
+      const enabled = isNotifEnabled();
+      let html = '';
+      if (perm === 'granted') {
+        html = `<div class="notif-row">
+          <span class="notif-badge notif-granted">✅ 通知が許可されています</span>
+          <label class="notif-toggle-label">
+            <input type="checkbox" id="notif-toggle" ${enabled ? 'checked' : ''}>
+            <span>予算アラートを有効にする</span>
+          </label>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="btn-test-notif" style="margin-top:8px">テスト通知を送る</button>`;
+      } else if (perm === 'denied') {
+        html = '<p class="hint" style="color:var(--expense)">❌ 通知がブロックされています。ブラウザの設定から通知を許可してください。</p>';
+      } else {
+        html = `<p class="hint" style="margin-bottom:10px">通知を許可すると、予算超過時に自動でお知らせします。</p>
+          <button class="btn btn-primary btn-sm" id="btn-request-notif">🔔 通知を許可する</button>`;
+      }
+      notifArea.innerHTML = html;
+
+      const toggle = document.getElementById('notif-toggle');
+      if (toggle) toggle.addEventListener('change', () => setNotifEnabled(toggle.checked));
+
+      const reqBtn = document.getElementById('btn-request-notif');
+      if (reqBtn) reqBtn.addEventListener('click', async () => {
+        await requestNotifPermission();
+        renderNotifStatus();
+      });
+
+      const testBtn = document.getElementById('btn-test-notif');
+      if (testBtn) testBtn.addEventListener('click', () => {
+        sendBudgetNotif('🔔 テスト通知', '予算アラートが正常に動作しています！');
+      });
+    }
+    renderNotifStatus();
+  }
 }
 
 // ============================================================
@@ -2045,6 +2098,82 @@ function translateAuthError(msg) {
 }
 
 // ============================================================
+// 予算アラート（Notification API）
+// ============================================================
+const NOTIF_ENABLED_KEY = 'kakeibo_notif_enabled';
+const NOTIF_SENT_PREFIX = 'kakeibo_notif_';
+
+function isNotifEnabled() {
+  return localStorage.getItem(NOTIF_ENABLED_KEY) !== 'false';
+}
+function setNotifEnabled(val) {
+  localStorage.setItem(NOTIF_ENABLED_KEY, val ? 'true' : 'false');
+}
+function _notifSentKey(month, catId, level) {
+  return `${NOTIF_SENT_PREFIX}${month}_${catId}_${level}`;
+}
+function _wasNotifSent(month, catId, level) {
+  return !!localStorage.getItem(_notifSentKey(month, catId, level));
+}
+function _markNotifSent(month, catId, level) {
+  localStorage.setItem(_notifSentKey(month, catId, level), '1');
+}
+
+async function requestNotifPermission() {
+  if (!('Notification' in window)) return 'unsupported';
+  if (Notification.permission === 'granted') return 'granted';
+  return await Notification.requestPermission();
+}
+
+function sendBudgetNotif(title, body) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    new Notification(title, {
+      body,
+      icon: './icons/icon-192.png',
+      badge: './icons/icon-192.png',
+      tag: 'kakeibo-budget-alert',
+    });
+  } catch (e) {
+    console.warn('通知送信失敗:', e);
+  }
+}
+
+function checkBudgetAlerts(month) {
+  if (!isNotifEnabled()) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const targetMonth = month || appState.month;
+  const txs     = getTransactionsByMonth(targetMonth);
+  const budgets = appData.budgets || {};
+  appData.categories
+    .filter(c => c.type === 'expense' && budgets[c.id] > 0)
+    .forEach(c => {
+      const budget = budgets[c.id];
+      const spent  = txs
+        .filter(t => t.categoryId === c.id && t.type === 'expense')
+        .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+      const pct = spent / budget * 100;
+      if (spent > budget) {
+        if (!_wasNotifSent(targetMonth, c.id, 'over')) {
+          _markNotifSent(targetMonth, c.id, 'over');
+          sendBudgetNotif(
+            `⚠️ 予算超過: ${c.name}`,
+            `今月の${c.name}が予算を超えました\n支出: ${formatMoney(spent)} / 予算: ${formatMoney(budget)}`
+          );
+        }
+      } else if (pct >= 80) {
+        if (!_wasNotifSent(targetMonth, c.id, 'warn')) {
+          _markNotifSent(targetMonth, c.id, 'warn');
+          sendBudgetNotif(
+            `📊 予算注意: ${c.name}`,
+            `今月の${c.name}が予算の${Math.round(pct)}%に達しました\n支出: ${formatMoney(spent)} / 予算: ${formatMoney(budget)}`
+          );
+        }
+      }
+    });
+}
+
+// ============================================================
 // アプリ初期化
 // ============================================================
 function initApp() {
@@ -2118,6 +2247,9 @@ function initApp() {
 
   // クラウド同期初期化（非同期・描画後に実行）
   if (typeof initSync === 'function') initSync();
+
+  // 起動時予算アラートチェック（1秒後、描画安定後）
+  setTimeout(() => checkBudgetAlerts(appState.month), 1000);
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
