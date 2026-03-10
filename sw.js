@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.7'; // v5.7: Gemini Vision API移行
+const CACHE_NAME = 'kakeibo-v5.8'; // v5.8: マイクロインタラクション
 const ASSETS = [
   './index.html',
   './css/style.css',

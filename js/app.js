@@ -58,6 +58,36 @@ function updateSidebarTitle() {
   if (mob) mob.textContent = appData.settings.familyName;
 }
 
+// ── モーダルアニメーションヘルパー ─────────────────────────
+function showModal(el) {
+  if (typeof el === 'string') el = document.getElementById(el);
+  if (!el) return;
+  el.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('modal-is-open')));
+}
+function hideModal(el) {
+  if (typeof el === 'string') el = document.getElementById(el);
+  if (!el) return;
+  el.classList.remove('modal-is-open');
+  el.style.display = 'none';
+}
+
+// ── 数値カウントアップ ──────────────────────────────────────
+function animateCountUp(el, target) {
+  const duration = 550;
+  const start = performance.now();
+  const isNeg = target < 0;
+  const abs = Math.abs(target);
+  const update = now => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = Math.round(abs * eased);
+    el.textContent = '¥' + (isNeg ? '-' : '') + val.toLocaleString('ja-JP');
+    if (t < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
 // ── ナビゲーション ─────────────────────────────────────────
 function navigate(page) {
   appState.page = page;
@@ -70,6 +100,10 @@ function navigate(page) {
     el.classList.toggle('active', el.dataset.page === page);
   });
   renderCurrentPage();
+  // ページ遷移フェードイン
+  const main = document.getElementById('main-content');
+  main.classList.remove('page-enter');
+  requestAnimationFrame(() => requestAnimationFrame(() => main.classList.add('page-enter')));
   // モバイルサイドバーを閉じる
   document.getElementById('sidebar').classList.remove('open');
 }
@@ -169,17 +203,17 @@ function renderDashboard() {
 <div class="summary-cards">
   <div class="card summary-card income">
     <div class="summary-label">今月の収入</div>
-    <div class="summary-amount">${formatMoney(income)}</div>
+    <div class="summary-amount js-countup" data-value="${income}">${formatMoney(income)}</div>
     ${diffSign(income, prevIncome)}
   </div>
   <div class="card summary-card expense">
     <div class="summary-label">今月の支出</div>
-    <div class="summary-amount">${formatMoney(expense)}</div>
+    <div class="summary-amount js-countup" data-value="${expense}">${formatMoney(expense)}</div>
     ${diffSign(expense, prevExpense)}
   </div>
   <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'}">
     <div class="summary-label">今月の残高</div>
-    <div class="summary-amount">${formatMoney(balance)}</div>
+    <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
   </div>
 </div>
 
@@ -220,6 +254,10 @@ function bindDashboard() {
   if (sel) sel.addEventListener('change', e => {
     appState.month = e.target.value;
     renderCurrentPage();
+  });
+  // サマリーカード数値カウントアップ
+  document.querySelectorAll('.js-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
   });
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
@@ -494,7 +532,7 @@ function openTxModal(id, template) {
   if (existing) existing.remove();
   document.getElementById('main-content').insertAdjacentHTML('beforeend', renderTxModal());
   bindTxModal();
-  document.getElementById('tx-modal').style.display = 'flex';
+  showModal('tx-modal');
   // タイプボタンによるカテゴリ表示切替
   updateCatGroups();
   // 初期サジェスト（編集・テンプレート時はカテゴリが選択済みなので即反映）
@@ -647,7 +685,7 @@ function updateMemoSuggestions() {
 
 function closeTxModal() {
   const modal = document.getElementById('tx-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) hideModal(modal);
   appState.editingTxId = null;
 }
 
@@ -913,11 +951,11 @@ function bindCategories() {
       document.getElementById('cat-color').value = '#ef4444';
       updateSwatchSelection('#ef4444');
     }
-    modal.style.display = 'flex';
+    showModal(modal);
   }
 
   function closeCatModal() {
-    document.getElementById('cat-modal').style.display = 'none';
+    hideModal('cat-modal');
     editingCatId = null;
   }
 
@@ -1487,11 +1525,11 @@ function bindSettings() {
       document.getElementById('tpl-memo').value     = '';
       setTplTypeBtn('expense');
     }
-    document.getElementById('tpl-modal').style.display = 'flex';
+    showModal('tpl-modal');
   }
 
   function closeTplModal() {
-    document.getElementById('tpl-modal').style.display = 'none';
+    hideModal('tpl-modal');
     editingTplId = null;
   }
 
@@ -1603,11 +1641,11 @@ function bindSettings() {
       document.getElementById('mem-color').value = '#3b82f6';
       updateMemSwatchSel('#3b82f6');
     }
-    modal.style.display = 'flex';
+    showModal(modal);
   }
 
   function closeMemModal() {
-    document.getElementById('mem-modal').style.display = 'none';
+    hideModal('mem-modal');
     editingMemId = null;
   }
 
@@ -2059,6 +2097,21 @@ function initApp() {
   // グローバルFAB（どのページからでも取引追加）
   const fab = document.getElementById('global-fab');
   if (fab) fab.addEventListener('click', () => openTxModal(null));
+
+  // リップルエフェクト（ボタン・ナビ）
+  document.addEventListener('click', e => {
+    const target = e.target.closest('.btn, .nav-item, .bottom-nav-item');
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    const wave = document.createElement('span');
+    wave.className = 'ripple-wave';
+    wave.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+    target.appendChild(wave);
+    wave.addEventListener('animationend', () => wave.remove());
+  });
 
   // 初期ページ描画
   navigate('dashboard');

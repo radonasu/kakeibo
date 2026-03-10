@@ -1652,3 +1652,84 @@ body {
 [data-theme="dark"] .btn-ghost { background: var(--surface-2); color: var(--text); }
 [data-theme="dark"] .btn-ghost:hover { background: #1e2d3d; }
 [data-theme="dark"] .budget-item { background: var(--surface-2); }
+
+/* ============================================================
+   マイクロインタラクション (v5.8)
+   ============================================================ */
+
+/* ── ページ遷移フェードイン ── */
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: page-fade-in .22s cubic-bezier(.4,0,.2,1) both; }
+
+/* ── カードホバーリフト ── */
+.card { transition: box-shadow .2s ease, transform .2s ease; }
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.summary-card { transition: box-shadow .25s ease, transform .25s ease; }
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 44px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1);
+}
+
+/* ── モーダルアニメーション ── */
+.modal-overlay { opacity: 0; transition: opacity .18s ease; }
+.modal-overlay.modal-is-open { opacity: 1; }
+.modal-overlay .modal {
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1), opacity .18s ease;
+}
+.modal-overlay.modal-is-open .modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+@media (max-width: 480px) {
+  .modal-overlay .modal { transform: translateY(40px) scale(1); }
+  .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(1); }
+}
+
+/* ── テーブル行ストッガード ── */
+@keyframes row-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.tx-table tbody tr { animation: row-in .18s ease both; }
+.tx-table tbody tr:nth-child(2)  { animation-delay: .04s; }
+.tx-table tbody tr:nth-child(3)  { animation-delay: .08s; }
+.tx-table tbody tr:nth-child(4)  { animation-delay: .12s; }
+.tx-table tbody tr:nth-child(5)  { animation-delay: .16s; }
+.tx-table tbody tr:nth-child(6)  { animation-delay: .20s; }
+.tx-table tbody tr:nth-child(7)  { animation-delay: .24s; }
+.tx-table tbody tr:nth-child(8)  { animation-delay: .28s; }
+.tx-table tbody tr:nth-child(9)  { animation-delay: .32s; }
+.tx-table tbody tr:nth-child(10) { animation-delay: .36s; }
+
+/* ── リップルエフェクト ── */
+.btn { position: relative; overflow: hidden; }
+.nav-item { overflow: hidden; }
+.bottom-nav-item { overflow: hidden; }
+.ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  transform: scale(0);
+  animation: ripple-anim .55s linear;
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+[data-theme="dark"] .ripple-wave { background: rgba(255,255,255,.2); }
+
+/* ── ボトムナビ アクティブアイコン バウンス ── */
+@keyframes nav-icon-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.bottom-nav-item.active .bottom-nav-icon {
+  display: inline-block;
+  animation: nav-icon-pop .3s cubic-bezier(.34,1.56,.64,1) both;
+}
