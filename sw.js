@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.6.0'; // v5.6.0: メモサジェスト追加
+const CACHE_NAME = 'kakeibo-v5.7'; // v5.7: Gemini Vision API移行
 const ASSETS = [
   './index.html',
   './css/style.css',
@@ -45,7 +45,7 @@ self.addEventListener('activate', event => {
 // フェッチ：キャッシュ優先（オフライン動作）
 self.addEventListener('fetch', event => {
   // APIリクエストはキャッシュしない
-  if (event.request.url.includes('api.anthropic.com')) return;
+  if (event.request.url.includes('workers.dev')) return;   // Gemini proxy
   if (event.request.url.includes('supabase.co')) return;
 
   event.respondWith(

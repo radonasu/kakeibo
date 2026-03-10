@@ -1032,18 +1032,18 @@ function renderSettings() {
 <div class="card">
   <h3 class="card-title">📷 レシート読み込み設定</h3>
   <div class="form-group">
-    <label>Claude API キー</label>
+    <label>Gemini API キー</label>
     <div class="api-key-row">
-      <input type="password" id="set-api-key" value="${esc2(s.claudeApiKey || '')}" placeholder="sk-ant-api03-..." autocomplete="off">
+      <input type="password" id="set-api-key" value="${esc2(s.geminiApiKey || '')}" placeholder="AIza..." autocomplete="off">
       <button class="btn btn-ghost btn-sm" id="toggle-api-key">表示</button>
     </div>
     <small class="hint">
-      <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>
-      で取得できます。このブラウザの localStorage にのみ保存されます。
+      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
+      で無料で取得できます（1日1,000回まで無料）。このブラウザの localStorage にのみ保存されます。
     </small>
   </div>
   <button class="btn btn-primary" id="save-api-key">APIキーを保存</button>
-  ${s.claudeApiKey ? '<span class="api-key-status set">✅ 設定済み</span>' : '<span class="api-key-status unset">未設定</span>'}
+  ${s.geminiApiKey ? '<span class="api-key-status set">✅ 設定済み</span>' : '<span class="api-key-status unset">未設定</span>'}
 </div>
 
 <div class="card">
@@ -1409,7 +1409,7 @@ function bindSettings() {
   // APIキー保存
   on('save-api-key', 'click', () => {
     const key = document.getElementById('set-api-key').value.trim();
-    updateSettings({ claudeApiKey: key });
+    updateSettings({ geminiApiKey: key });
     renderCurrentPage(); // ステータス表示を更新
     alert(key ? 'APIキーを保存しました' : 'APIキーを削除しました');
   });
@@ -1684,12 +1684,12 @@ function monthSelector(id, value) {
 }
 
 // ============================================================
-// レシートスキャン（Claude Vision API）
+// レシートスキャン（Gemini Vision API via Cloudflare Proxy）
 // ============================================================
 
 function checkApiKey() {
-  if (!appData.settings.claudeApiKey) {
-    if (confirm('Claude APIキーが設定されていません。\n設定画面でAPIキーを入力してください。\n\n設定画面を開きますか？')) {
+  if (!appData.settings.geminiApiKey) {
+    if (confirm('Gemini APIキーが設定されていません。\n設定画面でAPIキーを入力してください。\n\n設定画面を開きますか？')) {
       closeTxModal();
       navigate('settings');
     }
@@ -1711,7 +1711,7 @@ async function processReceiptImage(file) {
   try {
     const base64   = await fileToBase64(file);
     const mimeType = file.type || 'image/jpeg';
-    const data     = await callClaudeVision(base64, mimeType);
+    const data     = await callGeminiVision(base64, mimeType);
 
     // フォームに反映
     if (data.date)   setFormValue('tx-date',   data.date);
@@ -1753,10 +1753,15 @@ function fileToBase64(file) {
   });
 }
 
-async function callClaudeVision(base64, mimeType) {
-  const apiKey = appData.settings.claudeApiKey;
+async function callGeminiVision(base64, mimeType) {
+  const apiKey  = appData.settings.geminiApiKey;
+  const proxyUrl = APP_CONFIG.geminiProxy?.url;
 
-  const prompt = `このレシート・領収書の画像から情報を抽出し、必ずJSON形式のみで回答してください（前後の説明文は不要です）。
+  if (!proxyUrl) {
+    throw new Error('Geminiプロキシが未設定です。管理者に連絡してください。');
+  }
+
+  const prompt = `このレシート・領収書の画像から情報を抽出し、JSON形式で回答してください。
 
 {
   "date": "YYYY-MM-DD（日付が読み取れない場合は今日の日付 ${todayStr()}）",
@@ -1765,42 +1770,71 @@ async function callClaudeVision(base64, mimeType) {
   "taxRate": 消費税率（10・8・0のいずれか。軽減税率の場合は8）
 }`;
 
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
+  // Gemini API ペイロード
+  const payload = {
+    contents: [{
+      parts: [
+        {
+          inline_data: {
+            mime_type: mimeType,
+            data: base64,
+          },
+        },
+        { text: prompt },
+      ],
+    }],
+    generationConfig: {
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: 'object',
+        properties: {
+          date:      { type: 'string',  description: 'YYYY-MM-DD形式の日付' },
+          amount:    { type: 'number',  description: '税込み合計金額' },
+          storeName: { type: 'string',  description: '店名' },
+          taxRate:   { type: 'number',  description: '消費税率（10, 8, 0）' },
+        },
+        required: ['date', 'amount', 'storeName', 'taxRate'],
+      },
     },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 256,
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'image', source: { type: 'base64', media_type: mimeType, data: base64 } },
-          { type: 'text',  text: prompt },
-        ],
-      }],
-    }),
+  };
+
+  // Cloudflare Proxy 経由で送信
+  const resp = await fetch(proxyUrl + '/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ apiKey, payload }),
   });
 
   if (!resp.ok) {
     let msg = `HTTPエラー ${resp.status}`;
-    try { const e = await resp.json(); msg = e.error?.message || msg; } catch (_) {}
+    try {
+      const e = await resp.json();
+      msg = e.error?.message || e.error || msg;
+    } catch (_) {}
     throw new Error(msg);
   }
 
   const body = await resp.json();
-  const text = body.content?.[0]?.text || '';
 
-  // JSON部分だけ抽出
-  const m = text.match(/\{[\s\S]*?\}/);
-  if (!m) throw new Error('レスポンスの解析に失敗しました');
+  // Gemini レスポンス解析
+  const text = body.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!text) {
+    throw new Error('レスポンスが空です。画像を確認してください。');
+  }
 
-  const parsed = JSON.parse(m[0]);
+  // responseMimeType: application/json を指定しているためテキスト全体がJSON
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (_) {
+    // フォールバック：JSON部分を正規表現で抽出
+    const m = text.match(/\{[\s\S]*?\}/);
+    if (!m) throw new Error('レスポンスの解析に失敗しました');
+    parsed = JSON.parse(m[0]);
+  }
+
   if (!parsed.date) parsed.date = todayStr();
+  if (typeof parsed.amount === 'string') parsed.amount = Number(parsed.amount.replace(/,/g, ''));
   return parsed;
 }
 

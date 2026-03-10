@@ -36,7 +36,7 @@ const DEFAULT_SETTINGS = {
   familyName: 'わが家の家計簿',
   fiscalYearStart: 1,
   defaultMemberId: 'm1',
-  claudeApiKey: '',
+  geminiApiKey: '',
   syncConfig: { url: '', anonKey: '' },
 };
 
@@ -137,7 +137,9 @@ function loadData() {
     if (!raw) return createDefaultData();
     const data = JSON.parse(raw);
     if (!data.settings) data.settings = { ...DEFAULT_SETTINGS };
-    if (!data.settings.claudeApiKey) data.settings.claudeApiKey = '';
+    // 旧Claude APIキー → Gemini APIキーへマイグレーション
+    if (data.settings.claudeApiKey !== undefined) delete data.settings.claudeApiKey;
+    if (!data.settings.geminiApiKey) data.settings.geminiApiKey = '';
     if (!data.settings.syncConfig)   data.settings.syncConfig   = { url: '', anonKey: '' };
     // 旧形式マイグレーション（roomCode/enabled削除）
     if (data.settings.syncConfig.roomCode !== undefined) delete data.settings.syncConfig.roomCode;

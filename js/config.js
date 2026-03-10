@@ -19,9 +19,16 @@ const APP_CONFIG = {
     anonKey: 'sb_publishable_fxo0mVQTq1fZhdS1RLWgDQ_-v2REvfn',
   },
 
+  // ── Gemini API プロキシ設定 ──────────────────────────────
+  // Cloudflare Workers にデプロイしたプロキシのURL
+  // デプロイ手順は cloudflare-worker/worker.js を参照
+  geminiProxy: {
+    url: '',  // 例: 'https://kakeibo-gemini-proxy.xxxxx.workers.dev'
+  },
+
   // ── アプリ設定 ──────────────────────────────────────────
   app: {
     name: '家族家計簿',
-    version: '5.2',
+    version: '5.7',
   },
 };
