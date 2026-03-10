@@ -1027,8 +1027,9 @@ function renderSettings() {
   const templateRows = templates.map(t => {
     const cat = getCategoryById(t.categoryId);
     const isIncome = t.type === 'income';
+    const recurBadge = t.isRecurring ? `<span class="badge-recurring">🔁 ${t.recurringDay}日</span>` : '';
     return `<tr>
-      <td>${esc2(t.name)}</td>
+      <td>${esc2(t.name)}${recurBadge}</td>
       <td class="${isIncome ? 'income' : 'expense'}">${isIncome ? '収入' : '支出'}</td>
       <td>${cat ? `<span class="cat-badge" style="background:${cat.color}20;color:${cat.color}">${esc2(cat.name)}</span>` : '—'}</td>
       <td class="amount ${isIncome ? 'income' : 'expense'}">${t.amount ? formatMoney(t.amount) : '—'}</td>
@@ -1284,6 +1285,21 @@ CREATE POLICY "own_data" ON household_data
         <label>摘要（メモ）</label>
         <input type="text" id="tpl-memo" placeholder="例: ○○不動産">
       </div>
+      <div class="form-group">
+        <label class="recurring-toggle-label">
+          <input type="checkbox" id="tpl-recurring">
+          <span>毎月自動追加する（繰り返し取引）</span>
+        </label>
+      </div>
+      <div id="tpl-recurring-day-group" class="form-group recurring-day-group" style="display:none">
+        <label>追加日</label>
+        <div class="recurring-day-row">
+          <span class="recurring-day-prefix">毎月</span>
+          <input type="number" id="tpl-recurring-day" min="1" max="31" value="27" class="recurring-day-input">
+          <span class="recurring-day-suffix">日に追加</span>
+        </div>
+        <small class="hint">月末より大きい日付は月末日に自動調整されます</small>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="tpl-modal-cancel">キャンセル</button>
@@ -1514,26 +1530,39 @@ function bindSettings() {
     if (id) {
       const tpl = (appData.templates || []).find(t => t.id === id);
       if (tpl) {
-        document.getElementById('tpl-name').value     = tpl.name || '';
-        document.getElementById('tpl-type').value     = tpl.type || 'expense';
-        document.getElementById('tpl-category').value = tpl.categoryId || '';
-        document.getElementById('tpl-amount').value   = tpl.amount || '';
-        document.getElementById('tpl-payment').value  = tpl.paymentMethod || '現金';
-        document.getElementById('tpl-tax').value      = tpl.taxRate != null ? String(tpl.taxRate) : '0';
-        document.getElementById('tpl-memo').value     = tpl.memo || '';
+        document.getElementById('tpl-name').value         = tpl.name || '';
+        document.getElementById('tpl-type').value         = tpl.type || 'expense';
+        document.getElementById('tpl-category').value     = tpl.categoryId || '';
+        document.getElementById('tpl-amount').value       = tpl.amount || '';
+        document.getElementById('tpl-payment').value      = tpl.paymentMethod || '現金';
+        document.getElementById('tpl-tax').value          = tpl.taxRate != null ? String(tpl.taxRate) : '0';
+        document.getElementById('tpl-memo').value         = tpl.memo || '';
+        document.getElementById('tpl-recurring').checked  = !!tpl.isRecurring;
+        document.getElementById('tpl-recurring-day').value = tpl.recurringDay || 27;
+        document.getElementById('tpl-recurring-day-group').style.display = tpl.isRecurring ? '' : 'none';
         setTplTypeBtn(tpl.type || 'expense');
       }
     } else {
-      document.getElementById('tpl-name').value     = '';
-      document.getElementById('tpl-type').value     = 'expense';
-      document.getElementById('tpl-category').value = '';
-      document.getElementById('tpl-amount').value   = '';
-      document.getElementById('tpl-payment').value  = '現金';
-      document.getElementById('tpl-tax').value      = '0';
-      document.getElementById('tpl-memo').value     = '';
+      document.getElementById('tpl-name').value         = '';
+      document.getElementById('tpl-type').value         = 'expense';
+      document.getElementById('tpl-category').value     = '';
+      document.getElementById('tpl-amount').value       = '';
+      document.getElementById('tpl-payment').value      = '現金';
+      document.getElementById('tpl-tax').value          = '0';
+      document.getElementById('tpl-memo').value         = '';
+      document.getElementById('tpl-recurring').checked  = false;
+      document.getElementById('tpl-recurring-day').value = 27;
+      document.getElementById('tpl-recurring-day-group').style.display = 'none';
       setTplTypeBtn('expense');
     }
     showModal('tpl-modal');
+    // チェックボックスの連動
+    const recurCb = document.getElementById('tpl-recurring');
+    if (recurCb) {
+      recurCb.addEventListener('change', () => {
+        document.getElementById('tpl-recurring-day-group').style.display = recurCb.checked ? '' : 'none';
+      });
+    }
   }
 
   function closeTplModal() {
@@ -1568,6 +1597,8 @@ function bindSettings() {
   on('tpl-modal-save', 'click', () => {
     const name = document.getElementById('tpl-name').value.trim();
     if (!name) { alert('テンプレート名を入力してください'); return; }
+    const isRecurring = document.getElementById('tpl-recurring').checked;
+    const recurringDay = Number(document.getElementById('tpl-recurring-day').value) || 27;
     const fields = {
       name,
       type:          document.getElementById('tpl-type').value,
@@ -1576,6 +1607,10 @@ function bindSettings() {
       paymentMethod: document.getElementById('tpl-payment').value,
       taxRate:       Number(document.getElementById('tpl-tax').value),
       memo:          document.getElementById('tpl-memo').value.trim(),
+      isRecurring,
+      recurringDay:  isRecurring ? recurringDay : null,
+      // 繰り返し設定が外れた場合はlastAppliedをリセット
+      lastApplied:   isRecurring ? ((appData.templates || []).find(t => t.id === editingTplId)?.lastApplied || null) : null,
     };
     if (editingTplId) updateTemplate(editingTplId, fields);
     else addTemplate(fields);
@@ -2098,6 +2133,66 @@ function translateAuthError(msg) {
 }
 
 // ============================================================
+// トースト通知
+// ============================================================
+function showToast(message, duration) {
+  duration = duration || 3000;
+  const existing = document.getElementById('kk-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.id = 'kk-toast';
+  toast.className = 'kk-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('kk-toast-show')));
+  setTimeout(() => {
+    toast.classList.remove('kk-toast-show');
+    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 400);
+  }, duration);
+}
+
+// ============================================================
+// 繰り返し取引の自動適用
+// ============================================================
+function applyRecurringTransactions() {
+  const ym = currentYearMonth();
+  const templates = appData.templates || [];
+  let count = 0;
+
+  templates.forEach(tpl => {
+    if (!tpl.isRecurring || !tpl.recurringDay) return;
+    if (tpl.lastApplied === ym) return; // 当月は適用済み
+
+    const [year, month] = ym.split('-').map(Number);
+    // 月末より大きい日付は月末日にクランプ
+    const lastDay = new Date(year, month, 0).getDate();
+    const day = Math.min(tpl.recurringDay, lastDay);
+    const date = `${ym}-${String(day).padStart(2, '0')}`;
+
+    addTransaction({
+      type:              tpl.type,
+      date,
+      amount:            tpl.amount,
+      categoryId:        tpl.categoryId,
+      paymentMethod:     tpl.paymentMethod,
+      memberId:          tpl.memberId || appData.settings.defaultMemberId || '',
+      taxRate:           tpl.taxRate || 0,
+      memo:              tpl.memo || '',
+      recurringTemplateId: tpl.id,
+    });
+
+    // 適用済みマークを更新
+    updateTemplate(tpl.id, { lastApplied: ym });
+    count++;
+  });
+
+  if (count > 0) {
+    setTimeout(() => showToast(`🔁 ${count}件の繰り返し取引を自動追加しました`), 1200);
+  }
+  return count;
+}
+
+// ============================================================
 // 予算アラート（Notification API）
 // ============================================================
 const NOTIF_ENABLED_KEY = 'kakeibo_notif_enabled';
@@ -2247,6 +2342,9 @@ function initApp() {
 
   // クラウド同期初期化（非同期・描画後に実行）
   if (typeof initSync === 'function') initSync();
+
+  // 繰り返し取引の自動適用（描画前に実行、当月未適用分を追加）
+  applyRecurringTransactions();
 
   // 起動時予算アラートチェック（1秒後、描画安定後）
   setTimeout(() => checkBudgetAlerts(appState.month), 1000);

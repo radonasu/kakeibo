@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.10'; // v5.10: タイポグラフィ統一（CSS変数ベースのタイプスケール）
+const CACHE_NAME = 'kakeibo-v5.11'; // v5.11: 繰り返し取引（月次固定費の自動追加・トースト通知）
 const ASSETS = [
   './index.html',
   './css/style.css',
