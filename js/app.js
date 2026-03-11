@@ -2362,56 +2362,90 @@ function showMultiReceiptList(receipts) {
 
   if (!multiList) return;
 
-  const cards = receipts.map((r, i) => {
-    const catIcon = CAT_ICONS[r.category] || '📌';
+  // 編集用データを保持（元のreceiptsを変更しない）
+  const editData = receipts.map(r => ({ ...r }));
+
+  const expenseCats = appData.categories.filter(c => c.type === 'expense');
+
+  const cards = editData.map((r, i) => {
+    const catOptions = expenseCats.map(c => {
+      const sel = c.name === r.category ? ' selected' : '';
+      const icon = CAT_ICONS[c.name] || '📌';
+      return `<option value="${esc2(c.name)}"${sel}>${icon} ${esc2(c.name)}</option>`;
+    }).join('');
+
     return `<div class="multi-receipt-item" data-idx="${i}">
-      <div class="multi-receipt-info">
-        <span class="multi-receipt-store">${esc2(r.storeName || '店名不明')}</span>
-        <span class="multi-receipt-detail">${esc2(r.date)} ／ ¥${Number(r.amount || 0).toLocaleString('ja-JP')} ／ ${catIcon} ${esc2(r.category || '未分類')}</span>
+      <div class="mr-edit-form">
+        <div class="mr-edit-row">
+          <input type="text" class="mr-store" data-idx="${i}" value="${esc2(r.storeName || '')}" placeholder="店名">
+          <input type="number" class="mr-amount" data-idx="${i}" value="${r.amount || 0}" placeholder="金額" min="0">
+        </div>
+        <div class="mr-edit-row">
+          <input type="date" class="mr-date" data-idx="${i}" value="${esc2(r.date || todayStr())}">
+          <select class="mr-cat" data-idx="${i}">${catOptions}</select>
+        </div>
       </div>
       <div class="multi-receipt-actions">
         <button type="button" class="btn-mr-fill" data-idx="${i}">入力</button>
-        <button type="button" class="btn-mr-add" data-idx="${i}">追加</button>
+        <button type="button" class="btn-mr-add" data-idx="${i}">保存</button>
       </div>
     </div>`;
   }).join('');
 
   multiList.innerHTML = `
-    <button type="button" class="btn-mr-all">全て追加</button>
+    <button type="button" class="btn-mr-all">全て保存</button>
     ${cards}`;
   multiList.style.display = 'flex';
 
-  // イベントバインド
+  // フォーム変更を editData に同期
+  multiList.querySelectorAll('.mr-store').forEach(el => {
+    el.addEventListener('input', () => { editData[Number(el.dataset.idx)].storeName = el.value; });
+  });
+  multiList.querySelectorAll('.mr-amount').forEach(el => {
+    el.addEventListener('input', () => { editData[Number(el.dataset.idx)].amount = Number(el.value); });
+  });
+  multiList.querySelectorAll('.mr-date').forEach(el => {
+    el.addEventListener('input', () => { editData[Number(el.dataset.idx)].date = el.value; });
+  });
+  multiList.querySelectorAll('.mr-cat').forEach(el => {
+    el.addEventListener('change', () => { editData[Number(el.dataset.idx)].category = el.value; });
+  });
+
+  // 「入力」→ モーダルフォームに反映
   multiList.querySelectorAll('.btn-mr-fill').forEach(btn => {
     btn.addEventListener('click', () => {
       const idx = Number(btn.dataset.idx);
-      applySingleReceipt(receipts[idx]);
+      applySingleReceipt(editData[idx]);
       multiList.style.display = 'none';
     });
   });
 
+  // 「保存」→ 即座に取引追加
   multiList.querySelectorAll('.btn-mr-add').forEach(btn => {
     btn.addEventListener('click', () => {
       const idx  = Number(btn.dataset.idx);
       const item = btn.closest('.multi-receipt-item');
-      addReceiptAsTransaction(receipts[idx]);
+      addReceiptAsTransaction(editData[idx]);
       if (item) item.classList.add('added');
       btn.disabled = true;
       btn.textContent = '済';
     });
   });
 
+  // 「全て保存」
   multiList.querySelector('.btn-mr-all')?.addEventListener('click', () => {
-    receipts.forEach((r, i) => {
+    let count = 0;
+    editData.forEach((r, i) => {
       const item = multiList.querySelector(`.multi-receipt-item[data-idx="${i}"]`);
       if (item && !item.classList.contains('added')) {
         addReceiptAsTransaction(r);
         item.classList.add('added');
         const btn = item.querySelector('.btn-mr-add');
         if (btn) { btn.disabled = true; btn.textContent = '済'; }
+        count++;
       }
     });
-    showToast(`${receipts.length}件の取引を追加しました`);
+    if (count) showToast(`${count}件の取引を追加しました`);
   });
 }
 
