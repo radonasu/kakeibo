@@ -17,6 +17,7 @@
 | 11 | v5.15 | 機能 | 資産残高管理：貯蓄・投資・その他の口座を登録して残高を記録（addAsset/addAssetEntry CRUD）・純資産合計カード（数値カウントアップ・先月比）・純資産推移折れ線グラフ（12ヶ月・Chart.js）・口座カードに残高履歴3件表示・口座追加/編集モーダル・残高更新モーダル・サイドバーに「資産管理」ナビ追加 |
 | 12 | v5.16 | デザイン | スペーシング統一：:rootに--sp-1〜--sp-12の8pxグリッドベーススペーシング変数を追加・カード(22px→24px)・モーダル(18px→20/24px)・メインコンテンツ(28px→32px)・サイドバー・フィルターバー・予算グリッド・フォーム入力などの不揃いなpadding/gap値をCSS変数で統一・カードborderをrgba→var(--border)に変更(ダークモード自動対応)・:focus-visibleでキーボードナビアクセシビリティ向上・scroll-behavior:smooth追加 |
 | 13 | v5.17 | 機能 | 月次レポートPDF出力：レポートページに「📄 PDF出力」ボタン追加・doExportPDF()でA4年間収支レポートHTML生成（ヘッダー・年間サマリーカード3枚・月別収支表12ヶ月・支出カテゴリ内訳バーチャート上位8件）・ブラウザのprint→PDF保存で出力（追加ライブラリ不要・日本語完全対応） |
+| 14 | v5.18 | デザイン | コンポーネント洗練：:rootに--radius-btn/--radius-btn-sm/--radius-badge/--shadow-btn-baseを追加・全ボタンにsubtle base shadow統一・btn-dangerをセマンティックトークン（danger-bg/text/border）で再構築・btn-iconのタッチターゲット改善（32×32px flex center）・modal-closeを正方形ボタンに統一・入力フィールドとフィルターバーにホバー状態（border-strong）追加・type-toggleをセグメントコントロール風に刷新・diff/btn-preset/notif-badgeのradius変数化・ダークモード対応済 |
 
 ## 次スプリント候補
 
