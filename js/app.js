@@ -2414,9 +2414,13 @@ function showMultiReceiptList(receipts) {
   // 「入力」→ モーダルフォームに反映
   multiList.querySelectorAll('.btn-mr-fill').forEach(btn => {
     btn.addEventListener('click', () => {
-      const idx = Number(btn.dataset.idx);
+      const idx  = Number(btn.dataset.idx);
+      const item = btn.closest('.multi-receipt-item');
       applySingleReceipt(editData[idx]);
-      multiList.style.display = 'none';
+      // このアイテムだけ「入力済」にし、リストは残す
+      if (item) item.classList.add('added');
+      btn.disabled = true;
+      btn.textContent = '済';
     });
   });
 
@@ -3690,6 +3694,12 @@ function initApp() {
 
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
+
+  // ピンチズーム無効化（PWAアプリ固定表示）
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('gesturestart', e => e.preventDefault());
 }
 
 // ── サイドバー開閉（オーバーレイ管理込み） ──────────────

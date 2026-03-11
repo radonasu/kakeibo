@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.33'; // v5.33: モーダルフッター修正・ズーム無効化・複数レシート個別編集
+const CACHE_NAME = 'kakeibo-v5.34'; // v5.34: モーダル全画面化・ズーム完全無効・複数レシート入力修正
 const ASSETS = [
   './index.html',
   './css/style.css',
