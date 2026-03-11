@@ -19,6 +19,7 @@
 | 13 | v5.17 | 機能 | 月次レポートPDF出力：レポートページに「📄 PDF出力」ボタン追加・doExportPDF()でA4年間収支レポートHTML生成（ヘッダー・年間サマリーカード3枚・月別収支表12ヶ月・支出カテゴリ内訳バーチャート上位8件）・ブラウザのprint→PDF保存で出力（追加ライブラリ不要・日本語完全対応） |
 | 14 | v5.18 | デザイン | コンポーネント洗練：:rootに--radius-btn/--radius-btn-sm/--radius-badge/--shadow-btn-baseを追加・全ボタンにsubtle base shadow統一・btn-dangerをセマンティックトークン（danger-bg/text/border）で再構築・btn-iconのタッチターゲット改善（32×32px flex center）・modal-closeを正方形ボタンに統一・入力フィールドとフィルターバーにホバー状態（border-strong）追加・type-toggleをセグメントコントロール風に刷新・diff/btn-preset/notif-badgeのradius変数化・ダークモード対応済 |
 | 15 | v5.19 | 機能 | 複数通貨対応：USD/EUR/GBP/CNY/KRW/AUD/SGD 7通貨に対応・口座登録時に通貨を選択・外貨口座カードに通貨バッジ（🇺🇸 USD等）・残高を原貨幣＋円換算で二重表示（1 USD = ¥150.00）・getTotalNetWorth/getNetWorthAsOfでtoJPY変換（純資産集計を円統一）・純資産合計カードに「うち外貨資産」内訳表示・残高更新モーダルのラベルを通貨に合わせて動的変更・設定ページに「💱 為替レート設定」カード（手動入力・保存）・ダークモード対応 |
+| 16 | v5.20 | デザイン | データビジュアライゼーション改善：CSS変数(--text-muted, --border)からtick/grid色を動的取得しダークモード完全対応・ドーナツグラフ中央に合計金額表示（centerTextプラグイン）・パーセンテージ付きツールチップ・折れ線グラフにCanvas APIグラデーション塗り・棒グラフborderRadius拡大/hoverHighlight・全グラフツールチップスタイル統一（暗背景・Indigo枠・角丸）・アニメーション 600ms easeOutQuart |
 
 ## 次スプリント候補
 
