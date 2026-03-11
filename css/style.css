@@ -688,6 +688,43 @@ select:focus:not(:focus-visible) {
 .tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .empty { text-align: center; color: var(--text-muted); padding: 40px !important; }
 
+/* 全期間 月グループ行 (v5.29) */
+.tx-month-group-row td {
+  padding: 6px 14px;
+  background: var(--surface-2);
+  border-top: 2px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.tx-month-group-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tx-month-group-label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text);
+}
+.tx-month-group-summary {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+  font-size: var(--fs-sm);
+}
+.tx-month-group-count {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+}
+/* 全期間で検索ボタン */
+.tx-search-all-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+}
+
 /* 金額色 */
 .income  { color: var(--income); }
 .expense { color: var(--expense); }

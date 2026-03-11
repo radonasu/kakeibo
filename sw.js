@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.28'; // v5.28: レポートページ スティッキーセクションタブナビ（6セクションタブ・IntersectionObserver連動ハイライト・スムーズスクロール）
+const CACHE_NAME = 'kakeibo-v5.29'; // v5.29: 全期間横断検索（取引一覧に「📋 全期間」オプション追加・月グループ表示・「全期間で検索」ワンタップ切替）
 const ASSETS = [
   './index.html',
   './css/style.css',

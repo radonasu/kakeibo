@@ -341,12 +341,45 @@ function bindDashboard() {
 // ============================================================
 // 収支一覧
 // ============================================================
+
+// 取引一行HTML生成ヘルパー
+function renderTxRow(t) {
+  const cat = getCategoryById(t.categoryId);
+  const mem = getMemberById(t.memberId);
+  const isIncome = t.type === 'income';
+  return `<tr data-id="${t.id}">
+      <td>${formatDate(t.date)}</td>
+      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${cat ? esc2(cat.name) : '—'}</span></td>
+      <td class="memo-cell">${esc2(t.memo || '—')}</td>
+      <td>${esc2(t.paymentMethod || '—')}</td>
+      <td>${mem ? esc2(mem.name) : '—'}</td>
+      <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
+      <td class="actions">
+        <button class="btn-icon edit-tx" data-id="${t.id}" title="編集">✏️</button>
+        <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
+      </td>
+    </tr>`;
+}
+
+// 全期間対応月セレクター
+function txMonthSelector(value) {
+  const months = getAvailableMonths();
+  if (value !== 'all' && !months.includes(value)) months.unshift(value);
+  const allOpt = `<option value="all" ${value === 'all' ? 'selected' : ''}>📋 全期間</option>`;
+  const opts = months.map(m => {
+    const [y, mo] = m.split('-');
+    return `<option value="${m}" ${m === value ? 'selected' : ''}>${y}年${parseInt(mo)}月</option>`;
+  }).join('');
+  return `<select id="tx-month" class="month-sel">${allOpt}${opts}</select>`;
+}
+
 function renderTransactions() {
   const f = appState.txFilter;
+  const isAll = appState.month === 'all';
 
   let txs = appData.transactions.filter(t => {
     if (!t.date) return false;
-    if (!t.date.startsWith(appState.month)) return false;
+    if (!isAll && !t.date.startsWith(appState.month)) return false;
     if (f.category && t.categoryId !== f.category) return false;
     if (f.member && t.memberId !== f.member) return false;
     if (f.type && t.type !== f.type) return false;
@@ -371,23 +404,33 @@ function renderTransactions() {
   const memOptions = `<option value="">担当者: 全員</option>` +
     appData.members.map(m => `<option value="${m.id}" ${f.member === m.id ? 'selected' : ''}>${esc2(m.name)}</option>`).join('');
 
-  const rows = txs.map(t => {
-    const cat = getCategoryById(t.categoryId);
-    const mem = getMemberById(t.memberId);
-    const isIncome = t.type === 'income';
-    return `<tr data-id="${t.id}">
-      <td>${formatDate(t.date)}</td>
-      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${cat ? esc2(cat.name) : '—'}</span></td>
-      <td class="memo-cell">${esc2(t.memo || '—')}</td>
-      <td>${esc2(t.paymentMethod || '—')}</td>
-      <td>${mem ? esc2(mem.name) : '—'}</td>
-      <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
-      <td class="actions">
-        <button class="btn-icon edit-tx" data-id="${t.id}" title="編集">✏️</button>
-        <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
-      </td>
-    </tr>`;
-  }).join('');
+  // 行生成（全期間は月グループ分け）
+  let rows;
+  if (isAll && txs.length > 0) {
+    const groups = {};
+    txs.forEach(t => {
+      const ym = t.date.slice(0, 7);
+      if (!groups[ym]) groups[ym] = [];
+      groups[ym].push(t);
+    });
+    rows = Object.keys(groups).sort((a, b) => b.localeCompare(a)).map(ym => {
+      const [y, m] = ym.split('-');
+      const gi = calcTotal(groups[ym], 'income');
+      const ge = calcTotal(groups[ym], 'expense');
+      return `<tr class="tx-month-group-row">
+        <td colspan="7"><div class="tx-month-group-inner">
+          <span class="tx-month-group-label">${y}年${parseInt(m)}月</span>
+          <span class="tx-month-group-summary">
+            <span class="income">+${formatMoney(gi)}</span>
+            <span class="expense">-${formatMoney(ge)}</span>
+            <span class="tx-month-group-count">${groups[ym].length}件</span>
+          </span>
+        </div></td>
+      </tr>${groups[ym].map(t => renderTxRow(t)).join('')}`;
+    }).join('');
+  } else {
+    rows = txs.map(t => renderTxRow(t)).join('');
+  }
 
   // テンプレートクイックアクセスバー
   const templates = appData.templates || [];
@@ -403,6 +446,10 @@ function renderTransactions() {
   </div>
 </div>` : '';
 
+  const searchAllBtn = (!isAll && f.search)
+    ? `<button id="search-all-btn" class="btn btn-ghost tx-search-all-btn">全期間</button>`
+    : '';
+
   return `
 <div class="page-header">
   <h1 class="page-title">収支一覧</h1>
@@ -412,7 +459,7 @@ function renderTransactions() {
 ${templateBar}
 
 <div class="card filter-bar">
-  ${monthSelector('tx-month', appState.month)}
+  ${txMonthSelector(appState.month)}
   <select id="filter-cat">${catOptions}</select>
   <select id="filter-mem">${memOptions}</select>
   <select id="filter-type">
@@ -421,6 +468,7 @@ ${templateBar}
     <option value="expense" ${f.type === 'expense' ? 'selected' : ''}>支出のみ</option>
   </select>
   <input id="filter-search" type="search" placeholder="検索…" value="${esc2(f.search)}" class="filter-search">
+  ${searchAllBtn}
 </div>
 
 <div class="card summary-mini">
@@ -447,6 +495,8 @@ ${renderTxModal()}`;
 function bindTransactions() {
   // 月
   on('tx-month', 'change', e => { appState.month = e.target.value; renderCurrentPage(); });
+  // 全期間で検索ボタン
+  on('search-all-btn', 'click', () => { appState.month = 'all'; renderCurrentPage(); });
   // フィルター
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
