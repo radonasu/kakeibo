@@ -122,7 +122,8 @@ function renderCurrentPage() {
     case 'settings':     main.innerHTML = renderSettings(); bindSettings(); break;
     case 'assets':       main.innerHTML = renderAssets(); bindAssets(); break;
     case 'goals':        main.innerHTML = renderGoals(); bindGoals(); break;
-    case 'calendar':     main.innerHTML = renderCalendar(); bindCalendar(); break;  // v5.38
+    case 'calendar':       main.innerHTML = renderCalendar(); bindCalendar(); break;  // v5.38
+    case 'subscriptions':  main.innerHTML = renderSubscriptions(); bindSubscriptions(); break;  // v5.43
   }
 }
 
@@ -383,6 +384,38 @@ function renderDashboard() {
   </div>
 </div>` : '';
 
+  // サブスクウィジェット（v5.43）
+  const activeSubs = getSubscriptions().filter(s => s.isActive !== false);
+  const subTotal = calcMonthlySubTotal();
+  const upcomingSubs = [...activeSubs]
+    .sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b))
+    .slice(0, 3);
+  const subSection = activeSubs.length > 0 ? `
+<div class="card sub-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📱 サブスク管理</h3>
+    <button class="btn-link" onclick="navigate('subscriptions')">すべて見る →</button>
+  </div>
+  <div class="sub-widget-header">
+    <div class="sub-widget-total-label">月間合計</div>
+    <div class="sub-widget-total-amount js-countup" data-value="${subTotal}">${formatMoney(subTotal)}</div>
+  </div>
+  <div class="sub-widget-list">
+    ${upcomingSubs.map(s => {
+      const days = subDaysUntilBilling(s);
+      const urgentCls = days <= 3 ? 'sub-urgent' : days <= 7 ? 'sub-soon' : '';
+      return `<div class="sub-widget-item ${urgentCls}">
+        <div class="sub-widget-icon" style="background:${s.color || '#6366f1'}22;color:${s.color || '#6366f1'}">${s.emoji || '📱'}</div>
+        <div class="sub-widget-info">
+          <div class="sub-widget-name">${esc2(s.name)}</div>
+          <div class="sub-widget-next">${days === 0 ? '今日請求' : `${days}日後に請求`}</div>
+        </div>
+        <div class="sub-widget-amount">${formatMoney(s.cycle === 'yearly' ? s.amount : s.amount)}<span class="sub-cycle-badge">${s.cycle === 'yearly' ? '/年' : '/月'}</span></div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>` : '';
+
   // インサイトセクション（v5.40）
   const insights = generateInsights(appState.month);
   const insightSection = insights.length > 0 ? `
@@ -466,6 +499,8 @@ function renderDashboard() {
 </div>
 
 ${insightSection}
+
+${subSection}
 
 ${budgetSection}
 
@@ -4194,6 +4229,292 @@ function initSwipeGestures() {
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
+
+// ============================================================
+// サブスクリプション管理ページ (v5.43)
+// ============================================================
+
+function renderSubscriptions() {
+  const subs = getSubscriptions();
+  const active = subs.filter(s => s.isActive !== false);
+  const inactive = subs.filter(s => s.isActive === false);
+  const monthlyTotal = calcMonthlySubTotal();
+  const yearlyTotal = monthlyTotal * 12;
+
+  // カード生成
+  function subCard(s) {
+    const days = subDaysUntilBilling(s);
+    const nextDate = subNextBillingDate(s);
+    const urgentCls = s.isActive !== false && days <= 3 ? 'sub-urgent' :
+                      s.isActive !== false && days <= 7 ? 'sub-soon' : '';
+    const inactiveCls = s.isActive === false ? 'sub-inactive' : '';
+    const monthlyAmt = subMonthlyAmount(s);
+    return `
+<div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}">
+  <div class="sub-card-color-bar" style="background:${s.color || '#6366f1'}"></div>
+  <div class="sub-card-icon" style="background:${s.color || '#6366f1'}22;color:${s.color || '#6366f1'}">${s.emoji || '📱'}</div>
+  <div class="sub-card-body">
+    <div class="sub-card-name">${esc2(s.name)}</div>
+    <div class="sub-card-meta">
+      <span class="sub-cycle-tag">${s.cycle === 'yearly' ? '年払い' : '月払い'}</span>
+      ${s.isActive !== false ? `<span class="sub-next-billing">${days === 0 ? '🔴 今日請求' : days <= 3 ? `🟠 ${days}日後` : `📅 ${days}日後（${nextDate.slice(5).replace('-','/')}）`}</span>` : '<span class="sub-paused-badge">⏸ 休止中</span>'}
+    </div>
+    ${s.memo ? `<div class="sub-card-memo">${esc2(s.memo)}</div>` : ''}
+  </div>
+  <div class="sub-card-right">
+    <div class="sub-card-amount">${formatMoney(s.amount)}<span class="sub-cycle-unit">${s.cycle === 'yearly' ? '/年' : '/月'}</span></div>
+    ${s.cycle === 'yearly' ? `<div class="sub-monthly-equiv">月換算 ${formatMoney(monthlyAmt)}</div>` : ''}
+    <div class="sub-card-actions">
+      <button class="btn-icon sub-toggle-btn" data-id="${s.id}" title="${s.isActive !== false ? '休止' : '再開'}">${s.isActive !== false ? '⏸' : '▶'}</button>
+      <button class="btn-icon sub-edit-btn" data-id="${s.id}" title="編集">✏️</button>
+      <button class="btn-icon sub-delete-btn" data-id="${s.id}" title="削除">🗑</button>
+    </div>
+  </div>
+</div>`;
+  }
+
+  const activeCards = active.length > 0
+    ? active.sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b)).map(subCard).join('')
+    : `<div class="sub-empty"><span class="sub-empty-icon">📱</span><p>サブスクリプションが登録されていません</p><button class="btn btn-primary" id="sub-empty-add-btn">＋ 追加する</button></div>`;
+
+  const inactiveSection = inactive.length > 0 ? `
+<details class="sub-inactive-section">
+  <summary>休止中のサブスク（${inactive.length}件）</summary>
+  <div class="sub-cards-list">${inactive.map(subCard).join('')}</div>
+</details>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">📱 サブスク管理</h1>
+  <button class="btn btn-primary btn-sm" id="sub-add-btn">＋ 追加</button>
+</div>
+
+<div class="sub-summary-row">
+  <div class="card sub-summary-card">
+    <div class="sub-summary-label">月間合計</div>
+    <div class="sub-summary-amount js-countup" data-value="${monthlyTotal}">${formatMoney(monthlyTotal)}</div>
+    <div class="sub-summary-sub">${active.length}件のサブスク</div>
+  </div>
+  <div class="card sub-summary-card">
+    <div class="sub-summary-label">年間換算</div>
+    <div class="sub-summary-amount js-countup" data-value="${yearlyTotal}">${formatMoney(yearlyTotal)}</div>
+    <div class="sub-summary-sub">月間 × 12ヶ月</div>
+  </div>
+</div>
+
+<div class="sub-cards-list">${activeCards}</div>
+${inactiveSection}
+
+<!-- サブスク追加/編集モーダル -->
+<div class="modal-overlay" id="sub-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="sub-modal-title">サブスクを追加</h2>
+      <button class="modal-close" id="sub-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>サービス名 <span class="required">*</span></label>
+        <input type="text" id="sub-name" class="form-input" placeholder="Netflix, Spotify など" maxlength="40">
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>絵文字アイコン</label>
+          <div class="sub-emoji-grid" id="sub-emoji-grid">
+            ${SUB_EMOJIS.map(e => `<button class="sub-emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+          </div>
+          <input type="hidden" id="sub-emoji" value="📱">
+        </div>
+        <div class="form-group">
+          <label>カラー</label>
+          <div class="sub-color-grid" id="sub-color-grid">
+            ${SUB_COLORS.map(c => `<button class="sub-color-btn" data-color="${c}" style="background:${c}" title="${c}"></button>`).join('')}
+          </div>
+          <input type="hidden" id="sub-color" value="#6366f1">
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>金額 <span class="required">*</span></label>
+          <input type="number" id="sub-amount" class="form-input" placeholder="1490" min="1">
+        </div>
+        <div class="form-group">
+          <label>支払いサイクル</label>
+          <select id="sub-cycle" class="form-input">
+            <option value="monthly">毎月</option>
+            <option value="yearly">毎年</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>請求日（月の何日）</label>
+          <select id="sub-billing-day" class="form-input">
+            ${Array.from({length: 28}, (_, i) => `<option value="${i+1}">${i+1}日</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>カテゴリ</label>
+          <select id="sub-category" class="form-input">
+            <option value="">— 未設定 —</option>
+            ${(appData.categories || []).filter(c => c.type === 'expense').map(c =>
+              `<option value="${c.id}">${c.name}</option>`
+            ).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>メモ</label>
+        <input type="text" id="sub-memo" class="form-input" placeholder="プレミアムプラン など" maxlength="60">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="sub-modal-cancel">キャンセル</button>
+        <button class="btn btn-primary" id="sub-modal-save">保存</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+function bindSubscriptions() {
+  // 数値カウントアップ
+  document.querySelectorAll('.js-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
+  });
+
+  let editingSubId = null;
+
+  const modal = document.getElementById('sub-modal');
+  const modalTitle = document.getElementById('sub-modal-title');
+
+  function openModal(sub) {
+    editingSubId = sub ? sub.id : null;
+    modalTitle.textContent = sub ? 'サブスクを編集' : 'サブスクを追加';
+    document.getElementById('sub-name').value = sub ? sub.name : '';
+    document.getElementById('sub-emoji').value = sub ? (sub.emoji || '📱') : '📱';
+    document.getElementById('sub-color').value = sub ? (sub.color || '#6366f1') : '#6366f1';
+    document.getElementById('sub-amount').value = sub ? sub.amount : '';
+    document.getElementById('sub-cycle').value = sub ? (sub.cycle || 'monthly') : 'monthly';
+    document.getElementById('sub-billing-day').value = sub ? (sub.billingDay || 1) : 1;
+    document.getElementById('sub-category').value = sub ? (sub.categoryId || '') : '';
+    document.getElementById('sub-memo').value = sub ? (sub.memo || '') : '';
+    // emoji選択
+    document.querySelectorAll('.sub-emoji-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.emoji === (sub ? (sub.emoji || '📱') : '📱'));
+    });
+    // color選択
+    document.querySelectorAll('.sub-color-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.color === (sub ? (sub.color || '#6366f1') : '#6366f1'));
+    });
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('modal-is-open')));
+  }
+
+  function closeModal() {
+    modal.classList.remove('modal-is-open');
+    setTimeout(() => { modal.style.display = 'none'; }, 250);
+  }
+
+  // 開く
+  on('sub-add-btn', 'click', () => openModal(null));
+  on('sub-empty-add-btn', 'click', () => openModal(null));
+  on('sub-modal-close', 'click', closeModal);
+  on('sub-modal-cancel', 'click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+  // 絵文字・カラー選択
+  document.getElementById('sub-emoji-grid').addEventListener('click', e => {
+    const btn = e.target.closest('.sub-emoji-btn');
+    if (!btn) return;
+    document.querySelectorAll('.sub-emoji-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('sub-emoji').value = btn.dataset.emoji;
+  });
+  document.getElementById('sub-color-grid').addEventListener('click', e => {
+    const btn = e.target.closest('.sub-color-btn');
+    if (!btn) return;
+    document.querySelectorAll('.sub-color-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('sub-color').value = btn.dataset.color;
+  });
+
+  // 保存
+  on('sub-modal-save', 'click', () => {
+    const name = document.getElementById('sub-name').value.trim();
+    const amount = parseInt(document.getElementById('sub-amount').value);
+    if (!name) { showToast('サービス名を入力してください', 'warning'); return; }
+    if (!amount || amount <= 0) { showToast('金額を正しく入力してください', 'warning'); return; }
+    const fields = {
+      name,
+      emoji: document.getElementById('sub-emoji').value,
+      color: document.getElementById('sub-color').value,
+      amount,
+      cycle: document.getElementById('sub-cycle').value,
+      billingDay: parseInt(document.getElementById('sub-billing-day').value) || 1,
+      categoryId: document.getElementById('sub-category').value,
+      memo: document.getElementById('sub-memo').value.trim(),
+      isActive: true,
+    };
+    if (editingSubId) {
+      updateSubscription(editingSubId, fields);
+      showToast('サブスクを更新しました', 'success');
+    } else {
+      addSubscription(fields);
+      showToast('サブスクを追加しました', 'success');
+    }
+    closeModal();
+    setTimeout(() => renderCurrentPage(), 280);
+  });
+
+  // 編集・削除・休止ボタン（イベント委譲）
+  document.querySelector('.sub-cards-list') && document.querySelector('.sub-cards-list').addEventListener('click', e => {
+    const editBtn = e.target.closest('.sub-edit-btn');
+    const deleteBtn = e.target.closest('.sub-delete-btn');
+    const toggleBtn = e.target.closest('.sub-toggle-btn');
+    if (editBtn) {
+      const sub = getSubscriptions().find(s => s.id === editBtn.dataset.id);
+      if (sub) openModal(sub);
+    } else if (deleteBtn) {
+      if (!confirm('このサブスクを削除しますか？')) return;
+      deleteSubscription(deleteBtn.dataset.id);
+      showToast('削除しました');
+      renderCurrentPage();
+    } else if (toggleBtn) {
+      const sub = getSubscriptions().find(s => s.id === toggleBtn.dataset.id);
+      if (sub) {
+        updateSubscription(sub.id, { isActive: sub.isActive === false ? true : false });
+        showToast(sub.isActive === false ? 'サブスクを再開しました' : '休止しました', 'success');
+        renderCurrentPage();
+      }
+    }
+  });
+
+  // 休止中セクションのボタンも同様に処理
+  const inactiveSection = document.querySelector('.sub-inactive-section .sub-cards-list');
+  if (inactiveSection) {
+    inactiveSection.addEventListener('click', e => {
+      const editBtn = e.target.closest('.sub-edit-btn');
+      const deleteBtn = e.target.closest('.sub-delete-btn');
+      const toggleBtn = e.target.closest('.sub-toggle-btn');
+      if (editBtn) {
+        const sub = getSubscriptions().find(s => s.id === editBtn.dataset.id);
+        if (sub) openModal(sub);
+      } else if (deleteBtn) {
+        if (!confirm('このサブスクを削除しますか？')) return;
+        deleteSubscription(deleteBtn.dataset.id);
+        showToast('削除しました');
+        renderCurrentPage();
+      } else if (toggleBtn) {
+        const sub = getSubscriptions().find(s => s.id === toggleBtn.dataset.id);
+        if (sub) {
+          updateSubscription(sub.id, { isActive: true });
+          showToast('サブスクを再開しました', 'success');
+          renderCurrentPage();
+        }
+      }
+    });
+  }
+}
 
 // ============================================================
 // ダークモード（prefers-color-scheme + 手動トグル）

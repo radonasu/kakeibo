@@ -228,10 +228,11 @@ function loadData() {
     // 旧形式マイグレーション（roomCode/enabled削除）
     if (data.settings.syncConfig.roomCode !== undefined) delete data.settings.syncConfig.roomCode;
     if (data.settings.syncConfig.enabled  !== undefined) delete data.settings.syncConfig.enabled;
-    if (!data.budgets)   data.budgets = {};
-    if (!data.templates) data.templates = [];
-    if (!data.assets)    data.assets = [];
-    if (!data.goals)     data.goals = [];
+    if (!data.budgets)        data.budgets = {};
+    if (!data.templates)      data.templates = [];
+    if (!data.assets)         data.assets = [];
+    if (!data.goals)          data.goals = [];
+    if (!data.subscriptions)  data.subscriptions = [];
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
@@ -247,10 +248,11 @@ function createDefaultData() {
     categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
     members: JSON.parse(JSON.stringify(DEFAULT_MEMBERS)),
     settings: { ...DEFAULT_SETTINGS },
-    budgets: {},     // { categoryId: monthlyLimit }
-    templates: [],   // 繰り返し取引テンプレート
-    assets: [],      // 資産口座（貯蓄・投資）
-    goals: [],       // 貯蓄目標（v5.31）
+    budgets: {},        // { categoryId: monthlyLimit }
+    templates: [],      // 繰り返し取引テンプレート
+    assets: [],         // 資産口座（貯蓄・投資）
+    goals: [],          // 貯蓄目標（v5.31）
+    subscriptions: [],  // サブスクリプション（v5.43）
   };
 }
 
@@ -374,6 +376,73 @@ function deleteTemplate(id) {
   if (!appData.templates) { appData.templates = []; return; }
   appData.templates = appData.templates.filter(t => t.id !== id);
   saveData();
+}
+
+// ── サブスクリプション CRUD（v5.43）──────────────────────────
+const SUB_EMOJIS = ['📺','🎵','📱','🎮','📰','☁️','🛒','🏥','🏋️','📚','🎬','🎤','🎧','📡','🎯','💊','🍿','🔧'];
+const SUB_COLORS = ['#6366f1','#e50914','#1db954','#0073e6','#f97316','#8b5cf6','#ec4899','#06b6d4','#10b981','#f59e0b','#64748b','#ef4444'];
+
+function getSubscriptions() {
+  if (!appData.subscriptions) appData.subscriptions = [];
+  return appData.subscriptions;
+}
+
+function addSubscription(fields) {
+  if (!appData.subscriptions) appData.subscriptions = [];
+  const s = { ...fields, id: genId(), createdAt: todayStr() };
+  appData.subscriptions.push(s);
+  saveData();
+  return s;
+}
+
+function updateSubscription(id, fields) {
+  if (!appData.subscriptions) appData.subscriptions = [];
+  const idx = appData.subscriptions.findIndex(s => s.id === id);
+  if (idx >= 0) {
+    appData.subscriptions[idx] = { ...appData.subscriptions[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteSubscription(id) {
+  if (!appData.subscriptions) { appData.subscriptions = []; return; }
+  appData.subscriptions = appData.subscriptions.filter(s => s.id !== id);
+  saveData();
+}
+
+// 月次換算金額（yearly は÷12）
+function subMonthlyAmount(sub) {
+  const amt = Number(sub.amount) || 0;
+  return sub.cycle === 'yearly' ? Math.round(amt / 12) : amt;
+}
+
+// 次回請求日（文字列 YYYY-MM-DD）
+function subNextBillingDate(sub) {
+  const today = new Date();
+  const day = parseInt(sub.billingDay) || 1;
+  // 今月の請求日を作成
+  let candidate = new Date(today.getFullYear(), today.getMonth(), day);
+  if (candidate <= today) {
+    // 来月へ
+    candidate = new Date(today.getFullYear(), today.getMonth() + 1, day);
+  }
+  return candidate.getFullYear() + '-' +
+    String(candidate.getMonth() + 1).padStart(2, '0') + '-' +
+    String(candidate.getDate()).padStart(2, '0');
+}
+
+// 次回請求まで何日
+function subDaysUntilBilling(sub) {
+  const next = new Date(subNextBillingDate(sub));
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return Math.round((next - today) / 86400000);
+}
+
+// 月間サブスク合計（アクティブのみ）
+function calcMonthlySubTotal() {
+  return getSubscriptions()
+    .filter(s => s.isActive !== false)
+    .reduce((sum, s) => sum + subMonthlyAmount(s), 0);
 }
 
 // ── 貯蓄目標 CRUD（v5.31）─────────────────────────────────
