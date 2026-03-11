@@ -325,10 +325,13 @@ function renderDashboard() {
       const pct  = Math.min(Math.round(spent / budget * 100), 100);
       const over = spent > budget;
       const cls  = over ? 'over' : pct >= 80 ? 'warn' : '';
+      const pctLabel = over ? '超過' : pct + '%';
+      const pctCls   = over ? 'over' : pct >= 80 ? 'warn' : '';
       return `<div class="budget-item">
         <div class="budget-item-hdr">
           <span class="budget-cat-name"><span class="color-dot" style="background:${c.color}"></span>${esc2(c.name)}</span>
           <span class="budget-nums ${over ? 'over' : ''}">${formatMoney(spent)}<span class="budget-sep"> / </span>${formatMoney(budget)}</span>
+          <span class="budget-pct-badge ${pctCls}">${pctLabel}</span>
         </div>
         <div class="budget-track"><div class="budget-fill ${cls}" style="width:${pct}%"></div></div>
         ${over ? `<div class="budget-over-msg">⚠️ ${formatMoney(spent - budget)} 超過</div>` : ''}

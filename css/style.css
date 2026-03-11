@@ -695,6 +695,17 @@ select:focus:not(:focus-visible) {
   border-radius: 50%;
   background: rgba(255,255,255,.1);
 }
+.summary-card::before {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  pointer-events: none;
+}
 
 .summary-card.income  { background: linear-gradient(135deg, #047857 0%, #10b981 100%); }
 .summary-card.expense { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); }
@@ -1326,6 +1337,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   margin-bottom: 8px;
   font-size: var(--fs-sm);
+  gap: var(--sp-2);
 }
 
 .budget-cat-name {
@@ -1344,21 +1356,34 @@ select:focus:not(:focus-visible) {
 .budget-sep { color: var(--text-muted); }
 
 .budget-track {
-  height: 6px;
+  height: 8px;
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .budget-fill {
   height: 100%;
   background: var(--primary);
-  border-radius: 3px;
-  transition: width 0.4s ease;
+  border-radius: 4px;
   min-width: 2px;
+  transform-origin: left center;
+  animation: budget-fill-in 0.7s cubic-bezier(.4, 0, .2, 1) both;
 }
 .budget-fill.warn { background: var(--warning); }
 .budget-fill.over { background: var(--expense); }
+
+.budget-pct-badge {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+  padding: 1px 6px;
+  border-radius: var(--radius-badge);
+  background: var(--surface-hover);
+  white-space: nowrap;
+}
+.budget-pct-badge.warn { color: var(--warning); background: var(--warning-bg); }
+.budget-pct-badge.over { color: var(--expense); background: var(--danger-bg); font-weight: var(--fw-bold); }
 
 .budget-over-msg {
   font-size: var(--fs-xs);
@@ -2101,6 +2126,20 @@ body {
   .modal-overlay .modal { transform: translateY(40px) scale(1); }
   .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(1); }
 }
+
+/* ── 予算バー フィルアニメーション ── */
+@keyframes budget-fill-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.budget-item:nth-child(1) .budget-fill { animation-delay: 0.05s; }
+.budget-item:nth-child(2) .budget-fill { animation-delay: 0.10s; }
+.budget-item:nth-child(3) .budget-fill { animation-delay: 0.15s; }
+.budget-item:nth-child(4) .budget-fill { animation-delay: 0.20s; }
+.budget-item:nth-child(5) .budget-fill { animation-delay: 0.25s; }
+.budget-item:nth-child(6) .budget-fill { animation-delay: 0.30s; }
+.budget-item:nth-child(7) .budget-fill { animation-delay: 0.35s; }
+.budget-item:nth-child(8) .budget-fill { animation-delay: 0.40s; }
 
 /* ── テーブル行ストッガード ── */
 @keyframes row-in {
@@ -3969,6 +4008,38 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .insight-item.insight-alert   { background: var(--danger-bg); }
 [data-theme="dark"] .insight-item.insight-success { background: var(--success-bg); }
 [data-theme="dark"] .insight-item.insight-warning { background: var(--warning-bg); }
+
+/* インサイトアイテム入場アニメーション */
+@keyframes insight-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes insight-alert-pulse {
+  0%, 100% { border-left-width: 3px; }
+  50%       { border-left-width: 5px; }
+}
+
+.insight-item {
+  animation: insight-in 0.35s ease both;
+}
+.insight-item:nth-child(1) { animation-delay: 0.04s; }
+.insight-item:nth-child(2) { animation-delay: 0.10s; }
+.insight-item:nth-child(3) { animation-delay: 0.16s; }
+.insight-item:nth-child(4) { animation-delay: 0.22s; }
+
+.insight-item.insight-alert {
+  animation: insight-in 0.35s ease both, insight-alert-pulse 2.4s ease-in-out 0.8s infinite;
+}
+.insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, 0.8s; }
+.insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, 0.8s; }
+.insight-item.insight-alert:nth-child(3) { animation-delay: 0.16s, 0.8s; }
+.insight-item.insight-alert:nth-child(4) { animation-delay: 0.22s, 0.8s; }
+
+/* インサイトタイトルをタイプカラーで着色 */
+.insight-item.insight-info    .insight-title { color: var(--primary); }
+.insight-item.insight-alert   .insight-title { color: var(--danger-text); }
+.insight-item.insight-success .insight-title { color: var(--success); }
+.insight-item.insight-warning .insight-title { color: var(--warning); }
 
 /* モバイル */
 @media (max-width: 768px) {
