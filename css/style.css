@@ -98,6 +98,7 @@ html, body {
   height: 100%;
   height: 100dvh;
   touch-action: manipulation;
+  overflow-x: hidden;
   font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'BIZ UDGothic', 'Meiryo', 'Yu Gothic UI', sans-serif;
   font-size: var(--fs-base);
   color: var(--text);
@@ -1883,14 +1884,15 @@ body {
 
 @media (max-width: 480px) {
   .summary-cards { grid-template-columns: 1fr; }
-  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal-overlay { padding: 0; }
   .modal {
-    max-width: 100%;
-    margin: 0;
-    border-radius: 0;
-    align-self: stretch;
+    position: fixed;
+    inset: 0;
+    max-width: none;
     max-height: none;
-    height: 100%;
+    border-radius: 0;
+    margin: 0;
+    z-index: 1001;
   }
   .modal-footer {
     flex-shrink: 0;
@@ -2908,13 +2910,7 @@ body {
   opacity: 1;
 }
 
-/* ── モバイルフルスクリーンモーダル ──────────────────── */
-@media (max-width: 480px) {
-  .modal-overlay {
-    /* フルスクリーン */
-    align-items: stretch;
-  }
-}
+/* (モバイルフルスクリーンモーダルは上の480pxブロックで position:fixed; inset:0 を適用) */
 
 /* ── タッチターゲット強化 ─────────────────────────────── */
 @media (max-width: 768px) {
