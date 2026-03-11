@@ -104,8 +104,8 @@ function navigate(page) {
   const main = document.getElementById('main-content');
   main.classList.remove('page-enter');
   requestAnimationFrame(() => requestAnimationFrame(() => main.classList.add('page-enter')));
-  // モバイルサイドバーを閉じる
-  document.getElementById('sidebar').classList.remove('open');
+  // モバイルサイドバーを閉じる（オーバーレイ含む）
+  closeSidebar();
 }
 
 function renderCurrentPage() {

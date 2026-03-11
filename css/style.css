@@ -96,6 +96,7 @@
 
 html, body {
   height: 100%;
+  height: 100dvh;
   font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'BIZ UDGothic', 'Meiryo', 'Yu Gothic UI', sans-serif;
   font-size: var(--fs-base);
   color: var(--text);
@@ -336,6 +337,7 @@ select:focus:not(:focus-visible) {
   margin-left: var(--sidebar-w);
   flex: 1;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -934,6 +936,7 @@ select:focus:not(:focus-visible) {
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1850,8 +1853,17 @@ body {
 
 @media (max-width: 480px) {
   .summary-cards { grid-template-columns: 1fr; }
-  .modal { max-width: 100%; margin: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; align-self: flex-end; }
+  .modal { max-width: 100%; margin: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; align-self: flex-end; max-height: 92vh; max-height: 92dvh; }
   .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal-footer {
+    flex-shrink: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .modal-footer .btn {
+    min-height: 48px;
+    padding: 12px 20px;
+    font-size: var(--fs-base);
+  }
   .auth-card { padding: 28px 24px; }
 }
 

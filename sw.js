@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.31'; // v5.31: 貯蓄目標管理（目標名・絵文字・カラー・目標額・積立額・期限・進捗バー・達成済みアーカイブ・ダッシュボードウィジェット）
+const CACHE_NAME = 'kakeibo-v5.32'; // v5.32: モバイルUI修正（全画面dvh・画面暗転fix・モーダルボタン表示改善）
 const ASSETS = [
   './index.html',
   './css/style.css',
