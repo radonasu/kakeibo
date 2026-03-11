@@ -94,11 +94,15 @@
   --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
 html, body {
   height: 100%;
   height: 100dvh;
   touch-action: manipulation;
-  overflow-x: hidden;
+  overscroll-behavior-x: none;
   font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'BIZ UDGothic', 'Meiryo', 'Yu Gothic UI', sans-serif;
   font-size: var(--fs-base);
   color: var(--text);
@@ -1880,10 +1884,8 @@ body {
   .filter-bar select, .filter-bar .month-sel { font-size: var(--fs-xs); padding: 7px 9px; }
   .tx-table th, .tx-table td { padding: 8px 9px; }
   .page-title { font-size: var(--fs-2xl); }
-}
 
-@media (max-width: 480px) {
-  .summary-cards { grid-template-columns: 1fr; }
+  /* モバイル: モーダル全画面表示 */
   .modal-overlay { padding: 0; }
   .modal {
     position: fixed;
@@ -1904,6 +1906,9 @@ body {
     font-size: var(--fs-base);
     flex: 1;
   }
+}
+
+@media (max-width: 480px) {
   .auth-card { padding: 28px 24px; }
 }
 

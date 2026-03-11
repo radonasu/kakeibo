@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.35'; // v5.35: モーダルfixed全画面・横スクロール防止
+const CACHE_NAME = 'kakeibo-v5.36'; // v5.36: モーダル全画面を768pxに移動・横スクロール完全防止
 const ASSETS = [
   './index.html',
   './css/style.css',
