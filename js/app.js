@@ -819,6 +819,42 @@ function renderReports() {
   const totalIncome  = calcTotal(allTxs, 'income');
   const totalExpense = calcTotal(allTxs, 'expense');
 
+  // 前年比較データ
+  const prevYear = year - 1;
+  const prevAllTxs     = appData.transactions.filter(t => t.date && t.date.startsWith(String(prevYear)));
+  const prevTotalIncome  = calcTotal(prevAllTxs, 'income');
+  const prevTotalExpense = calcTotal(prevAllTxs, 'expense');
+  const expDiff    = totalExpense - prevTotalExpense;
+  const incomeDiff = totalIncome  - prevTotalIncome;
+  const yoyPct = (cur, prev) => {
+    if (prev === 0) return cur > 0 ? '新規' : '—';
+    const p = Math.round((cur - prev) / prev * 100);
+    return (p >= 0 ? '+' : '') + p + '%';
+  };
+
+  // 前年比較テーブル行（月別 支出比較）
+  const yoyRows = months12.map(ym => {
+    const txs     = getTransactionsByMonth(ym);
+    const exp     = calcTotal(txs, 'expense');
+    const mo      = parseInt(ym.split('-')[1]);
+    const prevYm  = `${prevYear}-${String(mo).padStart(2,'0')}`;
+    const prevTxs = getTransactionsByMonth(prevYm);
+    const prevExp = calcTotal(prevTxs, 'expense');
+    const diff    = exp - prevExp;
+    const pct     = prevExp ? Math.round(diff / prevExp * 100) : null;
+    const cls     = diff > 0 ? 'expense' : diff < 0 ? 'income' : '';
+    const pctCls  = pct !== null ? (pct > 0 ? 'yoy-up' : pct < 0 ? 'yoy-down' : '') : '';
+    const pctStr  = pct !== null ? (pct > 0 ? '▲' : pct < 0 ? '▼' : '') + Math.abs(pct) + '%' : '—';
+    const diffStr = (prevExp || exp) ? ((diff > 0 ? '+' : '') + formatMoney(diff)) : '—';
+    return `<tr>
+      <td>${mo}月</td>
+      <td class="expense">${exp ? formatMoney(exp) : '—'}</td>
+      <td class="text-muted">${prevExp ? formatMoney(prevExp) : '—'}</td>
+      <td class="${cls}">${diffStr}</td>
+      <td class="text-muted ${pctCls}">${pctStr}</td>
+    </tr>`;
+  }).join('');
+
   return `
 <div class="page-header">
   <h1 class="page-title">レポート</h1>
@@ -983,7 +1019,53 @@ ${(appData.members && appData.members.length > 0) ? `
       </tbody>
     </table>
   </div>
-</div>` : ''}`;
+</div>` : ''}
+
+<div class="card">
+  <h3 class="card-title">📅 前年比較（${year}年 vs ${prevYear}年）</h3>
+  <div class="yoy-summary">
+    <div class="yoy-summary-item">
+      <div class="yoy-summary-label">年間支出</div>
+      <div class="yoy-summary-value expense">${formatMoney(totalExpense)}</div>
+      ${prevTotalExpense ? `<div class="yoy-diff ${expDiff > 0 ? 'yoy-up' : expDiff < 0 ? 'yoy-down' : ''}">
+        ${expDiff > 0 ? '▲' : expDiff < 0 ? '▼' : ''}${formatMoney(Math.abs(expDiff))}（${yoyPct(totalExpense, prevTotalExpense)}）vs 前年
+      </div>` : `<div class="yoy-diff">前年データなし</div>`}
+    </div>
+    <div class="yoy-summary-item">
+      <div class="yoy-summary-label">年間収入</div>
+      <div class="yoy-summary-value income">${formatMoney(totalIncome)}</div>
+      ${prevTotalIncome ? `<div class="yoy-diff ${incomeDiff >= 0 ? 'yoy-down' : 'yoy-up'}">
+        ${incomeDiff >= 0 ? '▲' : '▼'}${formatMoney(Math.abs(incomeDiff))}（${yoyPct(totalIncome, prevTotalIncome)}）vs 前年
+      </div>` : `<div class="yoy-diff">前年データなし</div>`}
+    </div>
+  </div>
+  <div class="chart-wrap" style="height:280px;margin:var(--sp-4) 0 var(--sp-2)">
+    <canvas id="report-yoy"></canvas>
+  </div>
+  <div class="table-wrap">
+    <table class="tx-table">
+      <thead>
+        <tr>
+          <th>月</th>
+          <th>今年支出</th>
+          <th>前年支出</th>
+          <th>増減</th>
+          <th>増減率</th>
+        </tr>
+      </thead>
+      <tbody>${yoyRows}</tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td>合計</td>
+          <td class="expense">${formatMoney(totalExpense)}</td>
+          <td class="text-muted">${prevTotalExpense ? formatMoney(prevTotalExpense) : '—'}</td>
+          <td class="${expDiff > 0 ? 'expense' : expDiff < 0 ? 'income' : ''}">${prevTotalExpense || totalExpense ? (expDiff > 0 ? '+' : '') + formatMoney(expDiff) : '—'}</td>
+          <td class="text-muted ${expDiff > 0 ? 'yoy-up' : expDiff < 0 ? 'yoy-down' : ''}">${yoyPct(totalExpense, prevTotalExpense)}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>`;
 }
 
 function bindReports() {
@@ -1009,6 +1091,7 @@ function bindReports() {
     renderCategoryBarChart('report-cat-expense', allTxs, 'expense');
     renderPaymentMethodChart('report-payment-donut', allTxs);
     renderMemberExpenseChart('report-member-bar', allTxs);
+    renderYoYChart('report-yoy', year);
   }, 50);
 }
 

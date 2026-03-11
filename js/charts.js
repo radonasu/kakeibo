@@ -590,6 +590,107 @@ function renderPaymentMethodChart(canvasId, transactions) {
   });
 }
 
+// ─── 前年比較グラフ（レポート用）────────────────────────────
+function renderYoYChart(canvasId, year) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const prevYear = year - 1;
+  const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+  const thisExp  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${year}-${String(i+1).padStart(2,'0')}`), 'expense'));
+  const prevExp  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${prevYear}-${String(i+1).padStart(2,'0')}`), 'expense'));
+  const thisInc  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${year}-${String(i+1).padStart(2,'0')}`), 'income'));
+  const prevInc  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${prevYear}-${String(i+1).padStart(2,'0')}`), 'income'));
+
+  const { text: textColor, grid: gridColor } = getThemeColors();
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: `${year}年 支出`,
+          data: thisExp,
+          backgroundColor: 'rgba(220,38,38,0.75)',
+          borderRadius: 5,
+          borderSkipped: false,
+          hoverBackgroundColor: 'rgba(220,38,38,0.95)',
+          order: 1,
+        },
+        {
+          label: `${prevYear}年 支出`,
+          data: prevExp,
+          backgroundColor: 'rgba(220,38,38,0.22)',
+          borderColor: 'rgba(220,38,38,0.45)',
+          borderWidth: 1,
+          borderRadius: 5,
+          borderSkipped: false,
+          order: 2,
+        },
+        {
+          label: `${year}年 収入`,
+          data: thisInc,
+          backgroundColor: 'rgba(5,150,105,0.75)',
+          borderRadius: 5,
+          borderSkipped: false,
+          hoverBackgroundColor: 'rgba(5,150,105,0.95)',
+          order: 3,
+        },
+        {
+          label: `${prevYear}年 収入`,
+          data: prevInc,
+          backgroundColor: 'rgba(5,150,105,0.22)',
+          borderColor: 'rgba(5,150,105,0.45)',
+          borderWidth: 1,
+          borderRadius: 5,
+          borderSkipped: false,
+          order: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 14,
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+        }),
+      },
+      scales: {
+        x: {
+          grid:  { display: false },
+          ticks: { font: { size: 10 }, color: textColor, maxRotation: 0 },
+          border: { color: gridColor },
+        },
+        y: {
+          beginAtZero: true,
+          grid:  { color: gridColor + '60', drawBorder: false },
+          ticks: {
+            font:     { size: 10 },
+            color:    textColor,
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { display: false },
+        },
+      },
+    },
+  });
+}
+
 // ─── 純資産推移折れ線グラフ（資産管理ページ用）───────────────
 function renderNetWorthChart(canvasId) {
   destroyChart(canvasId);
