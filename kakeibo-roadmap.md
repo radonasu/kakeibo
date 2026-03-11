@@ -25,6 +25,7 @@
 | 19 | v5.23 | 機能 | メンバー別収支分析：レポートページに「👥 メンバー別分析」セクション追加（renderMemberExpenseChart: メンバー別支出/収入横棒グラフ・収支テーブル〈収入/支出/差額/比率〉・担当者なし集計対応・メンバー0人時は非表示） |
 | 20 | v5.24 | デザイン | スケルトンローディング：初期ロード時の「読み込み中...」テキストをシマーアニメーション付きスケルトン画面に刷新（@keyframes sk-shimmer・.sk-bone/.sk-card/.sk-header/.sk-summary-grid クラス群・スタッガード遅延 sk-d1〜sk-d5・ダークモード対応・モバイルレスポンシブ対応） |
 | 21 | v5.25 | 機能 | 支払方法別集計：レポートページに「💳 支払方法別支出」ドーナツグラフ（現金/クレカ/口座振替/銀行振込/電子マネー/その他 6色対応・中央合計表示・パーセンテージツールチップ）と支払方法別集計テーブル（件数・金額・割合）を追加（charts.jsにrenderPaymentMethodChart追加・ダークモード対応） |
+| 22 | v5.26 | デザイン | ビジュアルフィードバック改善：kk-toastを4タイプ対応（default/success/error/warning）に刷新・type別アイコンバッジ（✦/✓/✕/!）・プログレスバー（duration可視化・@keyframes kk-toast-shrink）・アニメーション改善（cubic-bezier）・sync-toast/update-toastをCSS変数ベースに移行（ダークモード完全対応）・フォームバリデーション状態（.form-group.has-error/.has-success）・インラインメッセージ（.field-msg.error/.success/.warning）・showToast()にsuccess/warningタイプ追加 |
 
 ## 次スプリント候補
 

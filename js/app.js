@@ -1730,7 +1730,7 @@ function bindSettings() {
       if (code && !isNaN(val) && val > 0) newRates[code] = val;
     });
     saveExchangeRates(newRates);
-    showToast('為替レートを保存しました');
+    showToast('為替レートを保存しました', 'success');
   });
 
   // ── 為替レート自動取得 ────────────────────────────────────
@@ -1751,7 +1751,7 @@ function bindSettings() {
       const d = new Date();
       const label = d.toLocaleDateString('ja-JP') + ' ' + d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
       if (statusEl) statusEl.innerHTML = `<span class="fx-update-ok">✅ 最終自動取得: ${label}</span>`;
-      showToast('為替レートを自動取得しました');
+      showToast('為替レートを自動取得しました', 'success');
     } catch (e) {
       showToast('取得失敗：ネットワーク接続を確認してください', 'error');
     } finally {
@@ -2724,12 +2724,37 @@ function translateAuthError(msg) {
 function showToast(message, type, duration) {
   if (typeof type === 'number') { duration = type; type = null; }
   duration = duration || 3000;
+
   const existing = document.getElementById('kk-toast');
   if (existing) existing.remove();
+
+  const typeMap = {
+    success: { cls: 'kk-toast-success', icon: '✓' },
+    error:   { cls: 'kk-toast-error',   icon: '✕' },
+    warning: { cls: 'kk-toast-warning', icon: '!' },
+  };
+  const cfg = typeMap[type] || null;
+
   const toast = document.createElement('div');
   toast.id = 'kk-toast';
-  toast.className = 'kk-toast' + (type === 'error' ? ' kk-toast-error' : '');
-  toast.textContent = message;
+  toast.className = 'kk-toast' + (cfg ? ' ' + cfg.cls : '');
+  toast.style.setProperty('--toast-dur', duration + 'ms');
+
+  const iconEl = document.createElement('i');
+  iconEl.className = 'kk-toast-icon';
+  iconEl.textContent = cfg ? cfg.icon : '✦';
+
+  const bodyEl = document.createElement('span');
+  bodyEl.className = 'kk-toast-body';
+  bodyEl.textContent = message;
+
+  const progressEl = document.createElement('div');
+  progressEl.className = 'kk-toast-progress';
+
+  toast.appendChild(iconEl);
+  toast.appendChild(bodyEl);
+  toast.appendChild(progressEl);
+
   document.body.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('kk-toast-show')));
   setTimeout(() => {

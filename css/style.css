@@ -545,6 +545,38 @@ select:focus:not(:focus-visible) {
   line-height: var(--lh-snug);
 }
 
+/* ── フォームバリデーション状態 v5.26 ── */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: var(--danger-text) !important;
+  box-shadow: 0 0 0 3px rgba(220,38,38,.1);
+}
+.form-group.has-success input,
+.form-group.has-success select,
+.form-group.has-success textarea {
+  border-color: var(--success) !important;
+  box-shadow: 0 0 0 3px rgba(5,150,105,.1);
+}
+/* インラインフィールドメッセージ */
+.field-msg {
+  font-size: var(--fs-xs);
+  margin-top: 4px;
+  display: block;
+  line-height: var(--lh-snug);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .2s ease, opacity .2s ease, margin-top .2s ease;
+}
+.field-msg.show {
+  max-height: 40px;
+  opacity: 1;
+}
+.field-msg.error   { color: var(--danger-text); }
+.field-msg.success { color: var(--success); }
+.field-msg.warning { color: var(--warning); }
+
 /* ── サマリーカード (グラデーション) ──────────────────── */
 .summary-cards {
   display: grid;
@@ -1215,9 +1247,10 @@ select:focus:not(:focus-visible) {
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: #1e293b;
-  color: #f8fafc;
-  padding: 11px 24px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
   border-radius: 24px;
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -1226,7 +1259,7 @@ select:focus:not(:focus-visible) {
   transition: opacity .3s, transform .3s;
   z-index: 9999;
   white-space: nowrap;
-  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  box-shadow: var(--shadow-md);
 }
 .sync-toast.show {
   opacity: 1;
@@ -1500,8 +1533,9 @@ body {
   position: fixed;
   bottom: 28px; left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: #1e293b;
-  color: #f8fafc;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 12px 20px;
   border-radius: 24px;
   display: flex;
@@ -1512,7 +1546,7 @@ body {
   z-index: 9999;
   opacity: 0;
   transition: opacity .3s, transform .3s;
-  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  box-shadow: var(--shadow-md);
   white-space: nowrap;
 }
 .update-toast.show {
@@ -2223,39 +2257,94 @@ body {
   .share-hint { display: none; }
 }
 
-/* ── トースト通知 ── */
+/* ── トースト通知システム v5.26 ── */
 .kk-toast {
   position: fixed;
   bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 8px);
   left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  background: var(--card-bg);
+  transform: translateX(-50%) translateY(14px);
+  max-width: min(360px, calc(100vw - 32px));
+  background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 10px 20px;
+  border-radius: var(--radius);
+  padding: 11px 16px 11px 12px;
   font-size: var(--fs-sm);
-  font-weight: 600;
-  box-shadow: 0 4px 24px rgba(0,0,0,.15);
+  font-weight: var(--fw-medium);
+  box-shadow: var(--shadow-md);
   opacity: 0;
-  transition: opacity .35s, transform .35s;
+  transition: opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1);
   z-index: 9999;
   white-space: nowrap;
   pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 .kk-toast-show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
-.kk-toast-error {
-  background: var(--danger-bg, #fef2f2);
-  color: var(--danger-text, #dc2626);
-  border: 1px solid var(--danger-border, #fecaca);
+
+/* アイコンバッジ */
+.kk-toast-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: var(--fw-bold);
+  line-height: 1;
 }
+.kk-toast-body {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+/* プログレスバー */
+.kk-toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--primary);
+  transform-origin: left;
+  animation: kk-toast-shrink var(--toast-dur, 3s) linear forwards;
+}
+@keyframes kk-toast-shrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* タイプ: 成功 */
+.kk-toast-success { border-color: var(--success-border); background: var(--success-bg); }
+.kk-toast-success .kk-toast-icon     { background: var(--success); }
+.kk-toast-success .kk-toast-progress { background: var(--success); }
+
+/* タイプ: エラー */
+.kk-toast-error { border-color: var(--danger-border); background: var(--danger-bg); }
+.kk-toast-error .kk-toast-icon     { background: var(--danger-text); }
+.kk-toast-error .kk-toast-progress { background: var(--danger-text); }
+
+/* タイプ: 警告 */
+.kk-toast-warning { border-color: var(--warning-border); background: var(--warning-bg); }
+.kk-toast-warning .kk-toast-icon     { background: var(--warning); }
+.kk-toast-warning .kk-toast-progress { background: var(--warning); }
+
 @media (min-width: 769px) {
-  .kk-toast {
-    bottom: 24px;
-  }
+  .kk-toast { bottom: 24px; }
 }
 
 /* ── 資産管理ページ ───────────────────────────────────────── */

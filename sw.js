@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.25'; // v5.25: 支払方法別集計（レポートページに支払方法別ドーナツグラフ＋集計テーブル追加）
+const CACHE_NAME = 'kakeibo-v5.26'; // v5.26: ビジュアルフィードバック改善（トースト4タイプ+アイコン+プログレスバー・フォームエラー状態・sync/updateトーストCSS変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',
