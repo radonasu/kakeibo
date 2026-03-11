@@ -75,6 +75,17 @@
   --ls-normal:  0px;
   --ls-wide:    0.4px;
   --ls-wider:   0.8px;
+
+  /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
+  --sp-1:   4px;   /* 極小：アイコン余白、バッジ */
+  --sp-2:   8px;   /* 小：要素内の隙間 */
+  --sp-3:  12px;   /* 中小：コンパクトなパディング */
+  --sp-4:  16px;   /* 中：標準パディング・マージン */
+  --sp-5:  20px;   /* 中大：カード・モーダル */
+  --sp-6:  24px;   /* 大：メインカードパディング */
+  --sp-8:  32px;   /* 特大：メインコンテンツ余白 */
+  --sp-10: 40px;   /* 超大：セクション間 */
+  --sp-12: 48px;   /* 最大：空状態パディング */
 }
 
 html, body {
@@ -85,11 +96,23 @@ html, body {
   background: var(--bg);
   line-height: var(--lh-normal);
   -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
 }
 
 button { cursor: pointer; font-family: inherit; }
 input, select, textarea { font-family: inherit; }
 a { color: inherit; text-decoration: none; }
+
+/* ── フォーカス表示（キーボードナビ用） ─────────────────── */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
+}
 
 /* ── レイアウト ───────────────────────────────────────── */
 #app {
@@ -113,7 +136,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 #sidebar-brand {
-  padding: 20px 16px 16px;
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
   border-bottom: 1px solid rgba(255,255,255,.07);
 }
 
@@ -182,7 +205,7 @@ a { color: inherit; text-decoration: none; }
 
 #sidebar-nav {
   flex: 1;
-  padding: 10px 10px;
+  padding: var(--sp-2) var(--sp-2);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -237,7 +260,7 @@ a { color: inherit; text-decoration: none; }
 
 /* サイドバー下部ユーザーエリア */
 .sidebar-footer {
-  padding: 12px 12px;
+  padding: var(--sp-3);
   border-top: 1px solid rgba(255,255,255,.07);
 }
 
@@ -339,7 +362,7 @@ a { color: inherit; text-decoration: none; }
 
 #main-content {
   flex: 1;
-  padding: 28px 28px;
+  padding: var(--sp-8);
   max-width: 1120px;
   width: 100%;
 }
@@ -351,9 +374,9 @@ a { color: inherit; text-decoration: none; }
   background: var(--surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 22px 24px;
-  margin-bottom: 18px;
-  border: 1px solid rgba(0,0,0,.04);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-4);
+  border: 1px solid var(--border);
 }
 
 .card-title {
@@ -377,8 +400,8 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
-  gap: 12px;
+  margin-bottom: var(--sp-6);
+  gap: var(--sp-3);
   flex-wrap: wrap;
 }
 
@@ -394,8 +417,8 @@ a { color: inherit; text-decoration: none; }
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 9px 18px;
+  gap: var(--sp-2);
+  padding: 10px 18px;
   border-radius: 10px;
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
@@ -468,7 +491,7 @@ a { color: inherit; text-decoration: none; }
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 10px 13px;
+  padding: 10px var(--sp-4);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-base);
@@ -496,13 +519,13 @@ a { color: inherit; text-decoration: none; }
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
 }
 
 .summary-card {
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
+  padding: var(--sp-6);
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -558,8 +581,8 @@ a { color: inherit; text-decoration: none; }
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 18px;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-4);
 }
 .chart-card .chart-wrap { position: relative; }
 
@@ -628,11 +651,11 @@ a { color: inherit; text-decoration: none; }
 /* ── フィルターバー ───────────────────────────────────── */
 .filter-bar {
   display: flex;
-  gap: 10px;
+  gap: var(--sp-2);
   align-items: center;
   flex-wrap: wrap;
-  padding: 14px 16px;
-  margin-bottom: 8px;
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-2);
 }
 .filter-bar select,
 .filter-bar .month-sel {
@@ -672,12 +695,12 @@ a { color: inherit; text-decoration: none; }
 /* サマリーミニ */
 .summary-mini {
   display: flex;
-  gap: 16px;
+  gap: var(--sp-4);
   align-items: center;
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
-  padding: 12px 16px;
-  margin-bottom: 8px;
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-2);
 }
 .summary-mini .sep { color: var(--border); }
 .summary-mini .count { margin-left: auto; color: var(--text-muted); font-size: var(--fs-xs); font-weight: var(--fw-medium); }
@@ -735,7 +758,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 22px;
+  padding: var(--sp-5) var(--sp-6);
   border-bottom: 1px solid var(--border);
 }
 .modal-header h2 { font-size: var(--fs-xl); font-weight: var(--fw-bold); line-height: var(--lh-snug); }
@@ -753,15 +776,15 @@ a { color: inherit; text-decoration: none; }
 .modal-body {
   flex: 1;
   overflow-y: auto;
-  padding: 22px;
+  padding: var(--sp-6);
 }
 
 .modal-footer {
-  padding: 16px 22px;
+  padding: var(--sp-4) var(--sp-6);
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: var(--sp-2);
   background: var(--surface-2);
 }
 
@@ -803,7 +826,7 @@ a { color: inherit; text-decoration: none; }
 .export-block {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
-  padding: 18px;
+  padding: var(--sp-5);
   border: 1px solid var(--border);
 }
 .export-block h4 { font-size: var(--fs-sm); font-weight: var(--fw-bold); margin-bottom: 6px; }
@@ -838,12 +861,12 @@ a { color: inherit; text-decoration: none; }
 .btn-inline-add:hover { background: var(--primary-light); }
 
 .quick-cat-form {
-  margin-top: 8px;
+  margin-top: var(--sp-2);
   display: flex;
-  gap: 6px;
+  gap: var(--sp-2);
   flex-wrap: wrap;
   align-items: center;
-  padding: 12px;
+  padding: var(--sp-3);
   background: var(--surface-2);
   border-radius: 10px;
   border: 1.5px dashed var(--border);
@@ -973,14 +996,14 @@ a { color: inherit; text-decoration: none; }
 .budget-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
-  margin-top: 4px;
+  gap: var(--sp-4);
+  margin-top: var(--sp-1);
 }
 
 .budget-item {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  padding: var(--sp-3) var(--sp-4);
   border: 1px solid var(--border);
 }
 
@@ -1104,8 +1127,8 @@ a { color: inherit; text-decoration: none; }
 .sync-user-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
   background: linear-gradient(135deg, var(--success-bg), var(--income-light));
   border: 1px solid var(--success-border);
   border-radius: 12px;
@@ -1698,7 +1721,6 @@ body {
 [data-theme="dark"] .export-block {
   background: var(--surface-2);
 }
-[data-theme="dark"] .card { border-color: var(--border); }
 [data-theme="dark"] .tx-table tbody tr:hover { background: var(--surface-hover); }
 [data-theme="dark"] .modal-footer { background: var(--surface-2); }
 [data-theme="dark"] .filter-bar { background: var(--surface); }
@@ -1976,17 +1998,17 @@ body {
 .onboarding-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
 }
 .step-card {
   background: var(--surface);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  padding: 20px 18px;
+  padding: var(--sp-5) var(--sp-4);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-2);
   cursor: pointer;
   transition: box-shadow .18s, transform .18s, border-color .18s;
   box-shadow: var(--shadow-sm);
@@ -2327,11 +2349,11 @@ body {
 /* 空状態 */
 .empty-asset-state {
   text-align: center;
-  padding: 48px 24px;
+  padding: var(--sp-12) var(--sp-6);
   background: var(--surface);
   border-radius: var(--radius);
   border: 2px dashed var(--border);
-  margin-bottom: 16px;
+  margin-bottom: var(--sp-4);
 }
 .empty-asset-icon {
   font-size: 48px;
