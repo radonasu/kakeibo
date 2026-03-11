@@ -2652,6 +2652,7 @@ async function callGeminiVision(base64, mimeType, categoryNames) {
   const categoryListStr = (categoryNames || []).join('、');
 
   const prompt = `この画像/PDFからレシート・領収書の情報を抽出してください。
+画像が横向き・逆さま・斜めに回転している場合でも、正しく向きを判断して読み取ってください。
 複数のレシートが含まれる場合は、すべてのレシートを個別に抽出してください。
 各レシートについてJSON形式で回答してください。
 
