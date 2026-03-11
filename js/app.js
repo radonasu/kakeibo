@@ -540,11 +540,6 @@ function renderTxModal() {
   const src = t || tpl;  // 値の取得元（編集中の取引 or テンプレート）
   const type = src ? src.type : 'expense';
 
-  const catOptions = (forType) => appData.categories
-    .filter(c => c.type === forType)
-    .map(c => `<option value="${c.id}" ${src && src.categoryId === c.id ? 'selected' : ''}>${esc2(c.name)}</option>`)
-    .join('');
-
   const memOptions = appData.members
     .map(m => `<option value="${m.id}" ${src && src.memberId === m.id ? 'selected' : !src && m.id === appData.settings.defaultMemberId ? 'selected' : ''}>${esc2(m.name)}</option>`)
     .join('');
@@ -582,11 +577,8 @@ function renderTxModal() {
         <label>カテゴリ
           <button type="button" class="btn-inline-add" id="btn-quick-cat" title="カテゴリを今すぐ追加">＋ 新規追加</button>
         </label>
-        <select id="tx-category">
-          <option value="">選択してください</option>
-          <optgroup label="支出" id="cat-expense-group">${catOptions('expense')}</optgroup>
-          <optgroup label="収入" id="cat-income-group">${catOptions('income')}</optgroup>
-        </select>
+        <input type="hidden" id="tx-category" value="${src ? src.categoryId || '' : ''}">
+        <div id="cat-chip-grid" class="cat-chip-grid"></div>
         <div id="quick-cat-form" class="quick-cat-form" style="display:none">
           <input type="text" id="qcat-name" placeholder="カテゴリ名（例: 外食費）">
           <input type="text" id="qcat-yayoi" placeholder="弥生科目（例: 食料品費）">
@@ -685,9 +677,7 @@ function bindTxModal() {
     });
   });
 
-  // カテゴリ変更でメモサジェスト更新
-  const catSelForSuggest = document.getElementById('tx-category');
-  if (catSelForSuggest) catSelForSuggest.addEventListener('change', updateMemoSuggestions);
+  // カテゴリ変更でメモサジェスト更新（chip クリック時は renderCatChips 内で呼ぶので不要だが念のため）
 
   // 保存
   on('modal-save', 'click', saveTxFromModal);
@@ -729,11 +719,10 @@ function bindTxModal() {
       name, yayoiAccount: yayoi || name, type: activeType,
       color: activeType === 'expense' ? '#6b7280' : '#059669',
     });
-    // セレクトボックスに追加して選択
-    const group  = document.getElementById(activeType === 'expense' ? 'cat-expense-group' : 'cat-income-group');
-    const opt    = document.createElement('option');
-    opt.value = newCat.id; opt.textContent = name; opt.selected = true;
-    if (group) group.appendChild(opt);
+    // チップグリッドを更新して新しいカテゴリを選択状態にする
+    const hi = document.getElementById('tx-category');
+    if (hi) hi.value = newCat.id;
+    renderCatChips(activeType, newCat.id);
     document.getElementById('quick-cat-form').style.display = 'none';
     document.getElementById('qcat-name').value  = '';
     document.getElementById('qcat-yayoi').value = '';
@@ -759,27 +748,49 @@ function bindTxModal() {
   });
 }
 
+// ── カテゴリアイコンマップ (v5.30) ────────────────────────────────
+const CAT_ICONS = {
+  '食費':'🍽️','光熱費':'💡','通信費':'📱','交通費':'🚃',
+  '医療費':'🏥','教育費':'📚','住居費':'🏠','娯楽費':'🎮',
+  '消耗品':'🛒','保険料':'🛡️','衣服費':'👗','その他支出':'📦',
+  '給与':'💰','賞与':'🎁','副業収入':'💼','その他収入':'💴',
+};
+
+// カテゴリチップグリッドを描画する (v5.30)
+function renderCatChips(type, selectedId) {
+  const grid = document.getElementById('cat-chip-grid');
+  if (!grid) return;
+  const cats = appData.categories.filter(c => c.type === type);
+  grid.innerHTML = cats.map(c => {
+    const icon = CAT_ICONS[c.name] || '📌';
+    const isSel = c.id === selectedId;
+    return `<button type="button" class="cat-chip${isSel ? ' selected' : ''}" data-cat-id="${c.id}" style="--cat-color:${c.color}">
+      <span class="cat-chip-icon">${icon}</span>
+      <span class="cat-chip-name">${esc2(c.name)}</span>
+    </button>`;
+  }).join('');
+  grid.querySelectorAll('.cat-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const hi = document.getElementById('tx-category');
+      if (hi) hi.value = btn.dataset.catId;
+      updateMemoSuggestions();
+    });
+  });
+}
+
 function updateCatGroups() {
   const modal = document.getElementById('tx-modal');
   if (!modal) return;
   const activeType = modal.querySelector('.type-btn.active')?.dataset.type || 'expense';
-  const expG = document.getElementById('cat-expense-group');
-  const incG = document.getElementById('cat-income-group');
-  const catSel = document.getElementById('tx-category');
-  if (!expG || !incG || !catSel) return;
-
-  if (activeType === 'expense') {
-    expG.style.display = '';
-    incG.style.display = 'none';
-    // 収入カテゴリが選択されていたらリセット
-    const selOpt = catSel.options[catSel.selectedIndex];
-    if (selOpt && selOpt.parentElement === incG) catSel.value = '';
-  } else {
-    expG.style.display = 'none';
-    incG.style.display = '';
-    const selOpt = catSel.options[catSel.selectedIndex];
-    if (selOpt && selOpt.parentElement === expG) catSel.value = '';
+  const hi = document.getElementById('tx-category');
+  // タイプが変わったとき選択が外れていたらリセット
+  if (hi && hi.value) {
+    const cat = appData.categories.find(c => c.id === hi.value);
+    if (cat && cat.type !== activeType) hi.value = '';
   }
+  renderCatChips(activeType, hi ? hi.value : '');
 }
 
 // メモサジェスト：選択カテゴリの直近ユニークメモを datalist に反映

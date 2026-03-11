@@ -577,6 +577,88 @@ select:focus:not(:focus-visible) {
 .field-msg.success { color: var(--success); }
 .field-msg.warning { color: var(--warning); }
 
+/* ── カテゴリ選択チップグリッド (v5.30) ──────────────── */
+.cat-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+  margin-bottom: 4px;
+}
+
+.cat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: var(--sp-3) var(--sp-1);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color .15s, background .15s, color .15s, box-shadow .15s, transform .1s;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  text-align: center;
+  min-height: 60px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cat-chip:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+  color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.cat-chip:active { transform: translateY(0); }
+
+.cat-chip.selected {
+  border-color: var(--cat-color, var(--primary));
+  background: var(--primary-light);
+  color: var(--cat-color, var(--primary-dark));
+  font-weight: var(--fw-bold);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+@supports (background: color-mix(in srgb, red 10%, white)) {
+  .cat-chip.selected {
+    background: color-mix(in srgb, var(--cat-color, var(--primary)) 12%, var(--surface));
+  }
+}
+
+.cat-chip-icon {
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.cat-chip-name {
+  font-size: var(--fs-2xs);
+  line-height: var(--lh-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  pointer-events: none;
+}
+
+/* ダークモード */
+[data-theme="dark"] .cat-chip.selected {
+  background: rgba(99, 102, 241, .18);
+}
+@supports (background: color-mix(in srgb, red 10%, white)) {
+  [data-theme="dark"] .cat-chip.selected {
+    background: color-mix(in srgb, var(--cat-color, var(--primary)) 20%, var(--surface));
+  }
+}
+
+@media (max-width: 480px) {
+  .cat-chip-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 /* ── サマリーカード (グラデーション) ──────────────────── */
 .summary-cards {
   display: grid;
