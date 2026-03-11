@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.22'; // v5.22: モバイルUX改善（タッチターゲット44px/56px強化・スワイプジェスチャー・overscroll-behavior・ボトムシートハンドル）
+const CACHE_NAME = 'kakeibo-v5.23'; // v5.23: メンバー別収支分析（レポートページに👥メンバー別支出グラフ＋収支テーブルを追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -414,6 +414,97 @@ function renderCategoryBarChart(canvasId, transactions, type) {
   });
 }
 
+// ─── メンバー別支出横棒グラフ（レポート用）──────────────────
+function renderMemberExpenseChart(canvasId, transactions) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const members = (appData.members || []);
+  if (members.length === 0) return;
+
+  // メンバー別支出集計（担当者なし分は含めない）
+  const expData = members.map(m =>
+    transactions
+      .filter(t => t.memberId === m.id && t.type === 'expense')
+      .reduce((s, t) => s + (Number(t.amount) || 0), 0)
+  );
+  const incData = members.map(m =>
+    transactions
+      .filter(t => t.memberId === m.id && t.type === 'income')
+      .reduce((s, t) => s + (Number(t.amount) || 0), 0)
+  );
+
+  const labels = members.map(m => m.name);
+  const colors = members.map(m => m.color || '#6b7280');
+  const { text: textColor, grid: gridColor } = getThemeColors();
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '支出',
+          data: expData,
+          backgroundColor: colors.map(c => c + 'cc'),
+          hoverBackgroundColor: colors,
+          borderRadius: 6,
+          borderSkipped: false,
+        },
+        {
+          label: '収入',
+          data: incData,
+          backgroundColor: colors.map(c => c + '55'),
+          hoverBackgroundColor: colors.map(c => c + '99'),
+          borderColor: colors,
+          borderWidth: 1.5,
+          borderRadius: 6,
+          borderSkipped: false,
+        },
+      ],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 16,
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+        }),
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid:  { color: gridColor + '60', drawBorder: false },
+          ticks: {
+            font: { size: 10 },
+            color: textColor,
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { display: false },
+        },
+        y: {
+          ticks:  { font: { size: 12 }, color: textColor },
+          grid:   { display: false },
+          border: { color: gridColor },
+        },
+      },
+    },
+  });
+}
+
 // ─── 純資産推移折れ線グラフ（資産管理ページ用）───────────────
 function renderNetWorthChart(canvasId) {
   destroyChart(canvasId);

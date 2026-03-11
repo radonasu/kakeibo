@@ -890,7 +890,57 @@ function renderReports() {
       <canvas id="report-cat-expense"></canvas>
     </div>
   </div>
-</div>`;
+</div>
+
+${(appData.members && appData.members.length > 0) ? `
+<div class="card">
+  <h3 class="card-title">👥 メンバー別収支分析</h3>
+  <div class="chart-wrap" style="height:${Math.max(140, appData.members.length * 60)}px;margin-bottom:var(--sp-4)">
+    <canvas id="report-member-bar"></canvas>
+  </div>
+  <div class="table-wrap">
+    <table class="tx-table">
+      <thead><tr><th>メンバー</th><th>収入</th><th>支出</th><th>差額</th><th>比率</th></tr></thead>
+      <tbody>
+        ${(() => {
+          const totalExpense = calcTotal(allTxs.filter(t => t.type === 'expense'), 'expense') || 1;
+          return appData.members.map(m => {
+            const mTxs = allTxs.filter(t => t.memberId === m.id);
+            const inc  = calcTotal(mTxs.filter(t => t.type === 'income'),  'income');
+            const exp  = calcTotal(mTxs.filter(t => t.type === 'expense'), 'expense');
+            const net  = inc - exp;
+            const pct  = allTxs.filter(t => t.type === 'expense').length > 0
+              ? Math.round(exp / calcTotal(allTxs.filter(t => t.type === 'expense'), 'expense') * 100)
+              : 0;
+            return `<tr>
+              <td><span class="color-dot" style="background:${m.color || '#6b7280'}"></span>${esc2(m.name)}</td>
+              <td class="income">${inc ? formatMoney(inc) : '—'}</td>
+              <td class="expense">${exp ? formatMoney(exp) : '—'}</td>
+              <td class="${net >= 0 ? 'income' : 'expense'}">${formatMoney(net)}</td>
+              <td class="text-muted">${exp ? pct + '%' : '—'}</td>
+            </tr>`;
+          }).join('');
+        })()}
+        ${(() => {
+          const noMemTxs = allTxs.filter(t => !t.memberId);
+          const inc = calcTotal(noMemTxs.filter(t => t.type === 'income'),  'income');
+          const exp = calcTotal(noMemTxs.filter(t => t.type === 'expense'), 'expense');
+          if (!inc && !exp) return '';
+          const net = inc - exp;
+          const totalExp = calcTotal(allTxs.filter(t => t.type === 'expense'), 'expense');
+          const pct = totalExp ? Math.round(exp / totalExp * 100) : 0;
+          return `<tr>
+            <td><span class="color-dot" style="background:#94a3b8"></span>担当者なし</td>
+            <td class="income">${inc ? formatMoney(inc) : '—'}</td>
+            <td class="expense">${exp ? formatMoney(exp) : '—'}</td>
+            <td class="${net >= 0 ? 'income' : 'expense'}">${formatMoney(net)}</td>
+            <td class="text-muted">${exp ? pct + '%' : '—'}</td>
+          </tr>`;
+        })()}
+      </tbody>
+    </table>
+  </div>
+</div>` : ''}`;
 }
 
 function bindReports() {
@@ -914,6 +964,7 @@ function bindReports() {
     renderBalanceLineChart('report-bar', months12);
     renderDonutChart('report-donut', allTxs, 'expense');
     renderCategoryBarChart('report-cat-expense', allTxs, 'expense');
+    renderMemberExpenseChart('report-member-bar', allTxs);
   }, 50);
 }
 
