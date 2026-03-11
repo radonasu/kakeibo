@@ -4241,16 +4241,22 @@ function renderSubscriptions() {
   const monthlyTotal = calcMonthlySubTotal();
   const yearlyTotal = monthlyTotal * 12;
 
-  // カード生成
-  function subCard(s) {
+  // カード生成 (v5.44: idx・プログレスバー追加)
+  function subCard(s, idx) {
     const days = subDaysUntilBilling(s);
     const nextDate = subNextBillingDate(s);
     const urgentCls = s.isActive !== false && days <= 3 ? 'sub-urgent' :
                       s.isActive !== false && days <= 7 ? 'sub-soon' : '';
     const inactiveCls = s.isActive === false ? 'sub-inactive' : '';
     const monthlyAmt = subMonthlyAmount(s);
+    // 請求サイクルプログレス計算
+    const cycleDays = s.cycle === 'yearly' ? 365 : 30;
+    const progress = s.isActive !== false
+      ? Math.round(Math.max(0, Math.min(100, (cycleDays - days) / cycleDays * 100)))
+      : 0;
+    const progCls = days <= 3 ? 'prog-urgent' : days <= 7 ? 'prog-soon' : 'prog-normal';
     return `
-<div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}">
+<div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}" style="--sub-i:${idx || 0};--sub-progress:${progress}%">
   <div class="sub-card-color-bar" style="background:${s.color || '#6366f1'}"></div>
   <div class="sub-card-icon" style="background:${s.color || '#6366f1'}22;color:${s.color || '#6366f1'}">${s.emoji || '📱'}</div>
   <div class="sub-card-body">
@@ -4270,17 +4276,18 @@ function renderSubscriptions() {
       <button class="btn-icon sub-delete-btn" data-id="${s.id}" title="削除">🗑</button>
     </div>
   </div>
+  ${s.isActive !== false ? `<div class="sub-card-progress"><div class="sub-card-progress-fill ${progCls}"></div></div>` : ''}
 </div>`;
   }
 
   const activeCards = active.length > 0
-    ? active.sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b)).map(subCard).join('')
+    ? active.sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b)).map((s, i) => subCard(s, i)).join('')
     : `<div class="sub-empty"><span class="sub-empty-icon">📱</span><p>サブスクリプションが登録されていません</p><button class="btn btn-primary" id="sub-empty-add-btn">＋ 追加する</button></div>`;
 
   const inactiveSection = inactive.length > 0 ? `
 <details class="sub-inactive-section">
   <summary>休止中のサブスク（${inactive.length}件）</summary>
-  <div class="sub-cards-list">${inactive.map(subCard).join('')}</div>
+  <div class="sub-cards-list">${inactive.map((s, i) => subCard(s, i)).join('')}</div>
 </details>` : '';
 
   return `
@@ -4290,12 +4297,12 @@ function renderSubscriptions() {
 </div>
 
 <div class="sub-summary-row">
-  <div class="card sub-summary-card">
+  <div class="card sub-summary-card sub-monthly">
     <div class="sub-summary-label">月間合計</div>
     <div class="sub-summary-amount js-countup" data-value="${monthlyTotal}">${formatMoney(monthlyTotal)}</div>
     <div class="sub-summary-sub">${active.length}件のサブスク</div>
   </div>
-  <div class="card sub-summary-card">
+  <div class="card sub-summary-card sub-yearly">
     <div class="sub-summary-label">年間換算</div>
     <div class="sub-summary-amount js-countup" data-value="${yearlyTotal}">${formatMoney(yearlyTotal)}</div>
     <div class="sub-summary-sub">月間 × 12ヶ月</div>

@@ -4049,8 +4049,22 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ============================================================
-   サブスクリプション管理 (v5.43)
+   サブスクリプション管理 (v5.43 / v5.44)
    ============================================================ */
+
+/* ── アニメーション (v5.44) ── */
+@keyframes sub-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sub-bar-fill {
+  from { width: 0; }
+  to   { width: var(--sub-progress, 0%); }
+}
+@keyframes sub-urgent-glow {
+  0%, 100% { border-color: var(--danger-border); }
+  50%       { border-color: var(--danger-text); }
+}
 
 /* ── ダッシュボードウィジェット ── */
 .sub-widget-card { }
@@ -4124,7 +4138,41 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-4);
   margin-bottom: var(--sp-4);
 }
-.sub-summary-card { text-align: center; padding: var(--sp-5) var(--sp-4); }
+.sub-summary-card {
+  text-align: center;
+  padding: var(--sp-5) var(--sp-4);
+  position: relative;
+  overflow: hidden;
+}
+/* デコレーションサークル (v5.44) */
+.sub-summary-card::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.10);
+  pointer-events: none;
+}
+.sub-summary-card::before {
+  content: '';
+  position: absolute;
+  bottom: -28px; left: -18px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  pointer-events: none;
+}
+/* グラデーション (v5.44) */
+.sub-summary-card.sub-monthly { background: linear-gradient(135deg, #4338ca 0%, #818cf8 100%); }
+.sub-summary-card.sub-yearly  { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
+.sub-summary-card.sub-monthly .sub-summary-label,
+.sub-summary-card.sub-monthly .sub-summary-sub,
+.sub-summary-card.sub-yearly  .sub-summary-label,
+.sub-summary-card.sub-yearly  .sub-summary-sub  { color: rgba(255,255,255,.80); }
+.sub-summary-card.sub-monthly .sub-summary-amount,
+.sub-summary-card.sub-yearly  .sub-summary-amount { color: #fff; }
+
 .sub-summary-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -4161,11 +4209,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
-  padding: var(--sp-3) var(--sp-4);
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.15s, transform 0.15s;
   box-shadow: var(--shadow-btn-base);
+  animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both;
 }
 .sub-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
 .sub-card-color-bar {
@@ -4247,10 +4296,30 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-1);
 }
 
+/* 請求サイクルプログレスバー (v5.44) */
+.sub-card-progress {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--border);
+}
+.sub-card-progress-fill {
+  height: 100%;
+  width: var(--sub-progress, 0%);
+  animation: sub-bar-fill 0.7s ease-out calc(var(--sub-i, 0) * 55ms + 0.2s) both;
+}
+.sub-card-progress-fill.prog-normal { background: var(--primary); opacity: 0.5; }
+.sub-card-progress-fill.prog-soon   { background: var(--warning); }
+.sub-card-progress-fill.prog-urgent { background: var(--danger-text); }
+
 /* 状態クラス */
-.sub-card.sub-urgent { border-color: var(--danger-border); }
+.sub-card.sub-urgent {
+  border-color: var(--danger-border);
+  animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both,
+             sub-urgent-glow 2.4s ease-in-out calc(var(--sub-i, 0) * 55ms + 0.4s) infinite;
+}
 .sub-card.sub-soon   { border-color: var(--warning); opacity: 0.9; }
-.sub-card.sub-inactive { opacity: 0.55; }
+.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both; }
 
 /* 空状態 */
 .sub-empty {
