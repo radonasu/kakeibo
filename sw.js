@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.8'; // v5.8: レシートOCR強化（カテゴリ自動推測・複数レシート対応・PDF対応・UI改善）
+const CACHE_NAME = 'kakeibo-v5.31'; // v5.31: 貯蓄目標管理（目標名・絵文字・カラー・目標額・積立額・期限・進捗バー・達成済みアーカイブ・ダッシュボードウィジェット）
 const ASSETS = [
   './index.html',
   './css/style.css',

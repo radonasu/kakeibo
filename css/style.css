@@ -3146,3 +3146,330 @@ body {
     margin-bottom: 16px;
   }
 }
+
+/* ============================================================
+   貯蓄目標（v5.31）
+   ============================================================ */
+
+.goal-card { padding: var(--sp-6); }
+
+.goal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  gap: var(--sp-2);
+}
+
+.goal-info {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.goal-emoji { font-size: 26px; flex-shrink: 0; line-height: 1; }
+
+.goal-name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: var(--ls-snug);
+}
+
+.goal-achieved-badge {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-badge);
+  padding: 2px 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.goal-actions { display: flex; gap: var(--sp-1); flex-shrink: 0; }
+
+/* プログレスバー */
+.goal-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+
+.goal-progress-bar-bg {
+  flex: 1;
+  height: 10px;
+  background: var(--border);
+  border-radius: var(--radius-badge);
+  overflow: hidden;
+}
+
+.goal-progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-badge);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.goal-pct {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  color: var(--text-muted);
+  min-width: 34px;
+  text-align: right;
+}
+
+/* 金額表示 */
+.goal-amounts {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: var(--fs-base);
+  margin-bottom: var(--sp-1);
+  flex-wrap: wrap;
+}
+.goal-saved  { font-weight: var(--fw-bold); color: var(--text); }
+.goal-target { font-weight: var(--fw-medium); color: var(--text-muted); }
+.goal-sep    { font-size: var(--fs-xs); color: var(--text-faint); }
+
+.goal-remaining {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.goal-remaining.goal-done-hint { color: var(--success); font-weight: var(--fw-semi); }
+
+/* 期限 */
+.goal-deadline {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-1) var(--sp-3);
+  margin-bottom: var(--sp-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.goal-deadline.over {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border-color: var(--danger-border);
+}
+.goal-monthly-target {
+  font-weight: var(--fw-semi);
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.goal-note {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  margin-bottom: var(--sp-2);
+  font-style: italic;
+}
+
+/* フッターボタン */
+.goal-card-footer {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+/* 達成済み */
+.goal-achieved { opacity: 0.8; }
+.goal-achieved-date {
+  font-size: var(--fs-xs);
+  color: var(--success);
+  margin-top: var(--sp-2);
+}
+
+/* 達成済みセクション (details) */
+.goal-achieved-section { margin-top: var(--sp-4); }
+
+.goal-achieved-summary {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--sp-2) 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  user-select: none;
+}
+.goal-achieved-summary::-webkit-details-marker { display: none; }
+.goal-achieved-summary::before {
+  content: '▶';
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
+
+.goal-achieved-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+
+/* 空状態 */
+.empty-goal-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-12) var(--sp-4);
+  text-align: center;
+  gap: var(--sp-3);
+}
+.empty-goal-icon { font-size: 56px; }
+.empty-goal-msg {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+}
+.empty-goal-sub {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-relaxed);
+}
+
+/* 絵文字ピッカー */
+.goal-emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+.goal-emoji-btn {
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 20px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.goal-emoji-btn:hover { border-color: var(--primary); transform: scale(1.1); }
+.goal-emoji-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(1.05);
+}
+
+/* カラーピッカー */
+.goal-color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.goal-color-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  padding: 0;
+}
+.goal-color-btn:hover { transform: scale(1.15); }
+.goal-color-btn.selected {
+  border-color: var(--text);
+  transform: scale(1.1);
+  outline: 2px solid var(--surface);
+  outline-offset: -4px;
+}
+
+/* 積立モーダル */
+.goal-deposit-current {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+
+/* ダッシュボード目標ウィジェット */
+.goal-dash-list { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.goal-dash-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.goal-dash-emoji { font-size: 22px; flex-shrink: 0; line-height: 1; }
+.goal-dash-info  { flex: 1; min-width: 0; }
+
+.goal-dash-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goal-dash-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.goal-dash-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: var(--radius-badge);
+  overflow: hidden;
+}
+.goal-dash-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-badge);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.goal-dash-pct {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  min-width: 28px;
+}
+.goal-dash-amount {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* btn-success */
+.btn-success { background: var(--success); color: #fff; border: none; }
+.btn-success:hover { background: #047857; }
+
+/* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
+[data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
+[data-theme="dark"] .goal-emoji-btn.selected { background: color-mix(in srgb, var(--primary) 25%, transparent); }
+[data-theme="dark"] .goal-deposit-current { background: var(--surface-2); }
+
+@media (max-width: 768px) {
+  .goal-card-footer { gap: var(--sp-2); }
+  .goal-card-footer .btn { flex: 1; justify-content: center; font-size: var(--fs-xs); }
+  .goal-deadline { flex-direction: column; align-items: flex-start; gap: 2px; }
+}

@@ -2913,6 +2913,337 @@ function bindAssets() {
 }
 
 // ============================================================
+// 貯蓄目標管理（v5.31）
+// ============================================================
+let _editingGoalId = null;
+let _depositTargetGoalId = null;
+
+function renderGoals() {
+  const goals = appData.goals || [];
+  const active = goals.filter(g => !g.achievedAt);
+  const achieved = goals.filter(g => g.achievedAt);
+  const totalTarget = active.reduce((s, g) => s + (Number(g.targetAmount) || 0), 0);
+  const totalSaved  = active.reduce((s, g) => s + (Number(g.savedAmount)  || 0), 0);
+  const overallPct  = totalTarget > 0 ? Math.min(Math.round(totalSaved / totalTarget * 100), 100) : 0;
+
+  function goalCard(g, isDone) {
+    const target    = Number(g.targetAmount) || 0;
+    const saved     = Number(g.savedAmount)  || 0;
+    const pct       = target > 0 ? Math.min(Math.round(saved / target * 100), 100) : 0;
+    const remaining = Math.max(target - saved, 0);
+    const color     = g.color || '#6366f1';
+    const emoji     = g.emoji || '🎯';
+
+    let deadlineHtml = '';
+    if (g.deadline && !isDone) {
+      const [dy, dm] = g.deadline.split('-');
+      const now = new Date();
+      const dlDate = new Date(Number(dy), Number(dm) - 1, 1);
+      const monthsLeft = (dlDate.getFullYear() - now.getFullYear()) * 12 + (dlDate.getMonth() - now.getMonth());
+      if (monthsLeft > 0 && remaining > 0) {
+        const monthly = Math.ceil(remaining / monthsLeft);
+        deadlineHtml = `<div class="goal-deadline">
+          <span class="goal-deadline-label">📅 ${dy}年${Number(dm)}月まで (残り${monthsLeft}ヶ月)</span>
+          <span class="goal-monthly-target">月々 ${formatMoney(monthly)} で達成！</span>
+        </div>`;
+      } else if (monthsLeft <= 0) {
+        deadlineHtml = `<div class="goal-deadline over">⚠️ 期限の ${dy}年${Number(dm)}月 を過ぎています</div>`;
+      } else {
+        deadlineHtml = `<div class="goal-deadline"><span class="goal-deadline-label">📅 ${dy}年${Number(dm)}月まで (残り${monthsLeft}ヶ月)</span></div>`;
+      }
+    }
+
+    if (isDone) {
+      return `<div class="card goal-card goal-achieved">
+  <div class="goal-card-header">
+    <div class="goal-info">
+      <span class="goal-emoji">${emoji}</span>
+      <span class="goal-name">${esc2(g.name)}</span>
+      <span class="goal-achieved-badge">✅ 達成</span>
+    </div>
+    <div class="goal-actions">
+      <button class="btn-icon goal-reopen" data-id="${g.id}" title="再開">🔄</button>
+      <button class="btn-icon goal-delete" data-id="${g.id}" title="削除">🗑️</button>
+    </div>
+  </div>
+  <div class="goal-progress-wrap">
+    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:100%;background:var(--success)"></div></div>
+    <span class="goal-pct">100%</span>
+  </div>
+  <div class="goal-amounts">
+    <span class="goal-saved">${formatMoney(saved)}</span><span class="goal-sep"> 達成 / </span><span class="goal-target">${formatMoney(target)}</span><span class="goal-sep"> 目標</span>
+  </div>
+  <div class="goal-achieved-date">🎉 達成日: ${formatDateLong(g.achievedAt)}</div>
+  ${g.note ? `<div class="goal-note">${esc2(g.note)}</div>` : ''}
+</div>`;
+    }
+    return `<div class="card goal-card">
+  <div class="goal-card-header">
+    <div class="goal-info">
+      <span class="goal-emoji">${emoji}</span>
+      <span class="goal-name">${esc2(g.name)}</span>
+    </div>
+    <div class="goal-actions">
+      <button class="btn-icon goal-edit" data-id="${g.id}" title="編集">✏️</button>
+      <button class="btn-icon goal-delete" data-id="${g.id}" title="削除">🗑️</button>
+    </div>
+  </div>
+  <div class="goal-progress-wrap">
+    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    <span class="goal-pct">${pct}%</span>
+  </div>
+  <div class="goal-amounts">
+    <span class="goal-saved">${formatMoney(saved)}</span><span class="goal-sep"> 貯まった / </span><span class="goal-target">${formatMoney(target)}</span><span class="goal-sep"> 目標</span>
+  </div>
+  <div class="goal-remaining${remaining === 0 ? ' goal-done-hint' : ''}">
+    ${remaining === 0 ? '🎉 目標額に達しました！達成済みにしましょう' : `残り ${formatMoney(remaining)}`}
+  </div>
+  ${deadlineHtml}
+  ${g.note ? `<div class="goal-note">${esc2(g.note)}</div>` : ''}
+  <div class="goal-card-footer">
+    <button class="btn btn-sm goal-deposit" data-id="${g.id}">💰 積立を追加</button>
+    <button class="btn btn-sm goal-achieve" data-id="${g.id}">✅ 達成済みにする</button>
+  </div>
+</div>`;
+  }
+
+  const activeCards   = active.map(g => goalCard(g, false)).join('');
+  const achievedCards = achieved.length > 0 ? `
+<details class="goal-achieved-section">
+  <summary class="goal-achieved-summary">🏆 達成済み（${achieved.length}件）</summary>
+  <div class="goal-achieved-list">${achieved.map(g => goalCard(g, true)).join('')}</div>
+</details>` : '';
+
+  const emptyState = goals.length === 0 ? `
+<div class="empty-goal-state">
+  <div class="empty-goal-icon">🎯</div>
+  <div class="empty-goal-msg">貯蓄目標がまだありません</div>
+  <div class="empty-goal-sub">旅行・車・家電など、目標を設定して<br>モチベーションを高めましょう！</div>
+</div>` : '';
+
+  const summarySection = active.length > 0 ? `
+<div class="summary-cards">
+  <div class="card summary-card">
+    <div class="summary-label">🎯 進行中の目標</div>
+    <div class="summary-amount">${active.length}件</div>
+  </div>
+  <div class="card summary-card income">
+    <div class="summary-label">合計積立額</div>
+    <div class="summary-amount js-countup" data-value="${totalSaved}">${formatMoney(totalSaved)}</div>
+  </div>
+  <div class="card summary-card ${overallPct >= 100 ? 'positive' : 'balance'}">
+    <div class="summary-label">総合達成率</div>
+    <div class="summary-amount">${overallPct}%</div>
+  </div>
+</div>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">🎯 貯蓄目標</h1>
+  <button class="btn btn-primary" id="btn-add-goal">＋ 目標を追加</button>
+</div>
+
+${summarySection}
+${emptyState}
+${activeCards}
+${achievedCards}
+
+<!-- 目標追加/編集モーダル -->
+<div class="modal-overlay" id="goal-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="goal-modal-title">目標を追加</h3>
+      <button class="modal-close" id="goal-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">絵文字</label>
+        <div class="goal-emoji-picker" id="goal-emoji-picker">
+          ${GOAL_EMOJIS.map(e => `<button type="button" class="goal-emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+        </div>
+        <input type="hidden" id="goal-emoji-val" value="🎯">
+      </div>
+      <div class="form-group">
+        <label class="form-label">目標名 <span class="required">*</span></label>
+        <input type="text" id="goal-name" class="form-input" placeholder="例：夏の家族旅行" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label class="form-label">目標金額 <span class="required">*</span></label>
+        <input type="number" id="goal-target" class="form-input" placeholder="200000" min="1" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">現在の積立額</label>
+        <input type="number" id="goal-saved" class="form-input" placeholder="0" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">期限（任意）</label>
+        <input type="month" id="goal-deadline" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">カラー</label>
+        <div class="goal-color-picker" id="goal-color-picker">
+          ${GOAL_COLORS.map(c => `<button type="button" class="goal-color-btn" data-color="${c}" style="background:${c}"></button>`).join('')}
+        </div>
+        <input type="hidden" id="goal-color-val" value="#6366f1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ（任意）</label>
+        <input type="text" id="goal-note" class="form-input" placeholder="例：ハワイ旅行の費用" maxlength="50">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="goal-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="goal-modal-save">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 積立追加モーダル -->
+<div class="modal-overlay" id="goal-deposit-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="goal-deposit-title">積立を追加</h3>
+      <button class="modal-close" id="goal-deposit-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="goal-deposit-current" id="goal-deposit-current"></p>
+      <div class="form-group">
+        <label class="form-label">追加する金額</label>
+        <input type="number" id="goal-deposit-amount" class="form-input" placeholder="0" min="1" step="1">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="goal-deposit-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="goal-deposit-save">追加</button>
+    </div>
+  </div>
+</div>`;
+}
+
+function openGoalModal(goalId) {
+  _editingGoalId = goalId || null;
+  const goal = goalId ? (appData.goals || []).find(g => g.id === goalId) : null;
+  document.getElementById('goal-modal-title').textContent = goal ? '目標を編集' : '目標を追加';
+  document.getElementById('goal-name').value     = goal ? goal.name : '';
+  document.getElementById('goal-target').value   = goal ? goal.targetAmount : '';
+  document.getElementById('goal-saved').value    = goal ? (goal.savedAmount || '') : '';
+  document.getElementById('goal-deadline').value = goal ? (goal.deadline || '') : '';
+  document.getElementById('goal-note').value     = goal ? (goal.note || '') : '';
+  const emojiVal = goal ? (goal.emoji || '🎯') : '🎯';
+  const colorVal = goal ? (goal.color || GOAL_COLORS[0]) : GOAL_COLORS[0];
+  document.getElementById('goal-emoji-val').value = emojiVal;
+  document.getElementById('goal-color-val').value = colorVal;
+
+  document.querySelectorAll('.goal-emoji-btn').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.emoji === emojiVal);
+    btn.onclick = () => {
+      document.querySelectorAll('.goal-emoji-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('goal-emoji-val').value = btn.dataset.emoji;
+    };
+  });
+  document.querySelectorAll('.goal-color-btn').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.color === colorVal);
+    btn.onclick = () => {
+      document.querySelectorAll('.goal-color-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('goal-color-val').value = btn.dataset.color;
+    };
+  });
+
+  const close = () => hideModal('goal-modal');
+  on('goal-modal-close',  'click', close);
+  on('goal-modal-cancel', 'click', close);
+  on('goal-modal-save',   'click', () => {
+    const name        = document.getElementById('goal-name').value.trim();
+    const targetAmount = Number(document.getElementById('goal-target').value);
+    const savedAmount  = Number(document.getElementById('goal-saved').value) || 0;
+    const deadline    = document.getElementById('goal-deadline').value;
+    const note        = document.getElementById('goal-note').value.trim();
+    const emoji       = document.getElementById('goal-emoji-val').value;
+    const color       = document.getElementById('goal-color-val').value;
+    if (!name)                { showToast('目標名を入力してください', 'error'); return; }
+    if (!targetAmount || targetAmount <= 0) { showToast('目標金額を入力してください', 'error'); return; }
+    const fields = { name, targetAmount, savedAmount, deadline, note, emoji, color };
+    if (_editingGoalId) {
+      updateGoal(_editingGoalId, fields);
+      showToast('目標を更新しました', 'success');
+    } else {
+      addGoal(fields);
+      showToast('目標を追加しました', 'success');
+    }
+    hideModal('goal-modal');
+    renderCurrentPage();
+  });
+  showModal('goal-modal');
+}
+
+function openGoalDepositModal(goalId) {
+  _depositTargetGoalId = goalId;
+  const goal = (appData.goals || []).find(g => g.id === goalId);
+  if (!goal) return;
+  const current = Number(goal.savedAmount) || 0;
+  const target  = Number(goal.targetAmount) || 0;
+  document.getElementById('goal-deposit-title').textContent = `「${goal.name}」に積立`;
+  document.getElementById('goal-deposit-current').textContent =
+    `現在の積立額: ${formatMoney(current)} / ${formatMoney(target)}`;
+  document.getElementById('goal-deposit-amount').value = '';
+
+  const close = () => hideModal('goal-deposit-modal');
+  on('goal-deposit-close',  'click', close);
+  on('goal-deposit-cancel', 'click', close);
+  on('goal-deposit-save',   'click', () => {
+    const amount = Number(document.getElementById('goal-deposit-amount').value);
+    if (!amount || amount <= 0) { showToast('金額を入力してください', 'error'); return; }
+    const newSaved = current + amount;
+    updateGoal(_depositTargetGoalId, { savedAmount: newSaved });
+    hideModal('goal-deposit-modal');
+    renderCurrentPage();
+    if (newSaved >= target) {
+      showToast(`🎉 目標「${goal.name}」達成！おめでとうございます！`, 'success', 5000);
+    } else {
+      showToast(`${formatMoney(amount)} 積立しました！`, 'success');
+    }
+  });
+  showModal('goal-deposit-modal');
+}
+
+function bindGoals() {
+  document.querySelectorAll('.js-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
+
+  on('btn-add-goal', 'click', () => openGoalModal(null));
+
+  document.querySelectorAll('.goal-edit').forEach(btn =>
+    btn.addEventListener('click', () => openGoalModal(btn.dataset.id)));
+
+  document.querySelectorAll('.goal-delete').forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (!confirm('この目標を削除しますか？')) return;
+      deleteGoal(btn.dataset.id);
+      renderCurrentPage();
+      showToast('目標を削除しました');
+    }));
+
+  document.querySelectorAll('.goal-deposit').forEach(btn =>
+    btn.addEventListener('click', () => openGoalDepositModal(btn.dataset.id)));
+
+  document.querySelectorAll('.goal-achieve').forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (!confirm('この目標を達成済みにしますか？')) return;
+      updateGoal(btn.dataset.id, { achievedAt: todayStr() });
+      renderCurrentPage();
+      showToast('🎉 目標達成おめでとうございます！', 'success');
+    }));
+
+  document.querySelectorAll('.goal-reopen').forEach(btn =>
+    btn.addEventListener('click', () => {
+      updateGoal(btn.dataset.id, { achievedAt: null });
+      renderCurrentPage();
+      showToast('目標を再開しました');
+    }));
+}
+
+// ============================================================
 // サイドバー ユーザー表示
 // ============================================================
 function renderSidebarUser() {
