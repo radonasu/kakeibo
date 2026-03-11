@@ -2883,3 +2883,64 @@ body {
 @media (max-width: 600px) {
   .yoy-summary { flex-direction: column; gap: var(--sp-2); }
 }
+
+/* ── セクションタブナビ (v5.28) ───────────────────────── */
+.section-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--sp-8));
+  padding: 0 var(--sp-8);
+  margin-bottom: var(--sp-6);
+  box-shadow: var(--shadow-sm);
+}
+.section-tabs::-webkit-scrollbar { display: none; }
+
+.section-tab {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.section-tab:hover {
+  color: var(--text);
+  border-bottom-color: var(--border-strong);
+}
+.section-tab.is-active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: var(--fw-bold);
+}
+.section-tab .tab-icon { font-size: 13px; }
+
+[data-theme="dark"] .section-tabs {
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+@media (max-width: 768px) {
+  .section-tabs {
+    top: 56px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+}

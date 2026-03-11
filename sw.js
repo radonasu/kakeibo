@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.27'; // v5.27: 前年比較レポート（月別支出グラフ 今年vs前年 grouped bar・年間差額サマリー・月別増減テーブル）
+const CACHE_NAME = 'kakeibo-v5.28'; // v5.28: レポートページ スティッキーセクションタブナビ（6セクションタブ・IntersectionObserver連動ハイライト・スムーズスクロール）
 const ASSETS = [
   './index.html',
   './css/style.css',

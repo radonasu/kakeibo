@@ -883,7 +883,16 @@ function renderReports() {
   </div>
 </div>
 
-<div class="charts-row">
+<div class="section-tabs" id="section-tabs">
+  <button class="section-tab is-active" data-target="sec-monthly-charts"><span class="tab-icon">📊</span> 月別収支</button>
+  <button class="section-tab" data-target="sec-monthly-table"><span class="tab-icon">📋</span> 月別表</button>
+  <button class="section-tab" data-target="sec-category"><span class="tab-icon">🏷️</span> カテゴリ</button>
+  <button class="section-tab" data-target="sec-payment"><span class="tab-icon">💳</span> 支払方法</button>
+  ${appData.members && appData.members.length > 0 ? '<button class="section-tab" data-target="sec-member"><span class="tab-icon">👥</span> メンバー</button>' : ''}
+  <button class="section-tab" data-target="sec-yoy"><span class="tab-icon">📅</span> 前年比較</button>
+</div>
+
+<div id="sec-monthly-charts" class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">月別収支</h3>
     <div class="chart-wrap" style="height:240px">
@@ -898,7 +907,7 @@ function renderReports() {
   </div>
 </div>
 
-<div class="card">
+<div id="sec-monthly-table" class="card">
   <div class="card-header-row">
     <h3 class="card-title">月別収支表</h3>
     <button class="btn btn-ghost btn-sm" id="export-year-csv">年間CSVダウンロード</button>
@@ -919,7 +928,7 @@ function renderReports() {
   </div>
 </div>
 
-<div class="charts-row">
+<div id="sec-category" class="charts-row">
   <div class="card" style="flex:1">
     <h3 class="card-title">支出カテゴリ詳細</h3>
     <div class="chart-wrap" style="height:300px">
@@ -928,7 +937,7 @@ function renderReports() {
   </div>
 </div>
 
-<div class="charts-row">
+<div id="sec-payment" class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">💳 支払方法別支出</h3>
     <div class="chart-wrap" style="height:260px">
@@ -972,7 +981,7 @@ function renderReports() {
 </div>
 
 ${(appData.members && appData.members.length > 0) ? `
-<div class="card">
+<div id="sec-member" class="card">
   <h3 class="card-title">👥 メンバー別収支分析</h3>
   <div class="chart-wrap" style="height:${Math.max(140, appData.members.length * 60)}px;margin-bottom:var(--sp-4)">
     <canvas id="report-member-bar"></canvas>
@@ -1021,7 +1030,7 @@ ${(appData.members && appData.members.length > 0) ? `
   </div>
 </div>` : ''}
 
-<div class="card">
+<div id="sec-yoy" class="card">
   <h3 class="card-title">📅 前年比較（${year}年 vs ${prevYear}年）</h3>
   <div class="yoy-summary">
     <div class="yoy-summary-item">
@@ -1093,6 +1102,34 @@ function bindReports() {
     renderMemberExpenseChart('report-member-bar', allTxs);
     renderYoYChart('report-yoy', year);
   }, 50);
+
+  // セクションタブナビ (v5.28)
+  const tabsEl = document.getElementById('section-tabs');
+  if (tabsEl) {
+    const setActiveTab = id => {
+      tabsEl.querySelectorAll('.section-tab').forEach(tab =>
+        tab.classList.toggle('is-active', tab.dataset.target === id)
+      );
+      const active = tabsEl.querySelector(`.section-tab[data-target="${id}"]`);
+      if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    };
+
+    tabsEl.querySelectorAll('.section-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const sec = document.getElementById(tab.dataset.target);
+        if (!sec) return;
+        const mhH = document.getElementById('mobile-header')?.offsetHeight || 0;
+        const y = sec.getBoundingClientRect().top + window.scrollY - mhH - tabsEl.offsetHeight - 8;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        setActiveTab(tab.dataset.target);
+      });
+    });
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) setActiveTab(e.target.id); });
+    }, { rootMargin: '0px 0px -60% 0px', threshold: 0 });
+    document.querySelectorAll('[id^="sec-"]').forEach(s => io.observe(s));
+  }
 }
 
 // ============================================================
