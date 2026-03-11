@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=5.23">
+  <link rel="stylesheet" href="css/style.css?v=5.24">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -96,7 +96,31 @@
     </header>
 
     <main id="main-content">
-      <p style="color:#64748b;padding:40px;text-align:center">読み込み中...</p>
+      <!-- スケルトンローディング（JS初期化前に表示）v5.24 -->
+      <div class="sk-header">
+        <div class="sk-bone" style="width:180px;height:34px;border-radius:10px"></div>
+        <div class="sk-header-btns">
+          <div class="sk-bone sk-d1" style="width:80px;height:36px;border-radius:10px"></div>
+          <div class="sk-bone sk-d2" style="width:100px;height:36px;border-radius:10px"></div>
+        </div>
+      </div>
+      <div class="sk-summary-grid">
+        <div class="sk-bone" style="height:108px;border-radius:14px"></div>
+        <div class="sk-bone sk-d1" style="height:108px;border-radius:14px"></div>
+        <div class="sk-bone sk-d2" style="height:108px;border-radius:14px"></div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-bone" style="width:140px;height:20px;margin-bottom:16px;border-radius:6px"></div>
+        <div class="sk-bone sk-d1" style="width:100%;height:200px;border-radius:8px"></div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-bone" style="width:160px;height:20px;margin-bottom:16px;border-radius:6px"></div>
+        <div class="sk-bone sk-d1" style="width:100%;height:44px;border-radius:8px;margin-bottom:8px"></div>
+        <div class="sk-bone sk-d2" style="width:100%;height:44px;border-radius:8px;margin-bottom:8px"></div>
+        <div class="sk-bone sk-d3" style="width:100%;height:44px;border-radius:8px;margin-bottom:8px"></div>
+        <div class="sk-bone sk-d4" style="width:100%;height:44px;border-radius:8px;margin-bottom:8px"></div>
+        <div class="sk-bone sk-d5" style="width:100%;height:44px;border-radius:8px"></div>
+      </div>
     </main>
 
   </div>
@@ -130,14 +154,14 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/config.js?v=5.23"></script>
-<script src="js/data.js?v=5.23"></script>
-<script src="js/export.js?v=5.23"></script>
-<script src="js/charts.js?v=5.23"></script>
-<script src="js/sync.js?v=5.23"></script>
-<script src="js/app.js?v=5.23"></script>
+<script src="js/config.js?v=5.24"></script>
+<script src="js/data.js?v=5.24"></script>
+<script src="js/export.js?v=5.24"></script>
+<script src="js/charts.js?v=5.24"></script>
+<script src="js/sync.js?v=5.24"></script>
+<script src="js/app.js?v=5.24"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=5.23"></script>
+<script src="js/pwa.js?v=5.24"></script>
 
 </body>
 </html>

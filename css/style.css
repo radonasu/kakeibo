@@ -2678,7 +2678,81 @@ body {
   }
 }
 
+/* ── スケルトンローディング (v5.24) ──────────────────── */
+@keyframes sk-shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position:  800px 0; }
+}
+
+/* ベーススケルトン骨格 */
+.sk-bone {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 0%,
+    #f1f5f9 40%,
+    #e2e8f0 80%
+  );
+  background-size: 1600px 100%;
+  animation: sk-shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+/* スケルトンカードコンテナ（シマーなし）*/
+.sk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-4);
+}
+
+/* ページヘッダー行 */
+.sk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+  gap: var(--sp-3);
+}
+.sk-header-btns { display: flex; gap: var(--sp-2); }
+
+/* サマリーカードグリッド */
+.sk-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+
+/* スタッガードアニメーション（遅延）*/
+.sk-d1 { animation-delay: .10s; }
+.sk-d2 { animation-delay: .20s; }
+.sk-d3 { animation-delay: .30s; }
+.sk-d4 { animation-delay: .40s; }
+.sk-d5 { animation-delay: .50s; }
+
+/* スケルトンレスポンシブ */
+@media (max-width: 768px) {
+  .sk-summary-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .sk-summary-grid { grid-template-columns: 1fr; }
+}
+
 /* ── ダークモード対応 ─────────────────────────────────── */
+[data-theme="dark"] .sk-bone {
+  background: linear-gradient(
+    90deg,
+    #1e293b 0%,
+    #2d3f55 40%,
+    #1e293b 80%
+  );
+  background-size: 1600px 100%;
+  animation: sk-shimmer 1.6s ease-in-out infinite;
+}
+
 [data-theme="dark"] #sidebar-overlay {
   background: rgba(0,0,0,.6);
 }
