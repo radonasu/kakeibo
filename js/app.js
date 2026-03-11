@@ -10,6 +10,8 @@ const appState = {
   editingTxId: null,
   templateData: null,  // テンプレートからの入力時に使用
   reportYear: new Date().getFullYear(),
+  calendarMonth: currentYearMonth(),  // v5.38: カレンダービュー
+  calendarDay: null,                  // v5.38: 選択中の日付
 };
 
 // ============================================================
@@ -120,6 +122,7 @@ function renderCurrentPage() {
     case 'settings':     main.innerHTML = renderSettings(); bindSettings(); break;
     case 'assets':       main.innerHTML = renderAssets(); bindAssets(); break;
     case 'goals':        main.innerHTML = renderGoals(); bindGoals(); break;
+    case 'calendar':     main.innerHTML = renderCalendar(); bindCalendar(); break;  // v5.38
   }
 }
 
@@ -3319,6 +3322,210 @@ function bindGoals() {
       renderCurrentPage();
       showToast('目標を再開しました');
     }));
+}
+
+// ============================================================
+// カレンダービュー (v5.38)
+// ============================================================
+function renderCalendar() {
+  const ym = appState.calendarMonth;
+  const [year, month] = ym.split('-').map(Number);
+
+  // その月の全取引
+  const txs = getTransactionsByMonth(ym);
+  const totalIncome  = calcTotal(txs, 'income');
+  const totalExpense = calcTotal(txs, 'expense');
+  const totalBalance = totalIncome - totalExpense;
+
+  // 日別集計マップ
+  const dayMap = {};
+  txs.forEach(t => {
+    if (!t.date) return;
+    if (!dayMap[t.date]) dayMap[t.date] = { income: 0, expense: 0, txs: [] };
+    dayMap[t.date][t.type] = (dayMap[t.date][t.type] || 0) + (Number(t.amount) || 0);
+    dayMap[t.date].txs.push(t);
+  });
+
+  // ヒートマップ: 最大支出
+  const maxExpense = Math.max(1, ...Object.values(dayMap).map(d => d.expense || 0));
+
+  // カレンダーグリッド
+  const firstDay = new Date(year, month - 1, 1);
+  const lastDay  = new Date(year, month, 0);
+  const startDow = firstDay.getDay(); // 0=日
+  const totalDays = lastDay.getDate();
+  const today = todayStr();
+
+  const DOW = ['日', '月', '火', '水', '木', '金', '土'];
+
+  let cells = '';
+  // 前月の空セル
+  for (let i = 0; i < startDow; i++) {
+    cells += `<div class="cal-cell cal-empty"></div>`;
+  }
+  // 日付セル
+  for (let d = 1; d <= totalDays; d++) {
+    const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const data = dayMap[dateStr];
+    const isToday = dateStr === today;
+    const isSelected = appState.calendarDay === dateStr;
+    const heat = data ? Math.min(4, Math.ceil((data.expense / maxExpense) * 4)) : 0;
+
+    let inner = `<div class="cal-date-num ${isToday ? 'today' : ''}">${d}</div>`;
+    if (data) {
+      if (data.income  > 0) inner += `<div class="cal-amount inc">+${formatMoney(data.income)}</div>`;
+      if (data.expense > 0) inner += `<div class="cal-amount exp">-${formatMoney(data.expense)}</div>`;
+    }
+    cells += `<div class="cal-cell${isSelected ? ' selected' : ''} heat-${heat}" data-date="${dateStr}">${inner}</div>`;
+  }
+
+  const monthName = `${year}年${month}月`;
+  const balSign = totalBalance >= 0 ? '+' : '';
+  const balCls  = totalBalance >= 0 ? 'income' : 'expense';
+
+  return `
+    <div class="cal-page">
+      <div class="cal-header-row">
+        <h1 class="page-title cal-title">${monthName}</h1>
+        <div class="cal-nav-btns">
+          <button class="btn btn-ghost cal-nav-btn" id="cal-prev" title="前月">&#8249;</button>
+          <button class="btn btn-ghost cal-nav-btn" id="cal-today-btn">今月</button>
+          <button class="btn btn-ghost cal-nav-btn" id="cal-next" title="翌月">&#8250;</button>
+        </div>
+      </div>
+
+      <div class="cal-summary-row">
+        <div class="cal-sum-item">
+          <span class="cal-sum-label">収入</span>
+          <span class="cal-sum-value income">+${formatMoney(totalIncome)}</span>
+        </div>
+        <div class="cal-sum-item">
+          <span class="cal-sum-label">支出</span>
+          <span class="cal-sum-value expense">-${formatMoney(totalExpense)}</span>
+        </div>
+        <div class="cal-sum-item">
+          <span class="cal-sum-label">収支</span>
+          <span class="cal-sum-value ${balCls}">${balSign}${formatMoney(totalBalance)}</span>
+        </div>
+      </div>
+
+      <div class="cal-grid-wrap">
+        <div class="cal-dow-row">
+          ${DOW.map((d, i) => `<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join('')}
+        </div>
+        <div class="cal-grid" id="cal-grid">${cells}</div>
+      </div>
+
+      <div class="cal-day-panel" id="cal-day-panel"${appState.calendarDay ? '' : ' style="display:none"'}>
+        <div class="cal-day-panel-header">
+          <span class="cal-day-panel-title" id="cal-panel-title"></span>
+          <button class="btn-icon cal-panel-close" id="cal-panel-close">✕</button>
+        </div>
+        <div class="cal-day-panel-body" id="cal-panel-body"></div>
+        <div class="cal-day-panel-footer">
+          <button class="btn btn-primary btn-sm" id="cal-add-tx">＋ この日に追加</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderDayPanel(dateStr) {
+  const panel = document.getElementById('cal-day-panel');
+  const title = document.getElementById('cal-panel-title');
+  const body  = document.getElementById('cal-panel-body');
+  if (!panel || !dateStr) return;
+
+  const [, m, d] = dateStr.split('-');
+  title.textContent = `${parseInt(m)}月${parseInt(d)}日`;
+
+  const txs = appData.transactions.filter(t => t.date === dateStr);
+
+  if (txs.length === 0) {
+    body.innerHTML = '<div class="cal-panel-empty">この日の取引はありません</div>';
+  } else {
+    body.innerHTML = txs.map(t => {
+      const cat = getCategoryById(t.categoryId);
+      const mem = getMemberById(t.memberId);
+      const isIncome = t.type === 'income';
+      return `
+        <div class="cal-panel-tx">
+          <div class="cal-panel-tx-info">
+            <span class="cal-panel-cat">${cat ? esc2(cat.name) : '—'}</span>
+            ${t.memo ? `<span class="cal-panel-memo">${esc2(t.memo)}</span>` : ''}
+            ${mem  ? `<span class="cal-panel-mem">${esc2(mem.name)}</span>` : ''}
+          </div>
+          <span class="cal-panel-amt ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</span>
+        </div>`;
+    }).join('');
+  }
+
+  panel.style.display = 'block';
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+function bindCalendar() {
+  // 月ナビ
+  document.getElementById('cal-prev')?.addEventListener('click', () => {
+    const [y, m] = appState.calendarMonth.split('-').map(Number);
+    const nd = new Date(y, m - 2, 1);
+    appState.calendarMonth = nd.getFullYear() + '-' + String(nd.getMonth() + 1).padStart(2, '0');
+    appState.calendarDay = null;
+    navigate('calendar');
+  });
+  document.getElementById('cal-next')?.addEventListener('click', () => {
+    const [y, m] = appState.calendarMonth.split('-').map(Number);
+    const nd = new Date(y, m, 1);
+    appState.calendarMonth = nd.getFullYear() + '-' + String(nd.getMonth() + 1).padStart(2, '0');
+    appState.calendarDay = null;
+    navigate('calendar');
+  });
+  document.getElementById('cal-today-btn')?.addEventListener('click', () => {
+    appState.calendarMonth = currentYearMonth();
+    appState.calendarDay = null;
+    navigate('calendar');
+  });
+
+  // 日付セルクリック
+  document.getElementById('cal-grid')?.addEventListener('click', e => {
+    const cell = e.target.closest('.cal-cell[data-date]');
+    if (!cell) return;
+    const dateStr = cell.dataset.date;
+
+    // 同じ日を再クリックで閉じる
+    if (appState.calendarDay === dateStr) {
+      appState.calendarDay = null;
+      cell.classList.remove('selected');
+      document.getElementById('cal-day-panel').style.display = 'none';
+      return;
+    }
+
+    document.querySelectorAll('.cal-cell').forEach(c => c.classList.remove('selected'));
+    cell.classList.add('selected');
+    appState.calendarDay = dateStr;
+    renderDayPanel(dateStr);
+  });
+
+  // パネルを閉じる
+  document.getElementById('cal-panel-close')?.addEventListener('click', () => {
+    appState.calendarDay = null;
+    document.getElementById('cal-day-panel').style.display = 'none';
+    document.querySelectorAll('.cal-cell').forEach(c => c.classList.remove('selected'));
+  });
+
+  // 選択日に追加
+  document.getElementById('cal-add-tx')?.addEventListener('click', () => {
+    const dateStr = appState.calendarDay;
+    if (!dateStr) return;
+    openTxModal(null, null);
+    // モーダルが描画された後に日付を上書き
+    setTimeout(() => {
+      const di = document.getElementById('tx-date');
+      if (di) di.value = dateStr;
+    }, 30);
+  });
+
+  // 初期パネル表示
+  if (appState.calendarDay) renderDayPanel(appState.calendarDay);
 }
 
 // ============================================================

@@ -342,10 +342,12 @@ select:focus:not(:focus-visible) {
 #main-wrapper {
   margin-left: var(--sidebar-w);
   flex: 1;
+  min-width: 0;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* モバイルヘッダー */
@@ -3601,4 +3603,280 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .goal-card-footer { gap: var(--sp-2); }
   .goal-card-footer .btn { flex: 1; justify-content: center; font-size: var(--fs-xs); }
   .goal-deadline { flex-direction: column; align-items: flex-start; gap: 2px; }
+}
+
+/* ── カレンダービュー (v5.38) ──────────────────────────────── */
+.cal-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.cal-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.cal-title { margin: 0; }
+
+.cal-nav-btns { display: flex; gap: var(--sp-2); }
+
+.cal-nav-btn {
+  min-width: 36px;
+  height: 36px;
+  font-size: var(--fs-lg);
+  padding: 0 var(--sp-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* サマリーバー */
+.cal-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.cal-sum-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cal-sum-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+
+.cal-sum-value {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--text);
+}
+.cal-sum-value.income  { color: var(--success); }
+.cal-sum-value.expense { color: var(--expense, #ef4444); }
+
+/* カレンダーグリッド */
+.cal-grid-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cal-dow-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.cal-dow {
+  text-align: center;
+  padding: var(--sp-2) 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+}
+.cal-dow.sun { color: #ef4444; }
+.cal-dow.sat { color: var(--primary); }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cal-cell {
+  min-height: 72px;
+  padding: var(--sp-1) var(--sp-2);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: relative;
+  overflow: hidden;
+}
+.cal-cell:nth-child(7n) { border-right: none; }
+.cal-cell.cal-empty {
+  cursor: default;
+  background: var(--surface-2);
+  opacity: 0.5;
+}
+
+/* 支出ヒートマップ */
+.cal-cell.heat-1 { background: color-mix(in srgb, #ef4444  8%, var(--surface)); }
+.cal-cell.heat-2 { background: color-mix(in srgb, #ef4444 18%, var(--surface)); }
+.cal-cell.heat-3 { background: color-mix(in srgb, #ef4444 30%, var(--surface)); }
+.cal-cell.heat-4 { background: color-mix(in srgb, #ef4444 44%, var(--surface)); }
+
+.cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
+.cal-cell.selected {
+  background: var(--primary-light);
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.cal-date-num {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cal-date-num.today {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: var(--fw-bold);
+}
+
+.cal-amount {
+  font-size: 9px;
+  font-weight: var(--fw-semi);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cal-amount.inc { color: var(--success); }
+.cal-amount.exp { color: #ef4444; }
+
+/* 日別詳細パネル */
+.cal-day-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cal-day-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.cal-day-panel-title {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--text);
+}
+
+.cal-panel-close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-btn, 8px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm);
+}
+.cal-panel-close:hover { background: var(--surface-hover); }
+
+.cal-day-panel-body {
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.cal-day-panel-footer {
+  padding: var(--sp-3) var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+
+.cal-panel-tx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface-2);
+  border-radius: var(--radius-btn, 8px);
+  border: 1px solid var(--border);
+}
+
+.cal-panel-tx-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cal-panel-cat {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+}
+
+.cal-panel-memo {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-panel-mem {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+}
+
+.cal-panel-amt {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+.cal-panel-amt.income  { color: var(--success); }
+.cal-panel-amt.expense { color: #ef4444; }
+
+.cal-panel-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--sp-5) 0;
+}
+
+/* ダークモード */
+[data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, #ef4444 12%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, #ef4444 22%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, #ef4444 35%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, #ef4444 50%, var(--surface)); }
+[data-theme="dark"] .cal-cell.selected {
+  background: color-mix(in srgb, var(--primary) 25%, var(--surface));
+}
+
+/* モバイル */
+@media (max-width: 768px) {
+  .cal-cell         { min-height: 52px; padding: 3px 4px; }
+  .cal-amount       { font-size: 8px; }
+  .cal-date-num     { font-size: var(--fs-xs); width: 20px; height: 20px; }
+  .cal-sum-item     { padding: var(--sp-2) var(--sp-3); }
+  .cal-sum-value    { font-size: var(--fs-sm); }
+  .cal-sum-label    { font-size: 10px; }
 }
