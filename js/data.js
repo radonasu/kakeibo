@@ -5,7 +5,8 @@
 const ACCOUNTS_META_KEY  = 'kakeibo_accounts_v1';
 const ACTIVE_ACCOUNT_KEY = 'kakeibo_active_v1';
 const OLD_STORAGE_KEY    = 'kakeibo_v1'; // 旧キー（移行用）
-const FX_RATES_KEY       = 'kakeibo_fx_rates_v1'; // 為替レート（グローバル）
+const FX_RATES_KEY         = 'kakeibo_fx_rates_v1'; // 為替レート（グローバル）
+const FX_RATES_UPDATED_KEY = 'kakeibo_fx_updated_v1'; // 為替レート最終自動取得日時
 
 // サポート通貨定義
 const CURRENCIES = [
@@ -41,6 +42,34 @@ function getExchangeRates() {
 
 function saveExchangeRates(rates) {
   localStorage.setItem(FX_RATES_KEY, JSON.stringify(rates));
+}
+
+function getFXRatesUpdatedAt() {
+  return localStorage.getItem(FX_RATES_UPDATED_KEY) || null;
+}
+
+function saveFXRatesUpdatedAt(isoStr) {
+  localStorage.setItem(FX_RATES_UPDATED_KEY, isoStr);
+}
+
+// Frankfurter.app から最新レートを取得して保存（USDベース→JPY換算）
+async function fetchAndSaveExchangeRates() {
+  const codes = CURRENCIES.filter(c => c.code !== 'JPY').map(c => c.code);
+  const url = `https://api.frankfurter.app/latest?base=USD&symbols=JPY,${codes.filter(c => c !== 'USD').join(',')}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const json = await res.json();
+  const usdToJpy = json.rates.JPY;
+  const newRates = {};
+  newRates['USD'] = usdToJpy;
+  codes.filter(c => c !== 'USD').forEach(code => {
+    const usdToX = json.rates[code];
+    if (usdToX) newRates[code] = Math.round((usdToJpy / usdToX) * 100) / 100;
+  });
+  saveExchangeRates(newRates);
+  const now = new Date().toISOString();
+  saveFXRatesUpdatedAt(now);
+  return newRates;
 }
 
 function toJPY(amount, currency) {

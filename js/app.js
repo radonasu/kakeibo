@@ -1442,7 +1442,7 @@ CREATE POLICY "own_data" ON household_data
 
 <div class="card">
   <h3 class="card-title">💱 為替レート設定</h3>
-  <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算する際のレートです（1外貨 = X円）。手動で最新レートに更新してください。</p>
+  <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算するレートです（1外貨 = X円）。自動取得ボタンで最新レートを即時反映できます。</p>
   <div class="fx-rate-grid" id="fx-rate-grid">
     ${CURRENCIES.filter(c => c.code !== 'JPY').map(c => {
       const currentRate = getExchangeRates()[c.code] || DEFAULT_FX_RATES[c.code];
@@ -1456,7 +1456,17 @@ CREATE POLICY "own_data" ON household_data
       </div>`;
     }).join('')}
   </div>
-  <button class="btn btn-primary" id="save-fx-rates" style="margin-top:16px">レートを保存</button>
+  <div class="fx-rate-actions">
+    <button class="btn btn-secondary" id="fetch-fx-rates">🔄 自動取得</button>
+    <button class="btn btn-primary" id="save-fx-rates">💾 保存</button>
+  </div>
+  <div class="fx-update-status" id="fx-update-status">${(() => {
+    const ts = getFXRatesUpdatedAt();
+    if (!ts) return '<span class="fx-update-none">未取得（デフォルト値を使用中）</span>';
+    const d = new Date(ts);
+    const label = d.toLocaleDateString('ja-JP') + ' ' + d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    return `<span class="fx-update-ok">✅ 最終自動取得: ${label}</span>`;
+  })()}</div>
 </div>
 
 <div class="card danger-zone">
@@ -1626,6 +1636,33 @@ function bindSettings() {
     });
     saveExchangeRates(newRates);
     showToast('為替レートを保存しました');
+  });
+
+  // ── 為替レート自動取得 ────────────────────────────────────
+  on('fetch-fx-rates', 'click', async () => {
+    const btn = document.getElementById('fetch-fx-rates');
+    const statusEl = document.getElementById('fx-update-status');
+    if (!btn) return;
+    btn.disabled = true;
+    btn.textContent = '⏳ 取得中...';
+    try {
+      const rates = await fetchAndSaveExchangeRates();
+      // 入力フィールドを更新
+      document.querySelectorAll('.fx-rate-input').forEach(input => {
+        const code = input.dataset.currency;
+        if (rates[code] != null) input.value = rates[code];
+      });
+      // ステータス更新
+      const d = new Date();
+      const label = d.toLocaleDateString('ja-JP') + ' ' + d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+      if (statusEl) statusEl.innerHTML = `<span class="fx-update-ok">✅ 最終自動取得: ${label}</span>`;
+      showToast('為替レートを自動取得しました');
+    } catch (e) {
+      showToast('取得失敗：ネットワーク接続を確認してください', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🔄 自動取得';
+    }
   });
 
   // ── テンプレート管理 ──────────────────────────────────────
@@ -2589,13 +2626,14 @@ function translateAuthError(msg) {
 // ============================================================
 // トースト通知
 // ============================================================
-function showToast(message, duration) {
+function showToast(message, type, duration) {
+  if (typeof type === 'number') { duration = type; type = null; }
   duration = duration || 3000;
   const existing = document.getElementById('kk-toast');
   if (existing) existing.remove();
   const toast = document.createElement('div');
   toast.id = 'kk-toast';
-  toast.className = 'kk-toast';
+  toast.className = 'kk-toast' + (type === 'error' ? ' kk-toast-error' : '');
   toast.textContent = message;
   document.body.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('kk-toast-show')));
