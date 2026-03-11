@@ -62,6 +62,8 @@ function updateSidebarTitle() {
 function showModal(el) {
   if (typeof el === 'string') el = document.getElementById(el);
   if (!el) return;
+  // transformを持つ親の中にあるとposition:fixedが壊れるためbody直下に移動
+  if (el.parentElement !== document.body) document.body.appendChild(el);
   el.style.display = 'flex';
   requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('modal-is-open')));
 }
@@ -234,12 +236,20 @@ function renderDashboard() {
       const svd = Number(g.savedAmount) || 0;
       const pct = tgt > 0 ? Math.min(Math.round(svd / tgt * 100), 100) : 0;
       const clr = g.color || '#6366f1';
-      return `<div class="goal-dash-item">
-        <span class="goal-dash-emoji">${g.emoji || '🎯'}</span>
+      const MINI_C = 81.68; // 2π×13（ミニリング r=13）
+      const miniOff = (MINI_C * (1 - pct / 100)).toFixed(2);
+      return `<div class="goal-dash-item" style="--goal-accent:${clr}">
+        <div class="goal-dash-ring-wrap">
+          <svg class="goal-dash-ring-svg" viewBox="0 0 36 36" aria-hidden="true">
+            <circle class="goal-dash-ring-bg" cx="18" cy="18" r="13"/>
+            <circle class="goal-dash-ring-fill" cx="18" cy="18" r="13" data-ring-offset="${miniOff}" style="stroke:var(--goal-accent)"/>
+          </svg>
+          <span class="goal-dash-emoji">${g.emoji || '🎯'}</span>
+        </div>
         <div class="goal-dash-info">
           <div class="goal-dash-name">${esc2(g.name)}</div>
           <div class="goal-dash-bar-wrap">
-            <div class="goal-dash-bar-bg"><div class="goal-dash-bar-fill" style="width:${pct}%;background:${clr}"></div></div>
+            <div class="goal-dash-bar-bg"><div class="goal-dash-bar-fill" style="width:${pct}%"></div></div>
             <span class="goal-dash-pct">${pct}%</span>
           </div>
         </div>
@@ -362,6 +372,7 @@ function bindDashboard() {
   document.querySelectorAll('.js-countup').forEach(el => {
     animateCountUp(el, Number(el.dataset.value));
   });
+  animateGoalRings(); // v5.32
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
     const txs = getTransactionsByMonth(appState.month);
@@ -676,7 +687,7 @@ function openTxModal(id, template) {
   // モーダルを再描画
   const existing = document.getElementById('tx-modal');
   if (existing) existing.remove();
-  document.getElementById('main-content').insertAdjacentHTML('beforeend', renderTxModal());
+  document.body.insertAdjacentHTML('beforeend', renderTxModal());
   bindTxModal();
   showModal('tx-modal');
   // タイプボタンによるカテゴリ表示切替
@@ -2964,6 +2975,19 @@ function renderGoals() {
   const totalSaved  = active.reduce((s, g) => s + (Number(g.savedAmount)  || 0), 0);
   const overallPct  = totalTarget > 0 ? Math.min(Math.round(totalSaved / totalTarget * 100), 100) : 0;
 
+  // v5.32: SVGリング用定数
+  const RING_C = 125.66; // 2π×20（メインリング r=20）
+
+  function goalRingHtml(pct, isAchieved) {
+    const dashOffset = RING_C * (1 - pct / 100);
+    return `<svg class="goal-ring-svg" viewBox="0 0 52 52" aria-hidden="true">
+      <circle class="goal-ring-bg" cx="26" cy="26" r="20"/>
+      <circle class="goal-ring-fill" cx="26" cy="26" r="20"
+        data-ring-offset="${dashOffset.toFixed(2)}"
+        style="stroke:${isAchieved ? 'var(--success)' : 'var(--goal-accent)'}"/>
+    </svg>`;
+  }
+
   function goalCard(g, isDone) {
     const target    = Number(g.targetAmount) || 0;
     const saved     = Number(g.savedAmount)  || 0;
@@ -2971,6 +2995,12 @@ function renderGoals() {
     const remaining = Math.max(target - saved, 0);
     const color     = g.color || '#6366f1';
     const emoji     = g.emoji || '🎯';
+    const accentStyle = isDone
+      ? `style="--goal-accent:var(--success)"`
+      : `style="--goal-accent:${color}"`;
+
+    // マイルストーンマーカー（25/50/75%）
+    const milestones = `<div class="goal-milestone" style="left:25%"></div><div class="goal-milestone" style="left:50%"></div><div class="goal-milestone" style="left:75%"></div>`;
 
     let deadlineHtml = '';
     if (g.deadline && !isDone) {
@@ -2992,10 +3022,10 @@ function renderGoals() {
     }
 
     if (isDone) {
-      return `<div class="card goal-card goal-achieved">
+      return `<div class="card goal-card goal-achieved" ${accentStyle}>
   <div class="goal-card-header">
     <div class="goal-info">
-      <span class="goal-emoji">${emoji}</span>
+      <div class="goal-ring-wrap">${goalRingHtml(100, true)}<span class="goal-emoji">${emoji}</span></div>
       <span class="goal-name">${esc2(g.name)}</span>
       <span class="goal-achieved-badge">✅ 達成</span>
     </div>
@@ -3005,8 +3035,8 @@ function renderGoals() {
     </div>
   </div>
   <div class="goal-progress-wrap">
-    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:100%;background:var(--success)"></div></div>
-    <span class="goal-pct">100%</span>
+    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:100%;background:var(--success)"></div>${milestones}</div>
+    <span class="goal-pct" style="color:var(--success)">100%</span>
   </div>
   <div class="goal-amounts">
     <span class="goal-saved">${formatMoney(saved)}</span><span class="goal-sep"> 達成 / </span><span class="goal-target">${formatMoney(target)}</span><span class="goal-sep"> 目標</span>
@@ -3015,10 +3045,10 @@ function renderGoals() {
   ${g.note ? `<div class="goal-note">${esc2(g.note)}</div>` : ''}
 </div>`;
     }
-    return `<div class="card goal-card">
+    return `<div class="card goal-card" ${accentStyle}>
   <div class="goal-card-header">
     <div class="goal-info">
-      <span class="goal-emoji">${emoji}</span>
+      <div class="goal-ring-wrap">${goalRingHtml(pct, false)}<span class="goal-emoji">${emoji}</span></div>
       <span class="goal-name">${esc2(g.name)}</span>
     </div>
     <div class="goal-actions">
@@ -3027,7 +3057,7 @@ function renderGoals() {
     </div>
   </div>
   <div class="goal-progress-wrap">
-    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    <div class="goal-progress-bar-bg"><div class="goal-progress-bar-fill" style="width:${pct}%"></div>${milestones}</div>
     <span class="goal-pct">${pct}%</span>
   </div>
   <div class="goal-amounts">
@@ -3246,8 +3276,18 @@ function openGoalDepositModal(goalId) {
   showModal('goal-deposit-modal');
 }
 
+// v5.32: SVGリングプログレスアニメーション
+function animateGoalRings() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('[data-ring-offset]').forEach(el => {
+      requestAnimationFrame(() => { el.style.strokeDashoffset = el.dataset.ringOffset; });
+    });
+  });
+}
+
 function bindGoals() {
   document.querySelectorAll('.js-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
+  animateGoalRings();
 
   on('btn-add-goal', 'click', () => openGoalModal(null));
 
