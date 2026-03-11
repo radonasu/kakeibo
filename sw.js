@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.18'; // v5.18: コンポーネント洗練（ボタン角丸変数統一・base shadow追加・btn-danger改善・入力フィールドホバー状態追加・type-toggleセグメントコントロール風・modal-closeタッチターゲット改善・バッジradius統一）
+const CACHE_NAME = 'kakeibo-v5.19'; // v5.19: 複数通貨対応（外貨建て資産の円換算表示・為替レート設定・通貨バッジ・外貨残高＋円換算二重表示・純資産合計の円換算集計）
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -1440,6 +1440,25 @@ CREATE POLICY "own_data" ON household_data
   <div id="notif-status-area"></div>
 </div>
 
+<div class="card">
+  <h3 class="card-title">💱 為替レート設定</h3>
+  <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算する際のレートです（1外貨 = X円）。手動で最新レートに更新してください。</p>
+  <div class="fx-rate-grid" id="fx-rate-grid">
+    ${CURRENCIES.filter(c => c.code !== 'JPY').map(c => {
+      const currentRate = getExchangeRates()[c.code] || DEFAULT_FX_RATES[c.code];
+      return `
+      <div class="fx-rate-row">
+        <span class="fx-currency-label">${c.flag} ${c.code}<small>${c.name}</small></span>
+        <div class="fx-input-wrap">
+          <input type="number" class="form-input fx-rate-input" data-currency="${c.code}" value="${currentRate}" min="0" step="0.01" placeholder="0.00">
+          <span class="fx-unit">円</span>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>
+  <button class="btn btn-primary" id="save-fx-rates" style="margin-top:16px">レートを保存</button>
+</div>
+
 <div class="card danger-zone">
   <h3 class="card-title">危険ゾーン</h3>
   <p class="hint">現在のアカウントのデータをすべて削除します。この操作は元に戻せません。</p>
@@ -1595,6 +1614,18 @@ function bindSettings() {
     saveData();
     renderCurrentPage();
     alert('データをリセットしました');
+  });
+
+  // ── 為替レート保存 ────────────────────────────────────────
+  on('save-fx-rates', 'click', () => {
+    const newRates = {};
+    document.querySelectorAll('.fx-rate-input').forEach(input => {
+      const code = input.dataset.currency;
+      const val  = parseFloat(input.value);
+      if (code && !isNaN(val) && val > 0) newRates[code] = val;
+    });
+    saveExchangeRates(newRates);
+    showToast('為替レートを保存しました');
   });
 
   // ── テンプレート管理 ──────────────────────────────────────
@@ -2063,7 +2094,8 @@ function getAssetCurrentBalance(asset) {
 function getTotalNetWorth() {
   return (appData.assets || []).reduce((sum, a) => {
     const e = getAssetCurrentBalance(a);
-    return sum + (e ? Number(e.balance) || 0 : 0);
+    if (!e) return sum;
+    return sum + toJPY(Number(e.balance) || 0, a.currency);
   }, 0);
 }
 
@@ -2073,7 +2105,15 @@ function getNetWorthAsOf(dateStr) {
     const valid = asset.entries.filter(e => e.date <= dateStr);
     if (valid.length === 0) return sum;
     const sorted = [...valid].sort((a, b) => b.date.localeCompare(a.date));
-    return sum + (Number(sorted[0].balance) || 0);
+    return sum + toJPY(Number(sorted[0].balance) || 0, asset.currency);
+  }, 0);
+}
+
+function getForeignAssetsTotalJPY() {
+  return (appData.assets || []).filter(a => a.currency && a.currency !== 'JPY').reduce((sum, a) => {
+    const e = getAssetCurrentBalance(a);
+    if (!e) return sum;
+    return sum + toJPY(Number(e.balance) || 0, a.currency);
   }, 0);
 }
 
@@ -2096,26 +2136,50 @@ function renderAssets() {
   })() : '';
 
   // 口座カード
+  const fxRates = getExchangeRates();
   const assetCards = assets.map(asset => {
     const typeInfo = ASSET_TYPES[asset.type] || ASSET_TYPES.other;
+    const currency = asset.currency || 'JPY';
+    const isForeign = currency !== 'JPY';
+    const currInfo = getCurrencyInfo(currency);
     const latest = getAssetCurrentBalance(asset);
     const balance = latest ? Number(latest.balance) : null;
+    const balanceJPY = balance !== null ? toJPY(balance, currency) : null;
     const dateLabel = latest ? `${formatDate(latest.date)} 時点` : '残高未登録';
     const entries = [...(asset.entries || [])].sort((a, b) => b.date.localeCompare(a.date));
 
-    const historyRows = entries.slice(0, 3).map(e => `
+    const historyRows = entries.slice(0, 3).map(e => {
+      const entryJPY = isForeign ? toJPY(Number(e.balance), currency) : null;
+      return `
       <div class="asset-entry-row">
         <span class="asset-entry-date">${formatDate(e.date)}</span>
         <span class="asset-entry-note">${esc2(e.note || '—')}</span>
-        <span class="asset-entry-balance">${formatMoney(e.balance)}</span>
+        <span class="asset-entry-balance">
+          ${isForeign ? `${formatCurrencyAmount(e.balance, currency)}<small class="fx-jpy-sub">≈${formatMoney(entryJPY)}</small>` : formatMoney(e.balance)}
+        </span>
         <button class="btn-icon asset-del-entry" data-asset="${asset.id}" data-entry="${e.id}" title="削除">🗑️</button>
-      </div>`).join('');
+      </div>`;
+    }).join('');
+
+    const currencyBadge = isForeign
+      ? `<span class="asset-currency-badge">${currInfo.flag} ${currInfo.code}</span>`
+      : '';
+    const rateHint = isForeign && balance !== null
+      ? `<div class="asset-fx-rate">1 ${currInfo.code} = ¥${fxRates[currency]?.toFixed(2) || '—'}</div>`
+      : '';
+    const balanceDisplay = balance !== null
+      ? (isForeign
+          ? `<div class="asset-balance js-countup" data-value="${balanceJPY}">${formatCurrencyAmount(balance, currency)}</div>
+             <div class="asset-balance-jpy">${formatMoney(balanceJPY)}</div>`
+          : `<div class="asset-balance js-countup" data-value="${balance}">${formatMoney(balance)}</div>`)
+      : `<div class="asset-balance">—</div>`;
 
     return `
 <div class="card asset-card">
   <div class="asset-card-header">
     <div class="asset-info">
       <span class="asset-type-badge" style="background:${typeInfo.color}20;color:${typeInfo.color}">${typeInfo.icon} ${typeInfo.label}</span>
+      ${currencyBadge}
       <span class="asset-name">${esc2(asset.name)}</span>
     </div>
     <div class="asset-card-actions">
@@ -2125,8 +2189,9 @@ function renderAssets() {
   </div>
   <div class="asset-balance-row">
     <div>
-      <div class="asset-balance js-countup" data-value="${balance || 0}">${balance !== null ? formatMoney(balance) : '—'}</div>
+      ${balanceDisplay}
       <div class="asset-date-label">${dateLabel}</div>
+      ${rateHint}
     </div>
     <button class="btn btn-primary btn-sm asset-add-entry" data-id="${asset.id}">＋ 残高を更新</button>
   </div>
@@ -2154,9 +2219,13 @@ function renderAssets() {
 
 <div class="summary-cards">
   <div class="card summary-card balance ${totalNetWorth >= 0 ? 'positive' : 'negative'}">
-    <div class="summary-label">💎 純資産合計</div>
+    <div class="summary-label">💎 純資産合計（円換算）</div>
     <div class="summary-amount js-countup" data-value="${totalNetWorth}">${formatMoney(totalNetWorth)}</div>
     ${diffHtml}
+    ${(() => {
+      const foreignTotal = getForeignAssetsTotalJPY();
+      return foreignTotal > 0 ? `<div class="asset-foreign-hint">うち外貨資産 ${formatMoney(foreignTotal)}</div>` : '';
+    })()}
   </div>
 </div>
 
@@ -2195,6 +2264,13 @@ ${assetCards}
           <option value="other">💼 その他</option>
         </select>
       </div>
+      <div class="form-group">
+        <label class="form-label">通貨</label>
+        <select id="asset-currency" class="form-input">
+          ${CURRENCIES.map(c => `<option value="${c.code}">${c.flag} ${c.code} — ${c.name}</option>`).join('')}
+        </select>
+        <small class="hint" id="asset-currency-hint" style="display:none">為替レートは設定ページで管理できます</small>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn" id="asset-modal-cancel">キャンセル</button>
@@ -2216,8 +2292,8 @@ ${assetCards}
         <input type="date" id="asset-entry-date" class="form-input">
       </div>
       <div class="form-group">
-        <label class="form-label">残高（円）</label>
-        <input type="number" id="asset-entry-balance" class="form-input" placeholder="0" min="0">
+        <label class="form-label" id="asset-entry-balance-label">残高（円）</label>
+        <input type="number" id="asset-entry-balance" class="form-input" placeholder="0" min="0" step="any">
       </div>
       <div class="form-group">
         <label class="form-label">メモ（任意）</label>
@@ -2241,6 +2317,13 @@ function openAssetModal(assetId) {
   document.getElementById('asset-modal-title').textContent = asset ? '口座を編集' : '口座を追加';
   document.getElementById('asset-name').value = asset ? asset.name : '';
   document.getElementById('asset-type').value = asset ? (asset.type || 'savings') : 'savings';
+  const currencySelect = document.getElementById('asset-currency');
+  currencySelect.value = asset ? (asset.currency || 'JPY') : 'JPY';
+  const hint = document.getElementById('asset-currency-hint');
+  hint.style.display = (currencySelect.value !== 'JPY') ? '' : 'none';
+  currencySelect.onchange = () => {
+    hint.style.display = (currencySelect.value !== 'JPY') ? '' : 'none';
+  };
   showModal('asset-modal');
 }
 
@@ -2252,6 +2335,15 @@ function openAssetEntryModal(assetId) {
   document.getElementById('asset-entry-date').value = todayStr();
   document.getElementById('asset-entry-balance').value = '';
   document.getElementById('asset-entry-note').value = '';
+  // 通貨ラベル更新
+  const currency = (asset && asset.currency) || 'JPY';
+  const currInfo = getCurrencyInfo(currency);
+  const balLabel = document.getElementById('asset-entry-balance-label');
+  if (balLabel) {
+    balLabel.textContent = currency === 'JPY'
+      ? '残高（円）'
+      : `残高（${currInfo.code} / ${currInfo.name}）`;
+  }
   showModal('asset-entry-modal');
 }
 
@@ -2305,11 +2397,12 @@ function bindAssets() {
   on('asset-modal-save',   'click', () => {
     const name = (document.getElementById('asset-name').value || '').trim();
     if (!name) { alert('口座名を入力してください'); return; }
-    const type = document.getElementById('asset-type').value;
+    const type     = document.getElementById('asset-type').value;
+    const currency = document.getElementById('asset-currency').value || 'JPY';
     if (_editingAssetId) {
-      updateAsset(_editingAssetId, { name, type });
+      updateAsset(_editingAssetId, { name, type, currency });
     } else {
-      addAsset({ name, type });
+      addAsset({ name, type, currency });
     }
     hideModal('asset-modal');
     navigate('assets');

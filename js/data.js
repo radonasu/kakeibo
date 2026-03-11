@@ -5,6 +5,61 @@
 const ACCOUNTS_META_KEY  = 'kakeibo_accounts_v1';
 const ACTIVE_ACCOUNT_KEY = 'kakeibo_active_v1';
 const OLD_STORAGE_KEY    = 'kakeibo_v1'; // 旧キー（移行用）
+const FX_RATES_KEY       = 'kakeibo_fx_rates_v1'; // 為替レート（グローバル）
+
+// サポート通貨定義
+const CURRENCIES = [
+  { code: 'JPY', name: '日本円',    symbol: '¥',  flag: '🇯🇵' },
+  { code: 'USD', name: '米ドル',    symbol: '$',  flag: '🇺🇸' },
+  { code: 'EUR', name: 'ユーロ',    symbol: '€',  flag: '🇪🇺' },
+  { code: 'GBP', name: '英ポンド',  symbol: '£',  flag: '🇬🇧' },
+  { code: 'CNY', name: '人民元',    symbol: '¥',  flag: '🇨🇳' },
+  { code: 'KRW', name: '韓国ウォン',symbol: '₩',  flag: '🇰🇷' },
+  { code: 'AUD', name: '豪ドル',    symbol: 'A$', flag: '🇦🇺' },
+  { code: 'SGD', name: 'SGドル',    symbol: 'S$', flag: '🇸🇬' },
+];
+
+const DEFAULT_FX_RATES = {
+  USD: 150.0,
+  EUR: 163.0,
+  GBP: 190.0,
+  CNY: 20.8,
+  KRW: 0.11,
+  AUD: 97.0,
+  SGD: 112.0,
+};
+
+function getExchangeRates() {
+  try {
+    const raw = localStorage.getItem(FX_RATES_KEY);
+    if (!raw) return { ...DEFAULT_FX_RATES };
+    return { ...DEFAULT_FX_RATES, ...JSON.parse(raw) };
+  } catch (e) {
+    return { ...DEFAULT_FX_RATES };
+  }
+}
+
+function saveExchangeRates(rates) {
+  localStorage.setItem(FX_RATES_KEY, JSON.stringify(rates));
+}
+
+function toJPY(amount, currency) {
+  if (!currency || currency === 'JPY') return amount;
+  const rates = getExchangeRates();
+  return Math.round(amount * (rates[currency] || 1));
+}
+
+function getCurrencyInfo(code) {
+  return CURRENCIES.find(c => c.code === code) || CURRENCIES[0];
+}
+
+function formatCurrencyAmount(amount, currency) {
+  const info = getCurrencyInfo(currency || 'JPY');
+  if (!currency || currency === 'JPY') {
+    return '¥' + Number(amount).toLocaleString('ja-JP');
+  }
+  return info.symbol + Number(amount).toLocaleString('ja-JP', { maximumFractionDigits: 2 });
+}
 
 const DEFAULT_CATEGORIES = [
   // 支出
@@ -147,6 +202,8 @@ function loadData() {
     if (!data.budgets)   data.budgets = {};
     if (!data.templates) data.templates = [];
     if (!data.assets)    data.assets = [];
+    // 旧アセットにcurrencyフィールドを追加（マイグレーション）
+    data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
   } catch (e) {
     console.error('データ読み込みエラー:', e);
