@@ -2780,17 +2780,22 @@ function initApp() {
   const hamburger = document.getElementById('hamburger');
   if (hamburger) {
     hamburger.addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('open');
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     });
   }
 
-  // サイドバー外クリックで閉じる
+  // サイドバー外クリックで閉じる（オーバーレイ含む）
   document.addEventListener('click', e => {
     const sidebar = document.getElementById('sidebar');
     if (sidebar && sidebar.classList.contains('open') &&
         !sidebar.contains(e.target) &&
         e.target.id !== 'hamburger') {
-      sidebar.classList.remove('open');
+      closeSidebar();
     }
   });
 
@@ -2840,6 +2845,102 @@ function initApp() {
 
   // 起動時予算アラートチェック（1秒後、描画安定後）
   setTimeout(() => checkBudgetAlerts(appState.month), 1000);
+
+  // スワイプジェスチャー（v5.22）
+  initSwipeGestures();
+}
+
+// ── サイドバー開閉（オーバーレイ管理込み） ──────────────
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar) return;
+  sidebar.classList.add('open');
+  if (overlay) {
+    overlay.classList.add('active');
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  }
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar) return;
+  sidebar.classList.remove('open');
+  if (overlay) {
+    overlay.classList.remove('visible');
+    setTimeout(() => overlay.classList.remove('active'), 250);
+  }
+}
+
+// ── スワイプジェスチャー（モバイルUX v5.22） ─────────────
+function initSwipeGestures() {
+  // サイドバーオーバーレイのタップで閉じる
+  const overlay = document.getElementById('sidebar-overlay');
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
+
+  let touchStartX = 0, touchStartY = 0, touchTarget = null;
+
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchTarget = null;
+
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+
+    // 左端30px以内の右スワイプ → サイドバーを開く
+    if (touchStartX <= 30 && !sidebar.classList.contains('open')) {
+      touchTarget = 'open-sidebar';
+    }
+    // サイドバー内またはオーバーレイ上の左スワイプ → 閉じる
+    else if (sidebar.classList.contains('open') &&
+             (sidebar.contains(e.target) || e.target.id === 'sidebar-overlay')) {
+      touchTarget = 'close-sidebar';
+    }
+    // モーダルのボトムシート（480px以下）を下スワイプ → 閉じる
+    else {
+      const modalOverlay = e.target.closest('.modal-overlay');
+      if (modalOverlay && modalOverlay.classList.contains('modal-is-open')) {
+        const modal = modalOverlay.querySelector('.modal');
+        const modalTop = modal ? modal.getBoundingClientRect().top : Infinity;
+        // ドラッグハンドルまたはモーダルの上端付近タッチ
+        if (touchStartY <= modalTop + 40) {
+          touchTarget = 'close-modal';
+        }
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if (!touchTarget) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const dx = endX - touchStartX;
+    const dy = endY - touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    // 水平スワイプ（横方向が縦の1.5倍以上、かつ40px以上）
+    const isHSwipe = absDx >= 40 && absDx >= absDy * 1.5;
+    // 下スワイプ（縦方向が横の1.5倍以上、かつ60px以上）
+    const isDownSwipe = dy >= 60 && absDy >= absDx * 1.5;
+
+    if (touchTarget === 'open-sidebar' && isHSwipe && dx > 0) {
+      openSidebar();
+      if (navigator.vibrate) navigator.vibrate(8);
+    } else if (touchTarget === 'close-sidebar' && isHSwipe && dx < 0) {
+      closeSidebar();
+      if (navigator.vibrate) navigator.vibrate(8);
+    } else if (touchTarget === 'close-modal' && isDownSwipe && window.innerWidth <= 480) {
+      const openModal = document.querySelector('.modal-overlay.modal-is-open');
+      if (openModal) hideModal(openModal);
+    }
+
+    touchTarget = null;
+  }, { passive: true });
 }
 
 document.addEventListener('DOMContentLoaded', initApp);

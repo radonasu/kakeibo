@@ -2523,3 +2523,162 @@ body {
 .fx-update-ok {
   color: var(--success);
 }
+
+/* ============================================================
+   モバイルUX改善 (v5.22)
+   - タッチターゲット強化（44px / 56px 基準）
+   - スクロール体験（momentum・overscroll-behavior）
+   - ボトムシートドラッグハンドル
+   - スワイプ対応サイドバーオーバーレイ
+   ============================================================ */
+
+/* ── スクロール体験 ─────────────────────────────────────── */
+#main-content {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+#sidebar {
+  overscroll-behavior: contain;
+}
+.modal-body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.table-wrap {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* ── サイドバーオーバーレイ（スワイプ＆タップで閉じる） ── */
+#sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 195;
+  background: rgba(0,0,0,.4);
+  opacity: 0;
+  transition: opacity .25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+#sidebar-overlay.active {
+  display: block;
+}
+#sidebar-overlay.visible {
+  opacity: 1;
+}
+
+/* ── ボトムシートドラッグハンドル ─────────────────────── */
+@media (max-width: 480px) {
+  .modal {
+    position: relative;
+    padding-top: calc(var(--sp-5) + 16px);
+  }
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: var(--border-strong);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+}
+
+/* ── タッチターゲット強化 ─────────────────────────────── */
+@media (max-width: 768px) {
+  /* ボトムナビ：56px（ガイドライン基準） */
+  .bottom-nav-item {
+    min-height: 56px;
+    padding: 10px 4px 8px;
+  }
+
+  /* ハンバーガー：44px */
+  #hamburger {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  /* モバイルヘッダー：56px */
+  #mobile-header {
+    min-height: 56px;
+  }
+
+  /* フィルターバーコントロール：44px */
+  .filter-bar select,
+  .filter-bar .month-sel,
+  .filter-search {
+    min-height: 44px;
+    padding: 10px 11px;
+  }
+
+  /* アクションボタン（ゴミ箱・編集等）：44px */
+  .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* テーブル行タッチ余白 */
+  .tx-table th,
+  .tx-table td {
+    padding: 12px 10px;
+  }
+
+  /* テーブルの横スクロール帯を広げる */
+  .table-wrap {
+    margin: 0 calc(-1 * var(--sp-4));
+    padding: 0 var(--sp-4);
+    border-radius: 0;
+  }
+  .card .table-wrap {
+    margin: 0 calc(-1 * var(--sp-6));
+    padding: 0 var(--sp-6);
+  }
+}
+
+/* ── フォーム入力のタッチサイズ（480px以下） ──────────── */
+@media (max-width: 480px) {
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group input[type="date"],
+  .form-group input[type="email"],
+  .form-group input[type="password"],
+  .form-group input[type="url"],
+  .form-group select {
+    min-height: 48px;
+    padding: 12px var(--sp-4);
+  }
+
+  /* プリセットボタンのタッチ改善 */
+  .btn-preset {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+
+  /* FABの下余白改善（ボトムナビ + セーフエリア） */
+  #global-fab {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 月次ナビゲーションボタン */
+  .btn-month-nav,
+  [class*="month-prev"],
+  [class*="month-next"] {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ── ダークモード対応 ─────────────────────────────────── */
+[data-theme="dark"] #sidebar-overlay {
+  background: rgba(0,0,0,.6);
+}

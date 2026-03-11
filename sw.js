@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.21'; // v5.21: 為替レート自動取得（Frankfurter.app API連携・自動取得ボタン・最終取得日時表示・エラートースト対応）
+const CACHE_NAME = 'kakeibo-v5.22'; // v5.22: モバイルUX改善（タッチターゲット44px/56px強化・スワイプジェスチャー・overscroll-behavior・ボトムシートハンドル）
 const ASSETS = [
   './index.html',
   './css/style.css',
