@@ -505,6 +505,91 @@ function renderMemberExpenseChart(canvasId, transactions) {
   });
 }
 
+// ─── 支払方法別ドーナツグラフ（レポート用）──────────────────
+const PAYMENT_METHOD_COLORS = {
+  '現金':       '#10b981',
+  'クレカ':     '#6366f1',
+  '口座振替':   '#8b5cf6',
+  '銀行振込':   '#f59e0b',
+  '電子マネー': '#06b6d4',
+  'その他':     '#6b7280',
+};
+
+function renderPaymentMethodChart(canvasId, transactions) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const expTxs = transactions.filter(t => t.type === 'expense');
+  const pmMap = {};
+  expTxs.forEach(t => {
+    const pm = t.paymentMethod || 'その他';
+    if (!pmMap[pm]) pmMap[pm] = { amount: 0, count: 0 };
+    pmMap[pm].amount += Number(t.amount) || 0;
+    pmMap[pm].count++;
+  });
+
+  const labels = Object.keys(pmMap).sort((a, b) => pmMap[b].amount - pmMap[a].amount);
+  const data   = labels.map(k => pmMap[k].amount);
+  const colors = labels.map(k => PAYMENT_METHOD_COLORS[k] || '#6b7280');
+  const total  = data.reduce((s, v) => s + v, 0);
+
+  if (data.length === 0) {
+    const c = canvas.getContext('2d');
+    const { text } = getThemeColors();
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = text;
+    c.font = '13px system-ui';
+    c.textAlign = 'center';
+    c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
+    return;
+  }
+
+  const { text: textColor, surface } = getThemeColors();
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      _centerTotal: total,
+      datasets: [{
+        data,
+        backgroundColor: colors.map(c => c + 'e0'),
+        borderWidth: 2.5,
+        borderColor: surface,
+        hoverBorderWidth: 3,
+        hoverOffset: 6,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { ...commonAnimation, animateRotate: true, animateScale: false },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            padding: 12,
+            boxWidth: 10,
+            boxHeight: 10,
+            usePointStyle: true,
+            pointStyle: 'circle',
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => {
+            const pct = total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0;
+            return `${ctx.label}: ${formatMoney(ctx.raw)} (${pct}%)`;
+          },
+        }),
+        centerText: {},
+      },
+      cutout: '62%',
+    },
+  });
+}
+
 // ─── 純資産推移折れ線グラフ（資産管理ページ用）───────────────
 function renderNetWorthChart(canvasId) {
   destroyChart(canvasId);

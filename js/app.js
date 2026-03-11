@@ -892,6 +892,49 @@ function renderReports() {
   </div>
 </div>
 
+<div class="charts-row">
+  <div class="card chart-card">
+    <h3 class="card-title">💳 支払方法別支出</h3>
+    <div class="chart-wrap" style="height:260px">
+      <canvas id="report-payment-donut"></canvas>
+    </div>
+  </div>
+  <div class="card" style="flex:1;min-width:0">
+    <h3 class="card-title">💳 支払方法別集計（${year}年）</h3>
+    <div class="table-wrap">
+      <table class="tx-table">
+        <thead><tr><th>支払方法</th><th>件数</th><th>金額</th><th>割合</th></tr></thead>
+        <tbody>
+          ${(() => {
+            const pmMap = {};
+            allTxs.filter(t => t.type === 'expense').forEach(t => {
+              const pm = t.paymentMethod || 'その他';
+              if (!pmMap[pm]) pmMap[pm] = { amount: 0, count: 0 };
+              pmMap[pm].amount += Number(t.amount) || 0;
+              pmMap[pm].count++;
+            });
+            const pmColors = { '現金': '#10b981', 'クレカ': '#6366f1', '口座振替': '#8b5cf6', '銀行振込': '#f59e0b', '電子マネー': '#06b6d4', 'その他': '#6b7280' };
+            const total = Object.values(pmMap).reduce((s, v) => s + v.amount, 0);
+            if (!total) return '<tr><td colspan="4" class="empty">データがありません</td></tr>';
+            return Object.entries(pmMap)
+              .sort((a, b) => b[1].amount - a[1].amount)
+              .map(([pm, v]) => {
+                const color = pmColors[pm] || '#6b7280';
+                const pct = total > 0 ? Math.round(v.amount / total * 100) : 0;
+                return `<tr>
+                  <td><span class="color-dot" style="background:${color}"></span>${esc2(pm)}</td>
+                  <td class="text-muted">${v.count}件</td>
+                  <td class="expense">${formatMoney(v.amount)}</td>
+                  <td class="text-muted">${pct}%</td>
+                </tr>`;
+              }).join('');
+          })()}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 ${(appData.members && appData.members.length > 0) ? `
 <div class="card">
   <h3 class="card-title">👥 メンバー別収支分析</h3>
@@ -964,6 +1007,7 @@ function bindReports() {
     renderBalanceLineChart('report-bar', months12);
     renderDonutChart('report-donut', allTxs, 'expense');
     renderCategoryBarChart('report-cat-expense', allTxs, 'expense');
+    renderPaymentMethodChart('report-payment-donut', allTxs);
     renderMemberExpenseChart('report-member-bar', allTxs);
   }, 50);
 }
