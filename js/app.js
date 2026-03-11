@@ -187,6 +187,124 @@ function bindOnboarding() {
   if (stepAdd) stepAdd.addEventListener('click', () => document.getElementById('global-fab').click());
 }
 
+// ============================================================
+// 家計インサイト生成 (v5.40)
+// ============================================================
+function generateInsights(ym) {
+  const insights = [];
+  const txs = getTransactionsByMonth(ym);
+  if (txs.length === 0) return insights;
+
+  const today = new Date();
+  const [y, m] = ym.split('-').map(Number);
+  const isCurrentMonth = today.getFullYear() === y && today.getMonth() + 1 === m;
+  const daysInMonth = new Date(y, m, 0).getDate();
+  const dayOfMonth = isCurrentMonth ? today.getDate() : daysInMonth;
+
+  const expense = calcTotal(txs, 'expense');
+  const income  = calcTotal(txs, 'income');
+
+  // 1. 残り日数の使える金額 / 赤字警告（今月 5日以降）
+  if (isCurrentMonth && dayOfMonth >= 5) {
+    const remaining = income - expense;
+    const remainingDays = daysInMonth - dayOfMonth;
+    if (remainingDays > 0) {
+      if (remaining > 0) {
+        const daily = Math.round(remaining / remainingDays);
+        insights.push({
+          type: 'info',
+          icon: '💡',
+          title: `残り${remainingDays}日間で使える目安`,
+          desc: `1日あたり ${formatMoney(daily)} が目安です（残高 ${formatMoney(remaining)}）`,
+        });
+      } else {
+        insights.push({
+          type: 'alert',
+          icon: '⚠️',
+          title: '今月の収支がマイナスです',
+          desc: `現在 ${formatMoney(Math.abs(remaining))} 赤字。支出を見直しましょう`,
+        });
+      }
+    }
+  }
+
+  // 先月データを取得
+  const prevDate = new Date(y, m - 2, 1);
+  const prevYm   = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+  const prevTxs  = getTransactionsByMonth(prevYm);
+
+  const catThis = {};
+  const catPrev = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    catThis[t.categoryId] = (catThis[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  prevTxs.filter(t => t.type === 'expense').forEach(t => {
+    catPrev[t.categoryId] = (catPrev[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+
+  // 2. 支出スパイク（先月比 +30% かつ +¥3,000 以上）
+  let maxSpike = null;
+  Object.entries(catThis).forEach(([id, sum]) => {
+    const prev = catPrev[id] || 0;
+    if (prev > 0 && sum > prev * 1.3 && (sum - prev) >= 3000) {
+      const pct = Math.round((sum - prev) / prev * 100);
+      if (!maxSpike || pct > maxSpike.pct) maxSpike = { id, sum, prev, pct };
+    }
+  });
+  if (maxSpike) {
+    const cat = getCategoryById(maxSpike.id);
+    if (cat) {
+      insights.push({
+        type: 'alert',
+        icon: '📈',
+        title: `${cat.name}が先月比 +${maxSpike.pct}%`,
+        desc: `先月 ${formatMoney(maxSpike.prev)} → 今月 ${formatMoney(maxSpike.sum)}`,
+      });
+    }
+  }
+
+  // 3. 節約達成（先月比 -20% かつ ¥2,000 以上削減）
+  let maxSaving = null;
+  Object.entries(catPrev).forEach(([id, prev]) => {
+    const sum = catThis[id] || 0;
+    if (sum > 0 && prev > sum * 1.2 && (prev - sum) >= 2000) {
+      const saved = prev - sum;
+      if (!maxSaving || saved > maxSaving.saved) maxSaving = { id, sum, prev, saved };
+    }
+  });
+  if (maxSaving) {
+    const cat = getCategoryById(maxSaving.id);
+    if (cat) {
+      insights.push({
+        type: 'success',
+        icon: '✨',
+        title: `${cat.name}で ${formatMoney(maxSaving.saved)} 節約`,
+        desc: `先月 ${formatMoney(maxSaving.prev)} → 今月 ${formatMoney(maxSaving.sum)}`,
+      });
+    }
+  }
+
+  // 4. 無支出日のカウント（今月・3日以降）
+  if (isCurrentMonth && dayOfMonth >= 3) {
+    const spendDates = new Set(txs.filter(t => t.type === 'expense').map(t => t.date));
+    let zeroCount = 0;
+    for (let d = 1; d <= dayOfMonth; d++) {
+      const ds = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      if (!spendDates.has(ds)) zeroCount++;
+    }
+    if (zeroCount >= 3) {
+      insights.push({
+        type: 'success',
+        icon: '🏆',
+        title: `無支出日が ${zeroCount} 日あります`,
+        desc: `今日まで ${dayOfMonth} 日中 ${zeroCount} 日は支出ゼロです`,
+      });
+    }
+  }
+
+  return insights.slice(0, 4);
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -262,6 +380,25 @@ function renderDashboard() {
   </div>
 </div>` : '';
 
+  // インサイトセクション（v5.40）
+  const insights = generateInsights(appState.month);
+  const insightSection = insights.length > 0 ? `
+<div class="card insight-card">
+  <div class="card-header-row">
+    <h3 class="card-title">💡 今月のインサイト</h3>
+  </div>
+  <div class="insight-list">
+    ${insights.map(ins => `
+    <div class="insight-item insight-${ins.type}">
+      <span class="insight-icon">${ins.icon}</span>
+      <div class="insight-body">
+        <div class="insight-title">${ins.title}</div>
+        <div class="insight-desc">${ins.desc}</div>
+      </div>
+    </div>`).join('')}
+  </div>
+</div>` : '';
+
   // 先月比
   const [y, m] = appState.month.split('-');
   const prevD = new Date(Number(y), Number(m) - 2, 1);
@@ -324,6 +461,8 @@ function renderDashboard() {
     <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
   </div>
 </div>
+
+${insightSection}
 
 ${budgetSection}
 
