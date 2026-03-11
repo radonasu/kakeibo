@@ -231,6 +231,7 @@ function loadData() {
     if (!data.budgets)   data.budgets = {};
     if (!data.templates) data.templates = [];
     if (!data.assets)    data.assets = [];
+    if (!data.goals)     data.goals = [];
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
@@ -249,6 +250,7 @@ function createDefaultData() {
     budgets: {},     // { categoryId: monthlyLimit }
     templates: [],   // 繰り返し取引テンプレート
     assets: [],      // 資産口座（貯蓄・投資）
+    goals: [],       // 貯蓄目標（v5.31）
   };
 }
 
@@ -371,6 +373,33 @@ function updateTemplate(id, fields) {
 function deleteTemplate(id) {
   if (!appData.templates) { appData.templates = []; return; }
   appData.templates = appData.templates.filter(t => t.id !== id);
+  saveData();
+}
+
+// ── 貯蓄目標 CRUD（v5.31）─────────────────────────────────
+const GOAL_COLORS = ['#6366f1','#059669','#f59e0b','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16'];
+const GOAL_EMOJIS = ['🎯','✈️','🏠','🚗','💍','🎓','👶','🏖️','💻','🎉','⛰️','🎪'];
+
+function addGoal(fields) {
+  if (!appData.goals) appData.goals = [];
+  const g = { ...fields, id: genId(), createdAt: todayStr() };
+  appData.goals.push(g);
+  saveData();
+  return g;
+}
+
+function updateGoal(id, fields) {
+  if (!appData.goals) appData.goals = [];
+  const idx = appData.goals.findIndex(g => g.id === id);
+  if (idx >= 0) {
+    appData.goals[idx] = { ...appData.goals[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteGoal(id) {
+  if (!appData.goals) { appData.goals = []; return; }
+  appData.goals = appData.goals.filter(g => g.id !== id);
   saveData();
 }
 

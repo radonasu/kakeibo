@@ -117,6 +117,7 @@ function renderCurrentPage() {
     case 'categories':   main.innerHTML = renderCategories(); bindCategories(); break;
     case 'settings':     main.innerHTML = renderSettings(); bindSettings(); break;
     case 'assets':       main.innerHTML = renderAssets(); bindAssets(); break;
+    case 'goals':        main.innerHTML = renderGoals(); bindGoals(); break;
   }
 }
 
@@ -219,6 +220,35 @@ function renderDashboard() {
   <div class="budget-grid">${budgetItems.join('')}</div>
 </div>` : '';
 
+  // 目標ウィジェット（v5.31）
+  const activeGoals = (appData.goals || []).filter(g => !g.achievedAt);
+  const goalSection = activeGoals.length > 0 ? `
+<div class="card">
+  <div class="card-header-row">
+    <h3 class="card-title">🎯 貯蓄目標</h3>
+    <button class="btn-link" onclick="navigate('goals')">すべて見る →</button>
+  </div>
+  <div class="goal-dash-list">
+    ${activeGoals.slice(0, 3).map(g => {
+      const tgt = Number(g.targetAmount) || 0;
+      const svd = Number(g.savedAmount) || 0;
+      const pct = tgt > 0 ? Math.min(Math.round(svd / tgt * 100), 100) : 0;
+      const clr = g.color || '#6366f1';
+      return `<div class="goal-dash-item">
+        <span class="goal-dash-emoji">${g.emoji || '🎯'}</span>
+        <div class="goal-dash-info">
+          <div class="goal-dash-name">${esc2(g.name)}</div>
+          <div class="goal-dash-bar-wrap">
+            <div class="goal-dash-bar-bg"><div class="goal-dash-bar-fill" style="width:${pct}%;background:${clr}"></div></div>
+            <span class="goal-dash-pct">${pct}%</span>
+          </div>
+        </div>
+        <span class="goal-dash-amount">${formatMoney(svd)}</span>
+      </div>`;
+    }).join('')}
+  </div>
+</div>` : '';
+
   // 先月比
   const [y, m] = appState.month.split('-');
   const prevD = new Date(Number(y), Number(m) - 2, 1);
@@ -283,6 +313,8 @@ function renderDashboard() {
 </div>
 
 ${budgetSection}
+
+${goalSection}
 
 <div class="charts-row">
   <div class="card chart-card">
@@ -558,6 +590,17 @@ function renderTxModal() {
         <button class="type-btn ${type === 'expense' ? 'active expense-btn' : ''}" data-type="expense">支出</button>
         <button class="type-btn ${type === 'income' ? 'active income-btn' : ''}" data-type="income">収入</button>
       </div>
+      <div class="receipt-scan-area">
+        <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
+          📷 レシートから読み込む
+        </button>
+        <label class="btn btn-receipt-file" id="receipt-file-label" title="画像・PDFから選択">
+          📄
+          <input type="file" id="receipt-file-input" accept="image/*,application/pdf" style="display:none">
+        </label>
+        <div id="scan-result" class="scan-result" style="display:none"></div>
+        <div id="multi-receipt-list" class="multi-receipt-list" style="display:none"></div>
+      </div>
       <div class="form-group">
         <label>日付</label>
         <input type="date" id="tx-date" value="${t ? t.date : todayStr()}" required>
@@ -593,17 +636,17 @@ function renderTxModal() {
         <datalist id="memo-suggestions"></datalist>
       </div>
 
+      <div class="form-group">
+        <label>支払方法</label>
+        <select id="tx-payment">
+          ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
+            `<option value="${p}" ${src && src.paymentMethod === p ? 'selected' : !src && p === 'クレカ' ? 'selected' : ''}>${p}</option>`).join('')}
+        </select>
+      </div>
       <!-- 詳細設定（折りたたみ） -->
       <details class="modal-details" ${src ? 'open' : ''}>
         <summary>詳細設定</summary>
         <div class="modal-details-body">
-          <div class="form-group">
-            <label>支払方法</label>
-            <select id="tx-payment">
-              ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
-                `<option value="${p}" ${src && src.paymentMethod === p ? 'selected' : !src && p === '現金' ? 'selected' : ''}>${p}</option>`).join('')}
-            </select>
-          </div>
           <div class="form-group">
             <label>担当者</label>
             <select id="tx-member"><option value="">—</option>${memOptions}</select>
@@ -611,20 +654,10 @@ function renderTxModal() {
           <div class="form-group">
             <label>消費税率（青色申告用）</label>
             <select id="tx-tax">
-              <option value="0"  ${!src || src.taxRate == 0  ? 'selected' : ''}>対象外（0%）</option>
-              <option value="10" ${src && src.taxRate == 10  ? 'selected' : ''}>課税 10%</option>
+              <option value="0"  ${src && src.taxRate == 0  ? 'selected' : ''}>対象外（0%）</option>
+              <option value="10" ${!src || src.taxRate == 10  ? 'selected' : ''}>課税 10%</option>
               <option value="8"  ${src && src.taxRate == 8   ? 'selected' : ''}>課税 8%（軽減）</option>
             </select>
-          </div>
-          <div class="receipt-scan-area">
-            <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
-              📷 レシートから読み込む
-            </button>
-            <label class="btn btn-receipt-file" id="receipt-file-label" title="ファイルから選択">
-              🖼️
-              <input type="file" id="receipt-file-input" accept="image/*" style="display:none">
-            </label>
-            <div id="scan-result" class="scan-result" style="display:none"></div>
           </div>
         </div>
       </details>
@@ -736,7 +769,7 @@ function bindTxModal() {
     input.accept = 'image/*';
     input.setAttribute('capture', 'environment'); // モバイルでカメラ起動
     input.addEventListener('change', e => {
-      if (e.target.files[0]) processReceiptImage(e.target.files[0]);
+      if (e.target.files[0]) processReceiptFile(e.target.files[0]);
     });
     input.click();
   });
@@ -744,7 +777,7 @@ function bindTxModal() {
   // レシートスキャン（ファイル選択）
   on('receipt-file-input', 'change', e => {
     if (!checkApiKey()) return;
-    if (e.target.files[0]) processReceiptImage(e.target.files[0]);
+    if (e.target.files[0]) processReceiptFile(e.target.files[0]);
   });
 }
 
@@ -2244,39 +2277,33 @@ function checkApiKey() {
   return true;
 }
 
-async function processReceiptImage(file) {
-  const scanBtn  = document.getElementById('receipt-scan-btn');
+async function processReceiptFile(file) {
+  const scanBtn   = document.getElementById('receipt-scan-btn');
   const fileLabel = document.getElementById('receipt-file-label');
-  const result   = document.getElementById('scan-result');
+  const result    = document.getElementById('scan-result');
+  const multiList = document.getElementById('multi-receipt-list');
 
   // ローディング状態
-  if (scanBtn)   { scanBtn.innerHTML  = '⏳ 解析中...'; scanBtn.disabled  = true; }
+  if (scanBtn)   { scanBtn.innerHTML = '⏳ 解析中...'; scanBtn.disabled = true; }
   if (fileLabel) { fileLabel.classList.add('disabled'); }
   if (result)    { result.style.display = 'none'; }
+  if (multiList) { multiList.innerHTML = ''; multiList.style.display = 'none'; }
 
   try {
     const base64   = await fileToBase64(file);
     const mimeType = file.type || 'image/jpeg';
-    const data     = await callGeminiVision(base64, mimeType);
 
-    // フォームに反映
-    if (data.date)   setFormValue('tx-date',   data.date);
-    if (data.amount) setFormValue('tx-amount', data.amount);
-    if (data.storeName) setFormValue('tx-memo', data.storeName);
-    if (data.taxRate !== undefined) setFormValue('tx-tax', String(data.taxRate));
+    // 支出カテゴリ名リストを渡す
+    const categoryNames = appData.categories
+      .filter(c => c.type === 'expense')
+      .map(c => c.name);
 
-    // 支出モードへ切替
-    const expBtn = document.querySelector('#tx-modal [data-type="expense"]');
-    if (expBtn && !expBtn.classList.contains('active')) {
-      expBtn.click();
-    }
+    const receipts = await callGeminiVision(base64, mimeType, categoryNames);
 
-    // 成功メッセージ
-    if (result) {
-      result.innerHTML = `<span class="scan-ok">✅ 読み取り完了</span>
-        <span class="scan-detail">${esc2(data.storeName || '店名不明')} ／ ¥${Number(data.amount || 0).toLocaleString('ja-JP')}（税率${data.taxRate || 0}%）</span>
-        <span class="scan-note">カテゴリを選択して保存してください</span>`;
-      result.style.display = 'flex';
+    if (receipts.length === 1) {
+      applySingleReceipt(receipts[0]);
+    } else {
+      showMultiReceiptList(receipts);
     }
 
   } catch (err) {
@@ -2285,9 +2312,133 @@ async function processReceiptImage(file) {
       result.style.display = 'flex';
     }
   } finally {
-    if (scanBtn)   { scanBtn.innerHTML  = '📷 レシートから読み込む'; scanBtn.disabled  = false; }
+    if (scanBtn)   { scanBtn.innerHTML = '📷 レシートから読み込む'; scanBtn.disabled = false; }
     if (fileLabel) { fileLabel.classList.remove('disabled'); }
   }
+}
+
+function applySingleReceipt(data) {
+  // フォームに反映
+  if (data.date)   setFormValue('tx-date',   data.date);
+  if (data.amount) setFormValue('tx-amount', data.amount);
+  if (data.storeName) setFormValue('tx-memo', data.storeName);
+  if (data.taxRate !== undefined) setFormValue('tx-tax', String(data.taxRate));
+
+  // 支出モードへ切替
+  const expBtn = document.querySelector('#tx-modal [data-type="expense"]');
+  if (expBtn && !expBtn.classList.contains('active')) {
+    expBtn.click();
+  }
+
+  // カテゴリ自動選択
+  if (data.category) {
+    const cat = appData.categories.find(c => c.name === data.category && c.type === 'expense');
+    if (cat) {
+      renderCatChips('expense', cat.id);
+      const hi = document.getElementById('tx-category');
+      if (hi) hi.value = cat.id;
+      updateMemoSuggestions();
+    }
+  }
+
+  // 成功メッセージ
+  const result = document.getElementById('scan-result');
+  if (result) {
+    const catLabel = data.category ? ` → ${esc2(data.category)}` : '';
+    result.innerHTML = `<span class="scan-ok">✅ 読み取り完了</span>
+      <span class="scan-detail">${esc2(data.storeName || '店名不明')} ／ ¥${Number(data.amount || 0).toLocaleString('ja-JP')}（税率${data.taxRate || 0}%）${catLabel}</span>`;
+    result.style.display = 'flex';
+  }
+}
+
+function showMultiReceiptList(receipts) {
+  const result    = document.getElementById('scan-result');
+  const multiList = document.getElementById('multi-receipt-list');
+
+  if (result) {
+    result.innerHTML = `<span class="scan-ok">📋 ${receipts.length}件のレシートを検出</span>`;
+    result.style.display = 'flex';
+  }
+
+  if (!multiList) return;
+
+  const cards = receipts.map((r, i) => {
+    const catIcon = CAT_ICONS[r.category] || '📌';
+    return `<div class="multi-receipt-item" data-idx="${i}">
+      <div class="multi-receipt-info">
+        <span class="multi-receipt-store">${esc2(r.storeName || '店名不明')}</span>
+        <span class="multi-receipt-detail">${esc2(r.date)} ／ ¥${Number(r.amount || 0).toLocaleString('ja-JP')} ／ ${catIcon} ${esc2(r.category || '未分類')}</span>
+      </div>
+      <div class="multi-receipt-actions">
+        <button type="button" class="btn-mr-fill" data-idx="${i}">入力</button>
+        <button type="button" class="btn-mr-add" data-idx="${i}">追加</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  multiList.innerHTML = `
+    <button type="button" class="btn-mr-all">全て追加</button>
+    ${cards}`;
+  multiList.style.display = 'flex';
+
+  // イベントバインド
+  multiList.querySelectorAll('.btn-mr-fill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.idx);
+      applySingleReceipt(receipts[idx]);
+      multiList.style.display = 'none';
+    });
+  });
+
+  multiList.querySelectorAll('.btn-mr-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx  = Number(btn.dataset.idx);
+      const item = btn.closest('.multi-receipt-item');
+      addReceiptAsTransaction(receipts[idx]);
+      if (item) item.classList.add('added');
+      btn.disabled = true;
+      btn.textContent = '済';
+    });
+  });
+
+  multiList.querySelector('.btn-mr-all')?.addEventListener('click', () => {
+    receipts.forEach((r, i) => {
+      const item = multiList.querySelector(`.multi-receipt-item[data-idx="${i}"]`);
+      if (item && !item.classList.contains('added')) {
+        addReceiptAsTransaction(r);
+        item.classList.add('added');
+        const btn = item.querySelector('.btn-mr-add');
+        if (btn) { btn.disabled = true; btn.textContent = '済'; }
+      }
+    });
+    showToast(`${receipts.length}件の取引を追加しました`);
+  });
+}
+
+function addReceiptAsTransaction(data) {
+  // カテゴリマッチ
+  let catId = '';
+  if (data.category) {
+    const cat = appData.categories.find(c => c.name === data.category && c.type === 'expense');
+    if (cat) catId = cat.id;
+  }
+  if (!catId) {
+    const fallback = appData.categories.find(c => c.type === 'expense');
+    if (fallback) catId = fallback.id;
+  }
+
+  addTransaction({
+    type:          'expense',
+    date:          data.date || todayStr(),
+    amount:        data.amount || 0,
+    categoryId:    catId,
+    paymentMethod: 'クレカ',
+    memberId:      appData.settings.defaultMemberId || '',
+    taxRate:       data.taxRate ?? 10,
+    memo:          data.storeName || '',
+  });
+
+  showToast(`${esc2(data.storeName || 'レシート')} ¥${Number(data.amount || 0).toLocaleString('ja-JP')} を追加`);
 }
 
 function fileToBase64(file) {
@@ -2299,7 +2450,7 @@ function fileToBase64(file) {
   });
 }
 
-async function callGeminiVision(base64, mimeType) {
+async function callGeminiVision(base64, mimeType, categoryNames) {
   const apiKey  = appData.settings.geminiApiKey;
   const proxyUrl = APP_CONFIG.geminiProxy?.url;
 
@@ -2307,14 +2458,23 @@ async function callGeminiVision(base64, mimeType) {
     throw new Error('Geminiプロキシが未設定です。管理者に連絡してください。');
   }
 
-  const prompt = `このレシート・領収書の画像から情報を抽出し、JSON形式で回答してください。
+  const categoryListStr = (categoryNames || []).join('、');
 
-{
-  "date": "YYYY-MM-DD（日付が読み取れない場合は今日の日付 ${todayStr()}）",
-  "amount": 税込み合計金額（数値のみ、カンマなし）,
-  "storeName": "店名または施設名（不明な場合は空文字）",
-  "taxRate": 消費税率（10・8・0のいずれか。軽減税率の場合は8）
-}`;
+  const prompt = `この画像/PDFからレシート・領収書の情報を抽出してください。
+複数のレシートが含まれる場合は、すべてのレシートを個別に抽出してください。
+各レシートについてJSON形式で回答してください。
+
+[
+  {
+    "date": "YYYY-MM-DD（日付が読み取れない場合は今日の日付 ${todayStr()}）",
+    "amount": 税込み合計金額（数値のみ、カンマなし）,
+    "storeName": "店名または施設名（不明な場合は空文字）",
+    "taxRate": 消費税率（10・8・0のいずれか。軽減税率の場合は8）,
+    "category": "以下のカテゴリから最も適切なもの1つを選択: ${categoryListStr}"
+  }
+]
+
+必ずJSON配列として回答してください。レシートが1枚でも配列に入れてください。`;
 
   // Gemini API ペイロード
   const payload = {
@@ -2332,14 +2492,18 @@ async function callGeminiVision(base64, mimeType) {
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: {
-        type: 'object',
-        properties: {
-          date:      { type: 'string',  description: 'YYYY-MM-DD形式の日付' },
-          amount:    { type: 'number',  description: '税込み合計金額' },
-          storeName: { type: 'string',  description: '店名' },
-          taxRate:   { type: 'number',  description: '消費税率（10, 8, 0）' },
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            date:      { type: 'string',  description: 'YYYY-MM-DD形式の日付' },
+            amount:    { type: 'number',  description: '税込み合計金額' },
+            storeName: { type: 'string',  description: '店名' },
+            taxRate:   { type: 'number',  description: '消費税率（10, 8, 0）' },
+            category:  { type: 'string',  description: 'カテゴリ名' },
+          },
+          required: ['date', 'amount', 'storeName', 'taxRate', 'category'],
         },
-        required: ['date', 'amount', 'storeName', 'taxRate'],
       },
     },
   };
@@ -2373,14 +2537,26 @@ async function callGeminiVision(base64, mimeType) {
   try {
     parsed = JSON.parse(text);
   } catch (_) {
-    // フォールバック：JSON部分を正規表現で抽出
-    const m = text.match(/\{[\s\S]*?\}/);
-    if (!m) throw new Error('レスポンスの解析に失敗しました');
-    parsed = JSON.parse(m[0]);
+    // フォールバック：配列またはオブジェクトを正規表現で抽出
+    const mArr = text.match(/\[[\s\S]*\]/);
+    if (mArr) {
+      parsed = JSON.parse(mArr[0]);
+    } else {
+      const mObj = text.match(/\{[\s\S]*?\}/);
+      if (!mObj) throw new Error('レスポンスの解析に失敗しました');
+      parsed = [JSON.parse(mObj[0])];
+    }
   }
 
-  if (!parsed.date) parsed.date = todayStr();
-  if (typeof parsed.amount === 'string') parsed.amount = Number(parsed.amount.replace(/,/g, ''));
+  // 常に配列として返す
+  if (!Array.isArray(parsed)) parsed = [parsed];
+
+  // 各レシートを正規化
+  parsed.forEach(r => {
+    if (!r.date) r.date = todayStr();
+    if (typeof r.amount === 'string') r.amount = Number(r.amount.replace(/,/g, ''));
+  });
+
   return parsed;
 }
 

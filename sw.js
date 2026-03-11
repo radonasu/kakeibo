@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.30'; // v5.30: カテゴリ選択グリッドUI（取引入力モーダルのselectをビジュアルチップグリッドに刷新・アイコン表示・カテゴリカラー連動）
+const CACHE_NAME = 'kakeibo-v5.8'; // v5.8: レシートOCR強化（カテゴリ自動推測・複数レシート対応・PDF対応・UI改善）
 const ASSETS = [
   './index.html',
   './css/style.css',

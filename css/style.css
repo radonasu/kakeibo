@@ -1120,6 +1120,10 @@ select:focus:not(:focus-visible) {
   flex-wrap: wrap;
   gap: 8px;
   align-items: flex-start;
+  background: var(--surface-2);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
 }
 
 .btn-receipt {
@@ -1168,6 +1172,84 @@ select:focus:not(:focus-visible) {
 .scan-detail { color: var(--text); }
 .scan-note   { color: var(--text-muted); }
 .scan-err    { font-weight: 600; color: var(--expense); background: var(--danger-bg); border-color: var(--danger-border); }
+
+/* 複数レシート一覧 */
+.multi-receipt-list {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.multi-receipt-list .btn-mr-all {
+  align-self: flex-end;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  cursor: pointer;
+}
+.multi-receipt-list .btn-mr-all:hover { opacity: .85; }
+.multi-receipt-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  gap: 8px;
+  transition: opacity .2s;
+}
+.multi-receipt-item.added {
+  opacity: .45;
+  pointer-events: none;
+}
+.multi-receipt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.multi-receipt-store {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multi-receipt-detail {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.multi-receipt-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.multi-receipt-actions button {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-mr-fill {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border) !important;
+}
+.btn-mr-fill:hover { background: var(--surface-hover); }
+.btn-mr-add {
+  background: var(--income);
+  color: #fff;
+}
+.btn-mr-add:hover { opacity: .85; }
+.btn-mr-add:disabled { opacity: .5; cursor: not-allowed; }
 
 /* APIキー設定 */
 .api-key-row {
