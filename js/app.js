@@ -822,10 +822,13 @@ function renderReports() {
   return `
 <div class="page-header">
   <h1 class="page-title">レポート</h1>
-  <div class="year-nav">
-    <button class="btn btn-ghost btn-sm" id="prev-year">＜</button>
-    <span class="year-label">${year}年</span>
-    <button class="btn btn-ghost btn-sm" id="next-year">＞</button>
+  <div class="page-header-right">
+    <div class="year-nav">
+      <button class="btn btn-ghost btn-sm" id="prev-year">＜</button>
+      <span class="year-label">${year}年</span>
+      <button class="btn btn-ghost btn-sm" id="next-year">＞</button>
+    </div>
+    <button class="btn btn-primary btn-sm" id="btn-export-pdf" title="${year}年の年間収支をPDFで出力">📄 PDF出力</button>
   </div>
 </div>
 
@@ -893,6 +896,8 @@ function renderReports() {
 function bindReports() {
   on('prev-year', 'click', () => { appState.reportYear--; renderCurrentPage(); });
   on('next-year', 'click', () => { appState.reportYear++; renderCurrentPage(); });
+
+  on('btn-export-pdf', 'click', () => { doExportPDF(appState.reportYear); });
 
   on('export-year-csv', 'click', () => {
     const year = appState.reportYear;

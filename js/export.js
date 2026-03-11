@@ -307,6 +307,181 @@ function generateSummaryCanvas(ym) {
   return canvas;
 }
 
+// ============================================================
+// 年間レポート PDF出力 (v5.17)
+// ============================================================
+function doExportPDF(year) {
+  const familyName = (appData.settings && appData.settings.familyName) || '家族家計簿';
+
+  // 月別データ収集
+  const months12 = [];
+  for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
+  const monthlyData = months12.map(ym => {
+    const txs = getTransactionsByMonth(ym);
+    return {
+      month: parseInt(ym.split('-')[1]),
+      income:  calcTotal(txs, 'income'),
+      expense: calcTotal(txs, 'expense'),
+    };
+  });
+
+  // 年間合計
+  const allTxs      = appData.transactions.filter(t => t.date && t.date.startsWith(String(year)));
+  const totalIncome  = calcTotal(allTxs, 'income');
+  const totalExpense = calcTotal(allTxs, 'expense');
+  const totalBalance = totalIncome - totalExpense;
+
+  // カテゴリ別支出集計（上位8件）
+  const catSums = {};
+  allTxs.filter(t => t.type === 'expense').forEach(t => {
+    catSums[t.categoryId] = (catSums[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  const topCats = Object.entries(catSums)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([id, sum]) => ({ cat: getCategoryById(id), sum }))
+    .filter(e => e.cat);
+  const maxCatSum = topCats.length ? topCats[0].sum : 1;
+
+  const fmt    = n => '¥' + Math.abs(n).toLocaleString('ja-JP');
+  const signOf = n => n >= 0 ? '+' : '−';
+
+  // 月別テーブル行
+  const tableRows = monthlyData.map(d => {
+    const bal = d.income - d.expense;
+    const hasData = d.income || d.expense;
+    return `<tr>
+      <td>${d.month}月</td>
+      <td class="num income">${d.income  ? fmt(d.income)  : '—'}</td>
+      <td class="num expense">${d.expense ? fmt(d.expense) : '—'}</td>
+      <td class="num ${bal >= 0 ? 'income' : 'expense'}">${hasData ? signOf(bal) + fmt(bal) : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  // カテゴリ行
+  const catRows = topCats.map(e => {
+    const pct  = totalExpense ? Math.round(e.sum / totalExpense * 100) : 0;
+    const barW = Math.round(e.sum / maxCatSum * 100);
+    const col  = e.cat.color || '#6366f1';
+    return `<tr>
+      <td><span class="dot" style="background:${col}"></span>${e.cat.name}</td>
+      <td><div class="bar-bg"><div class="bar-fg" style="width:${barW}%;background:${col}"></div></div></td>
+      <td class="num expense">${fmt(e.sum)}</td>
+      <td class="num pct">${pct}%</td>
+    </tr>`;
+  }).join('');
+
+  const now     = new Date();
+  const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<title>${familyName} ${year}年 年間収支レポート</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','BIZ UDGothic','Meiryo',sans-serif;color:#1e293b;background:#fff;font-size:12px;line-height:1.6}
+@page{size:A4;margin:16mm 14mm}
+/* ヘッダー */
+.rpt-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:12px;border-bottom:2.5px solid #6366f1;margin-bottom:18px}
+.rpt-title{font-size:20px;font-weight:700;color:#6366f1}
+.rpt-sub{font-size:12px;color:#64748b;margin-top:2px}
+.rpt-meta{text-align:right;font-size:10px;color:#94a3b8;line-height:1.9}
+/* サマリーカード */
+.sum-row{display:flex;gap:10px;margin-bottom:22px}
+.sum-card{flex:1;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0}
+.sum-card.inc{border-color:#86efac;background:#f0fdf4}
+.sum-card.exp{border-color:#fca5a5;background:#fef2f2}
+.sum-card.bal{border-color:#93c5fd;background:#eff6ff}
+.sum-card.bal.neg{border-color:#fca5a5;background:#fef2f2}
+.sum-lbl{font-size:10px;color:#64748b;font-weight:700;letter-spacing:.05em;margin-bottom:4px}
+.sum-amt{font-size:18px;font-weight:700}
+.inc .sum-amt{color:#059669}
+.exp .sum-amt{color:#dc2626}
+.bal .sum-amt{color:#2563eb}
+.bal.neg .sum-amt{color:#dc2626}
+/* セクション見出し */
+h2{font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;padding-left:8px;border-left:3px solid #6366f1}
+/* テーブル */
+table{width:100%;border-collapse:collapse;margin-bottom:22px}
+th{background:#f8fafc;color:#64748b;font-size:10px;font-weight:700;padding:7px 10px;text-align:right;border-bottom:2px solid #e2e8f0}
+th:first-child{text-align:left}
+td{padding:6px 10px;text-align:right;border-bottom:1px solid #f1f5f9}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tfoot td{font-weight:700;background:#f8fafc;border-top:2px solid #e2e8f0;border-bottom:none}
+td.num{font-variant-numeric:tabular-nums}
+.income{color:#059669}
+.expense{color:#dc2626}
+.pct{color:#94a3b8;font-size:10px}
+/* カテゴリバー */
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.bar-bg{display:inline-block;background:#f1f5f9;border-radius:3px;height:7px;width:140px;overflow:hidden;vertical-align:middle}
+.bar-fg{height:100%;border-radius:3px}
+/* フッター */
+.rpt-footer{margin-top:28px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head>
+<body>
+
+<div class="rpt-header">
+  <div>
+    <div class="rpt-title">💰 ${familyName}</div>
+    <div class="rpt-sub">${year}年 年間収支レポート</div>
+  </div>
+  <div class="rpt-meta">作成日: ${dateStr}<br>家族家計簿 PWA</div>
+</div>
+
+<div class="sum-row">
+  <div class="sum-card inc">
+    <div class="sum-lbl">年間収入</div>
+    <div class="sum-amt">+${fmt(totalIncome)}</div>
+  </div>
+  <div class="sum-card exp">
+    <div class="sum-lbl">年間支出</div>
+    <div class="sum-amt">−${fmt(totalExpense)}</div>
+  </div>
+  <div class="sum-card bal${totalBalance < 0 ? ' neg' : ''}">
+    <div class="sum-lbl">年間残高</div>
+    <div class="sum-amt">${signOf(totalBalance)}${fmt(totalBalance)}</div>
+  </div>
+</div>
+
+<h2>月別収支表</h2>
+<table>
+  <thead><tr><th>月</th><th>収入</th><th>支出</th><th>残高</th></tr></thead>
+  <tbody>${tableRows}</tbody>
+  <tfoot>
+    <tr>
+      <td>合計</td>
+      <td class="num income">+${fmt(totalIncome)}</td>
+      <td class="num expense">−${fmt(totalExpense)}</td>
+      <td class="num ${totalBalance >= 0 ? 'income' : 'expense'}">${signOf(totalBalance)}${fmt(totalBalance)}</td>
+    </tr>
+  </tfoot>
+</table>
+
+${topCats.length > 0 ? `<h2>支出カテゴリ内訳</h2>
+<table>
+  <thead><tr><th>カテゴリ</th><th>グラフ</th><th>金額</th><th>比率</th></tr></thead>
+  <tbody>${catRows}</tbody>
+</table>` : ''}
+
+<div class="rpt-footer">このレポートは家族家計簿PWAによって自動生成されました。</div>
+</body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) {
+    showToast('ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。');
+    return;
+  }
+  win.document.write(html);
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+
+// ============================================================
+// 月次サマリー画像生成・シェア (v5.13)
+// ============================================================
 function openShareModal(ym) {
   const canvas = generateSummaryCanvas(ym);
   const [yr, mo] = ym.split('-');

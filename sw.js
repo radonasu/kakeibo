@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.16'; // v5.16: スペーシング統一（8pxグリッド変数・カード/モーダル/フォームのpadding整列・:focus-visible対応）
+const CACHE_NAME = 'kakeibo-v5.17'; // v5.17: 月次レポートPDF出力（レポートページに「📄 PDF出力」ボタン追加・A4年間収支レポートをブラウザprint→PDF保存で出力）
 const ASSETS = [
   './index.html',
   './css/style.css',
