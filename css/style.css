@@ -86,6 +86,12 @@
   --sp-8:  32px;   /* 特大：メインコンテンツ余白 */
   --sp-10: 40px;   /* 超大：セクション間 */
   --sp-12: 48px;   /* 最大：空状態パディング */
+
+  /* ── コンポーネントトークン (v5.18) ──────────────────── */
+  --radius-btn:      10px;  /* ボタン角丸（統一） */
+  --radius-btn-sm:    8px;  /* 小ボタン角丸（統一） */
+  --radius-badge:   999px;  /* バッジ・pill */
+  --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
 }
 
 html, body {
@@ -419,13 +425,14 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: var(--sp-2);
   padding: 10px 18px;
-  border-radius: 10px;
+  border-radius: var(--radius-btn);
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   border: none;
   transition: background .15s, transform .1s, box-shadow .15s;
   white-space: nowrap;
   cursor: pointer;
+  box-shadow: var(--shadow-btn-base);
 }
 .btn:active { transform: scale(.98); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
@@ -435,19 +442,24 @@ select:focus:not(:focus-visible) {
   color: #fff;
   box-shadow: 0 2px 8px rgba(99,102,241,.35);
 }
-.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 4px 12px rgba(99,102,241,.4); }
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 4px 14px rgba(99,102,241,.45); }
 
 .btn-ghost {
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
+  box-shadow: var(--shadow-btn-base);
 }
-.btn-ghost:hover { background: var(--surface-hover); }
+.btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); }
 
-.btn-danger  { background: var(--expense-light); color: var(--expense); }
-.btn-danger:hover { background: #ffc9d0; }
+.btn-danger {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1.5px solid var(--danger-border);
+}
+.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); }
 
-.btn-sm { padding: 6px 12px; font-size: var(--fs-xs); border-radius: 8px; }
+.btn-sm { padding: 6px 12px; font-size: var(--fs-xs); border-radius: var(--radius-btn-sm); }
 
 .btn-link {
   background: none;
@@ -456,6 +468,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   padding: 0;
+  box-shadow: none;
 }
 .btn-link:hover { text-decoration: underline; }
 
@@ -463,10 +476,16 @@ select:focus:not(:focus-visible) {
   background: none;
   border: none;
   font-size: 14px;
-  padding: 5px 7px;
-  border-radius: 7px;
+  padding: 0;
+  min-width: 32px;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-btn-sm);
   opacity: .65;
   transition: opacity .15s, background .15s;
+  box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); }
 
@@ -500,12 +519,23 @@ select:focus:not(:focus-visible) {
   transition: border-color .15s, box-shadow .15s;
   appearance: auto;
 }
+.form-group input[type="text"]:hover,
+.form-group input[type="number"]:hover,
+.form-group input[type="date"]:hover,
+.form-group input[type="email"]:hover,
+.form-group input[type="password"]:hover,
+.form-group input[type="url"]:hover,
+.form-group input[type="search"]:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: var(--border-strong);
+}
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 1px 3px rgba(0,0,0,.05);
 }
 .hint {
   font-size: var(--fs-xs);
@@ -572,7 +602,7 @@ select:focus:not(:focus-visible) {
   display: inline-block;
   background: rgba(255,255,255,.2);
   padding: 2px 8px;
-  border-radius: 20px;
+  border-radius: var(--radius-badge);
 }
 .diff.up   { }
 .diff.down { }
@@ -668,6 +698,8 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   transition: border-color .15s;
 }
+.filter-bar select:hover,
+.filter-bar .month-sel:hover { border-color: var(--border-strong); }
 .filter-bar select:focus,
 .filter-bar .month-sel:focus { outline: none; border-color: var(--primary); }
 
@@ -680,6 +712,7 @@ select:focus:not(:focus-visible) {
   min-width: 120px;
   transition: border-color .15s;
 }
+.filter-search:hover { border-color: var(--border-strong); }
 .filter-search:focus { outline: none; border-color: var(--primary); }
 
 .month-sel {
@@ -708,24 +741,26 @@ select:focus:not(:focus-visible) {
 /* ── タイプトグル（モーダル） ────────────────────────── */
 .type-toggle {
   display: flex;
-  gap: 0;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+  gap: 4px;
+  background: var(--bg);
+  padding: 4px;
+  border-radius: calc(var(--radius-btn-sm) + 4px);
   margin-bottom: 20px;
 }
 .type-btn {
   flex: 1;
-  padding: 11px;
+  padding: 10px;
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   border: none;
-  background: var(--surface);
+  background: transparent;
   color: var(--text-muted);
-  transition: background .15s, color .15s;
+  border-radius: var(--radius-btn-sm);
+  transition: background .2s, color .2s, box-shadow .2s;
+  cursor: pointer;
 }
-.type-btn.expense-btn { background: var(--expense-light); color: var(--expense); }
-.type-btn.income-btn  { background: var(--income-light); color: var(--income); }
+.type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px rgba(0,0,0,.1); }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -767,11 +802,16 @@ select:focus:not(:focus-visible) {
   border: none;
   font-size: 18px;
   color: var(--text-muted);
-  border-radius: 7px;
-  padding: 3px 7px;
-  transition: background .15s;
+  border-radius: var(--radius-btn-sm);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s, color .15s;
 }
-.modal-close:hover { background: var(--bg); }
+.modal-close:hover { background: var(--bg); color: var(--text); }
 
 .modal-body {
   flex: 1;
@@ -849,7 +889,7 @@ select:focus:not(:focus-visible) {
   background: none;
   border: 1px solid var(--primary);
   color: var(--primary);
-  border-radius: 6px;
+  border-radius: var(--radius-btn-sm);
   padding: 1px 8px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -876,9 +916,10 @@ select:focus:not(:focus-visible) {
   min-width: 100px;
   padding: 7px 10px;
   border: 1.5px solid var(--border);
-  border-radius: 7px;
+  border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
 }
+.quick-cat-form input:hover { border-color: var(--border-strong); }
 .quick-cat-form input:focus { outline: none; border-color: var(--primary); }
 
 /* ── 金額プリセットボタン ────────────────────────────────── */
@@ -893,7 +934,7 @@ select:focus:not(:focus-visible) {
   padding: 4px 12px;
   background: var(--surface-2);
   border: 1.5px solid var(--border);
-  border-radius: 20px;
+  border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
@@ -1059,13 +1100,14 @@ select:focus:not(:focus-visible) {
   width: 110px;
   padding: 5px 9px;
   border: 1.5px solid var(--border);
-  border-radius: 7px;
+  border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
   text-align: right;
   background: var(--surface);
   color: var(--text);
   transition: border-color .15s;
 }
+.budget-input:hover { border-color: var(--border-strong); }
 .budget-input:focus { outline: none; border-color: var(--primary); }
 
 /* ── テンプレートバー ────────────────────────────────────── */
@@ -1727,6 +1769,8 @@ body {
 [data-theme="dark"] .btn-ghost { background: var(--surface-2); color: var(--text); }
 [data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); }
 [data-theme="dark"] .budget-item { background: var(--surface-2); }
+[data-theme="dark"] .type-toggle { background: var(--surface-2); }
+[data-theme="dark"] .btn-danger:hover { background: var(--danger-border); }
 
 /* ============================================================
    マイクロインタラクション (v5.8)
@@ -1822,7 +1866,7 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-badge);
 }
 .notif-badge.notif-granted {
   background: var(--income-light);
