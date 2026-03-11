@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.38'; // v5.38: 収支カレンダービュー
+const CACHE_NAME = 'kakeibo-v5.39'; // v5.39: カレンダービューデザイン洗練
 const ASSETS = [
   './index.html',
   './css/style.css',

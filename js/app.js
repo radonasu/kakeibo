@@ -3370,8 +3370,10 @@ function renderCalendar() {
     const isToday = dateStr === today;
     const isSelected = appState.calendarDay === dateStr;
     const heat = data ? Math.min(4, Math.ceil((data.expense / maxExpense) * 4)) : 0;
+    const dow = new Date(year, month - 1, d).getDay();
+    const dowCls = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
 
-    let inner = `<div class="cal-date-num ${isToday ? 'today' : ''}">${d}</div>`;
+    let inner = `<div class="cal-date-num ${isToday ? 'today' : ''} ${dowCls}">${d}</div>`;
     if (data) {
       if (data.income  > 0) inner += `<div class="cal-amount inc">+${formatMoney(data.income)}</div>`;
       if (data.expense > 0) inner += `<div class="cal-amount exp">-${formatMoney(data.expense)}</div>`;
@@ -3447,8 +3449,10 @@ function renderDayPanel(dateStr) {
       const cat = getCategoryById(t.categoryId);
       const mem = getMemberById(t.memberId);
       const isIncome = t.type === 'income';
+      const dotColor = (cat && cat.color) ? cat.color : (isIncome ? '#059669' : '#e11d48');
       return `
         <div class="cal-panel-tx">
+          <div class="cal-panel-dot" style="background:${dotColor}"></div>
           <div class="cal-panel-tx-info">
             <span class="cal-panel-cat">${cat ? esc2(cat.name) : '—'}</span>
             ${t.memo ? `<span class="cal-panel-memo">${esc2(t.memo)}</span>` : ''}
@@ -3460,6 +3464,10 @@ function renderDayPanel(dateStr) {
   }
 
   panel.style.display = 'block';
+  panel.classList.remove('cal-panel-animate');
+  void panel.offsetWidth; // reflow to re-trigger animation
+  panel.classList.add('cal-panel-animate');
+  panel.addEventListener('animationend', () => panel.classList.remove('cal-panel-animate'), { once: true });
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
 }
 
