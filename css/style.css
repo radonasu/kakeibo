@@ -2186,3 +2186,166 @@ body {
     bottom: 24px;
   }
 }
+
+/* ── 資産管理ページ ───────────────────────────────────────── */
+.asset-list-header {
+  margin: 0 0 12px;
+  padding: 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.asset-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border-radius: 12px;
+  padding: 1px 8px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+}
+[data-theme="dark"] .asset-count-badge {
+  background: rgba(99,102,241,.2);
+  color: #a5b4fc;
+}
+
+.asset-card {
+  margin-bottom: 12px;
+  transition: box-shadow .2s, transform .2s;
+}
+.asset-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.asset-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.asset-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.asset-type-badge {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.asset-name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.asset-card-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.asset-balance-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.asset-balance {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  line-height: 1.1;
+}
+.asset-date-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.asset-history {
+  margin-top: 12px;
+  padding-top: 4px;
+}
+.asset-history-title {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semi);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  margin-bottom: 6px;
+}
+.asset-entry-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+.asset-entry-row:last-of-type { border-bottom: none; }
+.asset-entry-date {
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.asset-entry-note {
+  color: var(--text-muted);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-entry-balance {
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  white-space: nowrap;
+}
+.asset-history-more {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  text-align: center;
+  padding-top: 8px;
+}
+
+/* 空状態 */
+.empty-asset-state {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 2px dashed var(--border);
+  margin-bottom: 16px;
+}
+.empty-asset-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+.empty-asset-msg {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.empty-asset-sub {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-relaxed);
+}

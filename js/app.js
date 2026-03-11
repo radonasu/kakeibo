@@ -116,6 +116,7 @@ function renderCurrentPage() {
     case 'reports':      main.innerHTML = renderReports(); bindReports(); break;
     case 'categories':   main.innerHTML = renderCategories(); bindCategories(); break;
     case 'settings':     main.innerHTML = renderSettings(); bindSettings(); break;
+    case 'assets':       main.innerHTML = renderAssets(); bindAssets(); break;
   }
 }
 
@@ -2037,6 +2038,291 @@ async function callGeminiVision(base64, mimeType) {
 function setFormValue(id, val) {
   const el = document.getElementById(id);
   if (el) el.value = val;
+}
+
+// ============================================================
+// 資産管理ページ
+// ============================================================
+
+const ASSET_TYPES = {
+  savings:    { label: '貯蓄',   icon: '🏦', color: '#3b82f6' },
+  investment: { label: '投資',   icon: '📈', color: '#8b5cf6' },
+  other:      { label: 'その他', icon: '💼', color: '#6b7280' },
+};
+
+function getAssetCurrentBalance(asset) {
+  if (!asset.entries || asset.entries.length === 0) return null;
+  return [...asset.entries].sort((a, b) => b.date.localeCompare(a.date))[0];
+}
+
+function getTotalNetWorth() {
+  return (appData.assets || []).reduce((sum, a) => {
+    const e = getAssetCurrentBalance(a);
+    return sum + (e ? Number(e.balance) || 0 : 0);
+  }, 0);
+}
+
+function getNetWorthAsOf(dateStr) {
+  return (appData.assets || []).reduce((sum, asset) => {
+    if (!asset.entries || asset.entries.length === 0) return sum;
+    const valid = asset.entries.filter(e => e.date <= dateStr);
+    if (valid.length === 0) return sum;
+    const sorted = [...valid].sort((a, b) => b.date.localeCompare(a.date));
+    return sum + (Number(sorted[0].balance) || 0);
+  }, 0);
+}
+
+function renderAssets() {
+  const assets = appData.assets || [];
+  const totalNetWorth = getTotalNetWorth();
+
+  // 先月末の純資産（比較用）
+  const today = new Date();
+  const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+  const lastMonthEndStr = lastMonthEnd.getFullYear() + '-' +
+    String(lastMonthEnd.getMonth() + 1).padStart(2, '0') + '-' +
+    String(lastMonthEnd.getDate()).padStart(2, '0');
+  const prevNetWorth = getNetWorthAsOf(lastMonthEndStr);
+  const diff = totalNetWorth - prevNetWorth;
+  const diffHtml = prevNetWorth > 0 ? (() => {
+    const pct = Math.round(diff / prevNetWorth * 100);
+    const cls = diff >= 0 ? 'up' : 'down';
+    return `<span class="diff ${cls}">${diff >= 0 ? '▲' : '▼'} ${Math.abs(pct)}% 先月比</span>`;
+  })() : '';
+
+  // 口座カード
+  const assetCards = assets.map(asset => {
+    const typeInfo = ASSET_TYPES[asset.type] || ASSET_TYPES.other;
+    const latest = getAssetCurrentBalance(asset);
+    const balance = latest ? Number(latest.balance) : null;
+    const dateLabel = latest ? `${formatDate(latest.date)} 時点` : '残高未登録';
+    const entries = [...(asset.entries || [])].sort((a, b) => b.date.localeCompare(a.date));
+
+    const historyRows = entries.slice(0, 3).map(e => `
+      <div class="asset-entry-row">
+        <span class="asset-entry-date">${formatDate(e.date)}</span>
+        <span class="asset-entry-note">${esc2(e.note || '—')}</span>
+        <span class="asset-entry-balance">${formatMoney(e.balance)}</span>
+        <button class="btn-icon asset-del-entry" data-asset="${asset.id}" data-entry="${e.id}" title="削除">🗑️</button>
+      </div>`).join('');
+
+    return `
+<div class="card asset-card">
+  <div class="asset-card-header">
+    <div class="asset-info">
+      <span class="asset-type-badge" style="background:${typeInfo.color}20;color:${typeInfo.color}">${typeInfo.icon} ${typeInfo.label}</span>
+      <span class="asset-name">${esc2(asset.name)}</span>
+    </div>
+    <div class="asset-card-actions">
+      <button class="btn-icon asset-edit" data-id="${asset.id}" title="編集">✏️</button>
+      <button class="btn-icon asset-delete" data-id="${asset.id}" title="削除">🗑️</button>
+    </div>
+  </div>
+  <div class="asset-balance-row">
+    <div>
+      <div class="asset-balance js-countup" data-value="${balance || 0}">${balance !== null ? formatMoney(balance) : '—'}</div>
+      <div class="asset-date-label">${dateLabel}</div>
+    </div>
+    <button class="btn btn-primary btn-sm asset-add-entry" data-id="${asset.id}">＋ 残高を更新</button>
+  </div>
+  ${entries.length > 0 ? `
+  <div class="asset-history">
+    <div class="asset-history-title">履歴</div>
+    ${historyRows}
+    ${entries.length > 3 ? `<div class="asset-history-more">他 ${entries.length - 3} 件</div>` : ''}
+  </div>` : ''}
+</div>`;
+  }).join('');
+
+  const emptyState = assets.length === 0 ? `
+<div class="empty-asset-state">
+  <div class="empty-asset-icon">🏦</div>
+  <div class="empty-asset-msg">資産口座をまだ登録していません</div>
+  <div class="empty-asset-sub">貯蓄・投資口座の残高を記録して<br>純資産の推移を把握しましょう</div>
+</div>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">🏦 資産管理</h1>
+  <button class="btn btn-primary" id="btn-add-asset">＋ 口座を追加</button>
+</div>
+
+<div class="summary-cards">
+  <div class="card summary-card balance ${totalNetWorth >= 0 ? 'positive' : 'negative'}">
+    <div class="summary-label">💎 純資産合計</div>
+    <div class="summary-amount js-countup" data-value="${totalNetWorth}">${formatMoney(totalNetWorth)}</div>
+    ${diffHtml}
+  </div>
+</div>
+
+${assets.length > 0 ? `
+<div class="card chart-card">
+  <h3 class="card-title">純資産推移（12ヶ月）</h3>
+  <div class="chart-wrap" style="height:220px">
+    <canvas id="net-worth-chart"></canvas>
+  </div>
+</div>` : ''}
+
+<div class="asset-list-header">
+  <h3 class="card-title">口座一覧 <span class="asset-count-badge">${assets.length}</span></h3>
+</div>
+
+${emptyState}
+${assetCards}
+
+<!-- 口座追加/編集モーダル -->
+<div class="modal-overlay" id="asset-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="asset-modal-title">口座を追加</h3>
+      <button class="modal-close" id="asset-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">口座名</label>
+        <input type="text" id="asset-name" class="form-input" placeholder="例：銀行A普通預金">
+      </div>
+      <div class="form-group">
+        <label class="form-label">種別</label>
+        <select id="asset-type" class="form-input">
+          <option value="savings">🏦 貯蓄（銀行・現金）</option>
+          <option value="investment">📈 投資（株式・投資信託・iDeCo）</option>
+          <option value="other">💼 その他</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="asset-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="asset-modal-save">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 残高更新モーダル -->
+<div class="modal-overlay" id="asset-entry-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="asset-entry-modal-title">残高を更新</h3>
+      <button class="modal-close" id="asset-entry-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">日付</label>
+        <input type="date" id="asset-entry-date" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">残高（円）</label>
+        <input type="number" id="asset-entry-balance" class="form-input" placeholder="0" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ（任意）</label>
+        <input type="text" id="asset-entry-note" class="form-input" placeholder="例：3月末残高確認">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="asset-entry-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="asset-entry-modal-save">保存</button>
+    </div>
+  </div>
+</div>`;
+}
+
+let _editingAssetId = null;
+let _entryTargetAssetId = null;
+
+function openAssetModal(assetId) {
+  _editingAssetId = assetId || null;
+  const asset = assetId ? (appData.assets || []).find(a => a.id === assetId) : null;
+  document.getElementById('asset-modal-title').textContent = asset ? '口座を編集' : '口座を追加';
+  document.getElementById('asset-name').value = asset ? asset.name : '';
+  document.getElementById('asset-type').value = asset ? (asset.type || 'savings') : 'savings';
+  showModal('asset-modal');
+}
+
+function openAssetEntryModal(assetId) {
+  _entryTargetAssetId = assetId;
+  const asset = (appData.assets || []).find(a => a.id === assetId);
+  document.getElementById('asset-entry-modal-title').textContent =
+    asset ? `「${asset.name}」残高を更新` : '残高を更新';
+  document.getElementById('asset-entry-date').value = todayStr();
+  document.getElementById('asset-entry-balance').value = '';
+  document.getElementById('asset-entry-note').value = '';
+  showModal('asset-entry-modal');
+}
+
+function bindAssets() {
+  // 数値カウントアップ
+  document.querySelectorAll('.js-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
+  });
+
+  // 純資産グラフ
+  if ((appData.assets || []).length > 0) {
+    setTimeout(() => renderNetWorthChart('net-worth-chart'), 50);
+  }
+
+  // 口座追加
+  on('btn-add-asset', 'click', () => openAssetModal(null));
+
+  // 口座編集
+  document.querySelectorAll('.asset-edit').forEach(btn => {
+    btn.addEventListener('click', () => openAssetModal(btn.dataset.id));
+  });
+
+  // 口座削除
+  document.querySelectorAll('.asset-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const asset = (appData.assets || []).find(a => a.id === btn.dataset.id);
+      if (!asset) return;
+      if (!confirm(`「${asset.name}」を削除しますか？\n残高履歴も含めてすべて削除されます。`)) return;
+      deleteAsset(btn.dataset.id);
+      navigate('assets');
+    });
+  });
+
+  // 残高更新
+  document.querySelectorAll('.asset-add-entry').forEach(btn => {
+    btn.addEventListener('click', () => openAssetEntryModal(btn.dataset.id));
+  });
+
+  // 残高エントリ削除
+  document.querySelectorAll('.asset-del-entry').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('この残高記録を削除しますか？')) return;
+      deleteAssetEntry(btn.dataset.asset, btn.dataset.entry);
+      navigate('assets');
+    });
+  });
+
+  // 口座モーダル
+  on('asset-modal-close',  'click', () => hideModal('asset-modal'));
+  on('asset-modal-cancel', 'click', () => hideModal('asset-modal'));
+  on('asset-modal-save',   'click', () => {
+    const name = (document.getElementById('asset-name').value || '').trim();
+    if (!name) { alert('口座名を入力してください'); return; }
+    const type = document.getElementById('asset-type').value;
+    if (_editingAssetId) {
+      updateAsset(_editingAssetId, { name, type });
+    } else {
+      addAsset({ name, type });
+    }
+    hideModal('asset-modal');
+    navigate('assets');
+  });
+
+  // 残高エントリモーダル
+  on('asset-entry-modal-close',  'click', () => hideModal('asset-entry-modal'));
+  on('asset-entry-modal-cancel', 'click', () => hideModal('asset-entry-modal'));
+  on('asset-entry-modal-save',   'click', () => {
+    const date    = document.getElementById('asset-entry-date').value;
+    const balance = Number(document.getElementById('asset-entry-balance').value);
+    const note    = (document.getElementById('asset-entry-note').value || '').trim();
+    if (!date)           { alert('日付を入力してください'); return; }
+    if (isNaN(balance) || balance < 0) { alert('残高を正しく入力してください'); return; }
+    addAssetEntry(_entryTargetAssetId, { date, balance, note });
+    hideModal('asset-entry-modal');
+    navigate('assets');
+  });
 }
 
 // ============================================================

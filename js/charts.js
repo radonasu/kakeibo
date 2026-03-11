@@ -255,3 +255,76 @@ function renderCategoryBarChart(canvasId, transactions, type) {
     },
   });
 }
+
+// 純資産推移折れ線グラフ（資産管理ページ用）
+function renderNetWorthChart(canvasId) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const months = getLast12Months();
+  const assets = appData.assets || [];
+
+  const netWorthData = months.map(m => {
+    const [y, mo] = m.split('-');
+    const lastDay = new Date(Number(y), Number(mo), 0).getDate();
+    const endDate = `${m}-${String(lastDay).padStart(2, '0')}`;
+    return assets.reduce((sum, asset) => {
+      if (!asset.entries || asset.entries.length === 0) return sum;
+      const valid = asset.entries.filter(e => e.date <= endDate);
+      if (valid.length === 0) return sum;
+      const sorted = [...valid].sort((a, b) => b.date.localeCompare(a.date));
+      return sum + (Number(sorted[0].balance) || 0);
+    }, 0);
+  });
+
+  const labels = months.map(m => {
+    const [y, mo] = m.split('-');
+    return `${y.slice(2)}/${mo}`;
+  });
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: '純資産',
+        data: netWorthData,
+        borderColor: '#6366f1',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: '#6366f1',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `純資産: ${formatMoney(ctx.raw)}`,
+          },
+        },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: {
+          beginAtZero: false,
+          ticks: {
+            font: { size: 10 },
+            callback: v => {
+              if (Math.abs(v) >= 10000) return '¥' + (v / 10000).toFixed(0) + '万';
+              return '¥' + v.toLocaleString('ja-JP');
+            },
+          },
+        },
+      },
+    },
+  });
+}

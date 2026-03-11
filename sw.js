@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.14'; // v5.14: カラーシステム統一（セマンティックトークン・ダークモード一貫性・surface-hover変数化）
+const CACHE_NAME = 'kakeibo-v5.15'; // v5.15: 資産残高管理（貯蓄・投資口座の残高追跡・純資産推移グラフ）
 const ASSETS = [
   './index.html',
   './css/style.css',

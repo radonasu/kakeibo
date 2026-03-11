@@ -146,6 +146,7 @@ function loadData() {
     if (data.settings.syncConfig.enabled  !== undefined) delete data.settings.syncConfig.enabled;
     if (!data.budgets)   data.budgets = {};
     if (!data.templates) data.templates = [];
+    if (!data.assets)    data.assets = [];
     return data;
   } catch (e) {
     console.error('データ読み込みエラー:', e);
@@ -161,6 +162,7 @@ function createDefaultData() {
     settings: { ...DEFAULT_SETTINGS },
     budgets: {},     // { categoryId: monthlyLimit }
     templates: [],   // 繰り返し取引テンプレート
+    assets: [],      // 資産口座（貯蓄・投資）
   };
 }
 
@@ -283,6 +285,47 @@ function updateTemplate(id, fields) {
 function deleteTemplate(id) {
   if (!appData.templates) { appData.templates = []; return; }
   appData.templates = appData.templates.filter(t => t.id !== id);
+  saveData();
+}
+
+// ── 資産管理 CRUD ──────────────────────────────────────────
+function addAsset(fields) {
+  if (!appData.assets) appData.assets = [];
+  const a = { ...fields, id: genId(), entries: fields.entries || [] };
+  appData.assets.push(a);
+  saveData();
+  return a;
+}
+
+function updateAsset(id, fields) {
+  if (!appData.assets) appData.assets = [];
+  const idx = appData.assets.findIndex(a => a.id === id);
+  if (idx >= 0) {
+    appData.assets[idx] = { ...appData.assets[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteAsset(id) {
+  if (!appData.assets) { appData.assets = []; return; }
+  appData.assets = appData.assets.filter(a => a.id !== id);
+  saveData();
+}
+
+function addAssetEntry(assetId, entry) {
+  if (!appData.assets) appData.assets = [];
+  const asset = appData.assets.find(a => a.id === assetId);
+  if (!asset) return;
+  if (!asset.entries) asset.entries = [];
+  asset.entries.push({ ...entry, id: genId() });
+  saveData();
+}
+
+function deleteAssetEntry(assetId, entryId) {
+  if (!appData.assets) return;
+  const asset = appData.assets.find(a => a.id === assetId);
+  if (!asset || !asset.entries) return;
+  asset.entries = asset.entries.filter(e => e.id !== entryId);
   saveData();
 }
 
