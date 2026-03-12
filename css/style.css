@@ -5954,3 +5954,119 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .dw-slider::after {
   background: #e5e7eb;
 }
+
+/* ══════════════════════════════════════════════════════════
+   資産管理ページ ビジュアル洗練 (v5.60)
+   ══════════════════════════════════════════════════════════ */
+
+/* カード入場スタッガードアニメーション */
+@keyframes asset-card-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.asset-card {
+  animation: asset-card-in .38s cubic-bezier(.22,1,.36,1) both;
+  animation-delay: calc(var(--ac-i, 0) * 60ms);
+  border-left: 4px solid var(--asset-accent, var(--border));
+}
+
+/* 残高変動デルタバッジ */
+.asset-balance-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semi);
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.asset-balance-delta.up {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+.asset-balance-delta.down {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border);
+}
+[data-theme="dark"] .asset-balance-delta.up {
+  background: rgba(16,185,129,.15);
+  color: #6ee7b7;
+  border-color: rgba(16,185,129,.3);
+}
+[data-theme="dark"] .asset-balance-delta.down {
+  background: rgba(239,68,68,.15);
+  color: #fca5a5;
+  border-color: rgba(239,68,68,.3);
+}
+
+/* タイプアイコン円形背景 */
+.asset-type-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--asset-accent, var(--primary)) 12%, transparent);
+}
+
+/* 純資産サマリーカード専用グラデーション */
+.summary-card.net-worth-card.positive {
+  background: linear-gradient(135deg, #065f46 0%, #059669 60%, #10b981 100%);
+}
+.summary-card.net-worth-card.negative {
+  background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%);
+}
+
+/* ミニスパークライン */
+.asset-sparkline-wrap {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.asset-sparkline-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  margin-bottom: 4px;
+}
+.asset-sparkline svg {
+  display: block;
+  width: 100%;
+  height: 40px;
+  overflow: visible;
+}
+
+/* 残高＋デルタバッジ横並び */
+.asset-balance-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.asset-balance-main .asset-balance {
+  font-size: var(--fs-4xl);
+}
+
+/* 残高ゼロ時スタイル */
+.asset-balance.no-balance {
+  color: var(--text-faint);
+  font-size: var(--fs-2xl);
+}
+
+/* 先月比ラベル改善 */
+.asset-neworth-diff {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}

@@ -3624,7 +3624,7 @@ function renderAssets() {
 
   // 口座カード
   const fxRates = getExchangeRates();
-  const assetCards = assets.map(asset => {
+  const assetCards = assets.map((asset, idx) => {
     const typeInfo = ASSET_TYPES[asset.type] || ASSET_TYPES.other;
     const currency = asset.currency || 'JPY';
     const isForeign = currency !== 'JPY';
@@ -3634,6 +3634,53 @@ function renderAssets() {
     const balanceJPY = balance !== null ? toJPY(balance, currency) : null;
     const dateLabel = latest ? `${formatDate(latest.date)} 時点` : '残高未登録';
     const entries = [...(asset.entries || [])].sort((a, b) => b.date.localeCompare(a.date));
+
+    // 残高変動デルタバッジ
+    let deltaHtml = '';
+    if (entries.length >= 2) {
+      const cur = Number(entries[0].balance);
+      const prev = Number(entries[1].balance);
+      if (prev !== 0 && cur !== prev) {
+        const pct = Math.round((cur - prev) / Math.abs(prev) * 100);
+        const dir = cur > prev ? 'up' : 'down';
+        const arrow = cur > prev ? '▲' : '▼';
+        deltaHtml = `<span class="asset-balance-delta ${dir}">${arrow} ${Math.abs(pct)}%</span>`;
+      }
+    }
+
+    // ミニスパークラインSVG
+    let sparkHtml = '';
+    if (entries.length >= 2) {
+      const pts = entries.slice(0, 6).reverse().map(e => Number(e.balance));
+      const min = Math.min(...pts), max = Math.max(...pts);
+      const range = max - min || 1;
+      const W = 100, H = 36, pad = 3;
+      const coords = pts.map((v, i) => {
+        const x = pad + (i / (pts.length - 1)) * (W - pad * 2);
+        const y = pad + (1 - (v - min) / range) * (H - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+      const areaBottom = pts.map((v, i) => {
+        const x = pad + (i / (pts.length - 1)) * (W - pad * 2);
+        const y = pad + (1 - (v - min) / range) * (H - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+      const areaPath = `M ${areaBottom[0]} L ${areaBottom.slice(1).join(' L ')} L ${(pad + (pts.length - 1) / (pts.length - 1) * (W - pad * 2)).toFixed(1)},${H} L ${pad},${H} Z`;
+      sparkHtml = `
+      <div class="asset-sparkline-wrap">
+        <div class="asset-sparkline-label">残高推移</div>
+        <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="spark-grad-${asset.id}" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="${typeInfo.color}" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="${typeInfo.color}" stop-opacity=".02"/>
+            </linearGradient>
+          </defs>
+          <path d="${areaPath}" fill="url(#spark-grad-${asset.id})"/>
+          <polyline points="${coords}" fill="none" stroke="${typeInfo.color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>`;
+    }
 
     const historyRows = entries.slice(0, 3).map(e => {
       const entryJPY = isForeign ? toJPY(Number(e.balance), currency) : null;
@@ -3659,13 +3706,14 @@ function renderAssets() {
           ? `<div class="asset-balance js-countup" data-value="${balanceJPY}">${formatCurrencyAmount(balance, currency)}</div>
              <div class="asset-balance-jpy">${formatMoney(balanceJPY)}</div>`
           : `<div class="asset-balance js-countup" data-value="${balance}">${formatMoney(balance)}</div>`)
-      : `<div class="asset-balance">—</div>`;
+      : `<div class="asset-balance no-balance">—</div>`;
 
     return `
-<div class="card asset-card">
+<div class="card asset-card" style="--asset-accent:${typeInfo.color};--ac-i:${idx}">
   <div class="asset-card-header">
     <div class="asset-info">
-      <span class="asset-type-badge" style="background:${typeInfo.color}20;color:${typeInfo.color}">${typeInfo.icon} ${typeInfo.label}</span>
+      <span class="asset-type-icon">${typeInfo.icon}</span>
+      <span class="asset-type-badge" style="background:${typeInfo.color}20;color:${typeInfo.color}">${typeInfo.label}</span>
       ${currencyBadge}
       <span class="asset-name">${esc2(asset.name)}</span>
     </div>
@@ -3676,12 +3724,16 @@ function renderAssets() {
   </div>
   <div class="asset-balance-row">
     <div>
-      ${balanceDisplay}
+      <div class="asset-balance-main">
+        ${balanceDisplay}
+        ${deltaHtml}
+      </div>
       <div class="asset-date-label">${dateLabel}</div>
       ${rateHint}
     </div>
     <button class="btn btn-primary btn-sm asset-add-entry" data-id="${asset.id}">＋ 残高を更新</button>
   </div>
+  ${sparkHtml}
   ${entries.length > 0 ? `
   <div class="asset-history">
     <div class="asset-history-title">履歴</div>
@@ -3705,14 +3757,16 @@ function renderAssets() {
 </div>
 
 <div class="summary-cards">
-  <div class="card summary-card balance ${totalNetWorth >= 0 ? 'positive' : 'negative'}">
+  <div class="card summary-card net-worth-card ${totalNetWorth >= 0 ? 'positive' : 'negative'}">
     <div class="summary-label">💎 純資産合計（円換算）</div>
     <div class="summary-amount js-countup" data-value="${totalNetWorth}">${formatMoney(totalNetWorth)}</div>
-    ${diffHtml}
-    ${(() => {
-      const foreignTotal = getForeignAssetsTotalJPY();
-      return foreignTotal > 0 ? `<div class="asset-foreign-hint">うち外貨資産 ${formatMoney(foreignTotal)}</div>` : '';
-    })()}
+    <div class="asset-neworth-diff">
+      ${diffHtml}
+      ${(() => {
+        const foreignTotal = getForeignAssetsTotalJPY();
+        return foreignTotal > 0 ? `<div class="asset-foreign-hint">うち外貨資産 ${formatMoney(foreignTotal)}</div>` : '';
+      })()}
+    </div>
   </div>
 </div>
 
