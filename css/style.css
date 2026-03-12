@@ -4525,3 +4525,25 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ダークモード */
 [data-theme="dark"] .csv-format-list,
 [data-theme="dark"] .csv-detect-row { background: var(--surface); border-color: var(--border); }
+
+/* ============================================================
+   設定ページ タブパネル (v5.46)
+   ============================================================ */
+
+.settings-panel {
+  display: none;
+}
+.settings-panel.is-active {
+  display: block;
+  animation: stp-in .22s cubic-bezier(.25,.46,.45,.94) both;
+}
+
+@keyframes stp-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* #settings-tabs は .section-tabs を流用 — モバイルオフセット上書き */
+@media (max-width: 768px) {
+  #settings-tabs { top: 56px; }
+}

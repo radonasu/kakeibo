@@ -1633,110 +1633,149 @@ function renderSettings() {
   <h1 class="page-title">設定</h1>
 </div>
 
-<div class="card">
-  <h3 class="card-title">基本設定</h3>
-  <div class="form-group">
-    <label>家計簿名</label>
-    <input type="text" id="set-family" value="${esc2(s.familyName)}">
-  </div>
-  <div class="form-group">
-    <label>会計年度開始月（青色申告用）</label>
-    <select id="set-fiscal">${monthOptions}</select>
-  </div>
-  <button class="btn btn-primary" id="save-settings">設定を保存</button>
+<div class="section-tabs" id="settings-tabs">
+  <button class="section-tab is-active" data-panel="stp-general"><span class="tab-icon">⚙️</span> 一般</button>
+  <button class="section-tab" data-panel="stp-sync"><span class="tab-icon">☁️</span> 連携</button>
+  <button class="section-tab" data-panel="stp-data"><span class="tab-icon">📊</span> データ</button>
+  <button class="section-tab" data-panel="stp-other"><span class="tab-icon">🔔</span> その他</button>
 </div>
 
-<div class="card">
-  <h3 class="card-title">📷 レシート読み込み設定</h3>
-  <div class="form-group">
-    <label>Gemini API キー</label>
-    <div class="api-key-row">
-      <input type="password" id="set-api-key" value="${esc2(s.geminiApiKey || '')}" placeholder="AIza..." autocomplete="off">
-      <button class="btn btn-ghost btn-sm" id="toggle-api-key">表示</button>
+<!-- ── パネル1: 一般 ── -->
+<div class="settings-panel is-active" id="stp-general">
+  <div class="card">
+    <h3 class="card-title">基本設定</h3>
+    <div class="form-group">
+      <label>家計簿名</label>
+      <input type="text" id="set-family" value="${esc2(s.familyName)}">
     </div>
-    <small class="hint">
-      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
-      で無料で取得できます（1日1,000回まで無料）。このブラウザの localStorage にのみ保存されます。
-    </small>
+    <div class="form-group">
+      <label>会計年度開始月（青色申告用）</label>
+      <select id="set-fiscal">${monthOptions}</select>
+    </div>
+    <button class="btn btn-primary" id="save-settings">設定を保存</button>
   </div>
-  <button class="btn btn-primary" id="save-api-key">APIキーを保存</button>
-  ${s.geminiApiKey ? '<span class="api-key-status set">✅ 設定済み</span>' : '<span class="api-key-status unset">未設定</span>'}
+
+  <div class="card">
+    <div class="card-header-row">
+      <h3 class="card-title">家族メンバー</h3>
+      <button class="btn btn-primary" id="open-add-mem">＋ メンバー追加</button>
+    </div>
+    <div class="table-wrap">
+      <table class="tx-table">
+        <thead><tr><th>名前</th><th></th></tr></thead>
+        <tbody>${memberRows || '<tr><td colspan="2" class="empty">メンバーがいません</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header-row">
+      <h3 class="card-title">⚡ よく使うテンプレート</h3>
+      <button class="btn btn-primary" id="open-add-tpl">＋ テンプレート追加</button>
+    </div>
+    <p class="hint" style="margin-bottom:10px">固定費や繰り返しの取引を登録。収支一覧画面でワンタップ入力できます。</p>
+    ${templateRows ? `<div class="table-wrap">
+      <table class="tx-table">
+        <thead><tr><th>名前</th><th>種別</th><th>カテゴリ</th><th>金額</th><th></th></tr></thead>
+        <tbody>${templateRows}</tbody>
+      </table>
+    </div>` : '<p class="empty" style="text-align:center;padding:12px 0;color:var(--text-muted)">テンプレートがありません</p>'}
+  </div>
 </div>
 
-<div class="card">
-  <h3 class="card-title">☁️ クラウドアカウント</h3>
-  <div class="sync-status-row">
-    <span id="sync-status-dot" class="sync-dot"></span>
-    <span id="sync-status-text" style="font-size:13px;color:var(--text-muted)">未接続</span>
+<!-- ── パネル2: 連携 ── -->
+<div class="settings-panel" id="stp-sync">
+  <div class="card">
+    <h3 class="card-title">📷 レシート読み込み設定</h3>
+    <div class="form-group">
+      <label>Gemini API キー</label>
+      <div class="api-key-row">
+        <input type="password" id="set-api-key" value="${esc2(s.geminiApiKey || '')}" placeholder="AIza..." autocomplete="off">
+        <button class="btn btn-ghost btn-sm" id="toggle-api-key">表示</button>
+      </div>
+      <small class="hint">
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
+        で無料で取得できます（1日1,000回まで無料）。このブラウザの localStorage にのみ保存されます。
+      </small>
+    </div>
+    <button class="btn btn-primary" id="save-api-key">APIキーを保存</button>
+    ${s.geminiApiKey ? '<span class="api-key-status set">✅ 設定済み</span>' : '<span class="api-key-status unset">未設定</span>'}
   </div>
 
-  ${(typeof isLoggedIn === 'function' && isLoggedIn()) ? (() => {
-    const user = getCurrentUser();
-    return `
-  <div id="sync-logged-info" class="sync-user-card">
-    <div class="sync-user-avatar" id="sync-user-avatar">${user ? user.email[0].toUpperCase() : '?'}</div>
-    <div class="sync-user-info">
-      <span id="sync-user-email" style="font-size:13px;font-weight:600">${esc2(user ? user.email : '')}</span>
-      <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
+  <div class="card">
+    <h3 class="card-title">☁️ クラウドアカウント</h3>
+    <div class="sync-status-row">
+      <span id="sync-status-dot" class="sync-dot"></span>
+      <span id="sync-status-text" style="font-size:13px;color:var(--text-muted)">未接続</span>
     </div>
-  </div>
-  <div class="sync-btn-row">
-    <button class="btn btn-ghost btn-sm" id="btn-sync-pull">↓ 今すぐ同期</button>
-    <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
-  </div>`;
-  })() : `
-  <div id="sync-logged-info" style="display:none">
-    <div class="sync-user-card">
-      <div class="sync-user-avatar" id="sync-user-avatar">?</div>
+
+    ${(typeof isLoggedIn === 'function' && isLoggedIn()) ? (() => {
+      const user = getCurrentUser();
+      return `
+    <div id="sync-logged-info" class="sync-user-card">
+      <div class="sync-user-avatar" id="sync-user-avatar">${user ? user.email[0].toUpperCase() : '?'}</div>
       <div class="sync-user-info">
-        <span id="sync-user-email" style="font-size:13px;font-weight:600"></span>
+        <span id="sync-user-email" style="font-size:13px;font-weight:600">${esc2(user ? user.email : '')}</span>
         <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
       </div>
     </div>
     <div class="sync-btn-row">
       <button class="btn btn-ghost btn-sm" id="btn-sync-pull">↓ 今すぐ同期</button>
       <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
-    </div>
-  </div>
-  <div id="sync-login-prompt" style="margin-top:10px">
-    ${(cfg.url && cfg.anonKey) ? `
-    <button class="btn btn-primary" id="btn-sync-login-show">✉️ ログイン / 新規登録</button>
-    ` : `<p class="hint">Supabase接続設定を行うと、メールアドレスでアカウント作成してクラウド同期できます。</p>`}
-  </div>`}
-
-  ${adminCfg ? `
-  <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;font-size:13px">
-    <span style="font-weight:700;color:#059669">✓ Supabase接続設定済み</span>
-    <span style="color:#64748b;margin-left:8px">（管理者によって設定されています）</span>
-  </div>` : `
-  <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
-    <summary style="cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
-      <span>⚙️ Supabase接続設定</span>
-      ${(cfg.url && cfg.anonKey) ? '<span style="font-size:11px;background:#d1fae5;color:#059669;padding:2px 8px;border-radius:20px;font-weight:700">設定済み</span>' : '<span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 8px;border-radius:20px;font-weight:700">未設定</span>'}
-    </summary>
-    <div style="margin-top:14px">
-      <div class="form-group">
-        <label>Supabase Project URL</label>
-        <input type="url" id="set-supabase-url" value="${esc2(cfg.url||'')}" placeholder="https://xxxx.supabase.co">
-      </div>
-      <div class="form-group">
-        <label>Anon（公開）Key</label>
-        <div class="api-key-row">
-          <input type="password" id="set-supabase-key" value="${esc2(cfg.anonKey||'')}" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-          <button class="btn btn-ghost btn-sm" id="toggle-supabase-key">表示</button>
+    </div>`;
+    })() : `
+    <div id="sync-logged-info" style="display:none">
+      <div class="sync-user-card">
+        <div class="sync-user-avatar" id="sync-user-avatar">?</div>
+        <div class="sync-user-info">
+          <span id="sync-user-email" style="font-size:13px;font-weight:600"></span>
+          <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
         </div>
       </div>
-      <button class="btn btn-primary btn-sm" id="save-supabase-config">設定を保存</button>
+      <div class="sync-btn-row">
+        <button class="btn btn-ghost btn-sm" id="btn-sync-pull">↓ 今すぐ同期</button>
+        <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
+      </div>
     </div>
-  </details>`}
+    <div id="sync-login-prompt" style="margin-top:10px">
+      ${(cfg.url && cfg.anonKey) ? `
+      <button class="btn btn-primary" id="btn-sync-login-show">✉️ ログイン / 新規登録</button>
+      ` : `<p class="hint">Supabase接続設定を行うと、メールアドレスでアカウント作成してクラウド同期できます。</p>`}
+    </div>`}
 
-  <details style="margin-top:14px">
-    <summary style="cursor:pointer;color:var(--text-muted);font-size:12px;user-select:none;list-style:none">▶ Supabase初期設定手順（クリックで展開）</summary>
-    <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
-      <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料プロジェクトを作成</li>
-      <li>SQL Editorで以下を実行してテーブルを作成：</li>
-    </ol>
-    <pre class="sql-block">CREATE TABLE household_data (
+    ${adminCfg ? `
+    <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;font-size:13px">
+      <span style="font-weight:700;color:#059669">✓ Supabase接続設定済み</span>
+      <span style="color:#64748b;margin-left:8px">（管理者によって設定されています）</span>
+    </div>` : `
+    <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
+      <summary style="cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
+        <span>⚙️ Supabase接続設定</span>
+        ${(cfg.url && cfg.anonKey) ? '<span style="font-size:11px;background:#d1fae5;color:#059669;padding:2px 8px;border-radius:20px;font-weight:700">設定済み</span>' : '<span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 8px;border-radius:20px;font-weight:700">未設定</span>'}
+      </summary>
+      <div style="margin-top:14px">
+        <div class="form-group">
+          <label>Supabase Project URL</label>
+          <input type="url" id="set-supabase-url" value="${esc2(cfg.url||'')}" placeholder="https://xxxx.supabase.co">
+        </div>
+        <div class="form-group">
+          <label>Anon（公開）Key</label>
+          <div class="api-key-row">
+            <input type="password" id="set-supabase-key" value="${esc2(cfg.anonKey||'')}" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+            <button class="btn btn-ghost btn-sm" id="toggle-supabase-key">表示</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" id="save-supabase-config">設定を保存</button>
+      </div>
+    </details>`}
+
+    <details style="margin-top:14px">
+      <summary style="cursor:pointer;color:var(--text-muted);font-size:12px;user-select:none;list-style:none">▶ Supabase初期設定手順（クリックで展開）</summary>
+      <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+        <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料プロジェクトを作成</li>
+        <li>SQL Editorで以下を実行してテーブルを作成：</li>
+      </ol>
+      <pre class="sql-block">CREATE TABLE household_data (
   user_id UUID REFERENCES auth.users NOT NULL PRIMARY KEY,
   data JSONB DEFAULT '{}',
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -1745,79 +1784,151 @@ ALTER TABLE household_data ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "own_data" ON household_data
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);</pre>
-    <ol start="3" style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
-      <li>Settings → API から Project URL と anon key をコピーして上の入力欄に貼り付け</li>
-      <li>「設定を保存」→「ログイン / 新規登録」でアカウント作成</li>
-    </ol>
-  </details>
+      <ol start="3" style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+        <li>Settings → API から Project URL と anon key をコピーして上の入力欄に貼り付け</li>
+        <li>「設定を保存」→「ログイン / 新規登録」でアカウント作成</li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">💱 為替レート設定</h3>
+    <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算するレートです（1外貨 = X円）。自動取得ボタンで最新レートを即時反映できます。</p>
+    <div class="fx-rate-grid" id="fx-rate-grid">
+      ${CURRENCIES.filter(c => c.code !== 'JPY').map(c => {
+        const currentRate = getExchangeRates()[c.code] || DEFAULT_FX_RATES[c.code];
+        return `
+        <div class="fx-rate-row">
+          <span class="fx-currency-label">${c.flag} ${c.code}<small>${c.name}</small></span>
+          <div class="fx-input-wrap">
+            <input type="number" class="form-input fx-rate-input" data-currency="${c.code}" value="${currentRate}" min="0" step="0.01" placeholder="0.00">
+            <span class="fx-unit">円</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="fx-rate-actions">
+      <button class="btn btn-secondary" id="fetch-fx-rates">🔄 自動取得</button>
+      <button class="btn btn-primary" id="save-fx-rates">💾 保存</button>
+    </div>
+    <div class="fx-update-status" id="fx-update-status">${(() => {
+      const ts = getFXRatesUpdatedAt();
+      if (!ts) return '<span class="fx-update-none">未取得（デフォルト値を使用中）</span>';
+      const d = new Date(ts);
+      const label = d.toLocaleDateString('ja-JP') + ' ' + d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+      return `<span class="fx-update-ok">✅ 最終自動取得: ${label}</span>`;
+    })()}</div>
+  </div>
 </div>
 
-<div class="card">
-  <div class="card-header-row">
-    <h3 class="card-title">家族メンバー</h3>
-    <button class="btn btn-primary" id="open-add-mem">＋ メンバー追加</button>
-  </div>
-  <div class="table-wrap">
-    <table class="tx-table">
-      <thead><tr><th>名前</th><th></th></tr></thead>
-      <tbody>${memberRows || '<tr><td colspan="2" class="empty">メンバーがいません</td></tr>'}</tbody>
-    </table>
-  </div>
-</div>
-
-<div class="card">
-  <h3 class="card-title">データのエクスポート・バックアップ</h3>
-  <div class="export-grid">
-    <div class="export-block">
-      <h4>弥生会計 仕訳インポートCSV</h4>
-      <p class="hint">弥生会計の「仕訳日記帳インポート」機能で読み込めます。<br>BOM付きUTF-8形式。</p>
-      <div class="export-range">
-        <select id="yayoi-year">
-          ${Array.from({length:5},(_,i)=>new Date().getFullYear()-i).map(y=>`<option value="${y}">${y}年</option>`).join('')}
-        </select>
-        <button class="btn btn-primary" id="btn-export-yayoi">弥生CSVダウンロード</button>
+<!-- ── パネル3: データ ── -->
+<div class="settings-panel" id="stp-data">
+  <div class="card">
+    <h3 class="card-title">データのエクスポート・バックアップ</h3>
+    <div class="export-grid">
+      <div class="export-block">
+        <h4>弥生会計 仕訳インポートCSV</h4>
+        <p class="hint">弥生会計の「仕訳日記帳インポート」機能で読み込めます。<br>BOM付きUTF-8形式。</p>
+        <div class="export-range">
+          <select id="yayoi-year">
+            ${Array.from({length:5},(_,i)=>new Date().getFullYear()-i).map(y=>`<option value="${y}">${y}年</option>`).join('')}
+          </select>
+          <button class="btn btn-primary" id="btn-export-yayoi">弥生CSVダウンロード</button>
+        </div>
+      </div>
+      <div class="export-block">
+        <h4>汎用CSV（全データ）</h4>
+        <p class="hint">Excel等で開ける汎用CSVです。</p>
+        <button class="btn btn-ghost" id="btn-export-csv">CSVダウンロード</button>
+      </div>
+      <div class="export-block">
+        <h4>JSONバックアップ</h4>
+        <p class="hint">全データをJSONで保存します。他のPCに移行する際に使えます。</p>
+        <button class="btn btn-ghost" id="btn-export-json">JSONダウンロード</button>
+      </div>
+      <div class="export-block">
+        <h4>JSONインポート</h4>
+        <p class="hint">バックアップJSONを読み込みます。<b>現在のデータは上書きされます。</b></p>
+        <label class="btn btn-ghost" id="btn-import-label">
+          JSONを選択
+          <input type="file" id="btn-import-json" accept=".json" style="display:none">
+        </label>
+      </div>
+      <div class="export-block">
+        <h4>📥 CSVインポート</h4>
+        <p class="hint">アプリの汎用CSVまたは銀行明細CSVを取り込みます。重複取引は自動スキップ。</p>
+        <button class="btn btn-ghost" id="btn-csv-import-open">CSVをインポート</button>
       </div>
     </div>
-    <div class="export-block">
-      <h4>汎用CSV（全データ）</h4>
-      <p class="hint">Excel等で開ける汎用CSVです。</p>
-      <button class="btn btn-ghost" id="btn-export-csv">CSVダウンロード</button>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">📂 アカウント管理</h3>
+    <p class="hint">アカウントごとに家計データを分けて管理できます（例：自分の家・親の家・事業用）。</p>
+    <div class="table-wrap" style="margin-bottom:12px">
+      <table class="tx-table">
+        <thead><tr><th>アカウント名</th><th>状態</th><th></th></tr></thead>
+        <tbody>
+          ${getAllAccounts().map(a => `<tr>
+            <td>${esc2(a.name)}${a.id === currentAccountId ? ' <span class="badge-active">使用中</span>' : ''}</td>
+            <td style="font-size:11px;color:var(--text-muted)">${(()=>{
+              try{const d=JSON.parse(localStorage.getItem(getStorageKey(a.id))||'{}');return (d.transactions||[]).length+'件';}catch{return '—';}
+            })()}</td>
+            <td class="actions">
+              <button class="btn-icon rename-acc" data-id="${a.id}" title="名前変更">✏️</button>
+              ${getAllAccounts().length > 1 ? `<button class="btn-icon delete-acc" data-id="${a.id}" title="削除">🗑️</button>` : ''}
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
     </div>
-    <div class="export-block">
-      <h4>JSONバックアップ</h4>
-      <p class="hint">全データをJSONで保存します。他のPCに移行する際に使えます。</p>
-      <button class="btn btn-ghost" id="btn-export-json">JSONダウンロード</button>
-    </div>
-    <div class="export-block">
-      <h4>JSONインポート</h4>
-      <p class="hint">バックアップJSONを読み込みます。<b>現在のデータは上書きされます。</b></p>
-      <label class="btn btn-ghost" id="btn-import-label">
-        JSONを選択
-        <input type="file" id="btn-import-json" accept=".json" style="display:none">
-      </label>
-    </div>
-    <div class="export-block">
-      <h4>📥 CSVインポート</h4>
-      <p class="hint">アプリの汎用CSVまたは銀行明細CSVを取り込みます。重複取引は自動スキップ。</p>
-      <button class="btn btn-ghost" id="btn-csv-import-open">CSVをインポート</button>
-    </div>
+    <button class="btn btn-ghost" id="btn-new-account">＋ アカウントを追加</button>
   </div>
 </div>
 
-<div class="card">
-  <div class="card-header-row">
-    <h3 class="card-title">⚡ よく使うテンプレート</h3>
-    <button class="btn btn-primary" id="open-add-tpl">＋ テンプレート追加</button>
+<!-- ── パネル4: その他 ── -->
+<div class="settings-panel" id="stp-other">
+  <div class="card">
+    <h3 class="card-title">🔔 予算アラート通知</h3>
+    <p class="hint" style="margin-bottom:12px">予算の80%到達・超過時にブラウザ通知でお知らせします。</p>
+    <div id="notif-status-area"></div>
   </div>
-  <p class="hint" style="margin-bottom:10px">固定費や繰り返しの取引を登録。収支一覧画面でワンタップ入力できます。</p>
-  ${templateRows ? `<div class="table-wrap">
-    <table class="tx-table">
-      <thead><tr><th>名前</th><th>種別</th><th>カテゴリ</th><th>金額</th><th></th></tr></thead>
-      <tbody>${templateRows}</tbody>
-    </table>
-  </div>` : '<p class="empty" style="text-align:center;padding:12px 0;color:var(--text-muted)">テンプレートがありません</p>'}
+
+  <div class="card">
+    <h3 class="card-title">📱 スマートフォンアプリとしてインストール</h3>
+    <p class="hint">このアプリはPWA（プログレッシブWebアプリ）です。ホーム画面に追加するとネイティブアプリのように使えます。</p>
+    <div id="pwa-install-area" style="margin-bottom:12px"></div>
+    <div class="install-guide-tabs">
+      <div class="install-tab">
+        <h4>🤖 Android（Chrome）</h4>
+        <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
+          <li>Chromeでこのページを開く</li>
+          <li>右上の「⋮」メニューをタップ</li>
+          <li>「ホーム画面に追加」を選択</li>
+          <li>「追加」をタップして完了 🎉</li>
+        </ol>
+      </div>
+      <div class="install-tab">
+        <h4>🍎 iPhone / iPad（Safari）</h4>
+        <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
+          <li>Safariでこのページを開く（必須）</li>
+          <li>画面下部の共有ボタン（□↑）をタップ</li>
+          <li>「ホーム画面に追加」を選択</li>
+          <li>「追加」をタップして完了 🎉</li>
+        </ol>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:10px">💡 インストール後はオフラインでも使用できます。データはこのデバイスに保存されます。</p>
+  </div>
+
+  <div class="card danger-zone">
+    <h3 class="card-title">危険ゾーン</h3>
+    <p class="hint">現在のアカウントのデータをすべて削除します。この操作は元に戻せません。</p>
+    <button class="btn btn-danger" id="btn-reset">データをリセット</button>
+  </div>
 </div>
 
+<!-- ── モーダル（パネル外に配置：display:none時でも呼び出し可能） ── -->
 <div id="tpl-modal" class="modal-overlay" style="display:none">
   <div class="modal modal-sm">
     <div class="modal-header">
@@ -1889,97 +2000,6 @@ CREATE POLICY "own_data" ON household_data
   </div>
 </div>
 
-<div class="card">
-  <h3 class="card-title">📂 アカウント管理</h3>
-  <p class="hint">アカウントごとに家計データを分けて管理できます（例：自分の家・親の家・事業用）。</p>
-  <div class="table-wrap" style="margin-bottom:12px">
-    <table class="tx-table">
-      <thead><tr><th>アカウント名</th><th>状態</th><th></th></tr></thead>
-      <tbody>
-        ${getAllAccounts().map(a => `<tr>
-          <td>${esc2(a.name)}${a.id === currentAccountId ? ' <span class="badge-active">使用中</span>' : ''}</td>
-          <td style="font-size:11px;color:var(--text-muted)">${(()=>{
-            try{const d=JSON.parse(localStorage.getItem(getStorageKey(a.id))||'{}');return (d.transactions||[]).length+'件';}catch{return '—';}
-          })()}</td>
-          <td class="actions">
-            <button class="btn-icon rename-acc" data-id="${a.id}" title="名前変更">✏️</button>
-            ${getAllAccounts().length > 1 ? `<button class="btn-icon delete-acc" data-id="${a.id}" title="削除">🗑️</button>` : ''}
-          </td>
-        </tr>`).join('')}
-      </tbody>
-    </table>
-  </div>
-  <button class="btn btn-ghost" id="btn-new-account">＋ アカウントを追加</button>
-</div>
-
-<div class="card">
-  <h3 class="card-title">📱 スマートフォンアプリとしてインストール</h3>
-  <p class="hint">このアプリはPWA（プログレッシブWebアプリ）です。ホーム画面に追加するとネイティブアプリのように使えます。</p>
-  <div id="pwa-install-area" style="margin-bottom:12px"></div>
-  <div class="install-guide-tabs">
-    <div class="install-tab">
-      <h4>🤖 Android（Chrome）</h4>
-      <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
-        <li>Chromeでこのページを開く</li>
-        <li>右上の「⋮」メニューをタップ</li>
-        <li>「ホーム画面に追加」を選択</li>
-        <li>「追加」をタップして完了 🎉</li>
-      </ol>
-    </div>
-    <div class="install-tab">
-      <h4>🍎 iPhone / iPad（Safari）</h4>
-      <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
-        <li>Safariでこのページを開く（必須）</li>
-        <li>画面下部の共有ボタン（□↑）をタップ</li>
-        <li>「ホーム画面に追加」を選択</li>
-        <li>「追加」をタップして完了 🎉</li>
-      </ol>
-    </div>
-  </div>
-  <p style="font-size:12px;color:var(--text-muted);margin-top:10px">💡 インストール後はオフラインでも使用できます。データはこのデバイスに保存されます。</p>
-</div>
-
-<div class="card">
-  <h3 class="card-title">🔔 予算アラート通知</h3>
-  <p class="hint" style="margin-bottom:12px">予算の80%到達・超過時にブラウザ通知でお知らせします。</p>
-  <div id="notif-status-area"></div>
-</div>
-
-<div class="card">
-  <h3 class="card-title">💱 為替レート設定</h3>
-  <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算するレートです（1外貨 = X円）。自動取得ボタンで最新レートを即時反映できます。</p>
-  <div class="fx-rate-grid" id="fx-rate-grid">
-    ${CURRENCIES.filter(c => c.code !== 'JPY').map(c => {
-      const currentRate = getExchangeRates()[c.code] || DEFAULT_FX_RATES[c.code];
-      return `
-      <div class="fx-rate-row">
-        <span class="fx-currency-label">${c.flag} ${c.code}<small>${c.name}</small></span>
-        <div class="fx-input-wrap">
-          <input type="number" class="form-input fx-rate-input" data-currency="${c.code}" value="${currentRate}" min="0" step="0.01" placeholder="0.00">
-          <span class="fx-unit">円</span>
-        </div>
-      </div>`;
-    }).join('')}
-  </div>
-  <div class="fx-rate-actions">
-    <button class="btn btn-secondary" id="fetch-fx-rates">🔄 自動取得</button>
-    <button class="btn btn-primary" id="save-fx-rates">💾 保存</button>
-  </div>
-  <div class="fx-update-status" id="fx-update-status">${(() => {
-    const ts = getFXRatesUpdatedAt();
-    if (!ts) return '<span class="fx-update-none">未取得（デフォルト値を使用中）</span>';
-    const d = new Date(ts);
-    const label = d.toLocaleDateString('ja-JP') + ' ' + d.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-    return `<span class="fx-update-ok">✅ 最終自動取得: ${label}</span>`;
-  })()}</div>
-</div>
-
-<div class="card danger-zone">
-  <h3 class="card-title">危険ゾーン</h3>
-  <p class="hint">現在のアカウントのデータをすべて削除します。この操作は元に戻せません。</p>
-  <button class="btn btn-danger" id="btn-reset">データをリセット</button>
-</div>
-
 <div id="mem-modal" class="modal-overlay" style="display:none">
   <div class="modal modal-sm">
     <div class="modal-header">
@@ -2010,6 +2030,23 @@ CREATE POLICY "own_data" ON household_data
 
 function bindSettings() {
   let editingMemId = null;
+
+  // ── 設定タブ切替 (v5.46) ──────────────────────────────────
+  const SETTINGS_TAB_KEY = 'kk_settings_tab';
+  function switchSettingsTab(panelId) {
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('is-active'));
+    document.querySelectorAll('#settings-tabs .section-tab').forEach(t => t.classList.remove('is-active'));
+    const panel = document.getElementById(panelId);
+    const tab   = document.querySelector(`#settings-tabs [data-panel="${panelId}"]`);
+    if (panel) panel.classList.add('is-active');
+    if (tab)   tab.classList.add('is-active');
+    localStorage.setItem(SETTINGS_TAB_KEY, panelId);
+  }
+  const savedTab = localStorage.getItem(SETTINGS_TAB_KEY) || 'stp-general';
+  switchSettingsTab(savedTab);
+  document.querySelectorAll('#settings-tabs .section-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchSettingsTab(btn.dataset.panel));
+  });
 
   // ── クラウド同期 ──────────────────────────────────────────
   if (typeof refreshSyncUI === 'function') refreshSyncUI();

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.45'; // v5.45: CSVインポート機能（アプリ独自形式自動認識・銀行明細列マッピング・重複スキップ）
+const CACHE_NAME = 'kakeibo-v5.46'; // v5.46: 設定ページ タブナビゲーション（4タブ構成・パネル切替・localStorage永続化）
 const ASSETS = [
   './index.html',
   './css/style.css',
