@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.62'; // v5.62: ネットショッピングOCR・カード明細CSVインポート
+const CACHE_NAME = 'kakeibo-v5.62'; // v5.62: タグ機能ビジュアル洗練（マルチカラーチップ・横スクロールフィルター・モーダルプレビュー）
 const ASSETS = [
   './index.html',
   './css/style.css',

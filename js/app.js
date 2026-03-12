@@ -1020,9 +1020,12 @@ function renderTxRow(t) {
   const cbCol = appState.bulkMode
     ? `<td class="tx-cb-cell"><input type="checkbox" class="tx-cb" data-id="${t.id}" ${isSel ? 'checked' : ''}></td>`
     : '';
-  // タグチップ (v5.61)
+  // タグチップ (v5.62: マルチカラー)
   const tagChips = (t.tags && t.tags.length > 0)
-    ? `<div class="tx-tag-chips">${t.tags.map(tag => `<span class="tx-tag-chip">#${esc2(tag)}</span>`).join('')}</div>`
+    ? `<div class="tx-tag-chips">${t.tags.map(tag => {
+        const col = getTagColor(tag);
+        return `<span class="tx-tag-chip" style="--tc:${col}">#${esc2(tag)}</span>`;
+      }).join('')}</div>`
     : '';
   return `<tr data-id="${t.id}" data-type="${t.type}"${isSel ? ' class="tx-selected"' : ''}>
       ${cbCol}
@@ -1037,6 +1040,25 @@ function renderTxRow(t) {
         <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
       </td>
     </tr>`;
+}
+
+// ── タグカラーパレット (v5.62) ────────────────────────────
+const TAG_COLORS = [
+  '#6366f1', // indigo
+  '#0891b2', // cyan
+  '#059669', // emerald
+  '#d97706', // amber
+  '#7c3aed', // violet
+  '#db2777', // pink
+  '#ea580c', // orange
+  '#0d9488', // teal
+  '#e11d48', // rose
+  '#64748b', // slate
+];
+function getTagColor(tag) {
+  let h = 0;
+  for (let i = 0; i < tag.length; i++) h = (h * 31 + tag.charCodeAt(i)) & 0xFFFF;
+  return TAG_COLORS[h % TAG_COLORS.length];
 }
 
 // ── タグ管理 (v5.61) ─────────────────────────────────────
@@ -1095,13 +1117,18 @@ function renderTransactions() {
   const memOptions = `<option value="">担当者: 全員</option>` +
     appData.members.map(m => `<option value="${m.id}" ${f.member === m.id ? 'selected' : ''}>${esc2(m.name)}</option>`).join('');
 
-  // タグ選択肢 (v5.61)
+  // タグフィルターチップ行 (v5.62: selectから横スクロールチップ行へ刷新)
   const allTags = getAllTags();
-  const tagOptions = `<option value="">🏷️ 全タグ</option>` +
-    allTags.map(tag => `<option value="${esc2(tag)}" ${f.tag === tag ? 'selected' : ''}>#${esc2(tag)}</option>`).join('');
   const tagFilterHtml = allTags.length > 0
-    ? `<select id="filter-tag">${tagOptions}</select>`
-    : `<select id="filter-tag" style="display:none">${tagOptions}</select>`;
+    ? `<div class="tx-tag-filter-row" id="tag-filter-row">
+        <span class="tx-tag-filter-label">🏷️</span>
+        <button class="tx-tag-filter-all ${!f.tag ? 'active' : ''}" data-tag="">全タグ</button>
+        ${allTags.map(tag => {
+          const col = getTagColor(tag);
+          return `<button class="tx-tag-filter-chip ${f.tag === tag ? 'active' : ''}" data-tag="${esc2(tag)}" style="--tc:${col}">#${esc2(tag)}</button>`;
+        }).join('')}
+      </div>`
+    : '';
 
   // 行生成（全期間は月グループ分け）
   let rows;
@@ -1175,10 +1202,11 @@ ${templateBar}
     <option value="income" ${f.type === 'income' ? 'selected' : ''}>収入のみ</option>
     <option value="expense" ${f.type === 'expense' ? 'selected' : ''}>支出のみ</option>
   </select>
-  ${tagFilterHtml}
   <input id="filter-search" type="search" placeholder="検索…" value="${esc2(f.search)}" class="filter-search">
   ${searchAllBtn}
 </div>
+
+${tagFilterHtml}
 
 <div class="card summary-mini">
   <div class="smi-item smi-income">
@@ -1219,7 +1247,16 @@ function bindTransactions() {
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
   on('filter-type',   'change', e => { appState.txFilter.type     = e.target.value; renderCurrentPage(); });
-  on('filter-tag',    'change', e => { appState.txFilter.tag      = e.target.value; renderCurrentPage(); });  // v5.61
+  // タグフィルターチップ行 (v5.62: クリックイベント委任)
+  const tagFilterRow = document.getElementById('tag-filter-row');
+  if (tagFilterRow) {
+    tagFilterRow.addEventListener('click', e => {
+      const chip = e.target.closest('[data-tag]');
+      if (!chip) return;
+      appState.txFilter.tag = chip.dataset.tag || '';
+      renderCurrentPage();
+    });
+  }
   let _searchTimer = null;
   on('filter-search', 'input', e => {
     appState.txFilter.search = e.target.value;
@@ -1484,6 +1521,7 @@ function renderTxModal() {
           value="${src && src.tags && src.tags.length > 0 ? src.tags.join(', ') : ''}"
           list="tx-tag-suggestions" autocomplete="off">
         <datalist id="tx-tag-suggestions"></datalist>
+        <div id="tx-tag-preview" class="tx-tag-preview"></div>
       </div>
 
       <div class="form-group">
@@ -1611,7 +1649,7 @@ function bindTxModal() {
     document.getElementById('qcat-yayoi').value = '';
   });
 
-  // タグdatalist初期化 (v5.61)
+  // タグdatalist初期化 + リアルタイムプレビュー (v5.61/v5.62)
   const tagDl = document.getElementById('tx-tag-suggestions');
   if (tagDl) {
     getAllTags().forEach(tag => {
@@ -1619,6 +1657,27 @@ function bindTxModal() {
       opt.value = tag;
       tagDl.appendChild(opt);
     });
+  }
+  // タグ入力 → リアルタイムチッププレビュー (v5.62)
+  const tagsInput = document.getElementById('tx-tags');
+  const tagPreview = document.getElementById('tx-tag-preview');
+  function updateTagPreview() {
+    if (!tagsInput || !tagPreview) return;
+    const tags = tagsInput.value.split(/[,、，]+/).map(s => s.trim()).filter(s => s.length > 0);
+    if (tags.length > 0) {
+      tagPreview.innerHTML = tags.map(tag => {
+        const col = getTagColor(tag);
+        return `<span class="tx-tag-chip" style="--tc:${col}">#${esc2(tag)}</span>`;
+      }).join('');
+      tagPreview.style.display = 'flex';
+    } else {
+      tagPreview.innerHTML = '';
+      tagPreview.style.display = 'none';
+    }
+  }
+  if (tagsInput) {
+    tagsInput.addEventListener('input', updateTagPreview);
+    updateTagPreview(); // 初期値があれば即時表示
   }
 
   // メモ入力 → カテゴリ自動提案 (v5.53)

@@ -1058,29 +1058,36 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
 }
 
-/* ── 取引タグチップ (v5.61) ──────────────────────────── */
+/* ── 取引タグチップ (v5.62 マルチカラー洗練) ─────────── */
+@keyframes tag-chip-in {
+  from { opacity: 0; transform: scale(0.75) translateY(3px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+
 .tx-tag-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
-  margin-top: 4px;
+  margin-top: 5px;
 }
 .tx-tag-chip {
   display: inline-flex;
   align-items: center;
-  padding: 1px 7px;
+  padding: 1px 8px;
   border-radius: 999px;
   font-size: 10px;
   font-weight: var(--fw-semi);
-  background: color-mix(in srgb, var(--primary) 12%, transparent);
-  color: var(--primary);
-  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  background: color-mix(in srgb, var(--tc, var(--primary)) 12%, transparent);
+  color: var(--tc, var(--primary));
+  border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
   white-space: nowrap;
   line-height: 1.5;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.15s;
+  animation: tag-chip-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .tx-tag-chip:hover {
-  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  background: color-mix(in srgb, var(--tc, var(--primary)) 20%, transparent);
+  transform: scale(1.06);
 }
 .tx-tag-label-hint {
   font-size: var(--fs-xs);
@@ -1088,9 +1095,104 @@ select:focus:not(:focus-visible) {
   color: var(--text-muted);
   margin-left: 6px;
 }
+/* タグチッププレビュー（モーダル内）v5.62 */
+.tx-tag-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+/* ── タグフィルターチップ行 (v5.62) ─────────────────── */
+.tx-tag-filter-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-4);
+  margin-bottom: var(--sp-2);
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.tx-tag-filter-row::-webkit-scrollbar { display: none; }
+.tx-tag-filter-label {
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-right: 2px;
+  opacity: 0.6;
+}
+.tx-tag-filter-all,
+.tx-tag-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+  user-select: none;
+  line-height: 1.5;
+  background: none;
+}
+.tx-tag-filter-all {
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+.tx-tag-filter-all.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  font-weight: var(--fw-bold);
+}
+.tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); }
+.tx-tag-filter-chip {
+  background: color-mix(in srgb, var(--tc, var(--primary)) 10%, transparent);
+  color: var(--tc, var(--primary));
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) 22%, transparent);
+}
+.tx-tag-filter-chip.active {
+  background: color-mix(in srgb, var(--tc, var(--primary)) 22%, transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) 48%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) 14%, transparent);
+  transform: scale(1.05);
+  font-weight: var(--fw-bold);
+}
+.tx-tag-filter-chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
+  transform: scale(1.03);
+}
 [data-theme="dark"] .tx-tag-chip {
-  background: color-mix(in srgb, var(--primary) 18%, transparent);
-  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) 35%, transparent);
+}
+[data-theme="dark"] .tx-tag-filter-row {
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .tx-tag-filter-all {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border);
+}
+[data-theme="dark"] .tx-tag-filter-all.active {
+  background: rgba(99,102,241,0.22);
+  border-color: rgba(99,102,241,0.42);
+}
+[data-theme="dark"] .tx-tag-filter-chip {
+  background: color-mix(in srgb, var(--tc, var(--primary)) 16%, transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) 30%, transparent);
+}
+[data-theme="dark"] .tx-tag-filter-chip.active {
+  background: color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) 52%, transparent);
 }
 
 /* ── フィルターバー ───────────────────────────────────── */
