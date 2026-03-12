@@ -973,8 +973,6 @@ ${templateBar}
   </div>
 </div>
 
-<div id="bulk-bar"></div>
-
 ${renderTxModal()}`;
 }
 
