@@ -804,12 +804,14 @@ function renderTxRow(t) {
   const cat = getCategoryById(t.categoryId);
   const mem = getMemberById(t.memberId);
   const isIncome = t.type === 'income';
-  return `<tr data-id="${t.id}">
+  const icon = cat ? (CAT_ICONS[cat.name] || '📌') : '';
+  const badgeIcon = icon ? `<span class="cat-badge-icon">${icon}</span>` : '';
+  return `<tr data-id="${t.id}" data-type="${t.type}">
       <td>${formatDate(t.date)}</td>
-      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${cat ? esc2(cat.name) : '—'}</span></td>
+      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${cat ? esc2(cat.name) : '—'}</span></td>
       <td class="memo-cell">${esc2(t.memo || '—')}</td>
-      <td>${esc2(t.paymentMethod || '—')}</td>
-      <td>${mem ? esc2(mem.name) : '—'}</td>
+      <td class="tx-col-pay">${esc2(t.paymentMethod || '—')}</td>
+      <td class="tx-col-mem">${mem ? esc2(mem.name) : '—'}</td>
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
       <td class="actions">
         <button class="btn-icon edit-tx" data-id="${t.id}" title="編集">✏️</button>
@@ -929,18 +931,27 @@ ${templateBar}
 </div>
 
 <div class="card summary-mini">
-  <span class="income">収入 ${formatMoney(income)}</span>
-  <span class="sep">|</span>
-  <span class="expense">支出 ${formatMoney(expense)}</span>
-  <span class="sep">|</span>
-  <span class="${income - expense >= 0 ? 'income' : 'expense'}">残高 ${formatMoney(income - expense)}</span>
-  <span class="count">${txs.length}件</span>
+  <div class="smi-item smi-income">
+    <span class="smi-label">収入</span>
+    <span class="smi-amount income">+${formatMoney(income)}</span>
+  </div>
+  <div class="smi-divider"></div>
+  <div class="smi-item smi-expense">
+    <span class="smi-label">支出</span>
+    <span class="smi-amount expense">-${formatMoney(expense)}</span>
+  </div>
+  <div class="smi-divider"></div>
+  <div class="smi-item smi-balance">
+    <span class="smi-label">収支</span>
+    <span class="smi-amount ${income - expense >= 0 ? 'income' : 'expense'}">${income - expense >= 0 ? '+' : ''}${formatMoney(income - expense)}</span>
+  </div>
+  <span class="smi-count">${txs.length}件</span>
 </div>
 
 <div class="card">
   <div class="table-wrap">
     <table class="tx-table">
-      <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>支払方法</th><th>担当者</th><th>金額</th><th></th></tr></thead>
+      <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th><th>金額</th><th></th></tr></thead>
       <tbody>${rows || '<tr><td colspan="7" class="empty">取引がありません</td></tr>'}</tbody>
     </table>
   </div>

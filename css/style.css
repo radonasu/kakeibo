@@ -785,9 +785,18 @@ select:focus:not(:focus-visible) {
   background: var(--surface-2);
 }
 
-.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-base); }
+.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); }
 .tx-table td.actions { white-space: nowrap; text-align: right; width: 80px; }
 .tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 種別左ボーダーカラーアクセント (v5.54) */
+.tx-table tbody tr[data-type="income"]  td:first-child { border-left: 3px solid var(--income); }
+.tx-table tbody tr[data-type="expense"] td:first-child { border-left: 3px solid var(--expense); }
+
+/* モバイルで支払方法・担当者列を非表示 (v5.54) */
+@media (max-width: 600px) {
+  .tx-col-pay, .tx-col-mem { display: none; }
+}
 .empty { text-align: center; color: var(--text-muted); padding: 40px !important; }
 
 /* 全期間 月グループ行 (v5.29) */
@@ -833,12 +842,19 @@ select:focus:not(:focus-visible) {
 
 /* カテゴリバッジ */
 .cat-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 3px 10px;
   border-radius: 999px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   white-space: nowrap;
+}
+.cat-badge-icon {
+  font-size: 11px;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .color-dot {
@@ -896,18 +912,54 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
 }
 
-/* サマリーミニ */
+/* サマリーミニ (v5.54 刷新) */
 .summary-mini {
   display: flex;
-  gap: var(--sp-4);
-  align-items: center;
-  font-size: var(--fs-base);
-  font-weight: var(--fw-bold);
-  padding: var(--sp-3) var(--sp-4);
+  align-items: stretch;
+  padding: 0;
   margin-bottom: var(--sp-2);
+  overflow: hidden;
+  gap: 0;
 }
-.summary-mini .sep { color: var(--border); }
-.summary-mini .count { margin-left: auto; color: var(--text-muted); font-size: var(--fs-xs); font-weight: var(--fw-medium); }
+.smi-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--sp-3) var(--sp-4);
+}
+.smi-income  { background: var(--income-light); }
+.smi-expense { background: var(--expense-light); }
+.smi-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+.smi-amount {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-black);
+  line-height: 1.1;
+}
+.smi-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  flex-shrink: 0;
+}
+.smi-count {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  border-left: 1px solid var(--border);
+  white-space: nowrap;
+  align-self: center;
+  flex-shrink: 0;
+}
 
 /* ── タイプトグル（モーダル） ────────────────────────── */
 .type-toggle {
@@ -5377,3 +5429,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: rgba(99,102,241,0.08);
   border-color: rgba(99,102,241,0.25);
 }
+
+/* ============================================================
+   取引一覧ビジュアル洗練 ダークモード (v5.54)
+   ============================================================ */
+[data-theme="dark"] .smi-income  { background: rgba(5, 150, 105, 0.15); }
+[data-theme="dark"] .smi-expense { background: rgba(225, 29, 72, 0.15); }
