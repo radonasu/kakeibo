@@ -1105,6 +1105,7 @@ function updateBulkBar() {
     <span class="bulk-count">${count}件選択中</span>
     <span class="bulk-total">${totalLabel}</span>
   </div>
+  <div class="bulk-bar-sep"></div>
   <div class="bulk-bar-actions">
     <div class="bulk-action-item">
       <select id="bulk-cat-sel" class="bulk-sel">
