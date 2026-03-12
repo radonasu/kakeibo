@@ -1,5 +1,5 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v5.20
+// charts.js - グラフ描画 (Chart.js) v5.68
 // ============================================================
 
 const chartInstances = {};
@@ -860,6 +860,84 @@ function renderNetWorthChart(canvasId) {
             },
           },
           border: { display: false },
+        },
+      },
+    },
+  });
+}
+
+// ─── カテゴリ別支出トレンドグラフ (v5.68) ────────────────────
+function renderCategoryTrendChart(canvasId, selectedCats, year) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const { text: textColor, grid: gridColor } = getThemeColors();
+
+  const datasets = (selectedCats || []).map(cat => {
+    const data = labels.map((_, i) => {
+      const month = `${year}-${String(i + 1).padStart(2, '0')}`;
+      return getTransactionsByMonth(month)
+        .filter(t => t.type === 'expense' && t.categoryId === cat.id)
+        .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    });
+    return {
+      label: cat.name,
+      data,
+      borderColor: cat.color,
+      backgroundColor: cat.color + '20',
+      borderWidth: 2.5,
+      pointRadius: 4,
+      pointHoverRadius: 7,
+      pointBackgroundColor: cat.color,
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      fill: true,
+      tension: 0.35,
+    };
+  });
+
+  if (!datasets.length) return;
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 14,
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => ` ${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+        }),
+      },
+      scales: {
+        x: {
+          grid:  { display: false },
+          ticks: { font: { size: 10 }, color: textColor, maxRotation: 0 },
+          border: { color: gridColor },
+        },
+        y: {
+          beginAtZero: true,
+          grid:  { color: gridColor },
+          ticks: {
+            font: { size: 10 },
+            color: textColor,
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { color: gridColor, dash: [3, 3] },
         },
       },
     },

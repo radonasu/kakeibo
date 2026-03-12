@@ -6697,3 +6697,80 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .dow-stat-row { flex-direction: column; }
   .dow-stat-amount { font-size: var(--fs-xl); }
 }
+
+/* ============================================================
+   カテゴリ別支出トレンド (v5.68)
+   ============================================================ */
+
+.ct-hint {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 0 0 var(--sp-3);
+}
+
+/* チップ行 */
+.ct-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+
+.ct-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.15s;
+  user-select: none;
+}
+.ct-chip:hover {
+  border-color: var(--ct-color, var(--primary));
+  color: var(--ct-color, var(--primary));
+  transform: translateY(-1px);
+}
+.ct-chip.is-selected {
+  border-color: var(--ct-color, var(--primary));
+  background: color-mix(in srgb, var(--ct-color, var(--primary)) 12%, transparent);
+  color: var(--ct-color, var(--primary));
+  font-weight: 600;
+}
+
+.ct-chip-icon { font-size: 13px; }
+.ct-chip-name { font-size: var(--fs-sm); }
+
+/* テーブル */
+.ct-tbl-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.ct-month-cell { font-weight: 600; color: var(--text); }
+.ct-cell-val   { font-variant-numeric: tabular-nums; }
+.ct-row-total  { font-weight: 700; color: var(--text); border-left: 1px solid var(--border); }
+.ct-row-empty td { color: var(--text-muted); opacity: 0.5; }
+
+/* -- ダークモード -- */
+[data-theme="dark"] .ct-chip {
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .ct-chip.is-selected {
+  background: color-mix(in srgb, var(--ct-color, var(--primary)) 18%, transparent);
+}
+
+/* -- モバイル対応 -- */
+@media (max-width: 560px) {
+  .ct-chips { gap: var(--sp-1); }
+  .ct-chip  { padding: 4px 10px; }
+  .ct-table th, .ct-table td { font-size: var(--fs-xs); padding: 6px 8px; }
+}

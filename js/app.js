@@ -14,6 +14,7 @@ const appState = {
   calendarDay: null,                  // v5.38: 選択中の日付
   bulkMode: false,                    // v5.55: 一括操作モード
   selectedTxIds: new Set(),           // v5.55: 選択中の取引ID
+  catTrendSelected: [],               // v5.68: カテゴリ推移 選択中カテゴリID配列
 };
 
 // ============================================================
@@ -2001,6 +2002,7 @@ function renderReports() {
   ${appData.members && appData.members.length > 0 ? '<button class="section-tab" data-target="sec-member"><span class="tab-icon">👥</span> メンバー</button>' : ''}
   <button class="section-tab" data-target="sec-yoy"><span class="tab-icon">📅</span> 前年比較</button>
   <button class="section-tab" data-target="sec-dow"><span class="tab-icon">📆</span> 曜日別</button>
+  <button class="section-tab" data-target="sec-cat-trend"><span class="tab-icon">📈</span> カテゴリ推移</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -2270,6 +2272,62 @@ ${(() => {
     </table>
   </div>`}
 </div>`;
+})()}
+
+${(() => {
+  // ── カテゴリ別支出トレンド (v5.68) ──────────────────────────────────
+  const expCats = appData.categories.filter(c => c.type === 'expense');
+  if (!expCats.length) return `<div id="sec-cat-trend" class="card"><div class="empty">支出カテゴリがありません</div></div>`;
+
+  // デフォルト選択: 支出上位3カテゴリ
+  if (!appState.catTrendSelected.length) {
+    const totals = expCats.map(c => ({
+      id: c.id,
+      total: appData.transactions
+        .filter(t => t.type === 'expense' && t.categoryId === c.id && t.date && t.date.startsWith(String(year)))
+        .reduce((s, t) => s + (Number(t.amount) || 0), 0),
+    })).sort((a, b) => b.total - a.total);
+    appState.catTrendSelected = totals.slice(0, 3).map(x => x.id);
+  }
+
+  const chipHtml = expCats.map(c => {
+    const isSel = appState.catTrendSelected.includes(c.id);
+    const icon  = (typeof CAT_ICONS !== 'undefined' && CAT_ICONS[c.name]) || '📌';
+    return `<button type="button" class="ct-chip${isSel ? ' is-selected' : ''}" data-cat-trend-id="${c.id}" style="--ct-color:${c.color}" aria-pressed="${isSel}">
+      <span class="ct-chip-icon" aria-hidden="true">${icon}</span>
+      <span class="ct-chip-name">${esc2(c.name)}</span>
+    </button>`;
+  }).join('');
+
+  // サマリーテーブル（選択カテゴリ × 月別）
+  const selCats = expCats.filter(c => appState.catTrendSelected.includes(c.id));
+  const months12 = [];
+  for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
+
+  const tableHead = `<tr><th>月</th>${selCats.map(c => `<th><span class="ct-tbl-dot" style="background:${c.color}"></span>${esc2(c.name)}</th>`).join('')}<th>合計</th></tr>`;
+  const tableBody = months12.map((ym, mi) => {
+    const label = `${mi + 1}月`;
+    const txs = getTransactionsByMonth(ym);
+    const vals = selCats.map(c => txs.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((s, t) => s + (Number(t.amount) || 0), 0));
+    const rowTotal = vals.reduce((s, v) => s + v, 0);
+    if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
+    return `<tr><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
+  }).join('');
+
+  return `<div id="sec-cat-trend" class="card">
+  <h3 class="card-title">📈 カテゴリ別支出トレンド（${year}年）</h3>
+  <p class="ct-hint">カテゴリを選択してトレンドを比較できます（複数選択可）</p>
+  <div class="ct-chips" role="group" aria-label="カテゴリ選択">${chipHtml}</div>
+  <div class="chart-wrap" style="height:260px;margin:var(--sp-4) 0 var(--sp-2)">
+    <canvas id="report-cat-trend"></canvas>
+  </div>
+  ${selCats.length > 0 ? `<div class="table-wrap ct-table-wrap">
+    <table class="tx-table ct-table">
+      <thead>${tableHead}</thead>
+      <tbody>${tableBody}</tbody>
+    </table>
+  </div>` : `<div class="empty" style="padding:var(--sp-6) 0">カテゴリを選択してください</div>`}
+</div>`;
 })()}`;
 }
 
@@ -2290,6 +2348,11 @@ function bindReports() {
   for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
   const allTxs = appData.transactions.filter(t => t.date && t.date.startsWith(String(year)));
 
+  const renderCatTrend = () => {
+    const selCats = appData.categories.filter(c => c.type === 'expense' && appState.catTrendSelected.includes(c.id));
+    renderCategoryTrendChart('report-cat-trend', selCats, year);
+  };
+
   setTimeout(() => {
     renderBalanceLineChart('report-bar', months12);
     renderDonutChart('report-donut', allTxs, 'expense');
@@ -2298,7 +2361,46 @@ function bindReports() {
     renderMemberExpenseChart('report-member-bar', allTxs);
     renderYoYChart('report-yoy', year);
     renderDayOfWeekChart('report-dow', allTxs);
+    renderCatTrend();
   }, 50);
+
+  // カテゴリ推移チップ操作 (v5.68)
+  document.addEventListener('click', function catTrendHandler(e) {
+    const chip = e.target.closest('[data-cat-trend-id]');
+    if (!chip) return;
+    const id = chip.dataset.catTrendId;
+    const idx = appState.catTrendSelected.indexOf(id);
+    if (idx >= 0) {
+      appState.catTrendSelected.splice(idx, 1);
+    } else {
+      appState.catTrendSelected.push(id);
+    }
+    chip.classList.toggle('is-selected', idx < 0);
+    chip.setAttribute('aria-pressed', String(idx < 0));
+    renderCatTrend();
+    // テーブルを再描画（ページ再描画せずに）
+    const selCats = appData.categories.filter(c => c.type === 'expense' && appState.catTrendSelected.includes(c.id));
+    const tableWrap = document.querySelector('.ct-table-wrap');
+    if (tableWrap) {
+      const months12local = [];
+      for (let m2 = 1; m2 <= 12; m2++) months12local.push(`${year}-${String(m2).padStart(2,'0')}`);
+      const newHead = `<tr><th>月</th>${selCats.map(c => `<th><span class="ct-tbl-dot" style="background:${c.color}"></span>${esc2(c.name)}</th>`).join('')}<th>合計</th></tr>`;
+      const newBody = months12local.map((ym, mi) => {
+        const label = `${mi + 1}月`;
+        const txs2 = getTransactionsByMonth(ym);
+        const vals = selCats.map(c => txs2.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((s, t) => s + (Number(t.amount) || 0), 0));
+        const rowTotal = vals.reduce((s, v) => s + v, 0);
+        if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
+        return `<tr><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
+      }).join('');
+      tableWrap.innerHTML = `<table class="tx-table ct-table"><thead>${newHead}</thead><tbody>${newBody}</tbody></table>`;
+    }
+    // クリーンアップ: ページ離脱時にリスナー削除
+    if (!document.getElementById('sec-cat-trend')) {
+      document.removeEventListener('click', catTrendHandler);
+    }
+  });
+
 
   // セクションタブナビ (v5.28)
   const tabsEl = document.getElementById('section-tabs');
