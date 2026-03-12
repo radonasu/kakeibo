@@ -1,5 +1,5 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v5.68
+// charts.js - グラフ描画 (Chart.js) v5.70
 // ============================================================
 
 const chartInstances = {};
@@ -966,6 +966,181 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
           border: { color: gridColor, dash: [3, 3] },
+        },
+      },
+    },
+  });
+}
+
+// ─── 固定費 vs 変動費 ドーナツグラフ (v5.70) ─────────────────────────
+function renderFixedVariableDonut(canvasId, allTxs) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const { text, surface } = getThemeColors();
+  const fixedIds = new Set(appData.categories.filter(c => c.isFixed).map(c => c.id));
+  const expTxs   = (allTxs || []).filter(t => t.type === 'expense');
+  const fixedAmt = expTxs.filter(t => fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const varAmt   = expTxs.filter(t => !fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const total    = fixedAmt + varAmt;
+
+  if (!total) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['固定費', '変動費'],
+      datasets: [{
+        data: [fixedAmt, varAmt],
+        backgroundColor: ['#6366f1', '#10b981'],
+        borderColor: surface,
+        borderWidth: 3,
+        hoverOffset: 6,
+      }],
+      _centerTotal: total,
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: text, font: { size: 12 }, padding: 12, usePointStyle: true },
+        },
+        tooltip: commonTooltip({
+          label: ctx => {
+            const pct = total > 0 ? Math.round(ctx.raw / total * 100) : 0;
+            return ` ${ctx.label}: ${formatMoney(ctx.raw)} (${pct}%)`;
+          },
+        }),
+      },
+      cutout: '62%',
+    },
+    plugins: [centerTextPlugin],
+  });
+}
+
+// ─── 月次 固定費率推移 折れ線グラフ (v5.70) ──────────────────────────
+function renderFixedVariableTrend(canvasId, year) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const { text, grid, surface, isDark } = getThemeColors();
+  const months12 = [];
+  for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
+
+  const fixedIds = new Set(appData.categories.filter(c => c.isFixed).map(c => c.id));
+
+  const fixedData = [];
+  const varData   = [];
+  const rateData  = [];
+
+  months12.forEach(ym => {
+    const mTxs   = (typeof getTransactionsByMonth === 'function' ? getTransactionsByMonth(ym) : appData.transactions.filter(t => t.date && t.date.startsWith(ym))).filter(t => t.type === 'expense');
+    const mFixed = mTxs.filter(t => fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const mVar   = mTxs.filter(t => !fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const mTotal = mFixed + mVar;
+    fixedData.push(mFixed);
+    varData.push(mVar);
+    rateData.push(mTotal > 0 ? Math.round(mFixed / mTotal * 100) : null);
+  });
+
+  const labels = months12.map((_, i) => `${i + 1}月`);
+  const ctx    = canvas.getContext('2d');
+
+  // グラデーション塗り（固定費）
+  const gFixed = ctx.createLinearGradient(0, 0, 0, 220);
+  gFixed.addColorStop(0, 'rgba(99,102,241,0.28)');
+  gFixed.addColorStop(1, 'rgba(99,102,241,0.02)');
+
+  const gVar = ctx.createLinearGradient(0, 0, 0, 220);
+  gVar.addColorStop(0, 'rgba(16,185,129,0.22)');
+  gVar.addColorStop(1, 'rgba(16,185,129,0.02)');
+
+  chartInstances[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: '固定費',
+          data: fixedData,
+          backgroundColor: 'rgba(99,102,241,0.75)',
+          borderRadius: 4,
+          order: 2,
+        },
+        {
+          type: 'bar',
+          label: '変動費',
+          data: varData,
+          backgroundColor: 'rgba(16,185,129,0.65)',
+          borderRadius: 4,
+          order: 2,
+        },
+        {
+          type: 'line',
+          label: '固定費率(%)',
+          data: rateData,
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245,158,11,0.12)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#f59e0b',
+          pointRadius: 4,
+          tension: 0.35,
+          fill: false,
+          yAxisID: 'yRate',
+          order: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: text, font: { size: 11 }, padding: 10, usePointStyle: true },
+        },
+        tooltip: commonTooltip({
+          label: ctx => {
+            if (ctx.dataset.yAxisID === 'yRate') return ` 固定費率: ${ctx.raw}%`;
+            return ` ${ctx.dataset.label}: ${formatMoney(ctx.raw)}`;
+          },
+        }),
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 10 }, color: text, maxRotation: 0 },
+          border: { color: grid },
+          stacked: true,
+        },
+        y: {
+          beginAtZero: true,
+          stacked: true,
+          grid: { color: grid },
+          ticks: {
+            font: { size: 10 }, color: text,
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { color: grid, dash: [3, 3] },
+        },
+        yRate: {
+          position: 'right',
+          beginAtZero: true,
+          max: 100,
+          grid: { drawOnChartArea: false },
+          ticks: { font: { size: 10 }, color: '#f59e0b', callback: v => v + '%' },
+          border: { color: grid },
         },
       },
     },

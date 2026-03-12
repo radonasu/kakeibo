@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.69'; // v5.69: カテゴリ推移チャート ビジュアル洗練
+const CACHE_NAME = 'kakeibo-v5.70'; // v5.70: 固定費 vs 変動費 分析機能
 const ASSETS = [
   './index.html',
   './css/style.css',

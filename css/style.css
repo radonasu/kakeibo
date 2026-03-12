@@ -6829,3 +6829,122 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .ct-table th, .ct-table td { font-size: var(--fs-xs); padding: 6px 8px; }
   .ct-stat-row { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ============================================================
+   固定費 vs 変動費 分析 (v5.70)
+   ============================================================ */
+
+/* カテゴリ管理ページの固定/変動バッジ */
+.cat-fixed-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.cat-fixed-badge.is-fixed {
+  background: color-mix(in srgb, #6366f1 12%, transparent);
+  color: #6366f1;
+  border: 1px solid color-mix(in srgb, #6366f1 30%, transparent);
+}
+.cat-fixed-badge.is-var {
+  background: color-mix(in srgb, #10b981 10%, transparent);
+  color: #10b981;
+  border: 1px solid color-mix(in srgb, #10b981 28%, transparent);
+}
+[data-theme="dark"] .cat-fixed-badge.is-fixed {
+  background: color-mix(in srgb, #818cf8 18%, transparent);
+  color: #a5b4fc;
+  border-color: color-mix(in srgb, #818cf8 35%, transparent);
+}
+[data-theme="dark"] .cat-fixed-badge.is-var {
+  background: color-mix(in srgb, #34d399 15%, transparent);
+  color: #6ee7b7;
+  border-color: color-mix(in srgb, #34d399 32%, transparent);
+}
+
+/* サマリーカードグリッド */
+.fv-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.fv-stat-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-3) var(--sp-4);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.fv-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.fv-stat-fixed::before { background: #6366f1; }
+.fv-stat-var::before   { background: #10b981; }
+.fv-stat-rate::before  { background: #f59e0b; }
+.fv-stat-icon { font-size: 18px; margin-bottom: var(--sp-1); }
+.fv-stat-label { font-size: var(--fs-xs); color: var(--text-muted); }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: 700; color: var(--text); line-height: 1.2; margin: 2px 0; }
+.fv-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); }
+[data-theme="dark"] .fv-stat-card { background: var(--surface); }
+
+/* テーブルセル */
+.fv-fixed-val { color: #6366f1; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fv-var-val   { color: #10b981; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fv-month-cell { font-weight: 600; }
+
+/* 固定費率バッジ */
+.fv-rate-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+.fv-rate-badge.high { background: color-mix(in srgb, #6366f1 12%, transparent); color: #6366f1; }
+.fv-rate-badge.mid  { background: color-mix(in srgb, #f59e0b 12%, transparent); color: #d97706; }
+.fv-rate-badge.low  { background: color-mix(in srgb, #10b981 10%, transparent); color: #059669; }
+[data-theme="dark"] .fv-rate-badge.high { color: #a5b4fc; }
+[data-theme="dark"] .fv-rate-badge.mid  { color: #fbbf24; }
+[data-theme="dark"] .fv-rate-badge.low  { color: #6ee7b7; }
+
+/* カテゴリ別ミニバー */
+.fv-mini-bar {
+  display: inline-block;
+  width: 70px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-right: 4px;
+}
+.fv-mini-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.fv-pct-txt { font-size: var(--fs-xs); color: var(--text-muted); vertical-align: middle; }
+.fv-cat-amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* 月別テーブル行アニメーション */
+.fv-month-table tbody tr {
+  animation: ct-row-in 0.22s ease both;
+  animation-delay: calc(var(--fv-ri, 0) * 25ms);
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+  .fv-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .fv-stat-value { font-size: var(--fs-lg); }
+  .fv-mini-bar { width: 40px; }
+}

@@ -2003,6 +2003,7 @@ function renderReports() {
   <button class="section-tab" data-target="sec-yoy"><span class="tab-icon">📅</span> 前年比較</button>
   <button class="section-tab" data-target="sec-dow"><span class="tab-icon">📆</span> 曜日別</button>
   <button class="section-tab" data-target="sec-cat-trend"><span class="tab-icon">📈</span> カテゴリ推移</button>
+  <button class="section-tab" data-target="sec-fixed"><span class="tab-icon">🔒</span> 固変分析</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -2358,6 +2359,120 @@ ${(() => {
     </table>
   </div>` : `<div class="empty" style="padding:var(--sp-6) 0">カテゴリを選択してください</div>`}
 </div>`;
+})()}
+
+${(() => {
+  // ── 固定費 vs 変動費 分析 (v5.70) ───────────────────────────────────
+  const months12 = [];
+  for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
+
+  const fixedCats = appData.categories.filter(c => c.type === 'expense' && c.isFixed);
+  const varCats   = appData.categories.filter(c => c.type === 'expense' && !c.isFixed);
+
+  const fixedIds = new Set(fixedCats.map(c => c.id));
+  const expTxs   = allTxs.filter(t => t.type === 'expense');
+  const fixedTotal = expTxs.filter(t => fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const varTotal   = expTxs.filter(t => !fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const grandTotal = fixedTotal + varTotal;
+  const fixedRate  = grandTotal > 0 ? Math.round(fixedTotal / grandTotal * 100) : 0;
+
+  // 月別集計（テーブル用）
+  const monthRows = months12.map((ym, mi) => {
+    const mTxs = getTransactionsByMonth(ym).filter(t => t.type === 'expense');
+    const mFixed = mTxs.filter(t => fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const mVar   = mTxs.filter(t => !fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const mTotal = mFixed + mVar;
+    const mRate  = mTotal > 0 ? Math.round(mFixed / mTotal * 100) : 0;
+    return `<tr style="--fv-ri:${mi}">
+      <td class="fv-month-cell">${mi + 1}月</td>
+      <td class="${mFixed > 0 ? 'fv-fixed-val' : 'text-muted'}">${mFixed > 0 ? formatMoney(mFixed) : '—'}</td>
+      <td class="${mVar > 0 ? 'fv-var-val' : 'text-muted'}">${mVar > 0 ? formatMoney(mVar) : '—'}</td>
+      <td class="${mTotal > 0 ? '' : 'text-muted'}">${mTotal > 0 ? formatMoney(mTotal) : '—'}</td>
+      <td>${mTotal > 0 ? `<span class="fv-rate-badge ${mRate >= 60 ? 'high' : mRate >= 40 ? 'mid' : 'low'}">${mRate}%</span>` : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  // カテゴリ別テーブル（固定費・変動費）
+  const catTableRows = (cats) => cats.map(c => {
+    const amt = expTxs.filter(t => t.categoryId === c.id).reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const pct = grandTotal > 0 ? Math.round(amt / grandTotal * 100) : 0;
+    return `<tr>
+      <td><span class="color-dot" style="background:${c.color}"></span>${esc2(c.name)}</td>
+      <td class="fv-cat-amt">${formatMoney(amt)}</td>
+      <td><span class="fv-mini-bar"><span class="fv-mini-fill" style="width:${pct}%;background:${c.color}"></span></span><span class="fv-pct-txt">${pct}%</span></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="3" class="empty">—</td></tr>';
+
+  return `<div id="sec-fixed" class="card">
+  <h3 class="card-title">🔒 固定費 vs 変動費 分析（${year}年）</h3>
+
+  <div class="fv-stat-grid">
+    <div class="fv-stat-card fv-stat-fixed">
+      <div class="fv-stat-icon" aria-hidden="true">🔒</div>
+      <div class="fv-stat-label">固定費合計</div>
+      <div class="fv-stat-value">${formatMoney(fixedTotal)}</div>
+      <div class="fv-stat-sub">${fixedCats.length}カテゴリ</div>
+    </div>
+    <div class="fv-stat-card fv-stat-var">
+      <div class="fv-stat-icon" aria-hidden="true">🔓</div>
+      <div class="fv-stat-label">変動費合計</div>
+      <div class="fv-stat-value">${formatMoney(varTotal)}</div>
+      <div class="fv-stat-sub">${varCats.length}カテゴリ</div>
+    </div>
+    <div class="fv-stat-card fv-stat-rate">
+      <div class="fv-stat-icon" aria-hidden="true">📊</div>
+      <div class="fv-stat-label">固定費率</div>
+      <div class="fv-stat-value">${fixedRate}%</div>
+      <div class="fv-stat-sub">${fixedRate >= 60 ? '固定費が高め' : fixedRate >= 40 ? 'バランス型' : '変動費中心'}</div>
+    </div>
+  </div>
+
+  <div class="charts-row" style="margin-top:var(--sp-4)">
+    <div class="card chart-card" style="flex:1;min-width:0">
+      <h3 class="card-title">支出の内訳</h3>
+      <div class="chart-wrap" style="height:240px">
+        <canvas id="report-fv-donut"></canvas>
+      </div>
+    </div>
+    <div class="card chart-card" style="flex:1;min-width:0">
+      <h3 class="card-title">月次 固定費率推移</h3>
+      <div class="chart-wrap" style="height:240px">
+        <canvas id="report-fv-trend"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-row" style="margin-top:var(--sp-4)">
+    <div class="card" style="flex:1;min-width:0">
+      <h3 class="card-title">🔒 固定費カテゴリ</h3>
+      <div class="table-wrap">
+        <table class="tx-table">
+          <thead><tr><th>カテゴリ</th><th>金額</th><th>支出比</th></tr></thead>
+          <tbody>${catTableRows(fixedCats)}</tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" style="flex:1;min-width:0">
+      <h3 class="card-title">🔓 変動費カテゴリ</h3>
+      <div class="table-wrap">
+        <table class="tx-table">
+          <thead><tr><th>カテゴリ</th><th>金額</th><th>支出比</th></tr></thead>
+          <tbody>${catTableRows(varCats)}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:var(--sp-4)">
+    <h3 class="card-title">月別 固定費 vs 変動費</h3>
+    <div class="table-wrap">
+      <table class="tx-table fv-month-table">
+        <thead><tr><th>月</th><th>固定費</th><th>変動費</th><th>合計</th><th>固定費率</th></tr></thead>
+        <tbody>${monthRows}</tbody>
+      </table>
+    </div>
+  </div>
+</div>`;
 })()}`;
 }
 
@@ -2392,6 +2507,8 @@ function bindReports() {
     renderYoYChart('report-yoy', year);
     renderDayOfWeekChart('report-dow', allTxs);
     renderCatTrend();
+    renderFixedVariableDonut('report-fv-donut', allTxs);
+    renderFixedVariableTrend('report-fv-trend', year);
   }, 50);
 
   // カテゴリ推移チップ操作 (v5.68)
@@ -2508,6 +2625,7 @@ function renderCategories() {
     <tr>
       <td><span class="color-dot" style="background:${c.color}"></span>${esc2(c.name)}</td>
       <td>${esc2(c.yayoiAccount)}</td>
+      <td><span class="cat-fixed-badge ${c.isFixed ? 'is-fixed' : 'is-var'}">${c.isFixed ? '固定' : '変動'}</span></td>
       ${c.type === 'expense'
         ? `<td><input class="budget-input" type="number" min="0" step="100" data-id="${c.id}" value="${budgets[c.id] || ''}" placeholder="なし"></td>`
         : '<td class="text-muted">—</td>'}
@@ -2527,8 +2645,8 @@ function renderCategories() {
   <h3 class="card-title section-label expense">支出カテゴリ</h3>
   <div class="table-wrap">
     <table class="tx-table">
-      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>月次予算 (¥)</th><th></th></tr></thead>
-      <tbody>${expCats.map(catRow).join('') || '<tr><td colspan="4" class="empty">なし</td></tr>'}</tbody>
+      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>タイプ</th><th>月次予算 (¥)</th><th></th></tr></thead>
+      <tbody>${expCats.map(catRow).join('') || '<tr><td colspan="5" class="empty">なし</td></tr>'}</tbody>
     </table>
   </div>
 </div>
@@ -2537,8 +2655,8 @@ function renderCategories() {
   <h3 class="card-title section-label income">収入カテゴリ</h3>
   <div class="table-wrap">
     <table class="tx-table">
-      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>月次予算</th><th></th></tr></thead>
-      <tbody>${incCats.map(catRow).join('') || '<tr><td colspan="4" class="empty">なし</td></tr>'}</tbody>
+      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>タイプ</th><th>月次予算</th><th></th></tr></thead>
+      <tbody>${incCats.map(catRow).join('') || '<tr><td colspan="5" class="empty">なし</td></tr>'}</tbody>
     </table>
   </div>
 </div>
@@ -2574,6 +2692,15 @@ function renderCategories() {
         </div>
         <input type="hidden" id="cat-color" value="#ef4444">
       </div>
+      <div class="form-group">
+        <label>費用タイプ</label>
+        <div class="type-toggle" id="cat-fixed-toggle">
+          <button type="button" class="type-btn active" data-fixed="false">変動費</button>
+          <button type="button" class="type-btn" data-fixed="true">固定費</button>
+        </div>
+        <input type="hidden" id="cat-is-fixed" value="false">
+        <small class="hint">家賃・光熱費など毎月ほぼ一定の費用は「固定費」に設定</small>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="cat-modal-cancel">キャンセル</button>
@@ -2585,6 +2712,14 @@ function renderCategories() {
 
 function bindCategories() {
   let editingCatId = null;
+
+  function setFixedToggle(val) {
+    const isFixed = !!val;
+    document.getElementById('cat-is-fixed').value = String(isFixed);
+    document.querySelectorAll('#cat-fixed-toggle .type-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.fixed === String(isFixed));
+    });
+  }
 
   function openCatModal(id) {
     editingCatId = id || null;
@@ -2599,6 +2734,7 @@ function bindCategories() {
         document.getElementById('cat-yayoi').value = c.yayoiAccount;
         document.getElementById('cat-color').value = c.color;
         updateSwatchSelection(c.color);
+        setFixedToggle(c.isFixed);
       }
     } else {
       title.textContent = 'カテゴリ追加';
@@ -2606,6 +2742,7 @@ function bindCategories() {
       document.getElementById('cat-yayoi').value = '';
       document.getElementById('cat-color').value = '#ef4444';
       updateSwatchSelection('#ef4444');
+      setFixedToggle(false);
     }
     showModal(modal);
   }
@@ -2643,15 +2780,22 @@ function bindCategories() {
     });
   });
 
+  document.getElementById('cat-fixed-toggle').addEventListener('click', e => {
+    const btn = e.target.closest('.type-btn');
+    if (!btn) return;
+    setFixedToggle(btn.dataset.fixed === 'true');
+  });
+
   on('cat-modal-save', 'click', () => {
-    const type   = document.getElementById('cat-type').value;
-    const name   = document.getElementById('cat-name').value.trim();
-    const yayoi  = document.getElementById('cat-yayoi').value.trim();
-    const color  = document.getElementById('cat-color').value;
+    const type    = document.getElementById('cat-type').value;
+    const name    = document.getElementById('cat-name').value.trim();
+    const yayoi   = document.getElementById('cat-yayoi').value.trim();
+    const color   = document.getElementById('cat-color').value;
+    const isFixed = document.getElementById('cat-is-fixed').value === 'true';
     if (!name)  { alert('カテゴリ名を入力してください'); return; }
     if (!yayoi) { alert('弥生勘定科目名を入力してください'); return; }
-    if (editingCatId) updateCategory(editingCatId, { type, name, yayoiAccount: yayoi, color });
-    else addCategory({ type, name, yayoiAccount: yayoi, color });
+    if (editingCatId) updateCategory(editingCatId, { type, name, yayoiAccount: yayoi, color, isFixed });
+    else addCategory({ type, name, yayoiAccount: yayoi, color, isFixed });
     closeCatModal();
     renderCurrentPage();
   });

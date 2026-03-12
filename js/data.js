@@ -92,23 +92,23 @@ function formatCurrencyAmount(amount, currency) {
 
 const DEFAULT_CATEGORIES = [
   // 支出
-  { id: 'c1',  name: '食費',       type: 'expense', yayoiAccount: '食料品費',   color: '#ef4444' },
-  { id: 'c2',  name: '光熱費',     type: 'expense', yayoiAccount: '水道光熱費', color: '#f97316' },
-  { id: 'c3',  name: '通信費',     type: 'expense', yayoiAccount: '通信費',     color: '#3b82f6' },
-  { id: 'c4',  name: '交通費',     type: 'expense', yayoiAccount: '旅費交通費', color: '#8b5cf6' },
-  { id: 'c5',  name: '医療費',     type: 'expense', yayoiAccount: '医療費',     color: '#06b6d4' },
-  { id: 'c6',  name: '教育費',     type: 'expense', yayoiAccount: '教育費',     color: '#10b981' },
-  { id: 'c7',  name: '住居費',     type: 'expense', yayoiAccount: '地代家賃',   color: '#84cc16' },
-  { id: 'c8',  name: '娯楽費',     type: 'expense', yayoiAccount: '雑費',       color: '#ec4899' },
-  { id: 'c9',  name: '消耗品',     type: 'expense', yayoiAccount: '消耗品費',   color: '#f59e0b' },
-  { id: 'c10', name: '保険料',     type: 'expense', yayoiAccount: '保険料',     color: '#64748b' },
-  { id: 'c11', name: '衣服費',     type: 'expense', yayoiAccount: '雑費',       color: '#a855f7' },
-  { id: 'c12', name: 'その他支出', type: 'expense', yayoiAccount: '雑費',       color: '#6b7280' },
+  { id: 'c1',  name: '食費',       type: 'expense', yayoiAccount: '食料品費',   color: '#ef4444', isFixed: false },
+  { id: 'c2',  name: '光熱費',     type: 'expense', yayoiAccount: '水道光熱費', color: '#f97316', isFixed: true  },
+  { id: 'c3',  name: '通信費',     type: 'expense', yayoiAccount: '通信費',     color: '#3b82f6', isFixed: true  },
+  { id: 'c4',  name: '交通費',     type: 'expense', yayoiAccount: '旅費交通費', color: '#8b5cf6', isFixed: false },
+  { id: 'c5',  name: '医療費',     type: 'expense', yayoiAccount: '医療費',     color: '#06b6d4', isFixed: false },
+  { id: 'c6',  name: '教育費',     type: 'expense', yayoiAccount: '教育費',     color: '#10b981', isFixed: false },
+  { id: 'c7',  name: '住居費',     type: 'expense', yayoiAccount: '地代家賃',   color: '#84cc16', isFixed: true  },
+  { id: 'c8',  name: '娯楽費',     type: 'expense', yayoiAccount: '雑費',       color: '#ec4899', isFixed: false },
+  { id: 'c9',  name: '消耗品',     type: 'expense', yayoiAccount: '消耗品費',   color: '#f59e0b', isFixed: false },
+  { id: 'c10', name: '保険料',     type: 'expense', yayoiAccount: '保険料',     color: '#64748b', isFixed: true  },
+  { id: 'c11', name: '衣服費',     type: 'expense', yayoiAccount: '雑費',       color: '#a855f7', isFixed: false },
+  { id: 'c12', name: 'その他支出', type: 'expense', yayoiAccount: '雑費',       color: '#6b7280', isFixed: false },
   // 収入
-  { id: 'c13', name: '給与',       type: 'income',  yayoiAccount: '給料賃金',   color: '#059669' },
-  { id: 'c14', name: '賞与',       type: 'income',  yayoiAccount: '賞与',       color: '#047857' },
-  { id: 'c15', name: '副業収入',   type: 'income',  yayoiAccount: '売上高',     color: '#0d9488' },
-  { id: 'c16', name: 'その他収入', type: 'income',  yayoiAccount: '雑収入',     color: '#6ee7b7' },
+  { id: 'c13', name: '給与',       type: 'income',  yayoiAccount: '給料賃金',   color: '#059669', isFixed: true  },
+  { id: 'c14', name: '賞与',       type: 'income',  yayoiAccount: '賞与',       color: '#047857', isFixed: false },
+  { id: 'c15', name: '副業収入',   type: 'income',  yayoiAccount: '売上高',     color: '#0d9488', isFixed: false },
+  { id: 'c16', name: 'その他収入', type: 'income',  yayoiAccount: '雑収入',     color: '#6ee7b7', isFixed: false },
 ];
 
 const DEFAULT_MEMBERS = [
@@ -238,6 +238,9 @@ function loadData() {
     if (!data.challenges)     data.challenges = [];   // 節約チャレンジ（v5.64）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
+    // isFixed フラグ追加（v5.70）
+    const defaultFixedIds = new Set(['c2', 'c3', 'c7', 'c10', 'c13']);
+    data.categories.forEach(c => { if (c.isFixed === undefined) c.isFixed = defaultFixedIds.has(c.id); });
     return data;
   } catch (e) {
     /* parse error – fall back to defaults */
