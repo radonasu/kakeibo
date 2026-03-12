@@ -2,10 +2,11 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.62'; // v5.62: タグ機能ビジュアル洗練（マルチカラーチップ・横スクロールフィルター・モーダルプレビュー）
+const CACHE_NAME = 'kakeibo-v5.63'; // v5.63: デザインオーバーホール（SVGアイコン・バイオレットカラー・ポップスタイル）
 const ASSETS = [
   './index.html',
   './css/style.css',
+  './js/icons.js',
   './js/config.js',
   './js/data.js',
   './js/export.js',

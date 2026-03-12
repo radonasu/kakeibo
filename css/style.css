@@ -6,9 +6,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --primary:       #6366f1;
-  --primary-dark:  #4f46e5;
-  --primary-light: #e0e7ff;
+  --primary:       #7c3aed;
+  --primary-dark:  #6d28d9;
+  --primary-light: #ede9fe;
   --income:        #059669;
   --income-light:  #d1fae5;
   --expense:       #e11d48;
@@ -23,9 +23,9 @@
   --text-faint:    #94a3b8;
   --border:        #e2e8f0;
   --border-strong: #cbd5e1;
-  --radius:        14px;
-  --radius-lg:     20px;
-  --radius-sm:     8px;
+  --radius:        16px;
+  --radius-lg:     24px;
+  --radius-sm:     10px;
   --shadow-sm:     0 1px 2px rgba(0,0,0,.05);
   --shadow:        0 1px 4px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
   --shadow-md:     0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
@@ -43,7 +43,7 @@
   --danger-border:    #fecaca;
   /* インタラクション */
   --surface-hover:    #eef2f7;
-  --focus-ring:       rgba(99,102,241,.13);
+  --focus-ring:       rgba(124,58,237,.15);
 
   /* ── タイポグラフィスケール ─────────────────────────── */
   /* フォントサイズ（8pxグリッドベース） */
@@ -88,8 +88,8 @@
   --sp-12: 48px;   /* 最大：空状態パディング */
 
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
-  --radius-btn:      10px;  /* ボタン角丸（統一） */
-  --radius-btn-sm:    8px;  /* 小ボタン角丸（統一） */
+  --radius-btn:      12px;  /* ボタン角丸（統一） */
+  --radius-btn-sm:    8px;  /* 小ボタン角丸 */
   --radius-badge:   999px;  /* バッジ・pill */
   --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
 }
@@ -159,14 +159,15 @@ select:focus:not(:focus-visible) {
 }
 
 .brand-icon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--primary), #818cf8);
-  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa, #f472b6);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  color: #fff;
   flex-shrink: 0;
 }
 
@@ -267,7 +268,20 @@ select:focus:not(:focus-visible) {
   border-radius: 0 3px 3px 0;
 }
 
-.nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  transition: background .2s, color .2s;
+}
+.nav-icon svg { display: block; }
+.nav-item.active .nav-icon {
+  background: rgba(124,58,237,.25);
+  color: #c4b5fd;
+  border-radius: 8px;
+  padding: 2px;
+}
 
 /* サイドバー下部ユーザーエリア */
 .sidebar-footer {
@@ -367,7 +381,10 @@ select:focus:not(:focus-visible) {
   border: none;
   color: #f8fafc;
   font-size: 22px;
-  padding: 2px 6px;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 6px;
 }
 #hamburger:hover { background: rgba(255,255,255,.1); }
@@ -707,10 +724,10 @@ select:focus:not(:focus-visible) {
   pointer-events: none;
 }
 
-.summary-card.income  { background: linear-gradient(135deg, #047857 0%, #10b981 100%); }
-.summary-card.expense { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); }
-.summary-card.balance.positive { background: linear-gradient(135deg, #4338ca 0%, #818cf8 100%); }
-.summary-card.balance.negative { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); }
+.summary-card.income  { background: linear-gradient(135deg, #059669 0%, #34d399 100%); }
+.summary-card.expense { background: linear-gradient(135deg, #e11d48 0%, #fb7185 100%); }
+.summary-card.balance.positive { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); }
+.summary-card.balance.negative { background: linear-gradient(135deg, #e11d48 0%, #fb7185 100%); }
 
 .summary-label {
   font-size: var(--fs-xs);
@@ -2251,7 +2268,23 @@ body {
   border-radius: 0 0 2px 2px;
 }
 
-.bottom-nav-icon { font-size: 20px; margin-bottom: 2px; line-height: 1; }
+.bottom-nav-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 2px;
+  border-radius: 12px;
+  padding: 2px;
+  transition: background .2s, color .2s, transform .2s;
+}
+.bottom-nav-icon svg { display: block; }
+.bottom-nav-item.active .bottom-nav-icon {
+  background: var(--primary-light);
+  color: var(--primary);
+  transform: scale(1.1);
+  padding: 4px;
+  width: 32px; height: 32px;
+  border-radius: 10px;
+}
 .bottom-nav-label { font-size: var(--fs-2xs); line-height: 1; }
 
 /* ============================================================
@@ -2335,7 +2368,7 @@ body {
   font-weight: 300;
   line-height: 1;
   border: none;
-  box-shadow: 0 4px 16px rgba(99,102,241,.45), 0 2px 6px rgba(0,0,0,.12);
+  box-shadow: 0 4px 16px rgba(124,58,237,.45), 0 2px 6px rgba(0,0,0,.12);
   z-index: 130;
   cursor: pointer;
   transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
@@ -2344,9 +2377,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+#global-fab svg { color: #fff; }
 #global-fab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 24px rgba(99,102,241,.55), 0 3px 8px rgba(0,0,0,.14);
+  transform: scale(1.12);
+  box-shadow: 0 6px 24px rgba(124,58,237,.55), 0 3px 8px rgba(0,0,0,.14);
 }
 #global-fab:active { transform: scale(0.93); }
 
@@ -2402,11 +2436,15 @@ body {
   border-radius: 8px;
   cursor: pointer;
   line-height: 1;
-  transition: background .15s;
+  transition: background .15s, color .15s;
   color: rgba(241,245,249,.75);
   flex-shrink: 0;
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.btn-dark-toggle svg { display: block; }
 .btn-dark-toggle:hover { background: rgba(255,255,255,.12); color: #f1f5f9; }
 
 /* ============================================================
@@ -2559,11 +2597,10 @@ body {
 /* ── ボトムナビ アクティブアイコン バウンス ── */
 @keyframes nav-icon-pop {
   0%   { transform: scale(1); }
-  45%  { transform: scale(1.25); }
-  100% { transform: scale(1); }
+  45%  { transform: scale(1.15); }
+  100% { transform: scale(1.1); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
-  display: inline-block;
   animation: nav-icon-pop .3s cubic-bezier(.34,1.56,.64,1) both;
 }
 

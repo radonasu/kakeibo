@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Kakeibo Icon Generator</title>
+<style>
+  body { font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 20px; background: #f3f4f6; }
+  h1 { margin-bottom: 8px; }
+  .preview { display: flex; flex-wrap: wrap; gap: 16px; margin: 24px 0; }
+  .preview-item { text-align: center; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .preview-item canvas { display: block; margin: 0 auto 8px; border-radius: 12px; }
+  .preview-item span { font-size: 12px; color: #666; }
+  button { background: #7c3aed; color: #fff; border: none; padding: 14px 32px; border-radius: 12px; font-size: 16px; cursor: pointer; margin: 8px 4px; }
+  button:hover { background: #6d28d9; }
+  .info { color: #666; font-size: 14px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<h1>Kakeibo App Icon Generator</h1>
+<p class="info">ブタの貯金箱アイコン - ポップスタイル。ボタンをクリックするとPNGファイルがダウンロードされます。</p>
+
+<div class="preview" id="preview"></div>
+
+<button onclick="downloadAll()">全サイズをダウンロード</button>
+<button onclick="downloadMaskable()">Maskableアイコンをダウンロード</button>
+
+<script>
+const SIZES = [48, 72, 96, 128, 144, 152, 167, 180, 192, 384, 512];
+const MASKABLE_SIZES = [192, 512];
+
+function drawIcon(ctx, size, maskable) {
+  const s = size;
+  const r = s * 0.22; // corner radius for squircle
+
+  // Background - vibrant gradient
+  const grad = ctx.createLinearGradient(0, 0, s, s);
+  grad.addColorStop(0, '#7c3aed');
+  grad.addColorStop(0.5, '#a78bfa');
+  grad.addColorStop(1, '#f472b6');
+
+  if (maskable) {
+    // Maskable: fill entire canvas (safe zone is inner 80%)
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, s, s);
+  } else {
+    // Regular: rounded square
+    ctx.beginPath();
+    ctx.moveTo(r, 0);
+    ctx.lineTo(s - r, 0);
+    ctx.quadraticCurveTo(s, 0, s, r);
+    ctx.lineTo(s, s - r);
+    ctx.quadraticCurveTo(s, s, s - r, s);
+    ctx.lineTo(r, s);
+    ctx.quadraticCurveTo(0, s, 0, s - r);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+
+  // Scale factor for drawing the piggy bank
+  const scale = maskable ? s * 0.35 : s * 0.4;
+  const cx = s / 2;
+  const cy = s / 2 + scale * 0.05;
+
+  // === Piggy Bank Body ===
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  // Body (main ellipse)
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.ellipse(0, scale * 0.1, scale * 0.85, scale * 0.7, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Subtle body shadow
+  ctx.fillStyle = 'rgba(124, 58, 237, 0.08)';
+  ctx.beginPath();
+  ctx.ellipse(0, scale * 0.25, scale * 0.75, scale * 0.45, 0, 0, Math.PI);
+  ctx.fill();
+
+  // Ears
+  ctx.fillStyle = '#fff';
+  // Left ear
+  ctx.beginPath();
+  ctx.ellipse(-scale * 0.45, -scale * 0.45, scale * 0.22, scale * 0.18, -0.4, 0, Math.PI * 2);
+  ctx.fill();
+  // Right ear
+  ctx.beginPath();
+  ctx.ellipse(scale * 0.45, -scale * 0.45, scale * 0.22, scale * 0.18, 0.4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Inner ears (pink)
+  ctx.fillStyle = '#f9a8d4';
+  ctx.beginPath();
+  ctx.ellipse(-scale * 0.45, -scale * 0.44, scale * 0.13, scale * 0.1, -0.4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(scale * 0.45, -scale * 0.44, scale * 0.13, scale * 0.1, 0.4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Snout
+  ctx.fillStyle = '#fecdd3';
+  ctx.beginPath();
+  ctx.ellipse(0, scale * 0.2, scale * 0.3, scale * 0.22, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Nostrils
+  ctx.fillStyle = '#f472b6';
+  ctx.beginPath();
+  ctx.ellipse(-scale * 0.09, scale * 0.2, scale * 0.055, scale * 0.045, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(scale * 0.09, scale * 0.2, scale * 0.055, scale * 0.045, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Eyes
+  ctx.fillStyle = '#1e1b4b';
+  ctx.beginPath();
+  ctx.ellipse(-scale * 0.25, -scale * 0.1, scale * 0.07, scale * 0.08, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(scale * 0.25, -scale * 0.1, scale * 0.07, scale * 0.08, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Eye highlights
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.ellipse(-scale * 0.22, -scale * 0.13, scale * 0.03, scale * 0.03, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(scale * 0.28, -scale * 0.13, scale * 0.03, scale * 0.03, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Smile
+  ctx.strokeStyle = '#db2777';
+  ctx.lineWidth = scale * 0.035;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(0, scale * 0.05, scale * 0.15, 0.2, Math.PI - 0.2);
+  ctx.stroke();
+
+  // Coin slot on top
+  ctx.fillStyle = '#fbbf24';
+  ctx.beginPath();
+  roundedRect(ctx, -scale * 0.18, -scale * 0.62, scale * 0.36, scale * 0.12, scale * 0.06);
+  ctx.fill();
+  // Coin slot line
+  ctx.strokeStyle = '#d97706';
+  ctx.lineWidth = scale * 0.025;
+  ctx.beginPath();
+  ctx.moveTo(-scale * 0.08, -scale * 0.56);
+  ctx.lineTo(scale * 0.08, -scale * 0.56);
+  ctx.stroke();
+
+  // Legs
+  ctx.fillStyle = '#fff';
+  // Front left
+  ctx.beginPath();
+  roundedRect(ctx, -scale * 0.5, scale * 0.55, scale * 0.2, scale * 0.2, scale * 0.08);
+  ctx.fill();
+  // Front right
+  ctx.beginPath();
+  roundedRect(ctx, scale * 0.3, scale * 0.55, scale * 0.2, scale * 0.2, scale * 0.08);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function roundedRect(ctx, x, y, w, h, r) {
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+}
+
+function createCanvas(size, maskable) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  drawIcon(ctx, size, maskable);
+  return canvas;
+}
+
+function downloadCanvas(canvas, filename) {
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// Generate previews
+const previewEl = document.getElementById('preview');
+[512, 192, 96, 48].forEach(size => {
+  const div = document.createElement('div');
+  div.className = 'preview-item';
+  const canvas = createCanvas(size > 192 ? 192 : size, false);
+  canvas.style.width = Math.min(size, 128) + 'px';
+  canvas.style.height = Math.min(size, 128) + 'px';
+  div.appendChild(canvas);
+  div.innerHTML += `<span>${size}x${size}</span>`;
+  previewEl.appendChild(div);
+});
+// Maskable preview
+const mDiv = document.createElement('div');
+mDiv.className = 'preview-item';
+const mCanvas = createCanvas(192, true);
+mCanvas.style.width = '128px';
+mCanvas.style.height = '128px';
+mDiv.appendChild(mCanvas);
+mDiv.innerHTML += `<span>Maskable</span>`;
+previewEl.appendChild(mDiv);
+
+function downloadAll() {
+  SIZES.forEach((size, i) => {
+    setTimeout(() => {
+      const canvas = createCanvas(size, false);
+      downloadCanvas(canvas, `icon-${size}.png`);
+    }, i * 200);
+  });
+}
+
+function downloadMaskable() {
+  MASKABLE_SIZES.forEach((size, i) => {
+    setTimeout(() => {
+      const canvas = createCanvas(size, true);
+      downloadCanvas(canvas, `icon-maskable-${size}.png`);
+    }, i * 200);
+  });
+}
+</script>
+</body>
+</html>

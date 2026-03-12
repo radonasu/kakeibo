@@ -4981,6 +4981,9 @@ function checkBudgetAlerts(month) {
 // アプリ初期化
 // ============================================================
 function initApp() {
+  // SVGアイコン初期化（emoji → SVG差し替え）
+  if (typeof initNavIcons === 'function') initNavIcons();
+
   // サイドバータイトルを設定
   const sidebarTitle = document.getElementById('sidebar-title');
   if (sidebarTitle) sidebarTitle.textContent = appData.settings.familyName;
@@ -6165,7 +6168,9 @@ function openWishlistModal(editId) {
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     document.querySelectorAll('.btn-dark-toggle').forEach(btn => {
-      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      btn.innerHTML = typeof appIcon === 'function'
+        ? appIcon(theme === 'dark' ? 'sun' : 'moon', 18)
+        : (theme === 'dark' ? '☀️' : '🌙');
       btn.title = theme === 'dark' ? 'ライトモードに切替' : 'ダークモードに切替';
     });
   }
