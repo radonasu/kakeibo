@@ -45,6 +45,12 @@
   --surface-hover:    #eef2f7;
   --focus-ring:       rgba(124,58,237,.15);
 
+  /* ── グラデーション端点色 (v5.65) ─────────────────────── */
+  --primary-end:    #a78bfa;   /* primary gradient end */
+  --income-end:     #34d399;   /* income gradient end */
+  --expense-end:    #fb7185;   /* expense gradient end */
+  --income-deep:    #065f46;   /* deep income (net-worth) */
+
   /* ── タイポグラフィスケール ─────────────────────────── */
   /* フォントサイズ（8pxグリッドベース） */
   --fs-2xs:     10px;   /* 最小：セクションラベル、ステータス */
@@ -724,10 +730,10 @@ select:focus:not(:focus-visible) {
   pointer-events: none;
 }
 
-.summary-card.income  { background: linear-gradient(135deg, #059669 0%, #34d399 100%); }
-.summary-card.expense { background: linear-gradient(135deg, #e11d48 0%, #fb7185 100%); }
-.summary-card.balance.positive { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); }
-.summary-card.balance.negative { background: linear-gradient(135deg, #e11d48 0%, #fb7185 100%); }
+.summary-card.income  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); }
+.summary-card.expense { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); }
+.summary-card.balance.positive { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); }
+.summary-card.balance.negative { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); }
 
 .summary-label {
   font-size: var(--fs-xs);
@@ -2478,6 +2484,11 @@ body {
   --danger-border:    #be123c;
   --surface-hover:    #1e2d3d;
   --focus-ring:       rgba(99,102,241,.22);
+  /* グラデーション端点色（ダーク） */
+  --primary-end:    #a78bfa;
+  --income-end:     #34d399;
+  --expense-end:    #fb7185;
+  --income-deep:    #064e3b;
 }
 
 /* ダークモード — コンポーネント固有の上書き */
@@ -4583,7 +4594,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   pointer-events: none;
 }
 /* グラデーション (v5.44) */
-.sub-summary-card.sub-monthly { background: linear-gradient(135deg, #4338ca 0%, #818cf8 100%); }
+.sub-summary-card.sub-monthly { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
 .sub-summary-card.sub-yearly  { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
 .sub-summary-card.sub-monthly .sub-summary-label,
 .sub-summary-card.sub-monthly .sub-summary-sub,
@@ -5448,9 +5459,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-summary-card::before { width: 80px; height: 80px; top: -24px; right: -20px; }
 .wl-summary-card::after  { width: 48px; height: 48px; bottom: -16px; left: 8px; }
 /* グラデーション 3種 */
-.wl-sum-count  { background: linear-gradient(135deg, #4338ca 0%, #818cf8 100%); }
+.wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
 .wl-sum-budget { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
-.wl-sum-done   { background: linear-gradient(135deg, #065f46 0%, #34d399 100%); }
+.wl-sum-done   { background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%); }
 /* グラデーションカード内のテキストを白に */
 .wl-sum-count .wl-summary-label,
 .wl-sum-budget .wl-summary-label,
@@ -6193,10 +6204,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 純資産サマリーカード専用グラデーション */
 .summary-card.net-worth-card.positive {
-  background: linear-gradient(135deg, #065f46 0%, #059669 60%, #10b981 100%);
+  background: linear-gradient(135deg, var(--income-deep) 0%, var(--income) 60%, var(--income-end) 100%);
 }
 .summary-card.net-worth-card.negative {
-  background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%);
+  background: linear-gradient(135deg, #9f1239 0%, var(--expense) 100%);
 }
 
 /* ミニスパークライン */
@@ -6272,9 +6283,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   opacity: 0.15;
 }
-.ch-sum-active    { background: linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%); color:#fff; }
+.ch-sum-active    { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color:#fff; }
 .ch-sum-active::before { background:#fff; }
-.ch-sum-achieved  { background: linear-gradient(135deg,#059669 0%,#10b981 100%); color:#fff; }
+.ch-sum-achieved  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); color:#fff; }
 .ch-sum-achieved::before { background:#fff; }
 .ch-sum-total     { background: linear-gradient(135deg,#0891b2 0%,#06b6d4 100%); color:#fff; }
 .ch-sum-total::before { background:#fff; }

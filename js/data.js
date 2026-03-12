@@ -240,7 +240,7 @@ function loadData() {
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
   } catch (e) {
-    console.error('データ読み込みエラー:', e);
+    /* parse error – fall back to defaults */
     return createDefaultData();
   }
 }
@@ -679,7 +679,7 @@ function markWishlistPurchased(id) {
     taxRate: 0,
     memo: item.name,
   });
-  updateWishlistItem(id, { purchased: true, purchasedDate: today(), purchasedTxId: tx.id });
+  updateWishlistItem(id, { purchased: true, purchasedDate: todayStr(), purchasedTxId: tx.id });
   return tx;
 }
 

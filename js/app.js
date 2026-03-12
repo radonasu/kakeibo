@@ -4972,7 +4972,7 @@ function sendBudgetNotif(title, body) {
       tag: 'kakeibo-budget-alert',
     });
   } catch (e) {
-    console.warn('通知送信失敗:', e);
+    /* notification send failed – silent */
   }
 }
 

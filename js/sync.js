@@ -51,7 +51,7 @@ function getSupabaseClient() {
       auth: { persistSession: true, autoRefreshToken: true },
     });
   } catch (e) {
-    console.error('[sync] クライアント初期化失敗:', e);
+    /* sync init failed – silent */
     return null;
   }
   return _supabaseClient;
@@ -200,7 +200,7 @@ async function pullFromCloud() {
     .eq('user_id', userId)
     .maybeSingle();
 
-  if (error) { console.warn('[sync] pull error:', error.message); return; }
+  if (error) { showSyncToast('⚠️ 同期の取得に失敗しました'); return; }
   if (!data || !data.data) return;
   applyRemoteData(data.data, null);
 }
@@ -219,12 +219,18 @@ async function pushToCloud() {
 
   const userId = _authSession.user.id;
   const payload = {
-    transactions: appData.transactions,
-    categories:   appData.categories,
-    members:      appData.members,
-    budgets:      appData.budgets,
-    templates:    appData.templates,
-    familyName:   appData.settings.familyName,
+    transactions:  appData.transactions,
+    categories:    appData.categories,
+    members:       appData.members,
+    budgets:       appData.budgets,
+    templates:     appData.templates,
+    subscriptions: appData.subscriptions  || [],
+    goals:         appData.goals          || [],
+    points:        appData.points         || [],
+    assets:        appData.assets         || [],
+    wishlist:      appData.wishlist       || [],
+    challenges:    appData.challenges     || [],
+    settings:      appData.settings,
   };
 
   const { error } = await client
@@ -234,7 +240,7 @@ async function pushToCloud() {
       { onConflict: 'user_id' }
     );
 
-  if (error) console.warn('[sync] push error:', error.message);
+  if (error) showSyncToast('⚠️ 同期の保存に失敗しました');
 }
 
 // ── リモート変更ハンドラ ───────────────────────────────────
@@ -246,11 +252,18 @@ function onRemoteChange(payload) {
 
 function applyRemoteData(d, toastMsg) {
   if (!d) return;
-  if (d.transactions) appData.transactions = d.transactions;
-  if (d.categories)   appData.categories   = d.categories;
-  if (d.members)      appData.members      = d.members;
-  if (d.budgets)      appData.budgets      = d.budgets;
-  if (d.templates)    appData.templates    = d.templates;
+  if (d.transactions)  appData.transactions  = d.transactions;
+  if (d.categories)    appData.categories    = d.categories;
+  if (d.members)       appData.members       = d.members;
+  if (d.budgets)       appData.budgets       = d.budgets;
+  if (d.templates)     appData.templates     = d.templates;
+  if (d.subscriptions) appData.subscriptions = d.subscriptions;
+  if (d.goals)         appData.goals         = d.goals;
+  if (d.points)        appData.points        = d.points;
+  if (d.assets)        appData.assets        = d.assets;
+  if (d.wishlist)      appData.wishlist      = d.wishlist;
+  if (d.challenges)    appData.challenges    = d.challenges;
+  if (d.settings)      appData.settings      = { ...appData.settings, ...d.settings };
 
   // saveData() を呼ばず直接書き込み（無限ループ防止）
   try { localStorage.setItem(getStorageKey(), JSON.stringify(appData)); } catch (e) {}
@@ -294,7 +307,7 @@ async function initSync() {
       if (typeof showAuthScreen === 'function') showAuthScreen();
     }
   } catch (e) {
-    console.error('[sync] session restore failed:', e);
+    showSyncToast('⚠️ セッション復元に失敗しました');
     setSyncStatus('error');
   }
 }

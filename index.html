@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=5.64">
+  <link rel="stylesheet" href="css/style.css?v=5.65">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -45,53 +45,53 @@
 <div id="app">
 
   <!-- ─── サイドバー ─── -->
-  <nav id="sidebar">
+  <nav id="sidebar" aria-label="メインナビゲーション">
     <div id="sidebar-brand">
       <div class="brand-row">
-        <div class="brand-icon">💰</div>
+        <div class="brand-icon" aria-hidden="true">💰</div>
         <span class="brand-name">家族家計簿</span>
-        <button class="btn-dark-toggle" id="dark-toggle-side" title="ダークモード切替">🌙</button>
+        <button class="btn-dark-toggle" id="dark-toggle-side" title="ダークモード切替" aria-label="ダークモード切替">🌙</button>
       </div>
       <!-- アカウント切替バー（JSで描画） -->
-      <div id="account-bar"></div>
+      <div id="account-bar" role="group" aria-label="アカウント切替"></div>
     </div>
 
-    <div id="sidebar-nav">
+    <div id="sidebar-nav" role="group" aria-label="ページナビゲーション">
       <button class="nav-item active" data-page="dashboard">
-        <span class="nav-icon">🏠</span> ダッシュボード
+        <span class="nav-icon" aria-hidden="true">🏠</span> ダッシュボード
       </button>
       <button class="nav-item" data-page="transactions">
-        <span class="nav-icon">📋</span> 収支一覧
+        <span class="nav-icon" aria-hidden="true">📋</span> 収支一覧
       </button>
       <button class="nav-item" data-page="reports">
-        <span class="nav-icon">📊</span> レポート
+        <span class="nav-icon" aria-hidden="true">📊</span> レポート
       </button>
       <button class="nav-item" data-page="categories">
-        <span class="nav-icon">🏷️</span> カテゴリ
+        <span class="nav-icon" aria-hidden="true">🏷️</span> カテゴリ
       </button>
       <button class="nav-item" data-page="assets">
-        <span class="nav-icon">🏦</span> 資産管理
+        <span class="nav-icon" aria-hidden="true">🏦</span> 資産管理
       </button>
       <button class="nav-item" data-page="goals">
-        <span class="nav-icon">🎯</span> 貯蓄目標
+        <span class="nav-icon" aria-hidden="true">🎯</span> 貯蓄目標
       </button>
       <button class="nav-item" data-page="calendar">
-        <span class="nav-icon">📅</span> カレンダー
+        <span class="nav-icon" aria-hidden="true">📅</span> カレンダー
       </button>
       <button class="nav-item" data-page="subscriptions">
-        <span class="nav-icon">📱</span> サブスク管理
+        <span class="nav-icon" aria-hidden="true">📱</span> サブスク管理
       </button>
       <button class="nav-item" data-page="points">
-        <span class="nav-icon">🎫</span> ポイント管理
+        <span class="nav-icon" aria-hidden="true">🎫</span> ポイント管理
       </button>
       <button class="nav-item" data-page="wishlist">
-        <span class="nav-icon">🛍️</span> ほしいもの
+        <span class="nav-icon" aria-hidden="true">🛍️</span> ほしいもの
       </button>
       <button class="nav-item" data-page="challenges">
-        <span class="nav-icon">🏆</span> 節約チャレンジ
+        <span class="nav-icon" aria-hidden="true">🏆</span> 節約チャレンジ
       </button>
       <button class="nav-item" data-page="settings">
-        <span class="nav-icon">⚙️</span> 設定
+        <span class="nav-icon" aria-hidden="true">⚙️</span> 設定
       </button>
     </div>
 
@@ -100,20 +100,20 @@
   </nav>
 
   <!-- サイドバーオーバーレイ（モバイル：タップで閉じる）-->
-  <div id="sidebar-overlay"></div>
+  <div id="sidebar-overlay" role="presentation" aria-hidden="true"></div>
 
   <!-- ─── メインエリア ─── -->
   <div id="main-wrapper">
 
-    <header id="mobile-header">
-      <button id="hamburger">☰</button>
+    <header id="mobile-header" role="banner">
+      <button id="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="sidebar">☰</button>
       <span id="mobile-title">家族家計簿</span>
       <!-- クラウド同期ステータスインジケーター -->
-      <span id="sync-status-dot-header" class="header-sync-dot" title="クラウド同期: 未接続"></span>
-      <button class="btn-dark-toggle" id="dark-toggle-mobile" title="ダークモード切替">🌙</button>
+      <span id="sync-status-dot-header" class="header-sync-dot" title="クラウド同期: 未接続" role="status" aria-label="クラウド同期: 未接続"></span>
+      <button class="btn-dark-toggle" id="dark-toggle-mobile" title="ダークモード切替" aria-label="ダークモード切替">🌙</button>
     </header>
 
-    <main id="main-content">
+    <main id="main-content" role="main">
       <!-- スケルトンローディング（JS初期化前に表示）v5.24 -->
       <div class="sk-header">
         <div class="sk-bone" style="width:180px;height:34px;border-radius:10px"></div>
@@ -147,47 +147,47 @@
   <div id="bulk-bar"></div>
 
   <!-- ─── グローバルFAB（全ページ共通・クイック追加） ─── -->
-  <button id="global-fab" title="収支を追加">＋</button>
+  <button id="global-fab" title="収支を追加" aria-label="収支を追加">＋</button>
 
   <!-- ─── ボトムナビ（モバイル） ─── -->
-  <nav id="bottom-nav">
-    <button class="bottom-nav-item active" data-page="dashboard">
-      <span class="bottom-nav-icon">🏠</span>
+  <nav id="bottom-nav" aria-label="モバイルナビゲーション">
+    <button class="bottom-nav-item active" data-page="dashboard" aria-label="ダッシュボード">
+      <span class="bottom-nav-icon" aria-hidden="true">🏠</span>
       <span class="bottom-nav-label">ホーム</span>
     </button>
-    <button class="bottom-nav-item" data-page="transactions">
-      <span class="bottom-nav-icon">📋</span>
+    <button class="bottom-nav-item" data-page="transactions" aria-label="収支一覧">
+      <span class="bottom-nav-icon" aria-hidden="true">📋</span>
       <span class="bottom-nav-label">収支</span>
     </button>
-    <button class="bottom-nav-item" data-page="reports">
-      <span class="bottom-nav-icon">📊</span>
+    <button class="bottom-nav-item" data-page="reports" aria-label="レポート">
+      <span class="bottom-nav-icon" aria-hidden="true">📊</span>
       <span class="bottom-nav-label">レポート</span>
     </button>
-    <button class="bottom-nav-item" data-page="categories">
-      <span class="bottom-nav-icon">🏷️</span>
+    <button class="bottom-nav-item" data-page="categories" aria-label="カテゴリ管理">
+      <span class="bottom-nav-icon" aria-hidden="true">🏷️</span>
       <span class="bottom-nav-label">カテゴリ</span>
     </button>
-    <button class="bottom-nav-item" data-page="calendar">
-      <span class="bottom-nav-icon">📅</span>
+    <button class="bottom-nav-item" data-page="calendar" aria-label="カレンダー">
+      <span class="bottom-nav-icon" aria-hidden="true">📅</span>
       <span class="bottom-nav-label">カレンダー</span>
     </button>
-    <button class="bottom-nav-item" data-page="settings">
-      <span class="bottom-nav-icon">⚙️</span>
+    <button class="bottom-nav-item" data-page="settings" aria-label="設定">
+      <span class="bottom-nav-icon" aria-hidden="true">⚙️</span>
       <span class="bottom-nav-label">設定</span>
     </button>
   </nav>
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=5.64"></script>
-<script src="js/config.js?v=5.64"></script>
-<script src="js/data.js?v=5.64"></script>
-<script src="js/export.js?v=5.64"></script>
-<script src="js/charts.js?v=5.64"></script>
-<script src="js/sync.js?v=5.64"></script>
-<script src="js/app.js?v=5.64"></script>
+<script src="js/icons.js?v=5.65"></script>
+<script src="js/config.js?v=5.65"></script>
+<script src="js/data.js?v=5.65"></script>
+<script src="js/export.js?v=5.65"></script>
+<script src="js/charts.js?v=5.65"></script>
+<script src="js/sync.js?v=5.65"></script>
+<script src="js/app.js?v=5.65"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=5.64"></script>
+<script src="js/pwa.js?v=5.65"></script>
 
 </body>
 </html>
