@@ -550,3 +550,113 @@ function openShareModal(ym) {
     });
   }
 }
+
+// ============================================================
+// CSV インポート (v5.45)
+// ============================================================
+
+// RFC 4180準拠CSVパーサー（BOM・クォート・改行対応）
+function parseCSVText(text) {
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+  const rows = [];
+  let row = [], field = '', inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], n = text[i + 1];
+    if (inQ) {
+      if (c === '"' && n === '"') { field += '"'; i++; }
+      else if (c === '"') { inQ = false; }
+      else { field += c; }
+    } else {
+      if (c === '"') { inQ = true; }
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\r' && n === '\n') {
+        row.push(field);
+        if (row.some(f => f.trim())) rows.push(row);
+        row = []; field = ''; i++;
+      } else if (c === '\n' || c === '\r') {
+        row.push(field);
+        if (row.some(f => f.trim())) rows.push(row);
+        row = []; field = '';
+      } else { field += c; }
+    }
+  }
+  if (field || row.length) { row.push(field); if (row.some(f => f.trim())) rows.push(row); }
+  return rows;
+}
+
+// アプリ独自形式かどうか判定（日付・種別・金額列が一致）
+function isAppCSVFormat(headers) {
+  return headers[0] === '日付' && headers[1] === '種別' && headers.length >= 7;
+}
+
+// アプリ独自形式からインポート
+function importFromAppCSV(rows) {
+  const data = rows.slice(1);
+  let added = 0, skipped = 0;
+  data.forEach(row => {
+    if (row.length < 7) { skipped++; return; }
+    const date    = (row[0] || '').trim();
+    const typeStr = (row[1] || '').trim();
+    const catName = (row[2] || '').trim();
+    const memName = (row[4] || '').trim();
+    const pay     = (row[5] || '現金').trim();
+    const amount  = parseInt((row[6] || '').replace(/[^0-9]/g, '')) || 0;
+    const taxRate = parseInt(row[7]) || 0;
+    const memo    = (row[8] || '').trim();
+    if (!date.match(/^\d{4}-\d{2}-\d{2}$/) || amount <= 0) { skipped++; return; }
+    const type = typeStr === '収入' ? 'income' : 'expense';
+    const cat  = appData.categories.find(c => c.name === catName && c.type === type)
+              || appData.categories.find(c => c.type === type);
+    const mem  = appData.members.find(m => m.name === memName);
+    const dup  = appData.transactions.some(t =>
+      t.date === date && t.amount === amount && t.type === type && (t.memo || '') === memo
+    );
+    if (dup) { skipped++; return; }
+    addTransaction({
+      date, type,
+      categoryId:    cat ? cat.id : '',
+      memberId:      mem ? mem.id : (appData.settings.defaultMemberId || ''),
+      paymentMethod: pay,
+      amount, taxRate, memo,
+    });
+    added++;
+  });
+  return { added, skipped };
+}
+
+// 列マッピング指定でインポート（銀行明細など）
+function importFromMappedCSV(rows, m) {
+  const data = m.hasHeader ? rows.slice(1) : rows;
+  let added = 0, skipped = 0;
+  data.forEach(row => {
+    const dateRaw = (row[m.date]   || '').trim();
+    const amtRaw  = (row[m.amount] || '').replace(/[¥,\s]/g, '');
+    const memo    = m.memo >= 0 ? (row[m.memo] || '').trim() : '';
+    const dm = dateRaw.replace(/[^0-9\/\-]/g, '').match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+    if (!dm) { skipped++; return; }
+    const date   = `${dm[1]}-${dm[2].padStart(2, '0')}-${dm[3].padStart(2, '0')}`;
+    const amount = parseInt(amtRaw.replace(/[^0-9]/g, '')) || 0;
+    if (amount <= 0) { skipped++; return; }
+    let type = 'expense';
+    if (m.typeMode === 'income') { type = 'income'; }
+    else if (m.typeMode === 'column') {
+      const tv = (row[m.typeCol] || '').trim();
+      type = /収入|入金|income|IN/i.test(tv) ? 'income' : 'expense';
+    }
+    const defCat = appData.categories.find(c => c.type === type && c.name.includes('その他'))
+                || appData.categories.find(c => c.type === type);
+    const dup = appData.transactions.some(t =>
+      t.date === date && t.amount === amount && t.type === type
+    );
+    if (dup) { skipped++; return; }
+    addTransaction({
+      date, type,
+      categoryId:    defCat ? defCat.id : '',
+      memberId:      appData.settings.defaultMemberId || '',
+      paymentMethod: '現金',
+      amount, taxRate: 0, memo,
+    });
+    added++;
+  });
+  return { added, skipped };
+}

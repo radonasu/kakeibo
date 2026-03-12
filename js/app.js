@@ -1796,6 +1796,11 @@ CREATE POLICY "own_data" ON household_data
         <input type="file" id="btn-import-json" accept=".json" style="display:none">
       </label>
     </div>
+    <div class="export-block">
+      <h4>📥 CSVインポート</h4>
+      <p class="hint">アプリの汎用CSVまたは銀行明細CSVを取り込みます。重複取引は自動スキップ。</p>
+      <button class="btn btn-ghost" id="btn-csv-import-open">CSVをインポート</button>
+    </div>
   </div>
 </div>
 
@@ -2116,6 +2121,8 @@ function bindSettings() {
     };
     reader.readAsText(file, 'utf-8');
   });
+
+  on('btn-csv-import-open', 'click', openCSVImportModal);
 
   on('btn-reset', 'click', () => {
     if (!confirm('本当にすべてのデータを削除しますか？この操作は元に戻せません。')) return;
@@ -4521,6 +4528,188 @@ function bindSubscriptions() {
       }
     });
   }
+}
+
+// ============================================================
+// CSVインポートモーダル (v5.45)
+// ============================================================
+function openCSVImportModal() {
+  let overlay = document.getElementById('csv-import-modal');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'csv-import-modal';
+    overlay.className = 'modal-overlay';
+    overlay.style.display = 'none';
+    document.body.appendChild(overlay);
+  }
+
+  overlay.innerHTML = `
+    <div class="modal csv-imp-modal">
+      <div class="modal-header">
+        <h2>📥 CSVインポート</h2>
+        <button class="modal-close" id="csv-imp-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="csv-step1">
+          <p class="hint" style="margin-bottom:var(--sp-4)">
+            家計簿CSVを選択してください。アプリ独自形式（CSVダウンロードで出力したファイル）は自動認識します。
+            銀行明細など他形式も列マッピングで取り込めます。
+          </p>
+          <div class="csv-format-list">
+            <div class="csv-format-item">
+              <span class="csv-badge csv-badge-auto">自動</span>
+              <span>アプリ独自形式（日付・種別・カテゴリ・金額・摘要）</span>
+            </div>
+            <div class="csv-format-item">
+              <span class="csv-badge csv-badge-manual">手動</span>
+              <span>銀行明細・他の家計簿アプリのCSV（列マッピングを指定）</span>
+            </div>
+          </div>
+          <label class="btn btn-primary csv-file-label" style="margin-top:var(--sp-5);display:inline-flex;align-items:center;gap:6px;cursor:pointer">
+            📂 CSVファイルを選択
+            <input type="file" id="csv-imp-file" accept=".csv,.tsv" style="display:none">
+          </label>
+        </div>
+        <div id="csv-step2" style="display:none"></div>
+      </div>
+    </div>`;
+
+  showModal(overlay);
+  document.getElementById('csv-imp-close').addEventListener('click', () => hideModal(overlay));
+  overlay.addEventListener('click', e => { if (e.target === overlay) hideModal(overlay); });
+
+  document.getElementById('csv-imp-file').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try { handleCSVFileContent(ev.target.result, overlay); }
+      catch (err) { showToast('CSVの読み込みに失敗しました: ' + err.message, 'error'); }
+    };
+    reader.readAsText(file, 'utf-8');
+  });
+}
+
+function handleCSVFileContent(text, overlay) {
+  const rows = parseCSVText(text);
+  if (rows.length < 2) { showToast('データが見つかりません', 'warning'); return; }
+
+  const step1 = document.getElementById('csv-step1');
+  const step2 = document.getElementById('csv-step2');
+  step1.style.display = 'none';
+  step2.style.display = 'block';
+
+  const headers  = rows[0];
+  const dataRows = rows.slice(1);
+  const total    = dataRows.length;
+
+  function goBack() {
+    step1.style.display = 'block';
+    step2.style.display = 'none';
+    step2.innerHTML = '';
+  }
+
+  if (isAppCSVFormat(headers)) {
+    // --- アプリ独自形式 ---
+    step2.innerHTML = `
+      <div class="csv-detect-row">
+        <span class="csv-badge csv-badge-auto">✓ アプリ独自形式を検出</span>
+        <span class="hint">${total}件のデータが見つかりました</span>
+      </div>
+      ${buildCSVPreviewTable(headers, dataRows.slice(0, 5))}
+      <div class="csv-actions">
+        <button class="btn btn-ghost btn-sm" id="csv-back">← 戻る</button>
+        <button class="btn btn-primary" id="csv-exec-app">📥 ${total}件をインポート</button>
+      </div>`;
+
+    document.getElementById('csv-back').addEventListener('click', goBack);
+    document.getElementById('csv-exec-app').addEventListener('click', () => {
+      const res = importFromAppCSV(rows);
+      hideModal(overlay);
+      showToast(`インポート完了：${res.added}件追加、${res.skipped}件スキップ`, res.added > 0 ? 'success' : 'warning');
+      if (res.added > 0) renderCurrentPage();
+    });
+
+  } else {
+    // --- 列マッピング形式 ---
+    const colOpts     = headers.map((h, i) => `<option value="${i}">${esc2(h) || `列${i + 1}`}</option>`).join('');
+    const colOptsNone = `<option value="-1">（なし）</option>` + colOpts;
+
+    step2.innerHTML = `
+      <div class="csv-detect-row">
+        <span class="csv-badge csv-badge-manual">⚙ 列マッピングを設定</span>
+        <span class="hint">${total}件のデータが見つかりました</span>
+      </div>
+      <div class="csv-map-grid">
+        <div class="csv-map-row">
+          <label class="csv-map-label">日付列 <span class="req">*</span></label>
+          <select id="cmap-date" class="csv-map-select">${colOpts}</select>
+        </div>
+        <div class="csv-map-row">
+          <label class="csv-map-label">金額列 <span class="req">*</span></label>
+          <select id="cmap-amount" class="csv-map-select">${colOpts}</select>
+        </div>
+        <div class="csv-map-row">
+          <label class="csv-map-label">摘要列</label>
+          <select id="cmap-memo" class="csv-map-select">${colOptsNone}</select>
+        </div>
+        <div class="csv-map-row">
+          <label class="csv-map-label">種別</label>
+          <select id="cmap-type-mode" class="csv-map-select">
+            <option value="expense">すべて支出</option>
+            <option value="income">すべて収入</option>
+            <option value="column">列で判別</option>
+          </select>
+        </div>
+        <div class="csv-map-row" id="cmap-typecol-row" style="display:none">
+          <label class="csv-map-label">種別判別列</label>
+          <select id="cmap-type-col" class="csv-map-select">${colOpts}</select>
+        </div>
+      </div>
+      <p class="hint" style="margin:var(--sp-2) 0 var(--sp-3)">※「収入」「入金」「IN」を含むセルを収入と判別します</p>
+      ${buildCSVPreviewTable(headers, dataRows.slice(0, 5))}
+      <div class="csv-actions">
+        <button class="btn btn-ghost btn-sm" id="csv-back">← 戻る</button>
+        <button class="btn btn-primary" id="csv-exec-mapped">📥 ${total}件をインポート</button>
+      </div>`;
+
+    document.getElementById('cmap-type-mode').addEventListener('change', e => {
+      document.getElementById('cmap-typecol-row').style.display =
+        e.target.value === 'column' ? 'flex' : 'none';
+    });
+    document.getElementById('csv-back').addEventListener('click', goBack);
+    document.getElementById('csv-exec-mapped').addEventListener('click', () => {
+      const mapping = {
+        hasHeader: true,
+        date:     parseInt(document.getElementById('cmap-date').value),
+        amount:   parseInt(document.getElementById('cmap-amount').value),
+        memo:     parseInt(document.getElementById('cmap-memo').value),
+        typeMode: document.getElementById('cmap-type-mode').value,
+        typeCol:  parseInt((document.getElementById('cmap-type-col') || { value: '0' }).value),
+      };
+      const res = importFromMappedCSV(rows, mapping);
+      hideModal(overlay);
+      showToast(`インポート完了：${res.added}件追加、${res.skipped}件スキップ`, res.added > 0 ? 'success' : 'warning');
+      if (res.added > 0) renderCurrentPage();
+    });
+  }
+}
+
+function buildCSVPreviewTable(headers, rows) {
+  const ths = headers.map(h => `<th>${esc2(h)}</th>`).join('');
+  const trs = rows.map(row =>
+    `<tr>${row.map(c => `<td>${esc2(c)}</td>`).join('')}</tr>`
+  ).join('');
+  return `
+    <div class="csv-preview-section">
+      <div class="csv-preview-label">プレビュー（先頭5行）</div>
+      <div class="table-wrap csv-preview-wrap">
+        <table class="tx-table csv-preview-table">
+          <thead><tr>${ths}</tr></thead>
+          <tbody>${trs}</tbody>
+        </table>
+      </div>
+    </div>`;
 }
 
 // ============================================================

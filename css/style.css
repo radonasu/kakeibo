@@ -4400,3 +4400,128 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .sub-widget-item.sub-soon   { background: rgba(245,158,11,0.15); }
 [data-theme="dark"] .sub-card.sub-urgent { border-color: rgba(220,38,38,0.4); }
 [data-theme="dark"] .sub-card.sub-soon   { border-color: rgba(245,158,11,0.4); }
+
+/* ============================================================
+   CSV インポートモーダル (v5.45)
+   ============================================================ */
+
+/* モーダルサイズ */
+.csv-imp-modal { max-width: 680px; width: 96%; }
+
+/* フォーマット説明リスト */
+.csv-format-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-3);
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.csv-format-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* バッジ */
+.csv-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.csv-badge-auto   { background: #e0f2fe; color: #0369a1; }
+.csv-badge-manual { background: #fef9c3; color: #854d0e; }
+
+[data-theme="dark"] .csv-badge-auto   { background: rgba(14,165,233,0.2); color: #7dd3fc; }
+[data-theme="dark"] .csv-badge-manual { background: rgba(234,179,8,0.2);  color: #fde047; }
+
+/* 検出バッジ行 */
+.csv-detect-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-3);
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+/* 列マッピンググリッド */
+.csv-map-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2) var(--sp-4);
+  margin-bottom: var(--sp-2);
+}
+.csv-map-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.csv-map-label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.csv-map-select {
+  flex: 1;
+  min-width: 0;
+}
+.req { color: var(--danger-text); margin-left: 2px; }
+
+/* プレビュー */
+.csv-preview-section { margin: var(--sp-4) 0 var(--sp-3); }
+.csv-preview-label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.csv-preview-wrap {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.csv-preview-table th, .csv-preview-table td {
+  font-size: var(--fs-xs);
+  padding: 5px 8px;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* アクションボタン行 */
+.csv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+
+/* モバイル対応 */
+@media (max-width: 640px) {
+  .csv-map-grid { grid-template-columns: 1fr; }
+  .csv-imp-modal { max-width: 100%; }
+  .csv-detect-row { flex-wrap: wrap; }
+}
+
+/* ダークモード */
+[data-theme="dark"] .csv-format-list,
+[data-theme="dark"] .csv-detect-row { background: var(--surface); border-color: var(--border); }
