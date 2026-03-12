@@ -1059,6 +1059,7 @@ function renderTxModal() {
         <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物"
                list="memo-suggestions" autocomplete="off">
         <datalist id="memo-suggestions"></datalist>
+        <div id="memo-cat-hint" class="memo-cat-hint" style="display:none"></div>
       </div>
 
       <div class="form-group">
@@ -1186,6 +1187,16 @@ function bindTxModal() {
     document.getElementById('qcat-yayoi').value = '';
   });
 
+  // メモ入力 → カテゴリ自動提案 (v5.53)
+  const memoInput = document.getElementById('tx-memo');
+  if (memoInput) {
+    memoInput.addEventListener('input', () => {
+      suggestCatFromMemo(memoInput.value.trim());
+    });
+    // 初期値があれば起動時に提案
+    if (memoInput.value.trim().length >= 2) suggestCatFromMemo(memoInput.value.trim());
+  }
+
   // レシートスキャン（カメラ）
   on('receipt-scan-btn', 'click', () => {
     if (!checkApiKey()) return;
@@ -1234,6 +1245,9 @@ function renderCatChips(type, selectedId) {
       const hi = document.getElementById('tx-category');
       if (hi) hi.value = btn.dataset.catId;
       updateMemoSuggestions();
+      // 手動選択したらヒントを閉じる
+      const hint = document.getElementById('memo-cat-hint');
+      if (hint) hint.style.display = 'none';
     });
   });
 }
@@ -1271,6 +1285,52 @@ function updateMemoSuggestions() {
     .map(m => `<option value="${esc2(m)}">`)
     .join('');
   dl.innerHTML = opts;
+}
+
+// メモ文字列から最頻出カテゴリを提案するヒントを表示 (v5.53)
+function suggestCatFromMemo(memo) {
+  const hint = document.getElementById('memo-cat-hint');
+  const catSel = document.getElementById('tx-category');
+  if (!hint || !catSel) return;
+
+  if (memo.length < 2) { hint.style.display = 'none'; return; }
+
+  const lower = memo.toLowerCase();
+  const catCounts = {};
+  appData.transactions
+    .filter(t => t.memo && t.memo.toLowerCase().includes(lower) && t.categoryId)
+    .forEach(t => { catCounts[t.categoryId] = (catCounts[t.categoryId] || 0) + 1; });
+
+  const entries = Object.entries(catCounts).sort((a, b) => b[1] - a[1]);
+  if (entries.length === 0) { hint.style.display = 'none'; return; }
+
+  const [topCatId, count] = entries[0];
+  if (catSel.value === topCatId) { hint.style.display = 'none'; return; }
+
+  const cat = getCategoryById(topCatId);
+  if (!cat) { hint.style.display = 'none'; return; }
+
+  const icon = CAT_ICONS[cat.name] || '📌';
+  hint.style.display = 'flex';
+  hint.innerHTML = `
+    <span class="memo-cat-hint-icon" style="color:${cat.color}">${icon}</span>
+    <span class="memo-cat-hint-text">「<strong>${esc2(cat.name)}</strong>」で${count}回使用</span>
+    <button type="button" class="memo-cat-hint-btn" data-cat-id="${topCatId}" data-cat-type="${cat.type}">適用</button>
+  `;
+
+  hint.querySelector('.memo-cat-hint-btn').addEventListener('click', () => {
+    const modal = document.getElementById('tx-modal');
+    const currentType = modal?.querySelector('.type-btn.active')?.dataset.type;
+    if (cat.type !== currentType) {
+      modal.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active', 'expense-btn', 'income-btn'));
+      const typeBtn = modal.querySelector(`.type-btn[data-type="${cat.type}"]`);
+      if (typeBtn) typeBtn.classList.add('active', cat.type === 'expense' ? 'expense-btn' : 'income-btn');
+    }
+    catSel.value = topCatId;
+    renderCatChips(cat.type, topCatId);
+    updateMemoSuggestions();
+    hint.style.display = 'none';
+  });
 }
 
 function closeTxModal() {

@@ -5324,3 +5324,56 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .wl-card-actions { gap: var(--sp-1); }
   .wl-card-actions .btn-sm { padding: 4px 8px; font-size: var(--fs-xs); }
 }
+
+/* ============================================================
+   メモ → カテゴリ自動提案ヒント (v5.53)
+   ============================================================ */
+@keyframes memo-hint-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.memo-cat-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface-2, var(--surface));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn-sm);
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  animation: memo-hint-in 0.2s ease;
+}
+.memo-cat-hint-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.memo-cat-hint-text {
+  flex: 1;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.memo-cat-hint-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.memo-cat-hint-btn {
+  padding: 3px 12px;
+  border-radius: var(--radius-btn-sm);
+  background: var(--primary, #6366f1);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.memo-cat-hint-btn:hover { background: var(--primary-hover, #4f46e5); }
+[data-theme="dark"] .memo-cat-hint {
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.25);
+}
