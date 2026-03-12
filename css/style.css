@@ -799,6 +799,87 @@ select:focus:not(:focus-visible) {
 }
 .empty { text-align: center; color: var(--text-muted); padding: 40px !important; }
 
+/* ── 一括操作 (v5.55) ─────────────────────────────────── */
+/* チェックボックス列 */
+.tx-cb-th { width: 36px; padding: 8px 0 8px 14px !important; }
+.tx-cb-cell { width: 36px; padding: 8px 0 8px 14px !important; }
+.tx-cb {
+  width: 16px; height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  border-radius: 4px;
+}
+/* 選択行ハイライト */
+.tx-table tbody tr.tx-selected {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+.tx-table tbody tr.tx-selected td:first-child {
+  border-left: 3px solid var(--primary) !important;
+}
+[data-theme="dark"] .tx-table tbody tr.tx-selected {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+/* 一括操作バー */
+@keyframes bulk-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.bulk-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--surface);
+  border-top: 2px solid var(--primary);
+  box-shadow: 0 -4px 24px rgba(0,0,0,.12);
+  padding: var(--sp-3) var(--sp-5);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  animation: bulk-slide-up .22s cubic-bezier(.34,1.56,.64,1) both;
+}
+.bulk-bar-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+.bulk-count {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+}
+.bulk-total {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.bulk-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  flex: 1;
+}
+.bulk-action-item { display: flex; }
+.bulk-sel {
+  height: 36px;
+  padding: 0 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.bulk-sel:focus { outline: none; border-color: var(--primary); }
+@media (max-width: 600px) {
+  .bulk-bar { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); bottom: 56px; }
+  .bulk-bar-info { min-width: auto; flex-direction: row; gap: var(--sp-2); align-items: center; }
+  .bulk-bar-actions { gap: var(--sp-2); }
+  .bulk-sel { font-size: var(--fs-xs); padding: 0 8px; }
+}
+
 /* 全期間 月グループ行 (v5.29) */
 .tx-month-group-row td {
   padding: 6px 14px;

@@ -12,6 +12,8 @@ const appState = {
   reportYear: new Date().getFullYear(),
   calendarMonth: currentYearMonth(),  // v5.38: カレンダービュー
   calendarDay: null,                  // v5.38: 選択中の日付
+  bulkMode: false,                    // v5.55: 一括操作モード
+  selectedTxIds: new Set(),           // v5.55: 選択中の取引ID
 };
 
 // ============================================================
@@ -806,7 +808,12 @@ function renderTxRow(t) {
   const isIncome = t.type === 'income';
   const icon = cat ? (CAT_ICONS[cat.name] || '📌') : '';
   const badgeIcon = icon ? `<span class="cat-badge-icon">${icon}</span>` : '';
-  return `<tr data-id="${t.id}" data-type="${t.type}">
+  const isSel = appState.selectedTxIds.has(t.id);
+  const cbCol = appState.bulkMode
+    ? `<td class="tx-cb-cell"><input type="checkbox" class="tx-cb" data-id="${t.id}" ${isSel ? 'checked' : ''}></td>`
+    : '';
+  return `<tr data-id="${t.id}" data-type="${t.type}"${isSel ? ' class="tx-selected"' : ''}>
+      ${cbCol}
       <td>${formatDate(t.date)}</td>
       <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${cat ? esc2(cat.name) : '—'}</span></td>
       <td class="memo-cell">${esc2(t.memo || '—')}</td>
@@ -876,8 +883,9 @@ function renderTransactions() {
       const [y, m] = ym.split('-');
       const gi = calcTotal(groups[ym], 'income');
       const ge = calcTotal(groups[ym], 'expense');
+      const grpCols = appState.bulkMode ? 8 : 7;
       return `<tr class="tx-month-group-row">
-        <td colspan="7"><div class="tx-month-group-inner">
+        <td colspan="${grpCols}"><div class="tx-month-group-inner">
           <span class="tx-month-group-label">${y}年${parseInt(m)}月</span>
           <span class="tx-month-group-summary">
             <span class="income">+${formatMoney(gi)}</span>
@@ -909,10 +917,18 @@ function renderTransactions() {
     ? `<button id="search-all-btn" class="btn btn-ghost tx-search-all-btn">全期間</button>`
     : '';
 
+  const bulkCols = appState.bulkMode ? 8 : 7;
+  const cbTh = appState.bulkMode
+    ? `<th class="tx-cb-th"><input type="checkbox" id="tx-select-all" class="tx-cb" title="全て選択"></th>`
+    : '';
+
   return `
 <div class="page-header">
   <h1 class="page-title">収支一覧</h1>
-  <button class="btn btn-primary" id="open-add-modal">＋ 追加</button>
+  <div class="page-header-right">
+    <button class="btn ${appState.bulkMode ? 'btn-primary' : 'btn-ghost'} btn-sm" id="bulk-toggle">☑ ${appState.bulkMode ? '選択中' : '一括選択'}</button>
+    <button class="btn btn-primary" id="open-add-modal">＋ 追加</button>
+  </div>
 </div>
 
 ${templateBar}
@@ -951,11 +967,13 @@ ${templateBar}
 <div class="card">
   <div class="table-wrap">
     <table class="tx-table">
-      <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th><th>金額</th><th></th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="7" class="empty">取引がありません</td></tr>'}</tbody>
+      <thead><tr>${cbTh}<th>日付</th><th>カテゴリ</th><th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th><th>金額</th><th></th></tr></thead>
+      <tbody>${rows || `<tr><td colspan="${bulkCols}" class="empty">取引がありません</td></tr>`}</tbody>
     </table>
   </div>
 </div>
+
+<div id="bulk-bar"></div>
 
 ${renderTxModal()}`;
 }
@@ -996,8 +1014,161 @@ function bindTransactions() {
       if (tpl) openTxModal(null, tpl);
     });
   });
+  // ── 一括操作 (v5.55) ────────────────────────────────────────
+  on('bulk-toggle', 'click', () => {
+    appState.bulkMode = !appState.bulkMode;
+    if (!appState.bulkMode) appState.selectedTxIds.clear();
+    renderCurrentPage();
+  });
+  if (appState.bulkMode) {
+    // 全選択チェックボックス
+    const allCb = document.getElementById('tx-select-all');
+    if (allCb) {
+      const totalRows = document.querySelectorAll('.tx-cb[data-id]').length;
+      allCb.checked = appState.selectedTxIds.size > 0 && appState.selectedTxIds.size === totalRows;
+      allCb.indeterminate = appState.selectedTxIds.size > 0 && appState.selectedTxIds.size < totalRows;
+      allCb.addEventListener('change', e => {
+        document.querySelectorAll('.tx-cb[data-id]').forEach(cb => {
+          if (e.target.checked) appState.selectedTxIds.add(cb.dataset.id);
+          else appState.selectedTxIds.delete(cb.dataset.id);
+        });
+        syncBulkCheckboxes();
+        updateBulkBar();
+      });
+    }
+    // 個別チェックボックス
+    document.querySelectorAll('.tx-cb[data-id]').forEach(cb => {
+      cb.addEventListener('change', e => {
+        if (e.target.checked) appState.selectedTxIds.add(e.target.dataset.id);
+        else appState.selectedTxIds.delete(e.target.dataset.id);
+        document.querySelectorAll('.tx-table tbody tr[data-id]').forEach(row => {
+          row.classList.toggle('tx-selected', appState.selectedTxIds.has(row.dataset.id));
+        });
+        const all = document.getElementById('tx-select-all');
+        if (all) {
+          const total = document.querySelectorAll('.tx-cb[data-id]').length;
+          all.checked = appState.selectedTxIds.size === total && total > 0;
+          all.indeterminate = appState.selectedTxIds.size > 0 && appState.selectedTxIds.size < total;
+        }
+        updateBulkBar();
+      });
+    });
+    updateBulkBar();
+  }
   // モーダルバインド
   bindTxModal();
+}
+
+// ── 一括操作ヘルパー (v5.55) ────────────────────────────────
+function syncBulkCheckboxes() {
+  document.querySelectorAll('.tx-cb[data-id]').forEach(cb => {
+    cb.checked = appState.selectedTxIds.has(cb.dataset.id);
+  });
+  document.querySelectorAll('.tx-table tbody tr[data-id]').forEach(row => {
+    row.classList.toggle('tx-selected', appState.selectedTxIds.has(row.dataset.id));
+  });
+  const all = document.getElementById('tx-select-all');
+  if (all) {
+    const total = document.querySelectorAll('.tx-cb[data-id]').length;
+    all.checked = appState.selectedTxIds.size === total && total > 0;
+    all.indeterminate = appState.selectedTxIds.size > 0 && appState.selectedTxIds.size < total;
+  }
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  if (!bar) return;
+  const ids = [...appState.selectedTxIds];
+  const count = ids.length;
+  if (!appState.bulkMode || count === 0) { bar.innerHTML = ''; return; }
+
+  const txs = ids.map(id => appData.transactions.find(t => t.id === id)).filter(Boolean);
+  const expTotal = txs.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+  const incTotal = txs.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+  const totalLabel = expTotal > 0 && incTotal > 0
+    ? `支出 -${formatMoney(expTotal)} / 収入 +${formatMoney(incTotal)}`
+    : expTotal > 0 ? `-${formatMoney(expTotal)}` : `+${formatMoney(incTotal)}`;
+
+  const catOpts = appData.categories.map(c =>
+    `<option value="${c.id}">${esc2(c.name)}</option>`).join('');
+  const memOpts = appData.members.length > 0
+    ? `<div class="bulk-action-item">
+        <select id="bulk-mem-sel" class="bulk-sel">
+          <option value="">担当者変更…</option>
+          ${appData.members.map(m => `<option value="${m.id}">${esc2(m.name)}</option>`).join('')}
+        </select>
+       </div>` : '';
+
+  bar.innerHTML = `
+<div class="bulk-bar">
+  <div class="bulk-bar-info">
+    <span class="bulk-count">${count}件選択中</span>
+    <span class="bulk-total">${totalLabel}</span>
+  </div>
+  <div class="bulk-bar-actions">
+    <div class="bulk-action-item">
+      <select id="bulk-cat-sel" class="bulk-sel">
+        <option value="">カテゴリ変更…</option>
+        ${catOpts}
+      </select>
+    </div>
+    ${memOpts}
+    <button id="bulk-delete-btn" class="btn btn-danger btn-sm">🗑 削除</button>
+    <button id="bulk-cancel-btn" class="btn btn-ghost btn-sm">✕ 解除</button>
+  </div>
+</div>`;
+
+  document.getElementById('bulk-cat-sel').addEventListener('change', e => {
+    if (!e.target.value) return;
+    bulkChangeCategory(e.target.value);
+  });
+  if (appData.members.length > 0) {
+    document.getElementById('bulk-mem-sel').addEventListener('change', e => {
+      if (!e.target.value) return;
+      bulkChangeMember(e.target.value);
+    });
+  }
+  document.getElementById('bulk-delete-btn').addEventListener('click', bulkDelete);
+  document.getElementById('bulk-cancel-btn').addEventListener('click', () => {
+    appState.selectedTxIds.clear();
+    syncBulkCheckboxes();
+    updateBulkBar();
+  });
+}
+
+function bulkDelete() {
+  const ids = [...appState.selectedTxIds];
+  if (!ids.length) return;
+  if (!confirm(`${ids.length}件の取引を削除しますか？`)) return;
+  ids.forEach(id => deleteTransaction(id));
+  appState.selectedTxIds.clear();
+  appState.bulkMode = false;
+  showToast(`${ids.length}件を削除しました`, 'success');
+  renderCurrentPage();
+}
+
+function bulkChangeCategory(catId) {
+  const ids = [...appState.selectedTxIds];
+  ids.forEach(id => {
+    const tx = appData.transactions.find(t => t.id === id);
+    if (tx) tx.categoryId = catId;
+  });
+  saveData();
+  const cat = getCategoryById(catId);
+  showToast(`${ids.length}件のカテゴリを「${cat ? cat.name : ''}」に変更しました`, 'success');
+  renderCurrentPage();
+}
+
+function bulkChangeMember(memId) {
+  const ids = [...appState.selectedTxIds];
+  ids.forEach(id => {
+    const tx = appData.transactions.find(t => t.id === id);
+    if (tx) tx.memberId = memId;
+  });
+  saveData();
+  const mem = getMemberById(memId);
+  showToast(`${ids.length}件の担当者を「${mem ? mem.name : ''}」に変更しました`, 'success');
+  renderCurrentPage();
 }
 
 // ── 収支入力モーダル ──────────────────────────────────────
