@@ -394,29 +394,44 @@ function renderHealthScoreCard(ym) {
   const hs = calculateHealthScore(ym);
   if (!hs) return '';
 
+  const gradeColors = { S: '#7c3aed', A: '#059669', B: '#2563eb', C: '#d97706', D: '#dc2626' };
+  const gradeColor  = gradeColors[hs.grade] || 'var(--primary)';
+  const gaugeOffset = (163.36 * (1 - hs.total / 100)).toFixed(2);
+
   const itemsHtml = hs.items.map((item, i) => {
-    const pct = Math.round(item.score / item.max * 100);
+    const ratio    = item.score / item.max;
+    const pctW     = Math.round(ratio * 100);
+    const barColor = ratio >= 0.8 ? gradeColor : ratio >= 0.5 ? '#f59e0b' : '#ef4444';
     return `<div class="hs-item hs-d${i}">
       <div class="hs-item-header">
         <span class="hs-item-label">${item.icon} ${item.label}</span>
         <span class="hs-item-score">${item.score}<span class="hs-item-max">/${item.max}</span></span>
       </div>
       <div class="hs-bar-track">
-        <div class="hs-bar-fill" style="width:${pct}%"></div>
+        <div class="hs-bar-fill" style="width:${pctW}%;--hs-bar-color:${barColor}"></div>
       </div>
     </div>`;
   }).join('');
 
-  return `<div class="card health-score-card">
+  return `<div class="card health-score-card" style="--hs-grade-color:${gradeColor}">
   <div class="card-header-row">
     <h3 class="card-title">🏅 家計スコア</h3>
+    <div class="hs-grade-badge ${hs.gradeClass}">${hs.grade}</div>
   </div>
   <div class="hs-main">
-    <div class="hs-score-wrap">
-      <div class="hs-score-num js-hs-countup" data-value="${hs.total}">0</div>
-      <div class="hs-score-unit">点</div>
+    <div class="hs-gauge-wrap">
+      <svg class="hs-gauge-svg" viewBox="0 0 120 74" aria-hidden="true">
+        <circle class="hs-gauge-track" cx="60" cy="68" r="52"
+          transform="rotate(180 60 68)" stroke-dasharray="163.36 163.36"/>
+        <circle class="hs-gauge-fill" cx="60" cy="68" r="52"
+          transform="rotate(180 60 68)"
+          style="stroke-dashoffset:${gaugeOffset};stroke:${gradeColor}"/>
+      </svg>
+      <div class="hs-gauge-text">
+        <span class="hs-score-num js-hs-countup" data-value="${hs.total}">0</span>
+        <span class="hs-score-unit">点</span>
+      </div>
     </div>
-    <div class="hs-grade-badge ${hs.gradeClass}">${hs.grade}</div>
     <div class="hs-msg">${hs.msg}</div>
   </div>
   <div class="hs-items">${itemsHtml}</div>
