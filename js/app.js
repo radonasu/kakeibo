@@ -2290,10 +2290,10 @@ ${(() => {
     appState.catTrendSelected = totals.slice(0, 3).map(x => x.id);
   }
 
-  const chipHtml = expCats.map(c => {
+  const chipHtml = expCats.map((c, ci) => {
     const isSel = appState.catTrendSelected.includes(c.id);
     const icon  = (typeof CAT_ICONS !== 'undefined' && CAT_ICONS[c.name]) || '📌';
-    return `<button type="button" class="ct-chip${isSel ? ' is-selected' : ''}" data-cat-trend-id="${c.id}" style="--ct-color:${c.color}" aria-pressed="${isSel}">
+    return `<button type="button" class="ct-chip${isSel ? ' is-selected' : ''}" data-cat-trend-id="${c.id}" style="--ct-color:${c.color};--ct-i:${ci}" aria-pressed="${isSel}">
       <span class="ct-chip-icon" aria-hidden="true">${icon}</span>
       <span class="ct-chip-name">${esc2(c.name)}</span>
     </button>`;
@@ -2304,21 +2304,51 @@ ${(() => {
   const months12 = [];
   for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
 
+  // サマリー統計（最多支出月・年間合計）
+  const monthTotals = months12.map((ym, mi) => {
+    const txs = getTransactionsByMonth(ym);
+    const tot = selCats.reduce((s, c) => s + txs.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((ss, t) => ss + (Number(t.amount) || 0), 0), 0);
+    return { label: `${mi + 1}月`, total: tot };
+  });
+  const yearTotal = monthTotals.reduce((s, r) => s + r.total, 0);
+  const maxMonth  = monthTotals.reduce((a, b) => b.total > a.total ? b : a, { label: '—', total: 0 });
+  const avgMonth  = monthTotals.filter(r => r.total > 0);
+  const avgVal    = avgMonth.length ? Math.round(yearTotal / avgMonth.length) : 0;
+  const statAccent = selCats.length === 1 ? selCats[0].color : 'var(--primary)';
+
+  const statCardsHtml = selCats.length > 0 ? `<div class="ct-stat-row">
+    <div class="ct-stat-card" style="--ct-stat-color:${statAccent}">
+      <div class="ct-stat-label">選択カテゴリ</div>
+      <div class="ct-stat-value">${selCats.length}<span style="font-size:var(--fs-sm);font-weight:400;color:var(--text-muted)"> / ${expCats.length}件</span></div>
+    </div>
+    <div class="ct-stat-card" style="--ct-stat-color:${statAccent}">
+      <div class="ct-stat-label">年間合計</div>
+      <div class="ct-stat-value">${formatMoney(yearTotal)}</div>
+      <div class="ct-stat-sub">平均 ${formatMoney(avgVal)}/月</div>
+    </div>
+    <div class="ct-stat-card" style="--ct-stat-color:${statAccent}">
+      <div class="ct-stat-label">最多支出月</div>
+      <div class="ct-stat-value">${maxMonth.label}</div>
+      <div class="ct-stat-sub">${maxMonth.total > 0 ? formatMoney(maxMonth.total) : '—'}</div>
+    </div>
+  </div>` : '';
+
   const tableHead = `<tr><th>月</th>${selCats.map(c => `<th><span class="ct-tbl-dot" style="background:${c.color}"></span>${esc2(c.name)}</th>`).join('')}<th>合計</th></tr>`;
   const tableBody = months12.map((ym, mi) => {
     const label = `${mi + 1}月`;
     const txs = getTransactionsByMonth(ym);
     const vals = selCats.map(c => txs.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((s, t) => s + (Number(t.amount) || 0), 0));
     const rowTotal = vals.reduce((s, v) => s + v, 0);
-    if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
-    return `<tr><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
+    if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty" style="--ct-ri:${mi}"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
+    return `<tr style="--ct-ri:${mi}"><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
   }).join('');
 
   return `<div id="sec-cat-trend" class="card">
   <h3 class="card-title">📈 カテゴリ別支出トレンド（${year}年）</h3>
   <p class="ct-hint">カテゴリを選択してトレンドを比較できます（複数選択可）</p>
   <div class="ct-chips" role="group" aria-label="カテゴリ選択">${chipHtml}</div>
-  <div class="chart-wrap" style="height:260px;margin:var(--sp-4) 0 var(--sp-2)">
+  ${statCardsHtml}
+  <div class="chart-wrap" style="height:280px;margin:0 0 var(--sp-2)">
     <canvas id="report-cat-trend"></canvas>
   </div>
   ${selCats.length > 0 ? `<div class="table-wrap ct-table-wrap">
@@ -2390,10 +2420,44 @@ function bindReports() {
         const txs2 = getTransactionsByMonth(ym);
         const vals = selCats.map(c => txs2.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((s, t) => s + (Number(t.amount) || 0), 0));
         const rowTotal = vals.reduce((s, v) => s + v, 0);
-        if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
-        return `<tr><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
+        if (rowTotal === 0 && vals.every(v => v === 0)) return `<tr class="ct-row-empty" style="--ct-ri:${mi}"><td>${label}</td>${vals.map(() => '<td class="text-muted">—</td>').join('')}<td class="text-muted">—</td></tr>`;
+        return `<tr style="--ct-ri:${mi}"><td class="ct-month-cell">${label}</td>${vals.map(v => `<td class="${v > 0 ? 'ct-cell-val' : 'text-muted'}">${v > 0 ? formatMoney(v) : '—'}</td>`).join('')}<td class="ct-row-total">${formatMoney(rowTotal)}</td></tr>`;
       }).join('');
       tableWrap.innerHTML = `<table class="tx-table ct-table"><thead>${newHead}</thead><tbody>${newBody}</tbody></table>`;
+    }
+    // サマリーカードを更新
+    const statRow = document.querySelector('.ct-stat-row');
+    if (statRow) {
+      const expCats2 = appData.categories.filter(c => c.type === 'expense');
+      const selCats2 = expCats2.filter(c => appState.catTrendSelected.includes(c.id));
+      const months12s = [];
+      for (let ms = 1; ms <= 12; ms++) months12s.push(`${year}-${String(ms).padStart(2,'0')}`);
+      const mTotals = months12s.map((ym, mi) => {
+        const txs3 = getTransactionsByMonth(ym);
+        const tot = selCats2.reduce((s, c) => s + txs3.filter(t => t.categoryId === c.id && t.type === 'expense').reduce((ss, t) => ss + (Number(t.amount) || 0), 0), 0);
+        return { label: `${mi + 1}月`, total: tot };
+      });
+      const yTotal = mTotals.reduce((s, r) => s + r.total, 0);
+      const mMax   = mTotals.reduce((a, b) => b.total > a.total ? b : a, { label: '—', total: 0 });
+      const filled = mTotals.filter(r => r.total > 0);
+      const avg    = filled.length ? Math.round(yTotal / filled.length) : 0;
+      const sa2    = selCats2.length === 1 ? selCats2[0].color : 'var(--primary)';
+      statRow.outerHTML = `<div class="ct-stat-row">
+        <div class="ct-stat-card" style="--ct-stat-color:${sa2}">
+          <div class="ct-stat-label">選択カテゴリ</div>
+          <div class="ct-stat-value">${selCats2.length}<span style="font-size:var(--fs-sm);font-weight:400;color:var(--text-muted)"> / ${expCats2.length}件</span></div>
+        </div>
+        <div class="ct-stat-card" style="--ct-stat-color:${sa2}">
+          <div class="ct-stat-label">年間合計</div>
+          <div class="ct-stat-value">${formatMoney(yTotal)}</div>
+          <div class="ct-stat-sub">平均 ${formatMoney(avg)}/月</div>
+        </div>
+        <div class="ct-stat-card" style="--ct-stat-color:${sa2}">
+          <div class="ct-stat-label">最多支出月</div>
+          <div class="ct-stat-value">${mMax.label}</div>
+          <div class="ct-stat-sub">${mMax.total > 0 ? formatMoney(mMax.total) : '—'}</div>
+        </div>
+      </div>`;
     }
     // クリーンアップ: ページ離脱時にリスナー削除
     if (!document.getElementById('sec-cat-trend')) {

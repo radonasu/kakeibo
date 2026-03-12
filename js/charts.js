@@ -874,6 +874,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
 
   const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
   const { text: textColor, grid: gridColor } = getThemeColors();
+  const ctx2d = canvas.getContext('2d');
 
   const datasets = (selectedCats || []).map(cat => {
     const data = labels.map((_, i) => {
@@ -886,27 +887,49 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
       label: cat.name,
       data,
       borderColor: cat.color,
-      backgroundColor: cat.color + '20',
+      backgroundColor: makeGradient(ctx2d, canvas, cat.color, 0.30, 0.03),
       borderWidth: 2.5,
       pointRadius: 4,
-      pointHoverRadius: 7,
+      pointHoverRadius: 8,
       pointBackgroundColor: cat.color,
       pointBorderColor: '#fff',
       pointBorderWidth: 2,
+      pointHoverBorderWidth: 2,
       fill: true,
-      tension: 0.35,
+      tension: 0.4,
     };
   });
 
   if (!datasets.length) return;
 
-  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+  // クロスヘアプラグイン（ホバー時の垂直ライン）
+  const ctCrosshairPlugin = {
+    id: 'ctCrosshair',
+    afterDraw(chart) {
+      if (!chart.tooltip?._active?.length) return;
+      const x = chart.tooltip._active[0].element.x;
+      const { top, bottom } = chart.chartArea;
+      const c = chart.ctx;
+      c.save();
+      c.beginPath();
+      c.moveTo(x, top);
+      c.lineTo(x, bottom);
+      c.lineWidth = 1;
+      c.strokeStyle = gridColor;
+      c.setLineDash([4, 4]);
+      c.stroke();
+      c.restore();
+    },
+  };
+
+  chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'line',
     data: { labels, datasets },
+    plugins: [ctCrosshairPlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      animation: commonAnimation,
+      animation: { duration: 700, easing: 'easeOutCubic' },
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
@@ -921,6 +944,11 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
         },
         tooltip: commonTooltip({
           label: ctx => ` ${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+          footer: items => {
+            if (items.length <= 1) return null;
+            const total = items.reduce((s, i) => s + (i.raw || 0), 0);
+            return `合計: ${formatMoney(total)}`;
+          },
         }),
       },
       scales: {
