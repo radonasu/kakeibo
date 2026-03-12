@@ -75,13 +75,14 @@ function exportYayoiCSV(transactions) {
 
 // ── 汎用CSV ────────────────────────────────────────────────
 function exportGenericCSV(transactions) {
-  const header = ['日付','種別','カテゴリ','勘定科目（弥生）','担当者','支払方法','金額','消費税率','摘要'];
+  const header = ['日付','種別','カテゴリ','勘定科目（弥生）','担当者','支払方法','金額','消費税率','摘要','タグ'];
   const rows = [header.join(',')];
 
   const sorted = [...transactions].sort((a, b) => a.date.localeCompare(b.date));
   sorted.forEach(t => {
     const cat = getCategoryById(t.categoryId);
     const mem = getMemberById(t.memberId);
+    const tagsStr = (t.tags && Array.isArray(t.tags)) ? t.tags.join(';') : '';  // v5.61
     const row = [
       t.date,
       t.type === 'income' ? '収入' : '支出',
@@ -92,6 +93,7 @@ function exportGenericCSV(transactions) {
       t.amount,
       t.taxRate || 0,
       esc(t.memo || ''),
+      esc(tagsStr),
     ];
     rows.push(row.join(','));
   });

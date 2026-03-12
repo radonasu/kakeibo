@@ -1058,6 +1058,41 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
 }
 
+/* ── 取引タグチップ (v5.61) ──────────────────────────── */
+.tx-tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 4px;
+}
+.tx-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: var(--fw-semi);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  white-space: nowrap;
+  line-height: 1.5;
+  transition: background 0.15s;
+}
+.tx-tag-chip:hover {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+.tx-tag-label-hint {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-normal);
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+[data-theme="dark"] .tx-tag-chip {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
 /* ── フィルターバー ───────────────────────────────────── */
 .filter-bar {
   display: flex;

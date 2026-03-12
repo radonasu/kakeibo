@@ -6,7 +6,7 @@
 const appState = {
   page: 'dashboard',
   month: currentYearMonth(),
-  txFilter: { category: '', member: '', search: '', type: '' },
+  txFilter: { category: '', member: '', search: '', type: '', tag: '' },
   editingTxId: null,
   templateData: null,  // テンプレートからの入力時に使用
   reportYear: new Date().getFullYear(),
@@ -1020,11 +1020,15 @@ function renderTxRow(t) {
   const cbCol = appState.bulkMode
     ? `<td class="tx-cb-cell"><input type="checkbox" class="tx-cb" data-id="${t.id}" ${isSel ? 'checked' : ''}></td>`
     : '';
+  // タグチップ (v5.61)
+  const tagChips = (t.tags && t.tags.length > 0)
+    ? `<div class="tx-tag-chips">${t.tags.map(tag => `<span class="tx-tag-chip">#${esc2(tag)}</span>`).join('')}</div>`
+    : '';
   return `<tr data-id="${t.id}" data-type="${t.type}"${isSel ? ' class="tx-selected"' : ''}>
       ${cbCol}
       <td>${formatDate(t.date)}</td>
       <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${cat ? esc2(cat.name) : '—'}</span></td>
-      <td class="memo-cell">${esc2(t.memo || '—')}</td>
+      <td class="memo-cell"><span class="tx-memo-text">${esc2(t.memo || '—')}</span>${tagChips}</td>
       <td class="tx-col-pay">${esc2(t.paymentMethod || '—')}</td>
       <td class="tx-col-mem">${mem ? esc2(mem.name) : '—'}</td>
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
@@ -1033,6 +1037,17 @@ function renderTxRow(t) {
         <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
       </td>
     </tr>`;
+}
+
+// ── タグ管理 (v5.61) ─────────────────────────────────────
+function getAllTags() {
+  const tagSet = new Set();
+  appData.transactions.forEach(t => {
+    if (t.tags && Array.isArray(t.tags)) {
+      t.tags.forEach(tag => { if (tag) tagSet.add(tag); });
+    }
+  });
+  return Array.from(tagSet).sort();
 }
 
 // 全期間対応月セレクター
@@ -1057,11 +1072,13 @@ function renderTransactions() {
     if (f.category && t.categoryId !== f.category) return false;
     if (f.member && t.memberId !== f.member) return false;
     if (f.type && t.type !== f.type) return false;
+    if (f.tag && (!t.tags || !t.tags.includes(f.tag))) return false;  // v5.61: タグフィルター
     if (f.search) {
       const q = f.search.toLowerCase();
       const cat = getCategoryById(t.categoryId);
       const mem = getMemberById(t.memberId);
-      const haystack = [(t.memo || ''), (cat ? cat.name : ''), (mem ? mem.name : '')].join(' ').toLowerCase();
+      const tagsStr = (t.tags || []).join(' ');  // v5.61: タグも検索対象
+      const haystack = [(t.memo || ''), (cat ? cat.name : ''), (mem ? mem.name : ''), tagsStr].join(' ').toLowerCase();
       if (!haystack.includes(q)) return false;
     }
     return true;
@@ -1077,6 +1094,14 @@ function renderTransactions() {
   // メンバー選択肢
   const memOptions = `<option value="">担当者: 全員</option>` +
     appData.members.map(m => `<option value="${m.id}" ${f.member === m.id ? 'selected' : ''}>${esc2(m.name)}</option>`).join('');
+
+  // タグ選択肢 (v5.61)
+  const allTags = getAllTags();
+  const tagOptions = `<option value="">🏷️ 全タグ</option>` +
+    allTags.map(tag => `<option value="${esc2(tag)}" ${f.tag === tag ? 'selected' : ''}>#${esc2(tag)}</option>`).join('');
+  const tagFilterHtml = allTags.length > 0
+    ? `<select id="filter-tag">${tagOptions}</select>`
+    : `<select id="filter-tag" style="display:none">${tagOptions}</select>`;
 
   // 行生成（全期間は月グループ分け）
   let rows;
@@ -1150,6 +1175,7 @@ ${templateBar}
     <option value="income" ${f.type === 'income' ? 'selected' : ''}>収入のみ</option>
     <option value="expense" ${f.type === 'expense' ? 'selected' : ''}>支出のみ</option>
   </select>
+  ${tagFilterHtml}
   <input id="filter-search" type="search" placeholder="検索…" value="${esc2(f.search)}" class="filter-search">
   ${searchAllBtn}
 </div>
@@ -1193,6 +1219,7 @@ function bindTransactions() {
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
   on('filter-type',   'change', e => { appState.txFilter.type     = e.target.value; renderCurrentPage(); });
+  on('filter-tag',    'change', e => { appState.txFilter.tag      = e.target.value; renderCurrentPage(); });  // v5.61
   let _searchTimer = null;
   on('filter-search', 'input', e => {
     appState.txFilter.search = e.target.value;
@@ -1450,6 +1477,14 @@ function renderTxModal() {
         <datalist id="memo-suggestions"></datalist>
         <div id="memo-cat-hint" class="memo-cat-hint" style="display:none"></div>
       </div>
+      <div class="form-group">
+        <label>タグ <span class="tx-tag-label-hint">カンマ区切りで複数指定</span></label>
+        <input type="text" id="tx-tags" class="form-input"
+          placeholder="例: 旅行, 外食, まとめ買い"
+          value="${src && src.tags && src.tags.length > 0 ? src.tags.join(', ') : ''}"
+          list="tx-tag-suggestions" autocomplete="off">
+        <datalist id="tx-tag-suggestions"></datalist>
+      </div>
 
       <div class="form-group">
         <label>支払方法</label>
@@ -1575,6 +1610,16 @@ function bindTxModal() {
     document.getElementById('qcat-name').value  = '';
     document.getElementById('qcat-yayoi').value = '';
   });
+
+  // タグdatalist初期化 (v5.61)
+  const tagDl = document.getElementById('tx-tag-suggestions');
+  if (tagDl) {
+    getAllTags().forEach(tag => {
+      const opt = document.createElement('option');
+      opt.value = tag;
+      tagDl.appendChild(opt);
+    });
+  }
 
   // メモ入力 → カテゴリ自動提案 (v5.53)
   const memoInput = document.getElementById('tx-memo');
@@ -1743,7 +1788,13 @@ function saveTxFromModal() {
   if (!amount || amount <= 0) { alert('金額を入力してください'); return; }
   if (!catId)  { alert('カテゴリを選択してください'); return; }
 
-  const fields = { type, date, amount, categoryId: catId, paymentMethod: payment, memberId: memId, taxRate, memo };
+  // タグをパース (v5.61): カンマ・読点・全角カンマで区切り、空白トリム・重複除去
+  const tagsRaw = document.getElementById('tx-tags')?.value || '';
+  const tags = [...new Set(
+    tagsRaw.split(/[,、，]+/).map(s => s.trim()).filter(s => s.length > 0)
+  )];
+
+  const fields = { type, date, amount, categoryId: catId, paymentMethod: payment, memberId: memId, taxRate, memo, tags };
 
   if (appState.editingTxId) {
     updateTransaction(appState.editingTxId, fields);
