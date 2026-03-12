@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.58'; // v5.58: 今月末収支予測カード ビジュアル洗練（SVGスパークライン・TODAYマーカー・fc-cell-inアニメーション・alertパルスグロー・平均比較バッジ）
+const CACHE_NAME = 'kakeibo-v5.59'; // v5.59: ダッシュボードウィジェット表示設定（9種ウィジェットのON/OFF・設定ページ「一般」タブにカスタマイズカード追加・トグルスイッチUI）
 const ASSETS = [
   './index.html',
   './css/style.css',

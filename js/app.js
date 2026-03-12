@@ -624,6 +624,10 @@ function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
 
+  // v5.59: ウィジェット表示設定（デフォルトON）
+  const dw = appData.settings.dashWidgets || {};
+  const showWidget = key => dw[key] !== false;
+
   const txs = getTransactionsByMonth(appState.month);
   const income  = calcTotal(txs, 'income');
   const expense = calcTotal(txs, 'expense');
@@ -652,7 +656,7 @@ function renderDashboard() {
         ${over ? `<div class="budget-over-msg">⚠️ ${formatMoney(spent - budget)} 超過</div>` : ''}
       </div>`;
     });
-  const budgetSection = budgetItems.length > 0 ? `
+  const budgetSection = showWidget('budget') && budgetItems.length > 0 ? `
 <div class="card">
   <div class="card-header-row">
     <h3 class="card-title">📊 今月の予算</h3>
@@ -663,7 +667,7 @@ function renderDashboard() {
 
   // 目標ウィジェット（v5.31）
   const activeGoals = (appData.goals || []).filter(g => !g.achievedAt);
-  const goalSection = activeGoals.length > 0 ? `
+  const goalSection = showWidget('goals') && activeGoals.length > 0 ? `
 <div class="card">
   <div class="card-header-row">
     <h3 class="card-title">🎯 貯蓄目標</h3>
@@ -704,7 +708,7 @@ function renderDashboard() {
   const upcomingSubs = [...activeSubs]
     .sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b))
     .slice(0, 3);
-  const subSection = activeSubs.length > 0 ? `
+  const subSection = showWidget('subscriptions') && activeSubs.length > 0 ? `
 <div class="card sub-widget-card">
   <div class="card-header-row">
     <h3 class="card-title">📱 サブスク管理</h3>
@@ -737,7 +741,7 @@ function renderDashboard() {
     const d = pointDaysUntilExpiry(p);
     return d !== null && d <= 30 && (Number(p.balance) || 0) > 0;
   }).sort((a, b) => pointDaysUntilExpiry(a) - pointDaysUntilExpiry(b));
-  const pointSection = allPoints.length > 0 ? `
+  const pointSection = showWidget('points') && allPoints.length > 0 ? `
 <div class="card pt-widget-card">
   <div class="card-header-row">
     <h3 class="card-title">🎫 ポイント残高</h3>
@@ -781,7 +785,7 @@ function renderDashboard() {
     return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
   });
   const wishTotal = wishItems.reduce((s, w) => s + (Number(w.price) || 0), 0);
-  const wishSection = wishItems.length > 0 ? `
+  const wishSection = showWidget('wishlist') && wishItems.length > 0 ? `
 <div class="card wish-widget-card">
   <div class="card-header-row">
     <h3 class="card-title">🛍️ ほしいものリスト</h3>
@@ -809,14 +813,14 @@ function renderDashboard() {
 </div>` : '';
 
   // 今月末収支予測カード（v5.57）
-  const forecastSection = renderForecastCard(appState.month);
+  const forecastSection = showWidget('forecast') ? renderForecastCard(appState.month) : '';
 
   // 家計スコアカード（v5.49）
-  const healthScoreSection = renderHealthScoreCard(appState.month);
+  const healthScoreSection = showWidget('healthScore') ? renderHealthScoreCard(appState.month) : '';
 
   // インサイトセクション（v5.40）
   const insights = generateInsights(appState.month);
-  const insightSection = insights.length > 0 ? `
+  const insightSection = showWidget('insight') && insights.length > 0 ? `
 <div class="card insight-card">
   <div class="card-header-row">
     <h3 class="card-title">💡 今月のインサイト</h3>
@@ -912,7 +916,7 @@ ${budgetSection}
 
 ${goalSection}
 
-<div class="charts-row">
+${showWidget('chart') ? `<div class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ</h3>
     <div class="chart-wrap" style="height:220px">
@@ -925,7 +929,7 @@ ${goalSection}
       <canvas id="monthly-bar"></canvas>
     </div>
   </div>
-</div>
+</div>` : ''}
 
 <div class="card">
   <div class="card-header-row">
@@ -991,9 +995,13 @@ function bindDashboard() {
   animateGoalRings(); // v5.32
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
-    const txs = getTransactionsByMonth(appState.month);
-    renderDonutChart('donut-expense', txs, 'expense');
-    renderMonthlyBarChart('monthly-bar');
+    if (document.getElementById('donut-expense')) {
+      const txs = getTransactionsByMonth(appState.month);
+      renderDonutChart('donut-expense', txs, 'expense');
+    }
+    if (document.getElementById('monthly-bar')) {
+      renderMonthlyBarChart('monthly-bar');
+    }
   }, 50);
 }
 
@@ -2356,6 +2364,37 @@ function renderSettings() {
       </table>
     </div>` : '<p class="empty" style="text-align:center;padding:12px 0;color:var(--text-muted)">テンプレートがありません</p>'}
   </div>
+
+  ${(() => {
+    const dw = s.dashWidgets || {};
+    const widgets = [
+      { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
+      { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
+      { key: 'insight',       label: '今月のインサイト',icon: '💡' },
+      { key: 'budget',        label: '予算進捗',        icon: '📊' },
+      { key: 'goals',         label: '貯蓄目標',        icon: '🎯' },
+      { key: 'subscriptions', label: 'サブスク管理',    icon: '📱' },
+      { key: 'points',        label: 'ポイント残高',    icon: '🎫' },
+      { key: 'wishlist',      label: 'ほしいものリスト',icon: '🛍️' },
+      { key: 'chart',         label: '収支グラフ',      icon: '📉' },
+    ];
+    const rows = widgets.map(w => {
+      const checked = dw[w.key] !== false ? 'checked' : '';
+      return `<label class="dw-item">
+        <span class="dw-item-label"><span class="dw-item-icon">${w.icon}</span>${w.label}</span>
+        <input type="checkbox" class="dw-toggle" data-key="${w.key}" ${checked}>
+        <span class="dw-slider"></span>
+      </label>`;
+    }).join('');
+    return `<div class="card">
+    <div class="card-header-row">
+      <h3 class="card-title">📐 ダッシュボード カスタマイズ</h3>
+    </div>
+    <p class="hint" style="margin-bottom:12px">ダッシュボードに表示するウィジェットを選択できます</p>
+    <div class="dw-grid">${rows}</div>
+    <button class="btn btn-primary" id="save-dash-widgets" style="margin-top:16px">保存</button>
+  </div>`;
+  })()}
 </div>
 
 <!-- ── パネル2: 連携 ── -->
@@ -2788,6 +2827,16 @@ function bindSettings() {
     });
     document.getElementById('sidebar-title').textContent = appData.settings.familyName;
     alert('設定を保存しました');
+  });
+
+  // ダッシュボードウィジェット保存（v5.59）
+  on('save-dash-widgets', 'click', () => {
+    const dw = {};
+    document.querySelectorAll('.dw-toggle').forEach(cb => {
+      dw[cb.dataset.key] = cb.checked;
+    });
+    updateSettings({ dashWidgets: dw });
+    showToast('ウィジェット設定を保存しました', 'success');
   });
 
   // APIキー保存
