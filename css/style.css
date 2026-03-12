@@ -4999,7 +4999,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ============================================================
-   ほしいものリスト (v5.51)
+   ほしいものリスト (v5.52)
    ============================================================ */
 
 /* サマリー行 */
@@ -5012,18 +5012,50 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-summary-card {
   text-align: center;
   padding: var(--sp-4);
+  position: relative;
+  overflow: hidden;
+  border: none;
 }
+/* デコレーションサークル */
+.wl-summary-card::before,
+.wl-summary-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.18;
+  background: #fff;
+  pointer-events: none;
+}
+.wl-summary-card::before { width: 80px; height: 80px; top: -24px; right: -20px; }
+.wl-summary-card::after  { width: 48px; height: 48px; bottom: -16px; left: 8px; }
+/* グラデーション 3種 */
+.wl-sum-count  { background: linear-gradient(135deg, #4338ca 0%, #818cf8 100%); }
+.wl-sum-budget { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
+.wl-sum-done   { background: linear-gradient(135deg, #065f46 0%, #34d399 100%); }
+/* グラデーションカード内のテキストを白に */
+.wl-sum-count .wl-summary-label,
+.wl-sum-budget .wl-summary-label,
+.wl-sum-done .wl-summary-label  { color: rgba(255,255,255,.80); }
+.wl-sum-count .wl-summary-value,
+.wl-sum-budget .wl-summary-value,
+.wl-sum-done .wl-summary-value  { color: #fff; }
+.wl-sum-count .wl-summary-unit,
+.wl-sum-budget .wl-summary-unit,
+.wl-sum-done .wl-summary-unit   { color: rgba(255,255,255,.70); }
+
 .wl-summary-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: 600;
   letter-spacing: .04em;
   margin-bottom: var(--sp-2);
+  position: relative; z-index: 1;
 }
 .wl-summary-value {
   font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--primary);
+  position: relative; z-index: 1;
 }
 .wl-summary-unit {
   font-size: var(--fs-sm);
@@ -5042,6 +5074,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-card {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--wl-accent, var(--primary));
   border-radius: var(--radius-card, 14px);
   padding: var(--sp-4) var(--sp-5);
   display: flex;
@@ -5049,10 +5082,21 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-4);
   animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both;
   animation-delay: calc(var(--wl-i, 0) * 60ms);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
+.wl-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+/* 高優先度カードのパルス */
+@keyframes wl-urgent-glow {
+  0%, 100% { border-left-color: var(--wl-accent, #ef4444); box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, #ef4444) 70%, #fff); box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+}
+.wl-card.wl-high {
+  animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both,
+             wl-urgent-glow 2.4s ease-in-out calc(var(--wl-i, 0) * 60ms + 0.4s) infinite;
 }
 .wl-card-icon {
   font-size: 28px;
@@ -5061,7 +5105,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--wl-accent, var(--primary)) 15%, var(--surface-hover));
   border-radius: 12px;
   flex-shrink: 0;
 }
@@ -5102,7 +5146,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-card-price {
   font-size: var(--fs-lg);
   font-weight: 700;
-  color: var(--text);
+  color: var(--wl-accent, var(--text));
 }
 .wl-card-actions {
   display: flex;
@@ -5255,6 +5299,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text);
   flex-shrink: 0;
 }
+/* ウィジェット高優先度ハイライト */
+.wish-widget-item.wl-high {
+  background: var(--danger-bg);
+  border-radius: 8px;
+  padding: var(--sp-1) var(--sp-2);
+  margin: 0 calc(var(--sp-2) * -1);
+}
+[data-theme="dark"] .wish-widget-item.wl-high { background: rgba(239,68,68,0.12); }
+
+/* ダークモード */
+[data-theme="dark"] .wl-card.wl-high { border-left-color: rgba(239,68,68,0.7); }
 
 /* モバイル */
 @media (max-width: 520px) {

@@ -614,7 +614,8 @@ function renderDashboard() {
     ${wishItems.slice(0, 3).map(w => {
       const priLabel = { high: '高', medium: '中', low: '低' }[w.priority] || '中';
       const priCls   = { high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[w.priority] || 'wl-pri-medium';
-      return `<div class="wish-widget-item">
+      const highCls  = w.priority === 'high' ? ' wl-high' : '';
+      return `<div class="wish-widget-item${highCls}">
         <div class="wish-widget-icon">${w.emoji || '🛍️'}</div>
         <div class="wish-widget-info">
           <div class="wish-widget-name">${esc2(w.name)}</div>
@@ -5263,11 +5264,12 @@ function renderWishlist() {
   const sorted  = [...items].sort((a, b) => (priSort[a.priority] ?? 1) - (priSort[b.priority] ?? 1));
   const total   = items.reduce((s, w) => s + (Number(w.price) || 0), 0);
 
-  const priLabel = p => ({ high: '優先度：高', medium: '優先度：中', low: '優先度：低' }[p] || '優先度：中');
-  const priCls   = p => ({ high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[p] || 'wl-pri-medium');
+  const priLabel  = p => ({ high: '優先度：高', medium: '優先度：中', low: '優先度：低' }[p] || '優先度：中');
+  const priCls    = p => ({ high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[p] || 'wl-pri-medium');
+  const priAccent = p => ({ high: '#ef4444', medium: '#f59e0b', low: '#10b981' }[p] || '#6366f1');
 
   const cards = sorted.length > 0 ? sorted.map((w, i) =>
-    `<div class="wl-card" style="--wl-i:${i}" data-id="${w.id}">
+    `<div class="wl-card${w.priority === 'high' ? ' wl-high' : ''}" style="--wl-i:${i};--wl-accent:${priAccent(w.priority)}" data-id="${w.id}">
       <div class="wl-card-icon">${w.emoji || '🛍️'}</div>
       <div class="wl-card-body">
         <div class="wl-card-name">${esc2(w.name)}</div>
@@ -5308,15 +5310,15 @@ function renderWishlist() {
 </div>
 
 <div class="wl-summary-row">
-  <div class="card wl-summary-card">
+  <div class="card wl-summary-card wl-sum-count">
     <div class="wl-summary-label">リスト件数</div>
     <div class="wl-summary-value">${items.length}<span class="wl-summary-unit">件</span></div>
   </div>
-  <div class="card wl-summary-card">
+  <div class="card wl-summary-card wl-sum-budget">
     <div class="wl-summary-label">合計予算</div>
     <div class="wl-summary-value js-countup" data-value="${total}">${formatMoney(total)}</div>
   </div>
-  <div class="card wl-summary-card">
+  <div class="card wl-summary-card wl-sum-done">
     <div class="wl-summary-label">購入済み</div>
     <div class="wl-summary-value">${done.length}<span class="wl-summary-unit">件</span></div>
   </div>
