@@ -5628,3 +5628,133 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
    ============================================================ */
 [data-theme="dark"] .smi-income  { background: rgba(5, 150, 105, 0.15); }
 [data-theme="dark"] .smi-expense { background: rgba(225, 29, 72, 0.15); }
+
+/* ============================================================
+   今月末収支予測カード (v5.57)
+   ============================================================ */
+.forecast-card {
+  border-top: 3px solid var(--fc-color, var(--primary));
+  position: relative;
+  overflow: hidden;
+}
+.forecast-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right, var(--fc-bg, var(--primary-light)), transparent 70%);
+  pointer-events: none;
+}
+
+/* ステータスバッジ */
+.fc-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.fc-good    { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
+.fc-caution { background: var(--primary-light); color: var(--primary-dark); border: 1px solid rgba(99,102,241,.3); }
+.fc-alert   { background: var(--danger-bg);   color: var(--danger-text);   border: 1px solid var(--danger-border); }
+
+/* 低信頼度バナー */
+.fc-low-conf {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  margin-bottom: var(--sp-3, 12px);
+}
+
+/* 経過日数プログレスバー */
+.fc-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--sp-4, 16px);
+}
+.fc-progress-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border);
+  overflow: hidden;
+}
+.fc-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--fc-color, var(--primary));
+  transition: width 0.6s ease;
+}
+.fc-progress-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* 3カラムグリッド */
+.fc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--sp-3, 12px);
+}
+.fc-cell {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-3, 12px) var(--sp-2, 8px);
+  text-align: center;
+}
+.fc-cell-balance {
+  background: var(--fc-bg, var(--primary-light));
+  border-color: var(--fc-color, var(--primary));
+}
+.fc-cell-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.fc-cell-amount {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.fc-cell-amount.income  { color: var(--income);  }
+.fc-cell-amount.expense { color: var(--expense); }
+.fc-cell-hint {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+
+/* モバイル: 3列→縦2+1 */
+@media (max-width: 480px) {
+  .fc-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fc-cell-balance {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ダークモード */
+[data-theme="dark"] .fc-cell {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.09);
+}
+[data-theme="dark"] .fc-cell-balance {
+  background: rgba(var(--fc-bg-rgb, 99 102 241) / .12);
+}
+[data-theme="dark"] .fc-low-conf {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.09);
+}
+[data-theme="dark"] .fc-good    { background: rgba(5,150,105,.15);  border-color: rgba(5,150,105,.3); }
+[data-theme="dark"] .fc-caution { background: rgba(99,102,241,.15); border-color: rgba(99,102,241,.3); }
+[data-theme="dark"] .fc-alert   { background: rgba(220,38,38,.15);  border-color: rgba(220,38,38,.3); }

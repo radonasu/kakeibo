@@ -441,6 +441,101 @@ function renderHealthScoreCard(ym) {
 </div>`;
 }
 
+// ============================================================
+// 今月末収支予測 (v5.57)
+// ============================================================
+function calculateForecast(ym) {
+  const today = new Date();
+  const [y, m] = ym.split('-').map(Number);
+  const isCurrentMonth = today.getFullYear() === y && today.getMonth() + 1 === m;
+  if (!isCurrentMonth) return null; // 当月のみ対象
+
+  const dayOfMonth  = today.getDate();
+  const daysInMonth = new Date(y, m, 0).getDate();
+  if (dayOfMonth < 3) return null;  // 月初3日未満はデータ不足で非表示
+
+  const txs    = getTransactionsByMonth(ym);
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+
+  // 日割り外挿
+  const dailyExpense = expense / dayOfMonth;
+  const dailyIncome  = income  / dayOfMonth;
+  const fcastExpense = Math.round(dailyExpense * daysInMonth);
+  const fcastIncome  = Math.round(dailyIncome  * daysInMonth);
+  const fcastBalance = fcastIncome - fcastExpense;
+
+  // 過去3ヶ月平均支出
+  let avg3Expense = 0;
+  let avg3Count   = 0;
+  for (let i = 1; i <= 3; i++) {
+    const d  = new Date(y, m - 1 - i, 1);
+    const pm = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    const ptxs = getTransactionsByMonth(pm);
+    if (ptxs.length > 0) { avg3Expense += calcTotal(ptxs, 'expense'); avg3Count++; }
+  }
+  const avg3 = avg3Count > 0 ? Math.round(avg3Expense / avg3Count) : null;
+
+  // ステータス判定
+  let status, statusLabel;
+  if (fcastBalance >= 0 && (avg3 === null || fcastExpense <= avg3)) {
+    status = 'good';   statusLabel = '黒字見込み ✓';
+  } else if (fcastBalance >= 0) {
+    status = 'caution'; statusLabel = '黒字見込み';
+  } else {
+    status = 'alert';  statusLabel = '赤字見込み';
+  }
+
+  const lowConfidence = dayOfMonth < 8; // 月初7日以内は低信頼度
+
+  return {
+    dayOfMonth, daysInMonth,
+    fcastExpense, fcastIncome, fcastBalance,
+    avg3,
+    status, statusLabel,
+    lowConfidence,
+  };
+}
+
+function renderForecastCard(ym) {
+  const fc = calculateForecast(ym);
+  if (!fc) return '';
+
+  const statusColors = { good: 'var(--success)', caution: 'var(--primary)', alert: 'var(--danger-text)' };
+  const statusBg     = { good: 'var(--success-bg)', caution: 'var(--primary-light)', alert: 'var(--danger-bg)' };
+  const color  = statusColors[fc.status];
+  const bgColor = statusBg[fc.status];
+  const balSign = fc.fcastBalance >= 0 ? '+' : '-';
+  const pct     = Math.round(fc.dayOfMonth / fc.daysInMonth * 100);
+
+  return `<div class="card forecast-card" style="--fc-color:${color};--fc-bg:${bgColor}">
+  <div class="card-header-row">
+    <h3 class="card-title">📈 今月末の見込み</h3>
+    <span class="fc-status-badge fc-${fc.status}">${fc.statusLabel}</span>
+  </div>
+  ${fc.lowConfidence ? `<div class="fc-low-conf">⚡ 経過${fc.dayOfMonth}日のため参考値です</div>` : ''}
+  <div class="fc-progress-wrap">
+    <div class="fc-progress-track"><div class="fc-progress-fill" style="width:${pct}%"></div></div>
+    <span class="fc-progress-label">${fc.dayOfMonth}日/${fc.daysInMonth}日</span>
+  </div>
+  <div class="fc-grid">
+    <div class="fc-cell">
+      <div class="fc-cell-label">予測支出</div>
+      <div class="fc-cell-amount expense js-fc-countup" data-value="${fc.fcastExpense}">¥0</div>
+      ${fc.avg3 !== null ? `<div class="fc-cell-hint">3ヶ月平均 ${formatMoney(fc.avg3)}</div>` : ''}
+    </div>
+    <div class="fc-cell">
+      <div class="fc-cell-label">予測収入</div>
+      <div class="fc-cell-amount income js-fc-countup" data-value="${fc.fcastIncome}">¥0</div>
+    </div>
+    <div class="fc-cell fc-cell-balance">
+      <div class="fc-cell-label">予測残高</div>
+      <div class="fc-cell-amount js-fc-countup" data-value="${fc.fcastBalance}" style="color:${color}">${balSign}¥0</div>
+    </div>
+  </div>
+</div>`;
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -629,6 +724,9 @@ function renderDashboard() {
   </div>
 </div>` : '';
 
+  // 今月末収支予測カード（v5.57）
+  const forecastSection = renderForecastCard(appState.month);
+
   // 家計スコアカード（v5.49）
   const healthScoreSection = renderHealthScoreCard(appState.month);
 
@@ -714,6 +812,8 @@ function renderDashboard() {
   </div>
 </div>
 
+${forecastSection}
+
 ${healthScoreSection}
 
 ${insightSection}
@@ -788,6 +888,22 @@ function bindDashboard() {
     };
     requestAnimationFrame(tick);
   }
+  // 今月末収支予測カウントアップ（v5.57）
+  document.querySelectorAll('.js-fc-countup').forEach(el => {
+    const target = Number(el.dataset.value);
+    const absTarget = Math.abs(target);
+    const isNeg = target < 0;
+    const prefix = isNeg ? '-¥' : '¥';
+    const dur = 600;
+    const start = performance.now();
+    const tick = now => {
+      const t = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = prefix + Math.round(absTarget * eased).toLocaleString('ja-JP');
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
   animateGoalRings(); // v5.32
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
