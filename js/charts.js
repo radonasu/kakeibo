@@ -692,6 +692,89 @@ function renderYoYChart(canvasId, year) {
 }
 
 // ─── 純資産推移折れ線グラフ（資産管理ページ用）───────────────
+// ─── 曜日別支出パターン分析 (v5.66) ─────────────────────────
+function renderDayOfWeekChart(canvasId, transactions) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const DOW_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
+  const DOW_COLORS = [
+    'rgba(239,68,68,0.80)',    // 日: red
+    'rgba(99,102,241,0.80)',   // 月: indigo
+    'rgba(99,102,241,0.80)',   // 火
+    'rgba(99,102,241,0.80)',   // 水
+    'rgba(99,102,241,0.80)',   // 木
+    'rgba(99,102,241,0.80)',   // 金
+    'rgba(8,145,178,0.80)',    // 土: cyan
+  ];
+  const DOW_BORDERS = [
+    '#ef4444', '#6366f1', '#6366f1', '#6366f1', '#6366f1', '#6366f1', '#0891b2',
+  ];
+
+  const dowTotals   = new Array(7).fill(0);
+  const dowCounts   = new Array(7).fill(0);
+  const dowDateSets = Array.from({ length: 7 }, () => new Set());
+
+  transactions.filter(t => t.type === 'expense' && t.date).forEach(t => {
+    const dow = new Date(t.date + 'T00:00:00').getDay();
+    dowTotals[dow]  += Number(t.amount) || 0;
+    dowCounts[dow]++;
+    dowDateSets[dow].add(t.date);
+  });
+
+  const dowAvgs = dowTotals.map((total, i) => {
+    const days = dowDateSets[i].size;
+    return days > 0 ? Math.round(total / days) : 0;
+  });
+
+  const { text, grid } = getThemeColors();
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: DOW_LABELS,
+      datasets: [{
+        label: '平均支出（円）',
+        data: dowAvgs,
+        backgroundColor: DOW_COLORS,
+        borderColor: DOW_BORDERS,
+        borderWidth: 1.5,
+        borderRadius: 7,
+        borderSkipped: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { ...commonAnimation, duration: 700 },
+      plugins: {
+        legend: { display: false },
+        tooltip: commonTooltip({
+          title: ctx => ctx[0].label + '曜日の平均支出',
+          label: ctx => ` ${formatMoney(ctx.raw)} / 取引日`,
+        }),
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: text, font: { size: 13, weight: '600' } },
+          border: { display: false },
+        },
+        y: {
+          grid: { color: grid },
+          ticks: {
+            color: text,
+            font: { size: 11 },
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { display: false },
+        },
+      },
+    },
+  });
+}
+
 function renderNetWorthChart(canvasId) {
   destroyChart(canvasId);
   const canvas = document.getElementById(canvasId);

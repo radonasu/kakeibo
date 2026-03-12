@@ -2000,6 +2000,7 @@ function renderReports() {
   <button class="section-tab" data-target="sec-payment"><span class="tab-icon">💳</span> 支払方法</button>
   ${appData.members && appData.members.length > 0 ? '<button class="section-tab" data-target="sec-member"><span class="tab-icon">👥</span> メンバー</button>' : ''}
   <button class="section-tab" data-target="sec-yoy"><span class="tab-icon">📅</span> 前年比較</button>
+  <button class="section-tab" data-target="sec-dow"><span class="tab-icon">📆</span> 曜日別</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -2184,7 +2185,80 @@ ${(appData.members && appData.members.length > 0) ? `
       </tfoot>
     </table>
   </div>
+</div>
+
+${(() => {
+  // ── 曜日別支出分析 (v5.66) ──────────────────────────────────
+  const DOW_LABELS  = ['日','月','火','水','木','金','土'];
+  const DOW_COLORS_HEX = ['#ef4444','#6366f1','#6366f1','#6366f1','#6366f1','#6366f1','#0891b2'];
+  const dowTotals   = new Array(7).fill(0);
+  const dowCounts   = new Array(7).fill(0);
+  const dowDateSets = Array.from({ length: 7 }, () => new Set());
+
+  allTxs.filter(t => t.type === 'expense' && t.date).forEach(t => {
+    const dow = new Date(t.date + 'T00:00:00').getDay();
+    dowTotals[dow]  += Number(t.amount) || 0;
+    dowCounts[dow]++;
+    dowDateSets[dow].add(t.date);
+  });
+
+  const dowAvgs = dowTotals.map((total, i) => {
+    const days = dowDateSets[i].size;
+    return days > 0 ? Math.round(total / days) : 0;
+  });
+
+  const validDows = DOW_LABELS.map((_, i) => ({ i, avg: dowAvgs[i], total: dowTotals[i], count: dowCounts[i] }))
+                               .filter(d => d.count > 0);
+  const maxDow = validDows.length ? validDows.reduce((a, b) => a.avg >= b.avg ? a : b) : null;
+  const minDow = validDows.length > 1 ? validDows.reduce((a, b) => a.avg <= b.avg ? a : b) : null;
+  const totalDowExpense = dowTotals.reduce((s, v) => s + v, 0);
+
+  const summaryCards = [maxDow, minDow].filter(Boolean).map((d, idx) => `
+    <div class="dow-stat-card ${idx === 0 ? 'dow-stat-max' : 'dow-stat-min'}">
+      <div class="dow-stat-icon" aria-hidden="true">${idx === 0 ? '📈' : '📉'}</div>
+      <div class="dow-stat-info">
+        <div class="dow-stat-day" style="color:${DOW_COLORS_HEX[d.i]}">${DOW_LABELS[d.i]}曜日</div>
+        <div class="dow-stat-label">${idx === 0 ? '最多支出' : '最少支出'}</div>
+        <div class="dow-stat-amount">${formatMoney(d.avg)}<span class="dow-stat-unit">/取引日</span></div>
+      </div>
+    </div>`).join('');
+
+  const tableRows = DOW_LABELS.map((label, i) => {
+    if (!dowCounts[i]) return '';
+    const pct = totalDowExpense > 0 ? Math.round(dowTotals[i] / totalDowExpense * 100) : 0;
+    const isMax = maxDow && i === maxDow.i;
+    return `<tr>
+      <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]};font-weight:600">${label}曜日</span></td>
+      <td class="text-muted">${dowCounts[i]}件 / ${dowDateSets[i].size}日</td>
+      <td class="expense">${formatMoney(dowTotals[i])}<span class="dow-pct-badge">${pct}%</span></td>
+      <td class="${isMax ? 'expense' : ''}" style="${isMax ? 'font-weight:600' : ''}">${formatMoney(dowAvgs[i])}</td>
+    </tr>`;
+  }).join('');
+
+  const emptyContent = `<div class="empty" style="padding:var(--sp-6) 0">${year}年の支出データがありません</div>`;
+
+  return `<div id="sec-dow" class="card">
+  <h3 class="card-title">📆 曜日別支出パターン（${year}年）</h3>
+  ${validDows.length === 0 ? emptyContent : `
+  <div class="dow-stat-row">${summaryCards}</div>
+  <div class="chart-wrap" style="height:220px;margin:var(--sp-4) 0 var(--sp-2)">
+    <canvas id="report-dow"></canvas>
+  </div>
+  <div class="table-wrap">
+    <table class="tx-table">
+      <thead>
+        <tr>
+          <th>曜日</th>
+          <th>件数 / 取引日数</th>
+          <th>合計支出</th>
+          <th>平均支出/日</th>
+        </tr>
+      </thead>
+      <tbody>${tableRows}</tbody>
+    </table>
+  </div>`}
 </div>`;
+})()}`;
 }
 
 function bindReports() {
@@ -2211,6 +2285,7 @@ function bindReports() {
     renderPaymentMethodChart('report-payment-donut', allTxs);
     renderMemberExpenseChart('report-member-bar', allTxs);
     renderYoYChart('report-yoy', year);
+    renderDayOfWeekChart('report-dow', allTxs);
   }, 50);
 
   // セクションタブナビ (v5.28)

@@ -6571,3 +6571,61 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .ch-progress-label { display: none; }
   .ch-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: 10px; }
 }
+
+/* ============================================================
+   曜日別支出パターン分析 (v5.66)
+   ============================================================ */
+.dow-stat-row {
+  display: flex;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.dow-stat-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex: 1;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: box-shadow 0.2s;
+}
+.dow-stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.dow-stat-max { border-left: 4px solid #ef4444; }
+.dow-stat-min { border-left: 4px solid #10b981; }
+.dow-stat-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
+.dow-stat-info { display: flex; flex-direction: column; gap: 2px; }
+.dow-stat-day  { font-size: var(--fs-lg); font-weight: 700; }
+.dow-stat-label { font-size: var(--fs-xs); color: var(--text-muted); }
+.dow-stat-amount {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text);
+}
+.dow-stat-unit {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+.dow-label-cell { letter-spacing: 0.02em; }
+.dow-pct-badge {
+  display: inline-block;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  background: var(--surface-hover);
+  border-radius: 10px;
+  padding: 1px 6px;
+  margin-left: var(--sp-1);
+  vertical-align: middle;
+}
+
+/* -- ダークモード -- */
+[data-theme="dark"] .dow-stat-card { background: var(--surface); }
+
+/* -- モバイル対応 -- */
+@media (max-width: 560px) {
+  .dow-stat-row { flex-direction: column; }
+  .dow-stat-amount { font-size: var(--fs-lg); }
+}
