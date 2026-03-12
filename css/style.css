@@ -4997,3 +4997,275 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .hs-grade-badge { font-size: 18px; width: 40px; height: 40px; }
   .hs-main { gap: var(--sp-3); }
 }
+
+/* ============================================================
+   ほしいものリスト (v5.51)
+   ============================================================ */
+
+/* サマリー行 */
+.wl-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.wl-summary-card {
+  text-align: center;
+  padding: var(--sp-4);
+}
+.wl-summary-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: .04em;
+  margin-bottom: var(--sp-2);
+}
+.wl-summary-value {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--primary);
+}
+.wl-summary-unit {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+/* カード一覧 */
+.wl-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+.wl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 14px);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both;
+  animation-delay: calc(var(--wl-i, 0) * 60ms);
+}
+@keyframes wl-card-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.wl-card-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-hover);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.wl-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.wl-card-name {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wl-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
+  flex-wrap: wrap;
+}
+.wl-card-note {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+.wl-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+.wl-card-price {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+.wl-card-actions {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+/* 優先度バッジ */
+.wl-priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+}
+.wl-pri-high {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border);
+}
+.wl-pri-medium {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning-border);
+}
+.wl-pri-low {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+/* 空状態 */
+.wl-empty {
+  text-align: center;
+  padding: var(--sp-12) var(--sp-5);
+  color: var(--text-muted);
+}
+.wl-empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: var(--sp-3);
+}
+.wl-empty p {
+  font-size: var(--fs-md);
+  margin-bottom: var(--sp-2);
+}
+.wl-empty-sub {
+  font-size: var(--fs-sm) !important;
+  color: var(--text-faint, var(--text-muted));
+}
+
+/* アーカイブ（購入済み） */
+.wl-archive-wrap {
+  margin-top: var(--sp-4);
+}
+.wl-archive-summary {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 14px);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.wl-archive-summary::-webkit-details-marker { display: none; }
+.wl-archive-list {
+  margin-top: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.wl-archive-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  opacity: 0.65;
+}
+.wl-archive-emoji { font-size: 18px; flex-shrink: 0; }
+.wl-archive-name  { flex: 1; font-size: var(--fs-sm); color: var(--text-muted); text-decoration: line-through; }
+.wl-archive-date  { font-size: var(--fs-xs); color: var(--text-muted); }
+.wl-archive-price { font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
+.wl-archive-del   { flex-shrink: 0; }
+
+/* ダッシュボードウィジェット */
+.wish-widget-card {}
+.wish-widget-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+.wish-widget-total-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.wish-widget-total-amount {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--primary);
+}
+.wish-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.wish-widget-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.wish-widget-icon {
+  font-size: 22px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-hover);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.wish-widget-info {
+  flex: 1;
+  min-width: 0;
+}
+.wish-widget-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wish-widget-price {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+/* モバイル */
+@media (max-width: 520px) {
+  .wl-summary-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-2);
+  }
+  .wl-summary-card { padding: var(--sp-3); }
+  .wl-card { padding: var(--sp-3); gap: var(--sp-3); }
+  .wl-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: 10px; }
+  .wl-card-price { font-size: var(--fs-md); }
+  .wl-card-actions { gap: var(--sp-1); }
+  .wl-card-actions .btn-sm { padding: 4px 8px; font-size: var(--fs-xs); }
+}

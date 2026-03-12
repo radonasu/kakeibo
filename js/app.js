@@ -125,6 +125,7 @@ function renderCurrentPage() {
     case 'calendar':       main.innerHTML = renderCalendar(); bindCalendar(); break;  // v5.38
     case 'subscriptions':  main.innerHTML = renderSubscriptions(); bindSubscriptions(); break;  // v5.43
     case 'points':         main.innerHTML = renderPoints(); bindPoints(); break;                 // v5.47
+    case 'wishlist':       main.innerHTML = renderWishlist(); bindWishlist(); break;             // v5.51
   }
 }
 
@@ -593,6 +594,38 @@ function renderDashboard() {
   </div>`}
 </div>` : '';
 
+  // ほしいものリストウィジェット（v5.51）
+  const wishItems = getWishlistItems(false).sort((a, b) => {
+    const p = { high: 0, medium: 1, low: 2 };
+    return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
+  });
+  const wishTotal = wishItems.reduce((s, w) => s + (Number(w.price) || 0), 0);
+  const wishSection = wishItems.length > 0 ? `
+<div class="card wish-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">🛍️ ほしいものリスト</h3>
+    <button class="btn-link" onclick="navigate('wishlist')">すべて見る →</button>
+  </div>
+  <div class="wish-widget-header">
+    <div class="wish-widget-total-label">合計予算</div>
+    <div class="wish-widget-total-amount js-countup" data-value="${wishTotal}">${formatMoney(wishTotal)}</div>
+  </div>
+  <div class="wish-widget-list">
+    ${wishItems.slice(0, 3).map(w => {
+      const priLabel = { high: '高', medium: '中', low: '低' }[w.priority] || '中';
+      const priCls   = { high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[w.priority] || 'wl-pri-medium';
+      return `<div class="wish-widget-item">
+        <div class="wish-widget-icon">${w.emoji || '🛍️'}</div>
+        <div class="wish-widget-info">
+          <div class="wish-widget-name">${esc2(w.name)}</div>
+          <span class="wl-priority-badge ${priCls}">${priLabel}</span>
+        </div>
+        <div class="wish-widget-price">${formatMoney(w.price || 0)}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>` : '';
+
   // 家計スコアカード（v5.49）
   const healthScoreSection = renderHealthScoreCard(appState.month);
 
@@ -683,6 +716,8 @@ ${healthScoreSection}
 ${insightSection}
 
 ${pointSection}
+
+${wishSection}
 
 ${subSection}
 
@@ -5212,6 +5247,217 @@ function bindPoints() {
       showToast('削除しました');
       renderCurrentPage();
     }
+  });
+}
+
+// ============================================================
+// ほしいものリスト (v5.51)
+// ============================================================
+const WL_EMOJIS = ['🛍️','💻','📱','🎮','👗','👟','🎸','📚','🚲','✈️','🏠','🍳','🎁','💎','🛋️','📷'];
+const WL_COLORS = ['#6366f1','#ec4899','#f97316','#eab308','#10b981','#06b6d4','#3b82f6','#8b5cf6','#f43f5e','#14b8a6','#84cc16','#64748b'];
+
+function renderWishlist() {
+  const items   = getWishlistItems(false);
+  const done    = getWishlistItems(true).filter(w => w.purchased);
+  const priSort = { high: 0, medium: 1, low: 2 };
+  const sorted  = [...items].sort((a, b) => (priSort[a.priority] ?? 1) - (priSort[b.priority] ?? 1));
+  const total   = items.reduce((s, w) => s + (Number(w.price) || 0), 0);
+
+  const priLabel = p => ({ high: '優先度：高', medium: '優先度：中', low: '優先度：低' }[p] || '優先度：中');
+  const priCls   = p => ({ high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[p] || 'wl-pri-medium');
+
+  const cards = sorted.length > 0 ? sorted.map((w, i) =>
+    `<div class="wl-card" style="--wl-i:${i}" data-id="${w.id}">
+      <div class="wl-card-icon">${w.emoji || '🛍️'}</div>
+      <div class="wl-card-body">
+        <div class="wl-card-name">${esc2(w.name)}</div>
+        <div class="wl-card-meta">
+          <span class="wl-priority-badge ${priCls(w.priority)}">${priLabel(w.priority)}</span>
+          ${w.notes ? `<span class="wl-card-note">${esc2(w.notes)}</span>` : ''}
+        </div>
+      </div>
+      <div class="wl-card-right">
+        <div class="wl-card-price">${formatMoney(w.price || 0)}</div>
+        <div class="wl-card-actions">
+          <button class="btn btn-sm btn-primary wl-buy-btn" data-id="${w.id}" title="購入済みにして取引追加">✓ 購入</button>
+          <button class="btn btn-sm btn-ghost wl-edit-btn" data-id="${w.id}">✏️</button>
+          <button class="btn btn-sm btn-danger wl-delete-btn" data-id="${w.id}">🗑</button>
+        </div>
+      </div>
+    </div>`
+  ).join('') : `<div class="wl-empty"><span class="wl-empty-icon">🛍️</span><p>ほしいものはまだありません</p><p class="wl-empty-sub">「＋ 追加」ボタンから登録しましょう</p></div>`;
+
+  const archiveHtml = done.length > 0 ? `
+<details class="wl-archive-wrap">
+  <summary class="wl-archive-summary">✅ 購入済み（${done.length}件）</summary>
+  <div class="wl-archive-list">
+    ${done.map(w => `<div class="wl-archive-item">
+      <span class="wl-archive-emoji">${w.emoji || '🛍️'}</span>
+      <span class="wl-archive-name">${esc2(w.name)}</span>
+      <span class="wl-archive-date">${w.purchasedDate || ''}</span>
+      <span class="wl-archive-price">${formatMoney(w.price || 0)}</span>
+      <button class="btn btn-sm btn-danger wl-delete-btn wl-archive-del" data-id="${w.id}">🗑</button>
+    </div>`).join('')}
+  </div>
+</details>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">🛍️ ほしいものリスト</h1>
+  <button class="btn btn-primary" id="wl-add-btn">＋ 追加</button>
+</div>
+
+<div class="wl-summary-row">
+  <div class="card wl-summary-card">
+    <div class="wl-summary-label">リスト件数</div>
+    <div class="wl-summary-value">${items.length}<span class="wl-summary-unit">件</span></div>
+  </div>
+  <div class="card wl-summary-card">
+    <div class="wl-summary-label">合計予算</div>
+    <div class="wl-summary-value js-countup" data-value="${total}">${formatMoney(total)}</div>
+  </div>
+  <div class="card wl-summary-card">
+    <div class="wl-summary-label">購入済み</div>
+    <div class="wl-summary-value">${done.length}<span class="wl-summary-unit">件</span></div>
+  </div>
+</div>
+
+<div class="wl-cards-list">${cards}</div>
+${archiveHtml}`;
+}
+
+function bindWishlist() {
+  document.querySelectorAll('.js-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
+
+  on('wl-add-btn', 'click', () => openWishlistModal(null));
+
+  const list = document.querySelector('.wl-cards-list');
+  if (list) {
+    list.addEventListener('click', e => {
+      const buyBtn  = e.target.closest('.wl-buy-btn');
+      const editBtn = e.target.closest('.wl-edit-btn');
+      const delBtn  = e.target.closest('.wl-delete-btn');
+      if (buyBtn) {
+        const id = buyBtn.dataset.id;
+        const item = (appData.wishlist || []).find(w => w.id === id);
+        if (!item) return;
+        if (!confirm(`「${item.name}」を購入済みにして取引（${formatMoney(item.price || 0)}）を追加しますか？`)) return;
+        markWishlistPurchased(id);
+        showToast('購入済みにして取引を追加しました', 'success');
+        renderCurrentPage();
+      }
+      if (editBtn) openWishlistModal(editBtn.dataset.id);
+      if (delBtn) {
+        if (!confirm('削除しますか？')) return;
+        deleteWishlistItem(delBtn.dataset.id);
+        showToast('削除しました');
+        renderCurrentPage();
+      }
+    });
+  }
+
+  // 購入済みアーカイブの削除
+  const archive = document.querySelector('.wl-archive-list');
+  if (archive) {
+    archive.addEventListener('click', e => {
+      const delBtn = e.target.closest('.wl-archive-del');
+      if (delBtn) {
+        if (!confirm('削除しますか？')) return;
+        deleteWishlistItem(delBtn.dataset.id);
+        showToast('削除しました');
+        renderCurrentPage();
+      }
+    });
+  }
+}
+
+function openWishlistModal(editId) {
+  const item = editId ? (appData.wishlist || []).find(w => w.id === editId) : null;
+  let overlay = document.getElementById('wl-modal');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'wl-modal';
+    overlay.className = 'modal-overlay';
+    overlay.style.display = 'none';
+    document.body.appendChild(overlay);
+  }
+
+  const emojiOpts = WL_EMOJIS.map(e =>
+    `<option value="${e}" ${item && item.emoji === e ? 'selected' : ''}>${e}</option>`
+  ).join('');
+  const colorOpts = WL_COLORS.map(c =>
+    `<option value="${c}" ${item && item.color === c ? 'selected' : ''}>${c}</option>`
+  ).join('');
+  const catOpts = appData.categories.filter(c => c.type === 'expense').map(c =>
+    `<option value="${c.id}" ${item && item.categoryId === c.id ? 'selected' : ''}>${c.name}</option>`
+  ).join('');
+
+  overlay.innerHTML = `
+    <div class="modal wl-modal">
+      <div class="modal-header">
+        <h2>${item ? 'ほしいものを編集' : 'ほしいものを追加'}</h2>
+        <button class="modal-close" id="wl-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">絵文字</label>
+          <select class="form-input" id="wl-emoji">${emojiOpts}</select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">名前 <span class="required">*</span></label>
+          <input class="form-input" id="wl-name" type="text" placeholder="例: MacBook Pro" value="${item ? esc2(item.name) : ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">価格（円）</label>
+          <input class="form-input" id="wl-price" type="number" min="0" placeholder="0" value="${item ? (item.price || 0) : ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">優先度</label>
+          <select class="form-input" id="wl-priority">
+            <option value="high"   ${item && item.priority === 'high'   ? 'selected' : ''}>🔴 高</option>
+            <option value="medium" ${!item || item.priority === 'medium' ? 'selected' : ''}>🟡 中</option>
+            <option value="low"    ${item && item.priority === 'low'    ? 'selected' : ''}>🟢 低</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">カテゴリ（購入時の取引に使用）</label>
+          <select class="form-input" id="wl-category">
+            <option value="">選択しない</option>
+            ${catOpts}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">メモ</label>
+          <input class="form-input" id="wl-notes" type="text" placeholder="備考" value="${item ? esc2(item.notes || '') : ''}">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="wl-modal-cancel">キャンセル</button>
+        <button class="btn btn-primary" id="wl-modal-save">${item ? '更新' : '追加'}</button>
+      </div>
+    </div>`;
+
+  showModal(overlay);
+
+  document.getElementById('wl-modal-close').addEventListener('click', () => hideModal(overlay));
+  document.getElementById('wl-modal-cancel').addEventListener('click', () => hideModal(overlay));
+  overlay.addEventListener('click', e => { if (e.target === overlay) hideModal(overlay); });
+
+  document.getElementById('wl-modal-save').addEventListener('click', () => {
+    const name = document.getElementById('wl-name').value.trim();
+    if (!name) { showToast('名前を入力してください', 'warning'); return; }
+    const fields = {
+      name,
+      emoji:      document.getElementById('wl-emoji').value || '🛍️',
+      price:      parseInt(document.getElementById('wl-price').value) || 0,
+      priority:   document.getElementById('wl-priority').value || 'medium',
+      categoryId: document.getElementById('wl-category').value || '',
+      notes:      document.getElementById('wl-notes').value.trim(),
+    };
+    if (editId) { updateWishlistItem(editId, fields); showToast('更新しました', 'success'); }
+    else        { addWishlistItem(fields); showToast('追加しました', 'success'); }
+    hideModal(overlay);
+    renderCurrentPage();
   });
 }
 

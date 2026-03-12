@@ -234,6 +234,7 @@ function loadData() {
     if (!data.goals)          data.goals = [];
     if (!data.subscriptions)  data.subscriptions = [];
     if (!data.points)         data.points = [];       // ポイント残高（v5.47）
+    if (!data.wishlist)       data.wishlist = [];     // ほしいものリスト（v5.51）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
@@ -255,6 +256,7 @@ function createDefaultData() {
     goals: [],          // 貯蓄目標（v5.31）
     subscriptions: [],  // サブスクリプション（v5.43）
     points: [],         // ポイント残高（v5.47）
+    wishlist: [],       // ほしいものリスト（v5.51）
   };
 }
 
@@ -633,6 +635,50 @@ function getLast12Months() {
     result.push(dd.getFullYear() + '-' + String(dd.getMonth() + 1).padStart(2, '0'));
   }
   return result;
+}
+
+// ── ほしいものリスト CRUD (v5.51) ─────────────────────────
+function getWishlistItems(includePurchased = false) {
+  const list = appData.wishlist || [];
+  return includePurchased ? list : list.filter(w => !w.purchased);
+}
+
+function addWishlistItem(fields) {
+  const item = { ...fields, id: 'wl_' + genId(), addedDate: todayStr(), purchased: false, purchasedDate: null, purchasedTxId: null };
+  if (!appData.wishlist) appData.wishlist = [];
+  appData.wishlist.push(item);
+  saveData();
+  return item;
+}
+
+function updateWishlistItem(id, fields) {
+  const idx = (appData.wishlist || []).findIndex(w => w.id === id);
+  if (idx >= 0) {
+    appData.wishlist[idx] = { ...appData.wishlist[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteWishlistItem(id) {
+  appData.wishlist = (appData.wishlist || []).filter(w => w.id !== id);
+  saveData();
+}
+
+function markWishlistPurchased(id) {
+  const item = (appData.wishlist || []).find(w => w.id === id);
+  if (!item || item.purchased) return null;
+  const tx = addTransaction({
+    date: todayStr(),
+    type: 'expense',
+    categoryId: item.categoryId || '',
+    memberId: appData.settings.defaultMemberId || '',
+    paymentMethod: '現金',
+    amount: item.price || 0,
+    taxRate: 0,
+    memo: item.name,
+  });
+  updateWishlistItem(id, { purchased: true, purchasedDate: today(), purchasedTxId: tx.id });
+  return tx;
 }
 
 // ── 初期化（必ず最後に実行）────────────────────────────────
