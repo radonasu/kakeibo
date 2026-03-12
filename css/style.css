@@ -4547,3 +4547,257 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 @media (max-width: 768px) {
   #settings-tabs { top: 56px; }
 }
+
+/* ============================================================
+   ポイント残高管理 (v5.47)
+   ============================================================ */
+
+/* サマリーカード */
+.pt-summary-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.pt-summary-card {
+  padding: var(--sp-4);
+  border-radius: var(--radius-btn);
+  position: relative;
+  overflow: hidden;
+}
+.pt-total {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border-color: transparent;
+}
+.pt-expiring {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  border-color: transparent;
+}
+.pt-summary-label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: .04em;
+  margin-bottom: var(--sp-1);
+}
+.pt-summary-amount {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+.pt-summary-unit {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.pt-summary-sub {
+  font-size: var(--fs-2xs);
+  color: rgba(255,255,255,0.65);
+  margin-top: 4px;
+}
+/* デコレーションサークル */
+.pt-summary-card::before {
+  content: '';
+  position: absolute;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  bottom: -20px; right: -20px;
+}
+.pt-summary-card::after {
+  content: '';
+  position: absolute;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  bottom: 14px; right: 36px;
+}
+
+/* カードリスト */
+.pt-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+/* ポイントカード */
+@keyframes pt-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.pt-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  padding: var(--sp-3) var(--sp-4);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.15s, transform 0.15s;
+  box-shadow: var(--shadow-btn-base);
+  animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both;
+}
+.pt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+.pt-card.pt-urgent { border-left: 3px solid #ef4444; }
+.pt-card.pt-soon   { border-left: 3px solid #f59e0b; }
+
+.pt-card-color-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+.pt-card.pt-urgent .pt-card-color-bar,
+.pt-card.pt-soon   .pt-card-color-bar { display: none; }
+
+.pt-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-left: var(--sp-1);
+}
+.pt-card-body { flex: 1; min-width: 0; }
+.pt-card-name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pt-card-meta {
+  display: flex; gap: var(--sp-2); align-items: center;
+  margin-top: 2px; flex-wrap: wrap;
+}
+.pt-exp-badge {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  background: var(--surface-hover);
+  padding: 2px 7px;
+  border-radius: var(--radius-badge);
+}
+.pt-urgent-badge {
+  background: rgba(239,68,68,.12);
+  color: #dc2626;
+  font-weight: 600;
+}
+.pt-soon-badge {
+  background: rgba(245,158,11,.12);
+  color: #b45309;
+  font-weight: 600;
+}
+.pt-exp-expired {
+  background: rgba(100,116,139,.15);
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.pt-note {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.pt-card-right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0;
+}
+.pt-card-balance {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+.pt-unit {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+.pt-card-yen {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.pt-card-actions {
+  display: flex; gap: var(--sp-1); margin-top: var(--sp-1);
+}
+
+/* 空状態 */
+.pt-empty {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-4);
+  color: var(--text-muted);
+}
+.pt-empty-icon { font-size: 40px; display: block; margin-bottom: var(--sp-3); }
+.pt-empty p { margin-bottom: var(--sp-4); }
+
+/* 絵文字・カラーグリッド（サブスクと同デザイン） */
+.pt-emoji-grid {
+  display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1);
+}
+.pt-emoji-btn {
+  width: 34px; height: 34px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--surface-hover);
+  font-size: 18px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.pt-emoji-btn.is-active { border-color: var(--primary); background: var(--primary)1a; }
+.pt-color-grid {
+  display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1);
+}
+.pt-color-btn {
+  width: 26px; height: 26px;
+  border: 2.5px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .15s, border-color .15s;
+}
+.pt-color-btn.is-active { border-color: var(--text); transform: scale(1.18); }
+
+/* ダッシュボードウィジェット */
+.pt-widget-card { }
+.pt-widget-header {
+  display: flex; align-items: baseline; gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.pt-widget-total-label { font-size: var(--fs-xs); color: var(--text-muted); }
+.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: 700; color: var(--text); }
+.pt-widget-expiry-header {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: #b45309;
+  margin-bottom: var(--sp-2);
+}
+[data-theme="dark"] .pt-widget-expiry-header { color: #fbbf24; }
+.pt-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
+.pt-widget-item {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 10px;
+  background: var(--surface-hover);
+}
+.pt-widget-item.pt-urgent { background: rgba(239,68,68,.08); }
+.pt-widget-item.pt-soon   { background: rgba(245,158,11,.08); }
+.pt-widget-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.pt-widget-info { flex: 1; min-width: 0; }
+.pt-widget-name {
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pt-widget-exp  { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; }
+.pt-widget-balance {
+  font-size: var(--fs-sm); font-weight: 700; color: var(--text); flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .pt-summary-row { grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+  .pt-summary-amount { font-size: var(--fs-xl); }
+  .pt-card-balance { font-size: var(--fs-base); }
+}

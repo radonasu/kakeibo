@@ -233,6 +233,7 @@ function loadData() {
     if (!data.assets)         data.assets = [];
     if (!data.goals)          data.goals = [];
     if (!data.subscriptions)  data.subscriptions = [];
+    if (!data.points)         data.points = [];       // ポイント残高（v5.47）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
@@ -253,6 +254,7 @@ function createDefaultData() {
     assets: [],         // 資産口座（貯蓄・投資）
     goals: [],          // 貯蓄目標（v5.31）
     subscriptions: [],  // サブスクリプション（v5.43）
+    points: [],         // ポイント残高（v5.47）
   };
 }
 
@@ -470,6 +472,61 @@ function deleteGoal(id) {
   if (!appData.goals) { appData.goals = []; return; }
   appData.goals = appData.goals.filter(g => g.id !== id);
   saveData();
+}
+
+// ── ポイント残高管理 CRUD（v5.47）──────────────────────────
+const POINT_EMOJIS = ['🎫','🛒','🚃','💳','🏪','☕','🎮','📱','🛍️','✈️','🏥','⛽','🎬','🍔','🎯','🌸'];
+const POINT_COLORS = ['#e50914','#0073e6','#1db954','#f97316','#8b5cf6','#ec4899','#06b6d4','#10b981','#f59e0b','#6366f1','#64748b','#ef4444'];
+const POINT_PRESETS = [
+  { name: '楽天ポイント',    emoji: '🛒', color: '#e50914', pointValue: 1 },
+  { name: 'Tポイント',       emoji: '🏪', color: '#0073e6', pointValue: 1 },
+  { name: 'Pontaポイント',   emoji: '🎫', color: '#ef4444', pointValue: 1 },
+  { name: 'dポイント',       emoji: '📱', color: '#e50914', pointValue: 1 },
+  { name: 'PayPayポイント',  emoji: '💳', color: '#e50914', pointValue: 1 },
+  { name: 'nanacoポイント',  emoji: '🏪', color: '#f59e0b', pointValue: 1 },
+  { name: 'WAONポイント',    emoji: '🐾', color: '#0073e6', pointValue: 1 },
+  { name: 'Suicaポイント',   emoji: '🚃', color: '#10b981', pointValue: 1 },
+];
+
+function getPoints() {
+  if (!appData.points) appData.points = [];
+  return appData.points;
+}
+
+function addPoint(fields) {
+  if (!appData.points) appData.points = [];
+  const p = { ...fields, id: genId(), createdAt: todayStr() };
+  appData.points.push(p);
+  saveData();
+  return p;
+}
+
+function updatePoint(id, fields) {
+  if (!appData.points) appData.points = [];
+  const idx = appData.points.findIndex(p => p.id === id);
+  if (idx >= 0) {
+    appData.points[idx] = { ...appData.points[idx], ...fields };
+    saveData();
+  }
+}
+
+function deletePoint(id) {
+  if (!appData.points) { appData.points = []; return; }
+  appData.points = appData.points.filter(p => p.id !== id);
+  saveData();
+}
+
+// ポイント残高の合計円価値
+function calcTotalPointsValue() {
+  return getPoints().reduce((sum, p) => sum + Math.round((Number(p.balance) || 0) * (Number(p.pointValue) || 1)), 0);
+}
+
+// ポイント期限切れまでの日数
+function pointDaysUntilExpiry(p) {
+  if (!p.expiryDate) return null;
+  const exp = new Date(p.expiryDate);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return Math.round((exp - today) / 86400000);
 }
 
 // ── 資産管理 CRUD ──────────────────────────────────────────

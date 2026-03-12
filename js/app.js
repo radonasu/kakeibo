@@ -124,6 +124,7 @@ function renderCurrentPage() {
     case 'goals':        main.innerHTML = renderGoals(); bindGoals(); break;
     case 'calendar':       main.innerHTML = renderCalendar(); bindCalendar(); break;  // v5.38
     case 'subscriptions':  main.innerHTML = renderSubscriptions(); bindSubscriptions(); break;  // v5.43
+    case 'points':         main.innerHTML = renderPoints(); bindPoints(); break;                 // v5.47
   }
 }
 
@@ -416,6 +417,51 @@ function renderDashboard() {
   </div>
 </div>` : '';
 
+  // ポイントウィジェット（v5.47）
+  const allPoints = getPoints();
+  const totalPointsValue = calcTotalPointsValue();
+  const expiringPoints = allPoints.filter(p => {
+    const d = pointDaysUntilExpiry(p);
+    return d !== null && d <= 30 && (Number(p.balance) || 0) > 0;
+  }).sort((a, b) => pointDaysUntilExpiry(a) - pointDaysUntilExpiry(b));
+  const pointSection = allPoints.length > 0 ? `
+<div class="card pt-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">🎫 ポイント残高</h3>
+    <button class="btn-link" onclick="navigate('points')">すべて見る →</button>
+  </div>
+  <div class="pt-widget-header">
+    <div class="pt-widget-total-label">合計ポイント価値</div>
+    <div class="pt-widget-total-amount js-countup" data-value="${totalPointsValue}">${formatMoney(totalPointsValue)}</div>
+  </div>
+  ${expiringPoints.length > 0 ? `
+  <div class="pt-widget-expiry-header">⚠️ 期限切れ間近</div>
+  <div class="pt-widget-list">
+    ${expiringPoints.slice(0, 3).map(p => {
+      const d = pointDaysUntilExpiry(p);
+      const urgCls = d <= 7 ? 'pt-urgent' : 'pt-soon';
+      return `<div class="pt-widget-item ${urgCls}">
+        <div class="pt-widget-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+        <div class="pt-widget-info">
+          <div class="pt-widget-name">${esc2(p.name)}</div>
+          <div class="pt-widget-exp">${d === 0 ? '今日期限' : `${d}日後に期限`}</div>
+        </div>
+        <div class="pt-widget-balance">${Number(p.balance).toLocaleString('ja-JP')}<span class="pt-unit">pt</span></div>
+      </div>`;
+    }).join('')}
+  </div>` : `
+  <div class="pt-widget-list">
+    ${allPoints.slice(0, 3).map(p => `<div class="pt-widget-item">
+      <div class="pt-widget-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+      <div class="pt-widget-info">
+        <div class="pt-widget-name">${esc2(p.name)}</div>
+        <div class="pt-widget-exp">${formatMoney(Math.round((Number(p.balance)||0)*(Number(p.pointValue)||1)))}</div>
+      </div>
+      <div class="pt-widget-balance">${Number(p.balance).toLocaleString('ja-JP')}<span class="pt-unit">pt</span></div>
+    </div>`).join('')}
+  </div>`}
+</div>` : '';
+
   // インサイトセクション（v5.40）
   const insights = generateInsights(appState.month);
   const insightSection = insights.length > 0 ? `
@@ -499,6 +545,8 @@ function renderDashboard() {
 </div>
 
 ${insightSection}
+
+${pointSection}
 
 ${subSection}
 
@@ -4747,6 +4795,265 @@ function buildCSVPreviewTable(headers, rows) {
         </table>
       </div>
     </div>`;
+}
+
+// ============================================================
+// ポイント残高管理 (v5.47)
+// ============================================================
+function renderPoints() {
+  const pts = getPoints();
+  const totalValue = calcTotalPointsValue();
+  const expiringSoon = pts.filter(p => {
+    const d = pointDaysUntilExpiry(p);
+    return d !== null && d <= 30 && (Number(p.balance) || 0) > 0;
+  });
+
+  function ptCard(p, idx) {
+    const days = pointDaysUntilExpiry(p);
+    const urgCls = days !== null && days <= 7 ? 'pt-urgent' : days !== null && days <= 30 ? 'pt-soon' : '';
+    const yenVal = Math.round((Number(p.balance) || 0) * (Number(p.pointValue) || 1));
+    let expiryHtml = '';
+    if (days !== null) {
+      if (days < 0)      expiryHtml = `<span class="pt-exp-badge pt-exp-expired">期限切れ</span>`;
+      else if (days === 0) expiryHtml = `<span class="pt-exp-badge pt-urgent-badge">今日期限</span>`;
+      else if (days <= 7) expiryHtml = `<span class="pt-exp-badge pt-urgent-badge">🔴 ${days}日後期限</span>`;
+      else if (days <= 30) expiryHtml = `<span class="pt-exp-badge pt-soon-badge">🟡 ${days}日後期限</span>`;
+      else {
+        const d = new Date(p.expiryDate);
+        expiryHtml = `<span class="pt-exp-badge">${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} 期限</span>`;
+      }
+    }
+    return `
+<div class="pt-card ${urgCls}" data-id="${p.id}" style="--pt-i:${idx}">
+  <div class="pt-card-color-bar" style="background:${p.color||'#6366f1'}"></div>
+  <div class="pt-card-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+  <div class="pt-card-body">
+    <div class="pt-card-name">${esc2(p.name)}</div>
+    <div class="pt-card-meta">
+      ${expiryHtml}
+      ${p.note ? `<span class="pt-note">${esc2(p.note)}</span>` : ''}
+    </div>
+  </div>
+  <div class="pt-card-right">
+    <div class="pt-card-balance">${Number(p.balance).toLocaleString('ja-JP')}<span class="pt-unit">pt</span></div>
+    <div class="pt-card-yen">${formatMoney(yenVal)}</div>
+    <div class="pt-card-actions">
+      <button class="btn-icon pt-edit-btn" data-id="${p.id}" title="編集">✏️</button>
+      <button class="btn-icon pt-delete-btn" data-id="${p.id}" title="削除">🗑</button>
+    </div>
+  </div>
+</div>`;
+  }
+
+  const cards = pts.length > 0
+    ? pts.map((p, i) => ptCard(p, i)).join('')
+    : `<div class="pt-empty"><span class="pt-empty-icon">🎫</span><p>ポイントサービスが登録されていません</p><button class="btn btn-primary" id="pt-empty-add-btn">＋ 追加する</button></div>`;
+
+  const presetOptions = POINT_PRESETS.map((ps, i) =>
+    `<option value="${i}">${ps.name}</option>`
+  ).join('');
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">🎫 ポイント残高</h1>
+  <button class="btn btn-primary btn-sm" id="pt-add-btn">＋ 追加</button>
+</div>
+
+<div class="pt-summary-row">
+  <div class="card pt-summary-card pt-total">
+    <div class="pt-summary-label">合計ポイント価値</div>
+    <div class="pt-summary-amount js-countup" data-value="${totalValue}">${formatMoney(totalValue)}</div>
+    <div class="pt-summary-sub">${pts.length}サービス登録中</div>
+  </div>
+  <div class="card pt-summary-card pt-expiring">
+    <div class="pt-summary-label">期限切れ間近</div>
+    <div class="pt-summary-amount">${expiringSoon.length}<span class="pt-summary-unit">サービス</span></div>
+    <div class="pt-summary-sub">30日以内に期限</div>
+  </div>
+</div>
+
+<div class="pt-cards-list">${cards}</div>
+
+<!-- ポイント追加/編集モーダル -->
+<div class="modal-overlay" id="pt-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="pt-modal-title">ポイントを追加</h2>
+      <button class="modal-close" id="pt-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>プリセットから選択</label>
+        <select id="pt-preset" class="form-input">
+          <option value="">— カスタム —</option>
+          ${presetOptions}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>サービス名 <span class="required">*</span></label>
+        <input type="text" id="pt-name" class="form-input" placeholder="楽天ポイント など" maxlength="40">
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>絵文字アイコン</label>
+          <div class="pt-emoji-grid" id="pt-emoji-grid">
+            ${POINT_EMOJIS.map(e => `<button class="pt-emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+          </div>
+          <input type="hidden" id="pt-emoji" value="🎫">
+        </div>
+        <div class="form-group">
+          <label>カラー</label>
+          <div class="pt-color-grid" id="pt-color-grid">
+            ${POINT_COLORS.map(c => `<button class="pt-color-btn" data-color="${c}" style="background:${c}" title="${c}"></button>`).join('')}
+          </div>
+          <input type="hidden" id="pt-color" value="#6366f1">
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>現在の残高（pt） <span class="required">*</span></label>
+          <input type="number" id="pt-balance" class="form-input" placeholder="5000" min="0">
+        </div>
+        <div class="form-group">
+          <label>1pt = 何円</label>
+          <input type="number" id="pt-value" class="form-input" placeholder="1" min="0.001" step="0.001" value="1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>有効期限（任意）</label>
+        <input type="date" id="pt-expiry" class="form-input">
+      </div>
+      <div class="form-group">
+        <label>メモ</label>
+        <input type="text" id="pt-note" class="form-input" placeholder="プレミアム会員 など" maxlength="60">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="pt-modal-cancel">キャンセル</button>
+        <button class="btn btn-primary" id="pt-modal-save">保存</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+function bindPoints() {
+  document.querySelectorAll('.js-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
+  });
+
+  let editingId = null;
+
+  const modal = document.getElementById('pt-modal');
+  const nameEl  = () => document.getElementById('pt-name');
+  const emojiEl = () => document.getElementById('pt-emoji');
+  const colorEl = () => document.getElementById('pt-color');
+  const balEl   = () => document.getElementById('pt-balance');
+  const valEl   = () => document.getElementById('pt-value');
+  const expEl   = () => document.getElementById('pt-expiry');
+  const noteEl  = () => document.getElementById('pt-note');
+
+  function showModal(p) {
+    editingId = p ? p.id : null;
+    document.getElementById('pt-modal-title').textContent = p ? 'ポイントを編集' : 'ポイントを追加';
+    nameEl().value  = p ? p.name : '';
+    emojiEl().value = p ? (p.emoji || '🎫') : '🎫';
+    colorEl().value = p ? (p.color || '#6366f1') : '#6366f1';
+    balEl().value   = p ? p.balance : '';
+    valEl().value   = p ? (p.pointValue || 1) : 1;
+    expEl().value   = p ? (p.expiryDate || '') : '';
+    noteEl().value  = p ? (p.note || '') : '';
+    // ボタン状態反映
+    document.querySelectorAll('#pt-emoji-grid .pt-emoji-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.emoji === emojiEl().value);
+    });
+    document.querySelectorAll('#pt-color-grid .pt-color-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.color === colorEl().value);
+    });
+    document.getElementById('pt-preset').value = '';
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('modal-is-open')));
+  }
+
+  function hideModal() {
+    modal.classList.remove('modal-is-open');
+    setTimeout(() => { modal.style.display = 'none'; }, 250);
+  }
+
+  on('pt-add-btn', 'click', () => showModal(null));
+  on('pt-empty-add-btn', 'click', () => showModal(null));
+  on('pt-modal-close', 'click', hideModal);
+  on('pt-modal-cancel', 'click', hideModal);
+  modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+
+  // プリセット選択
+  on('pt-preset', 'change', () => {
+    const idx = parseInt(document.getElementById('pt-preset').value);
+    if (isNaN(idx) || idx < 0 || !POINT_PRESETS[idx]) return;
+    const ps = POINT_PRESETS[idx];
+    nameEl().value  = ps.name;
+    emojiEl().value = ps.emoji;
+    colorEl().value = ps.color;
+    valEl().value   = ps.pointValue || 1;
+    document.querySelectorAll('#pt-emoji-grid .pt-emoji-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.emoji === ps.emoji);
+    });
+    document.querySelectorAll('#pt-color-grid .pt-color-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.color === ps.color);
+    });
+  });
+
+  // 絵文字・カラー選択
+  document.querySelectorAll('#pt-emoji-grid .pt-emoji-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      emojiEl().value = btn.dataset.emoji;
+      document.querySelectorAll('#pt-emoji-grid .pt-emoji-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+  document.querySelectorAll('#pt-color-grid .pt-color-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      colorEl().value = btn.dataset.color;
+      document.querySelectorAll('#pt-color-grid .pt-color-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+
+  // 保存
+  on('pt-modal-save', 'click', () => {
+    const name    = nameEl().value.trim();
+    const balance = parseInt(balEl().value) || 0;
+    if (!name) { showToast('サービス名を入力してください', 'warning'); return; }
+    if (balance < 0) { showToast('残高は0以上を入力してください', 'warning'); return; }
+    const fields = {
+      name,
+      emoji:      emojiEl().value || '🎫',
+      color:      colorEl().value || '#6366f1',
+      balance,
+      pointValue: parseFloat(valEl().value) || 1,
+      expiryDate: expEl().value || null,
+      note:       noteEl().value.trim(),
+    };
+    if (editingId) { updatePoint(editingId, fields); showToast('ポイントを更新しました', 'success'); }
+    else           { addPoint(fields); showToast('ポイントを追加しました', 'success'); }
+    hideModal();
+    renderCurrentPage();
+  });
+
+  // 編集・削除（イベント委譲）
+  document.querySelector('.pt-cards-list').addEventListener('click', e => {
+    const editBtn = e.target.closest('.pt-edit-btn');
+    const delBtn  = e.target.closest('.pt-delete-btn');
+    if (editBtn) {
+      const p = getPoints().find(p => p.id === editBtn.dataset.id);
+      if (p) showModal(p);
+    }
+    if (delBtn) {
+      if (!confirm('このポイントサービスを削除しますか？')) return;
+      deletePoint(delBtn.dataset.id);
+      showToast('削除しました');
+      renderCurrentPage();
+    }
+  });
 }
 
 // ============================================================

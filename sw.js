@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.46'; // v5.46: 設定ページ タブナビゲーション（4タブ構成・パネル切替・localStorage永続化）
+const CACHE_NAME = 'kakeibo-v5.47'; // v5.47: ポイント残高管理（CRUD・プリセット・期限切れ警告・ダッシュボードウィジェット）
 const ASSETS = [
   './index.html',
   './css/style.css',
