@@ -4812,6 +4812,7 @@ function renderPoints() {
     const days = pointDaysUntilExpiry(p);
     const urgCls = days !== null && days <= 7 ? 'pt-urgent' : days !== null && days <= 30 ? 'pt-soon' : '';
     const yenVal = Math.round((Number(p.balance) || 0) * (Number(p.pointValue) || 1));
+    const accent = p.color || '#6366f1';
     let expiryHtml = '';
     if (days !== null) {
       if (days < 0)      expiryHtml = `<span class="pt-exp-badge pt-exp-expired">期限切れ</span>`;
@@ -4823,10 +4824,17 @@ function renderPoints() {
         expiryHtml = `<span class="pt-exp-badge">${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} 期限</span>`;
       }
     }
+    // 有効期限プログレスバー: 残日数を上限90日で可視化 (v5.48)
+    let expBarHtml = '';
+    if (days !== null && days >= 0) {
+      const pct = Math.min(100, Math.round(days / 90 * 100));
+      const progCls = days <= 7 ? 'prog-urgent' : days <= 30 ? 'prog-soon' : 'prog-normal';
+      expBarHtml = `<div class="pt-exp-bar"><div class="pt-exp-bar-fill ${progCls}" style="--pt-progress:${pct}%"></div></div>`;
+    }
     return `
-<div class="pt-card ${urgCls}" data-id="${p.id}" style="--pt-i:${idx}">
-  <div class="pt-card-color-bar" style="background:${p.color||'#6366f1'}"></div>
-  <div class="pt-card-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+<div class="pt-card ${urgCls}" data-id="${p.id}" style="--pt-i:${idx};--pt-accent:${accent}">
+  <div class="pt-card-color-bar" style="background:${accent}"></div>
+  <div class="pt-card-icon" style="background:${accent}22;color:${accent}">${p.emoji||'🎫'}</div>
   <div class="pt-card-body">
     <div class="pt-card-name">${esc2(p.name)}</div>
     <div class="pt-card-meta">
@@ -4842,6 +4850,7 @@ function renderPoints() {
       <button class="btn-icon pt-delete-btn" data-id="${p.id}" title="削除">🗑</button>
     </div>
   </div>
+  ${expBarHtml}
 </div>`;
   }
 

@@ -4627,6 +4627,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
+@keyframes pt-bar-fill {
+  from { width: 0; }
+  to   { width: var(--pt-progress, 0%); }
+}
+@keyframes pt-urgent-glow {
+  0%, 100% { border-left-color: var(--danger-border); }
+  50%       { border-left-color: var(--danger-text); }
+}
 .pt-card {
   display: flex;
   align-items: center;
@@ -4634,7 +4642,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
-  padding: var(--sp-3) var(--sp-4);
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.15s, transform 0.15s;
@@ -4642,8 +4650,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both;
 }
 .pt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
-.pt-card.pt-urgent { border-left: 3px solid #ef4444; }
-.pt-card.pt-soon   { border-left: 3px solid #f59e0b; }
+.pt-card.pt-urgent {
+  border-left: 3px solid var(--danger-border);
+  animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both,
+             pt-urgent-glow 2.4s ease-in-out calc(var(--pt-i, 0) * 55ms + 0.4s) infinite;
+}
+.pt-card.pt-soon   { border-left: 3px solid var(--warning); }
 
 .pt-card-color-bar {
   position: absolute;
@@ -4705,7 +4717,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card-balance {
   font-size: var(--fs-lg);
   font-weight: 700;
-  color: var(--text);
+  color: var(--pt-accent, var(--text));
 }
 .pt-unit {
   font-size: var(--fs-xs);
@@ -4720,6 +4732,22 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card-actions {
   display: flex; gap: var(--sp-1); margin-top: var(--sp-1);
 }
+
+/* 有効期限プログレスバー (v5.48) */
+.pt-exp-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--border);
+}
+.pt-exp-bar-fill {
+  height: 100%;
+  width: var(--pt-progress, 0%);
+  animation: pt-bar-fill 0.7s ease-out calc(var(--pt-i, 0) * 55ms + 0.2s) both;
+}
+.pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: 0.6; }
+.pt-exp-bar-fill.prog-soon   { background: var(--warning); }
+.pt-exp-bar-fill.prog-urgent { background: var(--danger-text); }
 
 /* 空状態 */
 .pt-empty {
