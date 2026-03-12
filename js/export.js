@@ -591,6 +591,101 @@ function isAppCSVFormat(headers) {
   return headers[0] === '日付' && headers[1] === '種別' && headers.length >= 7;
 }
 
+// ============================================================
+// カード会社CSV自動検出 (v5.42)
+// ============================================================
+const CARD_FORMATS = {
+  rakuten: {
+    name: '楽天カード',
+    detect: h => h.some(c => c.includes('利用日')) && h.some(c => c.includes('利用店名')),
+    date:   h => h.findIndex(c => c.includes('利用日')),
+    amount: h => h.findIndex(c => c.includes('利用金額')),
+    memo:   h => h.findIndex(c => c.includes('利用店名')),
+  },
+  smbc: {
+    name: '三井住友カード',
+    detect: h => h.some(c => c.includes('ご利用日')) && h.some(c => c.includes('ご利用先')),
+    date:   h => h.findIndex(c => c.includes('ご利用日')),
+    amount: h => h.findIndex(c => /ご利用金額|利用金額/.test(c)),
+    memo:   h => h.findIndex(c => c.includes('ご利用先')),
+  },
+  amex: {
+    name: 'アメリカン・エキスプレス',
+    detect: h => h.some(c => c === '日付' || c === '利用日付') && h.some(c => c.includes('ご利用先') || c.includes('説明')) && h.some(c => c === '金額' || c.includes('ご利用金額')),
+    date:   h => h.findIndex(c => c === '日付' || c === '利用日付'),
+    amount: h => h.findIndex(c => c === '金額' || c.includes('ご利用金額')),
+    memo:   h => h.findIndex(c => c.includes('ご利用先') || c.includes('説明')),
+  },
+  jcb: {
+    name: 'JCBカード',
+    detect: h => h.some(c => c.includes('利用日')) && h.some(c => c.includes('利用金額')) && h.some(c => /利用店名|利用先/.test(c)),
+    date:   h => h.findIndex(c => c.includes('利用日')),
+    amount: h => h.findIndex(c => c.includes('利用金額')),
+    memo:   h => h.findIndex(c => /利用店名|利用先/.test(c)),
+  },
+  generic_card: {
+    name: 'クレジットカード明細',
+    detect: h => h.some(c => /利用日|ご利用日|取引日/.test(c)) && h.some(c => /金額|利用額/.test(c)),
+    date:   h => h.findIndex(c => /利用日|ご利用日|取引日/.test(c)),
+    amount: h => h.findIndex(c => /利用金額|ご利用金額|金額|利用額/.test(c)),
+    memo:   h => h.findIndex(c => /店名|利用先|ご利用先|摘要|内容/.test(c)),
+  },
+};
+
+function detectCardFormat(headers) {
+  const trimmed = headers.map(h => h.trim());
+  for (const [key, fmt] of Object.entries(CARD_FORMATS)) {
+    if (fmt.detect(trimmed)) {
+      return {
+        key, name: fmt.name,
+        date:   fmt.date(trimmed),
+        amount: fmt.amount(trimmed),
+        memo:   fmt.memo(trimmed),
+      };
+    }
+  }
+  return null;
+}
+
+// カード明細CSVインポート
+function importFromCardCSV(rows, cm) {
+  const data = rows.slice(1);
+  let added = 0, skipped = 0;
+  data.forEach(row => {
+    const dateRaw = (row[cm.date] || '').trim();
+    const amtRaw  = (row[cm.amount] || '').replace(/[¥￥,\s"]/g, '');
+    const memo    = cm.memo >= 0 ? (row[cm.memo] || '').trim() : '';
+
+    const dm = dateRaw.replace(/[^0-9\/\-]/g, '').match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+    if (!dm) { skipped++; return; }
+    const date = `${dm[1]}-${dm[2].padStart(2,'0')}-${dm[3].padStart(2,'0')}`;
+
+    const amtNum = parseInt(amtRaw.replace(/[^0-9\-]/g, '')) || 0;
+    if (amtNum === 0) { skipped++; return; }
+
+    const type   = amtNum < 0 ? 'income' : 'expense';
+    const amount = Math.abs(amtNum);
+
+    const defCat = appData.categories.find(c => c.type === type && c.name.includes('その他'))
+                || appData.categories.find(c => c.type === type);
+
+    const dup = appData.transactions.some(t =>
+      t.date === date && t.amount === amount && t.type === type && (t.memo || '') === memo
+    );
+    if (dup) { skipped++; return; }
+
+    addTransaction({
+      date, type,
+      categoryId:    defCat ? defCat.id : '',
+      memberId:      appData.settings.defaultMemberId || '',
+      paymentMethod: 'クレカ',
+      amount, taxRate: 10, memo,
+    });
+    added++;
+  });
+  return { added, skipped };
+}
+
 // アプリ独自形式からインポート
 function importFromAppCSV(rows) {
   const data = rows.slice(1);

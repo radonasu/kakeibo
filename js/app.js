@@ -3508,22 +3508,28 @@ async function callGeminiVision(base64, mimeType, categoryNames) {
 
   const categoryListStr = (categoryNames || []).join('、');
 
-  const prompt = `この画像/PDFからレシート・領収書の情報を抽出してください。
+  const prompt = `この画像/PDFから購入・支出の情報を抽出してください。
+以下のすべてのタイプに対応してください：
+- 紙のレシート・領収書
+- ネットショッピングの注文確認画面（Amazon、楽天市場、Yahoo!ショッピングなど）
+- クレジットカードアプリの利用明細画面
+- メールの購入確認・領収書
+- 請求書・納品書
 画像が横向き・逆さま・斜めに回転している場合でも、正しく向きを判断して読み取ってください。
-複数のレシートが含まれる場合は、すべてのレシートを個別に抽出してください。
-各レシートについてJSON形式で回答してください。
+複数の購入情報が含まれる場合は、すべてを個別に抽出してください。
+各項目についてJSON形式で回答してください。
 
 [
   {
     "date": "YYYY-MM-DD（日付が読み取れない場合は今日の日付 ${todayStr()}）",
     "amount": 税込み合計金額（数値のみ、カンマなし）,
-    "storeName": "店名または施設名（不明な場合は空文字）",
+    "storeName": "店名・サイト名・サービス名（不明な場合は空文字）",
     "taxRate": 消費税率（10・8・0のいずれか。軽減税率の場合は8）,
     "category": "以下のカテゴリから最も適切なもの1つを選択: ${categoryListStr}"
   }
 ]
 
-必ずJSON配列として回答してください。レシートが1枚でも配列に入れてください。`;
+必ずJSON配列として回答してください。1件でも配列に入れてください。`;
 
   // Gemini API ペイロード
   const payload = {
@@ -5418,17 +5424,20 @@ function openCSVImportModal() {
       <div class="modal-body">
         <div id="csv-step1">
           <p class="hint" style="margin-bottom:var(--sp-4)">
-            家計簿CSVを選択してください。アプリ独自形式（CSVダウンロードで出力したファイル）は自動認識します。
-            銀行明細など他形式も列マッピングで取り込めます。
+            CSVファイルを選択してください。以下の形式を自動認識します。
           </p>
           <div class="csv-format-list">
             <div class="csv-format-item">
               <span class="csv-badge csv-badge-auto">自動</span>
-              <span>アプリ独自形式（日付・種別・カテゴリ・金額・摘要）</span>
+              <span>アプリ独自形式（CSVダウンロードで出力したファイル）</span>
+            </div>
+            <div class="csv-format-item">
+              <span class="csv-badge csv-badge-auto">自動</span>
+              <span>カード明細（楽天・AMEX・JCB・三井住友など）</span>
             </div>
             <div class="csv-format-item">
               <span class="csv-badge csv-badge-manual">手動</span>
-              <span>銀行明細・他の家計簿アプリのCSV（列マッピングを指定）</span>
+              <span>その他（銀行明細・他アプリ等、列マッピング指定）</span>
             </div>
           </div>
           <label class="btn btn-primary csv-file-label" style="margin-top:var(--sp-5);display:inline-flex;align-items:center;gap:6px;cursor:pointer">
@@ -5493,6 +5502,29 @@ function handleCSVFileContent(text, overlay) {
       const res = importFromAppCSV(rows);
       hideModal(overlay);
       showToast(`インポート完了：${res.added}件追加、${res.skipped}件スキップ`, res.added > 0 ? 'success' : 'warning');
+      if (res.added > 0) renderCurrentPage();
+    });
+
+  } else if (typeof detectCardFormat === 'function' && detectCardFormat(headers)) {
+    // --- カード明細形式 ---
+    const card = detectCardFormat(headers);
+    step2.innerHTML = `
+      <div class="csv-detect-row">
+        <span class="csv-badge csv-badge-auto">✓ ${esc2(card.name)}の明細を検出</span>
+        <span class="hint">${total}件のデータが見つかりました</span>
+      </div>
+      <p class="hint" style="margin:var(--sp-2) 0">支払方法「クレカ」・消費税率10%で取り込みます。重複データは自動スキップされます。</p>
+      ${buildCSVPreviewTable(headers, dataRows.slice(0, 5))}
+      <div class="csv-actions">
+        <button class="btn btn-ghost btn-sm" id="csv-back">← 戻る</button>
+        <button class="btn btn-primary" id="csv-exec-card">💳 ${total}件をインポート</button>
+      </div>`;
+
+    document.getElementById('csv-back').addEventListener('click', goBack);
+    document.getElementById('csv-exec-card').addEventListener('click', () => {
+      const res = importFromCardCSV(rows, card);
+      hideModal(overlay);
+      showToast(`${card.name}インポート完了：${res.added}件追加、${res.skipped}件スキップ`, res.added > 0 ? 'success' : 'warning');
       if (res.added > 0) renderCurrentPage();
     });
 
