@@ -442,7 +442,7 @@ function renderHealthScoreCard(ym) {
 }
 
 // ============================================================
-// 今月末収支予測 (v5.57)
+// 今月末収支予測 (v5.57 / v5.58 デザイン強化)
 // ============================================================
 function calculateForecast(ym) {
   const today = new Date();
@@ -457,6 +457,19 @@ function calculateForecast(ym) {
   const txs    = getTransactionsByMonth(ym);
   const income  = calcTotal(txs, 'income');
   const expense = calcTotal(txs, 'expense');
+
+  // 日別累積支出（スパークライン用）
+  const dailyMap = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    const d = parseInt(t.date.slice(8), 10);
+    dailyMap[d] = (dailyMap[d] || 0) + (Number(t.amount) || 0);
+  });
+  const cumulativeExpense = []; // index 0 = day1
+  let cum = 0;
+  for (let d = 1; d <= dayOfMonth; d++) {
+    cum += dailyMap[d] || 0;
+    cumulativeExpense.push(cum);
+  }
 
   // 日割り外挿
   const dailyExpense = expense / dayOfMonth;
@@ -494,7 +507,58 @@ function calculateForecast(ym) {
     avg3,
     status, statusLabel,
     lowConfidence,
+    cumulativeExpense,
   };
+}
+
+// SVGスパークライン生成 (v5.58)
+function buildForecastSparkline(fc) {
+  const W = 280, H = 48, PAD = 4;
+  const daysInMonth = fc.daysInMonth;
+  const dayOfMonth  = fc.dayOfMonth;
+  const maxVal = Math.max(fc.fcastExpense, fc.avg3 || 0, 1);
+
+  const xOf = d => PAD + (d - 1) / (daysInMonth - 1) * (W - PAD * 2);
+  const yOf = v => H - PAD - (v / maxVal) * (H - PAD * 2);
+
+  // 実績パス（day1〜today）
+  let actualD = '';
+  fc.cumulativeExpense.forEach((v, i) => {
+    const x = xOf(i + 1);
+    const y = yOf(v);
+    actualD += i === 0 ? `M${x},${y}` : ` L${x},${y}`;
+  });
+
+  // 予測パス（today〜month-end）
+  const todayX = xOf(dayOfMonth);
+  const todayY = yOf(fc.cumulativeExpense[dayOfMonth - 1] || 0);
+  const endX   = xOf(daysInMonth);
+  const endY   = yOf(fc.fcastExpense);
+  const forecastD = `M${todayX},${todayY} L${endX},${endY}`;
+
+  // 3ヶ月平均ライン
+  let avgLine = '';
+  if (fc.avg3) {
+    const ay = yOf(fc.avg3);
+    avgLine = `<line class="fc-spark-avg" x1="${PAD}" y1="${ay}" x2="${W - PAD}" y2="${ay}"/>`;
+  }
+
+  // 実績エリア（グラデーション塗り）
+  const areaD = actualD + ` L${xOf(dayOfMonth)},${H - PAD} L${xOf(1)},${H - PAD} Z`;
+
+  return `<svg class="fc-sparkline" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="fc-spark-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--fc-spark-color, #ef4444)" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="var(--fc-spark-color, #ef4444)" stop-opacity="0.03"/>
+    </linearGradient>
+  </defs>
+  ${avgLine}
+  <path class="fc-spark-area" d="${areaD}" fill="url(#fc-spark-grad)"/>
+  <path class="fc-spark-actual" d="${actualD}"/>
+  <path class="fc-spark-forecast" d="${forecastD}"/>
+  <circle class="fc-spark-today-dot" cx="${todayX}" cy="${todayY}" r="3"/>
+</svg>`;
 }
 
 function renderForecastCard(ym) {
@@ -503,32 +567,52 @@ function renderForecastCard(ym) {
 
   const statusColors = { good: 'var(--success)', caution: 'var(--primary)', alert: 'var(--danger-text)' };
   const statusBg     = { good: 'var(--success-bg)', caution: 'var(--primary-light)', alert: 'var(--danger-bg)' };
-  const color  = statusColors[fc.status];
-  const bgColor = statusBg[fc.status];
-  const balSign = fc.fcastBalance >= 0 ? '+' : '-';
-  const pct     = Math.round(fc.dayOfMonth / fc.daysInMonth * 100);
+  const sparkColors  = { good: '#10b981', caution: '#6366f1', alert: '#ef4444' };
+  const color    = statusColors[fc.status];
+  const bgColor  = statusBg[fc.status];
+  const sparkCol = sparkColors[fc.status];
+  const balSign  = fc.fcastBalance >= 0 ? '+' : '-';
+  const pct      = Math.round(fc.dayOfMonth / fc.daysInMonth * 100);
 
-  return `<div class="card forecast-card" style="--fc-color:${color};--fc-bg:${bgColor}">
+  // 平均比較バッジ（支出予測 vs 3ヶ月平均）
+  let avgBadge = '';
+  if (fc.avg3 !== null) {
+    const diff    = fc.fcastExpense - fc.avg3;
+    const diffPct = Math.round(Math.abs(diff) / fc.avg3 * 100);
+    if (diff > 0) {
+      avgBadge = `<span class="fc-avg-badge fc-avg-up">↑${diffPct}%</span>`;
+    } else if (diff < 0) {
+      avgBadge = `<span class="fc-avg-badge fc-avg-down">↓${diffPct}%</span>`;
+    }
+  }
+
+  const sparklineSvg = buildForecastSparkline(fc);
+
+  return `<div class="card forecast-card fc-status-${fc.status}" style="--fc-color:${color};--fc-bg:${bgColor};--fc-spark-color:${sparkCol}">
   <div class="card-header-row">
     <h3 class="card-title">📈 今月末の見込み</h3>
     <span class="fc-status-badge fc-${fc.status}">${fc.statusLabel}</span>
   </div>
   ${fc.lowConfidence ? `<div class="fc-low-conf">⚡ 経過${fc.dayOfMonth}日のため参考値です</div>` : ''}
   <div class="fc-progress-wrap">
-    <div class="fc-progress-track"><div class="fc-progress-fill" style="width:${pct}%"></div></div>
-    <span class="fc-progress-label">${fc.dayOfMonth}日/${fc.daysInMonth}日</span>
+    <div class="fc-progress-track">
+      <div class="fc-progress-fill" style="width:${pct}%"></div>
+      <div class="fc-progress-today" style="left:${pct}%"></div>
+    </div>
+    <span class="fc-progress-label">${fc.dayOfMonth}日 / ${fc.daysInMonth}日</span>
   </div>
+  ${sparklineSvg}
   <div class="fc-grid">
-    <div class="fc-cell">
+    <div class="fc-cell" style="--fc-i:0">
       <div class="fc-cell-label">予測支出</div>
       <div class="fc-cell-amount expense js-fc-countup" data-value="${fc.fcastExpense}">¥0</div>
-      ${fc.avg3 !== null ? `<div class="fc-cell-hint">3ヶ月平均 ${formatMoney(fc.avg3)}</div>` : ''}
+      ${fc.avg3 !== null ? `<div class="fc-cell-hint">3ヶ月平均 ${formatMoney(fc.avg3)} ${avgBadge}</div>` : ''}
     </div>
-    <div class="fc-cell">
+    <div class="fc-cell" style="--fc-i:1">
       <div class="fc-cell-label">予測収入</div>
       <div class="fc-cell-amount income js-fc-countup" data-value="${fc.fcastIncome}">¥0</div>
     </div>
-    <div class="fc-cell fc-cell-balance">
+    <div class="fc-cell fc-cell-balance" style="--fc-i:2">
       <div class="fc-cell-label">予測残高</div>
       <div class="fc-cell-amount js-fc-countup" data-value="${fc.fcastBalance}" style="color:${color}">${balSign}¥0</div>
     </div>

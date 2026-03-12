@@ -5630,20 +5630,49 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .smi-expense { background: rgba(225, 29, 72, 0.15); }
 
 /* ============================================================
-   今月末収支予測カード (v5.57)
+   今月末収支予測カード (v5.57 / v5.58 デザイン洗練)
    ============================================================ */
+
+/* カード入場アニメーション */
+@keyframes fc-card-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* セル入場アニメーション */
+@keyframes fc-cell-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* alertパルスグロー */
+@keyframes fc-alert-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); border-left-color: var(--danger-text); }
+  50%       { box-shadow: -3px 0 10px -2px rgba(220,38,38,.4); border-left-color: rgba(220,38,38,.5); }
+}
+/* スパークライン描画アニメーション */
+@keyframes fc-spark-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
 .forecast-card {
   border-top: 3px solid var(--fc-color, var(--primary));
   position: relative;
   overflow: hidden;
+  animation: fc-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .forecast-card::before {
   content: '';
   position: absolute;
   top: 0; right: 0;
-  width: 120px; height: 120px;
+  width: 140px; height: 140px;
   background: radial-gradient(circle at top right, var(--fc-bg, var(--primary-light)), transparent 70%);
   pointer-events: none;
+}
+/* alert状態: 左ボーダーパルス */
+.forecast-card.fc-status-alert {
+  border-left: 3px solid var(--danger-text);
+  animation: fc-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both,
+             fc-alert-glow 2.4s ease-in-out 0.8s infinite;
 }
 
 /* ステータスバッジ */
@@ -5671,31 +5700,103 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-3, 12px);
 }
 
-/* 経過日数プログレスバー */
+/* 経過日数プログレスバー（TODAYマーカー付き） */
 .fc-progress-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: var(--sp-4, 16px);
+  margin-bottom: var(--sp-3, 12px);
 }
 .fc-progress-track {
   flex: 1;
   height: 6px;
   border-radius: 99px;
   background: var(--border);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 .fc-progress-fill {
   height: 100%;
   border-radius: 99px;
   background: var(--fc-color, var(--primary));
-  transition: width 0.6s ease;
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* TODAYマーカー */
+.fc-progress-today {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2.5px solid var(--fc-color, var(--primary));
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+  pointer-events: none;
+  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .fc-progress-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   white-space: nowrap;
 }
+
+/* SVGスパークライン (v5.58) */
+.fc-sparkline {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-bottom: var(--sp-3, 12px);
+  overflow: visible;
+}
+.fc-spark-area {
+  fill: url(#fc-spark-grad);
+}
+.fc-spark-actual {
+  fill: none;
+  stroke: var(--fc-spark-color, var(--expense));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  vector-effect: non-scaling-stroke;
+}
+.fc-spark-forecast {
+  fill: none;
+  stroke: var(--fc-spark-color, var(--expense));
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  stroke-linecap: round;
+  opacity: 0.55;
+  vector-effect: non-scaling-stroke;
+}
+.fc-spark-avg {
+  stroke: var(--text-faint);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+.fc-spark-today-dot {
+  fill: var(--fc-spark-color, var(--expense));
+  stroke: var(--surface);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* 平均比較バッジ */
+.fc-avg-badge {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+.fc-avg-up   { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
+.fc-avg-down { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
 
 /* 3カラムグリッド */
 .fc-grid {
@@ -5709,6 +5810,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm);
   padding: var(--sp-3, 12px) var(--sp-2, 8px);
   text-align: center;
+  animation: fc-cell-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.15s + var(--fc-i, 0) * 0.07s);
 }
 .fc-cell-balance {
   background: var(--fc-bg, var(--primary-light));
@@ -5731,6 +5834,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   color: var(--text-faint);
   margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 /* モバイル: 3列→縦2+1 */
@@ -5744,12 +5852,19 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ダークモード */
+[data-theme="dark"] .fc-progress-today {
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.4);
+}
 [data-theme="dark"] .fc-cell {
   background: rgba(255,255,255,.04);
   border-color: rgba(255,255,255,.09);
 }
 [data-theme="dark"] .fc-cell-balance {
-  background: rgba(var(--fc-bg-rgb, 99 102 241) / .12);
+  background: rgba(99, 102, 241, .12);
+}
+[data-theme="dark"] .fc-status-alert .fc-cell-balance {
+  background: rgba(220,38,38,.12);
 }
 [data-theme="dark"] .fc-low-conf {
   background: rgba(255,255,255,.04);
@@ -5758,3 +5873,5 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .fc-good    { background: rgba(5,150,105,.15);  border-color: rgba(5,150,105,.3); }
 [data-theme="dark"] .fc-caution { background: rgba(99,102,241,.15); border-color: rgba(99,102,241,.3); }
 [data-theme="dark"] .fc-alert   { background: rgba(220,38,38,.15);  border-color: rgba(220,38,38,.3); }
+[data-theme="dark"] .fc-avg-up   { background: rgba(220,38,38,.15);  border-color: rgba(220,38,38,.3); }
+[data-theme="dark"] .fc-avg-down { background: rgba(5,150,105,.15);  border-color: rgba(5,150,105,.3); }
