@@ -307,6 +307,122 @@ function generateInsights(ym) {
   return insights.slice(0, 4);
 }
 
+// ============================================================
+// 家計スコアカード (v5.49)
+// ============================================================
+function calculateHealthScore(ym) {
+  const txs    = getTransactionsByMonth(ym);
+  if (txs.length === 0) return null;
+
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+  const items   = [];
+  let   total   = 0;
+
+  // 1. 収支バランス (max 40pt) — 貯蓄率に応じて点数化
+  let balScore = 0;
+  if (income > 0) {
+    const rate = (income - expense) / income;
+    if      (rate >= 0.30) balScore = 40;
+    else if (rate >= 0.20) balScore = 34;
+    else if (rate >= 0.10) balScore = 26;
+    else if (rate >= 0.05) balScore = 18;
+    else if (rate >= 0)    balScore = 8;
+    else                   balScore = 0; // 赤字
+  } else if (expense === 0) {
+    balScore = 40;
+  }
+  items.push({ label: '収支バランス', icon: '💰', score: balScore, max: 40 });
+  total += balScore;
+
+  // 2. 予算管理 (max 30pt) — 設定済み予算の遵守率
+  const budgets    = appData.budgets || {};
+  const budgetCats = appData.categories.filter(c => c.type === 'expense' && (budgets[c.id] || 0) > 0);
+  let   budgetScore = 15; // 予算未設定は中間点
+  if (budgetCats.length > 0) {
+    const spentMap = {};
+    txs.filter(t => t.type === 'expense').forEach(t => {
+      spentMap[t.categoryId] = (spentMap[t.categoryId] || 0) + (Number(t.amount) || 0);
+    });
+    const overCount = budgetCats.filter(c => (spentMap[c.id] || 0) > (budgets[c.id] || 0)).length;
+    budgetScore = Math.round(30 * (1 - overCount / budgetCats.length));
+  }
+  items.push({ label: '予算管理', icon: '📊', score: budgetScore, max: 30 });
+  total += budgetScore;
+
+  // 3. 記録習慣 (max 15pt) — 経過日数の25%以上の日に記録があれば満点
+  const today          = new Date();
+  const [y, m]         = ym.split('-').map(Number);
+  const isCurrentMonth = today.getFullYear() === y && today.getMonth() + 1 === m;
+  const daysElapsed    = isCurrentMonth ? today.getDate() : new Date(y, m, 0).getDate();
+  const txDays         = new Set(txs.map(t => t.date)).size;
+  const density        = Math.min(txDays / Math.max(1, daysElapsed * 0.25), 1);
+  const recordScore    = Math.round(density * 15);
+  items.push({ label: '記録習慣', icon: '📝', score: recordScore, max: 15 });
+  total += recordScore;
+
+  // 4. 支出バランス (max 15pt) — 特定1カテゴリへの集中度
+  const expTxs = txs.filter(t => t.type === 'expense');
+  let diversityScore = 15;
+  if (expTxs.length > 0 && expense > 0) {
+    const catTotals = {};
+    expTxs.forEach(t => {
+      catTotals[t.categoryId] = (catTotals[t.categoryId] || 0) + (Number(t.amount) || 0);
+    });
+    const maxShare = Math.max(...Object.values(catTotals)) / expense;
+    if      (maxShare <= 0.35) diversityScore = 15;
+    else if (maxShare <= 0.50) diversityScore = 11;
+    else if (maxShare <= 0.65) diversityScore = 7;
+    else if (maxShare <= 0.80) diversityScore = 3;
+    else                       diversityScore = 1;
+  }
+  items.push({ label: '支出バランス', icon: '⚖️', score: diversityScore, max: 15 });
+  total += diversityScore;
+
+  // グレード判定
+  let grade, gradeClass, msg;
+  if      (total >= 90) { grade = 'S'; gradeClass = 'hs-grade-s'; msg = '完璧！理想的な家計管理です'; }
+  else if (total >= 75) { grade = 'A'; gradeClass = 'hs-grade-a'; msg = 'とても良い！継続して改善しましょう'; }
+  else if (total >= 60) { grade = 'B'; gradeClass = 'hs-grade-b'; msg = '良好です。予算管理を意識しましょう'; }
+  else if (total >= 45) { grade = 'C'; gradeClass = 'hs-grade-c'; msg = '改善の余地あり。支出を見直しましょう'; }
+  else                  { grade = 'D'; gradeClass = 'hs-grade-d'; msg = '要注意。家計の見直しが必要です'; }
+
+  return { total, items, grade, gradeClass, msg };
+}
+
+function renderHealthScoreCard(ym) {
+  const hs = calculateHealthScore(ym);
+  if (!hs) return '';
+
+  const itemsHtml = hs.items.map((item, i) => {
+    const pct = Math.round(item.score / item.max * 100);
+    return `<div class="hs-item hs-d${i}">
+      <div class="hs-item-header">
+        <span class="hs-item-label">${item.icon} ${item.label}</span>
+        <span class="hs-item-score">${item.score}<span class="hs-item-max">/${item.max}</span></span>
+      </div>
+      <div class="hs-bar-track">
+        <div class="hs-bar-fill" style="width:${pct}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="card health-score-card">
+  <div class="card-header-row">
+    <h3 class="card-title">🏅 家計スコア</h3>
+  </div>
+  <div class="hs-main">
+    <div class="hs-score-wrap">
+      <div class="hs-score-num js-hs-countup" data-value="${hs.total}">0</div>
+      <div class="hs-score-unit">点</div>
+    </div>
+    <div class="hs-grade-badge ${hs.gradeClass}">${hs.grade}</div>
+    <div class="hs-msg">${hs.msg}</div>
+  </div>
+  <div class="hs-items">${itemsHtml}</div>
+</div>`;
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -462,6 +578,9 @@ function renderDashboard() {
   </div>`}
 </div>` : '';
 
+  // 家計スコアカード（v5.49）
+  const healthScoreSection = renderHealthScoreCard(appState.month);
+
   // インサイトセクション（v5.40）
   const insights = generateInsights(appState.month);
   const insightSection = insights.length > 0 ? `
@@ -544,6 +663,8 @@ function renderDashboard() {
   </div>
 </div>
 
+${healthScoreSection}
+
 ${insightSection}
 
 ${pointSection}
@@ -600,6 +721,20 @@ function bindDashboard() {
   document.querySelectorAll('.js-countup').forEach(el => {
     animateCountUp(el, Number(el.dataset.value));
   });
+  // 家計スコア数値カウントアップ（v5.49）
+  const hsEl = document.querySelector('.js-hs-countup');
+  if (hsEl) {
+    const target = Number(hsEl.dataset.value);
+    const dur = 700;
+    const start = performance.now();
+    const tick = now => {
+      const t = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      hsEl.textContent = Math.round(target * eased);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
   animateGoalRings(); // v5.32
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
