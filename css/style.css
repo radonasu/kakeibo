@@ -6573,8 +6573,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ============================================================
-   曜日別支出パターン分析 (v5.66)
+   曜日別支出パターン分析 ビジュアル洗練 (v5.67)
    ============================================================ */
+@keyframes dow-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes dow-bar-fill {
+  from { width: 0; }
+  to   { width: var(--dow-bar-w, 0%); }
+}
+
 .dow-stat-row {
   display: flex;
   gap: var(--sp-3);
@@ -6587,45 +6596,104 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex: 1;
   padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: box-shadow 0.2s;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  animation: dow-card-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: calc(var(--dow-i, 0) * 80ms);
 }
-.dow-stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.dow-stat-max { border-left: 4px solid #ef4444; }
-.dow-stat-min { border-left: 4px solid #10b981; }
-.dow-stat-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
-.dow-stat-info { display: flex; flex-direction: column; gap: 2px; }
-.dow-stat-day  { font-size: var(--fs-lg); font-weight: 700; }
-.dow-stat-label { font-size: var(--fs-xs); color: var(--text-muted); }
+.dow-stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+/* 装飾サークル */
+.dow-stat-card::before,
+.dow-stat-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  pointer-events: none;
+}
+.dow-stat-card::before { width: 64px; height: 64px; bottom: -18px; right: -10px; }
+.dow-stat-card::after  { width: 36px; height: 36px; top: -12px; right: 28px; }
+
+/* 最多支出: 赤系グラデーション */
+.dow-stat-max {
+  background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+  color: #fff;
+}
+/* 最少支出: 緑系グラデーション */
+.dow-stat-min {
+  background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+  color: #fff;
+}
+
+.dow-stat-icon { font-size: 30px; line-height: 1; flex-shrink: 0; position: relative; z-index: 1; }
+.dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
+.dow-stat-day  { font-size: var(--fs-xl); font-weight: 700; color: #fff !important; }
+.dow-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.8); }
 .dow-stat-amount {
-  font-size: var(--fs-xl);
+  font-size: var(--fs-2xl);
   font-weight: 700;
-  color: var(--text);
+  color: #fff;
+  line-height: 1.1;
 }
 .dow-stat-unit {
   font-size: var(--fs-xs);
   font-weight: 400;
-  color: var(--text-muted);
-  margin-left: 2px;
+  color: rgba(255,255,255,0.75);
+  margin-left: 3px;
 }
-.dow-label-cell { letter-spacing: 0.02em; }
+
+/* ─ テーブル曜日セル ─ */
+.dow-label-cell { letter-spacing: 0.02em; font-size: var(--fs-base); }
+
+/* パーセンテージバッジ (色分け) */
 .dow-pct-badge {
   display: inline-block;
   font-size: var(--fs-2xs);
-  color: var(--text-muted);
-  background: var(--surface-hover);
+  font-weight: 600;
   border-radius: 10px;
   padding: 1px 6px;
   margin-left: var(--sp-1);
   vertical-align: middle;
 }
+.dow-pct-high { background: #fee2e2; color: #991b1b; }
+.dow-pct-mid  { background: #fef3c7; color: #92400e; }
+.dow-pct-low  { background: #d1fae5; color: #065f46; }
+
+/* ─ テーブル行の曜日カラー左ボーダー ─ */
+.dow-table-row { border-left: 3px solid var(--dow-row-color, var(--border)); }
+.dow-table-row.dow-row-max td:last-child { font-weight: 700; }
+
+/* ミニバーグラフ (合計支出セル内) */
+.dow-mini-bar-track {
+  height: 4px;
+  background: var(--surface-hover);
+  border-radius: 4px;
+  margin-top: 5px;
+  overflow: hidden;
+  min-width: 60px;
+}
+.dow-mini-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--dow-row-color, var(--primary));
+  width: var(--dow-bar-w, 0%);
+  animation: dow-bar-fill 0.7s cubic-bezier(0.4,0,0.2,1) both;
+  animation-delay: calc(var(--dow-bar-delay, 0) * 60ms + 0.2s);
+}
 
 /* -- ダークモード -- */
-[data-theme="dark"] .dow-stat-card { background: var(--surface); }
+[data-theme="dark"] .dow-pct-high { background: #7f1d1d; color: #fca5a5; }
+[data-theme="dark"] .dow-pct-mid  { background: #78350f; color: #fcd34d; }
+[data-theme="dark"] .dow-pct-low  { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .dow-mini-bar-track { background: rgba(255,255,255,0.06); }
 
 /* -- モバイル対応 -- */
 @media (max-width: 560px) {
   .dow-stat-row { flex-direction: column; }
-  .dow-stat-amount { font-size: var(--fs-lg); }
+  .dow-stat-amount { font-size: var(--fs-xl); }
 }

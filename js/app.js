@@ -2188,9 +2188,10 @@ ${(appData.members && appData.members.length > 0) ? `
 </div>
 
 ${(() => {
-  // ── 曜日別支出分析 (v5.66) ──────────────────────────────────
+  // ── 曜日別支出分析 (v5.67 ビジュアル洗練) ──────────────────────────────────
   const DOW_LABELS  = ['日','月','火','水','木','金','土'];
-  const DOW_COLORS_HEX = ['#ef4444','#6366f1','#6366f1','#6366f1','#6366f1','#6366f1','#0891b2'];
+  // 7曜日それぞれに個別カラー
+  const DOW_COLORS_HEX = ['#ef4444','#6366f1','#8b5cf6','#3b82f6','#14b8a6','#f59e0b','#0891b2'];
   const dowTotals   = new Array(7).fill(0);
   const dowCounts   = new Array(7).fill(0);
   const dowDateSets = Array.from({ length: 7 }, () => new Set());
@@ -2212,27 +2213,38 @@ ${(() => {
   const maxDow = validDows.length ? validDows.reduce((a, b) => a.avg >= b.avg ? a : b) : null;
   const minDow = validDows.length > 1 ? validDows.reduce((a, b) => a.avg <= b.avg ? a : b) : null;
   const totalDowExpense = dowTotals.reduce((s, v) => s + v, 0);
+  const maxTotal = Math.max(...dowTotals);
 
+  // サマリーカード（グラデーション背景＋スタッガーアニメーション）
   const summaryCards = [maxDow, minDow].filter(Boolean).map((d, idx) => `
-    <div class="dow-stat-card ${idx === 0 ? 'dow-stat-max' : 'dow-stat-min'}">
+    <div class="dow-stat-card ${idx === 0 ? 'dow-stat-max' : 'dow-stat-min'}" style="--dow-i:${idx}">
       <div class="dow-stat-icon" aria-hidden="true">${idx === 0 ? '📈' : '📉'}</div>
       <div class="dow-stat-info">
-        <div class="dow-stat-day" style="color:${DOW_COLORS_HEX[d.i]}">${DOW_LABELS[d.i]}曜日</div>
-        <div class="dow-stat-label">${idx === 0 ? '最多支出' : '最少支出'}</div>
+        <div class="dow-stat-day">${DOW_LABELS[d.i]}曜日</div>
+        <div class="dow-stat-label">${idx === 0 ? '最多支出曜日' : '最少支出曜日'}</div>
         <div class="dow-stat-amount">${formatMoney(d.avg)}<span class="dow-stat-unit">/取引日</span></div>
       </div>
     </div>`).join('');
 
+  // テーブル行（曜日カラー左ボーダー＋ミニバーグラフ＋色分けバッジ）
+  let barDelay = 0;
   const tableRows = DOW_LABELS.map((label, i) => {
     if (!dowCounts[i]) return '';
-    const pct = totalDowExpense > 0 ? Math.round(dowTotals[i] / totalDowExpense * 100) : 0;
-    const isMax = maxDow && i === maxDow.i;
-    return `<tr>
-      <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]};font-weight:600">${label}曜日</span></td>
+    const pct    = totalDowExpense > 0 ? Math.round(dowTotals[i] / totalDowExpense * 100) : 0;
+    const barW   = maxTotal > 0 ? Math.round(dowTotals[i] / maxTotal * 100) : 0;
+    const isMax  = maxDow && i === maxDow.i;
+    const pctCls = pct >= 20 ? 'dow-pct-high' : pct >= 10 ? 'dow-pct-mid' : 'dow-pct-low';
+    const row = `<tr class="dow-table-row${isMax ? ' dow-row-max' : ''}" style="--dow-row-color:${DOW_COLORS_HEX[i]}">
+      <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]};font-weight:700">${label}曜日</span></td>
       <td class="text-muted">${dowCounts[i]}件 / ${dowDateSets[i].size}日</td>
-      <td class="expense">${formatMoney(dowTotals[i])}<span class="dow-pct-badge">${pct}%</span></td>
-      <td class="${isMax ? 'expense' : ''}" style="${isMax ? 'font-weight:600' : ''}">${formatMoney(dowAvgs[i])}</td>
+      <td class="expense">
+        ${formatMoney(dowTotals[i])}<span class="dow-pct-badge ${pctCls}">${pct}%</span>
+        <div class="dow-mini-bar-track"><div class="dow-mini-bar-fill" style="--dow-bar-w:${barW}%;--dow-bar-delay:${barDelay}"></div></div>
+      </td>
+      <td>${formatMoney(dowAvgs[i])}</td>
     </tr>`;
+    barDelay++;
+    return row;
   }).join('');
 
   const emptyContent = `<div class="empty" style="padding:var(--sp-6) 0">${year}年の支出データがありません</div>`;

@@ -692,24 +692,25 @@ function renderYoYChart(canvasId, year) {
 }
 
 // ─── 純資産推移折れ線グラフ（資産管理ページ用）───────────────
-// ─── 曜日別支出パターン分析 (v5.66) ─────────────────────────
+// ─── 曜日別支出パターン分析 (v5.67 ビジュアル洗練) ─────────────────────────
 function renderDayOfWeekChart(canvasId, transactions) {
   destroyChart(canvasId);
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
   const DOW_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
+  // 7曜日それぞれ個別カラー（app.jsと統一）
   const DOW_COLORS = [
-    'rgba(239,68,68,0.80)',    // 日: red
-    'rgba(99,102,241,0.80)',   // 月: indigo
-    'rgba(99,102,241,0.80)',   // 火
-    'rgba(99,102,241,0.80)',   // 水
-    'rgba(99,102,241,0.80)',   // 木
-    'rgba(99,102,241,0.80)',   // 金
-    'rgba(8,145,178,0.80)',    // 土: cyan
+    'rgba(239,68,68,0.85)',    // 日: red
+    'rgba(99,102,241,0.85)',   // 月: indigo
+    'rgba(139,92,246,0.85)',   // 火: violet
+    'rgba(59,130,246,0.85)',   // 水: blue
+    'rgba(20,184,166,0.85)',   // 木: teal
+    'rgba(245,158,11,0.85)',   // 金: amber
+    'rgba(8,145,178,0.85)',    // 土: cyan
   ];
   const DOW_BORDERS = [
-    '#ef4444', '#6366f1', '#6366f1', '#6366f1', '#6366f1', '#6366f1', '#0891b2',
+    '#ef4444', '#6366f1', '#8b5cf6', '#3b82f6', '#14b8a6', '#f59e0b', '#0891b2',
   ];
 
   const dowTotals   = new Array(7).fill(0);
@@ -730,6 +731,10 @@ function renderDayOfWeekChart(canvasId, transactions) {
 
   const { text, grid } = getThemeColors();
 
+  // 最大値インデックスを取得してバーをハイライト
+  const maxAvg = Math.max(...dowAvgs);
+  const hoverColors = DOW_COLORS.map((c, i) => dowAvgs[i] === maxAvg ? DOW_BORDERS[i] : c);
+
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
     data: {
@@ -739,15 +744,16 @@ function renderDayOfWeekChart(canvasId, transactions) {
         data: dowAvgs,
         backgroundColor: DOW_COLORS,
         borderColor: DOW_BORDERS,
-        borderWidth: 1.5,
-        borderRadius: 7,
+        borderWidth: 2,
+        borderRadius: 9,
         borderSkipped: false,
+        hoverBackgroundColor: hoverColors,
       }],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      animation: { ...commonAnimation, duration: 700 },
+      animation: { ...commonAnimation, duration: 800 },
       plugins: {
         legend: { display: false },
         tooltip: commonTooltip({
@@ -758,7 +764,7 @@ function renderDayOfWeekChart(canvasId, transactions) {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: text, font: { size: 13, weight: '600' } },
+          ticks: { color: text, font: { size: 13, weight: '700' } },
           border: { display: false },
         },
         y: {
