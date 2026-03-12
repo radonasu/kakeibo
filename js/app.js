@@ -128,6 +128,7 @@ function renderCurrentPage() {
     case 'subscriptions':  main.innerHTML = renderSubscriptions(); bindSubscriptions(); break;  // v5.43
     case 'points':         main.innerHTML = renderPoints(); bindPoints(); break;                 // v5.47
     case 'wishlist':       main.innerHTML = renderWishlist(); bindWishlist(); break;             // v5.51
+    case 'challenges':     main.innerHTML = renderChallenges(); bindChallenges(); break;          // v5.64
   }
 }
 
@@ -915,6 +916,37 @@ ${subSection}
 ${budgetSection}
 
 ${goalSection}
+
+${showWidget('challenges') ? (() => {
+  const now = currentYearMonth();
+  const activeChallenges = getChallenges().filter(c => c.period === now);
+  if (!activeChallenges.length) return '';
+  return `<div class="card ch-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">🏆 節約チャレンジ</h3>
+    <button class="btn-link" onclick="navigate('challenges')">すべて見る →</button>
+  </div>
+  <div class="ch-widget-list">
+    ${activeChallenges.slice(0, 3).map(ch => {
+      const prog = calcChallengeProgress(ch);
+      const pct = prog.pct;
+      const isOver = ch.type === 'budget' && prog.actual > prog.target;
+      const barCls = isOver ? 'ch-bar-over' : prog.isOnTrack ? 'ch-bar-ok' : 'ch-bar-warn';
+      return `<div class="ch-widget-item" style="--ch-accent:${ch.color || '#6366f1'}">
+        <div class="ch-widget-icon">${ch.emoji || '🏆'}</div>
+        <div class="ch-widget-body">
+          <div class="ch-widget-name">${esc2(ch.name)}</div>
+          <div class="ch-widget-progress">
+            <div class="ch-bar-bg"><div class="ch-bar-fill ${barCls}" style="width:${pct}%"></div></div>
+            <span class="ch-widget-label">${prog.label}</span>
+          </div>
+        </div>
+        <span class="ch-widget-pct ${isOver ? 'ch-pct-over' : prog.isOnTrack ? 'ch-pct-ok' : ''}">${pct}%</span>
+      </div>`;
+    }).join('')}
+  </div>
+</div>`;
+})() : ''}
 
 ${showWidget('chart') ? `<div class="charts-row">
   <div class="card chart-card">
@@ -2486,6 +2518,7 @@ function renderSettings() {
       { key: 'subscriptions', label: 'サブスク管理',    icon: '📱' },
       { key: 'points',        label: 'ポイント残高',    icon: '🎫' },
       { key: 'wishlist',      label: 'ほしいものリスト',icon: '🛍️' },
+      { key: 'challenges',    label: '節約チャレンジ',  icon: '🏆' },
       { key: 'chart',         label: '収支グラフ',      icon: '📉' },
     ];
     const rows = widgets.map(w => {
@@ -6150,6 +6183,293 @@ function openWishlistModal(editId) {
     hideModal(overlay);
     renderCurrentPage();
   });
+}
+
+// ============================================================
+// 節約チャレンジ (v5.64)
+// ============================================================
+function renderChallenges() {
+  const now = currentYearMonth();
+  const all = getChallenges();
+  const active = all.filter(c => c.period === now);
+  const past   = all.filter(c => c.period !== now).sort((a, b) => b.period.localeCompare(a.period));
+
+  // サマリー
+  const totalActive   = active.length;
+  const totalAchieved = all.filter(c => c.achieved === true).length;
+
+  const emptyHtml = `<div class="ch-empty"><span class="ch-empty-icon">🏆</span><p>今月のチャレンジはありません</p><p class="ch-empty-sub">「＋ チャレンジを作成」から挑戦してみましょう</p></div>`;
+
+  const renderCard = (ch, i) => {
+    const prog = calcChallengeProgress(ch);
+    const pct  = prog.pct;
+    const isOver = ch.type === 'budget' && prog.actual > prog.target;
+    const isDone = ch.achieved === true;
+    const isFailed = ch.achieved === false;
+    const barCls = isOver ? 'ch-bar-over' : prog.isOnTrack ? 'ch-bar-ok' : 'ch-bar-warn';
+    const statusBadge = isDone
+      ? `<span class="ch-status ch-status-done">✓ 達成</span>`
+      : isFailed
+        ? `<span class="ch-status ch-status-fail">✗ 未達</span>`
+        : isOver
+          ? `<span class="ch-status ch-status-over">⚠ 超過</span>`
+          : `<span class="ch-status ch-status-active">進行中</span>`;
+    const typeLabel = ch.type === 'budget' ? '予算チャレンジ' : 'ノースペンドデー';
+    const catName = ch.categoryId ? (getCategoryById(ch.categoryId) || {}).name || '' : '全カテゴリ';
+    return `<div class="ch-card${isDone ? ' ch-card-done' : ''}" style="--ch-accent:${ch.color || '#6366f1'};--ch-i:${i}" data-id="${ch.id}">
+      <div class="ch-card-accent"></div>
+      <div class="ch-card-icon">${ch.emoji || '🏆'}</div>
+      <div class="ch-card-body">
+        <div class="ch-card-top">
+          <div class="ch-card-name">${esc2(ch.name)}</div>
+          ${statusBadge}
+        </div>
+        <div class="ch-card-meta"><span class="ch-type-badge">${typeLabel}</span> ${esc2(catName)}</div>
+        <div class="ch-card-progress">
+          <div class="ch-bar-bg"><div class="ch-bar-fill ${barCls}" style="width:${pct}%" data-ch-pct="${pct}"></div></div>
+          <span class="ch-progress-label">${prog.label}</span>
+          <span class="ch-progress-pct${isOver ? ' ch-pct-over' : prog.isOnTrack ? ' ch-pct-ok' : ''}">${pct}%</span>
+        </div>
+      </div>
+      <div class="ch-card-actions">
+        <button class="btn btn-sm btn-ghost ch-edit-btn" data-id="${ch.id}" title="編集">✏️</button>
+        <button class="btn btn-sm btn-danger ch-delete-btn" data-id="${ch.id}" title="削除">🗑</button>
+      </div>
+    </div>`;
+  };
+
+  const activeCards = active.length
+    ? active.map((c, i) => renderCard(c, i)).join('')
+    : emptyHtml;
+
+  const archiveHtml = past.length > 0 ? `
+<details class="ch-archive-wrap">
+  <summary class="ch-archive-summary">📁 過去のチャレンジ（${past.length}件）</summary>
+  <div class="ch-archive-list">
+    ${past.map((c, i) => renderCard(c, i)).join('')}
+  </div>
+</details>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">🏆 節約チャレンジ</h1>
+  <button class="btn btn-primary" id="ch-add-btn">＋ チャレンジを作成</button>
+</div>
+
+<div class="ch-summary-row">
+  <div class="card ch-summary-card ch-sum-active">
+    <div class="ch-summary-label">今月のチャレンジ</div>
+    <div class="ch-summary-value">${totalActive}<span class="ch-summary-unit">件</span></div>
+  </div>
+  <div class="card ch-summary-card ch-sum-achieved">
+    <div class="ch-summary-label">達成済み（累計）</div>
+    <div class="ch-summary-value">${totalAchieved}<span class="ch-summary-unit">件</span></div>
+  </div>
+  <div class="card ch-summary-card ch-sum-total">
+    <div class="ch-summary-label">登録チャレンジ</div>
+    <div class="ch-summary-value">${all.length}<span class="ch-summary-unit">件</span></div>
+  </div>
+</div>
+
+<h2 class="ch-section-title">今月のチャレンジ（${now}）</h2>
+<div class="ch-cards-list">${activeCards}</div>
+
+${archiveHtml}
+
+<!-- チャレンジ作成/編集モーダル -->
+<div id="ch-modal-overlay" class="modal-overlay" style="display:none">
+  <div class="modal ch-modal">
+    <h2 id="ch-modal-title">チャレンジを作成</h2>
+    <div class="form-group">
+      <label>チャレンジ名</label>
+      <input type="text" id="ch-name" placeholder="例: 外食費を抑える" maxlength="30">
+    </div>
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>絵文字</label>
+        <div class="ch-emoji-grid" id="ch-emoji-grid">
+          ${CHALLENGE_EMOJIS.map(e => `<button type="button" class="ch-emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+        </div>
+        <input type="hidden" id="ch-emoji" value="🏆">
+      </div>
+      <div class="form-group">
+        <label>カラー</label>
+        <div class="ch-color-grid" id="ch-color-grid">
+          ${CHALLENGE_COLORS.map(c => `<button type="button" class="ch-color-btn" data-color="${c}" style="background:${c}"></button>`).join('')}
+        </div>
+        <input type="hidden" id="ch-color" value="${CHALLENGE_COLORS[0]}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>種別</label>
+      <div class="type-toggle" id="ch-type-toggle">
+        <button type="button" class="type-btn active" data-type="budget">💰 予算チャレンジ</button>
+        <button type="button" class="type-btn" data-type="noSpend">📅 ノースペンドデー</button>
+      </div>
+      <input type="hidden" id="ch-type" value="budget">
+    </div>
+    <div class="form-group">
+      <label>カテゴリ（省略=全カテゴリ）</label>
+      <select id="ch-category">
+        <option value="">全カテゴリ</option>
+        ${appData.categories.filter(c => c.type === 'expense').map(c => `<option value="${c.id}">${esc2(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-group" id="ch-target-budget-wrap">
+      <label>目標金額（円以内）</label>
+      <input type="number" id="ch-target-amount" min="1" placeholder="例: 30000">
+    </div>
+    <div class="form-group" id="ch-target-noSpend-wrap" style="display:none">
+      <label>目標無支出日数（日以上）</label>
+      <input type="number" id="ch-target-days" min="1" max="31" placeholder="例: 15">
+    </div>
+    <div class="form-group">
+      <label>対象月</label>
+      <input type="month" id="ch-period" value="${now}">
+    </div>
+    <input type="hidden" id="ch-edit-id" value="">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="ch-cancel-btn">キャンセル</button>
+      <button class="btn btn-primary" id="ch-save-btn">保存</button>
+    </div>
+  </div>
+</div>`;
+}
+
+function bindChallenges() {
+  document.querySelectorAll('.js-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
+
+  // バーアニメーション
+  document.querySelectorAll('.ch-bar-fill[data-ch-pct]').forEach(el => {
+    const pct = Number(el.dataset.chPct) || 0;
+    el.style.width = '0%';
+    requestAnimationFrame(() => {
+      el.style.transition = 'width 0.7s cubic-bezier(0.4,0,0.2,1)';
+      el.style.width = pct + '%';
+    });
+  });
+
+  on('ch-add-btn', 'click', () => openChallengeModal(null));
+
+  const list = document.querySelector('.ch-cards-list');
+  const arch = document.querySelector('.ch-archive-list');
+  const handler = e => {
+    const editBtn   = e.target.closest('.ch-edit-btn');
+    const deleteBtn = e.target.closest('.ch-delete-btn');
+    if (editBtn) {
+      const ch = getChallenges().find(c => c.id === editBtn.dataset.id);
+      if (ch) openChallengeModal(ch);
+    }
+    if (deleteBtn) {
+      if (confirm('このチャレンジを削除しますか？')) {
+        deleteChallenge(deleteBtn.dataset.id);
+        renderCurrentPage();
+      }
+    }
+  };
+  if (list) list.addEventListener('click', handler);
+  if (arch) arch.addEventListener('click', handler);
+}
+
+function openChallengeModal(ch) {
+  const overlay = document.getElementById('ch-modal-overlay');
+  const title   = document.getElementById('ch-modal-title');
+  const nameEl  = document.getElementById('ch-name');
+  const emojiEl = document.getElementById('ch-emoji');
+  const colorEl = document.getElementById('ch-color');
+  const typeEl  = document.getElementById('ch-type');
+  const catEl   = document.getElementById('ch-category');
+  const amtEl   = document.getElementById('ch-target-amount');
+  const daysEl  = document.getElementById('ch-target-days');
+  const perEl   = document.getElementById('ch-period');
+  const editId  = document.getElementById('ch-edit-id');
+
+  if (ch) {
+    title.textContent = 'チャレンジを編集';
+    nameEl.value  = ch.name || '';
+    emojiEl.value = ch.emoji || '🏆';
+    colorEl.value = ch.color || CHALLENGE_COLORS[0];
+    typeEl.value  = ch.type || 'budget';
+    catEl.value   = ch.categoryId || '';
+    amtEl.value   = ch.targetAmount || '';
+    daysEl.value  = ch.targetDays || '';
+    perEl.value   = ch.period || currentYearMonth();
+    editId.value  = ch.id;
+  } else {
+    title.textContent = 'チャレンジを作成';
+    nameEl.value  = '';
+    emojiEl.value = '🏆';
+    colorEl.value = CHALLENGE_COLORS[0];
+    typeEl.value  = 'budget';
+    catEl.value   = '';
+    amtEl.value   = '';
+    daysEl.value  = '';
+    perEl.value   = currentYearMonth();
+    editId.value  = '';
+  }
+
+  // 絵文字ボタン反映
+  document.querySelectorAll('.ch-emoji-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.emoji === emojiEl.value);
+  });
+  // カラーボタン反映
+  document.querySelectorAll('.ch-color-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.color === colorEl.value);
+  });
+  // タイプ表示切替
+  const updateTypeUI = type => {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+    document.getElementById('ch-target-budget-wrap').style.display  = type === 'budget'  ? '' : 'none';
+    document.getElementById('ch-target-noSpend-wrap').style.display = type === 'noSpend' ? '' : 'none';
+  };
+  updateTypeUI(typeEl.value);
+
+  // イベント
+  document.querySelectorAll('.ch-emoji-btn').forEach(btn => {
+    btn.onclick = () => {
+      emojiEl.value = btn.dataset.emoji;
+      document.querySelectorAll('.ch-emoji-btn').forEach(b => b.classList.toggle('active', b === btn));
+    };
+  });
+  document.querySelectorAll('.ch-color-btn').forEach(btn => {
+    btn.onclick = () => {
+      colorEl.value = btn.dataset.color;
+      document.querySelectorAll('.ch-color-btn').forEach(b => b.classList.toggle('active', b === btn));
+    };
+  });
+  document.getElementById('ch-type-toggle').querySelectorAll('.type-btn').forEach(btn => {
+    btn.onclick = () => { typeEl.value = btn.dataset.type; updateTypeUI(btn.dataset.type); };
+  });
+
+  document.getElementById('ch-cancel-btn').onclick = () => hideModal(overlay);
+  document.getElementById('ch-save-btn').onclick = () => {
+    const name = nameEl.value.trim();
+    if (!name) { alert('チャレンジ名を入力してください'); return; }
+    const type = typeEl.value;
+    if (type === 'budget' && !amtEl.value) { alert('目標金額を入力してください'); return; }
+    if (type === 'noSpend' && !daysEl.value) { alert('目標日数を入力してください'); return; }
+
+    const fields = {
+      name,
+      emoji: emojiEl.value || '🏆',
+      color: colorEl.value || CHALLENGE_COLORS[0],
+      type,
+      categoryId: catEl.value || '',
+      targetAmount: type === 'budget' ? Number(amtEl.value) : null,
+      targetDays: type === 'noSpend' ? Number(daysEl.value) : null,
+      period: perEl.value || currentYearMonth(),
+    };
+
+    if (editId.value) {
+      updateChallenge(editId.value, fields);
+    } else {
+      addChallenge(fields);
+    }
+    hideModal(overlay);
+    renderCurrentPage();
+  };
+
+  showModal(overlay);
 }
 
 // ============================================================

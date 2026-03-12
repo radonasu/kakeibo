@@ -6244,3 +6244,319 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-top: 4px;
   flex-wrap: wrap;
 }
+
+/* ============================================================
+   節約チャレンジ (v5.64)
+   ============================================================ */
+
+/* -- サマリー行 -- */
+.ch-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.ch-summary-card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--sp-4);
+  border-radius: var(--radius);
+}
+.ch-summary-card::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  opacity: 0.15;
+}
+.ch-sum-active    { background: linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%); color:#fff; }
+.ch-sum-active::before { background:#fff; }
+.ch-sum-achieved  { background: linear-gradient(135deg,#059669 0%,#10b981 100%); color:#fff; }
+.ch-sum-achieved::before { background:#fff; }
+.ch-sum-total     { background: linear-gradient(135deg,#0891b2 0%,#06b6d4 100%); color:#fff; }
+.ch-sum-total::before { background:#fff; }
+.ch-summary-label { font-size: var(--fs-xs); opacity:0.85; margin-bottom: var(--sp-1); }
+.ch-summary-value { font-size: var(--fs-3xl); font-weight: 700; line-height: 1; }
+.ch-summary-unit  { font-size: var(--fs-sm); font-weight:400; margin-left: 2px; opacity:0.8; }
+
+/* -- セクションタイトル -- */
+.ch-section-title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-sub);
+  margin: var(--sp-4) 0 var(--sp-2);
+}
+
+/* -- カードリスト -- */
+.ch-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+/* -- カードアニメーション -- */
+@keyframes ch-card-in {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* -- チャレンジカード -- */
+.ch-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--ch-accent, #6366f1);
+  position: relative;
+  overflow: hidden;
+  animation: ch-card-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: calc(var(--ch-i, 0) * 60ms);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.ch-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+.ch-card.ch-card-done { opacity: 0.75; }
+
+.ch-card-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--ch-accent, #6366f1) 12%, transparent);
+  flex-shrink: 0;
+}
+.ch-card-body { flex: 1; min-width: 0; }
+.ch-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: 4px;
+}
+.ch-card-name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ch-card-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.ch-type-badge {
+  display: inline-block;
+  background: var(--surface-2);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+/* -- 進捗バー -- */
+.ch-card-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.ch-bar-bg {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+.ch-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.ch-bar-ok   { background: linear-gradient(90deg, #10b981, #34d399); }
+.ch-bar-warn { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.ch-bar-over { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+.ch-progress-label {
+  font-size: var(--fs-xs);
+  color: var(--text-sub);
+  white-space: nowrap;
+}
+.ch-progress-pct {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-sub);
+  min-width: 36px;
+  text-align: right;
+}
+.ch-progress-pct.ch-pct-ok   { color: #10b981; }
+.ch-progress-pct.ch-pct-over { color: #ef4444; }
+
+/* -- ステータスバッジ -- */
+.ch-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ch-status-active { background: #dbeafe; color: #1d4ed8; }
+.ch-status-done   { background: #d1fae5; color: #065f46; }
+.ch-status-fail   { background: #fee2e2; color: #991b1b; }
+.ch-status-over   { background: #fef3c7; color: #92400e; }
+
+/* -- カードアクション -- */
+.ch-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  flex-shrink: 0;
+}
+
+/* -- 空状態 -- */
+.ch-empty {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-4);
+  color: var(--text-muted);
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+}
+.ch-empty-icon { font-size: 40px; display: block; margin-bottom: var(--sp-3); }
+.ch-empty p    { margin: 0 0 4px; font-size: var(--fs-base); }
+.ch-empty-sub  { font-size: var(--fs-sm); color: var(--text-faint); }
+
+/* -- 過去チャレンジアーカイブ -- */
+.ch-archive-wrap {
+  margin-top: var(--sp-4);
+}
+.ch-archive-summary {
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-sub);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  list-style: none;
+  user-select: none;
+}
+.ch-archive-summary::-webkit-details-marker { display: none; }
+.ch-archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding-top: var(--sp-2);
+}
+
+/* -- モーダル -- */
+.ch-modal { max-width: 540px; }
+.ch-emoji-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+.ch-emoji-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--surface-2);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.ch-emoji-btn:hover  { background: var(--surface-hover); }
+.ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light, #ede9fe); }
+
+.ch-color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.ch-color-btn {
+  width: 28px;
+  height: 28px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.ch-color-btn:hover  { transform: scale(1.15); }
+.ch-color-btn.active { border-color: var(--text); transform: scale(1.1); }
+
+/* -- ダッシュボードウィジェット -- */
+.ch-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.ch-widget-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.ch-widget-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: color-mix(in srgb, var(--ch-accent, #6366f1) 12%, transparent);
+  flex-shrink: 0;
+}
+.ch-widget-body  { flex: 1; min-width: 0; }
+.ch-widget-name  { font-size: var(--fs-sm); font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.ch-widget-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.ch-widget-label { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.ch-widget-pct {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-sub);
+  min-width: 36px;
+  text-align: right;
+}
+.ch-widget-pct.ch-pct-ok   { color: #10b981; }
+.ch-widget-pct.ch-pct-over { color: #ef4444; }
+
+/* -- ダークモード対応 -- */
+[data-theme="dark"] .ch-status-active { background: #1e3a5f; color: #93c5fd; }
+[data-theme="dark"] .ch-status-done   { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .ch-status-fail   { background: #7f1d1d; color: #fca5a5; }
+[data-theme="dark"] .ch-status-over   { background: #78350f; color: #fcd34d; }
+[data-theme="dark"] .ch-emoji-btn.active { background: #312e81; }
+
+/* -- モバイル対応 -- */
+@media (max-width: 480px) {
+  .ch-summary-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ch-sum-total { grid-column: span 2; }
+  .ch-progress-label { display: none; }
+  .ch-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: 10px; }
+}

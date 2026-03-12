@@ -235,6 +235,7 @@ function loadData() {
     if (!data.subscriptions)  data.subscriptions = [];
     if (!data.points)         data.points = [];       // ポイント残高（v5.47）
     if (!data.wishlist)       data.wishlist = [];     // ほしいものリスト（v5.51）
+    if (!data.challenges)     data.challenges = [];   // 節約チャレンジ（v5.64）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     return data;
@@ -257,6 +258,7 @@ function createDefaultData() {
     subscriptions: [],  // サブスクリプション（v5.43）
     points: [],         // ポイント残高（v5.47）
     wishlist: [],       // ほしいものリスト（v5.51）
+    challenges: [],     // 節約チャレンジ（v5.64）
   };
 }
 
@@ -679,6 +681,67 @@ function markWishlistPurchased(id) {
   });
   updateWishlistItem(id, { purchased: true, purchasedDate: today(), purchasedTxId: tx.id });
   return tx;
+}
+
+// ── 節約チャレンジ CRUD (v5.64) ─────────────────────────────
+const CHALLENGE_EMOJIS = ['🏆','💪','🎯','🔥','⚡','🌟','🚀','💰','🍃','🥗','☕','🛒','✂️','🎪','🎲','🎨','🏅','🌈'];
+const CHALLENGE_COLORS = ['#6366f1','#10b981','#f59e0b','#ef4444','#3b82f6','#8b5cf6','#ec4899','#06b6d4','#84cc16','#f97316','#64748b','#0d9488'];
+
+function getChallenges() {
+  if (!appData.challenges) appData.challenges = [];
+  return appData.challenges;
+}
+
+function addChallenge(fields) {
+  if (!appData.challenges) appData.challenges = [];
+  const c = { ...fields, id: 'ch_' + genId(), createdAt: todayStr() };
+  appData.challenges.push(c);
+  saveData();
+  return c;
+}
+
+function updateChallenge(id, fields) {
+  if (!appData.challenges) appData.challenges = [];
+  const idx = appData.challenges.findIndex(c => c.id === id);
+  if (idx >= 0) {
+    appData.challenges[idx] = { ...appData.challenges[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteChallenge(id) {
+  if (!appData.challenges) { appData.challenges = []; return; }
+  appData.challenges = appData.challenges.filter(c => c.id !== id);
+  saveData();
+}
+
+// チャレンジ進捗を計算して返す
+// returns: { actual, target, pct, isOnTrack, label }
+function calcChallengeProgress(ch) {
+  const txs = appData.transactions.filter(t => t.date && t.date.startsWith(ch.period));
+  if (ch.type === 'budget') {
+    const filtered = ch.categoryId
+      ? txs.filter(t => t.type === 'expense' && t.categoryId === ch.categoryId)
+      : txs.filter(t => t.type === 'expense');
+    const actual = filtered.reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const target = Number(ch.targetAmount) || 1;
+    const pct = Math.min(100, Math.round(actual / target * 100));
+    return { actual, target, pct, isOnTrack: actual <= target, label: formatMoney(actual) + ' / ' + formatMoney(target) };
+  } else { // noSpend
+    const [y, m] = ch.period.split('-').map(Number);
+    const today = new Date();
+    const isCurrentMonth = today.getFullYear() === y && (today.getMonth() + 1) === m;
+    const lastDay = isCurrentMonth ? today.getDate() : new Date(y, m, 0).getDate();
+    const spendDays = new Set(
+      txs
+        .filter(t => t.type === 'expense' && (!ch.categoryId || t.categoryId === ch.categoryId))
+        .map(t => t.date)
+    );
+    const noSpendCount = lastDay - spendDays.size;
+    const target = Number(ch.targetDays) || 1;
+    const pct = Math.min(100, Math.round(noSpendCount / target * 100));
+    return { actual: noSpendCount, target, pct, isOnTrack: noSpendCount >= Math.round(target * (today.getDate() / lastDay)), label: `${noSpendCount}日 / ${target}日` };
+  }
 }
 
 // ── 初期化（必ず最後に実行）────────────────────────────────
