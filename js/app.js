@@ -7503,6 +7503,7 @@ function renderDebts() {
     </div>
     <div class="debt-card-actions">
       <button class="btn-icon debt-add-entry" data-id="${d.id}" title="残高を更新">＋ 更新</button>
+      ${!d.paidOff && d.monthlyPayment > 0 ? `<button class="btn-icon debt-sim" data-id="${d.id}" title="繰上返済シミュレーション">📊</button>` : ''}
       <button class="btn-icon debt-edit" data-id="${d.id}" title="編集">✏️</button>
       <button class="btn-icon debt-delete" data-id="${d.id}" title="削除">🗑️</button>
     </div>
@@ -7648,11 +7649,230 @@ ${archivedSection}
       <button class="btn btn-primary" id="debt-entry-modal-save">保存</button>
     </div>
   </div>
+</div>
+
+<!-- 繰上返済シミュレーターモーダル（v5.86） -->
+<div class="modal-overlay" id="debt-sim-modal" style="display:none">
+  <div class="modal modal-lg">
+    <div class="modal-header sim-modal-header">
+      <h3 class="modal-title">📊 繰上返済シミュレーション</h3>
+      <button class="modal-close" id="debt-sim-modal-close" style="color:#fff">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="sim-loan-info">
+        <span class="sim-loan-name" id="debt-sim-name"></span>
+        <span class="sim-loan-stat">残高 <strong id="debt-sim-balance"></strong></span>
+        <span class="sim-loan-stat" id="debt-sim-rate-badge"></span>
+        <span class="sim-loan-stat">月返済 <strong id="debt-sim-monthly"></strong></span>
+      </div>
+      <div class="form-group sim-extra-group">
+        <label class="form-label">追加返済額 / 月（円）</label>
+        <div class="sim-extra-row">
+          <input type="number" id="debt-sim-extra" class="form-input" placeholder="0" min="0" step="1000">
+          <div class="sim-preset-row">
+            <button class="btn btn-sm btn-ghost sim-preset" data-v="10000">+1万</button>
+            <button class="btn btn-sm btn-ghost sim-preset" data-v="30000">+3万</button>
+            <button class="btn btn-sm btn-ghost sim-preset" data-v="50000">+5万</button>
+            <button class="btn btn-sm btn-ghost sim-preset" data-v="100000">+10万</button>
+          </div>
+        </div>
+      </div>
+      <div id="debt-sim-result"></div>
+      <div class="sim-chart-wrap">
+        <div class="sim-chart-title">残高推移グラフ</div>
+        <canvas id="debt-sim-chart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="debt-sim-modal-close2">閉じる</button>
+    </div>
+  </div>
 </div>`;
 }
 
 let _editingDebtId = null;
 let _entryTargetDebtId = null;
+let _simDebtId = null;
+let _debtSimChart = null;
+
+// ============================================================
+// 繰上返済シミュレーター（v5.86）
+// ============================================================
+
+function calcDebtAmortization(balance, annualRatePct, monthly) {
+  const rate = annualRatePct / 100 / 12;
+  const schedule = [];
+  let bal = balance;
+  let totalInterest = 0;
+  let months = 0;
+  const MAX_MONTHS = 600;
+  while (bal > 0.5 && months < MAX_MONTHS) {
+    const interest = rate > 0 ? bal * rate : 0;
+    const principal = monthly - interest;
+    if (principal <= 0) { months = MAX_MONTHS; break; }
+    totalInterest += interest;
+    bal = Math.max(0, bal - principal);
+    months++;
+    schedule.push({ month: months, balance: Math.round(bal) });
+  }
+  return { months, totalInterest: Math.round(totalInterest), schedule };
+}
+
+function openDebtSimModal(debtId) {
+  _simDebtId = debtId;
+  const d = (appData.debts || []).find(x => x.id === debtId);
+  if (!d) return;
+  const e = getDebtCurrentBalance(d);
+  const cur = e ? Number(e.balance) : Number(d.principal);
+  document.getElementById('debt-sim-name').textContent = d.name;
+  document.getElementById('debt-sim-balance').textContent = formatMoney(cur);
+  document.getElementById('debt-sim-rate-badge').textContent = d.interestRate > 0 ? `年利 ${d.interestRate}%` : '利率なし';
+  document.getElementById('debt-sim-monthly').textContent = formatMoney(d.monthlyPayment || 0);
+  document.getElementById('debt-sim-extra').value = '';
+  updateDebtSim();
+  showModal('debt-sim-modal');
+}
+
+function updateDebtSim() {
+  const d = (appData.debts || []).find(x => x.id === _simDebtId);
+  if (!d) return;
+  const e = getDebtCurrentBalance(d);
+  const cur = e ? Number(e.balance) : Number(d.principal);
+  const rate = Number(d.interestRate) || 0;
+  const monthly = Number(d.monthlyPayment) || 0;
+  const extra = Number(document.getElementById('debt-sim-extra').value) || 0;
+  if (monthly <= 0) {
+    document.getElementById('debt-sim-result').innerHTML = '<p class="sim-no-data">月返済額が設定されていません。ローンを編集して月返済額を入力してください。</p>';
+    return;
+  }
+  const fmtMonths = m => {
+    if (m <= 0 || m >= 600) return '計算不可';
+    const y = Math.floor(m / 12), mo = m % 12;
+    if (y === 0) return `${mo}ヶ月`;
+    if (mo === 0) return `${y}年`;
+    return `${y}年${mo}ヶ月`;
+  };
+  const fmtEnd = m => {
+    if (m <= 0 || m >= 600) return '—';
+    const now = new Date();
+    const dt = new Date(now.getFullYear(), now.getMonth() + m, 1);
+    return `${dt.getFullYear()}年${dt.getMonth() + 1}月`;
+  };
+  const base = calcDebtAmortization(cur, rate, monthly);
+  const accel = extra > 0 ? calcDebtAmortization(cur, rate, monthly + extra) : null;
+  const savedMonths = accel ? Math.max(0, base.months - accel.months) : 0;
+  const savedInterest = accel ? Math.max(0, base.totalInterest - accel.totalInterest) : 0;
+
+  const colHead = accel ? `月+${extra >= 10000 ? (extra / 10000) + '万円' : formatMoney(extra)}` : '—';
+  const betterCls = accel ? ' sim-val-better' : '';
+
+  let html = `
+<div class="sim-result-grid">
+  <div class="sim-result-label"></div>
+  <div class="sim-result-col-head sim-col-base">現在の計画</div>
+  <div class="sim-result-col-head sim-col-accel">${colHead}</div>
+
+  <div class="sim-result-label">残り期間</div>
+  <div class="sim-result-val sim-col-base">${fmtMonths(base.months)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? fmtMonths(accel.months) : '—'}</div>
+
+  <div class="sim-result-label">総支払利息</div>
+  <div class="sim-result-val sim-col-base">${formatMoney(base.totalInterest)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? formatMoney(accel.totalInterest) : '—'}</div>
+
+  <div class="sim-result-label">完済予定</div>
+  <div class="sim-result-val sim-col-base">${fmtEnd(base.months)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? fmtEnd(accel.months) : '—'}</div>
+</div>`;
+
+  if (accel && (savedMonths > 0 || savedInterest > 0)) {
+    html += `
+<div class="sim-savings-banner">
+  <div class="sim-savings-item">
+    <div class="sim-savings-label">⏱️ 短縮期間</div>
+    <div class="sim-savings-value">${fmtMonths(savedMonths)}</div>
+  </div>
+  <div class="sim-savings-divider"></div>
+  <div class="sim-savings-item">
+    <div class="sim-savings-label">💰 節約できる利息</div>
+    <div class="sim-savings-value">${formatMoney(savedInterest)}</div>
+  </div>
+</div>`;
+  }
+  document.getElementById('debt-sim-result').innerHTML = html;
+  renderDebtSimChart(base, accel, extra);
+}
+
+function renderDebtSimChart(base, accel, extra) {
+  const canvas = document.getElementById('debt-sim-chart');
+  if (!canvas) return;
+  if (_debtSimChart) { _debtSimChart.destroy(); _debtSimChart = null; }
+  const ctx = canvas.getContext('2d');
+  const downsample = (sch, maxPts) => {
+    if (sch.length <= maxPts) return sch;
+    const step = Math.ceil(sch.length / maxPts);
+    const pts = [];
+    for (let i = 0; i < sch.length; i += step) pts.push(sch[i]);
+    if (pts[pts.length - 1] !== sch[sch.length - 1]) pts.push(sch[sch.length - 1]);
+    return pts;
+  };
+  const baseData = downsample(base.schedule, 60);
+  const totalMonths = base.schedule.length;
+  const step = totalMonths <= 60 ? 1 : Math.ceil(totalMonths / 60);
+  const labels = baseData.map(p => {
+    const y = Math.floor(p.month / 12);
+    const m = p.month % 12;
+    if (m === 0 && y > 0) return `${y}年後`;
+    return '';
+  });
+  const muted = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#9ca3af';
+  const border = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#e5e7eb';
+  const grad1 = ctx.createLinearGradient(0, 0, 0, 200);
+  grad1.addColorStop(0, 'rgba(99,102,241,0.25)');
+  grad1.addColorStop(1, 'rgba(99,102,241,0.02)');
+  const datasets = [{
+    label: '現在の計画',
+    data: baseData.map(p => p.balance),
+    borderColor: '#6366f1',
+    backgroundColor: grad1,
+    fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+  }];
+  if (accel) {
+    const accelData = downsample(accel.schedule, 60);
+    const grad2 = ctx.createLinearGradient(0, 0, 0, 200);
+    grad2.addColorStop(0, 'rgba(16,185,129,0.2)');
+    grad2.addColorStop(1, 'rgba(16,185,129,0.02)');
+    datasets.push({
+      label: `繰上返済後`,
+      data: accelData.map(p => p.balance),
+      borderColor: '#10b981',
+      backgroundColor: grad2,
+      fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+    });
+  }
+  _debtSimChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 700, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11 } } },
+        tooltip: {
+          backgroundColor: '#1e293b', borderColor: '#6366f1', borderWidth: 1, cornerRadius: 8, padding: 10,
+          callbacks: {
+            label: c => ` ${c.dataset.label}: ${formatMoney(c.raw)}`,
+            title: items => `${items[0].label || (Math.round(items[0].dataIndex * step + 1) + 'ヶ月後')}`,
+          },
+        },
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: 8, color: muted, font: { size: 10 } }, grid: { color: border } },
+        y: { ticks: { callback: v => v >= 10000 ? `¥${Math.round(v / 10000)}万` : `¥${v}`, color: muted, font: { size: 10 } }, grid: { color: border } },
+      },
+    },
+  });
+}
 
 function openDebtModal(debtId) {
   _editingDebtId = debtId || null;
@@ -7692,6 +7912,9 @@ function bindDebts() {
   on('debt-modal-cancel',  'click', () => hideModal('debt-modal'));
   on('debt-entry-modal-close',   'click', () => hideModal('debt-entry-modal'));
   on('debt-entry-modal-cancel',  'click', () => hideModal('debt-entry-modal'));
+  on('debt-sim-modal-close',  'click', () => hideModal('debt-sim-modal'));
+  on('debt-sim-modal-close2', 'click', () => hideModal('debt-sim-modal'));
+  on('debt-sim-extra', 'input', () => updateDebtSim());
 
   on('debt-modal-save', 'click', () => {
     const name = document.getElementById('debt-name').value.trim();
@@ -7731,8 +7954,19 @@ function bindDebts() {
     renderCurrentPage();
   });
 
+  // シミュレーター プリセットボタン（モーダル内）
+  document.addEventListener('click', e => {
+    const preset = e.target.closest('.sim-preset');
+    if (!preset) return;
+    const input = document.getElementById('debt-sim-extra');
+    if (input) { input.value = preset.dataset.v; updateDebtSim(); }
+  }, { capture: false });
+
   // イベント委譲
   document.getElementById('main-content').addEventListener('click', e => {
+    const simBtn = e.target.closest('.debt-sim');
+    if (simBtn) { openDebtSimModal(simBtn.dataset.id); return; }
+
     const addBtn = e.target.closest('.debt-add-entry');
     if (addBtn) { openDebtEntryModal(addBtn.dataset.id); return; }
 

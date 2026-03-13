@@ -8245,3 +8245,104 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .debt-balance-row { flex-direction: column; }
   .debt-meta-right  { flex-direction: row; }
 }
+
+/* ============================================================
+   繰上返済シミュレーター（v5.86）
+   ============================================================ */
+.modal-lg { max-width: 640px; width: 95vw; }
+
+.sim-modal-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end, #5b21b6) 100%);
+  color: #fff;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+.sim-modal-header .modal-title { color: #fff; }
+
+/* ローン情報バー */
+.sim-loan-info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
+  background: var(--surface-hover); border-radius: var(--sp-2); padding: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.sim-loan-name {
+  font-size: var(--fs-base); font-weight: 700; color: var(--text);
+  margin-right: var(--sp-1);
+}
+.sim-loan-stat {
+  font-size: var(--fs-sm); color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 99px; padding: 2px 10px;
+}
+.sim-loan-stat strong { color: var(--text); }
+
+/* 追加返済入力 */
+.sim-extra-group { margin-top: 0; }
+.sim-extra-row { display: flex; flex-direction: column; gap: var(--sp-2); }
+.sim-preset-row { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.sim-preset {
+  font-size: var(--fs-sm); padding: 4px 12px; border-radius: 99px;
+  border: 1px solid var(--border); transition: all .15s;
+}
+.sim-preset:hover {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
+
+/* 結果グリッド */
+.sim-result-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0; border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin: var(--sp-4) 0;
+}
+.sim-result-grid > div {
+  padding: 10px 12px; font-size: var(--fs-sm);
+  border-bottom: 1px solid var(--border);
+}
+.sim-result-grid > div:nth-child(-n+3) { /* header row */
+  font-weight: 700; background: var(--surface-hover);
+}
+.sim-result-grid > div:nth-last-child(-n+3) { border-bottom: none; }
+.sim-result-label { color: var(--text-muted); font-size: var(--fs-xs); display: flex; align-items: center; }
+.sim-result-col-head { text-align: center; }
+.sim-col-base { color: #6366f1; }
+.sim-col-accel { color: #10b981; }
+.sim-result-val { text-align: center; font-weight: 600; color: var(--text); }
+.sim-val-better { color: #059669; }
+
+/* 節約バナー */
+.sim-savings-banner {
+  display: flex; align-items: center; justify-content: center; gap: var(--sp-4);
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border: 1px solid #6ee7b7; border-radius: 12px;
+  padding: var(--sp-4); margin-bottom: var(--sp-4);
+}
+[data-theme="dark"] .sim-savings-banner {
+  background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3);
+}
+.sim-savings-item { text-align: center; }
+.sim-savings-label { font-size: var(--fs-xs); color: #065f46; margin-bottom: 4px; }
+[data-theme="dark"] .sim-savings-label { color: #6ee7b7; }
+.sim-savings-value { font-size: var(--fs-xl); font-weight: 800; color: #059669; }
+[data-theme="dark"] .sim-savings-value { color: #34d399; }
+.sim-savings-divider { width: 1px; height: 48px; background: #6ee7b7; }
+[data-theme="dark"] .sim-savings-divider { background: rgba(16,185,129,0.3); }
+
+/* グラフ */
+.sim-chart-wrap { margin-top: var(--sp-3); }
+.sim-chart-title {
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.sim-no-data {
+  text-align: center; color: var(--text-muted); font-size: var(--fs-sm);
+  padding: var(--sp-4); background: var(--surface-hover); border-radius: 8px;
+  margin: var(--sp-3) 0;
+}
+
+@media (max-width: 500px) {
+  .sim-loan-info { flex-direction: column; align-items: flex-start; }
+  .sim-result-grid { grid-template-columns: 0.8fr 1fr 1fr; }
+  .sim-result-grid > div { padding: 8px 6px; font-size: var(--fs-xs); }
+  .sim-savings-banner { flex-direction: column; gap: var(--sp-2); }
+  .sim-savings-divider { width: 48px; height: 1px; }
+  .modal-lg { width: 100vw; margin: 0; border-radius: var(--radius-card) var(--radius-card) 0 0; align-self: flex-end; }
+}
