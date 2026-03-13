@@ -17,6 +17,7 @@ const appState = {
   catTrendSelected: [],               // v5.68: カテゴリ推移 選択中カテゴリID配列
   quickAddOpen: false,                // v5.74: クイック入力パネル開閉状態
   quickAddType: 'expense',            // v5.74: クイック入力タイプ
+  txSort: { key: 'date', dir: 'desc' }, // v5.78: 取引ソート
 };
 
 // ============================================================
@@ -1416,7 +1417,21 @@ function renderTransactions() {
       if (!haystack.includes(q)) return false;
     }
     return true;
-  }).sort((a, b) => b.date.localeCompare(a.date));
+  }).sort((a, b) => {
+    const { key, dir } = appState.txSort;
+    let va, vb;
+    if (key === 'amount') {
+      va = a.amount; vb = b.amount;
+    } else if (key === 'category') {
+      const ca = getCategoryById(a.categoryId); const cb = getCategoryById(b.categoryId);
+      va = ca ? ca.name : ''; vb = cb ? cb.name : '';
+    } else {
+      va = a.date; vb = b.date;
+    }
+    if (va < vb) return dir === 'asc' ? -1 : 1;
+    if (va > vb) return dir === 'asc' ? 1 : -1;
+    return 0;
+  });
 
   const income  = calcTotal(txs, 'income');
   const expense = calcTotal(txs, 'expense');
@@ -1494,6 +1509,15 @@ function renderTransactions() {
     ? `<th class="tx-cb-th"><input type="checkbox" id="tx-select-all" class="tx-cb" title="全て選択"></th>`
     : '';
 
+  // v5.78: ソートヘルパー
+  const sort = appState.txSort;
+  const sIcon = key => {
+    if (sort.key !== key) return '<span class="tx-sort-icon tx-sort-none">⇅</span>';
+    return `<span class="tx-sort-icon">${sort.dir === 'asc' ? '▲' : '▼'}</span>`;
+  };
+  const sTh = (key, label, cls='') =>
+    `<th class="tx-th-sort${sort.key===key?' tx-th-active':''}${cls?' '+cls:''}" data-sort="${key}">${label}${sIcon(key)}</th>`;
+
   return `
 <div class="page-header">
   <h1 class="page-title">収支一覧</h1>
@@ -1541,7 +1565,7 @@ ${tagFilterHtml}
 <div class="card">
   <div class="table-wrap">
     <table class="tx-table">
-      <thead><tr>${cbTh}<th>日付</th><th>カテゴリ</th><th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th><th>金額</th><th></th></tr></thead>
+      <thead><tr>${cbTh}${sTh('date','日付')}${sTh('category','カテゴリ')}<th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th>${sTh('amount','金額')}<th></th></tr></thead>
       <tbody>${rows || `<tr><td colspan="${bulkCols}" class="empty">取引がありません</td></tr>`}</tbody>
     </table>
   </div>
@@ -1559,6 +1583,18 @@ function bindTransactions() {
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
   on('filter-type',   'change', e => { appState.txFilter.type     = e.target.value; renderCurrentPage(); });
+  // v5.78: ソートヘッダークリック
+  document.querySelectorAll('.tx-th-sort').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (appState.txSort.key === key) {
+        appState.txSort.dir = appState.txSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        appState.txSort = { key, dir: key === 'amount' ? 'desc' : 'asc' };
+      }
+      renderCurrentPage();
+    });
+  });
   // タグフィルターチップ行 (v5.62: クリックイベント委任)
   const tagFilterRow = document.getElementById('tag-filter-row');
   if (tagFilterRow) {

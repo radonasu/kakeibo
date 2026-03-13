@@ -906,6 +906,39 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
 }
 
+/* ── 取引ソートヘッダー (v5.78) ─────────────────────────────── */
+.tx-th-sort {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.tx-th-sort:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.tx-th-sort.tx-th-active {
+  color: var(--primary);
+}
+.tx-sort-icon {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: .7em;
+  line-height: 1;
+  vertical-align: middle;
+  opacity: .8;
+  transition: transform .15s;
+}
+.tx-th-active .tx-sort-icon {
+  opacity: 1;
+}
+.tx-sort-none {
+  opacity: .3;
+}
+[data-theme="dark"] .tx-th-sort:hover {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
 /* 一括操作バー (v5.56 グラスモーフィズム) */
 @keyframes bulk-slide-up {
   from { transform: translateY(110%); opacity: 0; }
