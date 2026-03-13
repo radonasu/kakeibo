@@ -7801,7 +7801,20 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 10px;
 }
 
-/* ── 年間支出ヒートマップ (v5.82) ──────────────────────────── */
+/* ── 年間支出ヒートマップ (v5.83) ──────────────────────────── */
+@keyframes hm-stat-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hm-col-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hm-today-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3px rgba(239,68,68,0.5); }
+  50%       { box-shadow: 0 0 0 2px rgba(255,255,255,0.7), 0 0 8px 2px rgba(239,68,68,0.4); }
+}
+
 .hm-summary-row {
   display: flex;
   gap: var(--sp-3);
@@ -7814,7 +7827,47 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--sp-3);
+  position: relative;
+  overflow: hidden;
+  animation: hm-stat-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--hm-si, 0) * 65ms);
 }
+.hm-stat-card::before {
+  content: '';
+  position: absolute;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  top: -20px; right: -20px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+/* カード別グラデーション */
+.hm-stat-card:nth-child(1) {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.hm-stat-card:nth-child(1)::before { background: var(--primary); }
+.hm-stat-card:nth-child(2) {
+  background: linear-gradient(135deg, var(--danger-bg) 0%, var(--surface) 100%);
+  border-color: var(--danger-border);
+}
+.hm-stat-card:nth-child(2)::before { background: var(--danger-text); }
+.hm-stat-card:nth-child(3) {
+  background: linear-gradient(135deg, #fffbeb 0%, var(--surface) 100%);
+  border-color: color-mix(in srgb, #f59e0b 30%, transparent);
+}
+.hm-stat-card:nth-child(3)::before { background: #f59e0b; }
+.hm-stat-card:nth-child(4) {
+  background: linear-gradient(135deg, var(--success-bg) 0%, var(--surface) 100%);
+  border-color: var(--success-border);
+}
+.hm-stat-card:nth-child(4)::before { background: #10b981; }
+
+[data-theme="dark"] .hm-stat-card:nth-child(1) { background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 15%, var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(2) { background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 12%, var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(135deg, color-mix(in srgb, #f59e0b 12%, var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(135deg, color-mix(in srgb, #10b981 12%, var(--surface)) 0%, var(--surface) 100%); }
+
 .hm-stat-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -7873,7 +7926,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-month-label {
   position: absolute;
   left: calc(var(--hm-week-col) * 16px);
-  font-size: 10px;
+  font-size: var(--fs-xs);
   color: var(--text-muted);
   line-height: 20px;
   white-space: nowrap;
@@ -7886,23 +7939,42 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   grid-auto-columns: 13px;
   gap: 3px;
 }
+/* 週列スタッガードフェードイン */
+.hm-col-wrap {
+  display: contents;
+  animation: hm-col-in 0.35s ease both;
+  animation-delay: calc(var(--hm-wi, 0) * 8ms);
+}
 .hm-cell {
   width: 13px;
   height: 13px;
-  border-radius: 2px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: transform 0.12s, box-shadow 0.12s;
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s;
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
-  transform: scale(1.5);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.6);
   z-index: 1;
   position: relative;
 }
+/* レベル別ホバーグロー */
+.hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px rgba(248,113,113,0.5); }
+.hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px rgba(239,68,68,0.6); }
+.hm-lv3:hover:not(.hm-legend-cell) { box-shadow: 0 2px 10px rgba(239,68,68,0.7); }
+.hm-lv4:hover:not(.hm-legend-cell) { box-shadow: 0 2px 12px rgba(185,28,28,0.8); }
 .hm-out {
   background: transparent !important;
   cursor: default;
   pointer-events: none;
+}
+/* 今日のセル */
+.hm-today {
+  outline: 2px solid rgba(255,255,255,0.9);
+  outline-offset: -2px;
+  border-radius: 3px;
+  animation: hm-today-pulse 2.4s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
 }
 /* 支出量ヒートマップ色（赤系グラデーション） */
 .hm-lv0 { background: var(--border); }
@@ -7916,6 +7988,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .hm-lv2 { background: #991b1b; }
 [data-theme="dark"] .hm-lv3 { background: #dc2626; }
 [data-theme="dark"] .hm-lv4 { background: #f87171; }
+[data-theme="dark"] .hm-today {
+  outline-color: rgba(255,255,255,0.7);
+}
 
 .hm-legend {
   display: flex;

@@ -2312,6 +2312,7 @@ function renderHeatmapSection(year, yearTxs) {
   // グリッド開始日: 1月1日を含む週の日曜日
   const jan1 = new Date(year, 0, 1);
   const gridStart = new Date(year, 0, 1 - jan1.getDay());
+  const todayIso = todayStr();
 
   // 各月の最初の週インデックスを記録
   const monthFirstWeek = {};
@@ -2333,7 +2334,7 @@ function renderHeatmapSection(year, yearTxs) {
       const date = new Date(gridStart);
       date.setDate(date.getDate() + w * 7 + d);
       if (date.getFullYear() !== year) {
-        cellsHtml.push('<div class="hm-cell hm-out" aria-hidden="true"></div>');
+        cellsHtml.push(`<div class="hm-cell hm-out" style="--hm-wi:${w}" aria-hidden="true"></div>`);
         continue;
       }
       const dateStr = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -2341,7 +2342,8 @@ function renderHeatmapSection(year, yearTxs) {
       const level = getLevel(amount);
       const mo = date.getMonth() + 1;
       const tooltip = amount > 0 ? `${dateStr}  ${formatMoney(amount)}` : dateStr;
-      cellsHtml.push(`<div class="hm-cell hm-lv${level}" title="${esc2(tooltip)}" data-hm-date="${dateStr}" data-hm-month="${mo}" role="gridcell" aria-label="${esc2(tooltip)}"></div>`);
+      const isToday = dateStr === todayIso;
+      cellsHtml.push(`<div class="hm-cell hm-lv${level}${isToday ? ' hm-today' : ''}" style="--hm-wi:${w}" title="${esc2(tooltip)}" data-hm-date="${dateStr}" data-hm-month="${mo}" role="gridcell" aria-label="${esc2(tooltip)}${isToday ? ' (今日)' : ''}"></div>`);
     }
   }
 
@@ -2356,20 +2358,20 @@ function renderHeatmapSection(year, yearTxs) {
   return `<div id="sec-heatmap" class="card">
   <h3 class="card-title">🗓️ 年間支出ヒートマップ（${year}年）</h3>
   <div class="hm-summary-row">
-    <div class="hm-stat-card">
+    <div class="hm-stat-card" style="--hm-si:0">
       <div class="hm-stat-label">支出日数</div>
       <div class="hm-stat-value">${expDays}<span class="hm-stat-unit">日</span></div>
     </div>
-    <div class="hm-stat-card">
+    <div class="hm-stat-card" style="--hm-si:1">
       <div class="hm-stat-label">最大支出日</div>
       <div class="hm-stat-value">${maxDay ? maxDay[0].slice(5).replace('-', '/') : '—'}</div>
       ${maxDay ? `<div class="hm-stat-sub expense">${formatMoney(maxDay[1])}</div>` : ''}
     </div>
-    <div class="hm-stat-card">
+    <div class="hm-stat-card" style="--hm-si:2">
       <div class="hm-stat-label">支出日平均</div>
       <div class="hm-stat-value">${expDays ? formatMoney(avgDailyExp) : '—'}</div>
     </div>
-    <div class="hm-stat-card">
+    <div class="hm-stat-card" style="--hm-si:3">
       <div class="hm-stat-label">最長無支出期間</div>
       <div class="hm-stat-value">${maxStreak}<span class="hm-stat-unit">日</span></div>
     </div>
