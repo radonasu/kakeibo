@@ -8019,7 +8019,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ============================================================
-   負債・ローン管理 (v5.84)
+   負債・ローン管理 (v5.84 + v5.85 ビジュアル洗練)
    ============================================================ */
 
 /* サマリーカード */
@@ -8028,6 +8028,39 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-summary-total .summary-label,
 .debt-summary-monthly .summary-label { color: rgba(255,255,255,0.85); }
 .debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: .85; }
+
+/* サマリーカード デコレーションサークル + 入場アニメーション (v5.85) */
+.debt-summary-total,
+.debt-summary-monthly {
+  position: relative;
+  overflow: hidden;
+  animation: debt-sum-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: calc(var(--ds-i, 0) * 70ms);
+}
+@keyframes debt-sum-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+.debt-summary-total::after,
+.debt-summary-monthly::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.10);
+  pointer-events: none;
+}
+.debt-summary-total::before,
+.debt-summary-monthly::before {
+  content: '';
+  position: absolute;
+  bottom: -28px; left: -18px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  pointer-events: none;
+}
 
 /* 純資産内訳 */
 .asset-net-breakdown {
@@ -8044,10 +8077,31 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 4px solid var(--debt-accent, var(--primary));
   animation: debt-card-in .38s cubic-bezier(0.34,1.56,0.64,1) both;
   animation-delay: calc(var(--dc-i, 0) * 60ms);
+  position: relative;
+  overflow: hidden;
 }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(12px) scale(0.97); }
   to   { opacity: 1; transform: none; }
+}
+/* カード右上デコレーションサークル (v5.85) */
+.debt-card::before {
+  content: '';
+  position: absolute;
+  top: -28px; right: -28px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--debt-accent, var(--primary)) 15%, transparent) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* 低返済率カードのパルスアニメーション (v5.85) */
+.debt-card.debt-low {
+  animation: debt-card-in .38s cubic-bezier(0.34,1.56,0.64,1) both,
+             debt-low-glow 2.4s ease-in-out calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
+}
+@keyframes debt-low-glow {
+  0%, 100% { border-left-color: var(--debt-accent, var(--expense)); }
+  50%       { border-left-color: color-mix(in srgb, var(--debt-accent, var(--expense)) 35%, transparent); }
 }
 
 .debt-card-header {
@@ -8075,11 +8129,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-balance { font-size: var(--fs-xl); font-weight: 700; color: var(--expense); }
 .debt-balance-meta { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-1); }
 .debt-meta-right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-1); }
+/* 年利・月返済バッジ: --debt-accent カラー連動 (v5.85) */
 .debt-rate-badge,
 .debt-monthly-badge {
   font-size: var(--fs-xs); font-weight: 600;
   padding: 2px 8px; border-radius: var(--radius-badge, 99px);
-  background: var(--surface-hover); color: var(--text-muted);
+  background: color-mix(in srgb, var(--debt-accent, var(--primary)) 12%, transparent);
+  color: var(--debt-accent, var(--primary));
 }
 
 /* 返済プログレスバー */
@@ -8094,18 +8150,30 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   overflow: hidden;
 }
+/* scaleX アニメーション (v5.85) */
 .debt-bar-fill {
   height: 100%; border-radius: 99px;
-  transition: width .7s cubic-bezier(.4,0,.2,1);
+  transform-origin: left center;
+  animation: debt-bar-fill-in 0.7s ease both;
+  animation-delay: calc(var(--dbi, 0) * 40ms + 0.2s);
+}
+@keyframes debt-bar-fill-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 .debt-bar-great { background: var(--income); }
 .debt-bar-mid   { background: #f59e0b; }
 .debt-bar-low   { background: var(--expense); }
 
-/* 完済予定 */
-.debt-end-date {
-  display: inline-block; font-size: var(--fs-xs); color: var(--text-muted);
-  margin-top: var(--sp-1);
+/* 完済予定 ピルスタイル (v5.85) */
+.debt-end-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: var(--fs-xs); font-weight: 600;
+  padding: 3px 10px; border-radius: 99px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  margin-top: var(--sp-2);
 }
 
 /* 履歴 */

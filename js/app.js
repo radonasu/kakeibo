@@ -7472,16 +7472,17 @@ function renderDebts() {
     const prin = Number(d.principal) || 1;
     const paidPct = Math.max(0, Math.min(Math.round((1 - cur / prin) * 100), 100));
     const barCls = paidPct >= 75 ? 'debt-bar-great' : paidPct >= 40 ? 'debt-bar-mid' : 'debt-bar-low';
+    const lowCls = paidPct < 25 ? ' debt-low' : '';
     const dateLabel = e ? `${formatDate(e.date)} 時点` : '残高未更新';
     const entries = [...(d.entries || [])].sort((a, b) => b.date.localeCompare(a.date));
 
-    // 完済予定月
+    // 完済予定月 (v5.85: ピル形式)
     let endHint = '';
     if (d.endDate) {
-      endHint = `<span class="debt-end-date">完済予定: ${d.endDate.replace('-', '年').replace(/-(\d+)$/, '$1月')}</span>`;
+      endHint = `<span class="debt-end-pill">🏁 完済予定: ${d.endDate.replace('-', '年').replace(/-(\d+)$/, '$1月')}</span>`;
     } else if (cur > 0 && Number(d.monthlyPayment) > 0) {
       const months = Math.ceil(cur / Number(d.monthlyPayment));
-      endHint = `<span class="debt-end-date">残り約 ${months} ヶ月</span>`;
+      endHint = `<span class="debt-end-pill">📅 残り約 ${months} ヶ月</span>`;
     }
 
     const histRows = entries.slice(0, 3).map(en => `
@@ -7493,7 +7494,7 @@ function renderDebts() {
       </div>`).join('');
 
     return `
-<div class="card debt-card" style="--debt-accent:${typeInfo.color};--dc-i:${idx}">
+<div class="card debt-card${lowCls}" style="--debt-accent:${typeInfo.color};--dc-i:${idx}">
   <div class="debt-card-header">
     <div class="debt-info">
       <div class="debt-type-icon-wrap" style="background:${typeInfo.color}20;color:${typeInfo.color}">${d.emoji || typeInfo.icon}</div>
@@ -7508,7 +7509,7 @@ function renderDebts() {
   </div>
   <div class="debt-balance-row">
     <div>
-      <div class="debt-balance js-countup" data-value="${cur}">${formatMoney(cur)}</div>
+      <div class="debt-balance js-countup" data-value="${cur}" style="color:var(--debt-accent)">${formatMoney(cur)}</div>
       <div class="debt-balance-meta">${dateLabel}</div>
     </div>
     <div class="debt-meta-right">
@@ -7521,7 +7522,7 @@ function renderDebts() {
       <span class="debt-progress-label">返済済み ${paidPct}%</span>
       <span class="debt-progress-detail">元本 ${formatMoney(prin)}</span>
     </div>
-    <div class="debt-bar-track"><div class="debt-bar-fill ${barCls}" style="width:${paidPct}%"></div></div>
+    <div class="debt-bar-track"><div class="debt-bar-fill ${barCls}" style="width:${paidPct}%;--dbi:${idx}"></div></div>
   </div>
   ${endHint}
   ${entries.length > 0 ? `
@@ -7554,12 +7555,12 @@ function renderDebts() {
 </div>
 
 <div class="summary-cards">
-  <div class="card summary-card debt-summary-total">
+  <div class="card summary-card debt-summary-total" style="--ds-i:0">
     <div class="summary-label">💳 総残高</div>
     <div class="summary-amount js-countup" data-value="${totalDebt}">${formatMoney(totalDebt)}</div>
     <div class="debt-summary-sub">${activeDebts.length}件のローン</div>
   </div>
-  <div class="card summary-card debt-summary-monthly">
+  <div class="card summary-card debt-summary-monthly" style="--ds-i:1">
     <div class="summary-label">📅 月次返済総額</div>
     <div class="summary-amount js-countup" data-value="${totalMonthly}">${formatMoney(totalMonthly)}</div>
     <div class="debt-summary-sub">毎月の支払い合計</div>
