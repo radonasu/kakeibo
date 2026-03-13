@@ -2700,8 +2700,8 @@ body {
 }
 
 /* ── モーダルアニメーション ── */
-.modal-overlay { opacity: 0; transition: opacity .18s ease; }
-.modal-overlay.modal-is-open { opacity: 1; }
+.modal-overlay { opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+.modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
 .modal-overlay .modal {
   transform: translateY(20px) scale(0.96);
   opacity: 0;

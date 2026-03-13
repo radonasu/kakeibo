@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.90'; // v5.90: 年間収支予定管理 + CSS品質改善（未定義変数修正・ハードコード色変数化・ダークモードモーダルオーバーレイ）
+const CACHE_NAME = 'kakeibo-v5.90a'; // v5.90a: モーダルオーバーレイpointer-events修正（スワイプ・タッチ操作ブロック解消）
 const ASSETS = [
   './index.html',
   './css/style.css',
