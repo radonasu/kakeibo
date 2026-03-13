@@ -7014,3 +7014,121 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .fv-mini-bar { width: 40px; }
   .fv-seg-bar { width: 36px; }
 }
+
+/* ============================================================
+   今週の家計ウィジェット (v5.72)
+   ============================================================ */
+.wk-widget-card .card-header-row { margin-bottom: var(--sp-3); }
+.wk-week-range {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* サマリー行 */
+.wk-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.wk-cell {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  padding: var(--sp-3) var(--sp-2);
+  text-align: center;
+}
+.wk-cell-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-1);
+}
+.wk-cell-value {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.wk-cell-value.wk-today-exp { color: var(--danger-text); }
+.wk-cell-value.wk-nospend   { color: var(--success, #10b981); }
+.wk-unit  { font-size: var(--fs-sm); font-weight: 500; }
+.wk-cell-sub {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.wk-diff {
+  display: inline-block;
+  font-size: var(--fs-2xs);
+  border-radius: var(--radius-badge, 20px);
+  padding: 1px 6px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+.wk-diff-up   { background: var(--danger-bg);   color: var(--danger-text); }
+.wk-diff-down { background: var(--success-bg, #d1fae5); color: #065f46; }
+[data-theme="dark"] .wk-diff-down { background: #064e3b; color: #6ee7b7; }
+
+/* バーグラフ行 */
+.wk-bars {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--sp-1);
+  align-items: end;
+}
+.wk-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  animation: wk-col-in 0.3s ease both;
+  animation-delay: calc(var(--wk-i, 0) * 40ms);
+}
+@keyframes wk-col-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.wk-bar-wrap {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.wk-bar-fill {
+  width: 60%;
+  min-width: 8px;
+  background: var(--primary, #6366f1);
+  border-radius: 4px 4px 2px 2px;
+  min-height: 3px;
+}
+.wk-bar-future  .wk-bar-fill { background: var(--border); }
+.wk-bar-today   .wk-bar-fill { background: var(--danger-text, #ef4444); }
+.wk-weekend     .wk-bar-fill { background: #8b5cf6; }
+.wk-bar-today.wk-weekend .wk-bar-fill { background: var(--danger-text, #ef4444); }
+
+.wk-bar-amount {
+  font-size: 9px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-height: 13px;
+  text-align: center;
+}
+.wk-bar-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.wk-today-label {
+  color: var(--danger-text, #ef4444);
+  font-weight: 700;
+}
+
+/* モバイル対応 */
+@media (max-width: 500px) {
+  .wk-summary-row { grid-template-columns: repeat(3, 1fr); gap: var(--sp-2); }
+  .wk-cell { padding: var(--sp-2) var(--sp-1); }
+  .wk-cell-value { font-size: var(--fs-md); }
+  .wk-bar-wrap { height: 48px; }
+  .wk-bar-amount { font-size: 8px; }
+}

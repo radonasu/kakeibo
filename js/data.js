@@ -642,6 +642,83 @@ function getLast12Months() {
   return result;
 }
 
+// ── 今週の家計統計 (v5.72) ────────────────────────────────
+function getWeeklyStats() {
+  const today = new Date();
+  const todayISO = todayStr();
+
+  // 月曜日を週の起点とする
+  const dow = today.getDay(); // 0=日, 1=月...
+  const diffToMon = dow === 0 ? -6 : 1 - dow;
+  const monDate = new Date(today);
+  monDate.setDate(today.getDate() + diffToMon);
+
+  // 今週の7日分 (月〜日) を生成
+  const DAY_LABELS = ['月', '火', '水', '木', '金', '土', '日'];
+  const weekDates = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monDate);
+    d.setDate(monDate.getDate() + i);
+    weekDates.push(
+      d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0')
+    );
+  }
+
+  // 先週の7日分
+  const lastWeekDates = weekDates.map(ds => {
+    const d = new Date(ds);
+    d.setDate(d.getDate() - 7);
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  });
+
+  // 日別集計
+  const daily = weekDates.map((date, i) => {
+    const dayTxs = appData.transactions.filter(t => t.date === date);
+    return {
+      label: DAY_LABELS[i],
+      date,
+      expense: calcTotal(dayTxs, 'expense'),
+      income: calcTotal(dayTxs, 'income'),
+      isFuture: date > todayISO,
+      isToday: date === todayISO,
+    };
+  });
+
+  const weekTxs = appData.transactions.filter(t => t.date && weekDates.includes(t.date));
+  const lastWeekTxs = appData.transactions.filter(t => t.date && lastWeekDates.includes(t.date));
+  const todayTxs = appData.transactions.filter(t => t.date === todayISO);
+
+  const thisWeekExpense = calcTotal(weekTxs, 'expense');
+  const thisWeekIncome  = calcTotal(weekTxs, 'income');
+  const lastWeekExpense = calcTotal(lastWeekTxs, 'expense');
+
+  const todayExpense = calcTotal(todayTxs, 'expense');
+  const todayIncome  = calcTotal(todayTxs, 'income');
+
+  // 過去日（今日含まず）の無支出日カウント
+  const pastDays    = daily.filter(d => !d.isFuture && !d.isToday);
+  const noSpendDays = pastDays.filter(d => d.expense === 0).length;
+
+  // 週範囲ラベル
+  const fmtMd = ds => {
+    const [, m, d] = ds.split('-');
+    return `${parseInt(m)}/${parseInt(d)}`;
+  };
+  const weekRangeLabel = `${fmtMd(weekDates[0])}(月)〜${fmtMd(weekDates[6])}(日)`;
+
+  return {
+    daily, weekDates, weekRangeLabel,
+    thisWeekExpense, thisWeekIncome,
+    lastWeekExpense,
+    todayExpense, todayIncome,
+    noSpendDays, todayISO,
+  };
+}
+
 // ── ほしいものリスト CRUD (v5.51) ─────────────────────────
 function getWishlistItems(includePurchased = false) {
   const list = appData.wishlist || [];

@@ -854,6 +854,54 @@ function renderDashboard() {
     return `<span class="diff ${cls}">${pct >= 0 ? '▲' : '▼'} ${Math.abs(pct)}%</span>`;
   };
 
+  // 今週の家計ウィジェット（v5.72）
+  const wk = getWeeklyStats();
+  const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
+  const wkDiffPct = wk.lastWeekExpense > 0
+    ? Math.round((wk.thisWeekExpense - wk.lastWeekExpense) / wk.lastWeekExpense * 100)
+    : null;
+  const wkDiffBadge = wkDiffPct !== null
+    ? `<span class="wk-diff ${wkDiffPct > 0 ? 'wk-diff-up' : 'wk-diff-down'}">${wkDiffPct > 0 ? '▲' : '▼'}${Math.abs(wkDiffPct)}% 先週比</span>`
+    : '';
+  const weeklySection = showWidget('weekly') ? `
+<div class="card wk-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📅 今週の家計</h3>
+    <span class="wk-week-range">${wk.weekRangeLabel}</span>
+  </div>
+  <div class="wk-summary-row">
+    <div class="wk-cell">
+      <div class="wk-cell-label">今日の支出</div>
+      <div class="wk-cell-value wk-today-exp js-countup" data-value="${wk.todayExpense}">${formatMoney(wk.todayExpense)}</div>
+      ${wk.todayIncome > 0 ? `<div class="wk-cell-sub">収入 ${formatMoney(wk.todayIncome)}</div>` : ''}
+    </div>
+    <div class="wk-cell">
+      <div class="wk-cell-label">今週の支出</div>
+      <div class="wk-cell-value js-countup" data-value="${wk.thisWeekExpense}">${formatMoney(wk.thisWeekExpense)}</div>
+      ${wkDiffBadge}
+    </div>
+    <div class="wk-cell">
+      <div class="wk-cell-label">無支出日</div>
+      <div class="wk-cell-value wk-nospend">${wk.noSpendDays} <span class="wk-unit">日</span></div>
+      <div class="wk-cell-sub">今週の実績</div>
+    </div>
+  </div>
+  <div class="wk-bars" aria-label="今週の日別支出バー">
+    ${wk.daily.map((d, i) => {
+      const pct = Math.round(d.expense / wkMaxExpense * 100);
+      const isCls = d.isToday ? 'wk-bar-today' : d.isFuture ? 'wk-bar-future' : '';
+      const isWeekend = i >= 5;
+      return `<div class="wk-bar-col ${isCls}${isWeekend ? ' wk-weekend' : ''}" style="--wk-i:${i}">
+        <div class="wk-bar-wrap">
+          <div class="wk-bar-fill" style="height:${d.isFuture ? 0 : pct}%;--wk-bar-pct:${pct}%" ${!d.isFuture ? 'data-wk-animate="1"' : ''}></div>
+        </div>
+        <div class="wk-bar-amount">${d.expense > 0 && !d.isFuture ? formatMoney(d.expense).replace('¥','') : ''}</div>
+        <div class="wk-bar-label ${d.isToday ? 'wk-today-label' : ''}">${d.label}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>` : '';
+
   // 最近10件
   const recent = [...appData.transactions]
     .filter(t => t.date)
@@ -901,6 +949,8 @@ function renderDashboard() {
     <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
   </div>
 </div>
+
+${weeklySection}
 
 ${forecastSection}
 
@@ -1026,6 +1076,19 @@ function bindDashboard() {
     requestAnimationFrame(tick);
   });
   animateGoalRings(); // v5.32
+  // 今週ウィジェット バーアニメーション（v5.72）
+  document.querySelectorAll('.wk-bar-fill[data-wk-animate]').forEach((el, idx) => {
+    const targetH = el.style.height;
+    el.style.height = '0%';
+    setTimeout(() => {
+      el.style.transition = 'height 0.55s cubic-bezier(0.34,1.56,0.64,1)';
+      el.style.height = targetH;
+    }, 80 + idx * 55);
+  });
+  // js-fv-countup 対応（固変ウィジェット等）
+  document.querySelectorAll('.js-fv-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
+  });
   // グラフ描画（少し遅延させてDOMが確定してから）
   setTimeout(() => {
     if (document.getElementById('donut-expense')) {
@@ -2909,6 +2972,7 @@ function renderSettings() {
   ${(() => {
     const dw = s.dashWidgets || {};
     const widgets = [
+      { key: 'weekly',        label: '今週の家計',      icon: '📅' },
       { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
       { key: 'insight',       label: '今月のインサイト',icon: '💡' },
