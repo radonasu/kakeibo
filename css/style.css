@@ -906,12 +906,23 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
 }
 
-/* ── 取引ソートヘッダー (v5.78) ─────────────────────────────── */
+/* ── 取引ソートヘッダー (v5.79 ビジュアル洗練) ─────────────── */
+@keyframes tx-icon-bounce-asc {
+  0%   { transform: translateY(3px) scale(.8); opacity: 0; }
+  60%  { transform: translateY(-1px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes tx-icon-bounce-desc {
+  0%   { transform: translateY(-3px) scale(.8); opacity: 0; }
+  60%  { transform: translateY(1px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
 .tx-th-sort {
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
   transition: color .15s, background .15s;
+  position: relative;
 }
 .tx-th-sort:hover {
   color: var(--primary);
@@ -919,24 +930,79 @@ select:focus:not(:focus-visible) {
 }
 .tx-th-sort.tx-th-active {
   color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  border-bottom: 3px solid var(--primary) !important;
 }
 .tx-sort-icon {
-  display: inline-block;
-  margin-left: 3px;
-  font-size: .7em;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
   vertical-align: middle;
   opacity: .8;
-  transition: transform .15s;
+  flex-shrink: 0;
+}
+.tx-sort-icon svg {
+  width: 10px;
+  height: 10px;
 }
 .tx-th-active .tx-sort-icon {
   opacity: 1;
 }
+.tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  .25s cubic-bezier(.34,1.56,.64,1) both; }
+.tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc .25s cubic-bezier(.34,1.56,.64,1) both; }
 .tx-sort-none {
-  opacity: .3;
+  opacity: .25;
+}
+/* ソートリセットピル */
+@keyframes tx-sort-badge-in {
+  from { opacity: 0; transform: scale(.85) translateX(4px); }
+  to   { opacity: 1; transform: scale(1) translateX(0); }
+}
+.tx-sort-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 99px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--primary);
+  background: var(--primary-light);
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
+  cursor: pointer;
+  transition: background .15s, transform .1s, box-shadow .15s;
+  white-space: nowrap;
+  align-self: center;
+  flex-shrink: 0;
+  animation: tx-sort-badge-in .2s ease both;
+}
+.tx-sort-badge:hover {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.tx-sort-badge svg {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+}
+.tx-sort-badge-x {
+  font-size: 10px;
+  opacity: .6;
+  margin-left: 1px;
 }
 [data-theme="dark"] .tx-th-sort:hover {
   background: color-mix(in srgb, var(--primary) 15%, transparent);
+}
+[data-theme="dark"] .tx-th-sort.tx-th-active {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+[data-theme="dark"] .tx-sort-badge {
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+[data-theme="dark"] .tx-sort-badge:hover {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
 }
 
 /* 一括操作バー (v5.56 グラスモーフィズム) */
@@ -2610,6 +2676,10 @@ body {
   from { opacity: 0; transform: translateX(-6px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+@keyframes tx-sort-row-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .tx-table tbody tr { animation: row-in .18s ease both; }
 .tx-table tbody tr:nth-child(2)  { animation-delay: .04s; }
 .tx-table tbody tr:nth-child(3)  { animation-delay: .08s; }
@@ -2620,6 +2690,17 @@ body {
 .tx-table tbody tr:nth-child(8)  { animation-delay: .28s; }
 .tx-table tbody tr:nth-child(9)  { animation-delay: .32s; }
 .tx-table tbody tr:nth-child(10) { animation-delay: .36s; }
+/* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
+.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in .2s ease both; }
+.tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: .025s; }
+.tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: .050s; }
+.tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: .075s; }
+.tx-table.tx-sorting tbody tr:nth-child(5)  { animation-delay: .100s; }
+.tx-table.tx-sorting tbody tr:nth-child(6)  { animation-delay: .125s; }
+.tx-table.tx-sorting tbody tr:nth-child(7)  { animation-delay: .150s; }
+.tx-table.tx-sorting tbody tr:nth-child(8)  { animation-delay: .175s; }
+.tx-table.tx-sorting tbody tr:nth-child(9)  { animation-delay: .200s; }
+.tx-table.tx-sorting tbody tr:nth-child(10) { animation-delay: .225s; }
 
 /* ── リップルエフェクト ── */
 .btn { position: relative; overflow: hidden; }

@@ -18,6 +18,7 @@ const appState = {
   quickAddOpen: false,                // v5.74: クイック入力パネル開閉状態
   quickAddType: 'expense',            // v5.74: クイック入力タイプ
   txSort: { key: 'date', dir: 'desc' }, // v5.78: 取引ソート
+  _sortChanged: false,                  // v5.79: ソートアニメーション用フラグ
 };
 
 // ============================================================
@@ -1509,14 +1510,28 @@ function renderTransactions() {
     ? `<th class="tx-cb-th"><input type="checkbox" id="tx-select-all" class="tx-cb" title="全て選択"></th>`
     : '';
 
-  // v5.78: ソートヘルパー
+  // v5.79: ソートヘルパー（SVGアイコン）
   const sort = appState.txSort;
+  const SVG_SORT_NONE = '<svg viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5L5 2.5L8 5"/><path d="M2 7L5 9.5L8 7"/></svg>';
+  const SVG_ASC       = '<svg viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="2"   stroke-linecap="round" stroke-linejoin="round"><path d="M2 8L5 4L8 8"/></svg>';
+  const SVG_DESC      = '<svg viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="2"   stroke-linecap="round" stroke-linejoin="round"><path d="M2 4L5 8L8 4"/></svg>';
   const sIcon = key => {
-    if (sort.key !== key) return '<span class="tx-sort-icon tx-sort-none">⇅</span>';
-    return `<span class="tx-sort-icon">${sort.dir === 'asc' ? '▲' : '▼'}</span>`;
+    if (sort.key !== key) return `<span class="tx-sort-icon tx-sort-none">${SVG_SORT_NONE}</span>`;
+    const cls = sort.dir === 'asc' ? 'tx-asc' : 'tx-desc';
+    return `<span class="tx-sort-icon ${cls}">${sort.dir === 'asc' ? SVG_ASC : SVG_DESC}</span>`;
   };
   const sTh = (key, label, cls='') =>
     `<th class="tx-th-sort${sort.key===key?' tx-th-active':''}${cls?' '+cls:''}" data-sort="${key}">${label}${sIcon(key)}</th>`;
+  // ソートリセットバッジ（デフォルト以外の時に表示）
+  const isDefaultSort = sort.key === 'date' && sort.dir === 'desc';
+  const sortLabel = sort.key === 'date' ? '日付' : sort.key === 'category' ? 'カテゴリ' : '金額';
+  const sortBadgeHtml = !isDefaultSort
+    ? `<button class="tx-sort-badge" id="tx-sort-reset" title="ソートをリセット">
+        ${sort.dir === 'asc' ? SVG_ASC : SVG_DESC}
+        ${sortLabel}
+        <span class="tx-sort-badge-x">✕</span>
+      </button>`
+    : '';
 
   return `
 <div class="page-header">
@@ -1560,11 +1575,12 @@ ${tagFilterHtml}
     <span class="smi-amount ${income - expense >= 0 ? 'income' : 'expense'}">${income - expense >= 0 ? '+' : ''}${formatMoney(income - expense)}</span>
   </div>
   <span class="smi-count">${txs.length}件</span>
+  ${sortBadgeHtml}
 </div>
 
 <div class="card">
   <div class="table-wrap">
-    <table class="tx-table">
+    <table class="tx-table${appState._sortChanged ? ' tx-sorting' : ''}">
       <thead><tr>${cbTh}${sTh('date','日付')}${sTh('category','カテゴリ')}<th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th>${sTh('amount','金額')}<th></th></tr></thead>
       <tbody>${rows || `<tr><td colspan="${bulkCols}" class="empty">取引がありません</td></tr>`}</tbody>
     </table>
@@ -1592,8 +1608,17 @@ function bindTransactions() {
       } else {
         appState.txSort = { key, dir: key === 'amount' ? 'desc' : 'asc' };
       }
+      appState._sortChanged = true;
       renderCurrentPage();
+      appState._sortChanged = false;
     });
+  });
+  // v5.79: ソートリセットバッジ
+  on('tx-sort-reset', 'click', () => {
+    appState.txSort = { key: 'date', dir: 'desc' };
+    appState._sortChanged = true;
+    renderCurrentPage();
+    appState._sortChanged = false;
   });
   // タグフィルターチップ行 (v5.62: クリックイベント委任)
   const tagFilterRow = document.getElementById('tag-filter-row');
