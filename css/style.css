@@ -7228,3 +7228,199 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .wk-bar-wrap { height: 48px; }
   .wk-bar-amount { font-size: 8px; }
 }
+
+/* ============================================================
+   クイック収支入力ウィジェット (v5.74)
+   ============================================================ */
+.qa-card {
+  padding: 0;
+  overflow: hidden;
+  /* サマリーカードと同じ視覚重量を避けるためやや控えめに */
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition: box-shadow 0.2s;
+}
+.qa-card:focus-within {
+  box-shadow: 0 0 0 3px var(--focus-ring, rgba(124,58,237,.18));
+  border-color: var(--primary);
+}
+.qa-toggle-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+  gap: var(--sp-2);
+}
+.qa-toggle-btn:hover {
+  background: var(--surface-hover);
+}
+.qa-toggle-left {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+.qa-card-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+.qa-subtext {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.qa-chevron {
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.qa-chevron-open {
+  transform: rotate(180deg);
+}
+.qa-body {
+  padding: 0 var(--sp-4) var(--sp-4);
+  border-top: 1px solid var(--border);
+  animation: qa-body-in 0.22s ease;
+}
+@keyframes qa-body-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.qa-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-top: var(--sp-3);
+}
+/* 収入/支出トグル */
+.qa-type-row {
+  display: flex;
+  gap: var(--sp-2);
+}
+.qa-type-btn {
+  flex: 1;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn, 10px);
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.qa-type-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.qa-type-btn.qa-type-active[data-qa-type="expense"] {
+  background: var(--danger-bg);
+  border-color: var(--danger-text);
+  color: var(--danger-text);
+}
+.qa-type-btn.qa-type-active[data-qa-type="income"] {
+  background: var(--success-bg, #f0fdf4);
+  border-color: var(--income, #10b981);
+  color: var(--income, #10b981);
+}
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"] {
+  background: rgba(16,185,129,.15);
+}
+/* フィールド行 */
+.qa-fields-row {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: stretch;
+}
+.qa-amount-wrap {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn, 10px);
+  background: var(--bg);
+  padding: 0 var(--sp-2) 0 var(--sp-3);
+  transition: border-color 0.15s;
+}
+.qa-amount-wrap:focus-within {
+  border-color: var(--primary);
+}
+.qa-yen {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+.qa-amount-input {
+  width: 110px;
+  border: none !important;
+  outline: none !important;
+  background: transparent;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text);
+  padding: var(--sp-2) 0;
+}
+.qa-amount-input::placeholder { color: var(--text-muted); font-weight: 400; }
+.qa-cat-select {
+  flex: 1;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn, 10px);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  min-width: 0;
+}
+.qa-cat-select:focus { border-color: var(--primary); outline: none; }
+/* メモ行 */
+.qa-memo-row {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: stretch;
+}
+.qa-memo-input {
+  flex: 1;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn, 10px);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  transition: border-color 0.15s;
+  min-width: 0;
+}
+.qa-memo-input::placeholder { color: var(--text-muted); }
+.qa-memo-input:focus { border-color: var(--primary); outline: none; }
+.qa-submit-btn {
+  flex-shrink: 0;
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: var(--radius-btn, 10px);
+}
+
+/* モバイル最適化 */
+@media (max-width: 500px) {
+  .qa-fields-row { flex-direction: column; }
+  .qa-amount-wrap { width: 100%; }
+  .qa-amount-input { width: 100%; }
+  .qa-cat-select { width: 100%; }
+  .qa-toggle-btn { padding: var(--sp-3); }
+  .qa-body { padding: 0 var(--sp-3) var(--sp-3); }
+}

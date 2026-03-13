@@ -15,6 +15,8 @@ const appState = {
   bulkMode: false,                    // v5.55: 一括操作モード
   selectedTxIds: new Set(),           // v5.55: 選択中の取引ID
   catTrendSelected: [],               // v5.68: カテゴリ推移 選択中カテゴリID配列
+  quickAddOpen: false,                // v5.74: クイック入力パネル開閉状態
+  quickAddType: 'expense',            // v5.74: クイック入力タイプ
 };
 
 // ============================================================
@@ -192,6 +194,46 @@ function bindOnboarding() {
 
   const stepAdd = document.getElementById('step-add-tx');
   if (stepAdd) stepAdd.addEventListener('click', () => document.getElementById('global-fab').click());
+}
+
+// ============================================================
+// クイック収支入力ウィジェット (v5.74)
+// ============================================================
+function renderQuickAddWidget() {
+  const type = appState.quickAddType || 'expense';
+  const isOpen = appState.quickAddOpen;
+  const cats = appData.categories.filter(c => c.type === type);
+  const catOpts = cats.map(c => `<option value="${c.id}">${esc2(c.name)}</option>`).join('');
+
+  return `
+<div class="card qa-card" id="qa-card">
+  <button class="qa-toggle-btn" id="qa-toggle" aria-expanded="${isOpen}" aria-controls="qa-body">
+    <span class="qa-toggle-left">
+      <span class="card-title qa-card-title">⚡ クイック入力</span>
+      <span class="qa-subtext">モーダルなしでサッと記録</span>
+    </span>
+    <span class="qa-chevron${isOpen ? ' qa-chevron-open' : ''}" aria-hidden="true">▾</span>
+  </button>
+  <div class="qa-body" id="qa-body"${isOpen ? '' : ' style="display:none"'}>
+    <div class="qa-inner">
+      <div class="qa-type-row">
+        <button class="qa-type-btn${type === 'expense' ? ' qa-type-active' : ''}" data-qa-type="expense">支出</button>
+        <button class="qa-type-btn${type === 'income' ? ' qa-type-active' : ''}" data-qa-type="income">収入</button>
+      </div>
+      <div class="qa-fields-row">
+        <div class="qa-amount-wrap">
+          <span class="qa-yen" aria-hidden="true">¥</span>
+          <input type="number" id="qa-amount" class="qa-input qa-amount-input" placeholder="金額" min="1" inputmode="decimal">
+        </div>
+        <select id="qa-category" class="qa-input qa-cat-select">${catOpts}</select>
+      </div>
+      <div class="qa-memo-row">
+        <input type="text" id="qa-memo" class="qa-input qa-memo-input" placeholder="メモ（任意）" maxlength="100">
+        <button class="btn btn-primary qa-submit-btn" id="qa-submit">追加</button>
+      </div>
+    </div>
+  </div>
+</div>`;
 }
 
 // ============================================================
@@ -854,6 +896,9 @@ function renderDashboard() {
     return `<span class="diff ${cls}">${pct >= 0 ? '▲' : '▼'} ${Math.abs(pct)}%</span>`;
   };
 
+  // クイック収支入力ウィジェット（v5.74）
+  const quickAddSection = showWidget('quickAdd') ? renderQuickAddWidget() : '';
+
   // 今週の家計ウィジェット（v5.72）
   const wk = getWeeklyStats();
   const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
@@ -949,6 +994,8 @@ function renderDashboard() {
     <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
   </div>
 </div>
+
+${quickAddSection}
 
 ${weeklySection}
 
@@ -1076,6 +1123,75 @@ function bindDashboard() {
     requestAnimationFrame(tick);
   });
   animateGoalRings(); // v5.32
+
+  // ── クイック入力ウィジェット バインド (v5.74) ──────────────
+  const qaToggle = document.getElementById('qa-toggle');
+  const qaBody   = document.getElementById('qa-body');
+  if (qaToggle && qaBody) {
+    // 開閉トグル
+    qaToggle.addEventListener('click', () => {
+      const isNowOpen = qaToggle.getAttribute('aria-expanded') === 'true';
+      appState.quickAddOpen = !isNowOpen;
+      qaToggle.setAttribute('aria-expanded', String(!isNowOpen));
+      qaBody.style.display = isNowOpen ? 'none' : 'block';
+      qaToggle.querySelector('.qa-chevron')?.classList.toggle('qa-chevron-open', !isNowOpen);
+      if (!isNowOpen) setTimeout(() => document.getElementById('qa-amount')?.focus(), 60);
+    });
+
+    // タイプ切替
+    qaBody.querySelectorAll('.qa-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        qaBody.querySelectorAll('.qa-type-btn').forEach(b => b.classList.remove('qa-type-active'));
+        btn.classList.add('qa-type-active');
+        appState.quickAddType = btn.dataset.qaType;
+        const sel = document.getElementById('qa-category');
+        if (!sel) return;
+        const cats = appData.categories.filter(c => c.type === btn.dataset.qaType);
+        sel.innerHTML = cats.map(c => `<option value="${c.id}">${esc2(c.name)}</option>`).join('');
+      });
+    });
+
+    // Enterキーで次フィールドへ
+    document.getElementById('qa-amount')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('qa-category')?.focus();
+    });
+    document.getElementById('qa-memo')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('qa-submit')?.click();
+    });
+
+    // 追加
+    document.getElementById('qa-submit')?.addEventListener('click', () => {
+      const amount = Number(document.getElementById('qa-amount')?.value);
+      const catId  = document.getElementById('qa-category')?.value;
+      const memo   = document.getElementById('qa-memo')?.value?.trim() || '';
+      const type   = qaBody.querySelector('.qa-type-btn.qa-type-active')?.dataset.qaType || 'expense';
+
+      if (!amount || amount <= 0) {
+        document.getElementById('qa-amount')?.focus();
+        showToast('金額を入力してください', 'warning');
+        return;
+      }
+      if (!catId) { showToast('カテゴリを選択してください', 'warning'); return; }
+
+      addTransaction({ type, date: todayStr(), amount, categoryId: catId, memo,
+        paymentMethod: '', memberId: '', taxRate: 0, tags: [] });
+
+      // 入力欄をリセット（パネルは開いたまま）
+      const amtEl = document.getElementById('qa-amount');
+      const memoEl = document.getElementById('qa-memo');
+      if (amtEl)  amtEl.value  = '';
+      if (memoEl) memoEl.value = '';
+
+      const typeLabel = type === 'expense' ? '支出' : '収入';
+      showToast(`${typeLabel} ${formatMoney(amount)} を追加しました`, 'success');
+
+      // appState.month を今日の月に合わせてダッシュボード再描画
+      appState.month = todayStr().slice(0, 7);
+      appState.quickAddOpen = true; // 再描画後もパネルを開いたまま
+      renderCurrentPage();
+    });
+  }
+
   // 今週ウィジェット バーアニメーション（v5.72）
   document.querySelectorAll('.wk-bar-fill[data-wk-animate]').forEach((el, idx) => {
     const targetH = el.style.height;
@@ -2972,6 +3088,7 @@ function renderSettings() {
   ${(() => {
     const dw = s.dashWidgets || {};
     const widgets = [
+      { key: 'quickAdd',      label: 'クイック入力',    icon: '⚡' },
       { key: 'weekly',        label: '今週の家計',      icon: '📅' },
       { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
