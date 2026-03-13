@@ -134,6 +134,7 @@ function renderCurrentPage() {
     case 'points':         main.innerHTML = renderPoints(); bindPoints(); break;                 // v5.47
     case 'wishlist':       main.innerHTML = renderWishlist(); bindWishlist(); break;             // v5.51
     case 'challenges':     main.innerHTML = renderChallenges(); bindChallenges(); break;          // v5.64
+    case 'debts':          main.innerHTML = renderDebts(); bindDebts(); break;                   // v5.84
   }
 }
 
@@ -1084,6 +1085,55 @@ ${showWidget('challenges') ? (() => {
           </div>
         </div>
         <span class="ch-widget-pct ${isOver ? 'ch-pct-over' : prog.isOnTrack ? 'ch-pct-ok' : ''}">${pct}%</span>
+      </div>`;
+    }).join('')}
+  </div>
+</div>`;
+})() : ''}
+
+${showWidget('debts') ? (() => {
+  const activeDebts = (appData.debts || []).filter(d => !d.paidOff);
+  if (!activeDebts.length) return '';
+  const totalDebt = getTotalDebt();
+  const totalMonthly = activeDebts.reduce((s, d) => s + (Number(d.monthlyPayment) || 0), 0);
+  return `<div class="card debt-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">💳 ローン管理</h3>
+    <button class="btn-link" onclick="navigate('debts')">すべて見る →</button>
+  </div>
+  <div class="debt-widget-summary">
+    <div class="debt-widget-cell">
+      <div class="debt-widget-cell-label">総残高</div>
+      <div class="debt-widget-cell-value js-countup" data-value="${totalDebt}">${formatMoney(totalDebt)}</div>
+    </div>
+    <div class="debt-widget-divider"></div>
+    <div class="debt-widget-cell">
+      <div class="debt-widget-cell-label">月次返済</div>
+      <div class="debt-widget-cell-value">${formatMoney(totalMonthly)}</div>
+    </div>
+    <div class="debt-widget-divider"></div>
+    <div class="debt-widget-cell">
+      <div class="debt-widget-cell-label">件数</div>
+      <div class="debt-widget-cell-value">${activeDebts.length}<small>件</small></div>
+    </div>
+  </div>
+  <div class="debt-widget-list">
+    ${activeDebts.slice(0, 3).map(d => {
+      const typeInfo = DEBT_TYPES[d.type] || DEBT_TYPES.other;
+      const e = getDebtCurrentBalance(d);
+      const cur = e ? Number(e.balance) : Number(d.principal);
+      const prin = Number(d.principal) || 1;
+      const paidPct = Math.min(Math.round((1 - cur / prin) * 100), 100);
+      return `<div class="debt-widget-item" style="--debt-accent:${typeInfo.color}">
+        <div class="debt-widget-icon" style="background:${typeInfo.color}22;color:${typeInfo.color}">${d.emoji || typeInfo.icon}</div>
+        <div class="debt-widget-info">
+          <div class="debt-widget-name">${esc2(d.name)}</div>
+          <div class="debt-widget-bar-row">
+            <div class="debt-widget-bar-bg"><div class="debt-widget-bar-fill" style="width:${paidPct}%"></div></div>
+            <span class="debt-widget-pct">${paidPct}%返済済</span>
+          </div>
+        </div>
+        <div class="debt-widget-balance">${formatMoney(cur)}</div>
       </div>`;
     }).join('')}
   </div>
@@ -3425,6 +3475,7 @@ function renderSettings() {
       { key: 'points',        label: 'ポイント残高',    icon: '🎫' },
       { key: 'wishlist',      label: 'ほしいものリスト',icon: '🛍️' },
       { key: 'challenges',    label: '節約チャレンジ',  icon: '🏆' },
+      { key: 'debts',         label: 'ローン管理',      icon: '💳' },
       { key: 'chart',         label: '収支グラフ',      icon: '📉' },
     ];
     const rows = widgets.map(w => {
@@ -4628,17 +4679,31 @@ const ASSET_TYPES = {
   other:      { label: 'その他', icon: '💼', color: '#6b7280' },
 };
 
+// v5.84: 負債タイプ定義
+const DEBT_TYPES = {
+  mortgage: { label: '住宅ローン',      icon: '🏠', color: '#6366f1' },
+  car:      { label: 'カーローン',      icon: '🚗', color: '#8b5cf6' },
+  card:     { label: 'クレジットカード', icon: '💳', color: '#ef4444' },
+  student:  { label: '奨学金',          icon: '🎓', color: '#f59e0b' },
+  personal: { label: '個人ローン',      icon: '🏦', color: '#06b6d4' },
+  other:    { label: 'その他',          icon: '💴', color: '#6b7280' },
+};
+
 function getAssetCurrentBalance(asset) {
   if (!asset.entries || asset.entries.length === 0) return null;
   return [...asset.entries].sort((a, b) => b.date.localeCompare(a.date))[0];
 }
 
-function getTotalNetWorth() {
+function getTotalAssets() {
   return (appData.assets || []).reduce((sum, a) => {
     const e = getAssetCurrentBalance(a);
     if (!e) return sum;
     return sum + toJPY(Number(e.balance) || 0, a.currency);
   }, 0);
+}
+
+function getTotalNetWorth() {
+  return getTotalAssets() - getTotalDebt();  // v5.84: 純資産 = 資産 - 負債
 }
 
 function getNetWorthAsOf(dateStr) {
@@ -4818,8 +4883,19 @@ function renderAssets() {
     <div class="asset-neworth-diff">
       ${diffHtml}
       ${(() => {
+        const totalAss = getTotalAssets();
+        const totalDbt = getTotalDebt();
         const foreignTotal = getForeignAssetsTotalJPY();
-        return foreignTotal > 0 ? `<div class="asset-foreign-hint">うち外貨資産 ${formatMoney(foreignTotal)}</div>` : '';
+        let html = '';
+        if (totalDbt > 0) {
+          html += `<div class="asset-net-breakdown">
+            <span class="asset-breakdown-item asset-total">資産 ${formatMoney(totalAss)}</span>
+            <span class="asset-breakdown-sep">−</span>
+            <span class="asset-breakdown-item debt-total">負債 ${formatMoney(totalDbt)}</span>
+          </div>`;
+        }
+        if (foreignTotal > 0) html += `<div class="asset-foreign-hint">うち外貨資産 ${formatMoney(foreignTotal)}</div>`;
+        return html;
       })()}
     </div>
   </div>
@@ -7376,6 +7452,317 @@ function openChallengeModal(ch) {
   };
 
   showModal(overlay);
+}
+
+// ============================================================
+// 負債・ローン管理 (v5.84)
+// ============================================================
+
+function renderDebts() {
+  const debts = appData.debts || [];
+  const totalDebt = getTotalDebt();
+  const activeDebts = debts.filter(d => !d.paidOff);
+  const paidDebts   = debts.filter(d => d.paidOff);
+  const totalMonthly = activeDebts.reduce((s, d) => s + (Number(d.monthlyPayment) || 0), 0);
+
+  const debtCard = (d, idx) => {
+    const typeInfo = DEBT_TYPES[d.type] || DEBT_TYPES.other;
+    const e = getDebtCurrentBalance(d);
+    const cur = e ? Number(e.balance) : Number(d.principal);
+    const prin = Number(d.principal) || 1;
+    const paidPct = Math.max(0, Math.min(Math.round((1 - cur / prin) * 100), 100));
+    const barCls = paidPct >= 75 ? 'debt-bar-great' : paidPct >= 40 ? 'debt-bar-mid' : 'debt-bar-low';
+    const dateLabel = e ? `${formatDate(e.date)} 時点` : '残高未更新';
+    const entries = [...(d.entries || [])].sort((a, b) => b.date.localeCompare(a.date));
+
+    // 完済予定月
+    let endHint = '';
+    if (d.endDate) {
+      endHint = `<span class="debt-end-date">完済予定: ${d.endDate.replace('-', '年').replace(/-(\d+)$/, '$1月')}</span>`;
+    } else if (cur > 0 && Number(d.monthlyPayment) > 0) {
+      const months = Math.ceil(cur / Number(d.monthlyPayment));
+      endHint = `<span class="debt-end-date">残り約 ${months} ヶ月</span>`;
+    }
+
+    const histRows = entries.slice(0, 3).map(en => `
+      <div class="debt-entry-row">
+        <span class="debt-entry-date">${formatDate(en.date)}</span>
+        <span class="debt-entry-note">${esc2(en.note || '—')}</span>
+        <span class="debt-entry-balance">${formatMoney(en.balance)}</span>
+        <button class="btn-icon debt-del-entry" data-debt="${d.id}" data-entry="${en.id}" title="削除">🗑️</button>
+      </div>`).join('');
+
+    return `
+<div class="card debt-card" style="--debt-accent:${typeInfo.color};--dc-i:${idx}">
+  <div class="debt-card-header">
+    <div class="debt-info">
+      <div class="debt-type-icon-wrap" style="background:${typeInfo.color}20;color:${typeInfo.color}">${d.emoji || typeInfo.icon}</div>
+      <span class="debt-type-badge" style="background:${typeInfo.color}20;color:${typeInfo.color}">${typeInfo.label}</span>
+      <span class="debt-name">${esc2(d.name)}</span>
+    </div>
+    <div class="debt-card-actions">
+      <button class="btn-icon debt-add-entry" data-id="${d.id}" title="残高を更新">＋ 更新</button>
+      <button class="btn-icon debt-edit" data-id="${d.id}" title="編集">✏️</button>
+      <button class="btn-icon debt-delete" data-id="${d.id}" title="削除">🗑️</button>
+    </div>
+  </div>
+  <div class="debt-balance-row">
+    <div>
+      <div class="debt-balance js-countup" data-value="${cur}">${formatMoney(cur)}</div>
+      <div class="debt-balance-meta">${dateLabel}</div>
+    </div>
+    <div class="debt-meta-right">
+      ${d.interestRate > 0 ? `<span class="debt-rate-badge">年利 ${d.interestRate}%</span>` : ''}
+      ${d.monthlyPayment > 0 ? `<span class="debt-monthly-badge">月返済 ${formatMoney(d.monthlyPayment)}</span>` : ''}
+    </div>
+  </div>
+  <div class="debt-progress-wrap">
+    <div class="debt-progress-hdr">
+      <span class="debt-progress-label">返済済み ${paidPct}%</span>
+      <span class="debt-progress-detail">元本 ${formatMoney(prin)}</span>
+    </div>
+    <div class="debt-bar-track"><div class="debt-bar-fill ${barCls}" style="width:${paidPct}%"></div></div>
+  </div>
+  ${endHint}
+  ${entries.length > 0 ? `
+  <div class="debt-history">
+    <div class="debt-history-title">残高履歴</div>
+    ${histRows}
+    ${entries.length > 3 ? `<div class="debt-history-more">他 ${entries.length - 3} 件</div>` : ''}
+  </div>` : ''}
+  ${!d.paidOff ? `<button class="btn btn-ghost btn-sm debt-paidoff" data-id="${d.id}" style="margin-top:var(--sp-2)">✓ 完済にする</button>` : ''}
+</div>`;
+  };
+
+  const emptyState = activeDebts.length === 0 ? `
+<div class="empty-debt-state">
+  <div class="empty-debt-icon">💳</div>
+  <div class="empty-debt-msg">ローン・負債を登録していません</div>
+  <div class="empty-debt-sub">住宅ローンや各種ローンを登録して<br>返済進捗を一元管理しましょう</div>
+</div>` : '';
+
+  const archivedSection = paidDebts.length > 0 ? `
+<details class="debt-archive">
+  <summary class="debt-archive-summary">✓ 完済済み（${paidDebts.length}件）</summary>
+  ${paidDebts.map((d, i) => debtCard(d, i)).join('')}
+</details>` : '';
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">💳 ローン管理</h1>
+  <button class="btn btn-primary" id="btn-add-debt">＋ ローンを追加</button>
+</div>
+
+<div class="summary-cards">
+  <div class="card summary-card debt-summary-total">
+    <div class="summary-label">💳 総残高</div>
+    <div class="summary-amount js-countup" data-value="${totalDebt}">${formatMoney(totalDebt)}</div>
+    <div class="debt-summary-sub">${activeDebts.length}件のローン</div>
+  </div>
+  <div class="card summary-card debt-summary-monthly">
+    <div class="summary-label">📅 月次返済総額</div>
+    <div class="summary-amount js-countup" data-value="${totalMonthly}">${formatMoney(totalMonthly)}</div>
+    <div class="debt-summary-sub">毎月の支払い合計</div>
+  </div>
+</div>
+
+${emptyState}
+${activeDebts.map((d, i) => debtCard(d, i)).join('')}
+${archivedSection}
+
+<!-- 負債追加/編集モーダル -->
+<div class="modal-overlay" id="debt-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="debt-modal-title">ローンを追加</h3>
+      <button class="modal-close" id="debt-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="debt-edit-id">
+      <div class="form-group">
+        <label class="form-label">ローン名</label>
+        <input type="text" id="debt-name" class="form-input" placeholder="例：住宅ローン（○○銀行）">
+      </div>
+      <div class="form-group">
+        <label class="form-label">種別</label>
+        <select id="debt-type" class="form-input">
+          ${Object.entries(DEBT_TYPES).map(([k, v]) => `<option value="${k}">${v.icon} ${v.label}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">絵文字（任意）</label>
+        <input type="text" id="debt-emoji" class="form-input" placeholder="🏠" maxlength="2" style="width:80px">
+      </div>
+      <div class="form-group">
+        <label class="form-label">借入元本（円）</label>
+        <input type="number" id="debt-principal" class="form-input" placeholder="30000000" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">年利（%）</label>
+        <input type="number" id="debt-rate" class="form-input" placeholder="1.5" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">月々の返済額（円）</label>
+        <input type="number" id="debt-monthly" class="form-input" placeholder="80000" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">完済予定月（任意）</label>
+        <input type="month" id="debt-enddate" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ（任意）</label>
+        <input type="text" id="debt-memo" class="form-input" placeholder="例：変動金利・10年固定">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="debt-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="debt-modal-save">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 残高更新モーダル -->
+<div class="modal-overlay" id="debt-entry-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="debt-entry-modal-title">残高を更新</h3>
+      <button class="modal-close" id="debt-entry-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">日付</label>
+        <input type="date" id="debt-entry-date" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">現在残高（円）</label>
+        <input type="number" id="debt-entry-balance" class="form-input" placeholder="0" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ（任意）</label>
+        <input type="text" id="debt-entry-note" class="form-input" placeholder="例：3月末残高確認">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="debt-entry-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="debt-entry-modal-save">保存</button>
+    </div>
+  </div>
+</div>`;
+}
+
+let _editingDebtId = null;
+let _entryTargetDebtId = null;
+
+function openDebtModal(debtId) {
+  _editingDebtId = debtId || null;
+  const d = debtId ? (appData.debts || []).find(x => x.id === debtId) : null;
+  document.getElementById('debt-modal-title').textContent = d ? 'ローンを編集' : 'ローンを追加';
+  document.getElementById('debt-edit-id').value = d ? d.id : '';
+  document.getElementById('debt-name').value = d ? d.name : '';
+  document.getElementById('debt-type').value = d ? (d.type || 'mortgage') : 'mortgage';
+  document.getElementById('debt-emoji').value = d ? (d.emoji || '') : '';
+  document.getElementById('debt-principal').value = d ? (d.principal || '') : '';
+  document.getElementById('debt-rate').value = d ? (d.interestRate || '') : '';
+  document.getElementById('debt-monthly').value = d ? (d.monthlyPayment || '') : '';
+  document.getElementById('debt-enddate').value = d ? (d.endDate || '') : '';
+  document.getElementById('debt-memo').value = d ? (d.memo || '') : '';
+  showModal('debt-modal');
+}
+
+function openDebtEntryModal(debtId) {
+  _entryTargetDebtId = debtId;
+  const d = (appData.debts || []).find(x => x.id === debtId);
+  document.getElementById('debt-entry-modal-title').textContent =
+    d ? `「${d.name}」残高を更新` : '残高を更新';
+  document.getElementById('debt-entry-date').value = todayStr();
+  document.getElementById('debt-entry-balance').value = '';
+  document.getElementById('debt-entry-note').value = '';
+  showModal('debt-entry-modal');
+}
+
+function bindDebts() {
+  document.querySelectorAll('.js-countup').forEach(el => {
+    animateCountUp(el, Number(el.dataset.value));
+  });
+
+  on('btn-add-debt', 'click', () => openDebtModal(null));
+
+  on('debt-modal-close',   'click', () => hideModal('debt-modal'));
+  on('debt-modal-cancel',  'click', () => hideModal('debt-modal'));
+  on('debt-entry-modal-close',   'click', () => hideModal('debt-entry-modal'));
+  on('debt-entry-modal-cancel',  'click', () => hideModal('debt-entry-modal'));
+
+  on('debt-modal-save', 'click', () => {
+    const name = document.getElementById('debt-name').value.trim();
+    if (!name) { alert('ローン名を入力してください'); return; }
+    const principal = Number(document.getElementById('debt-principal').value) || 0;
+    if (!principal) { alert('借入元本を入力してください'); return; }
+    const fields = {
+      name,
+      type:          document.getElementById('debt-type').value,
+      emoji:         document.getElementById('debt-emoji').value.trim(),
+      principal,
+      interestRate:  Number(document.getElementById('debt-rate').value) || 0,
+      monthlyPayment: Number(document.getElementById('debt-monthly').value) || 0,
+      endDate:       document.getElementById('debt-enddate').value || '',
+      memo:          document.getElementById('debt-memo').value.trim(),
+    };
+    const editId = document.getElementById('debt-edit-id').value;
+    if (editId) {
+      updateDebt(editId, fields);
+    } else {
+      addDebt(fields);
+    }
+    hideModal('debt-modal');
+    renderCurrentPage();
+  });
+
+  on('debt-entry-modal-save', 'click', () => {
+    const bal = Number(document.getElementById('debt-entry-balance').value);
+    if (isNaN(bal) || bal < 0) { alert('残高を入力してください'); return; }
+    const entry = {
+      date:    document.getElementById('debt-entry-date').value,
+      balance: bal,
+      note:    document.getElementById('debt-entry-note').value.trim(),
+    };
+    addDebtEntry(_entryTargetDebtId, entry);
+    hideModal('debt-entry-modal');
+    renderCurrentPage();
+  });
+
+  // イベント委譲
+  document.getElementById('main-content').addEventListener('click', e => {
+    const addBtn = e.target.closest('.debt-add-entry');
+    if (addBtn) { openDebtEntryModal(addBtn.dataset.id); return; }
+
+    const editBtn = e.target.closest('.debt-edit');
+    if (editBtn) { openDebtModal(editBtn.dataset.id); return; }
+
+    const delBtn = e.target.closest('.debt-delete');
+    if (delBtn) {
+      if (!confirm('このローンを削除しますか？')) return;
+      deleteDebt(delBtn.dataset.id);
+      renderCurrentPage();
+      return;
+    }
+
+    const delEntry = e.target.closest('.debt-del-entry');
+    if (delEntry) {
+      if (!confirm('この残高履歴を削除しますか？')) return;
+      deleteDebtEntry(delEntry.dataset.debt, delEntry.dataset.entry);
+      renderCurrentPage();
+      return;
+    }
+
+    const paidBtn = e.target.closest('.debt-paidoff');
+    if (paidBtn) {
+      if (!confirm('このローンを完済済みにしますか？')) return;
+      updateDebt(paidBtn.dataset.id, { paidOff: true, paidOffAt: todayStr() });
+      renderCurrentPage();
+      showToast('✓ 完済おめでとうございます！', 'success');
+      return;
+    }
+  });
 }
 
 // ============================================================

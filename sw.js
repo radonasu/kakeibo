@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.83'; // v5.83: 年間支出ヒートマップ ビジュアル洗練（サマリーカード4種グラデーション+デコレーションサークル+hm-stat-inスタッガード・--hm-wi週列フェードイン・hm-todayパルスハイライト・レベル別ホバーグロー・border-radius改善）
+const CACHE_NAME = 'kakeibo-v5.84'; // v5.84: 負債・ローン管理（DEBT_TYPES 6種・返済プログレスバー・完済アーカイブ・純資産=資産-負債・ダッシュボードウィジェット・クラウド同期対応）
 const ASSETS = [
   './index.html',
   './css/style.css',

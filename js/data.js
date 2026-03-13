@@ -579,6 +579,62 @@ function deleteAssetEntry(assetId, entryId) {
   saveData();
 }
 
+// ── 負債管理 CRUD (v5.84) ────────────────────────────────
+function addDebt(fields) {
+  if (!appData.debts) appData.debts = [];
+  const d = { ...fields, id: genId(), entries: fields.entries || [] };
+  appData.debts.push(d);
+  saveData();
+  return d;
+}
+
+function updateDebt(id, fields) {
+  if (!appData.debts) appData.debts = [];
+  const idx = appData.debts.findIndex(d => d.id === id);
+  if (idx >= 0) {
+    appData.debts[idx] = { ...appData.debts[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteDebt(id) {
+  if (!appData.debts) { appData.debts = []; return; }
+  appData.debts = appData.debts.filter(d => d.id !== id);
+  saveData();
+}
+
+function addDebtEntry(debtId, entry) {
+  if (!appData.debts) appData.debts = [];
+  const debt = appData.debts.find(d => d.id === debtId);
+  if (!debt) return;
+  if (!debt.entries) debt.entries = [];
+  debt.entries.push({ ...entry, id: genId() });
+  saveData();
+}
+
+function deleteDebtEntry(debtId, entryId) {
+  if (!appData.debts) return;
+  const debt = appData.debts.find(d => d.id === debtId);
+  if (!debt || !debt.entries) return;
+  debt.entries = debt.entries.filter(e => e.id !== entryId);
+  saveData();
+}
+
+function getDebtCurrentBalance(debt) {
+  if (debt.entries && debt.entries.length > 0) {
+    return [...debt.entries].sort((a, b) => b.date.localeCompare(a.date))[0];
+  }
+  return null;
+}
+
+function getTotalDebt() {
+  return (appData.debts || []).filter(d => !d.paidOff).reduce((sum, d) => {
+    const e = getDebtCurrentBalance(d);
+    const bal = e ? Number(e.balance) : Number(d.principal);
+    return sum + (bal || 0);
+  }, 0);
+}
+
 // ── ユーティリティ ────────────────────────────────────────
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
