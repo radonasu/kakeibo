@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.79'; // v5.79: 取引ソートビジュアル洗練（SVGアイコン・アクティブ列強調・ソートリセットバッジ）
+const CACHE_NAME = 'kakeibo-v5.80'; // v5.80: 取引複製機能（📋ボタンで同内容・今日付けの新規モーダル起動）
 const ASSETS = [
   './index.html',
   './css/style.css',

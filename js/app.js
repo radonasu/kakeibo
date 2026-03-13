@@ -1351,6 +1351,7 @@ function renderTxRow(t) {
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
       <td class="actions">
         <button class="btn-icon edit-tx" data-id="${t.id}" title="編集">✏️</button>
+        <button class="btn-icon dup-tx" data-id="${t.id}" title="複製して追加">📋</button>
         <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
       </td>
     </tr>`;
@@ -1642,6 +1643,13 @@ function bindTransactions() {
   document.querySelectorAll('.edit-tx').forEach(btn => {
     btn.addEventListener('click', () => openTxModal(btn.dataset.id));
   });
+  document.querySelectorAll('.dup-tx').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tx = appData.transactions.find(t => t.id === btn.dataset.id);
+      if (!tx) return;
+      openTxModal(null, { ...tx, date: todayStr(), isDuplicate: true, name: tx.memo || '複製' });
+    });
+  });
   document.querySelectorAll('.delete-tx').forEach(btn => {
     btn.addEventListener('click', () => {
       if (confirm('この取引を削除しますか？')) {
@@ -1827,7 +1835,7 @@ function renderTxModal() {
     .map(m => `<option value="${m.id}" ${src && src.memberId === m.id ? 'selected' : !src && m.id === appData.settings.defaultMemberId ? 'selected' : ''}>${esc2(m.name)}</option>`)
     .join('');
 
-  const modalTitle = isEdit ? '取引を編集' : tpl ? `⚡ ${esc2(tpl.name)}` : '収支を追加';
+  const modalTitle = isEdit ? '取引を編集' : tpl ? (tpl.isDuplicate ? '📋 複製して追加' : `⚡ ${esc2(tpl.name)}`) : '収支を追加';
 
   return `
 <div id="tx-modal" class="modal-overlay" style="display:none">
