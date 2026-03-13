@@ -5704,9 +5704,26 @@ function renderCalendar() {
   const DOW = ['日', '月', '火', '水', '木', '金', '土'];
 
   let cells = '';
+  let colIdx = 0;
+  let weekInc = 0;
+  let weekExp = 0;
+
+  // 週次サマリー行を追加
+  function flushWeekRow() {
+    const hasData = weekInc > 0 || weekExp > 0;
+    cells += '<div class="cal-week-summary">' +
+      (weekInc  > 0 ? `<span class="cal-ws-pill inc" style="--ws-i:0">+${formatMoney(weekInc)}</span>`  : '') +
+      (weekExp  > 0 ? `<span class="cal-ws-pill exp" style="--ws-i:${weekInc > 0 ? 1 : 0}">-${formatMoney(weekExp)}</span>` : '') +
+      (!hasData     ? '<span class="cal-ws-pill empty">—</span>' : '') +
+      '</div>';
+    colIdx = 0; weekInc = 0; weekExp = 0;
+  }
+
   // 前月の空セル
   for (let i = 0; i < startDow; i++) {
-    cells += `<div class="cal-cell cal-empty"></div>`;
+    cells += '<div class="cal-cell cal-empty"></div>';
+    colIdx++;
+    if (colIdx === 7) flushWeekRow();
   }
   // 日付セル
   for (let d = 1; d <= totalDays; d++) {
@@ -5723,7 +5740,20 @@ function renderCalendar() {
       if (data.income  > 0) inner += `<div class="cal-amount inc">+${formatMoney(data.income)}</div>`;
       if (data.expense > 0) inner += `<div class="cal-amount exp">-${formatMoney(data.expense)}</div>`;
     }
-    cells += `<div class="cal-cell${isSelected ? ' selected' : ''} heat-${heat}" data-date="${dateStr}">${inner}</div>`;
+    cells += `<div class="cal-cell${isSelected ? ' selected' : ''} heat-${heat}${dow === 6 ? ' cal-sat' : ''}" data-date="${dateStr}">${inner}</div>`;
+
+    if (data) { weekInc += (data.income || 0); weekExp += (data.expense || 0); }
+    colIdx++;
+
+    if (colIdx === 7) {
+      flushWeekRow();
+    } else if (d === totalDays) {
+      // 最終週の残りを空セルで埋める
+      for (let p = colIdx; p < 7; p++) {
+        cells += `<div class="cal-cell cal-empty${p === 6 ? ' cal-sat' : ''}"></div>`;
+      }
+      flushWeekRow();
+    }
   }
 
   const monthName = `${year}年${month}月`;

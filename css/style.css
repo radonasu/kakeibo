@@ -4254,6 +4254,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes cal-ws-pill-in {
+  from { opacity: 0; transform: translateX(calc(var(--ws-i, 0) * 4px + 6px)); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 
 .cal-page {
   display: flex;
@@ -4360,12 +4364,45 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
 }
-.cal-cell:nth-child(7n) { border-right: none; }
+.cal-cell.cal-sat { border-right: none; }
 .cal-cell.cal-empty {
   cursor: default;
   background: var(--surface-2);
   opacity: 0.5;
 }
+
+/* 週次サマリー行 (v5.93) */
+.cal-week-summary {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-1);
+  padding: 3px var(--sp-3) 4px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.cal-week-summary:last-of-type { border-bottom: none; }
+
+.cal-ws-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semi);
+  padding: 1px 7px;
+  border-radius: 99px;
+  animation: cal-ws-pill-in 0.28s ease both;
+  animation-delay: calc(var(--ws-i, 0) * 55ms);
+}
+.cal-ws-pill.inc {
+  background: color-mix(in srgb, var(--success) 12%, var(--surface));
+  color: var(--success);
+}
+.cal-ws-pill.exp {
+  background: color-mix(in srgb, #ef4444 10%, var(--surface));
+  color: #ef4444;
+}
+.cal-ws-pill.empty { color: var(--text-muted); font-size: 10px; }
 
 /* 支出ヒートマップ */
 .cal-cell.heat-1 { background: color-mix(in srgb, #ef4444  8%, var(--surface)); }
@@ -4543,6 +4580,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .cal-sum-item     { padding: var(--sp-2) var(--sp-3); }
   .cal-sum-value    { font-size: var(--fs-base); }
   .cal-sum-label    { font-size: 10px; }
+  .cal-week-summary { padding: 2px var(--sp-2) 3px; gap: 3px; }
+  .cal-ws-pill      { font-size: 9px; padding: 1px 5px; }
 }
 
 /* --- 収支予定統合表示 (v5.92) --- */
