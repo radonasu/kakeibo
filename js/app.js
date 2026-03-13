@@ -7729,6 +7729,7 @@ function openDebtSimModal(debtId) {
   document.getElementById('debt-sim-rate-badge').textContent = d.interestRate > 0 ? `年利 ${d.interestRate}%` : '利率なし';
   document.getElementById('debt-sim-monthly').textContent = formatMoney(d.monthlyPayment || 0);
   document.getElementById('debt-sim-extra').value = '';
+  document.querySelectorAll('.sim-preset').forEach(b => b.classList.remove('sim-preset-active'));
   updateDebtSim();
   showModal('debt-sim-modal');
 }
@@ -7767,22 +7768,24 @@ function updateDebtSim() {
   const betterCls = accel ? ' sim-val-better' : '';
 
   let html = `
+<div class="sim-result-grid-wrap">
 <div class="sim-result-grid">
-  <div class="sim-result-label"></div>
-  <div class="sim-result-col-head sim-col-base">現在の計画</div>
-  <div class="sim-result-col-head sim-col-accel">${colHead}</div>
+  <div class="sim-result-label" style="--sim-ri:0"></div>
+  <div class="sim-result-col-head sim-col-base sim-col-base-head" style="--sim-ri:0">現在の計画</div>
+  <div class="sim-result-col-head sim-col-accel sim-col-accel-head" style="--sim-ri:0">${colHead}</div>
 
-  <div class="sim-result-label">残り期間</div>
-  <div class="sim-result-val sim-col-base">${fmtMonths(base.months)}</div>
-  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? fmtMonths(accel.months) : '—'}</div>
+  <div class="sim-result-label" style="--sim-ri:1">残り期間</div>
+  <div class="sim-result-val sim-col-base" style="--sim-ri:1">${fmtMonths(base.months)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}" style="--sim-ri:1">${accel ? fmtMonths(accel.months) : '—'}</div>
 
-  <div class="sim-result-label">総支払利息</div>
-  <div class="sim-result-val sim-col-base">${formatMoney(base.totalInterest)}</div>
-  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? formatMoney(accel.totalInterest) : '—'}</div>
+  <div class="sim-result-label" style="--sim-ri:2">総支払利息</div>
+  <div class="sim-result-val sim-col-base" style="--sim-ri:2">${formatMoney(base.totalInterest)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}" style="--sim-ri:2">${accel ? formatMoney(accel.totalInterest) : '—'}</div>
 
-  <div class="sim-result-label">完済予定</div>
-  <div class="sim-result-val sim-col-base">${fmtEnd(base.months)}</div>
-  <div class="sim-result-val sim-col-accel${betterCls}">${accel ? fmtEnd(accel.months) : '—'}</div>
+  <div class="sim-result-label" style="--sim-ri:3">完済予定</div>
+  <div class="sim-result-val sim-col-base" style="--sim-ri:3">${fmtEnd(base.months)}</div>
+  <div class="sim-result-val sim-col-accel${betterCls}" style="--sim-ri:3">${accel ? fmtEnd(accel.months) : '—'}</div>
+</div>
 </div>`;
 
   if (accel && (savedMonths > 0 || savedInterest > 0)) {
@@ -7800,6 +7803,13 @@ function updateDebtSim() {
 </div>`;
   }
   document.getElementById('debt-sim-result').innerHTML = html;
+  /* 節約値バウンスアニメーション */
+  document.querySelectorAll('#debt-sim-result .sim-savings-value').forEach(el => {
+    el.classList.remove('sim-val-pop');
+    void el.offsetWidth;
+    el.classList.add('sim-val-pop');
+    el.addEventListener('animationend', () => el.classList.remove('sim-val-pop'), { once: true });
+  });
   renderDebtSimChart(base, accel, extra);
 }
 
@@ -7959,8 +7969,21 @@ function bindDebts() {
     const preset = e.target.closest('.sim-preset');
     if (!preset) return;
     const input = document.getElementById('debt-sim-extra');
-    if (input) { input.value = preset.dataset.v; updateDebtSim(); }
+    if (!input) return;
+    input.value = preset.dataset.v;
+    /* アクティブ状態ハイライト */
+    document.querySelectorAll('.sim-preset').forEach(b => b.classList.remove('sim-preset-active'));
+    preset.classList.add('sim-preset-active');
+    updateDebtSim();
   }, { capture: false });
+  /* 手入力時はプリセット選択解除 */
+  document.addEventListener('input', e => {
+    if (e.target && e.target.id === 'debt-sim-extra') {
+      document.querySelectorAll('.sim-preset').forEach(b => {
+        b.classList.toggle('sim-preset-active', b.dataset.v === e.target.value);
+      });
+    }
+  });
 
   // イベント委譲
   document.getElementById('main-content').addEventListener('click', e => {
