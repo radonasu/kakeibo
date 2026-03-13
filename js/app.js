@@ -206,7 +206,7 @@ function renderQuickAddWidget() {
   const catOpts = cats.map(c => `<option value="${c.id}">${esc2(c.name)}</option>`).join('');
 
   return `
-<div class="card qa-card" id="qa-card">
+<div class="card qa-card" data-qa-type="${type}" id="qa-card">
   <button class="qa-toggle-btn" id="qa-toggle" aria-expanded="${isOpen}" aria-controls="qa-body">
     <span class="qa-toggle-left">
       <span class="card-title qa-card-title">⚡ クイック入力</span>
@@ -1144,6 +1144,8 @@ function bindDashboard() {
         qaBody.querySelectorAll('.qa-type-btn').forEach(b => b.classList.remove('qa-type-active'));
         btn.classList.add('qa-type-active');
         appState.quickAddType = btn.dataset.qaType;
+        // v5.75: data-qa-type属性を更新してアクセントカラーを連動
+        document.getElementById('qa-card')?.setAttribute('data-qa-type', btn.dataset.qaType);
         const sel = document.getElementById('qa-category');
         if (!sel) return;
         const cats = appData.categories.filter(c => c.type === btn.dataset.qaType);
@@ -1176,6 +1178,13 @@ function bindDashboard() {
       addTransaction({ type, date: todayStr(), amount, categoryId: catId, memo,
         paymentMethod: '', memberId: '', taxRate: 0, tags: [] });
 
+      // v5.75: 追加成功バウンスアニメーション
+      const submitBtn = document.getElementById('qa-submit');
+      if (submitBtn) {
+        submitBtn.classList.add('qa-sent');
+        submitBtn.addEventListener('animationend', () => submitBtn.classList.remove('qa-sent'), { once: true });
+      }
+
       // 入力欄をリセット（パネルは開いたまま）
       const amtEl = document.getElementById('qa-amount');
       const memoEl = document.getElementById('qa-memo');
@@ -1185,10 +1194,10 @@ function bindDashboard() {
       const typeLabel = type === 'expense' ? '支出' : '収入';
       showToast(`${typeLabel} ${formatMoney(amount)} を追加しました`, 'success');
 
-      // appState.month を今日の月に合わせてダッシュボード再描画
+      // appState.month を今日の月に合わせてダッシュボード再描画（アニメーション後）
       appState.month = todayStr().slice(0, 7);
       appState.quickAddOpen = true; // 再描画後もパネルを開いたまま
-      renderCurrentPage();
+      setTimeout(() => renderCurrentPage(), 350);
     });
   }
 
