@@ -4545,6 +4545,148 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .cal-sum-label    { font-size: 10px; }
 }
 
+/* --- 収支予定統合表示 (v5.92) --- */
+.cal-events-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: cal-fade-in 0.25s ease;
+}
+.cal-events-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.cal-events-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.cal-ev-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+.cal-ev-nav {
+  font-size: var(--fs-xs);
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background .15s;
+}
+.cal-ev-nav:hover { background: color-mix(in srgb, var(--primary) 10%, transparent); }
+
+.cal-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.cal-ev-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--cal-ev-color, var(--primary));
+  transition: background .15s;
+  animation: cal-ev-item-in .35s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--cal-ev-i, 0) * 50ms);
+}
+.cal-ev-item:last-child { border-bottom: none; }
+.cal-ev-item:hover { background: var(--surface-hover); }
+.cal-ev-done {
+  opacity: 0.55;
+}
+.cal-ev-icon {
+  width: 34px; height: 34px;
+  border-radius: var(--radius-btn-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cal-ev-info { flex: 1; min-width: 0; }
+.cal-ev-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cal-ev-done .cal-ev-name { text-decoration: line-through; color: var(--text-muted); }
+.cal-ev-cat {
+  font-size: var(--fs-xs);
+  margin-top: 2px;
+}
+.cal-ev-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.cal-ev-amount {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.cal-ev-amount.inc { color: var(--success); }
+.cal-ev-amount.exp { color: #ef4444; }
+.cal-ev-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 99px;
+}
+.cal-ev-badge.done    { background: color-mix(in srgb, var(--success) 12%, transparent); color: var(--success); }
+.cal-ev-badge.pending { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
+
+.cal-events-totals {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.cal-ev-total {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.cal-ev-total.inc { background: color-mix(in srgb, var(--success) 10%, transparent); color: var(--success); }
+.cal-ev-total.exp { background: color-mix(in srgb, #ef4444 10%, transparent); color: #ef4444; }
+
+@keyframes cal-ev-item-in {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+  .cal-ev-item { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); }
+  .cal-ev-icon { width: 28px; height: 28px; font-size: 15px; }
+  .cal-ev-name { font-size: var(--fs-xs); }
+  .cal-ev-amount { font-size: var(--fs-xs); }
+}
+
 /* ============================================================
    家計インサイトウィジェット (v5.40)
    ============================================================ */

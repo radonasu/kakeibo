@@ -5677,6 +5677,11 @@ function renderCalendar() {
   const totalExpense = calcTotal(txs, 'expense');
   const totalBalance = totalIncome - totalExpense;
 
+  // v5.92: その月の収支予定イベントを取得
+  const monthEvents = (appData.events || []).filter(e => e.month === ym);
+  const plannedIncome  = monthEvents.filter(e => e.type==='income' ).reduce((s,e) => s + (Number(e.plannedAmount)||0), 0);
+  const plannedExpense = monthEvents.filter(e => e.type==='expense').reduce((s,e) => s + (Number(e.plannedAmount)||0), 0);
+
   // 日別集計マップ
   const dayMap = {};
   txs.forEach(t => {
@@ -5725,6 +5730,37 @@ function renderCalendar() {
   const balSign = totalBalance >= 0 ? '+' : '';
   const balCls  = totalBalance >= 0 ? 'income' : 'expense';
 
+  // v5.92: 収支予定セクション
+  const eventsSection = monthEvents.length > 0 ? `
+    <div class="cal-events-section">
+      <div class="cal-events-header">
+        <span class="cal-events-title">📌 今月の収支予定 <span class="cal-ev-count">${monthEvents.length}</span></span>
+        <button class="btn-link cal-ev-nav" onclick="navigate('events')">管理 →</button>
+      </div>
+      <div class="cal-events-list">
+        ${monthEvents.map((ev, i) => {
+          const cat = (appData.categories||[]).find(c => c.id === ev.categoryId);
+          const isIncome = ev.type === 'income';
+          return `<div class="cal-ev-item${ev.done ? ' cal-ev-done' : ''}" style="--cal-ev-color:${ev.color||'#6366f1'};--cal-ev-i:${i}">
+            <div class="cal-ev-icon" style="background:${ev.color||'#6366f1'}18;color:${ev.color||'#6366f1'}" aria-hidden="true">${ev.emoji||'📅'}</div>
+            <div class="cal-ev-info">
+              <div class="cal-ev-name">${esc2(ev.name)}</div>
+              ${cat ? `<div class="cal-ev-cat" style="color:${cat.color}">${esc2(cat.name)}</div>` : ''}
+            </div>
+            <div class="cal-ev-right">
+              <div class="cal-ev-amount ${isIncome ? 'inc' : 'exp'}">${isIncome ? '+' : '-'}${formatMoney(ev.plannedAmount||0)}</div>
+              <div class="cal-ev-badge ${ev.done ? 'done' : 'pending'}">${ev.done ? '完了' : '未完了'}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      ${(plannedIncome > 0 || plannedExpense > 0) ? `
+      <div class="cal-events-totals">
+        ${plannedIncome  > 0 ? `<span class="cal-ev-total inc">計画収入 +${formatMoney(plannedIncome)}</span>` : ''}
+        ${plannedExpense > 0 ? `<span class="cal-ev-total exp">計画支出 -${formatMoney(plannedExpense)}</span>` : ''}
+      </div>` : ''}
+    </div>` : '';
+
   return `
     <div class="cal-page">
       <div class="cal-header-row">
@@ -5757,6 +5793,8 @@ function renderCalendar() {
         </div>
         <div class="cal-grid" id="cal-grid">${cells}</div>
       </div>
+
+      ${eventsSection}
 
       <div class="cal-day-panel" id="cal-day-panel"${appState.calendarDay ? '' : ' style="display:none"'}>
         <div class="cal-day-panel-header">
