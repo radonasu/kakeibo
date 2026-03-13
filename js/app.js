@@ -2268,6 +2268,133 @@ function saveTxFromModal() {
 // ============================================================
 // レポート
 // ============================================================
+// ============================================================
+// 年間支出ヒートマップ (v5.82)
+// ============================================================
+function renderHeatmapSection(year, yearTxs) {
+  // 日別支出マップ構築
+  const dayMap = {};
+  yearTxs.filter(t => t.type === 'expense' && t.date).forEach(t => {
+    dayMap[t.date] = (dayMap[t.date] || 0) + (Number(t.amount) || 0);
+  });
+
+  // サマリー統計
+  const expEntries = Object.entries(dayMap).filter(([, v]) => v > 0);
+  const expDays = expEntries.length;
+  const maxDay = expDays ? [...expEntries].sort((a, b) => b[1] - a[1])[0] : null;
+  const yearTotalExp = expEntries.reduce((s, [, v]) => s + v, 0);
+  const avgDailyExp = expDays > 0 ? Math.round(yearTotalExp / expDays) : 0;
+
+  // 最長無支出連続期間
+  let maxStreak = 0, curStreak = 0;
+  for (let m = 0; m < 12; m++) {
+    const dim = new Date(year, m + 1, 0).getDate();
+    for (let d2 = 1; d2 <= dim; d2++) {
+      const ds = `${year}-${String(m + 1).padStart(2, '0')}-${String(d2).padStart(2, '0')}`;
+      if (!dayMap[ds]) { curStreak++; maxStreak = Math.max(maxStreak, curStreak); }
+      else curStreak = 0;
+    }
+  }
+
+  // 四分位でレベル分け（1〜4）
+  const sortedVals = expEntries.map(([, v]) => v).sort((a, b) => a - b);
+  const q1 = sortedVals[Math.floor(sortedVals.length * 0.25)] || 0;
+  const q2 = sortedVals[Math.floor(sortedVals.length * 0.5)] || 0;
+  const q3 = sortedVals[Math.floor(sortedVals.length * 0.75)] || 0;
+  const getLevel = v => {
+    if (!v) return 0;
+    if (v <= q1) return 1;
+    if (v <= q2) return 2;
+    if (v <= q3) return 3;
+    return 4;
+  };
+
+  // グリッド開始日: 1月1日を含む週の日曜日
+  const jan1 = new Date(year, 0, 1);
+  const gridStart = new Date(year, 0, 1 - jan1.getDay());
+
+  // 各月の最初の週インデックスを記録
+  const monthFirstWeek = {};
+  for (let w = 0; w < 53; w++) {
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(gridStart);
+      date.setDate(date.getDate() + w * 7 + d);
+      if (date.getFullYear() === year) {
+        const mo = date.getMonth();
+        if (monthFirstWeek[mo] === undefined) monthFirstWeek[mo] = w;
+      }
+    }
+  }
+
+  // セルHTML生成（grid-auto-flow:column → (w,d)順で正しく配置）
+  const cellsHtml = [];
+  for (let w = 0; w < 53; w++) {
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(gridStart);
+      date.setDate(date.getDate() + w * 7 + d);
+      if (date.getFullYear() !== year) {
+        cellsHtml.push('<div class="hm-cell hm-out" aria-hidden="true"></div>');
+        continue;
+      }
+      const dateStr = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      const amount = dayMap[dateStr] || 0;
+      const level = getLevel(amount);
+      const mo = date.getMonth() + 1;
+      const tooltip = amount > 0 ? `${dateStr}  ${formatMoney(amount)}` : dateStr;
+      cellsHtml.push(`<div class="hm-cell hm-lv${level}" title="${esc2(tooltip)}" data-hm-date="${dateStr}" data-hm-month="${mo}" role="gridcell" aria-label="${esc2(tooltip)}"></div>`);
+    }
+  }
+
+  // 月ラベルHTML
+  const MONTH_LABELS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const monthLabelsHtml = MONTH_LABELS.map((label, m) => {
+    const wi = monthFirstWeek[m];
+    if (wi === undefined) return '';
+    return `<span class="hm-month-label" style="--hm-week-col:${wi}">${label}</span>`;
+  }).join('');
+
+  return `<div id="sec-heatmap" class="card">
+  <h3 class="card-title">🗓️ 年間支出ヒートマップ（${year}年）</h3>
+  <div class="hm-summary-row">
+    <div class="hm-stat-card">
+      <div class="hm-stat-label">支出日数</div>
+      <div class="hm-stat-value">${expDays}<span class="hm-stat-unit">日</span></div>
+    </div>
+    <div class="hm-stat-card">
+      <div class="hm-stat-label">最大支出日</div>
+      <div class="hm-stat-value">${maxDay ? maxDay[0].slice(5).replace('-', '/') : '—'}</div>
+      ${maxDay ? `<div class="hm-stat-sub expense">${formatMoney(maxDay[1])}</div>` : ''}
+    </div>
+    <div class="hm-stat-card">
+      <div class="hm-stat-label">支出日平均</div>
+      <div class="hm-stat-value">${expDays ? formatMoney(avgDailyExp) : '—'}</div>
+    </div>
+    <div class="hm-stat-card">
+      <div class="hm-stat-label">最長無支出期間</div>
+      <div class="hm-stat-value">${maxStreak}<span class="hm-stat-unit">日</span></div>
+    </div>
+  </div>
+  <div class="hm-outer-wrap">
+    <div class="hm-dow-col" aria-hidden="true">
+      <span></span><span>月</span><span></span><span>水</span><span></span><span>金</span><span></span>
+    </div>
+    <div class="hm-grid-wrap">
+      <div class="hm-month-row">${monthLabelsHtml}</div>
+      <div class="hm-grid" role="grid" aria-label="${year}年 支出ヒートマップ">${cellsHtml.join('')}</div>
+    </div>
+  </div>
+  <div class="hm-legend" aria-hidden="true">
+    <span class="hm-legend-text">少</span>
+    <div class="hm-cell hm-lv0 hm-legend-cell"></div>
+    <div class="hm-cell hm-lv1 hm-legend-cell"></div>
+    <div class="hm-cell hm-lv2 hm-legend-cell"></div>
+    <div class="hm-cell hm-lv3 hm-legend-cell"></div>
+    <div class="hm-cell hm-lv4 hm-legend-cell"></div>
+    <span class="hm-legend-text">多</span>
+  </div>
+</div>`;
+}
+
 function renderReports() {
   const year = appState.reportYear;
   const months12 = [];
@@ -2367,6 +2494,7 @@ function renderReports() {
   <button class="section-tab" data-target="sec-dow"><span class="tab-icon">📆</span> 曜日別</button>
   <button class="section-tab" data-target="sec-cat-trend"><span class="tab-icon">📈</span> カテゴリ推移</button>
   <button class="section-tab" data-target="sec-fixed"><span class="tab-icon">🔒</span> 固変分析</button>
+  <button class="section-tab" data-target="sec-heatmap"><span class="tab-icon">🗓️</span> ヒートマップ</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -2836,7 +2964,8 @@ ${(() => {
     </div>
   </div>
 </div>`;
-})()}`;
+})()}
+${renderHeatmapSection(year, allTxs)}`;
 }
 
 function bindReports() {
@@ -2947,6 +3076,16 @@ function bindReports() {
     }
   });
 
+
+  // ヒートマップ: 日付セルクリックで月カレンダーへ遷移 (v5.82)
+  document.getElementById('sec-heatmap')?.addEventListener('click', e => {
+    const cell = e.target.closest('[data-hm-date]');
+    if (!cell) return;
+    const mo = parseInt(cell.dataset.hmMonth);
+    if (!mo) return;
+    appState.calendarMonth = `${appState.reportYear}-${String(mo).padStart(2, '0')}`;
+    navigate('calendar');
+  });
 
   // セクションタブナビ (v5.28)
   const tabsEl = document.getElementById('section-tabs');
