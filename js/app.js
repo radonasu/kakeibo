@@ -3276,6 +3276,22 @@ function renderCategories() {
     </div>
     <div class="modal-body">
       <p class="hint" id="sb-period-hint"></p>
+      <div id="sb-banner" class="sb-banner" style="display:none">
+        <div class="sb-banner-cell">
+          <div class="sb-banner-num" id="sb-bn-total">0</div>
+          <div class="sb-banner-lbl">提案件数</div>
+        </div>
+        <div class="sb-banner-div"></div>
+        <div class="sb-banner-cell">
+          <div class="sb-banner-num sb-bn-up" id="sb-bn-up">0</div>
+          <div class="sb-banner-lbl">増額カテゴリ</div>
+        </div>
+        <div class="sb-banner-div"></div>
+        <div class="sb-banner-cell">
+          <div class="sb-banner-num sb-bn-down" id="sb-bn-down">0</div>
+          <div class="sb-banner-lbl">削減カテゴリ</div>
+        </div>
+      </div>
       <div id="sb-no-data" style="display:none" class="empty-state-sm">
         <p>過去3ヶ月の支出データが見つかりませんでした。<br>取引を記録してから再度お試しください。</p>
       </div>
@@ -3305,7 +3321,7 @@ function renderCategories() {
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="sb-modal-cancel">キャンセル</button>
-      <button class="btn btn-primary" id="sb-apply-btn">選択した予算を適用</button>
+      <button class="btn btn-primary" id="sb-apply-btn">選択した予算を適用 <span class="sb-apply-count" id="sb-apply-count">0</span></button>
     </div>
   </div>
 </div>`;
@@ -3448,23 +3464,48 @@ function bindCategories() {
     const tableWrap = document.getElementById('sb-table-wrap');
     const tbody     = document.getElementById('sb-tbody');
     const selectAll = document.getElementById('sb-select-all');
+    const bannerEl  = document.getElementById('sb-banner');
+    const countBadge = document.getElementById('sb-apply-count');
+
+    function updateSbCount() {
+      const checks = [...tbody.querySelectorAll('.sb-check')];
+      const cnt = checks.filter(c => c.checked).length;
+      selectAll.indeterminate = cnt > 0 && cnt < checks.length;
+      selectAll.checked = cnt === checks.length;
+      if (countBadge) {
+        countBadge.textContent = cnt;
+        countBadge.classList.remove('sb-count-pop');
+        void countBadge.offsetWidth;
+        countBadge.classList.add('sb-count-pop');
+      }
+    }
 
     const fmt = m => { const [y, mo] = m.split('-'); return `${y}年${parseInt(mo)}月`; };
     periodEl.textContent = `分析期間: ${fmt(months[months.length - 1])} 〜 ${fmt(months[0])}`;
 
     if (suggestions.length === 0) {
+      bannerEl.style.display  = 'none';
       noDataEl.style.display  = '';
       tableWrap.style.display = 'none';
     } else {
+      // バナー更新
+      const upCnt   = suggestions.filter(s => s.suggested > s.current).length;
+      const downCnt = suggestions.filter(s => s.suggested < s.current).length;
+      document.getElementById('sb-bn-total').textContent = suggestions.length;
+      document.getElementById('sb-bn-up').textContent    = upCnt;
+      document.getElementById('sb-bn-down').textContent  = downCnt;
+      bannerEl.style.display  = '';
+
       noDataEl.style.display  = 'none';
       tableWrap.style.display = '';
       selectAll.checked = true;
       tbody.innerHTML = suggestions.map((s, i) => {
         const diff    = s.suggested - s.current;
-        const diffStr = diff === 0 ? '変わらず' : (diff > 0 ? `▲ ${formatMoney(diff)}` : `▼ ${formatMoney(-diff)}`);
         const diffCls = diff > 0 ? 'sb-diff-up' : (diff < 0 ? 'sb-diff-down' : 'sb-diff-same');
+        const diffIcon = diff > 0 ? '↑' : (diff < 0 ? '↓' : '–');
+        const diffAmt  = diff === 0 ? '変わらず' : `${diffIcon} ${formatMoney(Math.abs(diff))}`;
         const lowData = s.dataMonths < 3;
-        return `<tr class="sb-row" style="--sb-i:${i}">
+        return `<tr class="sb-row" style="--sb-i:${i};--sb-cat-color:${s.cat.color}">
           <td><input type="checkbox" class="sb-check" data-id="${s.cat.id}" data-val="${s.suggested}" checked></td>
           <td>
             <span class="color-dot" style="background:${s.cat.color}"></span>${esc2(s.cat.name)}
@@ -3473,18 +3514,16 @@ function bindCategories() {
           <td class="text-right text-muted">${formatMoney(s.avg)}</td>
           <td class="text-right">${s.current ? formatMoney(s.current) : '<span class="text-muted">未設定</span>'}</td>
           <td class="text-right sb-suggested">${formatMoney(s.suggested)}</td>
-          <td class="text-right"><span class="${diffCls}">${diffStr}</span></td>
+          <td class="text-right"><span class="sb-diff-pill ${diffCls}">${diffAmt}</span></td>
         </tr>`;
       }).join('');
 
-      tbody.addEventListener('change', () => {
-        const checks = [...tbody.querySelectorAll('.sb-check')];
-        const cnt = checks.filter(c => c.checked).length;
-        selectAll.indeterminate = cnt > 0 && cnt < checks.length;
-        selectAll.checked = cnt === checks.length;
-      });
+      if (countBadge) countBadge.textContent = suggestions.length;
+
+      tbody.addEventListener('change', updateSbCount);
       selectAll.addEventListener('change', () => {
         tbody.querySelectorAll('.sb-check').forEach(c => c.checked = selectAll.checked);
+        updateSbCount();
       });
     }
     showModal(document.getElementById('smart-budget-modal'));

@@ -8469,8 +8469,92 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ============================================================
-   スマート予算提案 (v5.88)
+   スマート予算提案 ビジュアル洗練 (v5.89)
    ============================================================ */
+
+/* モーダル入場アニメーション */
+#smart-budget-modal .modal {
+  animation: sb-modal-in 0.42s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes sb-modal-in {
+  from { opacity: 0; transform: scale(0.94) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+/* サマリーバナー */
+.sb-banner {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-radius: var(--radius-card);
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-3);
+  animation: sb-banner-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: 0.1s;
+}
+@keyframes sb-banner-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.sb-banner-cell {
+  text-align: center;
+  flex: 1;
+}
+.sb-banner-num {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+.sb-banner-num.sb-bn-up   { color: #fca5a5; }
+.sb-banner-num.sb-bn-down { color: #6ee7b7; }
+.sb-banner-lbl {
+  font-size: var(--fs-2xs);
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.sb-banner-div {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+
+/* カスタムチェックボックス */
+.sb-check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border: 2px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  vertical-align: middle;
+}
+.sb-check:hover:not(:checked) {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.sb-check:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.sb-check:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px; left: 4px;
+  width: 4px; height: 8px;
+  border: 2px solid #fff;
+  border-top: none; border-left: none;
+  animation: cb-check-in .2s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* 全選択ラベル */
 .sb-actions-top {
   display: flex;
   align-items: center;
@@ -8484,34 +8568,54 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   cursor: pointer;
 }
+
+/* テーブルヘッダー */
 .sb-col-suggest {
   color: var(--primary);
   font-weight: 600;
 }
-.sb-suggested {
-  font-weight: 600;
-  color: var(--primary);
-}
+
+/* テーブル行: カテゴリカラー左ボーダー */
 .sb-row {
-  animation: sb-row-in 0.3s ease both;
-  animation-delay: calc(var(--sb-i, 0) * 40ms);
+  border-left: 3px solid var(--sb-cat-color, var(--border));
+  transition: background .15s;
+  animation: sb-row-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--sb-i, 0) * 45ms + 0.12s);
+}
+.sb-row:hover {
+  background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) 6%, transparent);
+}
+.sb-row:has(.sb-check:checked) {
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
 }
 @keyframes sb-row-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateX(-6px) scale(0.99); }
+  to   { opacity: 1; transform: translateX(0)    scale(1); }
 }
-.sb-diff-up {
-  color: var(--danger-text);
-  font-size: var(--fs-sm);
+
+/* 提案予算: カテゴリカラー連動 */
+.sb-suggested {
+  font-weight: 700;
+  color: var(--sb-cat-color, var(--primary));
+  font-size: var(--fs-md);
 }
-.sb-diff-down {
-  color: var(--success);
-  font-size: var(--fs-sm);
+
+/* 変化ピルバッジ */
+.sb-diff-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: var(--radius-badge);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  white-space: nowrap;
 }
-.sb-diff-same {
-  color: var(--text-muted);
-  font-size: var(--fs-sm);
-}
+.sb-diff-pill.sb-diff-up   { background: var(--danger-bg);     color: var(--danger-text);  border: 1px solid var(--danger-border); }
+.sb-diff-pill.sb-diff-down { background: var(--success-bg);    color: var(--success);      border: 1px solid var(--success-border); }
+.sb-diff-pill.sb-diff-same { background: var(--surface-hover); color: var(--text-muted);   border: 1px solid var(--border); }
+
+/* データ不足バッジ */
 .sb-low-data {
   display: inline-block;
   font-size: var(--fs-2xs);
@@ -8523,6 +8627,31 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-left: 4px;
   vertical-align: middle;
 }
+
+/* 適用件数バッジ */
+.sb-apply-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 99px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  margin-left: 4px;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+.sb-apply-count.sb-count-pop {
+  animation: sb-count-pop .25s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes sb-count-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
 .empty-state-sm {
   text-align: center;
   padding: var(--sp-6) var(--sp-4);
