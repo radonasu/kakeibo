@@ -232,6 +232,7 @@ async function pushToCloud() {
     challenges:    appData.challenges     || [],
     notes:         appData.notes          || {},
     debts:         appData.debts          || [],
+    events:        appData.events         || [],
     settings:      appData.settings,
   };
 
@@ -267,6 +268,7 @@ function applyRemoteData(d, toastMsg) {
   if (d.challenges)    appData.challenges    = d.challenges;
   if (d.notes)         appData.notes         = d.notes;
   if (d.debts)         appData.debts         = d.debts;
+  if (d.events)        appData.events        = d.events;
   if (d.settings)      appData.settings      = { ...appData.settings, ...d.settings };
 
   // saveData() を呼ばず直接書き込み（無限ループ防止）

@@ -135,6 +135,7 @@ function renderCurrentPage() {
     case 'wishlist':       main.innerHTML = renderWishlist(); bindWishlist(); break;             // v5.51
     case 'challenges':     main.innerHTML = renderChallenges(); bindChallenges(); break;          // v5.64
     case 'debts':          main.innerHTML = renderDebts(); bindDebts(); break;                   // v5.84
+    case 'events':         main.innerHTML = renderEvents(); bindEvents(); break;                // v5.90
   }
 }
 
@@ -1134,6 +1135,37 @@ ${showWidget('debts') ? (() => {
           </div>
         </div>
         <div class="debt-widget-balance">${formatMoney(cur)}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>`;
+})() : ''}
+
+${showWidget('events') ? (() => {
+  const upcoming = getUpcomingEvents(1);
+  if (!upcoming.length) return '';
+  const today = new Date();
+  const ym = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0');
+  return `<div class="card ev-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📌 直近の収支予定</h3>
+    <button class="btn-link" onclick="navigate('events')">すべて見る →</button>
+  </div>
+  <div class="ev-widget-list">
+    ${upcoming.slice(0,4).map(ev => {
+      const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
+      const isIncome = ev.type === 'income';
+      const monthLabel = ev.month === ym ? '今月' : '来月';
+      return `<div class="ev-widget-item" style="--ev-accent:${ev.color||'#6366f1'}">
+        <div class="ev-widget-icon" style="background:${ev.color||'#6366f1'}22;color:${ev.color||'#6366f1'}">${ev.emoji||'📅'}</div>
+        <div class="ev-widget-info">
+          <div class="ev-widget-name">${esc2(ev.name)}</div>
+          <div class="ev-widget-meta">
+            <span class="ev-widget-month">${monthLabel}</span>
+            ${cat ? `<span class="ev-widget-cat" style="color:${cat.color}">${esc2(cat.name)}</span>` : ''}
+          </div>
+        </div>
+        <div class="ev-widget-amount ${isIncome?'ev-income':'ev-expense'}">${isIncome?'+':'-'}${formatMoney(ev.plannedAmount||0)}</div>
       </div>`;
     }).join('')}
   </div>
@@ -3652,6 +3684,7 @@ function renderSettings() {
       { key: 'wishlist',      label: 'ほしいものリスト',icon: '🛍️' },
       { key: 'challenges',    label: '節約チャレンジ',  icon: '🏆' },
       { key: 'debts',         label: 'ローン管理',      icon: '💳' },
+      { key: 'events',        label: '収支予定',        icon: '📌' },
       { key: 'chart',         label: '収支グラフ',      icon: '📉' },
     ];
     const rows = widgets.map(w => {
@@ -8197,6 +8230,262 @@ function bindDebts() {
       return;
     }
   });
+}
+
+// ============================================================
+// 年間収支予定管理（v5.90）
+// ============================================================
+function renderEvents() {
+  const events = getEvents();
+  const today = new Date();
+  const thisYearStr = String(today.getFullYear());
+  const thisMonthYM = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0');
+  const nextDate = new Date(today.getFullYear(), today.getMonth()+1, 1);
+  const nextMonthYM = nextDate.getFullYear() + '-' + String(nextDate.getMonth()+1).padStart(2,'0');
+
+  // サマリー
+  const thisMonthEvs = events.filter(e => e.month === thisMonthYM);
+  const nextMonthEvs = events.filter(e => e.month === nextMonthYM);
+  const thisYearEvs  = events.filter(e => e.month && e.month.startsWith(thisYearStr));
+  const thisYearExp  = thisYearEvs.filter(e => e.type==='expense').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+  const thisYearInc  = thisYearEvs.filter(e => e.type==='income').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+  const thisMonthExp = thisMonthEvs.filter(e=>e.type==='expense').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+  const thisMonthInc = thisMonthEvs.filter(e=>e.type==='income').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+  const nextMonthExp = nextMonthEvs.filter(e=>e.type==='expense').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+  const nextMonthInc = nextMonthEvs.filter(e=>e.type==='income').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+
+  const summaryCards = `
+<div class="ev-summary-grid">
+  <div class="card ev-sum-card ev-sum-this" style="--ev-si:0">
+    <div class="ev-sum-label">今月の予定</div>
+    <div class="ev-sum-count">${thisMonthEvs.length}<small>件</small></div>
+    <div class="ev-sum-amounts">
+      ${thisMonthInc>0?`<span class="ev-sum-inc">+${formatMoney(thisMonthInc)}</span>`:''}
+      ${thisMonthExp>0?`<span class="ev-sum-exp">-${formatMoney(thisMonthExp)}</span>`:''}
+      ${thisMonthEvs.length===0?'<span class="ev-sum-none">予定なし</span>':''}
+    </div>
+  </div>
+  <div class="card ev-sum-card ev-sum-next" style="--ev-si:1">
+    <div class="ev-sum-label">来月の予定</div>
+    <div class="ev-sum-count">${nextMonthEvs.length}<small>件</small></div>
+    <div class="ev-sum-amounts">
+      ${nextMonthInc>0?`<span class="ev-sum-inc">+${formatMoney(nextMonthInc)}</span>`:''}
+      ${nextMonthExp>0?`<span class="ev-sum-exp">-${formatMoney(nextMonthExp)}</span>`:''}
+      ${nextMonthEvs.length===0?'<span class="ev-sum-none">予定なし</span>':''}
+    </div>
+  </div>
+  <div class="card ev-sum-card ev-sum-year" style="--ev-si:2">
+    <div class="ev-sum-label">今年の予定合計</div>
+    <div class="ev-sum-count">${thisYearEvs.length}<small>件</small></div>
+    <div class="ev-sum-amounts">
+      ${thisYearInc>0?`<span class="ev-sum-inc">+${formatMoney(thisYearInc)}</span>`:''}
+      ${thisYearExp>0?`<span class="ev-sum-exp">-${formatMoney(thisYearExp)}</span>`:''}
+      ${thisYearEvs.length===0?'<span class="ev-sum-none">予定なし</span>':''}
+    </div>
+  </div>
+</div>`;
+
+  // イベントカード
+  const evCard = (ev, idx) => {
+    const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
+    const isIncome = ev.type === 'income';
+    const doneCls = ev.done ? ' ev-card-done' : '';
+    return `<div class="card ev-card${doneCls}" style="--ev-accent:${ev.color||'#6366f1'};--ev-ci:${idx}" data-id="${ev.id}">
+  <div class="ev-card-header">
+    <div class="ev-card-icon-wrap" style="background:${ev.color||'#6366f1'}18;color:${ev.color||'#6366f1'}">${ev.emoji||'📅'}</div>
+    <div class="ev-card-info">
+      <div class="ev-card-name ${ev.done?'ev-name-done':''}">${esc2(ev.name)}</div>
+      <div class="ev-card-meta">
+        <span class="ev-type-badge ${isIncome?'ev-income':'ev-expense'}">${isIncome?'収入':'支出'}</span>
+        ${cat?`<span class="ev-cat-badge" style="color:${cat.color}">${esc2(cat.name)}</span>`:''}
+      </div>
+    </div>
+    <div class="ev-card-amount ${isIncome?'ev-income':'ev-expense'}">${isIncome?'+':'-'}${formatMoney(ev.plannedAmount||0)}</div>
+  </div>
+  ${ev.memo?`<div class="ev-card-memo">${esc2(ev.memo)}</div>`:''}
+  <div class="ev-card-footer">
+    <label class="ev-done-label">
+      <input type="checkbox" class="ev-done-cb" data-id="${ev.id}" ${ev.done?'checked':''}> 完了
+    </label>
+    <div class="ev-card-actions">
+      <button class="btn-icon ev-edit" data-id="${ev.id}" title="編集">✏️</button>
+      <button class="btn-icon ev-delete" data-id="${ev.id}" title="削除">🗑️</button>
+    </div>
+  </div>
+</div>`;
+  };
+
+  // 12ヶ月グリッド
+  const MONTH_NAMES = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const yearGrid = Array.from({length:12}, (_,i) => {
+    const d = new Date(today.getFullYear(), i, 1);
+    const ym = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const monthEvs = events.filter(e => e.month === ym).sort((a,b)=>(a.type==='income'?0:1)-(b.type==='income'?0:1));
+    const isCurrent = ym === thisMonthYM;
+    const incTotal = monthEvs.filter(e=>e.type==='income').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+    const expTotal = monthEvs.filter(e=>e.type==='expense').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+    return `<div class="ev-month-col${isCurrent?' ev-month-current':''}">
+  <div class="ev-month-header">
+    <span class="ev-month-label">${MONTH_NAMES[i]}</span>
+    <div class="ev-month-totals">
+      ${incTotal>0?`<span class="ev-income ev-mtot">+${formatMoney(incTotal)}</span>`:''}
+      ${expTotal>0?`<span class="ev-expense ev-mtot">-${formatMoney(expTotal)}</span>`:''}
+    </div>
+    <button class="btn-icon ev-add-month" data-month="${ym}" title="${MONTH_NAMES[i]}に追加">＋</button>
+  </div>
+  <div class="ev-month-body">
+    ${monthEvs.length ? monthEvs.map((ev,idx) => evCard(ev,idx)).join('') : `<div class="ev-month-empty">予定なし</div>`}
+  </div>
+</div>`;
+  }).join('');
+
+  return `<div class="page-header">
+  <h2 class="page-title">📌 収支予定管理</h2>
+  <button class="btn btn-primary btn-sm" id="ev-add-btn">＋ イベントを追加</button>
+</div>
+${summaryCards}
+<div class="ev-year-grid">${yearGrid}</div>`;
+}
+
+function bindEvents() {
+  // モーダルオーバーレイクリックで閉じる
+  const evModal = document.getElementById('ev-modal');
+  if (evModal) {
+    evModal.addEventListener('click', e => { if (e.target === evModal) closeEventModal(); });
+  }
+
+  // ヘッダー追加ボタン
+  const addBtn = document.getElementById('ev-add-btn');
+  if (addBtn) addBtn.addEventListener('click', () => openEventModal(null, null));
+
+  // 月別追加ボタン
+  document.querySelectorAll('.ev-add-month').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      openEventModal(null, btn.dataset.month);
+    });
+  });
+
+  // イベント委譲（編集・削除・完了チェック）
+  const main = document.getElementById('main-content');
+  main.addEventListener('click', e => {
+    const editBtn = e.target.closest('.ev-edit');
+    if (editBtn) { openEventModal(editBtn.dataset.id, null); return; }
+    const delBtn = e.target.closest('.ev-delete');
+    if (delBtn) {
+      if (!confirm('この予定を削除しますか？')) return;
+      deleteEvent(delBtn.dataset.id);
+      renderCurrentPage();
+      return;
+    }
+  });
+
+  // 完了チェックボックス
+  main.addEventListener('change', e => {
+    const cb = e.target.closest('.ev-done-cb');
+    if (cb) {
+      updateEvent(cb.dataset.id, { done: cb.checked });
+      const card = cb.closest('.ev-card');
+      if (card) {
+        card.classList.toggle('ev-card-done', cb.checked);
+        card.querySelector('.ev-card-name')?.classList.toggle('ev-name-done', cb.checked);
+      }
+    }
+  });
+}
+
+function openEventModal(id, presetMonth) {
+  const ev = id ? (getEvents().find(e => e.id === id) || null) : null;
+  const today = new Date();
+  const defaultMonth = presetMonth || (today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0'));
+
+  const catOpts = (appData.categories||[]).map(c =>
+    `<option value="${c.id}" ${ev && ev.categoryId===c.id?'selected':''}>${esc2(c.name)}</option>`
+  ).join('');
+
+  const emojiGrid = EVENT_EMOJIS.map(em =>
+    `<button type="button" class="emoji-chip ev-emoji-chip${ev&&ev.emoji===em?' selected':''}" data-emoji="${em}">${em}</button>`
+  ).join('');
+
+  const colorSwatches = EVENT_COLORS.map(c =>
+    `<button type="button" class="color-swatch${ev&&ev.color===c?' selected':''}" data-color="${c}" style="background:${c}" aria-label="${c}"></button>`
+  ).join('');
+
+  const modal = document.getElementById('ev-modal');
+  const form  = document.getElementById('ev-form');
+  if (!modal || !form) return;
+
+  // フォームに値をセット
+  document.getElementById('ev-id').value       = id || '';
+  document.getElementById('ev-name').value     = ev ? ev.name : '';
+  document.getElementById('ev-amount').value   = ev ? (ev.plannedAmount||'') : '';
+  document.getElementById('ev-month').value    = ev ? ev.month : defaultMonth;
+  document.getElementById('ev-memo').value     = ev ? (ev.memo||'') : '';
+  document.getElementById('ev-type-expense').checked = !ev || ev.type !== 'income';
+  document.getElementById('ev-type-income').checked  = ev && ev.type === 'income';
+  document.getElementById('ev-cat').innerHTML  = catOpts;
+
+  // 絵文字グリッド
+  document.getElementById('ev-emoji-grid').innerHTML = emojiGrid;
+  document.getElementById('ev-emoji-selected').value = ev ? (ev.emoji||'📅') : '📅';
+  document.getElementById('ev-emoji-preview').textContent = ev ? (ev.emoji||'📅') : '📅';
+
+  // カラー
+  document.getElementById('ev-color-swatches').innerHTML = colorSwatches;
+  document.getElementById('ev-color-selected').value = ev ? (ev.color||'#6366f1') : '#6366f1';
+
+  document.getElementById('ev-modal-title').textContent = id ? 'イベントを編集' : '収支予定を追加';
+  modal.classList.add('open');
+
+  // 絵文字選択
+  document.getElementById('ev-emoji-grid').querySelectorAll('.ev-emoji-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ev-emoji-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('ev-emoji-selected').value = btn.dataset.emoji;
+      document.getElementById('ev-emoji-preview').textContent = btn.dataset.emoji;
+    });
+  });
+
+  // カラー選択
+  document.getElementById('ev-color-swatches').querySelectorAll('.color-swatch').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#ev-color-swatches .color-swatch').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('ev-color-selected').value = btn.dataset.color;
+    });
+  });
+}
+
+function closeEventModal() {
+  const modal = document.getElementById('ev-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+function saveEventForm() {
+  const id     = document.getElementById('ev-id').value;
+  const name   = document.getElementById('ev-name').value.trim();
+  const amount = Number(document.getElementById('ev-amount').value) || 0;
+  const month  = document.getElementById('ev-month').value;
+  const memo   = document.getElementById('ev-memo').value.trim();
+  const type   = document.getElementById('ev-type-income').checked ? 'income' : 'expense';
+  const catId  = document.getElementById('ev-cat').value;
+  const emoji  = document.getElementById('ev-emoji-selected').value || '📅';
+  const color  = document.getElementById('ev-color-selected').value || '#6366f1';
+
+  if (!name) { showToast('名前を入力してください', 'error'); return; }
+  if (!month){ showToast('月を選択してください', 'error'); return; }
+
+  const fields = { name, plannedAmount: amount, month, memo, type, categoryId: catId, emoji, color };
+  if (id) {
+    updateEvent(id, fields);
+    showToast('予定を更新しました', 'success');
+  } else {
+    addEvent({ ...fields, done: false });
+    showToast('予定を追加しました', 'success');
+  }
+  closeEventModal();
+  renderCurrentPage();
 }
 
 // ============================================================

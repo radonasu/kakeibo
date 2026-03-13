@@ -237,6 +237,7 @@ function loadData() {
     if (!data.wishlist)       data.wishlist = [];     // ほしいものリスト（v5.51）
     if (!data.challenges)     data.challenges = [];   // 節約チャレンジ（v5.64）
     if (!data.notes)          data.notes = {};        // 月次ノート（v5.76）
+    if (!data.events)         data.events = [];       // 年間イベント・収支予定（v5.90）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     // isFixed フラグ追加（v5.70）
@@ -264,6 +265,7 @@ function createDefaultData() {
     wishlist: [],       // ほしいものリスト（v5.51）
     challenges: [],     // 節約チャレンジ（v5.64）
     notes: {},          // 月次ノート（v5.76）
+    events: [],         // 年間イベント・収支予定（v5.90）
   };
 }
 
@@ -880,6 +882,50 @@ function calcChallengeProgress(ch) {
     const pct = Math.min(100, Math.round(noSpendCount / target * 100));
     return { actual: noSpendCount, target, pct, isOnTrack: noSpendCount >= Math.round(target * (today.getDate() / lastDay)), label: `${noSpendCount}日 / ${target}日` };
   }
+}
+
+// ── 年間イベント・収支予定 CRUD（v5.90）─────────────────────
+const EVENT_EMOJIS = ['📅','✈️','🎊','🎁','🚗','🏠','🎓','💒','🏥','💊','🎄','🌸','⛷️','🏖️','🎆','🎃'];
+const EVENT_COLORS = ['#6366f1','#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16','#f97316','#64748b','#0d9488'];
+
+function getEvents() {
+  if (!appData.events) appData.events = [];
+  return appData.events;
+}
+
+function addEvent(fields) {
+  if (!appData.events) appData.events = [];
+  const ev = { ...fields, id: 'ev_' + genId(), createdAt: todayStr() };
+  appData.events.push(ev);
+  saveData();
+  return ev;
+}
+
+function updateEvent(id, fields) {
+  if (!appData.events) appData.events = [];
+  const idx = appData.events.findIndex(e => e.id === id);
+  if (idx >= 0) {
+    appData.events[idx] = { ...appData.events[idx], ...fields };
+    saveData();
+  }
+}
+
+function deleteEvent(id) {
+  appData.events = (appData.events || []).filter(e => e.id !== id);
+  saveData();
+}
+
+// 今月・来月のイベントを返す
+function getUpcomingEvents(monthsAhead = 2) {
+  const evs = getEvents();
+  const today = new Date();
+  const results = [];
+  for (let i = 0; i <= monthsAhead; i++) {
+    const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    const ym = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    evs.filter(e => e.month === ym && !e.done).forEach(e => results.push(e));
+  }
+  return results;
 }
 
 // ── 初期化（必ず最後に実行）────────────────────────────────

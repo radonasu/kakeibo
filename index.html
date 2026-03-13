@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=5.89">
+  <link rel="stylesheet" href="css/style.css?v=5.90">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -92,6 +92,9 @@
       </button>
       <button class="nav-item" data-page="debts">
         <span class="nav-icon" aria-hidden="true">💳</span> ローン管理
+      </button>
+      <button class="nav-item" data-page="events">
+        <span class="nav-icon" aria-hidden="true">📌</span> 収支予定
       </button>
       <button class="nav-item" data-page="settings">
         <span class="nav-icon" aria-hidden="true">⚙️</span> 設定
@@ -181,16 +184,85 @@
   </nav>
 </div>
 
+<!-- ─── 収支予定モーダル（v5.90）─── -->
+<div id="ev-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ev-modal-title">
+  <div class="modal-wrap">
+    <div class="modal-header">
+      <h2 class="modal-title" id="ev-modal-title">収支予定を追加</h2>
+      <button class="modal-close" onclick="closeEventModal()" aria-label="閉じる">✕</button>
+    </div>
+    <form id="ev-form" onsubmit="event.preventDefault(); saveEventForm();">
+      <input type="hidden" id="ev-id">
+      <input type="hidden" id="ev-emoji-selected" value="📅">
+      <input type="hidden" id="ev-color-selected" value="#6366f1">
+
+      <div class="form-group">
+        <label>名前</label>
+        <input type="text" id="ev-name" placeholder="例: 夏休み旅行" maxlength="40" required>
+      </div>
+
+      <div class="form-group">
+        <label>絵文字</label>
+        <div class="ev-emoji-row">
+          <span class="ev-emoji-preview-box" id="ev-emoji-preview">📅</span>
+          <div id="ev-emoji-grid" class="ev-emoji-grid"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>カラー</label>
+        <div id="ev-color-swatches" class="color-swatch-row"></div>
+      </div>
+
+      <div class="form-group">
+        <label>種別</label>
+        <div class="type-toggle">
+          <label><input type="radio" id="ev-type-expense" name="ev-type" value="expense"> 支出</label>
+          <label><input type="radio" id="ev-type-income"  name="ev-type" value="income">  収入</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>予定金額</label>
+        <div class="amount-input-wrap">
+          <span class="amount-prefix">¥</span>
+          <input type="number" id="ev-amount" placeholder="0" min="0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>予定月</label>
+        <input type="month" id="ev-month">
+      </div>
+
+      <div class="form-group">
+        <label>カテゴリ</label>
+        <select id="ev-cat"><option value="">カテゴリなし</option></select>
+      </div>
+
+      <div class="form-group">
+        <label>メモ</label>
+        <input type="text" id="ev-memo" placeholder="任意のメモ" maxlength="100">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeEventModal()">キャンセル</button>
+        <button type="submit" class="btn btn-primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=5.89"></script>
-<script src="js/config.js?v=5.89"></script>
-<script src="js/data.js?v=5.89"></script>
-<script src="js/export.js?v=5.89"></script>
-<script src="js/charts.js?v=5.89"></script>
-<script src="js/sync.js?v=5.89"></script>
-<script src="js/app.js?v=5.89"></script>
+<script src="js/icons.js?v=5.90"></script>
+<script src="js/config.js?v=5.90"></script>
+<script src="js/data.js?v=5.90"></script>
+<script src="js/export.js?v=5.90"></script>
+<script src="js/charts.js?v=5.90"></script>
+<script src="js/sync.js?v=5.90"></script>
+<script src="js/app.js?v=5.90"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=5.89"></script>
+<script src="js/pwa.js?v=5.90"></script>
 
 </body>
 </html>

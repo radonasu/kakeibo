@@ -111,6 +111,8 @@
 
 | 78 | v5.89 | デザイン | スマート予算提案 ビジュアル洗練：`sb-modal-in`モーダル入場アニメーション（0.42s cubic-bezier弾性・scale+translateY）・提案件数/増額/削減の3列グラデーションサマリーバナー（インディゴ→バイオレット・`sb-banner-in`入場アニメーション）・カスタムチェックボックス（appearance:none・primaryカラー・cb-check-inチェックマークアニメーション）・テーブル行にカテゴリカラー左ボーダー3px（`--sb-cat-color`CSS変数）＋ホバー薄着色＋チェック済み行primary-light背景・変化列を`sb-diff-pill`ピルバッジ（danger-bg/success-bg/surface-hover 3色・↑↓矢印アイコン）に刷新・提案予算を`--sb-cat-color`カテゴリカラー連動で着色・適用ボタンに選択件数バッジ（リアルタイム更新・`sb-count-pop`バウンスアニメーション）・`sb-row-in`を弾性cubic-bezier(translateX+scale)に強化・ダークモード対応 |
 
+| 79 | v5.90 | 機能+デザイン | 年間収支予定管理：12ヶ月グリッド・イベントCRUD・ダッシュボードウィジェット・カード入場アニメーション ＋ CSS品質改善：未定義CSSカスタムプロパティ修正（`--surface-1`→`--surface`、`--card-bg`→`--surface`を6箇所）・ブランドアイコングラデーションをCSS変数化・SQLブロック背景を`var(--sidebar-bg)`に変数化・ダークモード用モーダルオーバーレイ追加 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
