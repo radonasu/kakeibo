@@ -681,6 +681,10 @@ function renderNotesCard(month) {
     savedAtHtml = `<span class="nt-saved-at">${mm}/${dd} ${hh}:${mn} 更新</span>`;
   }
 
+  const initPct = Math.round(text.length / 500 * 100);
+  const initProgCls = initPct >= 96 ? 'nt-prog-danger' : initPct >= 80 ? 'nt-prog-warn' : '';
+  const initCntCls  = initPct >= 96 ? 'nt-cnt-danger'  : initPct >= 80 ? 'nt-cnt-warn'  : '';
+
   return `<div class="card nt-card">
   <div class="card-header-row">
     <h3 class="card-title">📝 今月のメモ</h3>
@@ -689,8 +693,9 @@ function renderNotesCard(month) {
   <textarea id="nt-textarea" class="nt-textarea"
     placeholder="今月の家計目標や振り返りをメモしましょう&#10;例）食費を2万円以内に！ / 旅行代を貯める月"
     maxlength="500">${esc2(text)}</textarea>
+  <div class="nt-progress-bar"><div class="nt-progress-fill ${initProgCls}" id="nt-prog-fill" style="width:${initPct}%"></div></div>
   <div class="nt-footer">
-    <span class="nt-char-count"><span id="nt-chars">${text.length}</span>/500</span>
+    <span class="nt-char-count ${initCntCls}" id="nt-char-wrap"><span id="nt-chars">${text.length}</span>/500</span>
     <span class="nt-status" id="nt-status"></span>
   </div>
 </div>`;
@@ -1246,7 +1251,22 @@ function bindDashboard() {
     const autoResize = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
     ta.addEventListener('input', () => {
       const cEl = document.getElementById('nt-chars');
-      if (cEl) cEl.textContent = ta.value.length;
+      const len = ta.value.length;
+      if (cEl) cEl.textContent = len;
+      // プログレスバー更新
+      const progFill = document.getElementById('nt-prog-fill');
+      const charWrap = document.getElementById('nt-char-wrap');
+      if (progFill) {
+        const pct = Math.round(len / 500 * 100);
+        progFill.style.width = pct + '%';
+        progFill.classList.toggle('nt-prog-danger', pct >= 96);
+        progFill.classList.toggle('nt-prog-warn',   pct >= 80 && pct < 96);
+      }
+      if (charWrap) {
+        const pct = Math.round(len / 500 * 100);
+        charWrap.classList.toggle('nt-cnt-danger', pct >= 96);
+        charWrap.classList.toggle('nt-cnt-warn',   pct >= 80 && pct < 96);
+      }
       autoResize();
       clearTimeout(ntTimer);
       ntTimer = setTimeout(() => {
@@ -1261,9 +1281,11 @@ function bindDashboard() {
         saveData();
         const statusEl = document.getElementById('nt-status');
         if (statusEl) {
+          statusEl.classList.remove('nt-saved');
+          void statusEl.offsetWidth; // アニメーションリセット
           statusEl.textContent = '保存済み ✓';
           statusEl.classList.add('nt-saved');
-          setTimeout(() => { statusEl.textContent = ''; statusEl.classList.remove('nt-saved'); }, 2000);
+          setTimeout(() => { statusEl.textContent = ''; statusEl.classList.remove('nt-saved'); }, 2200);
         }
       }, 800);
     });
