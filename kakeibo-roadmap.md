@@ -83,6 +83,8 @@
 
 | 64 | v5.75 | デザイン | クイック収支入力ウィジェット ビジュアル洗練：`--qa-accent` CSS変数でタイプ別アクセントカラー連動（支出=赤/収入=緑/デフォルト=インディゴ）・カード上部3px `border-top` アクセントライン（`border-top-color: var(--qa-accent)`）・`::before`デコレーションサークル（右上ラジアルグラデーション・タイプ別色変化）・タイトル/シェブロン/¥記号をタイプカラーに連動（`transition 0.25s`）・フィールド選択時の `box-shadow` フォーカスグローをタイプカラー連動・送信ボタンを `var(--qa-accent)` 背景色で統一（hover時 `brightness(1.12)` ＋ `translateY(-1px)`）・`@keyframes qa-field-in` ＋ タイプ行/フィールド行/メモ行の0.04s/0.10s/0.16sスタッガード入場アニメーション・`@keyframes qa-btn-pop` 追加成功バウンス（cubic-bezier弾性・`animationend`で自動除去）・タイプ切替時に `data-qa-type` 属性をDOM即時更新・re-render前350ms遅延でアニメーション完走・ダークモード対応 |
 
+| 65 | v5.76 | 機能 | 月次ノート機能：ダッシュボードのインサイト直下に「📝 今月のメモ」ウィジェット追加・月別メモをインライン編集（自動リサイズtextarea・maxlength 500文字）・入力後800ms debounceで自動保存（保存済み ✓ バッジ表示）・最終更新日時をカードヘッダーに表示・`appData.notes = { 'YYYY-MM': { text, updatedAt } }` シンプルデータ構造・設定ページのダッシュボードカスタマイズに「📝 今月のメモ」追加・クラウド同期（pushToCloud/applyRemoteData）対応・ダークモード対応 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

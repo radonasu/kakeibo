@@ -236,6 +236,7 @@ function loadData() {
     if (!data.points)         data.points = [];       // ポイント残高（v5.47）
     if (!data.wishlist)       data.wishlist = [];     // ほしいものリスト（v5.51）
     if (!data.challenges)     data.challenges = [];   // 節約チャレンジ（v5.64）
+    if (!data.notes)          data.notes = {};        // 月次ノート（v5.76）
     // 旧アセットにcurrencyフィールドを追加（マイグレーション）
     data.assets.forEach(a => { if (!a.currency) a.currency = 'JPY'; });
     // isFixed フラグ追加（v5.70）
@@ -262,6 +263,7 @@ function createDefaultData() {
     points: [],         // ポイント残高（v5.47）
     wishlist: [],       // ほしいものリスト（v5.51）
     challenges: [],     // 節約チャレンジ（v5.64）
+    notes: {},          // 月次ノート（v5.76）
   };
 }
 

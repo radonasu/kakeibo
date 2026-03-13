@@ -664,6 +664,38 @@ function renderForecastCard(ym) {
 </div>`;
 }
 
+// ── 月次ノートカード（v5.76）──────────────────────────────
+function renderNotesCard(month) {
+  const notes = appData.notes || {};
+  const note = notes[month] || {};
+  const text = note.text || '';
+  const updatedAt = note.updatedAt || '';
+
+  let savedAtHtml = '';
+  if (updatedAt) {
+    const d = new Date(updatedAt);
+    const mm = d.getMonth() + 1;
+    const dd = d.getDate();
+    const hh = d.getHours();
+    const mn = String(d.getMinutes()).padStart(2, '0');
+    savedAtHtml = `<span class="nt-saved-at">${mm}/${dd} ${hh}:${mn} 更新</span>`;
+  }
+
+  return `<div class="card nt-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📝 今月のメモ</h3>
+    ${savedAtHtml}
+  </div>
+  <textarea id="nt-textarea" class="nt-textarea"
+    placeholder="今月の家計目標や振り返りをメモしましょう&#10;例）食費を2万円以内に！ / 旅行代を貯める月"
+    maxlength="500">${esc2(text)}</textarea>
+  <div class="nt-footer">
+    <span class="nt-char-count"><span id="nt-chars">${text.length}</span>/500</span>
+    <span class="nt-status" id="nt-status"></span>
+  </div>
+</div>`;
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -896,6 +928,9 @@ function renderDashboard() {
     return `<span class="diff ${cls}">${pct >= 0 ? '▲' : '▼'} ${Math.abs(pct)}%</span>`;
   };
 
+  // 月次ノートウィジェット（v5.76）
+  const notesSection = showWidget('notes') ? renderNotesCard(appState.month) : '';
+
   // クイック収支入力ウィジェット（v5.74）
   const quickAddSection = showWidget('quickAdd') ? renderQuickAddWidget() : '';
 
@@ -1004,6 +1039,8 @@ ${forecastSection}
 ${healthScoreSection}
 
 ${insightSection}
+
+${notesSection}
 
 ${pointSection}
 
@@ -1200,6 +1237,38 @@ function bindDashboard() {
       setTimeout(() => renderCurrentPage(), 350);
     });
   }
+
+  // 月次ノートウィジェット バインド（v5.76）
+  (() => {
+    const ta = document.getElementById('nt-textarea');
+    if (!ta) return;
+    let ntTimer = null;
+    const autoResize = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
+    ta.addEventListener('input', () => {
+      const cEl = document.getElementById('nt-chars');
+      if (cEl) cEl.textContent = ta.value.length;
+      autoResize();
+      clearTimeout(ntTimer);
+      ntTimer = setTimeout(() => {
+        const month = appState.month;
+        if (!appData.notes) appData.notes = {};
+        const text = ta.value.trim();
+        if (text) {
+          appData.notes[month] = { text, updatedAt: new Date().toISOString() };
+        } else {
+          delete appData.notes[month];
+        }
+        saveData();
+        const statusEl = document.getElementById('nt-status');
+        if (statusEl) {
+          statusEl.textContent = '保存済み ✓';
+          statusEl.classList.add('nt-saved');
+          setTimeout(() => { statusEl.textContent = ''; statusEl.classList.remove('nt-saved'); }, 2000);
+        }
+      }, 800);
+    });
+    autoResize();
+  })();
 
   // 今週ウィジェット バーアニメーション（v5.72）
   document.querySelectorAll('.wk-bar-fill[data-wk-animate]').forEach((el, idx) => {
@@ -3102,6 +3171,7 @@ function renderSettings() {
       { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
       { key: 'insight',       label: '今月のインサイト',icon: '💡' },
+      { key: 'notes',         label: '今月のメモ',      icon: '📝' },
       { key: 'budget',        label: '予算進捗',        icon: '📊' },
       { key: 'goals',         label: '貯蓄目標',        icon: '🎯' },
       { key: 'subscriptions', label: 'サブスク管理',    icon: '📱' },
