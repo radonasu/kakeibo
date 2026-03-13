@@ -1152,11 +1152,11 @@ ${showWidget('events') ? (() => {
     <button class="btn-link" onclick="navigate('events')">すべて見る →</button>
   </div>
   <div class="ev-widget-list">
-    ${upcoming.slice(0,4).map(ev => {
+    ${upcoming.slice(0,4).map((ev, wi) => {
       const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
       const isIncome = ev.type === 'income';
       const monthLabel = ev.month === ym ? '今月' : '来月';
-      return `<div class="ev-widget-item" style="--ev-accent:${ev.color||'#6366f1'}">
+      return `<div class="ev-widget-item" style="--ev-accent:${ev.color||'#6366f1'};--ev-wi:${wi}">
         <div class="ev-widget-icon" style="background:${ev.color||'#6366f1'}22;color:${ev.color||'#6366f1'}">${ev.emoji||'📅'}</div>
         <div class="ev-widget-info">
           <div class="ev-widget-name">${esc2(ev.name)}</div>
@@ -8324,6 +8324,14 @@ function renderEvents() {
     const isCurrent = ym === thisMonthYM;
     const incTotal = monthEvs.filter(e=>e.type==='income').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
     const expTotal = monthEvs.filter(e=>e.type==='expense').reduce((s,e)=>s+(Number(e.plannedAmount)||0),0);
+    const doneCount = monthEvs.filter(e=>e.done).length;
+    const progPct   = monthEvs.length > 0 ? Math.round(doneCount / monthEvs.length * 100) : 0;
+    const progCls   = progPct===100 ? 'ev-pm-done' : progPct>=50 ? 'ev-pm-mid' : '';
+    const progressBar = monthEvs.length > 0
+      ? `<div class="ev-month-progress ${progCls}" style="--ev-prog:${progPct};--ev-mi:${i}">
+  <div class="ev-prog-bar"><div class="ev-prog-fill"></div></div>
+  <span class="ev-prog-pct">${progPct}%</span>
+</div>` : '';
     return `<div class="ev-month-col${isCurrent?' ev-month-current':''}">
   <div class="ev-month-header">
     <span class="ev-month-label">${MONTH_NAMES[i]}</span>
@@ -8336,6 +8344,7 @@ function renderEvents() {
   <div class="ev-month-body">
     ${monthEvs.length ? monthEvs.map((ev,idx) => evCard(ev,idx)).join('') : `<div class="ev-month-empty">予定なし</div>`}
   </div>
+  ${progressBar}
 </div>`;
   }).join('');
 

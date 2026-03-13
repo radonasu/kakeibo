@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.90a'; // v5.90a: モーダルオーバーレイpointer-events修正（スワイプ・タッチ操作ブロック解消）
+const CACHE_NAME = 'kakeibo-v5.91'; // v5.91: 収支予定管理ビジュアル洗練
 const ASSETS = [
   './index.html',
   './css/style.css',

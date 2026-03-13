@@ -8680,31 +8680,38 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ev-card-in .38s cubic-bezier(.34,1.56,.64,1) both;
   animation-delay: calc(var(--ev-si,0) * 70ms);
+  color: #fff;
 }
 .ev-sum-card::before {
   content: '';
   position: absolute;
   top: -20px; right: -20px;
-  width: 80px; height: 80px;
+  width: 90px; height: 90px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,.14) 0%, transparent 70%);
   pointer-events: none;
 }
-.ev-sum-this { border-top: 3px solid var(--primary); }
-.ev-sum-next { border-top: 3px solid #10b981; }
-.ev-sum-year { border-top: 3px solid #f59e0b; }
-.ev-sum-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: 2px; }
-.ev-sum-count {
-  font-size: var(--fs-2xl);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.1;
+.ev-sum-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: -20px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+  pointer-events: none;
 }
-.ev-sum-count small { font-size: var(--fs-xs); font-weight: 400; margin-left: 2px; color: var(--text-muted); }
+/* サマリーカード種別グラデーション */
+.ev-sum-this { background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%); border-top: none; }
+.ev-sum-next { background: linear-gradient(135deg, #059669 0%, #10b981 100%); border-top: none; }
+.ev-sum-year { background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%); border-top: none; }
+/* サマリーカード内テキストを白系に */
+.ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
+.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; }
+.ev-sum-card .ev-sum-count small { color: rgba(255,255,255,.70); font-size: var(--fs-xs); font-weight: 400; margin-left: 2px; }
+.ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: 600; }
+.ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: 600; }
+.ev-sum-card .ev-sum-none  { color: rgba(255,255,255,.60); font-size: var(--fs-xs); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--sp-1); }
-.ev-sum-inc { font-size: var(--fs-sm); font-weight: 600; color: var(--income); }
-.ev-sum-exp { font-size: var(--fs-sm); font-weight: 600; color: var(--expense); }
-.ev-sum-none { font-size: var(--fs-xs); color: var(--text-muted); }
 
 /* --- 年間グリッド --- */
 .ev-year-grid {
@@ -8830,8 +8837,77 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   cursor: pointer;
 }
-.ev-done-label input { accent-color: var(--primary); cursor: pointer; }
+/* カスタムチェックボックス（v5.91）*/
+.ev-done-cb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  background: var(--surface);
+  transition: background .15s, border-color .15s, transform .12s;
+}
+.ev-done-cb::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 0px;
+  width: 7px; height: 4px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) scale(0);
+  transform-origin: center;
+  transition: transform .15s cubic-bezier(.34,1.56,.64,1);
+}
+.ev-done-cb:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+  animation: ev-cb-pop .2s cubic-bezier(.34,1.56,.64,1);
+}
+.ev-done-cb:checked::after { transform: rotate(-45deg) scale(1); }
+.ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
+@keyframes ev-cb-pop { 0% { transform: scale(.7); } 100% { transform: scale(1); } }
 .ev-card-actions { display: flex; gap: 2px; }
+
+/* --- 月別達成プログレスバー（v5.91）--- */
+.ev-month-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--sp-1);
+}
+.ev-prog-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--surface-hover);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.ev-prog-fill {
+  height: 100%;
+  width: calc(var(--ev-prog, 0) * 1%);
+  border-radius: 99px;
+  background: var(--primary);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: ev-prog-grow .65s cubic-bezier(.34,1.2,.64,1) both;
+  animation-delay: calc(var(--ev-mi, 0) * 35ms + 0.12s);
+}
+@keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+.ev-month-progress.ev-pm-done .ev-prog-fill { background: #10b981; }
+.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: #f59e0b; }
+.ev-prog-pct {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 26px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.ev-month-progress.ev-pm-done .ev-prog-pct { color: #10b981; }
+.ev-month-progress.ev-pm-mid  .ev-prog-pct { color: #f59e0b; }
 
 /* --- 月別追加ボタン --- */
 .ev-add-month {
@@ -8845,11 +8921,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: background .15s, color .15s;
+  transition: background .15s, color .15s, transform .15s, box-shadow .15s;
 }
-.ev-add-month:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.ev-add-month:hover {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+  transform: scale(1.12);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
+}
 
-/* --- ダッシュボードウィジェット --- */
+/* --- ダッシュボードウィジェット（v5.91）--- */
 .ev-widget-card { padding: var(--sp-4); }
 .ev-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); }
 .ev-widget-item {
@@ -8859,6 +8939,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2);
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
+  border-left: 3px solid var(--ev-accent, var(--primary));
+  animation: ev-widget-item-in .32s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--ev-wi, 0) * 50ms);
+  transition: transform .15s;
+}
+.ev-widget-item:hover { transform: translateX(2px); }
+@keyframes ev-widget-item-in {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
 .ev-widget-icon {
   width: 32px; height: 32px;
