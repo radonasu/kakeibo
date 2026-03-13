@@ -6865,7 +6865,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: color-mix(in srgb, #34d399 32%, transparent);
 }
 
-/* サマリーカードグリッド */
+/* サマリーカードグリッド (v5.71 グラデーション刷新) */
 .fv-stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -6875,26 +6875,40 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-stat-card {
   position: relative;
   overflow: hidden;
-  background: var(--bg);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
+  color: #fff;
   transition: transform 0.18s, box-shadow 0.18s;
+  animation: fv-card-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
-.fv-stat-card::before {
+.fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.fv-stat-fixed { background: linear-gradient(135deg, #4338ca, #6366f1); }
+.fv-stat-var   { background: linear-gradient(135deg, #065f46, #10b981); }
+.fv-stat-rate  { background: linear-gradient(135deg, #92400e, #f59e0b); }
+/* デコレーションサークル */
+.fv-stat-card::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
+  bottom: -22px; right: -22px;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.13);
+  pointer-events: none;
 }
-.fv-stat-fixed::before { background: #6366f1; }
-.fv-stat-var::before   { background: #10b981; }
-.fv-stat-rate::before  { background: #f59e0b; }
-.fv-stat-icon { font-size: 18px; margin-bottom: var(--sp-1); }
-.fv-stat-label { font-size: var(--fs-xs); color: var(--text-muted); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: 700; color: var(--text); line-height: 1.2; margin: 2px 0; }
-.fv-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); }
-[data-theme="dark"] .fv-stat-card { background: var(--surface); }
+/* ダークモード */
+[data-theme="dark"] .fv-stat-fixed { background: linear-gradient(135deg, #312e81, #4f46e5); }
+[data-theme="dark"] .fv-stat-var   { background: linear-gradient(135deg, #064e3b, #059669); }
+[data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, #78350f, #d97706); }
+/* 入場アニメーション */
+@keyframes fv-card-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+.fv-stat-icon  { font-size: 18px; margin-bottom: var(--sp-1); }
+.fv-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.82); }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: 700; color: #fff; line-height: 1.2; margin: 2px 0; }
+.fv-stat-sub   { font-size: var(--fs-xs); color: rgba(255,255,255,0.75); }
 
 /* テーブルセル */
 .fv-fixed-val { color: #6366f1; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -6931,10 +6945,61 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: block;
   height: 100%;
   border-radius: 3px;
-  transition: width 0.5s ease;
+  transform-origin: left center;
+  animation: fv-bar-fill 0.7s ease both;
+  animation-delay: calc(var(--fv-ci, 0) * 40ms);
+}
+@keyframes fv-bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 .fv-pct-txt { font-size: var(--fs-xs); color: var(--text-muted); vertical-align: middle; }
 .fv-cat-amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* カテゴリ別テーブル行: 左ボーダー + 入場アニメーション (v5.71) */
+.fv-cat-table tbody tr {
+  border-left: 3px solid var(--fv-cat-color, var(--border));
+  animation: fv-cat-row-in 0.22s ease both;
+  animation-delay: calc(var(--fv-ci, 0) * 30ms);
+}
+@keyframes fv-cat-row-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 月別テーブル 固定費率セグメントバー (v5.71) */
+.fv-seg-wrap { display: inline-flex; align-items: center; gap: 5px; }
+.fv-seg-bar {
+  display: flex;
+  width: 52px;
+  height: 7px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--border);
+}
+.fv-seg-fixed {
+  height: 100%;
+  background: #6366f1;
+  width: calc(var(--fv-fi, 0) * 1%);
+  animation: fv-seg-in 0.6s ease both;
+  animation-delay: calc(var(--fv-ri, 0) * 22ms);
+  transform-origin: left;
+}
+.fv-seg-var {
+  height: 100%;
+  background: #10b981;
+  flex: 1;
+  animation: fv-seg-in 0.6s ease both;
+  animation-delay: calc(var(--fv-ri, 0) * 22ms + 0.06s);
+  transform-origin: right;
+}
+@keyframes fv-seg-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+[data-theme="dark"] .fv-seg-fixed { background: #818cf8; }
+[data-theme="dark"] .fv-seg-var   { background: #34d399; }
 
 /* 月別テーブル行アニメーション */
 .fv-month-table tbody tr {
@@ -6947,4 +7012,5 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .fv-stat-grid { grid-template-columns: repeat(2, 1fr); }
   .fv-stat-value { font-size: var(--fs-lg); }
   .fv-mini-bar { width: 40px; }
+  .fv-seg-bar { width: 36px; }
 }

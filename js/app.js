@@ -2388,15 +2388,15 @@ ${(() => {
       <td class="${mFixed > 0 ? 'fv-fixed-val' : 'text-muted'}">${mFixed > 0 ? formatMoney(mFixed) : '—'}</td>
       <td class="${mVar > 0 ? 'fv-var-val' : 'text-muted'}">${mVar > 0 ? formatMoney(mVar) : '—'}</td>
       <td class="${mTotal > 0 ? '' : 'text-muted'}">${mTotal > 0 ? formatMoney(mTotal) : '—'}</td>
-      <td>${mTotal > 0 ? `<span class="fv-rate-badge ${mRate >= 60 ? 'high' : mRate >= 40 ? 'mid' : 'low'}">${mRate}%</span>` : '—'}</td>
+      <td>${mTotal > 0 ? `<span class="fv-seg-wrap"><span class="fv-seg-bar" style="--fv-fi:${mRate}"><span class="fv-seg-fixed"></span><span class="fv-seg-var"></span></span><span class="fv-rate-badge ${mRate >= 60 ? 'high' : mRate >= 40 ? 'mid' : 'low'}">${mRate}%</span></span>` : '—'}</td>
     </tr>`;
   }).join('');
 
   // カテゴリ別テーブル（固定費・変動費）
-  const catTableRows = (cats) => cats.map(c => {
+  const catTableRows = (cats) => cats.map((c, ci) => {
     const amt = expTxs.filter(t => t.categoryId === c.id).reduce((s, t) => s + (Number(t.amount) || 0), 0);
     const pct = grandTotal > 0 ? Math.round(amt / grandTotal * 100) : 0;
-    return `<tr>
+    return `<tr style="--fv-cat-color:${c.color};--fv-ci:${ci}">
       <td><span class="color-dot" style="background:${c.color}"></span>${esc2(c.name)}</td>
       <td class="fv-cat-amt">${formatMoney(amt)}</td>
       <td><span class="fv-mini-bar"><span class="fv-mini-fill" style="width:${pct}%;background:${c.color}"></span></span><span class="fv-pct-txt">${pct}%</span></td>
@@ -2407,19 +2407,19 @@ ${(() => {
   <h3 class="card-title">🔒 固定費 vs 変動費 分析（${year}年）</h3>
 
   <div class="fv-stat-grid">
-    <div class="fv-stat-card fv-stat-fixed">
+    <div class="fv-stat-card fv-stat-fixed" style="--fv-si:0">
       <div class="fv-stat-icon" aria-hidden="true">🔒</div>
       <div class="fv-stat-label">固定費合計</div>
-      <div class="fv-stat-value">${formatMoney(fixedTotal)}</div>
+      <div class="fv-stat-value js-fv-countup" data-value="${fixedTotal}">¥0</div>
       <div class="fv-stat-sub">${fixedCats.length}カテゴリ</div>
     </div>
-    <div class="fv-stat-card fv-stat-var">
+    <div class="fv-stat-card fv-stat-var" style="--fv-si:1">
       <div class="fv-stat-icon" aria-hidden="true">🔓</div>
       <div class="fv-stat-label">変動費合計</div>
-      <div class="fv-stat-value">${formatMoney(varTotal)}</div>
+      <div class="fv-stat-value js-fv-countup" data-value="${varTotal}">¥0</div>
       <div class="fv-stat-sub">${varCats.length}カテゴリ</div>
     </div>
-    <div class="fv-stat-card fv-stat-rate">
+    <div class="fv-stat-card fv-stat-rate" style="--fv-si:2">
       <div class="fv-stat-icon" aria-hidden="true">📊</div>
       <div class="fv-stat-label">固定費率</div>
       <div class="fv-stat-value">${fixedRate}%</div>
@@ -2446,7 +2446,7 @@ ${(() => {
     <div class="card" style="flex:1;min-width:0">
       <h3 class="card-title">🔒 固定費カテゴリ</h3>
       <div class="table-wrap">
-        <table class="tx-table">
+        <table class="tx-table fv-cat-table">
           <thead><tr><th>カテゴリ</th><th>金額</th><th>支出比</th></tr></thead>
           <tbody>${catTableRows(fixedCats)}</tbody>
         </table>
@@ -2455,7 +2455,7 @@ ${(() => {
     <div class="card" style="flex:1;min-width:0">
       <h3 class="card-title">🔓 変動費カテゴリ</h3>
       <div class="table-wrap">
-        <table class="tx-table">
+        <table class="tx-table fv-cat-table">
           <thead><tr><th>カテゴリ</th><th>金額</th><th>支出比</th></tr></thead>
           <tbody>${catTableRows(varCats)}</tbody>
         </table>
@@ -2509,6 +2509,8 @@ function bindReports() {
     renderCatTrend();
     renderFixedVariableDonut('report-fv-donut', allTxs);
     renderFixedVariableTrend('report-fv-trend', year);
+    // 固変カードカウントアップ (v5.71)
+    document.querySelectorAll('.js-fv-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
   }, 50);
 
   // カテゴリ推移チップ操作 (v5.68)
