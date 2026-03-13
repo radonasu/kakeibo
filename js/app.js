@@ -3194,7 +3194,10 @@ function renderCategories() {
   return `
 <div class="page-header">
   <h1 class="page-title">カテゴリ管理</h1>
-  <button class="btn btn-primary" id="open-add-cat">＋ カテゴリ追加</button>
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-ghost" id="open-smart-budget">📊 スマート提案</button>
+    <button class="btn btn-primary" id="open-add-cat">＋ カテゴリ追加</button>
+  </div>
 </div>
 
 <div class="card">
@@ -3263,7 +3266,76 @@ function renderCategories() {
       <button class="btn btn-primary" id="cat-modal-save">保存</button>
     </div>
   </div>
+</div>
+
+<div id="smart-budget-modal" class="modal-overlay" style="display:none">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2>📊 スマート予算提案</h2>
+      <button class="modal-close" id="sb-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="hint" id="sb-period-hint"></p>
+      <div id="sb-no-data" style="display:none" class="empty-state-sm">
+        <p>過去3ヶ月の支出データが見つかりませんでした。<br>取引を記録してから再度お試しください。</p>
+      </div>
+      <div id="sb-table-wrap">
+        <div class="sb-actions-top">
+          <label class="sb-select-all-wrap">
+            <input type="checkbox" id="sb-select-all" checked> 全て選択
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table class="tx-table">
+            <thead>
+              <tr>
+                <th style="width:36px"></th>
+                <th>カテゴリ</th>
+                <th class="text-right">実績平均/月</th>
+                <th class="text-right">現在の予算</th>
+                <th class="text-right sb-col-suggest">提案予算</th>
+                <th class="text-right">変化</th>
+              </tr>
+            </thead>
+            <tbody id="sb-tbody"></tbody>
+          </table>
+        </div>
+        <p class="hint" style="margin-top:8px">※ 提案額 = 過去3ヶ月の平均支出 × 110% を1,000円単位で切り上げ</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="sb-modal-cancel">キャンセル</button>
+      <button class="btn btn-primary" id="sb-apply-btn">選択した予算を適用</button>
+    </div>
+  </div>
 </div>`;
+}
+
+// スマート予算提案 (v5.88)
+function calcSmartBudget() {
+  const now = new Date();
+  const months = [];
+  for (let i = 1; i <= 3; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'));
+  }
+  const expCats = appData.categories.filter(c => c.type === 'expense');
+  const budgets = appData.budgets || {};
+  const suggestions = [];
+  expCats.forEach(c => {
+    const monthlyAmounts = months.map(m => {
+      const txs = appData.transactions.filter(t =>
+        t.type === 'expense' && t.categoryId === c.id && t.date && t.date.startsWith(m)
+      );
+      return txs.reduce((s, t) => s + t.amount, 0);
+    });
+    const nonZeroMonths = monthlyAmounts.filter(a => a > 0).length;
+    if (nonZeroMonths === 0) return;
+    const avg = monthlyAmounts.reduce((s, a) => s + a, 0) / months.length;
+    const suggested = Math.max(Math.ceil(avg * 1.1 / 1000) * 1000, 1000);
+    suggestions.push({ cat: c, avg: Math.round(avg), suggested, current: budgets[c.id] || 0, dataMonths: nonZeroMonths });
+  });
+  return { suggestions, months };
 }
 
 function bindCategories() {
@@ -3366,6 +3438,71 @@ function bindCategories() {
         renderCurrentPage();
       }
     });
+  });
+
+  // スマート予算提案モーダル
+  on('open-smart-budget', 'click', () => {
+    const { suggestions, months } = calcSmartBudget();
+    const periodEl  = document.getElementById('sb-period-hint');
+    const noDataEl  = document.getElementById('sb-no-data');
+    const tableWrap = document.getElementById('sb-table-wrap');
+    const tbody     = document.getElementById('sb-tbody');
+    const selectAll = document.getElementById('sb-select-all');
+
+    const fmt = m => { const [y, mo] = m.split('-'); return `${y}年${parseInt(mo)}月`; };
+    periodEl.textContent = `分析期間: ${fmt(months[months.length - 1])} 〜 ${fmt(months[0])}`;
+
+    if (suggestions.length === 0) {
+      noDataEl.style.display  = '';
+      tableWrap.style.display = 'none';
+    } else {
+      noDataEl.style.display  = 'none';
+      tableWrap.style.display = '';
+      selectAll.checked = true;
+      tbody.innerHTML = suggestions.map((s, i) => {
+        const diff    = s.suggested - s.current;
+        const diffStr = diff === 0 ? '変わらず' : (diff > 0 ? `▲ ${formatMoney(diff)}` : `▼ ${formatMoney(-diff)}`);
+        const diffCls = diff > 0 ? 'sb-diff-up' : (diff < 0 ? 'sb-diff-down' : 'sb-diff-same');
+        const lowData = s.dataMonths < 3;
+        return `<tr class="sb-row" style="--sb-i:${i}">
+          <td><input type="checkbox" class="sb-check" data-id="${s.cat.id}" data-val="${s.suggested}" checked></td>
+          <td>
+            <span class="color-dot" style="background:${s.cat.color}"></span>${esc2(s.cat.name)}
+            ${lowData ? `<span class="sb-low-data" title="${s.dataMonths}ヶ月分のデータ">データ少</span>` : ''}
+          </td>
+          <td class="text-right text-muted">${formatMoney(s.avg)}</td>
+          <td class="text-right">${s.current ? formatMoney(s.current) : '<span class="text-muted">未設定</span>'}</td>
+          <td class="text-right sb-suggested">${formatMoney(s.suggested)}</td>
+          <td class="text-right"><span class="${diffCls}">${diffStr}</span></td>
+        </tr>`;
+      }).join('');
+
+      tbody.addEventListener('change', () => {
+        const checks = [...tbody.querySelectorAll('.sb-check')];
+        const cnt = checks.filter(c => c.checked).length;
+        selectAll.indeterminate = cnt > 0 && cnt < checks.length;
+        selectAll.checked = cnt === checks.length;
+      });
+      selectAll.addEventListener('change', () => {
+        tbody.querySelectorAll('.sb-check').forEach(c => c.checked = selectAll.checked);
+      });
+    }
+    showModal(document.getElementById('smart-budget-modal'));
+  });
+
+  on('sb-modal-close',  'click', () => hideModal('smart-budget-modal'));
+  on('sb-modal-cancel', 'click', () => hideModal('smart-budget-modal'));
+  document.getElementById('smart-budget-modal').addEventListener('click', e => {
+    if (e.target.id === 'smart-budget-modal') hideModal('smart-budget-modal');
+  });
+
+  on('sb-apply-btn', 'click', () => {
+    const checks = [...document.querySelectorAll('.sb-check:checked')];
+    if (checks.length === 0) { showToast('適用する予算を選択してください', 'warning'); return; }
+    checks.forEach(c => setBudget(c.dataset.id, parseInt(c.dataset.val)));
+    hideModal('smart-budget-modal');
+    renderCurrentPage();
+    showToast(`${checks.length}件の予算を更新しました`, 'success');
   });
 }
 

@@ -8467,3 +8467,65 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
   border-color: var(--primary);
 }
+
+/* ============================================================
+   スマート予算提案 (v5.88)
+   ============================================================ */
+.sb-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.sb-select-all-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+.sb-col-suggest {
+  color: var(--primary);
+  font-weight: 600;
+}
+.sb-suggested {
+  font-weight: 600;
+  color: var(--primary);
+}
+.sb-row {
+  animation: sb-row-in 0.3s ease both;
+  animation-delay: calc(var(--sb-i, 0) * 40ms);
+}
+@keyframes sb-row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.sb-diff-up {
+  color: var(--danger-text);
+  font-size: var(--fs-sm);
+}
+.sb-diff-down {
+  color: var(--success);
+  font-size: var(--fs-sm);
+}
+.sb-diff-same {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+.sb-low-data {
+  display: inline-block;
+  font-size: var(--fs-2xs);
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-badge);
+  padding: 1px 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.empty-state-sm {
+  text-align: center;
+  padding: var(--sp-6) var(--sp-4);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
