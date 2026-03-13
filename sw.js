@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.80'; // v5.80: 取引複製機能（📋ボタンで同内容・今日付けの新規モーダル起動）
+const CACHE_NAME = 'kakeibo-v5.81'; // v5.81: 取引複製ボタン ビジュアル洗練（SVGアイコン・dup-popアニメ・行フラッシュ・複製モーダルバナー）
 const ASSETS = [
   './index.html',
   './css/style.css',

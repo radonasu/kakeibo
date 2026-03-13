@@ -519,8 +519,64 @@ select:focus:not(:focus-visible) {
   box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); }
-.dup-tx:hover { background: #fef3c7 !important; }
-[data-theme="dark"] .dup-tx:hover { background: #451a03 !important; }
+/* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
+.dup-tx {
+  color: var(--warning);
+  transition: opacity .18s, background .18s, transform .18s, box-shadow .18s;
+}
+.dup-tx:hover {
+  background: var(--warning-bg) !important;
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning) 25%, transparent);
+  opacity: 1;
+}
+.dup-tx:active { transform: scale(0.88); }
+[data-theme="dark"] .dup-tx:hover {
+  background: var(--warning-bg) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning) 30%, transparent);
+}
+
+@keyframes dup-pop {
+  0%   { transform: scale(1); }
+  28%  { transform: scale(0.82); }
+  62%  { transform: scale(1.22); }
+  82%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.dup-popping { animation: dup-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* 複製元行フラッシュ */
+@keyframes tx-dup-row-flash {
+  0%   { background-color: transparent; }
+  18%  { background-color: var(--warning-bg); }
+  65%  { background-color: var(--warning-bg); }
+  100% { background-color: transparent; }
+}
+.tx-dup-flash { animation: tx-dup-row-flash 0.65s ease-out; }
+
+/* 複製モーダルバナー */
+.dup-modal-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--warning-bg);
+  border-bottom: 1px solid var(--warning-border);
+  color: var(--warning);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-wide);
+  animation: dup-banner-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dup-modal-banner svg { flex-shrink: 0; opacity: 0.85; }
+@keyframes dup-banner-in {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+[data-theme="dark"] .dup-modal-banner {
+  background: var(--warning-bg);
+  border-bottom-color: var(--warning-border);
+}
 
 /* ── フォーム ────────────────────────────────────────── */
 .form-group { margin-bottom: 16px; }

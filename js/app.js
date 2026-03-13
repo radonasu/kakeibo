@@ -1351,7 +1351,7 @@ function renderTxRow(t) {
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
       <td class="actions">
         <button class="btn-icon edit-tx" data-id="${t.id}" title="編集">✏️</button>
-        <button class="btn-icon dup-tx" data-id="${t.id}" title="複製して追加">📋</button>
+        <button class="btn-icon dup-tx" data-id="${t.id}" title="複製して追加"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
         <button class="btn-icon delete-tx" data-id="${t.id}" title="削除">🗑️</button>
       </td>
     </tr>`;
@@ -1647,6 +1647,19 @@ function bindTransactions() {
     btn.addEventListener('click', () => {
       const tx = appData.transactions.find(t => t.id === btn.dataset.id);
       if (!tx) return;
+      // dup-pop アニメーション
+      btn.classList.remove('dup-popping');
+      void btn.offsetWidth;
+      btn.classList.add('dup-popping');
+      btn.addEventListener('animationend', () => btn.classList.remove('dup-popping'), { once: true });
+      // 複製元行フラッシュ
+      const row = btn.closest('tr');
+      if (row) {
+        row.classList.remove('tx-dup-flash');
+        void row.offsetWidth;
+        row.classList.add('tx-dup-flash');
+        row.addEventListener('animationend', () => row.classList.remove('tx-dup-flash'), { once: true });
+      }
       openTxModal(null, { ...tx, date: todayStr(), isDuplicate: true, name: tx.memo || '複製' });
     });
   });
@@ -1835,15 +1848,17 @@ function renderTxModal() {
     .map(m => `<option value="${m.id}" ${src && src.memberId === m.id ? 'selected' : !src && m.id === appData.settings.defaultMemberId ? 'selected' : ''}>${esc2(m.name)}</option>`)
     .join('');
 
-  const modalTitle = isEdit ? '取引を編集' : tpl ? (tpl.isDuplicate ? '📋 複製して追加' : `⚡ ${esc2(tpl.name)}`) : '収支を追加';
+  const isDup = !isEdit && tpl && tpl.isDuplicate;
+  const modalTitle = isEdit ? '取引を編集' : tpl ? (isDup ? '複製して追加' : `⚡ ${esc2(tpl.name)}`) : '収支を追加';
+  const dupBanner = isDup ? `<div class="dup-modal-banner"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>元の取引を複製 — 日付は今日に変更されました</div>` : '';
 
   return `
 <div id="tx-modal" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
-      <h2>${modalTitle}</h2>
+      <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--warning)"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
       <button class="modal-close" id="modal-close">✕</button>
-    </div>
+    </div>${dupBanner}
     <div class="modal-body">
       <div class="type-toggle">
         <button class="type-btn ${type === 'expense' ? 'active expense-btn' : ''}" data-type="expense">支出</button>
