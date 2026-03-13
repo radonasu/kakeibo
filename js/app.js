@@ -6,7 +6,8 @@
 const appState = {
   page: 'dashboard',
   month: currentYearMonth(),
-  txFilter: { category: '', member: '', search: '', type: '', tag: '' },
+  txFilter: { category: '', member: '', search: '', type: '', tag: '', amountMin: '', amountMax: '', dateFrom: '', dateTo: '' },
+  advFilterOpen: false,  // v5.94: 詳細フィルターパネル開閉
   editingTxId: null,
   templateData: null,  // テンプレートからの入力時に使用
   reportYear: new Date().getFullYear(),
@@ -1492,6 +1493,12 @@ function renderTransactions() {
     if (f.member && t.memberId !== f.member) return false;
     if (f.type && t.type !== f.type) return false;
     if (f.tag && (!t.tags || !t.tags.includes(f.tag))) return false;  // v5.61: タグフィルター
+    // v5.94: 金額範囲フィルター
+    if (f.amountMin !== '' && t.amount < Number(f.amountMin)) return false;
+    if (f.amountMax !== '' && t.amount > Number(f.amountMax)) return false;
+    // v5.94: 日付範囲フィルター
+    if (f.dateFrom && t.date < f.dateFrom) return false;
+    if (f.dateTo   && t.date > f.dateTo)   return false;
     if (f.search) {
       const q = f.search.toLowerCase();
       const cat = getCategoryById(t.categoryId);
@@ -1588,6 +1595,33 @@ function renderTransactions() {
     ? `<button id="search-all-btn" class="btn btn-ghost tx-search-all-btn">全期間</button>`
     : '';
 
+  // v5.94: 詳細フィルター（金額・日付範囲）
+  const advActive = f.amountMin !== '' || f.amountMax !== '' || f.dateFrom !== '' || f.dateTo !== '';
+  const advCount = [f.amountMin, f.amountMax, f.dateFrom, f.dateTo].filter(v => v !== '').length;
+  const SVG_FILTER = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2.5h12M3 7h8M5.5 11.5h3"/></svg>';
+  const advToggleBtn = `<button class="btn btn-ghost btn-sm adv-filter-toggle${advActive ? ' adv-filter-on' : ''}" id="adv-filter-toggle" title="詳細フィルター">${SVG_FILTER} 詳細${advActive ? `<span class="adv-filter-count">${advCount}</span>` : ''}</button>`;
+  const advPanel = `<div class="adv-filter-panel${appState.advFilterOpen ? ' open' : ''}" id="adv-filter-panel">
+  <div class="adv-filter-inner">
+    <div class="adv-filter-group">
+      <span class="adv-filter-label">💰 金額範囲</span>
+      <div class="adv-filter-row">
+        <input type="number" id="filter-amt-min" class="adv-filter-input" placeholder="下限 ¥" value="${esc2(f.amountMin)}" min="0" step="100">
+        <span class="adv-filter-sep">〜</span>
+        <input type="number" id="filter-amt-max" class="adv-filter-input" placeholder="上限 ¥" value="${esc2(f.amountMax)}" min="0" step="100">
+      </div>
+    </div>
+    <div class="adv-filter-group">
+      <span class="adv-filter-label">📅 日付範囲</span>
+      <div class="adv-filter-row">
+        <input type="date" id="filter-date-from" class="adv-filter-input" value="${esc2(f.dateFrom)}">
+        <span class="adv-filter-sep">〜</span>
+        <input type="date" id="filter-date-to" class="adv-filter-input" value="${esc2(f.dateTo)}">
+      </div>
+    </div>
+    ${advActive ? `<button class="btn btn-ghost btn-sm adv-filter-clear" id="adv-filter-clear">✕ クリア</button>` : ''}
+  </div>
+</div>`;
+
   const bulkCols = appState.bulkMode ? 8 : 7;
   const cbTh = appState.bulkMode
     ? `<th class="tx-cb-th"><input type="checkbox" id="tx-select-all" class="tx-cb" title="全て選択"></th>`
@@ -1638,8 +1672,10 @@ ${templateBar}
   </select>
   <input id="filter-search" type="search" placeholder="検索…" value="${esc2(f.search)}" class="filter-search">
   ${searchAllBtn}
+  ${advToggleBtn}
 </div>
 
+${advPanel}
 ${tagFilterHtml}
 
 <div class="card summary-mini">
@@ -1682,6 +1718,37 @@ function bindTransactions() {
   on('filter-cat',    'change', e => { appState.txFilter.category = e.target.value; renderCurrentPage(); });
   on('filter-mem',    'change', e => { appState.txFilter.member   = e.target.value; renderCurrentPage(); });
   on('filter-type',   'change', e => { appState.txFilter.type     = e.target.value; renderCurrentPage(); });
+  // v5.94: 詳細フィルタートグル
+  on('adv-filter-toggle', 'click', () => {
+    appState.advFilterOpen = !appState.advFilterOpen;
+    const panel = document.getElementById('adv-filter-panel');
+    if (panel) panel.classList.toggle('open', appState.advFilterOpen);
+    document.getElementById('adv-filter-toggle')?.classList.toggle('adv-filter-toggle-open', appState.advFilterOpen);
+  });
+  // v5.94: 詳細フィルター入力（デバウンス）
+  let _advTimer = null;
+  const onAdvInput = () => {
+    clearTimeout(_advTimer);
+    _advTimer = setTimeout(() => {
+      appState.txFilter.amountMin = document.getElementById('filter-amt-min')?.value || '';
+      appState.txFilter.amountMax = document.getElementById('filter-amt-max')?.value || '';
+      appState.txFilter.dateFrom  = document.getElementById('filter-date-from')?.value || '';
+      appState.txFilter.dateTo    = document.getElementById('filter-date-to')?.value || '';
+      renderCurrentPage();
+    }, 350);
+  };
+  on('filter-amt-min',   'input', onAdvInput);
+  on('filter-amt-max',   'input', onAdvInput);
+  on('filter-date-from', 'change', onAdvInput);
+  on('filter-date-to',   'change', onAdvInput);
+  // v5.94: 詳細フィルタークリア
+  on('adv-filter-clear', 'click', () => {
+    appState.txFilter.amountMin = '';
+    appState.txFilter.amountMax = '';
+    appState.txFilter.dateFrom  = '';
+    appState.txFilter.dateTo    = '';
+    renderCurrentPage();
+  });
   // v5.78: ソートヘッダークリック
   document.querySelectorAll('.tx-th-sort').forEach(th => {
     th.addEventListener('click', () => {

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.93'; // v5.93: カレンダー週次サマリー行
+const CACHE_NAME = 'kakeibo-v5.94'; // v5.94: 高度な検索フィルター（金額・日付範囲）
 const ASSETS = [
   './index.html',
   './css/style.css',
