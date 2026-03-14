@@ -5309,8 +5309,22 @@ function openAdviceModal(month) {
         return `<p>${line}</p>`;
       }).join('');
 
-    bodyEl.innerHTML = `<div class="adv-text">${html}</div>`;
-    if (copyBtn)  { copyBtn.style.display  = 'inline-flex'; copyBtn.onclick  = () => { navigator.clipboard?.writeText(text).then(() => showToast('コピーしました', 'success')); }; }
+    // h3を区切りにセクション分割してラッパーを付与
+    const sectionParts = html.split(/(?=<h3>)/);
+    const wrappedHtml = sectionParts.map((s, i) =>
+      s.trim() ? `<div class="adv-section" style="--adv-si:${i}">${s}</div>` : ''
+    ).join('');
+    bodyEl.innerHTML = `<div class="adv-text">${wrappedHtml || html}</div>`;
+    if (copyBtn) {
+      copyBtn.style.display = 'inline-flex';
+      copyBtn.onclick = () => {
+        navigator.clipboard?.writeText(text).then(() => {
+          showToast('コピーしました', 'success');
+          copyBtn.classList.add('adv-copy-done');
+          setTimeout(() => copyBtn.classList.remove('adv-copy-done'), 600);
+        });
+      };
+    }
     if (regenBtn) { regenBtn.style.display = 'inline-flex'; regenBtn.onclick = () => openAdviceModal(month); }
   }).catch(err => {
     bodyEl.innerHTML = `<div class="adv-error">⚠️ ${esc2(err.message)}</div>`;

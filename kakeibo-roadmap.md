@@ -133,6 +133,7 @@
 | 88 | v5.99 | 機能＋デザイン | 月ナビ矢印ボタン＋残高先月比バッジ：`monthSelector()`と`txMonthSelector()`を `‹ [セレクタ] ›` 形式の`.month-nav`ラッパーに刷新・`‹`ボタンで前月・`›`ボタンで翌月へワンタップ移動（ドロップダウン不要）・最古月で`‹`を無効化・今月で`›`を無効化・全期間モード中は両ボタン無効・`adjMonth(m, delta)`ヘルパー関数を追加・ダッシュボードと収支一覧の両方に対応（bindDashboard/bindTransactions）・デザイン：`.month-nav-btn`にホバー時primaryカラーグロー・アクティブ時scale(0.9)・disabled時opacity0.3・バグ修正：残高サマリーカードに先月比バッジ（`diffSign`）を追加（収入・支出カードと統一） |
 
 | 90 | v6.1 | 機能 | AI家計アドバイス：ダッシュボードに「🤖 AI家計アドバイス」ウィジェット追加・`callGeminiAdvice(month)`が今月の収支データ（収入/支出/貯蓄率/カテゴリ別支出上位8件/先月比/予算達成状況）をプロンプトに含めてGemini APIへ送信・総評/良かった点/改善点/来月アクションの4構成で300〜450文字のアドバイスを取得・`openAdviceModal()`でローディングスケルトン（shimmerアニメーション）→簡易マークダウンレンダリング（**太字**・見出し・箇条書き）で表示・コピーボタン＋再生成ボタン付き・APIキー未設定時は設定案内を表示・設定ページのダッシュボードカスタマイズに「AIアドバイス」追加・adv-modal-in入場アニメーション（0.38s cubic-bezier弾性）・ダークモード対応 |
+| 91 | v6.2 | デザイン | AI家計アドバイスウィジェット ビジュアル洗練：ウィジェットカードに`adv-card-in`入場アニメーション（0.4s cubic-bezier）＋グラデーション背景（primary 5%色混合）＋`::after`デコレーションサークル追加（左下）・`adv-widget-btn`を全幅化＋`adv-btn-glow`パルスアニメーション（2.8s infinite・primary shadow）・月バッジに`::before`ライブドット（`adv-dot-pulse` 2s infinite・縮小フェード）・アドバイス本文をh3区切りで`.adv-section`ブロックに分割しスタッガードフェードイン（`adv-section-in` 0.35s cubic-bezier・`--adv-si`変数で80msステップ）・セクション左ボーダー3px＋薄背景（1=primary/2=success/3=warning種別カラー連動）・セクション見出しも種別カラーに着色・コピーボタンに`adv-copy-done`成功アニメーション（緑色変化＋`adv-copy-pop` cubic-bezier弾性 0.3s）・ダークモード対応 |
 
 ## 次スプリント候補（v5.44以降）
 

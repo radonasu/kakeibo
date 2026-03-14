@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v6.1'; // v6.1: AI家計アドバイス
+const CACHE_NAME = 'kakeibo-v6.2'; // v6.2: AI家計アドバイスウィジェット ビジュアル洗練
 const ASSETS = [
   './index.html',
   './css/style.css',
