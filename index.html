@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=7.6">
+  <link rel="stylesheet" href="css/style.css?v=7.7">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -202,6 +202,27 @@
   </nav>
 </div>
 
+<!-- ─── 繰り返し取引 確認モーダル (v7.7) ─── -->
+<div id="rc-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="rc-title">
+  <div class="modal-wrap rc-wrap">
+    <div class="rc-header">
+      <div class="rc-header-top">
+        <span class="rc-header-icon">🔁</span>
+        <div>
+          <h2 class="rc-title" id="rc-title">今月の繰り返し取引</h2>
+          <p class="rc-sub">追加する取引を選んでください</p>
+        </div>
+      </div>
+      <button class="rc-close" id="rc-close-btn" aria-label="閉じる">✕</button>
+    </div>
+    <div class="rc-body" id="rc-body"></div>
+    <div class="rc-footer">
+      <button class="btn btn-ghost rc-skip-btn" id="rc-skip-btn">今月はスキップ</button>
+      <button class="btn btn-primary rc-ok-btn" id="rc-ok-btn">追加する</button>
+    </div>
+  </div>
+</div>
+
 <!-- ─── 月初チェックインモーダル (v6.6) ─── -->
 <div id="checkin-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ci-title">
   <div class="modal-wrap ci-wrap">
@@ -290,15 +311,15 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=7.6"></script>
-<script src="js/config.js?v=7.6"></script>
-<script src="js/data.js?v=7.6"></script>
-<script src="js/export.js?v=7.6"></script>
-<script src="js/charts.js?v=7.6"></script>
-<script src="js/sync.js?v=7.6"></script>
-<script src="js/app.js?v=7.6"></script>
+<script src="js/icons.js?v=7.7"></script>
+<script src="js/config.js?v=7.7"></script>
+<script src="js/data.js?v=7.7"></script>
+<script src="js/export.js?v=7.7"></script>
+<script src="js/charts.js?v=7.7"></script>
+<script src="js/sync.js?v=7.7"></script>
+<script src="js/app.js?v=7.7"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=7.6"></script>
+<script src="js/pwa.js?v=7.7"></script>
 
 </body>
 </html>

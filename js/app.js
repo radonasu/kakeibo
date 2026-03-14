@@ -7249,17 +7249,19 @@ function showToast(message, type, duration) {
 // ============================================================
 // 繰り返し取引の自動適用
 // ============================================================
-function applyRecurringTransactions() {
+function applyRecurringTransactions(templateIds) {
+  // templateIds が指定された場合はその IDs のみ、未指定は全未適用テンプレート
   const ym = currentYearMonth();
-  const templates = appData.templates || [];
+  const templates = (appData.templates || []).filter(tpl => {
+    if (!tpl.isRecurring || !tpl.recurringDay) return false;
+    if (tpl.lastApplied === ym) return false;
+    if (templateIds && !templateIds.includes(tpl.id)) return false;
+    return true;
+  });
   let count = 0;
 
   templates.forEach(tpl => {
-    if (!tpl.isRecurring || !tpl.recurringDay) return;
-    if (tpl.lastApplied === ym) return; // 当月は適用済み
-
     const [year, month] = ym.split('-').map(Number);
-    // 月末より大きい日付は月末日にクランプ
     const lastDay = new Date(year, month, 0).getDate();
     const day = Math.min(tpl.recurringDay, lastDay);
     const date = `${ym}-${String(day).padStart(2, '0')}`;
@@ -7276,15 +7278,133 @@ function applyRecurringTransactions() {
       recurringTemplateId: tpl.id,
     });
 
-    // 適用済みマークを更新
     updateTemplate(tpl.id, { lastApplied: ym });
     count++;
   });
 
   if (count > 0) {
-    setTimeout(() => showToast(`🔁 ${count}件の繰り返し取引を自動追加しました`), 1200);
+    setTimeout(() => showToast(`🔁 ${count}件の繰り返し取引を追加しました`), 400);
   }
   return count;
+}
+
+// 当月未適用の繰り返しテンプレートを返す
+function getPendingRecurringTemplates() {
+  const ym = currentYearMonth();
+  const skipKey = `kk_rc_skip_${ym}`;
+  const skipped = JSON.parse(localStorage.getItem(skipKey) || '[]');
+  return (appData.templates || []).filter(tpl => {
+    if (!tpl.isRecurring || !tpl.recurringDay) return false;
+    if (tpl.lastApplied === ym) return false;
+    if (skipped.includes(tpl.id)) return false;
+    return true;
+  });
+}
+
+// 繰り返し取引 確認モーダルの表示判定
+function showRecurringConfirmIfNeeded() {
+  if (!appData.transactions) return;
+  const pending = getPendingRecurringTemplates();
+  if (pending.length === 0) return;
+
+  // チェックインモーダルが表示される場合はそれより後に表示
+  const checkinDelay = (appData.transactions.length > 0) ? 3500 : 800;
+  setTimeout(() => openRecurringConfirmModal(pending), checkinDelay);
+}
+
+function openRecurringConfirmModal(templates) {
+  const modal = document.getElementById('rc-modal');
+  if (!modal) return;
+
+  const ym = currentYearMonth();
+  const [y, m] = ym.split('-').map(Number);
+  const monthLabel = `${y}年${m}月`;
+
+  document.getElementById('rc-title').textContent = `${monthLabel}の繰り返し取引`;
+
+  const body = document.getElementById('rc-body');
+  body.innerHTML = templates.map((tpl, i) => {
+    const cat = getCategoryById(tpl.categoryId);
+    const catName = cat ? esc2(cat.name) : '不明';
+    const catColor = cat ? cat.color : '#aaa';
+    const typeLabel = tpl.type === 'income' ? '収入' : '支出';
+    const typeClass = tpl.type === 'income' ? 'rc-type-inc' : 'rc-type-exp';
+    const day = tpl.recurringDay;
+    return `<label class="rc-item" style="--rc-i:${i}">
+  <input type="checkbox" class="rc-check" value="${tpl.id}" checked>
+  <span class="rc-item-main">
+    <span class="rc-cat-dot" style="background:${catColor}"></span>
+    <span class="rc-item-info">
+      <span class="rc-item-name">${esc2(tpl.name)}</span>
+      <span class="rc-item-meta">${catName} · 毎月${day}日</span>
+    </span>
+  </span>
+  <span class="rc-item-right">
+    <span class="rc-type-badge ${typeClass}">${typeLabel}</span>
+    <span class="rc-item-amount">${tpl.type === 'expense' ? '-' : '+'}${formatMoney(tpl.amount)}</span>
+  </span>
+</label>`;
+  }).join('');
+
+  // フッターボタン
+  const okBtn = document.getElementById('rc-ok-btn');
+  const skipBtn = document.getElementById('rc-skip-btn');
+  const closeBtn = document.getElementById('rc-close-btn');
+
+  const getCheckedIds = () =>
+    [...body.querySelectorAll('.rc-check:checked')].map(el => el.value);
+
+  // チェック状態に合わせてボタンラベル更新
+  body.querySelectorAll('.rc-check').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const n = getCheckedIds().length;
+      okBtn.textContent = n > 0 ? `${n}件を追加する` : '追加する（0件選択）';
+      okBtn.disabled = n === 0;
+    });
+  });
+  okBtn.textContent = `${templates.length}件を追加する`;
+  okBtn.disabled = false;
+
+  okBtn.onclick = () => {
+    const ids = getCheckedIds();
+    // 未チェックのものは「今月スキップ」扱い
+    const allIds = templates.map(t => t.id);
+    const unchecked = allIds.filter(id => !ids.includes(id));
+    if (unchecked.length > 0) _markRecurringSkipped(unchecked);
+    // チェック分を追加
+    if (ids.length > 0) applyRecurringTransactions(ids);
+    // 未選択もapplied扱いにして再表示防止
+    allIds.forEach(id => {
+      const tpl = (appData.templates || []).find(t => t.id === id);
+      if (tpl && tpl.lastApplied !== ym) updateTemplate(id, { lastApplied: ym });
+    });
+    closeRecurringConfirmModal();
+    if (appState.page === 'dashboard') { renderCurrentPage(); }
+  };
+
+  skipBtn.onclick = () => {
+    _markRecurringSkipped(templates.map(t => t.id));
+    closeRecurringConfirmModal();
+  };
+
+  closeBtn.onclick = skipBtn.onclick;
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('rc-modal-open')));
+}
+
+function closeRecurringConfirmModal() {
+  const modal = document.getElementById('rc-modal');
+  if (!modal) return;
+  modal.classList.remove('rc-modal-open');
+  setTimeout(() => { modal.style.display = 'none'; }, 300);
+}
+
+function _markRecurringSkipped(ids) {
+  const ym = currentYearMonth();
+  const skipKey = `kk_rc_skip_${ym}`;
+  const existing = JSON.parse(localStorage.getItem(skipKey) || '[]');
+  localStorage.setItem(skipKey, JSON.stringify([...new Set([...existing, ...ids])]));
 }
 
 // ============================================================
@@ -7830,8 +7950,8 @@ function initApp() {
   // クラウド同期初期化（非同期・描画後に実行）
   if (typeof initSync === 'function') initSync();
 
-  // 繰り返し取引の自動適用（描画前に実行、当月未適用分を追加）
-  applyRecurringTransactions();
+  // 繰り返し取引 確認モーダル（v7.7: 自動追加→確認モーダルへ変更）
+  showRecurringConfirmIfNeeded();
 
   // 起動時予算アラートチェック（1秒後、描画安定後）
   setTimeout(() => checkBudgetAlerts(appState.month), 1000);

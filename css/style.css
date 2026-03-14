@@ -11199,3 +11199,235 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--warning) 10%, var(--surface-2));
   border-color: color-mix(in srgb, var(--warning) 35%, transparent);
 }
+
+
+/* ============================================================
+   繰り返し取引 確認モーダル (v7.7)
+   ============================================================ */
+.rc-wrap {
+  max-width: 480px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  padding: 0;
+  background: var(--surface-1);
+}
+
+.rc-header {
+  position: relative;
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary) 12%, var(--surface-1)),
+    color-mix(in srgb, var(--primary) 5%, var(--surface-1)));
+  border-bottom: 1px solid var(--border);
+}
+
+.rc-header-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-right: 32px;
+}
+
+.rc-header-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  animation: rc-icon-spin 0.6s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes rc-icon-spin {
+  from { transform: rotate(-45deg) scale(.6); opacity: 0; }
+  to   { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+.rc-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+}
+
+.rc-sub {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.rc-close {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-sm);
+  transition: background .15s, color .15s;
+}
+.rc-close:hover { background: var(--danger-bg); color: var(--danger); }
+
+.rc-body {
+  padding: var(--sp-3) var(--sp-4);
+  max-height: 52vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+/* 各取引アイテム */
+.rc-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-3);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border);
+  background: var(--surface-1);
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .15s;
+  animation: rc-item-in .28s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--rc-i, 0) * 50ms);
+}
+
+@keyframes rc-item-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 4%, var(--surface-1)); }
+
+.rc-item:has(.rc-check:checked) {
+  border-color: color-mix(in srgb, var(--primary) 60%, transparent);
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface-1));
+}
+
+.rc-check {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.rc-item-main {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.rc-cat-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rc-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.rc-item-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rc-item-meta {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+.rc-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.rc-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+}
+.rc-type-inc { background: var(--success-bg); color: var(--success); }
+.rc-type-exp { background: var(--danger-bg); color: var(--danger); }
+
+.rc-item-amount {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.rc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-top: 1px solid var(--border);
+}
+
+/* モーダルオープンアニメーション */
+.rc-modal-open .rc-wrap {
+  animation: rc-wrap-in .38s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes rc-wrap-in {
+  from { opacity: 0; transform: scale(.9) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ダークモード */
+[data-theme="dark"] .rc-header {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary) 18%, var(--surface-2)),
+    color-mix(in srgb, var(--primary) 8%, var(--surface-2)));
+}
+[data-theme="dark"] .rc-item:has(.rc-check:checked) {
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface-2));
+}
+
+/* ページ遷移アニメーション強化 (v7.7) */
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(8px) scale(.995); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.page-enter { animation: page-fade-in .24s cubic-bezier(.4,0,.2,1) both; }
+
+/* ナビボタン リップルエフェクト */
+.nav-item, .bottom-nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::after, .bottom-nav-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 20%, transparent) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .4s, transform .4s;
+  pointer-events: none;
+}
+
+.nav-item:active::after, .bottom-nav-item:active::after {
+  opacity: 1;
+  transform: scale(2.5);
+  transition: none;
+}
+
