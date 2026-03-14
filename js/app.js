@@ -1407,7 +1407,25 @@ function bindDashboard() {
 // ============================================================
 
 // 取引一行HTML生成ヘルパー
-function renderTxRow(t) {
+// ── v5.95: 検索テキストハイライト ────────────────────────
+function highlightText(text, query) {
+  if (!query || !text) return esc2(text || '');
+  const lower = text.toLowerCase();
+  const q = query.toLowerCase();
+  const qLen = query.length;
+  let result = '';
+  let pos = 0;
+  let idx;
+  while ((idx = lower.indexOf(q, pos)) !== -1) {
+    result += esc2(text.slice(pos, idx));
+    result += `<mark class="tx-hl">${esc2(text.slice(idx, idx + qLen))}</mark>`;
+    pos = idx + qLen;
+  }
+  result += esc2(text.slice(pos));
+  return result;
+}
+
+function renderTxRow(t, query = '') {
   const cat = getCategoryById(t.categoryId);
   const mem = getMemberById(t.memberId);
   const isIncome = t.type === 'income';
@@ -1424,11 +1442,14 @@ function renderTxRow(t) {
         return `<span class="tx-tag-chip" style="--tc:${col}">#${esc2(tag)}</span>`;
       }).join('')}</div>`
     : '';
+  // v5.95: 検索ハイライト
+  const catName = cat ? highlightText(cat.name, query) : '—';
+  const memoText = t.memo ? highlightText(t.memo, query) : '—';
   return `<tr data-id="${t.id}" data-type="${t.type}"${isSel ? ' class="tx-selected"' : ''}>
       ${cbCol}
       <td>${formatDate(t.date)}</td>
-      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${cat ? esc2(cat.name) : '—'}</span></td>
-      <td class="memo-cell"><span class="tx-memo-text">${esc2(t.memo || '—')}</span>${tagChips}</td>
+      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${catName}</span></td>
+      <td class="memo-cell"><span class="tx-memo-text">${memoText}</span>${tagChips}</td>
       <td class="tx-col-pay">${esc2(t.paymentMethod || '—')}</td>
       <td class="tx-col-mem">${mem ? esc2(mem.name) : '—'}</td>
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
@@ -1571,10 +1592,10 @@ function renderTransactions() {
             <span class="tx-month-group-count">${groups[ym].length}件</span>
           </span>
         </div></td>
-      </tr>${groups[ym].map(t => renderTxRow(t)).join('')}`;
+      </tr>${groups[ym].map(t => renderTxRow(t, f.search)).join('')}`;
     }).join('');
   } else {
-    rows = txs.map(t => renderTxRow(t)).join('');
+    rows = txs.map(t => renderTxRow(t, f.search)).join('');
   }
 
   // テンプレートクイックアクセスバー
@@ -1595,6 +1616,8 @@ function renderTransactions() {
     ? `<button id="search-all-btn" class="btn btn-ghost tx-search-all-btn">全期間</button>`
     : '';
 
+  // v5.95: アクティブフィルター判定
+  const anyFilterActive = !!(f.search || f.category || f.member || f.type || f.tag || f.amountMin !== '' || f.amountMax !== '' || f.dateFrom !== '' || f.dateTo !== '');
   // v5.94: 詳細フィルター（金額・日付範囲）
   const advActive = f.amountMin !== '' || f.amountMax !== '' || f.dateFrom !== '' || f.dateTo !== '';
   const advCount = [f.amountMin, f.amountMax, f.dateFrom, f.dateTo].filter(v => v !== '').length;
@@ -1694,6 +1717,7 @@ ${tagFilterHtml}
     <span class="smi-amount ${income - expense >= 0 ? 'income' : 'expense'}">${income - expense >= 0 ? '+' : ''}${formatMoney(income - expense)}</span>
   </div>
   <span class="smi-count">${txs.length}件</span>
+  ${anyFilterActive ? `<span class="smi-filter-badge tx-hl-badge-in">絞込中</span>` : ''}
   ${sortBadgeHtml}
 </div>
 

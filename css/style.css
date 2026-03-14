@@ -1530,6 +1530,57 @@ select:focus:not(:focus-visible) {
   border-color: var(--border);
 }
 
+/* ── v5.95: 検索テキストハイライト ── */
+@keyframes tx-hl-in {
+  from { background-size: 0% 100%; }
+  to   { background-size: 100% 100%; }
+}
+mark.tx-hl {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+  color: var(--primary);
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: 700;
+  font-style: normal;
+  animation: tx-hl-in 0.25s ease both;
+}
+[data-theme="dark"] mark.tx-hl {
+  background: color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+/* ── v5.95: フィルター適用中バッジ ── */
+@keyframes tx-hl-badge-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.smi-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  animation: tx-hl-badge-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── v5.95: 詳細フィルターパネル グループ入場アニメーション ── */
+@keyframes adv-grp-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+.adv-filter-panel.open .adv-filter-group {
+  animation: adv-grp-in 0.25s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+.adv-filter-panel.open .adv-filter-group:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.adv-filter-panel.open .adv-filter-clear {
+  animation: adv-grp-in 0.25s cubic-bezier(0.34, 1.2, 0.64, 1) 0.08s both;
+}
+
 .month-sel {
   padding: 8px 11px;
   border: 1.5px solid var(--border);

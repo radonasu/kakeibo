@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.94'; // v5.94: 高度な検索フィルター（金額・日付範囲）
+const CACHE_NAME = 'kakeibo-v5.95'; // v5.95: 検索テキストハイライト表示
 const ASSETS = [
   './index.html',
   './css/style.css',
