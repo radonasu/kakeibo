@@ -11431,3 +11431,55 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: none;
 }
 
+/* ── 取引モーダル 連続入力バナー + フォーム入場アニメーション v7.8 ── */
+.tx-added-banner {
+  background: var(--success-bg);
+  border-bottom: 1px solid var(--success-border);
+  padding: 9px var(--sp-6);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  animation: tx-banner-in 0.22s ease both;
+}
+.tx-added-count-badge {
+  background: var(--success);
+  color: #fff;
+  border-radius: 99px;
+  padding: 1px 8px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  min-width: 20px;
+  text-align: center;
+}
+@keyframes tx-banner-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.tx-modal-anim .type-toggle,
+.tx-modal-anim .receipt-scan-area,
+.tx-modal-anim .form-group,
+.tx-modal-anim .modal-details {
+  animation: fg-in 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--fg-i, 0) * 28ms);
+}
+.btn-continue {
+  background: var(--surface-2);
+  color: var(--primary);
+  border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  box-shadow: var(--shadow-btn-base);
+}
+.btn-continue:hover {
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+}
+[data-theme="dark"] .btn-continue {
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
+}
+

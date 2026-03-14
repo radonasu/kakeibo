@@ -2504,12 +2504,15 @@ function renderTxModal() {
       <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--warning)"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
       <button class="modal-close" id="modal-close">✕</button>
     </div>${dupBanner}
-    <div class="modal-body">
-      <div class="type-toggle">
+    <div id="tx-added-banner" class="tx-added-banner" style="display:none">
+      ✓ <span class="tx-added-count-badge" id="tx-added-count">0</span>件追加済み — 続けて入力してください
+    </div>
+    <div class="modal-body tx-modal-anim">
+      <div class="type-toggle" style="--fg-i:0">
         <button class="type-btn ${type === 'expense' ? 'active expense-btn' : ''}" data-type="expense">支出</button>
         <button class="type-btn ${type === 'income' ? 'active income-btn' : ''}" data-type="income">収入</button>
       </div>
-      <div class="receipt-scan-area">
+      <div class="receipt-scan-area" style="--fg-i:1">
         <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
           📷 レシートから読み込む
         </button>
@@ -2520,7 +2523,7 @@ function renderTxModal() {
         <div id="scan-result" class="scan-result" style="display:none"></div>
         <div id="multi-receipt-list" class="multi-receipt-list" style="display:none"></div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:2">
         <label>日付</label>
         <input type="date" id="tx-date" value="${t ? t.date : todayStr()}" required>
         <div class="date-quick-btns">
@@ -2529,7 +2532,7 @@ function renderTxModal() {
           <button type="button" class="date-quick-btn date-quick-today" data-offset="0">今日</button>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:3">
         <label>金額（円）</label>
         <input type="text" id="tx-amount" inputmode="decimal" value="${src ? src.amount : ''}" placeholder="例: 1500+300" autocomplete="off">
         <div id="amt-calc-preview" class="amt-calc-preview"></div>
@@ -2542,7 +2545,7 @@ function renderTxModal() {
         </div>
         <div id="amount-hist-chips" class="amount-hist-chips" style="display:none"></div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:4">
         <label>カテゴリ
           <button type="button" class="btn-inline-add" id="btn-quick-cat" title="カテゴリを今すぐ追加">＋ 新規追加</button>
         </label>
@@ -2555,7 +2558,7 @@ function renderTxModal() {
           <button type="button" class="btn btn-ghost btn-sm" id="qcat-cancel">キャンセル</button>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:5">
         <label>摘要（メモ）</label>
         <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物"
                list="memo-suggestions" autocomplete="off">
@@ -2563,7 +2566,7 @@ function renderTxModal() {
         <div id="memo-hist-chips" class="memo-hist-chips" style="display:none"></div>
         <div id="memo-cat-hint" class="memo-cat-hint" style="display:none"></div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:6">
         <label>タグ <span class="tx-tag-label-hint">カンマ区切りで複数指定</span></label>
         <input type="text" id="tx-tags" class="form-input"
           placeholder="例: 旅行, 外食, まとめ買い"
@@ -2573,7 +2576,7 @@ function renderTxModal() {
         <div id="tx-tag-preview" class="tx-tag-preview"></div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="--fg-i:7">
         <label>支払方法</label>
         <select id="tx-payment">
           ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
@@ -2581,7 +2584,7 @@ function renderTxModal() {
         </select>
       </div>
       <!-- 詳細設定（折りたたみ） -->
-      <details class="modal-details" ${src ? 'open' : ''}>
+      <details class="modal-details" style="--fg-i:8" ${src ? 'open' : ''}>
         <summary>詳細設定</summary>
         <div class="modal-details-body">
           <div class="form-group">
@@ -2601,6 +2604,7 @@ function renderTxModal() {
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" id="modal-cancel">キャンセル</button>
+      ${!isEdit ? '<button class="btn btn-continue" id="modal-save-more">続けて追加</button>' : ''}
       <button class="btn btn-primary" id="modal-save">保存</button>
     </div>
   </div>
@@ -2652,7 +2656,9 @@ function bindTxModal() {
   // カテゴリ変更でメモサジェスト更新（chip クリック時は renderCatChips 内で呼ぶので不要だが念のため）
 
   // 保存
-  on('modal-save', 'click', saveTxFromModal);
+  on('modal-save', 'click', () => saveTxFromModal(false));
+  // 続けて追加 (v7.8)
+  on('modal-save-more', 'click', () => saveTxFromModal(true));
 
   // Enterキーで保存 / Escapeで閉じる
   modal.addEventListener('keydown', e => {
@@ -2672,7 +2678,7 @@ function bindTxModal() {
         }
         return;
       }
-      saveTxFromModal();
+      saveTxFromModal(false);
     }
   });
 
@@ -3102,11 +3108,17 @@ function suggestCatFromMemo(memo) {
 
 function closeTxModal() {
   const modal = document.getElementById('tx-modal');
+  // 連続入力で1件以上追加済みの場合は閉じるときにページ再描画
+  const addedCount = parseInt(document.getElementById('tx-added-count')?.textContent, 10) || 0;
   if (modal) hideModal(modal);
   appState.editingTxId = null;
+  if (addedCount > 0) {
+    renderCurrentPage();
+    checkBudgetAlerts(appState.month);
+  }
 }
 
-function saveTxFromModal() {
+function saveTxFromModal(keepOpen = false) {
   const modal = document.getElementById('tx-modal');
   const type    = modal.querySelector('.type-btn.active')?.dataset.type || 'expense';
   const date    = document.getElementById('tx-date')?.value;
@@ -3134,6 +3146,42 @@ function saveTxFromModal() {
     updateTransaction(appState.editingTxId, fields);
   } else {
     addTransaction(fields);
+  }
+
+  if (keepOpen) {
+    // ── 連続入力モード (v7.8): モーダルを閉じずに金額・摘要・タグをクリア ──
+    appState.month = date.slice(0, 7);
+    // バナー更新
+    const banner = document.getElementById('tx-added-banner');
+    const countEl = document.getElementById('tx-added-count');
+    if (banner && countEl) {
+      const prev = parseInt(countEl.textContent, 10) || 0;
+      countEl.textContent = prev + 1;
+      banner.style.display = '';
+      // 再アニメーション
+      banner.style.animation = 'none';
+      requestAnimationFrame(() => { banner.style.animation = ''; });
+    }
+    // 金額・摘要・タグをクリア
+    const amtEl = document.getElementById('tx-amount');
+    const memoEl = document.getElementById('tx-memo');
+    const tagsEl = document.getElementById('tx-tags');
+    const calcPrev = document.getElementById('amt-calc-preview');
+    const tagPrev = document.getElementById('tx-tag-preview');
+    const memoHint = document.getElementById('memo-cat-hint');
+    if (amtEl)  { amtEl.value = ''; amtEl.classList.remove('calc-mode'); }
+    if (memoEl) memoEl.value = '';
+    if (tagsEl) tagsEl.value = '';
+    if (calcPrev) calcPrev.style.display = 'none';
+    if (tagPrev)  tagPrev.innerHTML = '';
+    if (memoHint) memoHint.style.display = 'none';
+    // 金額フィールドにフォーカス
+    setTimeout(() => amtEl?.focus(), 50);
+    // 予算アラートトースト（即時 in-app 通知）
+    if (type === 'expense' && catId) {
+      setTimeout(() => checkBudgetToast(catId, appState.month), 500);
+    }
+    return;
   }
 
   closeTxModal();
