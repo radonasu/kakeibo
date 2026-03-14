@@ -10918,3 +10918,94 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
     width: auto;
   }
 }
+
+/* ================================================================
+   日付クイックピッカーボタン (v7.2)
+   ================================================================ */
+.date-quick-btns {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.date-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-badge);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+  line-height: 1.4;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.date-quick-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+  transform: translateY(-1px);
+}
+
+.date-quick-btn.active {
+  border-color: var(--primary);
+  color: #fff;
+  background: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+/* 今日ボタンは非アクティブ時も少し強調 */
+.date-quick-btn.date-quick-today:not(.active) {
+  border-color: color-mix(in srgb, var(--primary) 60%, transparent);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  font-weight: 600;
+}
+
+@keyframes date-quick-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.88); }
+  70%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.date-quick-btn.date-quick-pop {
+  animation: date-quick-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="dark"] .date-quick-btn {
+  background: var(--surface);
+  border-color: rgba(255,255,255,.12);
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .date-quick-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+[data-theme="dark"] .date-quick-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+[data-theme="dark"] .date-quick-btn.date-quick-today:not(.active) {
+  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+[data-theme="dark"] .date-quick-btn.date-quick-today:not(.active):hover {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+}

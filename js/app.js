@@ -2520,6 +2520,11 @@ function renderTxModal() {
       <div class="form-group">
         <label>日付</label>
         <input type="date" id="tx-date" value="${t ? t.date : todayStr()}" required>
+        <div class="date-quick-btns">
+          <button type="button" class="date-quick-btn" data-offset="-2">一昨日</button>
+          <button type="button" class="date-quick-btn" data-offset="-1">昨日</button>
+          <button type="button" class="date-quick-btn date-quick-today" data-offset="0">今日</button>
+        </div>
       </div>
       <div class="form-group">
         <label>金額（円）</label>
@@ -2746,6 +2751,39 @@ function bindTxModal() {
     if (!checkApiKey()) return;
     if (e.target.files[0]) processReceiptFile(e.target.files[0]);
   });
+
+  // 日付クイックピッカーボタン (v7.2)
+  const dateInput = document.getElementById('tx-date');
+  const dateQuickBtns = document.querySelectorAll('.date-quick-btn');
+
+  function syncDateQuickBtns() {
+    if (!dateInput) return;
+    dateQuickBtns.forEach(b => {
+      const off = parseInt(b.dataset.offset, 10);
+      const d2 = new Date();
+      d2.setDate(d2.getDate() + off);
+      b.classList.toggle('active', dateInput.value === d2.toISOString().slice(0, 10));
+    });
+  }
+  syncDateQuickBtns();
+
+  dateQuickBtns.forEach(btn => {
+    const offset = parseInt(btn.dataset.offset, 10);
+    btn.addEventListener('click', () => {
+      if (!dateInput) return;
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      dateInput.value = d.toISOString().slice(0, 10);
+      // バウンスアニメーション
+      btn.classList.add('date-quick-pop');
+      btn.addEventListener('animationend', () => btn.classList.remove('date-quick-pop'), { once: true });
+      syncDateQuickBtns();
+    });
+  });
+
+  if (dateInput) {
+    dateInput.addEventListener('change', syncDateQuickBtns);
+  }
 }
 
 // ── カテゴリアイコンマップ (v5.30) ────────────────────────────────
