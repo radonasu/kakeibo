@@ -706,6 +706,52 @@ function renderNotesCard(month) {
 </div>`;
 }
 
+// ============================================================
+// カテゴリ別前月比ウィジェット (v6.3)
+// ============================================================
+function renderCategoryCompareWidget(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  const prevYm = m === 1 ? `${y-1}-12` : `${y}-${String(m-1).padStart(2,'0')}`;
+  const thisTxs = getTransactionsByMonth(ym).filter(t => t.type === 'expense');
+  const prevTxs = getTransactionsByMonth(prevYm).filter(t => t.type === 'expense');
+  const thisMap = {}, prevMap = {};
+  thisTxs.forEach(t => { thisMap[t.categoryId] = (thisMap[t.categoryId] || 0) + (Number(t.amount) || 0); });
+  prevTxs.forEach(t => { prevMap[t.categoryId] = (prevMap[t.categoryId] || 0) + (Number(t.amount) || 0); });
+  const allCids = [...new Set([...Object.keys(thisMap), ...Object.keys(prevMap)])];
+  const diffs = allCids.filter(cid => prevMap[cid] > 0 && thisMap[cid] > 0).map(cid => {
+    const cat = getCategoryById(cid);
+    if (!cat) return null;
+    const prev = prevMap[cid], curr = thisMap[cid], diff = curr - prev;
+    const pct = Math.round(diff / prev * 100);
+    return { cat, curr, prev, diff, pct };
+  }).filter(Boolean);
+  const increased = diffs.filter(d => d.pct > 0).sort((a, b) => b.pct - a.pct).slice(0, 3);
+  const decreased = diffs.filter(d => d.pct < 0).sort((a, b) => a.pct - b.pct).slice(0, 3);
+  if (increased.length === 0 && decreased.length === 0) return '';
+  const row = ({ cat, pct, curr }) => `<div class="cc-item">
+  <span class="cc-dot" style="background:${cat.color}"></span>
+  <span class="cc-name">${esc2(cat.name)}</span>
+  <span class="cc-amount">${formatMoney(curr)}</span>
+  <span class="cc-badge ${pct > 0 ? 'cc-up' : 'cc-down'}">${pct > 0 ? '▲' : '▼'}${Math.abs(pct)}%</span>
+</div>`;
+  return `<div class="card cc-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📊 先月との比較</h3>
+    <button class="btn-link" onclick="navigate('reports')">レポート →</button>
+  </div>
+  <div class="cc-cols">
+    ${increased.length > 0 ? `<div class="cc-col">
+      <div class="cc-col-header cc-col-up">⬆ 増加カテゴリ</div>
+      ${increased.map(row).join('')}
+    </div>` : ''}
+    ${decreased.length > 0 ? `<div class="cc-col">
+      <div class="cc-col-header cc-col-down">⬇ 節約カテゴリ</div>
+      ${decreased.map(row).join('')}
+    </div>` : ''}
+  </div>
+</div>`;
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -944,6 +990,9 @@ function renderDashboard() {
   // クイック収支入力ウィジェット（v5.74）
   const quickAddSection = showWidget('quickAdd') ? renderQuickAddWidget() : '';
 
+  // カテゴリ別前月比ウィジェット（v6.3）
+  const categoryCompareSection = showWidget('categoryCompare') ? renderCategoryCompareWidget(appState.month) : '';
+
   // 今週の家計ウィジェット（v5.72）
   const wk = getWeeklyStats();
   const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
@@ -1044,6 +1093,8 @@ function renderDashboard() {
 ${quickAddSection}
 
 ${weeklySection}
+
+${categoryCompareSection}
 
 ${forecastSection}
 
@@ -1610,6 +1661,11 @@ function txMonthSelector(value) {
   </div>`;
 }
 
+function resetTxFilters() {
+  appState.txFilter = { category: '', member: '', search: '', type: '', tag: '', amountMin: '', amountMax: '', dateFrom: '', dateTo: '' };
+  renderCurrentPage();
+}
+
 function renderTransactions() {
   const f = appState.txFilter;
   const isAll = appState.month === 'all';
@@ -1866,7 +1922,14 @@ ${tagFilterHtml}
   <div class="table-wrap">
     <table class="tx-table${appState._sortChanged ? ' tx-sorting' : ''}">
       <thead><tr>${cbTh}${sTh('date','日付')}${sTh('category','カテゴリ')}<th>摘要</th><th class="tx-col-pay">支払方法</th><th class="tx-col-mem">担当者</th>${sTh('amount','金額')}<th></th></tr></thead>
-      <tbody>${rows || `<tr><td colspan="${bulkCols}" class="empty">取引がありません</td></tr>`}</tbody>
+      <tbody>${rows || `<tr><td colspan="${bulkCols}"><div class="tx-empty-state">
+        <span class="tx-empty-icon">📭</span>
+        <p class="tx-empty-msg">${anyFilterActive ? '条件に一致する取引がありません' : 'この月の取引はありません'}</p>
+        ${anyFilterActive
+          ? `<button class="btn btn-ghost btn-sm" onclick="resetTxFilters()">🔄 フィルターをリセット</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="document.getElementById('global-fab').click()">＋ 収支を追加する</button>`
+        }
+      </div></td></tr>`}</tbody>
     </table>
   </div>
 </div>
@@ -4056,10 +4119,11 @@ function renderSettings() {
   ${(() => {
     const dw = s.dashWidgets || {};
     const widgets = [
-      { key: 'aiAdvice',      label: 'AIアドバイス',    icon: '🤖' },
-      { key: 'quickAdd',      label: 'クイック入力',    icon: '⚡' },
-      { key: 'weekly',        label: '今週の家計',      icon: '📅' },
-      { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
+      { key: 'aiAdvice',        label: 'AIアドバイス',    icon: '🤖' },
+      { key: 'quickAdd',        label: 'クイック入力',    icon: '⚡' },
+      { key: 'weekly',          label: '今週の家計',      icon: '📅' },
+      { key: 'categoryCompare', label: '前月比カテゴリ',  icon: '📊' },
+      { key: 'forecast',        label: '今月末収支予測',  icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
       { key: 'insight',       label: '今月のインサイト',icon: '💡' },
       { key: 'notes',         label: '今月のメモ',      icon: '📝' },
