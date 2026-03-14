@@ -611,6 +611,33 @@ function buildForecastSparkline(fc) {
 }
 
 // ── 年次累計サマリーウィジェット (v6.4) ───────────────────
+// 月別支出スパークライン SVG 生成（v6.5）
+function makeYrSparkline(values) {
+  const nonZero = values.filter(v => v > 0);
+  if (nonZero.length < 2) return '';
+  const W = 280, H = 44;
+  const max = Math.max(...values, 1);
+  const pts = values.map((v, i) => [
+    Math.round((i / 11) * (W - 10) + 5),
+    Math.round(H - 5 - (v / max) * (H - 12))
+  ]);
+  const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ');
+  const fillPath = `M${pts[0][0]},${H} ${pts.map(p => `L${p[0]},${p[1]}`).join(' ')} L${pts[11][0]},${H} Z`;
+  const curM = new Date().getMonth();
+  const [dx, dy] = pts[curM];
+  return `<svg class="yr-spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="yr-sg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--danger-text)" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="var(--danger-text)" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    <path d="${fillPath}" fill="url(#yr-sg)"/>
+    <path d="${linePath}" fill="none" stroke="var(--danger-text)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${dx}" cy="${dy}" r="3" fill="var(--danger-text)" stroke="white" stroke-width="1.5"/>
+  </svg>`;
+}
+
 function renderYearSummaryWidget() {
   const year = new Date().getFullYear();
   const s = getYearStats(year);
@@ -643,6 +670,8 @@ function renderYearSummaryWidget() {
     ? (() => { const d = Math.round((s.income - s.prevIncome) / s.prevIncome * 100); return `<div class="yr-cell-sub ${d >= 0 ? 'yr-up' : 'yr-down'}">${d >= 0 ? '▲' : '▼'}${Math.abs(d)}% 前年比</div>`; })()
     : '';
 
+  const sparkline = makeYrSparkline(s.monthlyExpenses);
+
   return `<div class="card yr-widget-card">
   <div class="card-header-row">
     <h3 class="card-title">📆 ${year}年の家計</h3>
@@ -665,6 +694,7 @@ function renderYearSummaryWidget() {
       <div class="yr-cell-sub">${formatMoney(s.savings)} 貯蓄</div>
     </div>
   </div>
+  ${sparkline ? `<div class="yr-spark-wrap">${sparkline}</div>` : ''}
   <div class="yr-progress-wrap">
     <div class="yr-progress-label">
       <span>年間進捗</span><span>${yearPct}%（${s.elapsedMonths}/12ヶ月）</span>
@@ -674,11 +704,11 @@ function renderYearSummaryWidget() {
     </div>
   </div>
   <div class="yr-footer">
-    <div class="yr-avg">
+    <div class="yr-avg yr-avg-expense">
       <span class="yr-avg-label">月平均支出</span>
       <span class="yr-avg-val js-countup" data-value="${s.avgMonthlyExpense}">${formatMoney(s.avgMonthlyExpense)}</span>
     </div>
-    <div class="yr-avg">
+    <div class="yr-avg yr-avg-income-card">
       <span class="yr-avg-label">月平均収入</span>
       <span class="yr-avg-val yr-avg-income js-countup" data-value="${s.avgMonthlyIncome}">${formatMoney(s.avgMonthlyIncome)}</span>
     </div>

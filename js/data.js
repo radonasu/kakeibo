@@ -816,10 +816,17 @@ function getYearStats(year) {
   const topCatId = Object.entries(catMap).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
   const topCatAmount = topCatId ? catMap[topCatId] : 0;
 
+  // 月別支出配列（1〜12月、スパークライン用）
+  const monthlyExpenses = Array.from({length: 12}, (_, i) => {
+    const m = String(i + 1).padStart(2, '0');
+    return calcTotal(txs.filter(t => t.date && t.date.startsWith(`${year}-${m}`)), 'expense');
+  });
+
   return {
     year, income, expense, savings, savingsRate,
     monthCount, avgMonthlyExpense, avgMonthlyIncome, elapsedMonths,
     prevIncome, prevExpense, hasPrevYear, topCatId, topCatAmount,
+    monthlyExpenses,
   };
 }
 

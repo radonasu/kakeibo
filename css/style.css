@@ -10052,13 +10052,58 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: 600;
   color: var(--danger-text);
 }
+/* ::after デコレーションサークル（左下）*/
+.yr-widget-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: -30px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--success) 7%, transparent), transparent 70%);
+  pointer-events: none;
+}
+/* 月別支出スパークライン（v6.5）*/
+.yr-spark-wrap {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: var(--sp-1) 0 0;
+  position: relative;
+}
+.yr-spark-wrap::before {
+  content: '月別支出';
+  position: absolute;
+  top: 4px; left: 6px;
+  font-size: 9px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+.yr-spark {
+  width: 100%;
+  height: 44px;
+  display: block;
+  animation: yr-spark-in 0.55s ease 0.3s both;
+}
+@keyframes yr-spark-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* フッター月平均をミニカード化（v6.5）*/
+.yr-avg {
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-2) var(--sp-3);
+}
 /* ダークモード */
 [data-theme="dark"] .yr-progress-track { background: rgba(255,255,255,0.08); }
 [data-theme="dark"] .yr-elapsed-badge  { background: rgba(255,255,255,0.07); }
+[data-theme="dark"] .yr-spark-wrap::before { color: rgba(255,255,255,0.35); }
 /* モバイル対応 */
 @media (max-width: 480px) {
   .yr-cells { gap: var(--sp-2); }
   .yr-cell  { padding: var(--sp-2); }
   .yr-cell-value { font-size: var(--fs-sm); }
   .yr-topcat { margin-left: 0; }
+  .yr-avg { padding: var(--sp-2); }
 }
