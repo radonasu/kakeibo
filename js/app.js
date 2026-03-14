@@ -860,6 +860,36 @@ function renderCategoryCompareWidget(ym) {
 </div>`;
 }
 
+// ── ウィジェット折りたたみ (v7.0) ─────────────────────────────
+const KK_COLLAPSED_KEY = 'kk_card_collapsed';
+
+function getCollapsedSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(KK_COLLAPSED_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveCollapsedSet(s) {
+  localStorage.setItem(KK_COLLAPSED_KEY, JSON.stringify([...s]));
+}
+// ウィジェットHTMLをcollapse可能なラッパーに変換するヘルパー
+// id: ウィジェットの一意キー、headerHtml: ヘッダー行HTML、bodyHtml: ボディHTML
+// fullWidth: 2カラムグリッドで全幅表示するか
+function makeCollapsibleCard(id, headerHtml, bodyHtml, extraClasses = '', fullWidth = false) {
+  const collapsed = getCollapsedSet().has(id);
+  const collapseChevron = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const wrapClass = fullWidth ? 'dash-full' : '';
+  return `<div class="card ${extraClasses} ${wrapClass}" data-collapse-id="${id}">
+  <div class="card-header-row">
+    ${headerHtml}
+    <button class="card-collapse-btn" aria-label="${collapsed ? '展開' : '折りたたむ'}" aria-expanded="${!collapsed}" data-collapse-target="${id}" title="${collapsed ? '展開' : '折りたたむ'}">
+      ${collapseChevron}
+    </button>
+  </div>
+  <div class="card-collapse-body${collapsed ? ' collapsed' : ''}" id="ccb-${id}">
+    ${bodyHtml}
+  </div>
+</div>`;
+}
+
 function renderDashboard() {
   // 初回ユーザー（データなし）→ オンボーディング画面
   if (appData.transactions.length === 0) return renderOnboarding();
@@ -896,30 +926,21 @@ function renderDashboard() {
         ${over ? `<div class="budget-over-msg">⚠️ ${formatMoney(spent - budget)} 超過</div>` : ''}
       </div>`;
     });
-  const budgetSection = showWidget('budget') && budgetItems.length > 0 ? `
-<div class="card">
-  <div class="card-header-row">
-    <h3 class="card-title">📊 今月の予算</h3>
-    <button class="btn-link" onclick="navigate('categories')">予算設定 →</button>
-  </div>
-  <div class="budget-grid">${budgetItems.join('')}</div>
-</div>` : '';
+  const budgetSection = showWidget('budget') && budgetItems.length > 0
+    ? makeCollapsibleCard('budget',
+        `<h3 class="card-title">📊 今月の予算</h3><button class="btn-link" onclick="navigate('categories')">予算設定 →</button>`,
+        `<div class="budget-grid">${budgetItems.join('')}</div>`)
+    : '';
 
   // 目標ウィジェット（v5.31）
   const activeGoals = (appData.goals || []).filter(g => !g.achievedAt);
-  const goalSection = showWidget('goals') && activeGoals.length > 0 ? `
-<div class="card">
-  <div class="card-header-row">
-    <h3 class="card-title">🎯 貯蓄目標</h3>
-    <button class="btn-link" onclick="navigate('goals')">すべて見る →</button>
-  </div>
-  <div class="goal-dash-list">
+  const goalDashBody = `<div class="goal-dash-list">
     ${activeGoals.slice(0, 3).map(g => {
       const tgt = Number(g.targetAmount) || 0;
       const svd = Number(g.savedAmount) || 0;
       const pct = tgt > 0 ? Math.min(Math.round(svd / tgt * 100), 100) : 0;
       const clr = g.color || '#6366f1';
-      const MINI_C = 81.68; // 2π×13（ミニリング r=13）
+      const MINI_C = 81.68;
       const miniOff = (MINI_C * (1 - pct / 100)).toFixed(2);
       return `<div class="goal-dash-item" style="--goal-accent:${clr}">
         <div class="goal-dash-ring-wrap">
@@ -939,8 +960,12 @@ function renderDashboard() {
         <span class="goal-dash-amount">${formatMoney(svd)}</span>
       </div>`;
     }).join('')}
-  </div>
-</div>` : '';
+  </div>`;
+  const goalSection = showWidget('goals') && activeGoals.length > 0
+    ? makeCollapsibleCard('goals',
+        `<h3 class="card-title">🎯 貯蓄目標</h3><button class="btn-link" onclick="navigate('goals')">すべて見る →</button>`,
+        goalDashBody)
+    : '';
 
   // サブスクウィジェット（v5.43）
   const activeSubs = getSubscriptions().filter(s => s.isActive !== false);
@@ -948,13 +973,7 @@ function renderDashboard() {
   const upcomingSubs = [...activeSubs]
     .sort((a, b) => subDaysUntilBilling(a) - subDaysUntilBilling(b))
     .slice(0, 3);
-  const subSection = showWidget('subscriptions') && activeSubs.length > 0 ? `
-<div class="card sub-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">📱 サブスク管理</h3>
-    <button class="btn-link" onclick="navigate('subscriptions')">すべて見る →</button>
-  </div>
-  <div class="sub-widget-header">
+  const subBody = `<div class="sub-widget-header">
     <div class="sub-widget-total-label">月間合計</div>
     <div class="sub-widget-total-amount js-countup" data-value="${subTotal}">${formatMoney(subTotal)}</div>
   </div>
@@ -971,8 +990,12 @@ function renderDashboard() {
         <div class="sub-widget-amount">${formatMoney(s.cycle === 'yearly' ? s.amount : s.amount)}<span class="sub-cycle-badge">${s.cycle === 'yearly' ? '/年' : '/月'}</span></div>
       </div>`;
     }).join('')}
-  </div>
-</div>` : '';
+  </div>`;
+  const subSection = showWidget('subscriptions') && activeSubs.length > 0
+    ? makeCollapsibleCard('subscriptions',
+        `<h3 class="card-title">📱 サブスク管理</h3><button class="btn-link" onclick="navigate('subscriptions')">すべて見る →</button>`,
+        subBody, 'sub-widget-card')
+    : '';
 
   // ポイントウィジェット（v5.47）
   const allPoints = getPoints();
@@ -981,13 +1004,7 @@ function renderDashboard() {
     const d = pointDaysUntilExpiry(p);
     return d !== null && d <= 30 && (Number(p.balance) || 0) > 0;
   }).sort((a, b) => pointDaysUntilExpiry(a) - pointDaysUntilExpiry(b));
-  const pointSection = showWidget('points') && allPoints.length > 0 ? `
-<div class="card pt-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">🎫 ポイント残高</h3>
-    <button class="btn-link" onclick="navigate('points')">すべて見る →</button>
-  </div>
-  <div class="pt-widget-header">
+  const ptBody = `<div class="pt-widget-header">
     <div class="pt-widget-total-label">合計ポイント価値</div>
     <div class="pt-widget-total-amount js-countup" data-value="${totalPointsValue}">${formatMoney(totalPointsValue)}</div>
   </div>
@@ -1016,8 +1033,12 @@ function renderDashboard() {
       </div>
       <div class="pt-widget-balance">${Number(p.balance).toLocaleString('ja-JP')}<span class="pt-unit">pt</span></div>
     </div>`).join('')}
-  </div>`}
-</div>` : '';
+  </div>`}`;
+  const pointSection = showWidget('points') && allPoints.length > 0
+    ? makeCollapsibleCard('points',
+        `<h3 class="card-title">🎫 ポイント残高</h3><button class="btn-link" onclick="navigate('points')">すべて見る →</button>`,
+        ptBody, 'pt-widget-card')
+    : '';
 
   // ほしいものリストウィジェット（v5.51）
   const wishItems = getWishlistItems(false).sort((a, b) => {
@@ -1025,13 +1046,7 @@ function renderDashboard() {
     return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
   });
   const wishTotal = wishItems.reduce((s, w) => s + (Number(w.price) || 0), 0);
-  const wishSection = showWidget('wishlist') && wishItems.length > 0 ? `
-<div class="card wish-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">🛍️ ほしいものリスト</h3>
-    <button class="btn-link" onclick="navigate('wishlist')">すべて見る →</button>
-  </div>
-  <div class="wish-widget-header">
+  const wishBody = `<div class="wish-widget-header">
     <div class="wish-widget-total-label">合計予算</div>
     <div class="wish-widget-total-amount js-countup" data-value="${wishTotal}">${formatMoney(wishTotal)}</div>
   </div>
@@ -1049,8 +1064,12 @@ function renderDashboard() {
         <div class="wish-widget-price">${formatMoney(w.price || 0)}</div>
       </div>`;
     }).join('')}
-  </div>
-</div>` : '';
+  </div>`;
+  const wishSection = showWidget('wishlist') && wishItems.length > 0
+    ? makeCollapsibleCard('wishlist',
+        `<h3 class="card-title">🛍️ ほしいものリスト</h3><button class="btn-link" onclick="navigate('wishlist')">すべて見る →</button>`,
+        wishBody, 'wish-widget-card')
+    : '';
 
   // 今月末収支予測カード（v5.57）
   const forecastSection = showWidget('forecast') ? renderForecastCard(appState.month) : '';
@@ -1060,12 +1079,10 @@ function renderDashboard() {
 
   // インサイトセクション（v5.40）
   const insights = generateInsights(appState.month);
-  const insightSection = showWidget('insight') && insights.length > 0 ? `
-<div class="card insight-card">
-  <div class="card-header-row">
-    <h3 class="card-title">💡 今月のインサイト</h3>
-  </div>
-  <div class="insight-list">
+  const insightSection = showWidget('insight') && insights.length > 0
+    ? makeCollapsibleCard('insight',
+        `<h3 class="card-title">💡 今月のインサイト</h3>`,
+        `<div class="insight-list">
     ${insights.map(ins => `
     <div class="insight-item insight-${ins.type}">
       <span class="insight-icon">${ins.icon}</span>
@@ -1074,8 +1091,8 @@ function renderDashboard() {
         <div class="insight-desc">${ins.desc}</div>
       </div>
     </div>`).join('')}
-  </div>
-</div>` : '';
+  </div>`, 'insight-card')
+    : '';
 
   // 先月比
   const [y, m] = appState.month.split('-');
@@ -1174,83 +1191,25 @@ function renderDashboard() {
   // 月セレクター
   const monthSel = monthSelector('dash-month', appState.month);
 
-  return `
-<div class="page-header">
-  <h1 class="page-title">${esc2(appData.settings.familyName)}</h1>
-  <div class="page-header-right">
-    ${monthSel}
-    <button class="btn btn-share" id="btn-share-summary" title="月次サマリーをシェア">📤 シェア</button>
-  </div>
-</div>
-
-<div class="summary-cards">
-  <div class="card summary-card income">
-    <div class="summary-label">今月の収入</div>
-    <div class="summary-amount js-countup" data-value="${income}">${formatMoney(income)}</div>
-    ${diffSign(income, prevIncome)}
-  </div>
-  <div class="card summary-card expense">
-    <div class="summary-label">今月の支出</div>
-    <div class="summary-amount js-countup" data-value="${expense}">${formatMoney(expense)}</div>
-    ${diffSign(expense, prevExpense)}
-  </div>
-  <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'}">
-    <div class="summary-label">今月の残高</div>
-    <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
-    ${(() => { const prev = prevIncome - prevExpense; return prev !== 0 ? diffSign(balance, prev) : ''; })()}
-  </div>
-</div>
-
-${quickAddSection}
-
-${weeklySection}
-
-${yearSummarySection}
-
-${categoryCompareSection}
-
-${forecastSection}
-
-${healthScoreSection}
-
-${insightSection}
-
-${showWidget('aiAdvice') ? (() => {
-  const hasKey = !!(appData.settings?.geminiApiKey);
-  return `<div class="card adv-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">🤖 AI家計アドバイス</h3>
-  </div>
-  <p class="adv-widget-desc">今月の収支データをAIが分析して、節約のヒントや改善点をお伝えします。</p>
+  // 各セクションの折りたたみ対応（インラインウィジェット）
+  const aiAdviceSection = showWidget('aiAdvice') ? (() => {
+    const hasKey = !!(appData.settings?.geminiApiKey);
+    return makeCollapsibleCard('aiAdvice',
+      `<h3 class="card-title">🤖 AI家計アドバイス</h3>`,
+      `<p class="adv-widget-desc">今月の収支データをAIが分析して、節約のヒントや改善点をお伝えします。</p>
   ${hasKey
     ? `<button class="btn btn-primary adv-widget-btn" id="btn-ai-advice" data-month="${appState.month}">✨ AIにアドバイスをもらう</button>`
     : `<div class="adv-widget-hint">⚙️ 設定 → 連携タブで <strong>Gemini APIキー</strong> を設定するとご利用いただけます</div>`
-  }
-</div>`;
-})() : ''}
+  }`, 'adv-widget-card');
+  })() : '';
 
-${notesSection}
-
-${pointSection}
-
-${wishSection}
-
-${subSection}
-
-${budgetSection}
-
-${goalSection}
-
-${showWidget('challenges') ? (() => {
-  const now = currentYearMonth();
-  const activeChallenges = getChallenges().filter(c => c.period === now);
-  if (!activeChallenges.length) return '';
-  return `<div class="card ch-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">🏆 節約チャレンジ</h3>
-    <button class="btn-link" onclick="navigate('challenges')">すべて見る →</button>
-  </div>
-  <div class="ch-widget-list">
+  const challengeSection = showWidget('challenges') ? (() => {
+    const now = currentYearMonth();
+    const activeChallenges = getChallenges().filter(c => c.period === now);
+    if (!activeChallenges.length) return '';
+    return makeCollapsibleCard('challenges',
+      `<h3 class="card-title">🏆 節約チャレンジ</h3><button class="btn-link" onclick="navigate('challenges')">すべて見る →</button>`,
+      `<div class="ch-widget-list">
     ${activeChallenges.slice(0, 3).map(ch => {
       const prog = calcChallengeProgress(ch);
       const pct = prog.pct;
@@ -1268,21 +1227,17 @@ ${showWidget('challenges') ? (() => {
         <span class="ch-widget-pct ${isOver ? 'ch-pct-over' : prog.isOnTrack ? 'ch-pct-ok' : ''}">${pct}%</span>
       </div>`;
     }).join('')}
-  </div>
-</div>`;
-})() : ''}
+  </div>`, 'ch-widget-card');
+  })() : '';
 
-${showWidget('debts') ? (() => {
-  const activeDebts = (appData.debts || []).filter(d => !d.paidOff);
-  if (!activeDebts.length) return '';
-  const totalDebt = getTotalDebt();
-  const totalMonthly = activeDebts.reduce((s, d) => s + (Number(d.monthlyPayment) || 0), 0);
-  return `<div class="card debt-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">💳 ローン管理</h3>
-    <button class="btn-link" onclick="navigate('debts')">すべて見る →</button>
-  </div>
-  <div class="debt-widget-summary">
+  const debtSection = showWidget('debts') ? (() => {
+    const activeDebts = (appData.debts || []).filter(d => !d.paidOff);
+    if (!activeDebts.length) return '';
+    const totalDebt = getTotalDebt();
+    const totalMonthly = activeDebts.reduce((s, d) => s + (Number(d.monthlyPayment) || 0), 0);
+    return makeCollapsibleCard('debts',
+      `<h3 class="card-title">💳 ローン管理</h3><button class="btn-link" onclick="navigate('debts')">すべて見る →</button>`,
+      `<div class="debt-widget-summary">
     <div class="debt-widget-cell">
       <div class="debt-widget-cell-label">総残高</div>
       <div class="debt-widget-cell-value js-countup" data-value="${totalDebt}">${formatMoney(totalDebt)}</div>
@@ -1317,21 +1272,17 @@ ${showWidget('debts') ? (() => {
         <div class="debt-widget-balance">${formatMoney(cur)}</div>
       </div>`;
     }).join('')}
-  </div>
-</div>`;
-})() : ''}
+  </div>`, 'debt-widget-card');
+  })() : '';
 
-${showWidget('events') ? (() => {
-  const upcoming = getUpcomingEvents(1);
-  if (!upcoming.length) return '';
-  const today = new Date();
-  const ym = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0');
-  return `<div class="card ev-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">📌 直近の収支予定</h3>
-    <button class="btn-link" onclick="navigate('events')">すべて見る →</button>
-  </div>
-  <div class="ev-widget-list">
+  const eventsSection = showWidget('events') ? (() => {
+    const upcoming = getUpcomingEvents(1);
+    if (!upcoming.length) return '';
+    const todayDate = new Date();
+    const ym = todayDate.getFullYear() + '-' + String(todayDate.getMonth()+1).padStart(2,'0');
+    return makeCollapsibleCard('events',
+      `<h3 class="card-title">📌 直近の収支予定</h3><button class="btn-link" onclick="navigate('events')">すべて見る →</button>`,
+      `<div class="ev-widget-list">
     ${upcoming.slice(0,4).map((ev, wi) => {
       const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
       const isIncome = ev.type === 'income';
@@ -1348,11 +1299,65 @@ ${showWidget('events') ? (() => {
         <div class="ev-widget-amount ${isIncome?'ev-income':'ev-expense'}">${isIncome?'+':'-'}${formatMoney(ev.plannedAmount||0)}</div>
       </div>`;
     }).join('')}
-  </div>
-</div>`;
-})() : ''}
+  </div>`, 'ev-widget-card');
+  })() : '';
 
-${showWidget('chart') ? `<div class="charts-row">
+  const recentTxSection = makeCollapsibleCard('recentTx',
+    `<h3 class="card-title">最近の取引</h3><button class="btn-link" onclick="navigate('transactions')">すべて見る →</button>`,
+    `<div class="table-wrap">
+    <table class="tx-table">
+      <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>担当者</th><th>金額</th></tr></thead>
+      <tbody>${recentRows || `<tr><td colspan="5"><div class="empty-month-state"><span class="empty-month-icon">📭</span><span class="empty-month-msg">今月の取引はまだありません</span><button class="empty-month-btn" onclick="document.getElementById('global-fab').click()">＋ 収支を追加する</button></div></td></tr>`}</tbody>
+    </table>
+  </div>`, '', true);
+
+  return `
+<div class="page-header">
+  <h1 class="page-title">${esc2(appData.settings.familyName)}</h1>
+  <div class="page-header-right">
+    ${monthSel}
+    <button class="btn btn-share" id="btn-share-summary" title="月次サマリーをシェア">📤 シェア</button>
+  </div>
+</div>
+
+<div class="summary-cards">
+  <div class="card summary-card income">
+    <div class="summary-label">今月の収入</div>
+    <div class="summary-amount js-countup" data-value="${income}">${formatMoney(income)}</div>
+    ${diffSign(income, prevIncome)}
+  </div>
+  <div class="card summary-card expense">
+    <div class="summary-label">今月の支出</div>
+    <div class="summary-amount js-countup" data-value="${expense}">${formatMoney(expense)}</div>
+    ${diffSign(expense, prevExpense)}
+  </div>
+  <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'}">
+    <div class="summary-label">今月の残高</div>
+    <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
+    ${(() => { const prev = prevIncome - prevExpense; return prev !== 0 ? diffSign(balance, prev) : ''; })()}
+  </div>
+</div>
+
+${quickAddSection}
+
+<div class="dash-grid">
+${weeklySection ? `<div class="dash-full">${weeklySection}</div>` : ''}
+${yearSummarySection ? `<div class="dash-full">${yearSummarySection}</div>` : ''}
+${categoryCompareSection ? `<div>${categoryCompareSection}</div>` : ''}
+${forecastSection ? `<div>${forecastSection}</div>` : ''}
+${healthScoreSection ? `<div>${healthScoreSection}</div>` : ''}
+${insightSection ? `<div>${insightSection}</div>` : ''}
+${aiAdviceSection ? `<div>${aiAdviceSection}</div>` : ''}
+${notesSection ? `<div>${notesSection}</div>` : ''}
+${pointSection ? `<div>${pointSection}</div>` : ''}
+${wishSection ? `<div>${wishSection}</div>` : ''}
+${subSection ? `<div>${subSection}</div>` : ''}
+${budgetSection ? `<div class="dash-full">${budgetSection}</div>` : ''}
+${goalSection ? `<div>${goalSection}</div>` : ''}
+${challengeSection ? `<div>${challengeSection}</div>` : ''}
+${debtSection ? `<div>${debtSection}</div>` : ''}
+${eventsSection ? `<div>${eventsSection}</div>` : ''}
+${showWidget('chart') ? `<div class="dash-full"><div class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ</h3>
     <div class="chart-wrap" style="height:220px">
@@ -1365,19 +1370,8 @@ ${showWidget('chart') ? `<div class="charts-row">
       <canvas id="monthly-bar"></canvas>
     </div>
   </div>
-</div>` : ''}
-
-<div class="card">
-  <div class="card-header-row">
-    <h3 class="card-title">最近の取引</h3>
-    <button class="btn-link" onclick="navigate('transactions')">すべて見る →</button>
-  </div>
-  <div class="table-wrap">
-    <table class="tx-table">
-      <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>担当者</th><th>金額</th></tr></thead>
-      <tbody>${recentRows || `<tr><td colspan="5"><div class="empty-month-state"><span class="empty-month-icon">📭</span><span class="empty-month-msg">今月の取引はまだありません</span><button class="empty-month-btn" onclick="document.getElementById('global-fab').click()">＋ 収支を追加する</button></div></td></tr>`}</tbody>
-    </table>
-  </div>
+</div></div>` : ''}
+<div class="dash-full">${recentTxSection}</div>
 </div>
 
 <!-- AI家計アドバイスモーダル (v6.1) -->
@@ -1639,6 +1633,34 @@ function bindDashboard() {
   if (advClose  && advModal) advClose.addEventListener('click',  () => { advModal.style.display = 'none'; });
   if (advClose2 && advModal) advClose2.addEventListener('click', () => { advModal.style.display = 'none'; });
   if (advModal) advModal.addEventListener('click', e => { if (e.target === advModal) advModal.style.display = 'none'; });
+
+  // ── ウィジェット折りたたみ バインド (v7.0) ─────────────────
+  document.querySelectorAll('.card-collapse-btn[data-collapse-target]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = btn.dataset.collapseTarget;
+      const body = document.getElementById('ccb-' + id);
+      if (!body) return;
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const cs = getCollapsedSet();
+      if (isExpanded) {
+        // 折りたたむ
+        cs.add(id);
+        btn.setAttribute('aria-expanded', 'false');
+        btn.title = '展開';
+        btn.setAttribute('aria-label', '展開');
+        body.classList.add('collapsed');
+      } else {
+        // 展開
+        cs.delete(id);
+        btn.setAttribute('aria-expanded', 'true');
+        btn.title = '折りたたむ';
+        btn.setAttribute('aria-label', '折りたたむ');
+        body.classList.remove('collapsed');
+      }
+      saveCollapsedSet(cs);
+    });
+  });
 }
 
 // ============================================================

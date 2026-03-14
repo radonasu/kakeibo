@@ -432,6 +432,65 @@ select:focus:not(:focus-visible) {
 }
 .card-header-row .card-title { margin-bottom: 0; }
 
+/* ── ダッシュボード 2カラムグリッド (v7.0) ────────────────── */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  align-items: start;
+}
+.dash-grid > .dash-full {
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── ウィジェット折りたたみ (v7.0) ────────────────────────── */
+.card-collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s, transform 0.25s;
+  margin-left: var(--sp-2);
+}
+.card-collapse-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+.card-collapse-btn svg {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.card-collapse-btn[aria-expanded="false"] svg {
+  transform: rotate(-90deg);
+}
+.card-collapse-body {
+  overflow: hidden;
+  transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity   0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 2000px;
+  opacity: 1;
+}
+.card-collapse-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+/* 折りたたみ時はカードpadding-bottomを縮小 */
+.card:has(.card-collapse-body.collapsed) {
+  padding-bottom: var(--sp-4);
+}
+
 /* ページヘッダー */
 .page-header {
   display: flex;
