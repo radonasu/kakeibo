@@ -2528,7 +2528,8 @@ function renderTxModal() {
       </div>
       <div class="form-group">
         <label>金額（円）</label>
-        <input type="number" id="tx-amount" value="${src ? src.amount : ''}" placeholder="0" min="1" required>
+        <input type="text" id="tx-amount" inputmode="decimal" value="${src ? src.amount : ''}" placeholder="例: 1500+300" autocomplete="off">
+        <div id="amt-calc-preview" class="amt-calc-preview"></div>
         <div class="amount-presets">
           <button type="button" class="btn-preset" data-amount="500">¥500</button>
           <button type="button" class="btn-preset" data-amount="1000">¥1,000</button>
@@ -2656,6 +2657,18 @@ function bindTxModal() {
       closeTxModal();
     } else if (e.key === 'Enter' && !e.shiftKey && e.target.tagName !== 'SELECT' && e.target.tagName !== 'BUTTON') {
       e.preventDefault();
+      // 金額フィールドで計算式が入力中ならまず計算する
+      if (e.target.id === 'tx-amount' && isCalcExpr(e.target.value.trim())) {
+        const amtInput2 = e.target;
+        const result = evalCalcExpr(amtInput2.value.trim());
+        if (!isNaN(result)) {
+          amtInput2.value = result;
+          amtInput2.classList.remove('calc-mode');
+          const cp = document.getElementById('amt-calc-preview');
+          if (cp) cp.style.display = 'none';
+        }
+        return;
+      }
       saveTxFromModal();
     }
   });
@@ -2788,6 +2801,51 @@ function bindTxModal() {
   if (dateInput) {
     dateInput.addEventListener('change', syncDateQuickBtns);
   }
+
+  // 金額フィールド インライン電卓 (v7.5)
+  const amtInput = document.getElementById('tx-amount');
+  const calcPreview = document.getElementById('amt-calc-preview');
+
+  function updateCalcPreview() {
+    if (!amtInput || !calcPreview) return;
+    const val = amtInput.value.trim();
+    if (isCalcExpr(val)) {
+      const result = evalCalcExpr(val);
+      amtInput.classList.add('calc-mode');
+      if (!isNaN(result)) {
+        calcPreview.innerHTML = `<span class="calc-arrow">＝</span><span class="calc-result">¥${result.toLocaleString()}</span><span class="calc-hint">Enterで確定</span>`;
+        calcPreview.style.display = 'flex';
+      } else {
+        calcPreview.innerHTML = `<span class="calc-arrow">＝</span><span class="calc-err">計算できません</span>`;
+        calcPreview.style.display = 'flex';
+      }
+    } else {
+      amtInput.classList.remove('calc-mode');
+      calcPreview.style.display = 'none';
+    }
+  }
+
+  function resolveAmtExpr() {
+    if (!amtInput) return false;
+    const val = amtInput.value.trim();
+    if (!isCalcExpr(val)) return false;
+    const result = evalCalcExpr(val);
+    if (!isNaN(result)) {
+      amtInput.value = result;
+      amtInput.classList.remove('calc-mode');
+      if (calcPreview) calcPreview.style.display = 'none';
+      return true;
+    }
+    return false;
+  }
+
+  if (amtInput) {
+    amtInput.addEventListener('input', updateCalcPreview);
+    amtInput.addEventListener('blur', () => {
+      resolveAmtExpr();
+    });
+    updateCalcPreview();
+  }
 }
 
 // ── カテゴリアイコンマップ (v5.30) ────────────────────────────────
@@ -2914,6 +2972,31 @@ function updateMemoChips() {
 }
 
 // ── カテゴリ別「よく使う金額」サジェスト (v7.3) ─────────────────────
+// ============================================================
+// インライン電卓ヘルパー (v7.5)
+// ============================================================
+function evalCalcExpr(str) {
+  // 全角数字・演算子を半角に変換
+  let s = str
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[＋]/g, '+').replace(/[－]/g, '-').replace(/[×＊]/g, '*').replace(/[÷／]/g, '/')
+    .replace(/[,，、]/g, '').replace(/¥/g, '').replace(/\s+/g, '');
+  // 数字と四則演算子・括弧・小数点のみ許可
+  if (!/^[\d+\-*/.()]+$/.test(s) || s.length === 0) return NaN;
+  // 安全に評価
+  try {
+    // eslint-disable-next-line no-new-func
+    const result = Function('"use strict"; return (' + s + ')')();
+    if (!Number.isFinite(result) || result <= 0) return NaN;
+    return Math.round(result);
+  } catch { return NaN; }
+}
+
+function isCalcExpr(str) {
+  const s = str.replace(/[,，、¥\s]/g, '');
+  return /[+\-*\/×÷＋－×÷]/.test(s) && /\d/.test(s);
+}
+
 function getFrequentAmounts(categoryId, limit = 4) {
   if (!categoryId) return [];
   const counts = {};
@@ -3024,7 +3107,8 @@ function saveTxFromModal() {
   const modal = document.getElementById('tx-modal');
   const type    = modal.querySelector('.type-btn.active')?.dataset.type || 'expense';
   const date    = document.getElementById('tx-date')?.value;
-  const amount  = Number(document.getElementById('tx-amount')?.value);
+  const amtRaw  = document.getElementById('tx-amount')?.value?.trim() || '';
+  const amount  = isCalcExpr(amtRaw) ? (evalCalcExpr(amtRaw) || 0) : Number(amtRaw);
   const catId   = document.getElementById('tx-category')?.value;
   const payment = document.getElementById('tx-payment')?.value;
   const memId   = document.getElementById('tx-member')?.value;

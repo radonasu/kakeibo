@@ -153,6 +153,8 @@
 
 | 102 | v7.4 | 機能＋デザイン | 取引入力モーダル 最近のメモサジェストチップ：摘要フィールド直下に選択カテゴリの最近使ったユニークメモを最大4件ピルチップで表示・`getRecentMemos(categoryId)`が日付降順でユニークメモを収集・カテゴリ選択/変更のたびに自動更新（renderCatChipsフック・suggestCatFromMemo適用時も連動）・チップは`--memo-chip-color`CSS変数でカテゴリカラーに色連動（背景10%着色・ボーダー28%着色・テキストカラー）・タップで摘要フィールドに即入力＋`memo-chip-pop` cubic-bezier弾性バウンスアニメーション（0.35s）・チップ入場`@keyframes memo-chip-in`（0.28s弾性・45msスタッガー）・長いメモはmax-width:160px+text-overflow:ellipsis+titleツールチップ・ホバー時translateY(-1px)＋カテゴリカラーglow・ダークモード対応 |
 
+| 103 | v7.5 | 機能＋デザイン | 金額フィールド インライン電卓：取引入力モーダルの金額フィールドを`type="text" inputmode="decimal"`に変更し四則演算式を直接入力可能に（例: `1500+300-50`）・`evalCalcExpr(str)`が全角数字/演算子の半角変換・桁区切り除去・`Function()`コンストラクタによる安全な評価・結果を`Math.round()`で整数化・`isCalcExpr(str)`で演算子含有判定・入力中は`#amt-calc-preview`にリアルタイムプレビュー（`＝ ¥1,750 Enterで確定`）・計算不能な式は「計算できません」エラー表示・Enterキーで計算確定（保存しない）・blurで自動確定・calc-mode時に金額フィールドを`var(--warning)`ボーダー＋背景に変化（0.2s transition）・`@keyframes calc-preview-in`フェードイン（0.18s）・プリセットボタン/頻出金額チップ/OCR連携は従来通り動作・ダークモード対応 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

@@ -11140,3 +11140,62 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .memo-hist-chip:hover {
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 22%, var(--surface-2));
 }
+
+/* ── インライン電卓 (v7.5) ──────────────────────────────────────── */
+#tx-amount.calc-mode {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+[data-theme="dark"] #tx-amount.calc-mode {
+  background: color-mix(in srgb, var(--warning) 12%, var(--surface-2));
+}
+
+.amt-calc-preview {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-btn-sm, 8px);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  animation: calc-preview-in 0.18s ease both;
+}
+
+@keyframes calc-preview-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.calc-arrow {
+  font-size: var(--fs-sm);
+  color: var(--warning);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+.calc-result {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--warning);
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-err {
+  font-size: var(--fs-sm);
+  color: var(--danger-text);
+}
+
+.calc-hint {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .amt-calc-preview {
+  background: color-mix(in srgb, var(--warning) 10%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--warning) 35%, transparent);
+}
