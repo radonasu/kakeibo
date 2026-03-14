@@ -1051,6 +1051,20 @@ ${healthScoreSection}
 
 ${insightSection}
 
+${showWidget('aiAdvice') ? (() => {
+  const hasKey = !!(appData.settings?.geminiApiKey);
+  return `<div class="card adv-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">🤖 AI家計アドバイス</h3>
+  </div>
+  <p class="adv-widget-desc">今月の収支データをAIが分析して、節約のヒントや改善点をお伝えします。</p>
+  ${hasKey
+    ? `<button class="btn btn-primary adv-widget-btn" id="btn-ai-advice" data-month="${appState.month}">✨ AIにアドバイスをもらう</button>`
+    : `<div class="adv-widget-hint">⚙️ 設定 → 連携タブで <strong>Gemini APIキー</strong> を設定するとご利用いただけます</div>`
+  }
+</div>`;
+})() : ''}
+
 ${notesSection}
 
 ${pointSection}
@@ -1199,6 +1213,25 @@ ${showWidget('chart') ? `<div class="charts-row">
       <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>担当者</th><th>金額</th></tr></thead>
       <tbody>${recentRows || `<tr><td colspan="5"><div class="empty-month-state"><span class="empty-month-icon">📭</span><span class="empty-month-msg">今月の取引はまだありません</span><button class="empty-month-btn" onclick="document.getElementById('global-fab').click()">＋ 収支を追加する</button></div></td></tr>`}</tbody>
     </table>
+  </div>
+</div>
+
+<!-- AI家計アドバイスモーダル (v6.1) -->
+<div id="advice-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="advice-modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="advice-modal-title">🤖 AI家計アドバイス</h2>
+      <button class="modal-close" id="advice-modal-close" aria-label="閉じる">✕</button>
+    </div>
+    <div class="modal-body">
+      <span class="adv-month-badge" id="adv-month-badge">📅</span>
+      <div id="adv-body"></div>
+      <div class="adv-footer">
+        <button class="btn btn-ghost" id="adv-copy-btn" style="display:none">📋 コピー</button>
+        <button class="btn btn-ghost" id="adv-regen-btn" style="display:none">🔄 再生成</button>
+        <button class="btn btn-primary" id="advice-modal-close2">閉じる</button>
+      </div>
+    </div>
   </div>
 </div>`;
 }
@@ -1419,6 +1452,18 @@ function bindDashboard() {
       renderMonthlyBarChart('monthly-bar');
     }
   }, 50);
+
+  // AI家計アドバイス (v6.1)
+  const advBtn = document.getElementById('btn-ai-advice');
+  if (advBtn) {
+    advBtn.addEventListener('click', () => openAdviceModal(advBtn.dataset.month || appState.month));
+  }
+  const advClose  = document.getElementById('advice-modal-close');
+  const advClose2 = document.getElementById('advice-modal-close2');
+  const advModal  = document.getElementById('advice-modal');
+  if (advClose  && advModal) advClose.addEventListener('click',  () => { advModal.style.display = 'none'; });
+  if (advClose2 && advModal) advClose2.addEventListener('click', () => { advModal.style.display = 'none'; });
+  if (advModal) advModal.addEventListener('click', e => { if (e.target === advModal) advModal.style.display = 'none'; });
 }
 
 // ============================================================
@@ -4011,6 +4056,7 @@ function renderSettings() {
   ${(() => {
     const dw = s.dashWidgets || {};
     const widgets = [
+      { key: 'aiAdvice',      label: 'AIアドバイス',    icon: '🤖' },
       { key: 'quickAdd',      label: 'クイック入力',    icon: '⚡' },
       { key: 'weekly',        label: '今週の家計',      icon: '📅' },
       { key: 'forecast',      label: '今月末収支予測', icon: '📈' },
@@ -5108,6 +5154,168 @@ function fileToBase64(file) {
     reader.onload  = e => resolve(e.target.result.split(',')[1]);
     reader.onerror = reject;
     reader.readAsDataURL(file);
+  });
+}
+
+// ============================================================
+// AI家計アドバイス (v6.1)
+// ============================================================
+async function callGeminiAdvice(month) {
+  const apiKey  = appData.settings?.geminiApiKey;
+  const proxyUrl = APP_CONFIG.geminiProxy?.url;
+  if (!apiKey)   throw new Error('Gemini APIキーが設定されていません。設定 → 連携タブで入力してください。');
+  if (!proxyUrl) throw new Error('Geminiプロキシが未設定です。');
+
+  const txs     = getTransactionsByMonth(month);
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+  const balance = income - expense;
+  const savingRate = income > 0 ? Math.round(balance / income * 100) : 0;
+
+  // カテゴリ別支出（上位8件）
+  const catMap = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    catMap[t.categoryId] = (catMap[t.categoryId] || 0) + t.amount;
+  });
+  const catEntries = Object.entries(catMap)
+    .map(([id, amt]) => {
+      const cat = (appData.categories || []).find(c => c.id === id);
+      return { name: cat?.name || id, amount: amt };
+    })
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 8);
+
+  // 先月比
+  const [y, m] = month.split('-');
+  const prevD = new Date(Number(y), Number(m) - 2, 1);
+  const prevMonth = prevD.getFullYear() + '-' + String(prevD.getMonth() + 1).padStart(2, '0');
+  const prevTxs    = getTransactionsByMonth(prevMonth);
+  const prevIncome  = calcTotal(prevTxs, 'income');
+  const prevExpense = calcTotal(prevTxs, 'expense');
+
+  const pctDiff = (cur, prev) => prev > 0
+    ? (cur >= prev ? '+' : '') + Math.round((cur - prev) / prev * 100) + '%'
+    : 'データなし';
+
+  // 予算達成状況
+  const budgets = appData.budgets || {};
+  const budgetLines = catEntries.map(ce => {
+    const cat = (appData.categories || []).find(c => c.name === ce.name);
+    if (!cat || !budgets[cat.id]) return null;
+    const pct = Math.round(ce.amount / budgets[cat.id] * 100);
+    return `  - ${ce.name}: ${ce.amount.toLocaleString()}円 / 予算${budgets[cat.id].toLocaleString()}円 (${pct}%)`;
+  }).filter(Boolean);
+
+  const yearMonthLabel = `${y}年${Number(m)}月`;
+
+  const prompt = `あなたは家計管理のエキスパートです。以下の${yearMonthLabel}の家計データを分析して、具体的でわかりやすいアドバイスを日本語で提供してください。
+
+## ${yearMonthLabel}の家計データ
+
+### 収支サマリー
+- 収入合計: ${income.toLocaleString()}円
+- 支出合計: ${expense.toLocaleString()}円
+- 収支バランス: ${balance >= 0 ? '+' : ''}${balance.toLocaleString()}円
+- 貯蓄率: ${savingRate}%
+- 取引件数: ${txs.length}件
+
+### 先月との比較
+- 収入: ${prevIncome.toLocaleString()}円 → ${income.toLocaleString()}円 (${pctDiff(income, prevIncome)})
+- 支出: ${prevExpense.toLocaleString()}円 → ${expense.toLocaleString()}円 (${pctDiff(expense, prevExpense)})
+
+### カテゴリ別支出（上位）
+${catEntries.map(ce => `  - ${ce.name}: ${ce.amount.toLocaleString()}円`).join('\n') || '  データなし'}
+
+${budgetLines.length > 0 ? `### 予算達成状況\n${budgetLines.join('\n')}` : ''}
+
+## 回答形式
+以下の構成でアドバイスをください（合計300〜450文字程度）：
+1. **今月の総評**（1〜2文で簡潔に）
+2. **良かった点**（箇条書き1〜2点）
+3. **改善できそうな点**（箇条書き1〜2点）
+4. **来月に向けてのアクション**（具体的な1つの提案）
+
+親しみやすく前向きなトーンでお願いします。`;
+
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
+  };
+
+  const resp = await fetch(proxyUrl + '/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ apiKey, payload }),
+  });
+
+  if (!resp.ok) {
+    let msg = `HTTPエラー ${resp.status}`;
+    try { const e = await resp.json(); msg = e.error?.message || e.error || msg; } catch (_) {}
+    throw new Error(msg);
+  }
+
+  const body = await resp.json();
+  const text = body.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!text) throw new Error('レスポンスが空です。');
+  return text;
+}
+
+function openAdviceModal(month) {
+  const modal = document.getElementById('advice-modal');
+  if (!modal) return;
+
+  const apiKey = appData.settings?.geminiApiKey;
+  const [y, m] = month.split('-');
+  const badge = document.getElementById('adv-month-badge');
+  if (badge) badge.textContent = `📅 ${y}年${Number(m)}月`;
+
+  modal.style.display = 'flex';
+
+  const bodyEl   = document.getElementById('adv-body');
+  const copyBtn  = document.getElementById('adv-copy-btn');
+  const regenBtn = document.getElementById('adv-regen-btn');
+
+  if (!apiKey) {
+    bodyEl.innerHTML = `<div class="adv-error">⚠️ Gemini APIキーが設定されていません。<br>設定 → 連携タブでAPIキーを入力してください。</div>`;
+    if (copyBtn)  copyBtn.style.display  = 'none';
+    if (regenBtn) regenBtn.style.display = 'none';
+    return;
+  }
+
+  // ローディング
+  bodyEl.innerHTML = `<div class="adv-loading">
+    <div class="adv-sk-line" style="width:90%"></div>
+    <div class="adv-sk-line" style="width:78%"></div>
+    <div class="adv-sk-line" style="width:94%"></div>
+    <div class="adv-sk-line" style="width:68%"></div>
+    <div class="adv-sk-line" style="width:85%"></div>
+    <div class="adv-sk-line" style="width:55%"></div>
+  </div>`;
+  if (copyBtn)  copyBtn.style.display  = 'none';
+  if (regenBtn) regenBtn.style.display = 'none';
+
+  callGeminiAdvice(month).then(text => {
+    // 簡易マークダウンレンダリング
+    const html = text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^#{1,3}\s+(.+)$/gm, '<h3>$1</h3>')
+      .replace(/^[-•・]\s+(.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>[\s\S]+?<\/li>)(?:\n|$)/g, (m) => m)
+      .replace(/(<li>[^<]*<\/li>\n?)+/g, s => `<ul>${s}</ul>`)
+      .replace(/\n{2,}/g, '\n')
+      .split('\n').map(line => {
+        if (/^<[hul]/.test(line)) return line;
+        if (line.trim() === '') return '';
+        return `<p>${line}</p>`;
+      }).join('');
+
+    bodyEl.innerHTML = `<div class="adv-text">${html}</div>`;
+    if (copyBtn)  { copyBtn.style.display  = 'inline-flex'; copyBtn.onclick  = () => { navigator.clipboard?.writeText(text).then(() => showToast('コピーしました', 'success')); }; }
+    if (regenBtn) { regenBtn.style.display = 'inline-flex'; regenBtn.onclick = () => openAdviceModal(month); }
+  }).catch(err => {
+    bodyEl.innerHTML = `<div class="adv-error">⚠️ ${esc2(err.message)}</div>`;
+    if (copyBtn)  copyBtn.style.display  = 'none';
+    if (regenBtn) { regenBtn.style.display = 'inline-flex'; regenBtn.onclick = () => openAdviceModal(month); }
   });
 }
 

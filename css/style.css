@@ -9580,3 +9580,137 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .tg-stat-card {
   background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) 10%, var(--surface)) 100%);
 }
+
+/* ============================================================
+   AI家計アドバイス (v6.1)
+   ============================================================ */
+
+/* ウィジェットカード */
+.adv-widget-card {
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid var(--primary);
+}
+.adv-widget-card::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.adv-widget-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 4px 0 12px;
+  line-height: 1.6;
+}
+.adv-widget-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-hover);
+}
+
+/* モーダル */
+@keyframes adv-modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+#advice-modal .modal {
+  animation: adv-modal-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 月バッジ */
+.adv-month-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* スケルトンローディング */
+@keyframes adv-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+.adv-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.adv-sk-line {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--surface-hover) 25%,
+    var(--border) 50%,
+    var(--surface-hover) 75%
+  );
+  background-size: 800px 100%;
+  animation: adv-shimmer 1.5s infinite linear;
+}
+
+/* アドバイステキスト */
+.adv-text {
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+  color: var(--text);
+}
+.adv-text h3 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin: 14px 0 6px;
+  color: var(--primary);
+}
+.adv-text ul {
+  margin: 4px 0 10px 18px;
+  padding: 0;
+}
+.adv-text li {
+  margin-bottom: 4px;
+  list-style-type: disc;
+}
+.adv-text strong {
+  font-weight: 700;
+}
+.adv-text p {
+  margin: 6px 0;
+}
+
+/* エラー表示 */
+.adv-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+/* フッター */
+.adv-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
