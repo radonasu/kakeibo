@@ -1037,6 +1037,7 @@ function renderDashboard() {
   <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'}">
     <div class="summary-label">今月の残高</div>
     <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
+    ${(() => { const prev = prevIncome - prevExpense; return prev !== 0 ? diffSign(balance, prev) : ''; })()}
   </div>
 </div>
 
@@ -1211,6 +1212,20 @@ function bindDashboard() {
   if (sel) sel.addEventListener('change', e => {
     appState.month = e.target.value;
     renderCurrentPage();
+  });
+  // 月ナビボタン (v5.99)
+  const mnPrev = document.getElementById('dash-month-prev');
+  const mnNext = document.getElementById('dash-month-next');
+  if (mnPrev) mnPrev.addEventListener('click', () => {
+    appState.month = adjMonth(appState.month, -1);
+    renderCurrentPage();
+  });
+  if (mnNext) mnNext.addEventListener('click', () => {
+    const today = todayStr().substring(0, 7);
+    if (appState.month < today) {
+      appState.month = adjMonth(appState.month, 1);
+      renderCurrentPage();
+    }
   });
 
   // シェアボタン
@@ -1537,7 +1552,17 @@ function txMonthSelector(value) {
     const [y, mo] = m.split('-');
     return `<option value="${m}" ${m === value ? 'selected' : ''}>${y}年${parseInt(mo)}月</option>`;
   }).join('');
-  return `<select id="tx-month" class="month-sel">${allOpt}${opts}</select>`;
+
+  const isAll = value === 'all';
+  const today = todayStr().substring(0, 7);
+  const disNext = (isAll || value >= today) ? ' disabled' : '';
+  const disOldest = (isAll || (months.length > 0 && value === months[months.length - 1])) ? ' disabled' : '';
+
+  return `<div class="month-nav" id="tx-month-wrap">
+    <button class="month-nav-btn" id="tx-month-prev" title="前の月" aria-label="前の月"${disOldest}>&#8249;</button>
+    <select id="tx-month" class="month-sel">${allOpt}${opts}</select>
+    <button class="month-nav-btn" id="tx-month-next" title="次の月" aria-label="次の月"${disNext}>&#8250;</button>
+  </div>`;
 }
 
 function renderTransactions() {
@@ -1807,6 +1832,14 @@ ${renderTxModal()}`;
 function bindTransactions() {
   // 月
   on('tx-month', 'change', e => { appState.month = e.target.value; renderCurrentPage(); });
+  // 月ナビボタン (v5.99)
+  on('tx-month-prev', 'click', () => {
+    if (appState.month !== 'all') { appState.month = adjMonth(appState.month, -1); renderCurrentPage(); }
+  });
+  on('tx-month-next', 'click', () => {
+    const today = todayStr().substring(0, 7);
+    if (appState.month !== 'all' && appState.month < today) { appState.month = adjMonth(appState.month, 1); renderCurrentPage(); }
+  });
   // 全期間で検索ボタン
   on('search-all-btn', 'click', () => { appState.month = 'all'; renderCurrentPage(); });
   // フィルター
@@ -4735,7 +4768,22 @@ function monthSelector(id, value) {
     return `<option value="${m}" ${m === value ? 'selected' : ''}>${y}年${parseInt(mo)}月</option>`;
   }).join('');
 
-  return `<select id="${id}" class="month-sel">${options}</select>`;
+  const today = todayStr().substring(0, 7);
+  const disNext = value >= today ? ' disabled' : '';
+  const disOldest = months.length > 0 && value === months[months.length - 1] ? ' disabled' : '';
+
+  return `<div class="month-nav" id="${id}-wrap">
+    <button class="month-nav-btn" id="${id}-prev" title="前の月" aria-label="前の月"${disOldest}>&#8249;</button>
+    <select id="${id}" class="month-sel">${options}</select>
+    <button class="month-nav-btn" id="${id}-next" title="次の月" aria-label="次の月"${disNext}>&#8250;</button>
+  </div>`;
+}
+
+// v5.99: 月を前後に移動するヘルパー
+function adjMonth(m, delta) {
+  const [y, mo] = m.split('-').map(Number);
+  const d = new Date(y, mo - 1 + delta, 1);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
 }
 
 // ============================================================

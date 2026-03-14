@@ -1632,6 +1632,43 @@ mark.tx-hl {
   animation: adv-grp-in 0.25s cubic-bezier(0.34, 1.2, 0.64, 1) 0.08s both;
 }
 
+/* 月ナビ (v5.99) */
+.month-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.month-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 34px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color .15s, color .15s, background .15s, transform .1s;
+  flex-shrink: 0;
+}
+.month-nav-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.month-nav-btn:active:not(:disabled) {
+  transform: scale(0.9);
+}
+.month-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .month-sel {
   padding: 8px 11px;
   border: 1.5px solid var(--border);

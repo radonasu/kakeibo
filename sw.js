@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.98'; // v5.98: 予算アラートトースト
+const CACHE_NAME = 'kakeibo-v5.99'; // v5.99: 月ナビ矢印ボタン・残高先月比
 const ASSETS = [
   './index.html',
   './css/style.css',
