@@ -7267,11 +7267,20 @@ function renderNotifPanel() {
   const body = document.getElementById('notif-panel-body');
   if (!body) return;
 
+  // フッターに最終チェック時刻を表示
+  const footer = document.getElementById('notif-panel-footer');
+  if (footer) {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    footer.textContent = `最終確認: ${timeStr}`;
+  }
+
   if (items.length === 0) {
     body.innerHTML = `
       <div class="notif-empty">
         <span class="notif-empty-icon" aria-hidden="true">✅</span>
         <p>新しい通知はありません</p>
+        <span class="notif-empty-sub">すべての項目が問題ありません</span>
       </div>`;
     return;
   }
@@ -7324,6 +7333,7 @@ function updateBellBadge() {
   const readSet = getNotifReadSet();
   const unread = items.filter(it => !readSet.has(it.id)).length;
   const badge = document.getElementById('notif-bell-badge');
+  const bellBtn = document.getElementById('notif-bell-btn');
   if (!badge) return;
   if (unread > 0) {
     badge.textContent = unread > 99 ? '99+' : String(unread);
@@ -7331,8 +7341,15 @@ function updateBellBadge() {
     badge.classList.remove('notif-badge-pop');
     requestAnimationFrame(() => badge.classList.add('notif-badge-pop'));
     badge.addEventListener('animationend', () => badge.classList.remove('notif-badge-pop'), { once: true });
+    if (bellBtn && !bellBtn.classList.contains('has-unread')) {
+      bellBtn.classList.add('has-unread', 'notif-bell-ringing');
+      bellBtn.addEventListener('animationend', () => bellBtn.classList.remove('notif-bell-ringing'), { once: true });
+    } else if (bellBtn) {
+      bellBtn.classList.add('has-unread');
+    }
   } else {
     badge.style.display = 'none';
+    if (bellBtn) bellBtn.classList.remove('has-unread', 'notif-bell-ringing');
   }
 }
 

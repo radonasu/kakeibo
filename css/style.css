@@ -10413,6 +10413,36 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .btn-notif-bell:active {
   transform: scale(0.92);
 }
+/* 未読あり状態 */
+.btn-notif-bell.has-unread {
+  color: #fbbf24;
+}
+/* パネル開いた状態 */
+.btn-notif-bell[aria-expanded="true"] {
+  background: rgba(124,58,237,.22);
+  color: #c4b5fd;
+}
+/* ベルシェイクアニメーション */
+@keyframes notif-bell-ring {
+  0%, 100% { transform: rotate(0deg); }
+  12%  { transform: rotate(18deg); }
+  25%  { transform: rotate(-16deg); }
+  37%  { transform: rotate(12deg); }
+  50%  { transform: rotate(-8deg); }
+  62%  { transform: rotate(5deg); }
+  75%  { transform: rotate(-3deg); }
+}
+.btn-notif-bell.has-unread svg {
+  display: inline-block;
+  transform-origin: 50% 4px;
+  transition: color 0.18s;
+}
+.btn-notif-bell.notif-bell-ringing svg {
+  animation: notif-bell-ring 0.7s ease-in-out both;
+}
+.btn-notif-bell.has-unread:hover svg {
+  animation: notif-bell-ring 0.65s ease-in-out both;
+}
 
 /* ベルバッジ */
 .notif-bell-badge {
@@ -10516,6 +10546,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overscroll-behavior: contain;
 }
 
+/* パネルフッター */
+.notif-panel-footer {
+  padding: var(--sp-2) var(--sp-4);
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  text-align: center;
+  flex-shrink: 0;
+  letter-spacing: var(--ls-snug);
+}
+
 /* グループラベル */
 .notif-group-label {
   font-size: var(--fs-2xs);
@@ -10529,6 +10571,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .notif-group-label.notif-type-warning { color: var(--warning); }
 .notif-group-label.notif-type-success { color: var(--success); }
 .notif-group-label.notif-type-info { color: var(--primary); }
+/* グループ間セパレーター */
+.notif-item + .notif-group-label {
+  border-top: 1px solid var(--border);
+  margin-top: var(--sp-1);
+  padding-top: var(--sp-3);
+}
 
 /* 通知アイテム */
 .notif-item {
@@ -10542,15 +10590,23 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: left;
   cursor: pointer;
   position: relative;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.15s;
   animation: notif-item-in 0.3s cubic-bezier(.34,1.56,.64,1) both;
   animation-delay: calc(var(--ni, 0) * 35ms);
 }
+/* 未読アイテムに薄い背景 */
+.notif-item:not(.notif-read) {
+  background: color-mix(in srgb, var(--primary) 4%, transparent);
+}
 .notif-item:hover {
   background: var(--surface-hover);
+  transform: translateX(2px);
+}
+.notif-item:not(.notif-read):hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
 .notif-item.notif-read {
-  opacity: 0.6;
+  opacity: 0.58;
 }
 .notif-item::after {
   content: '';
@@ -10571,11 +10627,22 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .notif-item-icon {
-  font-size: 18px;
-  line-height: 1.2;
+  font-size: 15px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   flex-shrink: 0;
+  background: var(--surface-hover);
   margin-top: 1px;
 }
+/* タイプ別アイコン背景 */
+.notif-item.notif-type-danger  .notif-item-icon { background: color-mix(in srgb, var(--expense) 12%, transparent); }
+.notif-item.notif-type-warning .notif-item-icon { background: color-mix(in srgb, var(--warning) 12%, transparent); }
+.notif-item.notif-type-success .notif-item-icon { background: color-mix(in srgb, var(--success) 12%, transparent); }
+.notif-item.notif-type-info    .notif-item-icon { background: color-mix(in srgb, var(--primary) 12%, transparent); }
 .notif-item-text {
   display: flex;
   flex-direction: column;
@@ -10611,6 +10678,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* 空状態 */
+@keyframes notif-empty-in {
+  0%   { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
 .notif-empty {
   display: flex;
   flex-direction: column;
@@ -10620,11 +10691,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-size: var(--fs-sm);
   text-align: center;
+  animation: notif-empty-in 0.42s cubic-bezier(.34,1.4,.64,1) both;
 }
 .notif-empty-icon {
-  font-size: 32px;
+  font-size: 40px;
   line-height: 1;
-  margin-bottom: var(--sp-1);
+  margin-bottom: var(--sp-2);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.08));
+}
+.notif-empty-sub {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  opacity: 0.75;
 }
 
 /* ダークモード */
@@ -10658,9 +10736,30 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: #a78bfa;
   border-color: #a78bfa;
 }
-[data-theme="dark"] .notif-item:hover {
-  background: rgba(255,255,255,.05);
+[data-theme="dark"] .notif-item:not(.notif-read) {
+  background: rgba(124,58,237,.06);
 }
+[data-theme="dark"] .notif-item:hover {
+  background: rgba(255,255,255,.06);
+}
+[data-theme="dark"] .notif-item:not(.notif-read):hover {
+  background: rgba(124,58,237,.12);
+}
+[data-theme="dark"] .notif-item + .notif-group-label {
+  border-top-color: rgba(255,255,255,.07);
+}
+[data-theme="dark"] .notif-panel-footer {
+  background: #0f172a;
+  border-top-color: rgba(255,255,255,.07);
+  color: #475569;
+}
+[data-theme="dark"] .notif-item-icon {
+  background: rgba(255,255,255,.06);
+}
+[data-theme="dark"] .notif-item.notif-type-danger  .notif-item-icon { background: rgba(239,68,68,.14); }
+[data-theme="dark"] .notif-item.notif-type-warning .notif-item-icon { background: rgba(245,158,11,.14); }
+[data-theme="dark"] .notif-item.notif-type-success .notif-item-icon { background: rgba(5,150,105,.14); }
+[data-theme="dark"] .notif-item.notif-type-info    .notif-item-icon { background: rgba(124,58,237,.14); }
 [data-theme="dark"] .notif-item-title {
   color: #f1f5f9;
 }
