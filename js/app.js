@@ -2720,6 +2720,102 @@ function renderHeatmapSection(year, yearTxs) {
 </div>`;
 }
 
+// ============================================================
+// タグ別支出集計セクション (v6.0)
+// ============================================================
+function renderTagSection(year, yearTxs) {
+  const expTxs = yearTxs.filter(t => t.type === 'expense');
+
+  // タグ別集計
+  const tagMap = {};
+  let noTagTotal = 0;
+  let noTagCount = 0;
+  expTxs.forEach(t => {
+    const amt = Number(t.amount) || 0;
+    if (!t.tags || t.tags.length === 0) {
+      noTagTotal += amt;
+      noTagCount++;
+    } else {
+      t.tags.forEach(tag => {
+        if (!tag) return;
+        if (!tagMap[tag]) tagMap[tag] = { amount: 0, count: 0 };
+        tagMap[tag].amount += amt;
+        tagMap[tag].count++;
+      });
+    }
+  });
+
+  if (noTagTotal > 0) {
+    tagMap['タグなし'] = { amount: noTagTotal, count: noTagCount };
+  }
+
+  function tagColor(tag) {
+    if (tag === 'タグなし') return '#94a3b8';
+    const palette = ['#6366f1','#0891b2','#059669','#d97706','#7c3aed','#db2777','#ea580c','#0d9488','#e11d48','#64748b'];
+    let h = 0;
+    for (let i = 0; i < tag.length; i++) h = (h * 31 + tag.charCodeAt(i)) & 0xFFFF;
+    return palette[h % palette.length];
+  }
+
+  const total = Object.values(tagMap).reduce((s, v) => s + v.amount, 0);
+  const tagEntries = Object.entries(tagMap).sort((a, b) => b[1].amount - a[1].amount);
+
+  const tableRows = tagEntries.length === 0
+    ? '<tr><td colspan="4" class="empty">タグ付き取引がありません</td></tr>'
+    : tagEntries.map(([tag, v], i) => {
+        const color = tagColor(tag);
+        const pct   = total > 0 ? Math.round(v.amount / total * 100) : 0;
+        return `<tr style="--tg-i:${i}">
+          <td><span class="tx-tag-chip" style="--tc:${color}">#${esc2(tag)}</span></td>
+          <td class="text-muted">${v.count}件</td>
+          <td class="expense">${formatMoney(v.amount)}</td>
+          <td class="text-muted">${pct}%</td>
+        </tr>`;
+      }).join('');
+
+  const tagCount  = Object.keys(tagMap).filter(k => k !== 'タグなし').length;
+  const taggedPct = expTxs.length > 0
+    ? Math.round((expTxs.filter(t => t.tags && t.tags.length > 0).length / expTxs.length) * 100)
+    : 0;
+
+  return `<div id="sec-tags">
+  <div class="tg-stat-row">
+    <div class="tg-stat-card" style="--tg-si:0">
+      <div class="tg-stat-icon" aria-hidden="true">🔖</div>
+      <div class="tg-stat-label">使用タグ数</div>
+      <div class="tg-stat-value">${tagCount}<span class="tg-stat-unit">種類</span></div>
+    </div>
+    <div class="tg-stat-card" style="--tg-si:1">
+      <div class="tg-stat-icon" aria-hidden="true">🏷️</div>
+      <div class="tg-stat-label">タグ付き支出</div>
+      <div class="tg-stat-value">${taggedPct}<span class="tg-stat-unit">%</span></div>
+    </div>
+    <div class="tg-stat-card" style="--tg-si:2">
+      <div class="tg-stat-icon" aria-hidden="true">💰</div>
+      <div class="tg-stat-label">タグ付き支出合計</div>
+      <div class="tg-stat-value">${formatMoney(total - (tagMap['タグなし'] ? tagMap['タグなし'].amount : 0))}</div>
+    </div>
+  </div>
+  <div class="charts-row" style="margin-top:var(--sp-4)">
+    <div class="card chart-card">
+      <h3 class="card-title">🔖 タグ別支出</h3>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="report-tag-donut"></canvas>
+      </div>
+    </div>
+    <div class="card" style="flex:1;min-width:0">
+      <h3 class="card-title">🔖 タグ別集計（${year}年）</h3>
+      <div class="table-wrap">
+        <table class="tx-table tg-table">
+          <thead><tr><th>タグ</th><th>件数</th><th>金額</th><th>割合</th></tr></thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
 function renderReports() {
   const year = appState.reportYear;
   const months12 = [];
@@ -2820,6 +2916,7 @@ function renderReports() {
   <button class="section-tab" data-target="sec-cat-trend"><span class="tab-icon">📈</span> カテゴリ推移</button>
   <button class="section-tab" data-target="sec-fixed"><span class="tab-icon">🔒</span> 固変分析</button>
   <button class="section-tab" data-target="sec-heatmap"><span class="tab-icon">🗓️</span> ヒートマップ</button>
+  <button class="section-tab" data-target="sec-tags"><span class="tab-icon">🔖</span> タグ別</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -3290,7 +3387,8 @@ ${(() => {
   </div>
 </div>`;
 })()}
-${renderHeatmapSection(year, allTxs)}`;
+${renderHeatmapSection(year, allTxs)}
+${renderTagSection(year, allTxs)}`;
 }
 
 function bindReports() {
@@ -3326,6 +3424,7 @@ function bindReports() {
     renderCatTrend();
     renderFixedVariableDonut('report-fv-donut', allTxs);
     renderFixedVariableTrend('report-fv-trend', year);
+    renderTagChart('report-tag-donut', allTxs);
     // 固変カードカウントアップ (v5.71)
     document.querySelectorAll('.js-fv-countup').forEach(el => animateCountUp(el, Number(el.dataset.value)));
   }, 50);

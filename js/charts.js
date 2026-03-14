@@ -1146,3 +1146,103 @@ function renderFixedVariableTrend(canvasId, year) {
     },
   });
 }
+
+// ─── タグ別支出ドーナツグラフ (v6.0) ─────────────────────────
+function renderTagChart(canvasId, transactions) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const expTxs = transactions.filter(t => t.type === 'expense');
+  const tagMap = {};
+  let noTagTotal = 0;
+  let noTagCount = 0;
+
+  expTxs.forEach(t => {
+    const amt = Number(t.amount) || 0;
+    if (!t.tags || t.tags.length === 0) {
+      noTagTotal += amt;
+      noTagCount++;
+    } else {
+      t.tags.forEach(tag => {
+        if (!tag) return;
+        if (!tagMap[tag]) tagMap[tag] = { amount: 0, count: 0 };
+        tagMap[tag].amount += amt;
+        tagMap[tag].count++;
+      });
+    }
+  });
+
+  if (noTagTotal > 0) {
+    tagMap['タグなし'] = { amount: noTagTotal, count: noTagCount };
+  }
+
+  const labels = Object.keys(tagMap).sort((a, b) => tagMap[b].amount - tagMap[a].amount);
+  const data   = labels.map(k => tagMap[k].amount);
+  const total  = data.reduce((s, v) => s + v, 0);
+
+  if (data.length === 0) {
+    const c = canvas.getContext('2d');
+    const { text } = getThemeColors();
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = text;
+    c.font = '13px system-ui';
+    c.textAlign = 'center';
+    c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
+    return;
+  }
+
+  function tagColor(tag) {
+    if (tag === 'タグなし') return '#94a3b8';
+    const palette = ['#6366f1','#0891b2','#059669','#d97706','#7c3aed','#db2777','#ea580c','#0d9488','#e11d48','#64748b'];
+    let h = 0;
+    for (let i = 0; i < tag.length; i++) h = (h * 31 + tag.charCodeAt(i)) & 0xFFFF;
+    return palette[h % palette.length];
+  }
+
+  const colors = labels.map(tagColor);
+  const { text: textColor, surface } = getThemeColors();
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      _centerTotal: total,
+      datasets: [{
+        data,
+        backgroundColor: colors.map(c => c + 'e0'),
+        borderWidth: 2.5,
+        borderColor: surface,
+        hoverBorderWidth: 3,
+        hoverOffset: 6,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { ...commonAnimation, animateRotate: true, animateScale: false },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            padding: 12,
+            boxWidth: 10,
+            boxHeight: 10,
+            usePointStyle: true,
+            pointStyle: 'circle',
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => {
+            const pct = total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0;
+            return `${ctx.label}: ${formatMoney(ctx.raw)} (${pct}%)`;
+          },
+        }),
+        centerText: {},
+      },
+      cutout: '62%',
+    },
+  });
+}

@@ -9520,3 +9520,63 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; transform: scale(0.8) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+/* ════════════════════════════════════════════════════════════
+   タグ別支出集計 (v6.0)
+════════════════════════════════════════════════════════════ */
+.tg-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+@media (max-width: 480px) {
+  .tg-stat-row { grid-template-columns: 1fr 1fr; }
+  .tg-stat-row .tg-stat-card:last-child { grid-column: 1 / -1; }
+}
+.tg-stat-card {
+  background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) 6%, var(--surface)) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 14px);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-1);
+  animation: tg-stat-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--tg-si, 0) * 65ms);
+}
+.tg-stat-icon { font-size: 22px; line-height: 1; }
+.tg-stat-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+.tg-stat-value {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-black);
+  color: var(--text);
+  line-height: 1.1;
+}
+.tg-stat-unit {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+.tg-table tbody tr {
+  animation: tg-row-in 0.28s cubic-bezier(.4,0,.2,1) both;
+  animation-delay: calc(var(--tg-i, 0) * 40ms + 0.1s);
+}
+@keyframes tg-stat-in {
+  from { opacity: 0; transform: scale(0.88) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes tg-row-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+[data-theme="dark"] .tg-stat-card {
+  background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) 10%, var(--surface)) 100%);
+}
