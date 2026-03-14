@@ -10358,3 +10358,33 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .ci-cell-value { font-size: var(--fs-sm); }
   .ci-title      { font-size: var(--fs-lg); }
 }
+
+/* ── サイドバーアラートバッジ (v6.7) ────────────────────────── */
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: auto;
+  flex-shrink: 0;
+  letter-spacing: 0;
+  box-shadow: 0 1px 4px rgba(239,68,68,.45);
+}
+
+@keyframes nav-badge-pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.nav-badge-pop {
+  animation: nav-badge-pop 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}

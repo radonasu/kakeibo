@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v6.6'; // v6.6: 月初チェックインモーダル
+const CACHE_NAME = 'kakeibo-v6.7'; // v6.7: サイドバーアラートバッジ
 const ASSETS = [
   './index.html',
   './css/style.css',

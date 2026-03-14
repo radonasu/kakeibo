@@ -138,6 +138,7 @@ function renderCurrentPage() {
     case 'debts':          main.innerHTML = renderDebts(); bindDebts(); break;                   // v5.84
     case 'events':         main.innerHTML = renderEvents(); bindEvents(); break;                // v5.90
   }
+  updateNavBadges(); // v6.7: サイドバーアラートバッジ更新
 }
 
 // ============================================================
@@ -7058,6 +7059,82 @@ function checkBudgetToast(categoryId, month) {
 // ============================================================
 // アプリ初期化
 // ============================================================
+// サイドバーアラートバッジ (v6.7)
+// ============================================================
+function calcNavBadges() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const ym = currentYearMonth();
+  const [y, m] = ym.split('-').map(Number);
+  const nextYm = m === 12
+    ? `${y + 1}-01`
+    : `${y}-${String(m + 1).padStart(2, '0')}`;
+
+  const badges = {};
+
+  // サブスク管理：アクティブで7日以内に請求
+  const subs = getSubscriptions().filter(s => s.isActive !== false);
+  badges.subscriptions = subs.filter(s => subDaysUntilBilling(s) <= 7).length;
+
+  // ポイント管理：30日以内に期限切れ
+  badges.points = (appData.points || []).filter(p => {
+    if (!p.expiryDate) return false;
+    const diff = Math.round((new Date(p.expiryDate) - today) / 86400000);
+    return diff >= 0 && diff <= 30;
+  }).length;
+
+  // カテゴリ：今月予算超過
+  const budgets = appData.budgets || {};
+  const txs = getTransactionsByMonth(ym);
+  badges.categories = appData.categories.filter(c => {
+    const budget = budgets[c.id];
+    if (!budget || budget <= 0 || c.type !== 'expense') return false;
+    const spent = txs.filter(t => t.categoryId === c.id && t.type === 'expense')
+      .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    return spent > budget;
+  }).length;
+
+  // 収支予定：今月・来月の未完了
+  badges.events = (appData.events || []).filter(e =>
+    !e.done && (e.month === ym || e.month === nextYm)
+  ).length;
+
+  // 貯蓄目標：達成間近（90%以上・未達成）
+  badges.goals = (appData.goals || []).filter(g => {
+    if (g.achievedAt) return false;
+    const tgt = Number(g.targetAmount) || 0;
+    const svd = Number(g.savedAmount) || 0;
+    return tgt > 0 && svd / tgt >= 0.9;
+  }).length;
+
+  return badges;
+}
+
+function updateNavBadges() {
+  const badges = calcNavBadges();
+  document.querySelectorAll('.nav-item[data-page]').forEach(el => {
+    const count = badges[el.dataset.page] || 0;
+    let badge = el.querySelector('.nav-badge');
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'nav-badge';
+        el.appendChild(badge);
+      }
+      const prev = badge.textContent;
+      const next = count > 99 ? '99+' : String(count);
+      if (prev !== next) {
+        badge.textContent = next;
+        badge.classList.remove('nav-badge-pop');
+        requestAnimationFrame(() => badge.classList.add('nav-badge-pop'));
+        badge.addEventListener('animationend', () => badge.classList.remove('nav-badge-pop'), { once: true });
+      }
+    } else if (badge) {
+      badge.remove();
+    }
+  });
+}
+
+// ============================================================
 function initApp() {
   // SVGアイコン初期化（emoji → SVG差し替え）
   if (typeof initNavIcons === 'function') initNavIcons();
@@ -7146,6 +7223,9 @@ function initApp() {
 
   // 月初チェックインモーダル（v6.6）
   showCheckinIfNeeded();
+
+  // サイドバーアラートバッジ初期表示（v6.7）
+  updateNavBadges();
 
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
