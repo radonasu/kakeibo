@@ -9889,3 +9889,176 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin: 0 0 var(--sp-4);
   line-height: var(--lh-normal);
 }
+
+/* ── 年次累計サマリーウィジェット (v6.4) ────────────────── */
+@keyframes yr-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes yr-cell-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.yr-widget-card {
+  animation: yr-card-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid var(--primary);
+}
+.yr-widget-card::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.yr-elapsed-badge {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 2px 10px;
+}
+/* 3セルグリッド */
+.yr-cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin: var(--sp-3) 0;
+}
+.yr-cell {
+  border-radius: var(--radius-md);
+  padding: var(--sp-3);
+  animation: yr-cell-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--yr-i, 0) * 0.08s);
+}
+.yr-cell-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-1);
+}
+.yr-cell-value {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.yr-unit {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  margin-left: 1px;
+}
+.yr-cell-sub {
+  font-size: var(--fs-2xs);
+  margin-top: var(--sp-1);
+  color: var(--text-muted);
+}
+.yr-cell-sub.yr-up   { color: var(--success); }
+.yr-cell-sub.yr-down { color: var(--danger-text); }
+/* 収入セル */
+.yr-cell-income {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+.yr-cell-income .yr-cell-value { color: var(--success); }
+/* 支出セル */
+.yr-cell-expense {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+}
+.yr-cell-expense .yr-cell-value { color: var(--danger-text); }
+/* 貯蓄率セル */
+.yr-cell-savings {
+  border: 1px solid var(--border);
+}
+.yr-cell-savings-success { background: var(--success-bg); border-color: var(--success-border); }
+.yr-cell-savings-success .yr-cell-value { color: var(--success); }
+.yr-cell-savings-warn    { background: var(--warning-bg);  border-color: var(--warning-border); }
+.yr-cell-savings-warn .yr-cell-value    { color: var(--warning); }
+.yr-cell-savings-danger  { background: var(--danger-bg);   border-color: var(--danger-border); }
+.yr-cell-savings-danger .yr-cell-value  { color: var(--danger-text); }
+/* 前年比バッジ */
+.yr-prev-badge {
+  display: inline-block;
+  font-size: var(--fs-2xs);
+  border-radius: 99px;
+  padding: 1px 7px;
+  margin-top: var(--sp-1);
+  font-weight: 600;
+}
+.yr-prev-down { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+.yr-prev-up   { background: var(--danger-bg);  color: var(--danger-text); border: 1px solid var(--danger-border); }
+/* プログレスバー */
+.yr-progress-wrap {
+  margin: var(--sp-3) 0 var(--sp-2);
+}
+.yr-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-1);
+}
+.yr-progress-track {
+  height: 8px;
+  background: var(--surface-hover);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.yr-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--primary-end, #6366f1)));
+  border-radius: 99px;
+  width: 0;
+}
+/* フッター（月平均・最多カテゴリ） */
+.yr-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-5);
+  border-top: 1px solid var(--border);
+  padding-top: var(--sp-3);
+  margin-top: var(--sp-1);
+}
+.yr-avg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.yr-avg-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.yr-avg-val {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--danger-text);
+}
+.yr-avg-income { color: var(--success); }
+.yr-topcat {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+}
+.yr-topcat-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.yr-topcat-amt {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--danger-text);
+}
+/* ダークモード */
+[data-theme="dark"] .yr-progress-track { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .yr-elapsed-badge  { background: rgba(255,255,255,0.07); }
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .yr-cells { gap: var(--sp-2); }
+  .yr-cell  { padding: var(--sp-2); }
+  .yr-cell-value { font-size: var(--fs-sm); }
+  .yr-topcat { margin-left: 0; }
+}

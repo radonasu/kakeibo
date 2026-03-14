@@ -610,6 +610,83 @@ function buildForecastSparkline(fc) {
 </svg>`;
 }
 
+// ── 年次累計サマリーウィジェット (v6.4) ───────────────────
+function renderYearSummaryWidget() {
+  const year = new Date().getFullYear();
+  const s = getYearStats(year);
+  if (s.income === 0 && s.expense === 0) return '';
+
+  const savingsColor = s.savingsRate >= 20 ? 'success' : s.savingsRate >= 10 ? 'warn' : 'danger';
+  const savingsIcon  = s.savingsRate >= 20 ? '✓' : s.savingsRate >= 10 ? '△' : '↓';
+  const yearPct = Math.round(s.elapsedMonths / 12 * 100);
+
+  let prevBadge = '';
+  if (s.hasPrevYear && s.prevExpense > 0) {
+    const diff = Math.round((s.expense - s.prevExpense) / s.prevExpense * 100);
+    const cls  = diff <= 0 ? 'yr-prev-down' : 'yr-prev-up';
+    prevBadge = `<span class="yr-prev-badge ${cls}">${diff > 0 ? '▲' : '▼'}${Math.abs(diff)}% 前年比</span>`;
+  }
+
+  let topCatHtml = '';
+  if (s.topCatId) {
+    const cat = getCategoryById(s.topCatId);
+    if (cat) {
+      topCatHtml = `<div class="yr-topcat">
+        <span class="yr-topcat-label">最多支出</span>
+        <span class="cat-badge" style="background:${cat.color}20;color:${cat.color}">${cat.name}</span>
+        <span class="yr-topcat-amt">${formatMoney(s.topCatAmount)}</span>
+      </div>`;
+    }
+  }
+
+  const prevIncomeDiff = (s.hasPrevYear && s.prevIncome > 0)
+    ? (() => { const d = Math.round((s.income - s.prevIncome) / s.prevIncome * 100); return `<div class="yr-cell-sub ${d >= 0 ? 'yr-up' : 'yr-down'}">${d >= 0 ? '▲' : '▼'}${Math.abs(d)}% 前年比</div>`; })()
+    : '';
+
+  return `<div class="card yr-widget-card">
+  <div class="card-header-row">
+    <h3 class="card-title">📆 ${year}年の家計</h3>
+    <span class="yr-elapsed-badge">${s.elapsedMonths}ヶ月経過</span>
+  </div>
+  <div class="yr-cells">
+    <div class="yr-cell yr-cell-income" style="--yr-i:0">
+      <div class="yr-cell-label">年間収入</div>
+      <div class="yr-cell-value js-countup" data-value="${s.income}">${formatMoney(s.income)}</div>
+      ${prevIncomeDiff}
+    </div>
+    <div class="yr-cell yr-cell-expense" style="--yr-i:1">
+      <div class="yr-cell-label">年間支出</div>
+      <div class="yr-cell-value js-countup" data-value="${s.expense}">${formatMoney(s.expense)}</div>
+      ${prevBadge}
+    </div>
+    <div class="yr-cell yr-cell-savings yr-cell-savings-${savingsColor}" style="--yr-i:2">
+      <div class="yr-cell-label">貯蓄率</div>
+      <div class="yr-cell-value">${savingsIcon} ${s.savingsRate}<span class="yr-unit">%</span></div>
+      <div class="yr-cell-sub">${formatMoney(s.savings)} 貯蓄</div>
+    </div>
+  </div>
+  <div class="yr-progress-wrap">
+    <div class="yr-progress-label">
+      <span>年間進捗</span><span>${yearPct}%（${s.elapsedMonths}/12ヶ月）</span>
+    </div>
+    <div class="yr-progress-track">
+      <div class="yr-progress-fill" style="width:${yearPct}%" data-yr-animate="1"></div>
+    </div>
+  </div>
+  <div class="yr-footer">
+    <div class="yr-avg">
+      <span class="yr-avg-label">月平均支出</span>
+      <span class="yr-avg-val js-countup" data-value="${s.avgMonthlyExpense}">${formatMoney(s.avgMonthlyExpense)}</span>
+    </div>
+    <div class="yr-avg">
+      <span class="yr-avg-label">月平均収入</span>
+      <span class="yr-avg-val yr-avg-income js-countup" data-value="${s.avgMonthlyIncome}">${formatMoney(s.avgMonthlyIncome)}</span>
+    </div>
+    ${topCatHtml}
+  </div>
+</div>`;
+}
+
 function renderForecastCard(ym) {
   const fc = calculateForecast(ym);
   if (!fc) return '';
@@ -993,6 +1070,9 @@ function renderDashboard() {
   // カテゴリ別前月比ウィジェット（v6.3）
   const categoryCompareSection = showWidget('categoryCompare') ? renderCategoryCompareWidget(appState.month) : '';
 
+  // 年次累計サマリーウィジェット（v6.4）
+  const yearSummarySection = showWidget('yearSummary') ? renderYearSummaryWidget() : '';
+
   // 今週の家計ウィジェット（v5.72）
   const wk = getWeeklyStats();
   const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
@@ -1093,6 +1173,8 @@ function renderDashboard() {
 ${quickAddSection}
 
 ${weeklySection}
+
+${yearSummarySection}
 
 ${categoryCompareSection}
 
@@ -1349,6 +1431,17 @@ function bindDashboard() {
     requestAnimationFrame(tick);
   });
   animateGoalRings(); // v5.32
+
+  // 年次累計プログレスバーアニメーション（v6.4）
+  const yrFill = document.querySelector('.yr-progress-fill[data-yr-animate]');
+  if (yrFill) {
+    const target = parseFloat(yrFill.style.width);
+    yrFill.style.width = '0%';
+    requestAnimationFrame(() => {
+      yrFill.style.transition = 'width 0.9s cubic-bezier(0.25,0.46,0.45,0.94)';
+      yrFill.style.width = target + '%';
+    });
+  }
 
   // ── クイック入力ウィジェット バインド (v5.74) ──────────────
   const qaToggle = document.getElementById('qa-toggle');
@@ -4122,6 +4215,7 @@ function renderSettings() {
       { key: 'aiAdvice',        label: 'AIアドバイス',    icon: '🤖' },
       { key: 'quickAdd',        label: 'クイック入力',    icon: '⚡' },
       { key: 'weekly',          label: '今週の家計',      icon: '📅' },
+      { key: 'yearSummary',     label: '年次累計',        icon: '📆' },
       { key: 'categoryCompare', label: '前月比カテゴリ',  icon: '📊' },
       { key: 'forecast',        label: '今月末収支予測',  icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },

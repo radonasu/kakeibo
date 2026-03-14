@@ -779,6 +779,50 @@ function getWeeklyStats() {
   };
 }
 
+// ── 年次累計統計 (v6.4) ────────────────────────────────────
+function getYearStats(year) {
+  const prefix = String(year) + '-';
+  const txs = appData.transactions.filter(t => t.date && t.date.startsWith(prefix));
+
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+  const savings = income - expense;
+  const savingsRate = income > 0 ? Math.round(savings / income * 100) : 0;
+
+  // 実績のある月数（今年のデータがある月）
+  const months = new Set(txs.map(t => t.date.slice(0, 7)));
+  const monthCount = months.size;
+  const avgMonthlyExpense = monthCount > 0 ? Math.round(expense / monthCount) : 0;
+  const avgMonthlyIncome  = monthCount > 0 ? Math.round(income  / monthCount) : 0;
+
+  // 経過月数（1月〜今月）
+  const today = new Date();
+  const elapsedMonths = year === today.getFullYear()
+    ? today.getMonth() + 1  // 1-indexed
+    : 12;
+
+  // 前年比
+  const prevYear = year - 1;
+  const prevTxs = appData.transactions.filter(t => t.date && t.date.startsWith(String(prevYear) + '-'));
+  const prevIncome  = calcTotal(prevTxs, 'income');
+  const prevExpense = calcTotal(prevTxs, 'expense');
+  const hasPrevYear = prevTxs.length > 0;
+
+  // 最多支出カテゴリ
+  const catMap = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    catMap[t.categoryId] = (catMap[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  const topCatId = Object.entries(catMap).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  const topCatAmount = topCatId ? catMap[topCatId] : 0;
+
+  return {
+    year, income, expense, savings, savingsRate,
+    monthCount, avgMonthlyExpense, avgMonthlyIncome, elapsedMonths,
+    prevIncome, prevExpense, hasPrevYear, topCatId, topCatAmount,
+  };
+}
+
 // ── ほしいものリスト CRUD (v5.51) ─────────────────────────
 function getWishlistItems(includePurchased = false) {
   const list = appData.wishlist || [];
