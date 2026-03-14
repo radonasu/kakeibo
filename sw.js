@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.2'; // v7.2: 取引入力モーダル日付クイックピッカーボタン追加（一昨日/昨日/今日）
+const CACHE_NAME = 'kakeibo-v7.3'; // v7.3: カテゴリ連動「よく使う金額」サジェストチップ追加
 const ASSETS = [
   './index.html',
   './css/style.css',

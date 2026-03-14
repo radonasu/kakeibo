@@ -11009,3 +11009,67 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .date-quick-btn.date-quick-today:not(.active):hover {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
 }
+
+/* ── よく使う金額サジェスト (v7.3) ──────────────────────────── */
+.amount-hist-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.amt-hist-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.amt-hist-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 99px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 10%, var(--surface));
+  color: var(--amt-chip-color, var(--primary));
+  border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  animation: amt-chip-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  white-space: nowrap;
+}
+
+.amt-hist-chip:hover {
+  background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 18%, var(--surface));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--amt-chip-color, var(--primary)) 25%, transparent);
+}
+
+.amt-hist-chip:active { transform: scale(0.95); }
+
+@keyframes amt-chip-in {
+  from { opacity: 0; transform: scale(0.75) translateY(5px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+@keyframes amt-chip-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); }
+  70%  { transform: scale(0.93); }
+  100% { transform: scale(1); }
+}
+
+.amt-chip-pop { animation: amt-chip-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+[data-theme="dark"] .amt-hist-chip {
+  background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 15%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 35%, transparent);
+}
+
+[data-theme="dark"] .amt-hist-chip:hover {
+  background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 22%, var(--surface-2));
+}

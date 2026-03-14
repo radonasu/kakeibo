@@ -2536,6 +2536,7 @@ function renderTxModal() {
           <button type="button" class="btn-preset" data-amount="5000">¥5,000</button>
           <button type="button" class="btn-preset" data-amount="10000">¥10,000</button>
         </div>
+        <div id="amount-hist-chips" class="amount-hist-chips" style="display:none"></div>
       </div>
       <div class="form-group">
         <label>カテゴリ
@@ -2614,6 +2615,7 @@ function openTxModal(id, template) {
   updateCatGroups();
   // 初期サジェスト（編集・テンプレート時はカテゴリが選択済みなので即反映）
   updateMemoSuggestions();
+  updateAmountSuggestions(); // v7.3: よく使う金額
   // 金額フィールドにオートフォーカス
   setTimeout(() => {
     const amountInput = document.getElementById('tx-amount');
@@ -2814,6 +2816,7 @@ function renderCatChips(type, selectedId) {
       const hi = document.getElementById('tx-category');
       if (hi) hi.value = btn.dataset.catId;
       updateMemoSuggestions();
+      updateAmountSuggestions(); // v7.3: よく使う金額を更新
       // 手動選択したらヒントを閉じる
       const hint = document.getElementById('memo-cat-hint');
       if (hint) hint.style.display = 'none';
@@ -2854,6 +2857,59 @@ function updateMemoSuggestions() {
     .map(m => `<option value="${esc2(m)}">`)
     .join('');
   dl.innerHTML = opts;
+}
+
+// ── カテゴリ別「よく使う金額」サジェスト (v7.3) ─────────────────────
+function getFrequentAmounts(categoryId, limit = 4) {
+  if (!categoryId) return [];
+  const counts = {};
+  appData.transactions
+    .filter(t => t.categoryId === categoryId)
+    .forEach(t => {
+      const key = String(t.amount);
+      counts[key] = (counts[key] || 0) + 1;
+    });
+  return Object.entries(counts)
+    .filter(([, cnt]) => cnt >= 2)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([amt]) => Number(amt));
+}
+
+function updateAmountSuggestions() {
+  const wrap = document.getElementById('amount-hist-chips');
+  if (!wrap) return;
+  const catSel = document.getElementById('tx-category');
+  const catId = catSel ? catSel.value : '';
+  const amounts = getFrequentAmounts(catId);
+  if (amounts.length === 0) {
+    wrap.style.display = 'none';
+    wrap.innerHTML = '';
+    return;
+  }
+  const cat = getCategoryById(catId);
+  const color = cat ? cat.color : 'var(--primary)';
+  wrap.style.display = 'flex';
+  wrap.innerHTML = `<span class="amt-hist-label">よく使う：</span>` +
+    amounts.map((amt, i) =>
+      `<button type="button" class="amt-hist-chip" data-amount="${amt}"
+               style="--amt-chip-color:${color};animation-delay:${i * 45}ms">
+         ¥${formatMoney(amt)}
+       </button>`
+    ).join('');
+  wrap.querySelectorAll('.amt-hist-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById('tx-amount');
+      if (el) {
+        el.value = btn.dataset.amount;
+        el.focus();
+        btn.classList.remove('amt-chip-pop');
+        void btn.offsetWidth;
+        btn.classList.add('amt-chip-pop');
+        btn.addEventListener('animationend', () => btn.classList.remove('amt-chip-pop'), { once: true });
+      }
+    });
+  });
 }
 
 // メモ文字列から最頻出カテゴリを提案するヒントを表示 (v5.53)
@@ -2898,6 +2954,7 @@ function suggestCatFromMemo(memo) {
     catSel.value = topCatId;
     renderCatChips(cat.type, topCatId);
     updateMemoSuggestions();
+    updateAmountSuggestions(); // v7.3
     hint.style.display = 'none';
   });
 }
