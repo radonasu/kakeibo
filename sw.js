@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.5'; // v7.5: 金額フィールド インライン電卓
+const CACHE_NAME = 'kakeibo-v7.6'; // v7.6: 月次レポートPDF出力
 const ASSETS = [
   './index.html',
   './css/style.css',

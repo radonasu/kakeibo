@@ -482,6 +482,188 @@ ${topCats.length > 0 ? `<h2>支出カテゴリ内訳</h2>
 }
 
 // ============================================================
+// 月次レポート PDF出力 (v7.6)
+// ============================================================
+function doMonthlyExportPDF(ym) {
+  const familyName = (appData.settings && appData.settings.familyName) || '家族家計簿';
+  const [year, month] = ym.split('-').map(Number);
+  const monthLabel = `${year}年${month}月`;
+
+  const txs     = getTransactionsByMonth(ym);
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+  const balance = income - expense;
+  const savingRate = income > 0 ? Math.round((income - expense) / income * 100) : 0;
+
+  // 前月比
+  const prevDate = new Date(year, month - 2, 1);
+  const prevYm   = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+  const prevExpense = calcTotal(getTransactionsByMonth(prevYm), 'expense');
+  const expDiff     = expense - prevExpense;
+  const expDiffStr  = prevExpense > 0
+    ? (expDiff >= 0 ? '▲' : '▼') + '¥' + Math.abs(expDiff).toLocaleString('ja-JP')
+    : '—';
+  const expDiffCls  = expDiff > 0 ? 'expense' : 'income';
+
+  // カテゴリ別支出
+  const catSums = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    catSums[t.categoryId] = (catSums[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  const topCats = Object.entries(catSums)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id, sum]) => ({ cat: getCategoryById(id), sum }))
+    .filter(e => e.cat);
+  const maxCatSum = topCats.length ? topCats[0].sum : 1;
+
+  // 予算達成状況行
+  const budgets = appData.budgets || {};
+  const budgetRows = topCats.map(e => {
+    const budget = budgets[e.cat.id] ? Number(budgets[e.cat.id]) : 0;
+    const pct    = budget > 0 ? Math.min(Math.round(e.sum / budget * 100), 200) : 0;
+    const barW   = budget > 0 ? Math.min(Math.round(e.sum / budget * 100), 100) : 0;
+    const col    = e.cat.color || '#6366f1';
+    const status = !budget ? '未設定' : pct >= 100 ? `超過(${pct}%)` : `${pct}%`;
+    const statusCls = !budget ? 'muted' : pct >= 100 ? 'expense' : pct >= 80 ? 'warn' : 'income';
+    return `<tr>
+      <td><span class="dot" style="background:${col}"></span>${e.cat.name}</td>
+      <td class="num expense">¥${e.sum.toLocaleString('ja-JP')}</td>
+      <td class="num muted">${budget ? '¥' + Number(budget).toLocaleString('ja-JP') : '—'}</td>
+      <td><div class="bar-bg"><div class="bar-fg" style="width:${barW}%;background:${col}"></div></div></td>
+      <td class="num ${statusCls}">${status}</td>
+    </tr>`;
+  }).join('');
+
+  // カテゴリ内訳行
+  const catRows = topCats.map(e => {
+    const pct  = expense ? Math.round(e.sum / expense * 100) : 0;
+    const barW = Math.round(e.sum / maxCatSum * 100);
+    const col  = e.cat.color || '#6366f1';
+    return `<tr>
+      <td><span class="dot" style="background:${col}"></span>${e.cat.name}</td>
+      <td><div class="bar-bg"><div class="bar-fg" style="width:${barW}%;background:${col}"></div></div></td>
+      <td class="num expense">¥${e.sum.toLocaleString('ja-JP')}</td>
+      <td class="num pct">${pct}%</td>
+    </tr>`;
+  }).join('');
+
+  // 取引一覧（日付昇順）
+  const sorted = [...txs].sort((a, b) => a.date.localeCompare(b.date));
+  const txRows = sorted.map(t => {
+    const cat     = getCategoryById(t.categoryId);
+    const catName = cat ? cat.name : '—';
+    const catCol  = cat ? cat.color : '#6b7280';
+    const sign    = t.type === 'income' ? '+' : '−';
+    const cls     = t.type === 'income' ? 'income' : 'expense';
+    const d       = t.date ? t.date.replace(/^\d{4}-/, '').replace('-', '/') : '';
+    return `<tr>
+      <td class="muted">${d}</td>
+      <td><span class="dot" style="background:${catCol}"></span>${catName}</td>
+      <td class="tx-memo">${t.memo ? t.memo.replace(/</g,'&lt;') : ''}</td>
+      <td class="num ${cls}">${sign}¥${Number(t.amount).toLocaleString('ja-JP')}</td>
+    </tr>`;
+  }).join('');
+
+  const now     = new Date();
+  const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<title>${familyName} ${monthLabel} 月次収支レポート</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','BIZ UDGothic','Meiryo',sans-serif;color:#1e293b;background:#fff;font-size:12px;line-height:1.6}
+@page{size:A4;margin:14mm 14mm}
+.rpt-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:12px;border-bottom:2.5px solid #6366f1;margin-bottom:16px}
+.rpt-title{font-size:20px;font-weight:700;color:#6366f1}
+.rpt-sub{font-size:12px;color:#64748b;margin-top:2px}
+.rpt-meta{text-align:right;font-size:10px;color:#94a3b8;line-height:1.9}
+.sum-row{display:flex;gap:10px;margin-bottom:18px}
+.sum-card{flex:1;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0}
+.sum-card.inc{border-color:#86efac;background:#f0fdf4}
+.sum-card.exp{border-color:#fca5a5;background:#fef2f2}
+.sum-card.bal{border-color:#93c5fd;background:#eff6ff}
+.sum-card.bal.neg{border-color:#fca5a5;background:#fef2f2}
+.sum-card.sav{border-color:#c4b5fd;background:#faf5ff}
+.sum-lbl{font-size:10px;color:#64748b;font-weight:700;letter-spacing:.05em;margin-bottom:3px}
+.sum-amt{font-size:17px;font-weight:700}
+.sum-sub{font-size:10px;margin-top:2px}
+.inc .sum-amt{color:#059669}.exp .sum-amt{color:#dc2626}.bal .sum-amt{color:#2563eb}.bal.neg .sum-amt{color:#dc2626}.sav .sum-amt{color:#7c3aed}
+h2{font-size:11px;font-weight:700;color:#374151;margin-bottom:7px;margin-top:18px;padding-left:7px;border-left:3px solid #6366f1}
+table{width:100%;border-collapse:collapse;margin-bottom:4px;font-size:11px}
+th{background:#f8fafc;color:#64748b;font-size:10px;font-weight:700;padding:6px 8px;text-align:right;border-bottom:2px solid #e2e8f0}
+th:first-child{text-align:left}
+td{padding:5px 8px;text-align:right;border-bottom:1px solid #f1f5f9}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tfoot td{font-weight:700;background:#f8fafc;border-top:2px solid #e2e8f0;border-bottom:none}
+td.num{font-variant-numeric:tabular-nums}
+.income{color:#059669}.expense{color:#dc2626}.warn{color:#d97706}.muted{color:#94a3b8}.pct{color:#94a3b8;font-size:10px}
+.tx-memo{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#475569}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.bar-bg{display:inline-block;background:#f1f5f9;border-radius:3px;height:6px;width:120px;overflow:hidden;vertical-align:middle}
+.bar-fg{height:100%;border-radius:3px}
+.rpt-footer{margin-top:24px;padding-top:8px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.page-break{page-break-before:always}}
+</style></head>
+<body>
+<div class="rpt-header">
+  <div>
+    <div class="rpt-title">💰 ${familyName}</div>
+    <div class="rpt-sub">${monthLabel} 月次収支レポート</div>
+  </div>
+  <div class="rpt-meta">作成日: ${dateStr}<br>家族家計簿 PWA</div>
+</div>
+<div class="sum-row">
+  <div class="sum-card inc">
+    <div class="sum-lbl">収入</div>
+    <div class="sum-amt">+¥${income.toLocaleString('ja-JP')}</div>
+  </div>
+  <div class="sum-card exp">
+    <div class="sum-lbl">支出</div>
+    <div class="sum-amt">−¥${expense.toLocaleString('ja-JP')}</div>
+    <div class="sum-sub ${expDiffCls}">前月比 ${expDiffStr}</div>
+  </div>
+  <div class="sum-card bal${balance < 0 ? ' neg' : ''}">
+    <div class="sum-lbl">残高</div>
+    <div class="sum-amt">${balance >= 0 ? '+' : '−'}¥${Math.abs(balance).toLocaleString('ja-JP')}</div>
+  </div>
+  <div class="sum-card sav">
+    <div class="sum-lbl">貯蓄率</div>
+    <div class="sum-amt">${savingRate}%</div>
+    <div class="sum-sub muted">${txs.length}件の取引</div>
+  </div>
+</div>
+${budgetRows ? `<h2>予算達成状況</h2>
+<table>
+  <thead><tr><th>カテゴリ</th><th>支出額</th><th>予算</th><th>進捗</th><th>達成率</th></tr></thead>
+  <tbody>${budgetRows}</tbody>
+</table>` : ''}
+${topCats.length > 0 ? `<h2>カテゴリ別支出内訳</h2>
+<table>
+  <thead><tr><th>カテゴリ</th><th>グラフ</th><th>金額</th><th>比率</th></tr></thead>
+  <tbody>${catRows}</tbody>
+  <tfoot><tr><td>合計</td><td></td><td class="num expense">−¥${expense.toLocaleString('ja-JP')}</td><td></td></tr></tfoot>
+</table>` : ''}
+${sorted.length > 0 ? `<h2 class="${topCats.length > 4 ? 'page-break' : ''}">取引一覧 (${sorted.length}件)</h2>
+<table>
+  <thead><tr><th>日付</th><th>カテゴリ</th><th>摘要</th><th>金額</th></tr></thead>
+  <tbody>${txRows}</tbody>
+</table>` : '<p style="color:#94a3b8;font-size:11px;margin-top:16px">この月の取引はありません。</p>'}
+<div class="rpt-footer">このレポートは家族家計簿PWAによって自動生成されました。</div>
+</body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) {
+    showToast('ポップアップがブロックされました。ブラウザの設定でポップアップを許可してください。');
+    return;
+  }
+  win.document.write(html);
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+
+// ============================================================
 // 月次サマリー画像生成・シェア (v5.13)
 // ============================================================
 function openShareModal(ym) {

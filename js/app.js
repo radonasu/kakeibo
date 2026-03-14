@@ -2088,6 +2088,7 @@ function renderTransactions() {
 <div class="page-header">
   <h1 class="page-title">収支一覧</h1>
   <div class="page-header-right">
+    <button class="btn btn-ghost btn-sm" id="btn-monthly-pdf" title="今月の収支をPDFで出力">📄 PDF</button>
     <button class="btn ${appState.bulkMode ? 'btn-primary' : 'btn-ghost'} btn-sm" id="bulk-toggle">☑ ${appState.bulkMode ? '選択中' : '一括選択'}</button>
     <button class="btn btn-primary" id="open-add-modal">＋ 追加</button>
   </div>
@@ -2279,6 +2280,8 @@ function bindTransactions() {
     clearTimeout(_searchTimer);
     _searchTimer = setTimeout(() => renderCurrentPage(), 300);
   });
+  // 月次PDFボタン (v7.6)
+  on('btn-monthly-pdf', 'click', () => doMonthlyExportPDF(appState.month));
   // 追加ボタン
   on('open-add-modal', 'click', () => openTxModal(null));
   // 編集・削除
