@@ -7144,6 +7144,9 @@ function initApp() {
   // 起動時予算アラートチェック（1秒後、描画安定後）
   setTimeout(() => checkBudgetAlerts(appState.month), 1000);
 
+  // 月初チェックインモーダル（v6.6）
+  showCheckinIfNeeded();
+
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
 
@@ -9349,6 +9352,153 @@ function saveEventForm() {
   }
   closeEventModal();
   renderCurrentPage();
+}
+
+// ============================================================
+// 月初チェックインモーダル (v6.6)
+// ============================================================
+function showCheckinIfNeeded() {
+  if (!appData.transactions || appData.transactions.length === 0) return;
+  const curYM = currentYearMonth();
+  if (localStorage.getItem('kk_checkin_last') === curYM) return;
+  const prevYM = adjMonth(curYM, -1);
+  if (getTransactionsByMonth(prevYM).length === 0) {
+    localStorage.setItem('kk_checkin_last', curYM);
+    return;
+  }
+  setTimeout(() => openCheckinModal(prevYM), 1500);
+}
+
+function openCheckinModal(prevYM) {
+  const modal = document.getElementById('checkin-modal');
+  if (!modal) return;
+
+  const [y, m] = prevYM.split('-').map(Number);
+  const txs     = getTransactionsByMonth(prevYM);
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+  const balance = income - expense;
+  const savingsRate = income > 0 ? Math.round((income - expense) / income * 100) : 0;
+
+  // 予算達成状況
+  const budgets    = appData.budgets || {};
+  const budgetCats = appData.categories.filter(c => c.type === 'expense' && (budgets[c.id] || 0) > 0);
+  const spentMap   = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    spentMap[t.categoryId] = (spentMap[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  const okCount   = budgetCats.filter(c => (spentMap[c.id] || 0) <= budgets[c.id]).length;
+  const overCount = budgetCats.filter(c => (spentMap[c.id] || 0) >  budgets[c.id]).length;
+
+  // 家計スコア
+  const hs = calculateHealthScore(prevYM);
+
+  // タイトルメッセージ
+  let titleMsg, subMsg;
+  if (hs) {
+    if      (hs.total >= 80) { titleMsg = '素晴らしい月でした！🎉'; subMsg = `家計スコア ${hs.total}点。先月の家計管理は優秀です。`; }
+    else if (hs.total >= 60) { titleMsg = '良い調子です！👍';       subMsg = `家計スコア ${hs.total}点。もう一歩で優良家計です。`; }
+    else                     { titleMsg = '先月を振り返ろう';        subMsg = `家計スコア ${hs.total}点。今月は改善できるはず！`; }
+  } else {
+    titleMsg = `${y}年${m}月の振り返り`;
+    subMsg   = '先月の家計をチェックしましょう。';
+  }
+
+  // ヘッダー更新
+  const badge = document.getElementById('ci-month-badge');
+  const title = document.getElementById('ci-title');
+  const sub   = document.getElementById('ci-sub');
+  if (badge) badge.textContent = `📆 ${y}年${m}月`;
+  if (title) title.textContent = titleMsg;
+  if (sub)   sub.textContent   = subMsg;
+
+  // ボディ組立
+  const balClass = balance >= 0 ? 'positive' : 'negative';
+  const balSign  = balance >= 0 ? '+' : '';
+
+  let html = `<div class="ci-summary-grid">
+    <div class="ci-cell"><div class="ci-cell-label">収入</div><div class="ci-cell-value income">${formatMoney(income)}</div></div>
+    <div class="ci-cell"><div class="ci-cell-label">支出</div><div class="ci-cell-value expense">${formatMoney(expense)}</div></div>
+    <div class="ci-cell"><div class="ci-cell-label">収支</div><div class="ci-cell-value ${balClass}">${balSign}${formatMoney(balance)}</div></div>
+  </div>`;
+
+  // 貯蓄率
+  if (income > 0) {
+    const pct = Math.max(0, Math.min(savingsRate, 100));
+    html += `<div class="ci-savings-row">
+      <span class="ci-savings-label">貯蓄率</span>
+      <div class="ci-savings-bar-wrap"><div class="ci-savings-fill" data-w="${pct}" style="width:0%"></div></div>
+      <span class="ci-savings-pct">${pct}%</span>
+    </div>`;
+  }
+
+  // 予算達成
+  if (budgetCats.length > 0) {
+    html += `<div class="ci-budget-row">
+      <span class="ci-budget-pill ok">✓ 達成 ${okCount}件</span>
+      ${overCount > 0 ? `<span class="ci-budget-pill over">⚠ 超過 ${overCount}件</span>` : ''}
+    </div>`;
+  }
+
+  // 家計スコア
+  if (hs) {
+    html += `<div class="ci-score-row">
+      <span class="ci-score-label">家計スコア</span>
+      <span class="ci-score-badge">${hs.grade}（${hs.total}点）</span>
+    </div>`;
+  }
+
+  // 先月のチャレンジ
+  const prevChallenges = (appData.challenges || []).filter(ch => ch.period === prevYM);
+  if (prevChallenges.length > 0) {
+    const items = prevChallenges.slice(0, 3).map(ch => {
+      const prog     = calcChallengeProgress(ch);
+      const achieved = ch.type === 'budget' ? prog.actual <= prog.target : prog.actual >= prog.target;
+      return `<div class="ci-challenge-item">
+        <span aria-hidden="true">${ch.emoji || '🏆'}</span>
+        <span class="ci-challenge-name">${esc2(ch.name)}</span>
+        <span class="ci-badge ${achieved ? 'achieved' : 'failed'}">${achieved ? '✓ 達成' : '未達'}</span>
+      </div>`;
+    }).join('');
+    html += `<div><div class="ci-section-title">先月のチャレンジ</div>${items}</div>`;
+  }
+
+  // 今月の収支予定
+  const curYM = currentYearMonth();
+  const upcoming = (appData.events || []).filter(e => e.month === curYM && !e.done);
+  if (upcoming.length > 0) {
+    const items = upcoming.slice(0, 4).map(ev => {
+      const typeColor = ev.type === 'income' ? 'var(--income)' : 'var(--expense)';
+      const accent    = ev.color || typeColor;
+      const amtStr    = ev.plannedAmount ? formatMoney(ev.plannedAmount) : '';
+      return `<div class="ci-event-item" style="--ci-ev-accent:${accent}">
+        <span class="ci-event-icon" aria-hidden="true">${ev.emoji || '📌'}</span>
+        <span class="ci-event-name">${esc2(ev.name)}</span>
+        ${amtStr ? `<span class="ci-event-amount">${amtStr}</span>` : ''}
+      </div>`;
+    }).join('');
+    html += `<div><div class="ci-section-title">今月の収支予定</div><div class="ci-event-list">${items}</div></div>`;
+  }
+
+  const body = document.getElementById('ci-body');
+  if (body) {
+    body.innerHTML = html;
+    // 貯蓄率バーアニメーション
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const fill = body.querySelector('.ci-savings-fill');
+      if (fill) fill.style.width = fill.dataset.w + '%';
+    }));
+  }
+
+  showModal(modal);
+  localStorage.setItem('kk_checkin_last', curYM);
+
+  const doClose = () => hideModal(modal);
+  const closeBtn = document.getElementById('ci-close-btn');
+  const okBtn    = document.getElementById('ci-ok-btn');
+  if (closeBtn) closeBtn.onclick = doClose;
+  if (okBtn)    okBtn.onclick    = doClose;
+  modal.addEventListener('click', e => { if (e.target === modal) doClose(); }, { once: true });
 }
 
 // ============================================================

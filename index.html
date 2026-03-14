@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=6.5">
+  <link rel="stylesheet" href="css/style.css?v=6.6">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -184,6 +184,24 @@
   </nav>
 </div>
 
+<!-- ─── 月初チェックインモーダル (v6.6) ─── -->
+<div id="checkin-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ci-title">
+  <div class="modal-wrap ci-wrap">
+    <div class="ci-header">
+      <div class="ci-header-inner">
+        <div class="ci-month-badge" id="ci-month-badge"></div>
+        <h2 class="ci-title" id="ci-title"></h2>
+        <p class="ci-sub" id="ci-sub"></p>
+      </div>
+      <button class="ci-close" id="ci-close-btn" aria-label="閉じる">✕</button>
+    </div>
+    <div class="ci-body" id="ci-body"></div>
+    <div class="ci-footer">
+      <button class="btn btn-primary ci-ok-btn" id="ci-ok-btn">今月もがんばろう！</button>
+    </div>
+  </div>
+</div>
+
 <!-- ─── 収支予定モーダル（v5.90）─── -->
 <div id="ev-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ev-modal-title">
   <div class="modal-wrap">
@@ -254,15 +272,15 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=6.5"></script>
-<script src="js/config.js?v=6.5"></script>
-<script src="js/data.js?v=6.5"></script>
-<script src="js/export.js?v=6.5"></script>
-<script src="js/charts.js?v=6.5"></script>
-<script src="js/sync.js?v=6.5"></script>
-<script src="js/app.js?v=6.5"></script>
+<script src="js/icons.js?v=6.6"></script>
+<script src="js/config.js?v=6.6"></script>
+<script src="js/data.js?v=6.6"></script>
+<script src="js/export.js?v=6.6"></script>
+<script src="js/charts.js?v=6.6"></script>
+<script src="js/sync.js?v=6.6"></script>
+<script src="js/app.js?v=6.6"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=6.5"></script>
+<script src="js/pwa.js?v=6.6"></script>
 
 </body>
 </html>
