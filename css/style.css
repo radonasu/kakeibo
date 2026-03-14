@@ -11073,3 +11073,70 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .amt-hist-chip:hover {
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 22%, var(--surface-2));
 }
+
+/* ── 最近のメモサジェストチップ (v7.4) ──────────────────────────── */
+.memo-hist-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-1) var(--sp-2);
+  margin-top: 6px;
+}
+
+.memo-hist-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.memo-hist-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) 28%, transparent);
+  background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 10%, var(--surface));
+  color: var(--memo-chip-color, var(--primary));
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  animation: memo-chip-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memo-hist-chip:hover {
+  background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 18%, var(--surface));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--memo-chip-color, var(--primary)) 25%, transparent);
+}
+
+.memo-hist-chip:active { transform: scale(0.95); }
+
+@keyframes memo-chip-in {
+  from { opacity: 0; transform: scale(0.75) translateY(5px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes memo-chip-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.2); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.memo-chip-pop { animation: memo-chip-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+[data-theme="dark"] .memo-hist-chip {
+  background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 15%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 35%, transparent);
+}
+
+[data-theme="dark"] .memo-hist-chip:hover {
+  background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 22%, var(--surface-2));
+}

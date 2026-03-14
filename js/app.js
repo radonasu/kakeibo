@@ -2556,6 +2556,7 @@ function renderTxModal() {
         <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物"
                list="memo-suggestions" autocomplete="off">
         <datalist id="memo-suggestions"></datalist>
+        <div id="memo-hist-chips" class="memo-hist-chips" style="display:none"></div>
         <div id="memo-cat-hint" class="memo-cat-hint" style="display:none"></div>
       </div>
       <div class="form-group">
@@ -2616,6 +2617,7 @@ function openTxModal(id, template) {
   // 初期サジェスト（編集・テンプレート時はカテゴリが選択済みなので即反映）
   updateMemoSuggestions();
   updateAmountSuggestions(); // v7.3: よく使う金額
+  updateMemoChips(); // v7.4: 最近のメモ
   // 金額フィールドにオートフォーカス
   setTimeout(() => {
     const amountInput = document.getElementById('tx-amount');
@@ -2817,6 +2819,7 @@ function renderCatChips(type, selectedId) {
       if (hi) hi.value = btn.dataset.catId;
       updateMemoSuggestions();
       updateAmountSuggestions(); // v7.3: よく使う金額を更新
+      updateMemoChips(); // v7.4: 最近のメモを更新
       // 手動選択したらヒントを閉じる
       const hint = document.getElementById('memo-cat-hint');
       if (hint) hint.style.display = 'none';
@@ -2857,6 +2860,57 @@ function updateMemoSuggestions() {
     .map(m => `<option value="${esc2(m)}">`)
     .join('');
   dl.innerHTML = opts;
+}
+
+// ── カテゴリ別「最近のメモ」サジェストチップ (v7.4) ────────────────────
+function getRecentMemos(categoryId, limit = 4) {
+  if (!categoryId) return [];
+  const seen = new Set();
+  const result = [];
+  appData.transactions
+    .filter(t => t.categoryId === categoryId && t.memo && t.memo.trim())
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .forEach(t => {
+      const m = t.memo.trim();
+      if (!seen.has(m)) { seen.add(m); result.push(m); }
+    });
+  return result.slice(0, limit);
+}
+
+function updateMemoChips() {
+  const wrap = document.getElementById('memo-hist-chips');
+  if (!wrap) return;
+  const catSel = document.getElementById('tx-category');
+  const catId = catSel ? catSel.value : '';
+  const memos = getRecentMemos(catId);
+  if (memos.length === 0) {
+    wrap.style.display = 'none';
+    wrap.innerHTML = '';
+    return;
+  }
+  const cat = getCategoryById(catId);
+  const color = cat ? cat.color : 'var(--primary)';
+  wrap.style.display = 'flex';
+  wrap.innerHTML = `<span class="memo-hist-label">最近：</span>` +
+    memos.map((m, i) =>
+      `<button type="button" class="memo-hist-chip" data-memo="${esc2(m)}"
+               style="--memo-chip-color:${color};animation-delay:${i * 45}ms"
+               title="${esc2(m)}">${esc2(m)}</button>`
+    ).join('');
+  wrap.querySelectorAll('.memo-hist-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById('tx-memo');
+      if (el) {
+        el.value = btn.dataset.memo;
+        el.focus();
+        btn.classList.remove('memo-chip-pop');
+        void btn.offsetWidth;
+        btn.classList.add('memo-chip-pop');
+        btn.addEventListener('animationend', () => btn.classList.remove('memo-chip-pop'), { once: true });
+        suggestCatFromMemo(el.value.trim());
+      }
+    });
+  });
 }
 
 // ── カテゴリ別「よく使う金額」サジェスト (v7.3) ─────────────────────
@@ -2955,6 +3009,7 @@ function suggestCatFromMemo(memo) {
     renderCatChips(cat.type, topCatId);
     updateMemoSuggestions();
     updateAmountSuggestions(); // v7.3
+    updateMemoChips(); // v7.4
     hint.style.display = 'none';
   });
 }

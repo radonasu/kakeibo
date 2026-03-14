@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.3'; // v7.3: カテゴリ連動「よく使う金額」サジェストチップ追加
+const CACHE_NAME = 'kakeibo-v7.4'; // v7.4: 最近のメモサジェストチップ追加
 const ASSETS = [
   './index.html',
   './css/style.css',
