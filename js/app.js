@@ -7132,6 +7132,276 @@ function updateNavBadges() {
       badge.remove();
     }
   });
+  // ベルバッジ更新 (v6.8)
+  updateBellBadge();
+}
+
+// ============================================================
+// 通知センター (v6.8)
+// ============================================================
+const NOTIF_READ_KEY = 'kk_notif_read_v1';
+
+function getNotifReadSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(NOTIF_READ_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+
+function saveNotifReadSet(set) {
+  localStorage.setItem(NOTIF_READ_KEY, JSON.stringify([...set]));
+}
+
+// 通知アイテム一覧を生成
+function buildNotifications() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const ym = currentYearMonth();
+  const [y, m] = ym.split('-').map(Number);
+  const nextYm = m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, '0')}`;
+  const items = [];
+
+  // ── 予算超過 ──
+  const budgets = appData.budgets || {};
+  const txs = getTransactionsByMonth(ym);
+  appData.categories.filter(c => c.type === 'expense').forEach(c => {
+    const budget = budgets[c.id];
+    if (!budget || budget <= 0) return;
+    const spent = txs.filter(t => t.categoryId === c.id && t.type === 'expense')
+      .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    if (spent <= budget) return;
+    const over = spent - budget;
+    items.push({
+      id: `budget-over-${c.id}-${ym}`,
+      type: 'danger',
+      icon: '⚠️',
+      title: `予算超過: ${c.name}`,
+      body: `¥${over.toLocaleString('ja-JP')} オーバー（今月）`,
+      page: 'categories',
+    });
+  });
+
+  // ── 予算80%警告 ──
+  appData.categories.filter(c => c.type === 'expense').forEach(c => {
+    const budget = budgets[c.id];
+    if (!budget || budget <= 0) return;
+    const spent = txs.filter(t => t.categoryId === c.id && t.type === 'expense')
+      .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    const pct = spent / budget;
+    if (pct < 0.8 || spent > budget) return;
+    items.push({
+      id: `budget-warn-${c.id}-${ym}`,
+      type: 'warning',
+      icon: '📊',
+      title: `予算${Math.round(pct * 100)}%: ${c.name}`,
+      body: `¥${spent.toLocaleString('ja-JP')} / ¥${budget.toLocaleString('ja-JP')}`,
+      page: 'categories',
+    });
+  });
+
+  // ── サブスク請求間近 ──
+  const subs = getSubscriptions().filter(s => s.isActive !== false);
+  subs.forEach(s => {
+    const days = subDaysUntilBilling(s);
+    if (days < 0 || days > 7) return;
+    const urgency = days <= 2 ? 'danger' : days <= 4 ? 'warning' : 'info';
+    const daysLabel = days === 0 ? '今日' : days === 1 ? '明日' : `${days}日後`;
+    items.push({
+      id: `sub-billing-${s.id}-${today.toISOString().slice(0,7)}`,
+      type: urgency,
+      icon: s.emoji || '📱',
+      title: `${s.name} 請求 ${daysLabel}`,
+      body: `¥${Number(s.amount || 0).toLocaleString('ja-JP')} ${s.cycle === 'yearly' ? '(年払)' : '(月払)'}`,
+      page: 'subscriptions',
+    });
+  });
+
+  // ── ポイント期限 ──
+  (appData.points || []).forEach(p => {
+    if (!p.expiryDate) return;
+    const diff = Math.round((new Date(p.expiryDate) - today) / 86400000);
+    if (diff < 0 || diff > 30) return;
+    const urgency = diff <= 7 ? 'danger' : 'warning';
+    const daysLabel = diff === 0 ? '今日期限' : diff === 1 ? '明日期限' : `${diff}日後期限`;
+    items.push({
+      id: `point-expire-${p.id}-${today.toISOString().slice(0,7)}`,
+      type: urgency,
+      icon: p.emoji || '🎫',
+      title: `${p.name} ${daysLabel}`,
+      body: `残${Number(p.balance || 0).toLocaleString('ja-JP')}pt（¥${Math.round(Number(p.balance||0) * Number(p.rateJpy||1)).toLocaleString('ja-JP')}相当）`,
+      page: 'points',
+    });
+  });
+
+  // ── 収支予定（今月・来月の未完了） ──
+  (appData.events || []).filter(e => !e.done && (e.month === ym || e.month === nextYm)).forEach(e => {
+    const isThisMonth = e.month === ym;
+    items.push({
+      id: `event-${e.id}-${e.month}`,
+      type: isThisMonth ? 'warning' : 'info',
+      icon: e.emoji || '📌',
+      title: `${e.name}（${isThisMonth ? '今月' : '来月'}）`,
+      body: `${e.type === 'income' ? '収入' : '支出'} ¥${Number(e.amount || 0).toLocaleString('ja-JP')}`,
+      page: 'events',
+    });
+  });
+
+  // ── 貯蓄目標 達成間近 ──
+  (appData.goals || []).filter(g => !g.achievedAt).forEach(g => {
+    const tgt = Number(g.targetAmount) || 0;
+    const svd = Number(g.savedAmount) || 0;
+    if (tgt <= 0 || svd / tgt < 0.9) return;
+    items.push({
+      id: `goal-near-${g.id}`,
+      type: 'success',
+      icon: g.emoji || '🎯',
+      title: `目標達成間近: ${g.name}`,
+      body: `${Math.round(svd / tgt * 100)}% 達成 (¥${svd.toLocaleString('ja-JP')} / ¥${tgt.toLocaleString('ja-JP')})`,
+      page: 'goals',
+    });
+  });
+
+  return items;
+}
+
+function renderNotifPanel() {
+  const items = buildNotifications();
+  const readSet = getNotifReadSet();
+  const body = document.getElementById('notif-panel-body');
+  if (!body) return;
+
+  if (items.length === 0) {
+    body.innerHTML = `
+      <div class="notif-empty">
+        <span class="notif-empty-icon" aria-hidden="true">✅</span>
+        <p>新しい通知はありません</p>
+      </div>`;
+    return;
+  }
+
+  // グループ別ラベル
+  const typeOrder = ['danger', 'warning', 'success', 'info'];
+  const typeLabel = { danger: '要注意', warning: '注意', success: '達成間近', info: 'お知らせ' };
+  const grouped = {};
+  items.forEach(it => {
+    if (!grouped[it.type]) grouped[it.type] = [];
+    grouped[it.type].push(it);
+  });
+
+  let html = '';
+  typeOrder.forEach(t => {
+    const group = grouped[t];
+    if (!group || group.length === 0) return;
+    html += `<div class="notif-group-label notif-type-${t}">${typeLabel[t]}</div>`;
+    group.forEach((it, i) => {
+      const isRead = readSet.has(it.id);
+      html += `
+        <button class="notif-item notif-type-${it.type}${isRead ? ' notif-read' : ''}" data-notif-id="${esc2(it.id)}" data-notif-page="${esc2(it.page)}" style="--ni:${i}" aria-label="${esc2(it.title)}">
+          <span class="notif-item-icon" aria-hidden="true">${it.icon}</span>
+          <span class="notif-item-text">
+            <span class="notif-item-title">${esc2(it.title)}</span>
+            <span class="notif-item-body">${esc2(it.body)}</span>
+          </span>
+          ${!isRead ? '<span class="notif-unread-dot" aria-hidden="true"></span>' : ''}
+        </button>`;
+    });
+  });
+  body.innerHTML = html;
+
+  // クリックイベント
+  body.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.notifId;
+      const page = el.dataset.notifPage;
+      const rs = getNotifReadSet();
+      rs.add(id);
+      saveNotifReadSet(rs);
+      closeNotifPanel();
+      navigate(page);
+    });
+  });
+}
+
+function updateBellBadge() {
+  const items = buildNotifications();
+  const readSet = getNotifReadSet();
+  const unread = items.filter(it => !readSet.has(it.id)).length;
+  const badge = document.getElementById('notif-bell-badge');
+  if (!badge) return;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? '99+' : String(unread);
+    badge.style.display = '';
+    badge.classList.remove('notif-badge-pop');
+    requestAnimationFrame(() => badge.classList.add('notif-badge-pop'));
+    badge.addEventListener('animationend', () => badge.classList.remove('notif-badge-pop'), { once: true });
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function openNotifPanel() {
+  const panel = document.getElementById('notif-panel');
+  const overlay = document.getElementById('notif-overlay');
+  const btn = document.getElementById('notif-bell-btn');
+  if (!panel) return;
+  renderNotifPanel();
+  panel.style.display = 'block';
+  overlay.style.display = 'block';
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+  requestAnimationFrame(() => panel.classList.add('notif-panel-open'));
+}
+
+function closeNotifPanel() {
+  const panel = document.getElementById('notif-panel');
+  const overlay = document.getElementById('notif-overlay');
+  const btn = document.getElementById('notif-bell-btn');
+  if (!panel) return;
+  panel.classList.remove('notif-panel-open');
+  setTimeout(() => {
+    panel.style.display = 'none';
+    overlay.style.display = 'none';
+  }, 220);
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+function initNotifCenter() {
+  const bell = document.getElementById('notif-bell-btn');
+  const markRead = document.getElementById('notif-mark-read-btn');
+  const overlay = document.getElementById('notif-overlay');
+
+  if (bell) {
+    bell.addEventListener('click', e => {
+      e.stopPropagation();
+      const panel = document.getElementById('notif-panel');
+      if (panel && panel.classList.contains('notif-panel-open')) {
+        closeNotifPanel();
+      } else {
+        openNotifPanel();
+      }
+    });
+  }
+
+  if (markRead) {
+    markRead.addEventListener('click', () => {
+      const items = buildNotifications();
+      const rs = getNotifReadSet();
+      items.forEach(it => rs.add(it.id));
+      saveNotifReadSet(rs);
+      renderNotifPanel();
+      updateBellBadge();
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', closeNotifPanel);
+  }
+
+  // パネル外クリックで閉じる
+  document.addEventListener('click', e => {
+    const panel = document.getElementById('notif-panel');
+    if (panel && panel.classList.contains('notif-panel-open')) {
+      if (!panel.contains(e.target) && e.target.id !== 'notif-bell-btn' && !e.target.closest('#notif-bell-btn')) {
+        closeNotifPanel();
+      }
+    }
+  });
 }
 
 // ============================================================
@@ -7226,6 +7496,9 @@ function initApp() {
 
   // サイドバーアラートバッジ初期表示（v6.7）
   updateNavBadges();
+
+  // 通知センター初期化（v6.8）
+  initNotifCenter();
 
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
