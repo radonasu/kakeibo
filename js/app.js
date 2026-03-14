@@ -451,6 +451,75 @@ function renderHealthScoreCard(ym) {
   const gradeColor  = gradeColors[hs.grade] || 'var(--primary)';
   const gaugeOffset = (163.36 * (1 - hs.total / 100)).toFixed(2);
 
+  // v7.1: 過去6ヶ月スコア推移スパークライン
+  const trendMonths = [];
+  for (let i = 5; i >= 0; i--) trendMonths.push(adjMonth(ym, -i));
+  const trendScores = trendMonths.map(m => {
+    const s = calculateHealthScore(m);
+    return s ? s.total : null;
+  });
+  const validScores = trendScores.filter(s => s !== null);
+  let trendHtml = '';
+  let trendBadgeHtml = '';
+  if (validScores.length >= 2) {
+    // 先月比バッジ
+    const prevScore = trendScores[trendScores.length - 2];
+    const currScore = trendScores[trendScores.length - 1];
+    if (prevScore !== null && currScore !== null) {
+      const diff = currScore - prevScore;
+      const diffAbs = Math.abs(diff);
+      const diffCls = diff > 0 ? 'hs-trend-up' : diff < 0 ? 'hs-trend-down' : 'hs-trend-flat';
+      const diffIcon = diff > 0 ? '▲' : diff < 0 ? '▼' : '─';
+      trendBadgeHtml = `<span class="hs-prev-badge ${diffCls}">${diffIcon} ${diffAbs > 0 ? diffAbs + 'pt' : '変動なし'}</span>`;
+    }
+    // SVGスパークライン生成
+    const W = 200, H = 40, PAD = 6;
+    const minS = Math.max(0, Math.min(...validScores) - 5);
+    const maxS = Math.min(100, Math.max(...validScores) + 5);
+    const range = maxS - minS || 1;
+    const step = (W - PAD * 2) / (trendMonths.length - 1);
+    const points = trendScores.map((s, i) => {
+      if (s === null) return null;
+      const x = PAD + i * step;
+      const y = H - PAD - ((s - minS) / range) * (H - PAD * 2);
+      return { x, y, s, m: trendMonths[i] };
+    }).filter(Boolean);
+    // グラデーション塗りのパスを生成
+    const linePoints = points.map(p => `${p.x},${p.y}`).join(' ');
+    const areaPath = points.length >= 2
+      ? `M${points[0].x},${H} ` + points.map(p => `L${p.x},${p.y}`).join(' ') + ` L${points[points.length-1].x},${H} Z`
+      : '';
+    // 点とラベル
+    const dots = points.map((p, i) => {
+      const isLast = i === points.length - 1;
+      const labelY = p.y > H / 2 ? p.y - 5 : p.y + 12;
+      const labelX = Math.max(PAD + 8, Math.min(W - PAD - 8, p.x));
+      const monthLabel = Number(p.m.slice(5)) + '月'; // M月
+      return `<circle class="hs-spark-dot${isLast ? ' hs-spark-dot-last' : ''}" cx="${p.x}" cy="${p.y}" r="${isLast ? 4 : 2.5}" fill="${isLast ? gradeColor : 'var(--text-muted)'}"/>
+      ${isLast ? `<text class="hs-spark-label hs-spark-label-now" x="${labelX}" y="${labelY}" text-anchor="middle" fill="${gradeColor}">${p.s}</text>` : ''}`;
+    }).join('');
+    trendHtml = `<div class="hs-trend-wrap">
+      <div class="hs-trend-header">
+        <span class="hs-trend-label">過去6ヶ月の推移</span>
+        ${trendBadgeHtml}
+      </div>
+      <svg class="hs-spark-svg" viewBox="0 0 ${W} ${H}" aria-hidden="true" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="hs-spark-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${gradeColor}" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="${gradeColor}" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        ${areaPath ? `<path d="${areaPath}" fill="url(#hs-spark-grad)"/>` : ''}
+        ${points.length >= 2 ? `<polyline class="hs-spark-line" points="${linePoints}" stroke="${gradeColor}" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/>` : ''}
+        ${dots}
+      </svg>
+      <div class="hs-spark-months">
+        ${trendMonths.map(m => `<span>${Number(m.slice(5))}月</span>`).join('')}
+      </div>
+    </div>`;
+  }
+
   const itemsHtml = hs.items.map((item, i) => {
     const ratio    = item.score / item.max;
     const pctW     = Math.round(ratio * 100);
@@ -488,6 +557,7 @@ function renderHealthScoreCard(ym) {
     <div class="hs-msg">${hs.msg}</div>
   </div>
   <div class="hs-items">${itemsHtml}</div>
+  ${trendHtml}
 </div>`;
 }
 
@@ -842,12 +912,7 @@ function renderCategoryCompareWidget(ym) {
   <span class="cc-amount">${formatMoney(curr)}</span>
   <span class="cc-badge ${pct > 0 ? 'cc-up' : 'cc-down'}">${pct > 0 ? '▲' : '▼'}${Math.abs(pct)}%</span>
 </div>`;
-  return `<div class="card cc-widget-card">
-  <div class="card-header-row">
-    <h3 class="card-title">📊 先月との比較</h3>
-    <button class="btn-link" onclick="navigate('reports')">レポート →</button>
-  </div>
-  <div class="cc-cols">
+  const ccBody = `<div class="cc-cols">
     ${increased.length > 0 ? `<div class="cc-col">
       <div class="cc-col-header cc-col-up">⬆ 増加カテゴリ</div>
       ${increased.map(row).join('')}
@@ -856,8 +921,10 @@ function renderCategoryCompareWidget(ym) {
       <div class="cc-col-header cc-col-down">⬇ 節約カテゴリ</div>
       ${decreased.map(row).join('')}
     </div>` : ''}
-  </div>
-</div>`;
+  </div>`;
+  return makeCollapsibleCard('categoryCompare',
+    `<h3 class="card-title">📊 先月との比較</h3><button class="btn-link" onclick="navigate('reports')">レポート →</button>`,
+    ccBody, 'cc-widget-card');
 }
 
 // ── ウィジェット折りたたみ (v7.0) ─────────────────────────────
@@ -1534,6 +1601,8 @@ function bindDashboard() {
       const memoEl = document.getElementById('qa-memo');
       if (amtEl)  amtEl.value  = '';
       if (memoEl) memoEl.value = '';
+      // 連続入力のためにamountへフォーカスを戻す
+      if (amtEl) setTimeout(() => amtEl.focus(), 50);
 
       const typeLabel = type === 'expense' ? '支出' : '収入';
       showToast(`${typeLabel} ${formatMoney(amount)} を追加しました`, 'success');

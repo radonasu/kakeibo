@@ -925,7 +925,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface-2);
 }
 
-.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); }
+.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 .tx-table td.actions { white-space: nowrap; text-align: right; width: 80px; }
 .tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -4749,6 +4749,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: #fff;
   border-radius: 50%;
   font-weight: var(--fw-bold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
 }
 .cal-date-num.sun:not(.today) { color: #ef4444; }
 .cal-date-num.sat:not(.today) { color: var(--primary); }
@@ -6097,6 +6098,75 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .hs-grade-badge { font-size: 18px; width: 40px; height: 40px; }
   .hs-main { gap: var(--sp-3); }
 }
+
+/* v7.1: 家計スコア推移スパークライン */
+.hs-trend-wrap {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+.hs-trend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-2);
+}
+.hs-trend-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.hs-prev-badge {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.01em;
+}
+.hs-trend-up   { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
+.hs-trend-down { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
+.hs-trend-flat { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
+[data-theme="dark"] .hs-trend-up   { background: rgba(16,185,129,.18); color: #34d399; border-color: rgba(16,185,129,.3); }
+[data-theme="dark"] .hs-trend-down { background: rgba(239,68,68,.18);  color: #f87171; border-color: rgba(239,68,68,.3); }
+[data-theme="dark"] .hs-trend-flat { background: rgba(255,255,255,.07); color: var(--text-muted); }
+.hs-spark-svg {
+  display: block;
+  width: 100%;
+  height: 44px;
+  overflow: visible;
+}
+.hs-spark-line {
+  transition: stroke 0.4s;
+}
+.hs-spark-dot {
+  transition: r 0.2s, fill 0.2s;
+}
+.hs-spark-dot-last {
+  filter: drop-shadow(0 0 3px var(--hs-grade-color, var(--primary)));
+}
+.hs-spark-label {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.hs-spark-label-now {
+  font-size: 11px;
+}
+.hs-spark-months {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--sp-1);
+}
+.hs-spark-months span {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  min-width: 0;
+  flex: 1;
+}
+.hs-spark-months span:first-child { text-align: left; }
+.hs-spark-months span:last-child  { text-align: right; }
 
 /* ============================================================
    ほしいものリスト (v5.52)

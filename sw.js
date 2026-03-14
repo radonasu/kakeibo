@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.0'; // v7.0: ダッシュボード2カラムグリッド＋ウィジェット折りたたみ機能
+const CACHE_NAME = 'kakeibo-v7.1'; // v7.1: 家計スコア月次推移スパークライン＋カテゴリ比較ウィジェット折りたたみ対応
 const ASSETS = [
   './index.html',
   './css/style.css',
