@@ -1623,6 +1623,24 @@ function renderTransactions() {
   const advCount = [f.amountMin, f.amountMax, f.dateFrom, f.dateTo].filter(v => v !== '').length;
   const SVG_FILTER = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2.5h12M3 7h8M5.5 11.5h3"/></svg>';
   const advToggleBtn = `<button class="btn btn-ghost btn-sm adv-filter-toggle${advActive ? ' adv-filter-on' : ''}" id="adv-filter-toggle" title="詳細フィルター">${SVG_FILTER} 詳細${advActive ? `<span class="adv-filter-count">${advCount}</span>` : ''}</button>`;
+  // v5.96: 期間クイックプリセット
+  const _d96 = new Date(), _y96 = _d96.getFullYear(), _m96 = _d96.getMonth();
+  const _fmt96 = dt => `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+  const _dow96 = _d96.getDay();
+  const _mon96 = new Date(_d96); _mon96.setDate(_d96.getDate() - (_dow96 === 0 ? 6 : _dow96 - 1));
+  const _sun96 = new Date(_mon96); _sun96.setDate(_mon96.getDate() + 6);
+  const _qs96 = Math.floor(_m96 / 3) * 3;
+  const DATE_PRESETS96 = [
+    { key: 'week',  label: '今週',    from: _fmt96(_mon96),                        to: _fmt96(_sun96),                          wide: 0 },
+    { key: 'month', label: '今月',    from: _fmt96(new Date(_y96, _m96, 1)),        to: _fmt96(new Date(_y96, _m96+1, 0)),       wide: 0 },
+    { key: 'lmon',  label: '先月',    from: _fmt96(new Date(_y96, _m96-1, 1)),      to: _fmt96(new Date(_y96, _m96, 0)),         wide: 0 },
+    { key: 'qtr',   label: '今四半期', from: _fmt96(new Date(_y96, _qs96, 1)),      to: _fmt96(new Date(_y96, _qs96+3, 0)),      wide: 1 },
+    { key: 'year',  label: '今年',    from: `${_y96}-01-01`,                        to: `${_y96}-12-31`,                         wide: 1 },
+  ];
+  const _ap96 = DATE_PRESETS96.find(p => p.from === f.dateFrom && p.to === f.dateTo);
+  const presetsHtml96 = DATE_PRESETS96.map((p, i) =>
+    `<button class="adv-preset-chip${_ap96?.key === p.key ? ' active' : ''}" data-from="${p.from}" data-to="${p.to}" data-wide="${p.wide}" style="--pi:${i}">${p.label}</button>`
+  ).join('');
   const advPanel = `<div class="adv-filter-panel${appState.advFilterOpen ? ' open' : ''}" id="adv-filter-panel">
   <div class="adv-filter-inner">
     <div class="adv-filter-group">
@@ -1633,8 +1651,9 @@ function renderTransactions() {
         <input type="number" id="filter-amt-max" class="adv-filter-input" placeholder="上限 ¥" value="${esc2(f.amountMax)}" min="0" step="100">
       </div>
     </div>
-    <div class="adv-filter-group">
+    <div class="adv-filter-group adv-filter-group-date">
       <span class="adv-filter-label">📅 日付範囲</span>
+      <div class="adv-preset-row">${presetsHtml96}</div>
       <div class="adv-filter-row">
         <input type="date" id="filter-date-from" class="adv-filter-input" value="${esc2(f.dateFrom)}">
         <span class="adv-filter-sep">〜</span>
@@ -1772,6 +1791,21 @@ function bindTransactions() {
     appState.txFilter.dateFrom  = '';
     appState.txFilter.dateTo    = '';
     renderCurrentPage();
+  });
+  // v5.96: 期間クイックプリセット
+  document.querySelectorAll('.adv-preset-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const { from, to, wide } = btn.dataset;
+      if (appState.txFilter.dateFrom === from && appState.txFilter.dateTo === to) {
+        appState.txFilter.dateFrom = '';
+        appState.txFilter.dateTo   = '';
+      } else {
+        appState.txFilter.dateFrom = from;
+        appState.txFilter.dateTo   = to;
+        if (wide === '1') appState.month = 'all';
+      }
+      renderCurrentPage();
+    });
   });
   // v5.78: ソートヘッダークリック
   document.querySelectorAll('.tx-th-sort').forEach(th => {

@@ -1530,6 +1530,57 @@ select:focus:not(:focus-visible) {
   border-color: var(--border);
 }
 
+/* ── v5.96: 期間クイックプリセット ── */
+.adv-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+.adv-preset-chip {
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  cursor: pointer;
+  line-height: 1.6;
+  transition: border-color .18s, color .18s, background .18s, transform .15s, box-shadow .18s;
+  animation: preset-chip-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--pi) * 38ms);
+}
+.adv-preset-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.adv-preset-chip.active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.adv-preset-chip.active::after {
+  content: ' ✓';
+  font-size: 10px;
+}
+@keyframes preset-chip-in {
+  from { opacity: 0; transform: scale(0.78) translateY(5px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+[data-theme="dark"] .adv-preset-chip {
+  background: var(--bg);
+  border-color: var(--border);
+}
+[data-theme="dark"] .adv-preset-chip.active {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
 /* ── v5.95: 検索テキストハイライト ── */
 @keyframes tx-hl-in {
   from { background-size: 0% 100%; }
