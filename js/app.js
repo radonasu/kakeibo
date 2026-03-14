@@ -1325,6 +1325,10 @@ function bindDashboard() {
       appState.month = todayStr().slice(0, 7);
       appState.quickAddOpen = true; // 再描画後もパネルを開いたまま
       setTimeout(() => renderCurrentPage(), 350);
+      // 予算アラートトースト（v5.98）
+      if (type === 'expense' && catId) {
+        setTimeout(() => checkBudgetToast(catId, appState.month), 3500);
+      }
     });
   }
 
@@ -2543,8 +2547,12 @@ function saveTxFromModal() {
   // 一覧に月が合わせてあることを確認
   appState.month = date.slice(0, 7);
   renderCurrentPage();
-  // 予算アラートチェック
+  // 予算アラートチェック（ブラウザ通知）
   checkBudgetAlerts(appState.month);
+  // 予算アラートトースト（即時 in-app 通知）
+  if (type === 'expense' && catId) {
+    setTimeout(() => checkBudgetToast(catId, appState.month), 300);
+  }
 }
 
 // ============================================================
@@ -6467,6 +6475,27 @@ function checkBudgetAlerts(month) {
         }
       }
     });
+}
+
+// v5.98: 予算アラートトースト（in-app、通知権限不要）
+function checkBudgetToast(categoryId, month) {
+  const budgets = appData.budgets || {};
+  const budget = budgets[categoryId] || 0;
+  if (!budget) return;
+  const targetMonth = month || appState.month;
+  const cat = (appData.categories || []).find(c => c.id === categoryId);
+  if (!cat || cat.type !== 'expense') return;
+  const txs = getTransactionsByMonth(targetMonth);
+  const spent = txs
+    .filter(t => t.categoryId === categoryId && t.type === 'expense')
+    .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const pct = spent / budget * 100;
+  if (spent > budget) {
+    const over = spent - budget;
+    showToast(`⚠️ ${cat.name} 予算超過 +${formatMoney(over)}`, 'error', 5000);
+  } else if (pct >= 80) {
+    showToast(`📊 ${cat.name} 予算の${Math.round(pct)}%に達しました`, 'warning', 4000);
+  }
 }
 
 // ============================================================
