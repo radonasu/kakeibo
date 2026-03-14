@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v5.96'; // v5.96: 期間クイックプリセット
+const CACHE_NAME = 'kakeibo-v5.97'; // v5.97: フィルター保存プリセット
 const ASSETS = [
   './index.html',
   './css/style.css',

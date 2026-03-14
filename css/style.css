@@ -9397,3 +9397,89 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   0%   { opacity: 0; transform: translateY(8px) scale(.97); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ── v5.97: フィルター保存プリセット ─────────────────────── */
+.sf-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  margin-bottom: var(--sp-2);
+}
+.sf-row-label {
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.sf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 12px;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: var(--surface-hover);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: border-color .18s, color .18s, background .18s, box-shadow .18s, transform .18s;
+  animation: sf-chip-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: calc(var(--sfi, 0) * 45ms);
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sf-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+.sf-chip-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background .15s, color .15s;
+}
+.sf-chip-del:hover {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+.adv-filter-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border);
+}
+.sf-save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  font-size: var(--fs-sm);
+}
+.sf-save-btn:hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+@keyframes sf-chip-in {
+  from { opacity: 0; transform: scale(0.8) translateY(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}

@@ -1403,6 +1403,39 @@ function bindDashboard() {
 }
 
 // ============================================================
+// v5.97: フィルター保存プリセット
+// ============================================================
+
+function getSavedFilters() {
+  try { return JSON.parse(localStorage.getItem('kk_saved_filters') || '[]'); }
+  catch { return []; }
+}
+function saveTxFilter(name) {
+  const saved = getSavedFilters();
+  if (saved.length >= 5) {
+    showToast('保存上限（5件）に達しています。不要なフィルターを削除してください。', 'warning');
+    return false;
+  }
+  const entry = { id: Date.now().toString(36), name, filter: { ...appState.txFilter } };
+  saved.push(entry);
+  localStorage.setItem('kk_saved_filters', JSON.stringify(saved));
+  return true;
+}
+function deleteSavedFilter(id) {
+  const saved = getSavedFilters().filter(s => s.id !== id);
+  localStorage.setItem('kk_saved_filters', JSON.stringify(saved));
+}
+function applySavedFilter(entry) {
+  appState.txFilter = { ...appState.txFilter, ...entry.filter };
+  const { dateFrom, dateTo } = entry.filter;
+  if (dateFrom && dateTo) {
+    const fromM = dateFrom.substring(0, 7);
+    const toM   = dateTo.substring(0, 7);
+    if (fromM !== toM || fromM !== appState.month) appState.month = 'all';
+  }
+}
+
+// ============================================================
 // 収支一覧
 // ============================================================
 
@@ -1622,6 +1655,17 @@ function renderTransactions() {
   const advActive = f.amountMin !== '' || f.amountMax !== '' || f.dateFrom !== '' || f.dateTo !== '';
   const advCount = [f.amountMin, f.amountMax, f.dateFrom, f.dateTo].filter(v => v !== '').length;
   const SVG_FILTER = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2.5h12M3 7h8M5.5 11.5h3"/></svg>';
+  const SVG_STAR   = '<svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M6.5 1l1.39 2.82 3.11.45-2.19 2.13.52 3.1L6.5 10.08l-2.83 1.42.52-3.1L2 6.27l3.11-.45z"/></svg>';
+  // v5.97: 保存済みフィルター行
+  const _savedFilters = getSavedFilters();
+  const sfRowHtml = _savedFilters.length > 0 ? `<div class="sf-row" id="sf-row">
+  <span class="sf-row-label">${SVG_STAR}</span>
+  ${_savedFilters.map((s, i) => `<button class="sf-chip" data-sfid="${s.id}" title="${esc2(s.name)}" style="--sfi:${i}">${esc2(s.name)}<span class="sf-chip-del" data-sfid="${s.id}" title="削除">✕</span></button>`).join('')}
+</div>` : '';
+  // v5.97: 保存ボタン（フィルターアクティブ時のみ表示、5件未満時）
+  const sfSaveBtn = anyFilterActive && _savedFilters.length < 5
+    ? `<button class="btn btn-ghost btn-sm sf-save-btn" id="sf-save-btn" title="現在のフィルターを保存">${SVG_STAR} 保存</button>`
+    : '';
   const advToggleBtn = `<button class="btn btn-ghost btn-sm adv-filter-toggle${advActive ? ' adv-filter-on' : ''}" id="adv-filter-toggle" title="詳細フィルター">${SVG_FILTER} 詳細${advActive ? `<span class="adv-filter-count">${advCount}</span>` : ''}</button>`;
   // v5.96: 期間クイックプリセット
   const _d96 = new Date(), _y96 = _d96.getFullYear(), _m96 = _d96.getMonth();
@@ -1660,7 +1704,10 @@ function renderTransactions() {
         <input type="date" id="filter-date-to" class="adv-filter-input" value="${esc2(f.dateTo)}">
       </div>
     </div>
-    ${advActive ? `<button class="btn btn-ghost btn-sm adv-filter-clear" id="adv-filter-clear">✕ クリア</button>` : ''}
+    <div class="adv-filter-actions">
+      ${advActive ? `<button class="btn btn-ghost btn-sm adv-filter-clear" id="adv-filter-clear">✕ クリア</button>` : ''}
+      ${sfSaveBtn}
+    </div>
   </div>
 </div>`;
 
@@ -1718,6 +1765,7 @@ ${templateBar}
 </div>
 
 ${advPanel}
+${sfRowHtml}
 ${tagFilterHtml}
 
 <div class="card summary-mini">
@@ -1792,6 +1840,33 @@ function bindTransactions() {
     appState.txFilter.dateTo    = '';
     renderCurrentPage();
   });
+  // v5.97: フィルター保存ボタン
+  on('sf-save-btn', 'click', () => {
+    const name = prompt('フィルター名を入力してください（例：食費だけ・山田さんの支出）', '');
+    if (!name?.trim()) return;
+    if (saveTxFilter(name.trim())) {
+      showToast(`「${name.trim()}」を保存しました`, 'success');
+      renderCurrentPage();
+    }
+  });
+  // v5.97: 保存済みフィルターチップ（適用・削除）
+  const sfRow = document.getElementById('sf-row');
+  if (sfRow) {
+    sfRow.addEventListener('click', e => {
+      const delBtn = e.target.closest('.sf-chip-del');
+      if (delBtn) {
+        e.stopPropagation();
+        deleteSavedFilter(delBtn.dataset.sfid);
+        renderCurrentPage();
+        return;
+      }
+      const chip = e.target.closest('.sf-chip');
+      if (chip) {
+        const saved = getSavedFilters().find(s => s.id === chip.dataset.sfid);
+        if (saved) { applySavedFilter(saved); renderCurrentPage(); }
+      }
+    });
+  }
   // v5.96: 期間クイックプリセット
   document.querySelectorAll('.adv-preset-chip').forEach(btn => {
     btn.addEventListener('click', () => {
