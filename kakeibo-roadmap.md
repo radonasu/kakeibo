@@ -185,6 +185,10 @@
 
 | 119 | v9.1 | 機能＋デザイン | 月間支出ペースウィジェット：`renderPaceWidget(ym)`を新設・月の経過日数%と予算/収入消化%を2本の横バーで並べて比較表示・予算設定あり→予算合計を基準、なし→今月収入を基準に自動切替・差分10pt以内を「👍 ペース良好」(緑)/10pt以内を「⚠️ 概ね順調」(黄)/超過を「🚨 ペース速め」(赤)の3状態にステータスバッジで色分け・`pace-bar-in` scaleX 0.85s cubic-bezier弾性アニメーション・ステータス別メッセージカード（success-bg/warning-bg/danger-bg背景・border付き）・ダッシュボードカスタマイズに「支出ペース」追加・ダークモード完全対応 |
 
+| 120 | v9.2 | 機能＋デザイン | 支出ペースウィジェット 拡張＆ビジュアル洗練：【機能】「今日使える目安」グリッド追加（残り予算÷残り日数を計算し残り予算/残り日数/1日あたりの3セルグリッドで表示・超過時は「−」表示）・経過との差分行（±Npt形式・ステータス色連動）・【デザイン】カード右上デコレーションサークル(::before)をステータス色連動（good=緑/warn=黄/over=赤・各18%透明度）・pace-widget-body上部3pxアクセントライン（ステータス色）・pace-bar-rowにpace-row-in左スライドスタッガードアニメーション（80msステップ）・2本目バーに薄いゴーストバー(opacity .22)を重ねて月経過%との差分を視覚化・pace-daily-gridに弾性入場アニメーション（pace-daily-in 0.35s cubic-bezier・0.14s delay）・380px以下は1日あたりセルが全幅になるモバイル対応・ダークモード完全対応 |
+
+| 121 | v9.3 | 機能＋デザイン | 支払方法別月次推移スタック棒グラフ：【機能】`renderPaymentTrendChart(canvasId, year)`をcharts.jsに新設・年間12ヶ月の支払方法別支出をスタック棒グラフで可視化・現金/クレカ/口座振替/銀行振込/電子マネー/その他の6種・データのある支払方法のみ自動表示・ツールチップに月合計フッター付き・PAYMENT_METHOD_COLORSでドーナツグラフと色完全統一・レポートページsec-payment内にpm-trend-cardとして追加（既存のドーナツ+集計テーブルの下に全幅配置）・renderReports()のsetTimeoutにrenderPaymentTrendChart呼び出し追加・【デザイン】`.pm-trend-card` `pm-trend-in` 0.4s cubic-bezier弾性入場アニメーション・`.pm-trend-hint`サブテキスト・ダークモード対応 |
+
 | 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
 
 ## 次スプリント候補（v5.44以降）
