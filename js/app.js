@@ -1101,6 +1101,70 @@ function renderCategoryCompareWidget(ym) {
     ccBody, 'cc-widget-card');
 }
 
+// ============================================================
+// 月間支出ペースウィジェット (v9.1)
+// ============================================================
+function renderPaceWidget(ym) {
+  const today = new Date();
+  const [y, m] = ym.split('-').map(Number);
+  const isCurrentMonth = today.getFullYear() === y && today.getMonth() + 1 === m;
+  const daysInMonth = new Date(y, m, 0).getDate();
+  const daysPassed = isCurrentMonth ? today.getDate() : daysInMonth;
+  const daysPct = Math.round(daysPassed / daysInMonth * 100);
+
+  const txs = getTransactionsByMonth(ym);
+  const income  = calcTotal(txs, 'income');
+  const expense = calcTotal(txs, 'expense');
+
+  // 予算合計または収入を基準値に使用
+  const budgets = appData.budgets || {};
+  const totalBudget = Object.values(budgets).reduce((s, v) => s + (Number(v) || 0), 0);
+  const reference = totalBudget > 0 ? totalBudget : income;
+  if (reference === 0) return '';
+
+  const expensePct = Math.round(expense / reference * 100);
+  const cappedPct  = Math.min(expensePct, 100);
+  const diff = expensePct - daysPct;
+
+  let statusCls, statusText;
+  if (diff <= -10) {
+    statusCls  = 'pace-good';
+    statusText = '👍 ペース良好';
+  } else if (diff <= 10) {
+    statusCls  = 'pace-warn';
+    statusText = '⚠️ 概ね順調';
+  } else {
+    statusCls  = 'pace-over';
+    statusText = '🚨 ペース速め';
+  }
+
+  const refLabel = totalBudget > 0 ? '予算' : '収入';
+  const msg = diff <= -10
+    ? `月の${daysPct}%経過・${refLabel}の${expensePct}%消化 — 余裕があります`
+    : diff <= 10
+    ? `月の${daysPct}%経過・${refLabel}の${expensePct}%消化 — 概ね順調です`
+    : `月の${daysPct}%経過・${refLabel}の${expensePct}%消化 — 支出ペースが速めです`;
+
+  return makeCollapsibleCard('pace',
+    `<h3 class="card-title">⏱️ 支出ペース</h3><span class="pace-status-badge ${statusCls}">${statusText}</span>`,
+    `<div class="pace-widget-body">
+  <div class="pace-bars">
+    <div class="pace-bar-row">
+      <div class="pace-bar-label">月の経過</div>
+      <div class="pace-bar-track"><div class="pace-bar-fill pace-bar-days" style="width:${daysPct}%"></div></div>
+      <div class="pace-bar-value">${daysPassed}<span class="pace-unit">/${daysInMonth}日</span> <span class="pace-pct">${daysPct}%</span></div>
+    </div>
+    <div class="pace-bar-row">
+      <div class="pace-bar-label">${refLabel}消化</div>
+      <div class="pace-bar-track"><div class="pace-bar-fill pace-bar-expense ${statusCls}" style="width:${cappedPct}%"></div></div>
+      <div class="pace-bar-value">${formatMoney(expense)} <span class="pace-pct ${statusCls}">${expensePct}%</span></div>
+    </div>
+  </div>
+  <div class="pace-msg ${statusCls}">${msg}</div>
+</div>`,
+    'pace-widget-card');
+}
+
 // ── ウィジェット折りたたみ (v7.0) ─────────────────────────────
 const KK_COLLAPSED_KEY = 'kk_card_collapsed';
 
@@ -1365,6 +1429,9 @@ function renderDashboard() {
   // 節約機会スキャンウィジェット（v8.4）
   const savingsOppsSection = showWidget('savingsOpps') ? renderSavingsOppsWidget(appState.month) : '';
 
+  // 月間支出ペースウィジェット（v9.1）
+  const paceSection = showWidget('pace') ? renderPaceWidget(appState.month) : '';
+
   // 今週の家計ウィジェット（v5.72）
   const wk = getWeeklyStats();
   const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
@@ -1588,6 +1655,7 @@ ${quickAddSection}
 ${weeklySection ? `<div class="dash-full">${weeklySection}</div>` : ''}
 ${yearSummarySection ? `<div class="dash-full">${yearSummarySection}</div>` : ''}
 ${categoryCompareSection ? `<div>${categoryCompareSection}</div>` : ''}
+${paceSection ? `<div>${paceSection}</div>` : ''}
 ${forecastSection ? `<div>${forecastSection}</div>` : ''}
 ${healthScoreSection ? `<div>${healthScoreSection}</div>` : ''}
 ${insightSection ? `<div>${insightSection}</div>` : ''}
@@ -5000,6 +5068,7 @@ function renderSettings() {
       { key: 'weekly',          label: '今週の家計',      icon: '📅' },
       { key: 'yearSummary',     label: '年次累計',        icon: '📆' },
       { key: 'categoryCompare', label: '前月比カテゴリ',  icon: '📊' },
+      { key: 'pace',            label: '支出ペース',      icon: '⏱️' },
       { key: 'forecast',        label: '今月末収支予測',  icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
       { key: 'insight',       label: '今月のインサイト',icon: '💡' },

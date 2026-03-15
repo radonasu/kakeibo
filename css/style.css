@@ -12463,3 +12463,87 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* md-month-info: バッジ追加で flex:1 & wrap 対応 */
 .md-month-info { flex: 1; flex-wrap: wrap; row-gap: 3px; }
+
+/* ── 月間支出ペースウィジェット (v9.1) ──────────────────── */
+@keyframes pace-bar-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.pace-widget-body { padding: var(--sp-2) 0 0; }
+.pace-bars { display: flex; flex-direction: column; gap: 14px; }
+.pace-bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.pace-bar-label {
+  width: 66px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  font-weight: var(--fw-medium);
+}
+.pace-bar-track {
+  flex: 1;
+  height: 10px;
+  background: var(--surface-hover);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.pace-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transform-origin: left;
+  animation: pace-bar-in .85s cubic-bezier(.34,1.56,.64,1) both;
+}
+.pace-bar-days { background: linear-gradient(90deg, var(--primary), var(--primary-end)); }
+.pace-bar-expense.pace-good { background: linear-gradient(90deg, var(--success), var(--income-end)); }
+.pace-bar-expense.pace-warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.pace-bar-expense.pace-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
+.pace-bar-value {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 92px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.pace-unit { color: var(--text-faint); }
+.pace-pct { font-weight: var(--fw-semi); }
+.pace-pct.pace-good { color: var(--success); }
+.pace-pct.pace-warn { color: var(--warning); }
+.pace-pct.pace-over { color: var(--danger-text); }
+.pace-msg {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  line-height: var(--lh-snug);
+}
+.pace-msg.pace-good { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
+.pace-msg.pace-warn { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+.pace-msg.pace-over { background: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-border); }
+.pace-status-badge {
+  font-size: var(--fs-xs);
+  padding: 3px 8px;
+  border-radius: var(--radius-badge);
+  font-weight: var(--fw-semi);
+  flex-shrink: 0;
+}
+.pace-status-badge.pace-good { background: var(--success-bg); color: var(--success); }
+.pace-status-badge.pace-warn { background: var(--warning-bg); color: var(--warning); }
+.pace-status-badge.pace-over { background: var(--danger-bg); color: var(--danger-text); }
+[data-theme="dark"] .pace-msg.pace-good {
+  background: rgba(5,150,105,.1);
+  border-color: rgba(5,150,105,.25);
+}
+[data-theme="dark"] .pace-msg.pace-warn {
+  background: rgba(217,119,6,.1);
+  border-color: rgba(217,119,6,.25);
+}
+[data-theme="dark"] .pace-msg.pace-over {
+  background: rgba(220,38,38,.1);
+  border-color: rgba(220,38,38,.25);
+}
+[data-theme="dark"] .pace-bar-track { background: rgba(255,255,255,.07); }
