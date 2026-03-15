@@ -12460,17 +12460,48 @@ canvas.chart-clickable { cursor: pointer; }
 /* md-month-info: バッジ追加で flex:1 & wrap 対応 */
 .md-month-info { flex: 1; flex-wrap: wrap; row-gap: 3px; }
 
-/* ── 月間支出ペースウィジェット (v9.1) ──────────────────── */
+/* ── 月間支出ペースウィジェット (v9.1 → v9.2) ──────────────── */
 @keyframes pace-bar-in {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
+@keyframes pace-row-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pace-daily-in {
+  from { opacity: 0; transform: translateY(6px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* カード装飾 (v9.2) */
+.pace-widget-card { position: relative; overflow: hidden; }
+.pace-widget-card::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pace-deco-color, rgba(99,102,241,.15)) 0%, transparent 70%);
+  pointer-events: none;
+}
+.pace-widget-card.pace-status-good::before { --pace-deco-color: rgba(5,150,105,.18); }
+.pace-widget-card.pace-status-warn::before { --pace-deco-color: rgba(217,119,6,.18); }
+.pace-widget-card.pace-status-over::before { --pace-deco-color: rgba(220,38,38,.18); }
+
+/* カード上部アクセントライン */
+.pace-widget-body.pace-status-good { border-top: 3px solid var(--success); }
+.pace-widget-body.pace-status-warn { border-top: 3px solid var(--warning); }
+.pace-widget-body.pace-status-over { border-top: 3px solid var(--danger-text); }
+
 .pace-widget-body { padding: var(--sp-2) 0 0; }
 .pace-bars { display: flex; flex-direction: column; gap: 14px; }
 .pace-bar-row {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
+  animation: pace-row-in .28s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--pbr-i, 0) * 80ms);
 }
 .pace-bar-label {
   width: 66px;
@@ -12485,12 +12516,24 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-hover);
   border-radius: 99px;
   overflow: hidden;
+  position: relative;
+}
+/* 2本目のトラック：2層重ね表示 (v9.2) */
+.pace-bar-track-main { overflow: visible; position: relative; }
+.pace-bar-track-main .pace-bar-ghost {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  opacity: .22;
+  pointer-events: none;
 }
 .pace-bar-fill {
   height: 100%;
   border-radius: 99px;
   transform-origin: left;
   animation: pace-bar-in .85s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: calc(var(--pbr-i, 0) * 80ms + 60ms);
+  position: relative;
 }
 .pace-bar-days { background: linear-gradient(90deg, var(--primary), var(--primary-end)); }
 .pace-bar-expense.pace-good { background: linear-gradient(90deg, var(--success), var(--income-end)); }
@@ -12509,6 +12552,68 @@ canvas.chart-clickable { cursor: pointer; }
 .pace-pct.pace-good { color: var(--success); }
 .pace-pct.pace-warn { color: var(--warning); }
 .pace-pct.pace-over { color: var(--danger-text); }
+
+/* 差分行 (v9.2) */
+.pace-diff-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: 10px;
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+}
+.pace-diff-val {
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+.pace-diff-val.pace-good { color: var(--success); }
+.pace-diff-val.pace-warn { color: var(--warning); }
+.pace-diff-val.pace-over { color: var(--danger-text); }
+
+/* 1日あたり残り予算グリッド (v9.2) */
+.pace-daily-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  animation: pace-daily-in .35s cubic-bezier(.34,1.56,.64,1) .14s both;
+}
+.pace-daily-cell {
+  background: var(--surface-hover);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-2) var(--sp-2);
+  text-align: center;
+}
+.pace-daily-highlight {
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.pace-daily-label {
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pace-daily-val {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.pace-daily-val .pace-unit { font-size: 10px; font-weight: var(--fw-normal); }
+.pace-daily-val.pace-good { color: var(--success); }
+.pace-daily-val.pace-warn { color: var(--warning); }
+.pace-daily-val.pace-over { color: var(--danger-text); }
+.pace-daily-over {
+  font-size: 10px;
+  font-weight: var(--fw-normal);
+  color: var(--danger-text);
+  margin-left: 2px;
+}
+
 .pace-msg {
   margin-top: var(--sp-3);
   font-size: var(--fs-xs);
@@ -12543,3 +12648,12 @@ canvas.chart-clickable { cursor: pointer; }
   border-color: rgba(220,38,38,.25);
 }
 [data-theme="dark"] .pace-bar-track { background: rgba(255,255,255,.07); }
+[data-theme="dark"] .pace-daily-cell { background: rgba(255,255,255,.06); }
+[data-theme="dark"] .pace-daily-highlight {
+  background: rgba(99,102,241,.08);
+  border-color: rgba(99,102,241,.2);
+}
+@media (max-width: 380px) {
+  .pace-daily-grid { grid-template-columns: 1fr 1fr; }
+  .pace-daily-highlight { grid-column: 1 / -1; }
+}

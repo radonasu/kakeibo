@@ -1145,21 +1145,49 @@ function renderPaceWidget(ym) {
     ? `月の${daysPct}%経過・${refLabel}の${expensePct}%消化 — 概ね順調です`
     : `月の${daysPct}%経過・${refLabel}の${expensePct}%消化 — 支出ペースが速めです`;
 
+  // 1日あたり残り予算 (v9.2)
+  const remaining = reference - expense;
+  const daysLeft  = isCurrentMonth ? daysInMonth - daysPassed + 1 : 1; // +1: 今日含む
+  const dailyLeft = daysLeft > 0 ? Math.floor(remaining / daysLeft) : 0;
+  const dailyCls  = dailyLeft >= 0 ? (diff <= -10 ? 'pace-good' : diff <= 10 ? 'pace-warn' : 'pace-over') : 'pace-over';
+  const dailySection = isCurrentMonth ? `
+  <div class="pace-daily-grid">
+    <div class="pace-daily-cell">
+      <div class="pace-daily-label">残り${refLabel}</div>
+      <div class="pace-daily-val ${remaining < 0 ? 'pace-over' : ''}">${formatMoney(Math.abs(remaining))}${remaining < 0 ? '<span class="pace-daily-over">超過</span>' : ''}</div>
+    </div>
+    <div class="pace-daily-cell">
+      <div class="pace-daily-label">残り日数</div>
+      <div class="pace-daily-val">${daysLeft}<span class="pace-unit">日</span></div>
+    </div>
+    <div class="pace-daily-cell pace-daily-highlight">
+      <div class="pace-daily-label">今日使える目安</div>
+      <div class="pace-daily-val ${dailyCls}">${dailyLeft >= 0 ? formatMoney(dailyLeft) : '−'}<span class="pace-unit">/日</span></div>
+    </div>
+  </div>` : '';
+
   return makeCollapsibleCard('pace',
     `<h3 class="card-title">⏱️ 支出ペース</h3><span class="pace-status-badge ${statusCls}">${statusText}</span>`,
-    `<div class="pace-widget-body">
+    `<div class="pace-widget-body pace-status-${statusCls.replace('pace-','')}">
   <div class="pace-bars">
-    <div class="pace-bar-row">
+    <div class="pace-bar-row" style="--pbr-i:0">
       <div class="pace-bar-label">月の経過</div>
       <div class="pace-bar-track"><div class="pace-bar-fill pace-bar-days" style="width:${daysPct}%"></div></div>
       <div class="pace-bar-value">${daysPassed}<span class="pace-unit">/${daysInMonth}日</span> <span class="pace-pct">${daysPct}%</span></div>
     </div>
-    <div class="pace-bar-row">
+    <div class="pace-bar-row pace-bar-row-expense" style="--pbr-i:1">
       <div class="pace-bar-label">${refLabel}消化</div>
-      <div class="pace-bar-track"><div class="pace-bar-fill pace-bar-expense ${statusCls}" style="width:${cappedPct}%"></div></div>
+      <div class="pace-bar-track pace-bar-track-main">
+        <div class="pace-bar-fill pace-bar-days pace-bar-ghost" style="width:${daysPct}%"></div>
+        <div class="pace-bar-fill pace-bar-expense ${statusCls}" style="width:${cappedPct}%"></div>
+      </div>
       <div class="pace-bar-value">${formatMoney(expense)} <span class="pace-pct ${statusCls}">${expensePct}%</span></div>
     </div>
   </div>
+  <div class="pace-diff-row">
+    <span class="pace-diff-label">経過との差</span>
+    <span class="pace-diff-val ${statusCls}">${diff > 0 ? '+' : ''}${diff}pt</span>
+  </div>${dailySection}
   <div class="pace-msg ${statusCls}">${msg}</div>
 </div>`,
     'pace-widget-card');
