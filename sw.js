@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.5'; // v9.5: カテゴリ管理ページ グリッドカードビュー刷新
+const CACHE_NAME = 'kakeibo-v9.5.1'; // v9.5.1: モバイルはみ出し防止
 const ASSETS = [
   './index.html',
   './css/style.css',
