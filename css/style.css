@@ -12176,11 +12176,17 @@ canvas.chart-clickable { cursor: pointer; }
   to   { opacity: 1; transform: none; }
 }
 .md-cat-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: var(--md-cat-color, var(--text));
+  font-weight: 500;
+}
+.md-cat-name .md-cat-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--text);
-  font-weight: 500;
 }
 .md-cat-bar-wrap {
   height: 8px;
@@ -12215,8 +12221,111 @@ canvas.chart-clickable { cursor: pointer; }
 /* md-list の取引行は dd-tx-row を流用 */
 #md-list .dd-tx-row { margin: 0 calc(-1 * var(--sp-1)); padding-left: var(--sp-1); padding-right: var(--sp-1); }
 
+/* ─── md-cells: サマリーグラデーションセル (v8.8) ──────────── */
+.md-cells {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.md-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: var(--radius-btn);
+  padding: var(--sp-2) var(--sp-2);
+  position: relative;
+  overflow: hidden;
+  animation: md-cell-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--md-si, 0) * 60ms);
+}
+.md-cell::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.10;
+}
+@keyframes md-cell-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+.md-cell-label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+.md-cell-value {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.md-cell-value small {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  margin-left: 1px;
+  opacity: 0.8;
+}
+/* 収入: 緑系 */
+.md-cell-income {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--success) 16%, transparent), color-mix(in srgb, var(--success) 6%, transparent));
+  border: 1px solid color-mix(in srgb, var(--success) 22%, transparent);
+  color: var(--success);
+}
+.md-cell-income .md-cell-label { color: color-mix(in srgb, var(--success) 85%, var(--text-muted)); }
+/* 支出: 赤系 */
+.md-cell-expense {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
+  border: 1px solid color-mix(in srgb, var(--danger-text) 20%, transparent);
+  color: var(--danger-text);
+}
+.md-cell-expense .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
+/* 残高黒字: インディゴ系 */
+.md-cell-balance-pos {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, transparent), color-mix(in srgb, var(--primary) 5%, transparent));
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary);
+}
+.md-cell-balance-pos .md-cell-label { color: color-mix(in srgb, var(--primary) 85%, var(--text-muted)); }
+/* 残高赤字: 赤系 */
+.md-cell-balance-neg {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
+  border: 1px solid color-mix(in srgb, var(--danger-text) 20%, transparent);
+  color: var(--danger-text);
+}
+.md-cell-balance-neg .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
+/* 件数: サーフェス系 */
+.md-cell-count {
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.md-cell-count .md-cell-label { color: var(--text-muted); }
+
+/* カテゴリドット＋テキスト (v8.8) */
+.md-cat-dot {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--md-cat-color, var(--primary));
+}
+.md-cat-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 480px) {
   .md-cat-row { grid-template-columns: 60px 1fr 60px 28px; }
+  .md-cells { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */

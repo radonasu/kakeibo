@@ -5947,25 +5947,25 @@ function openMonthDrilldown(month) {
   const titleEl = document.getElementById('md-modal-title');
   if (titleEl) titleEl.textContent = monthLabel;
 
-  // サマリー
+  // サマリー（グラデーションセルカード）
   const summaryEl = document.getElementById('md-summary');
   if (summaryEl) {
     summaryEl.innerHTML = `
-      <div class="dd-summary-item">
-        <span class="dd-summary-label">収入</span>
-        <span class="dd-summary-value" style="color:var(--success)">${formatMoney(income)}</span>
+      <div class="md-cell md-cell-income" style="--md-si:0">
+        <span class="md-cell-label">収入</span>
+        <span class="md-cell-value">${formatMoney(income)}</span>
       </div>
-      <div class="dd-summary-item">
-        <span class="dd-summary-label">支出</span>
-        <span class="dd-summary-value" style="color:var(--danger-text)">${formatMoney(expense)}</span>
+      <div class="md-cell md-cell-expense" style="--md-si:1">
+        <span class="md-cell-label">支出</span>
+        <span class="md-cell-value">${formatMoney(expense)}</span>
       </div>
-      <div class="dd-summary-item">
-        <span class="dd-summary-label">残高</span>
-        <span class="dd-summary-value" style="color:${balance >= 0 ? 'var(--success)' : 'var(--danger-text)'}">${formatMoney(balance)}</span>
+      <div class="md-cell ${balance >= 0 ? 'md-cell-balance-pos' : 'md-cell-balance-neg'}" style="--md-si:2">
+        <span class="md-cell-label">残高</span>
+        <span class="md-cell-value">${formatMoney(balance)}</span>
       </div>
-      <div class="dd-summary-item">
-        <span class="dd-summary-label">件数</span>
-        <span class="dd-summary-value">${txs.length}件</span>
+      <div class="md-cell md-cell-count" style="--md-si:3">
+        <span class="md-cell-label">件数</span>
+        <span class="md-cell-value">${txs.length}<small>件</small></span>
       </div>
     `;
   }
@@ -5994,7 +5994,7 @@ function openMonthDrilldown(month) {
         const barPct   = Math.round(total / maxCatTotal * 100);
         const sharePct = expense > 0 ? Math.round(total / expense * 100) : 0;
         return `<div class="md-cat-row" style="--md-i:${i};--md-cat-color:${color}">
-          <div class="md-cat-name" title="${esc2(name)}">${esc2(name)}</div>
+          <div class="md-cat-name" title="${esc2(name)}"><span class="md-cat-dot" aria-hidden="true"></span><span class="md-cat-text">${esc2(name)}</span></div>
           <div class="md-cat-bar-wrap"><div class="md-cat-bar" style="width:${barPct}%"></div></div>
           <div class="md-cat-amount">${formatMoney(total)}</div>
           <div class="md-cat-pct">${sharePct}%</div>
