@@ -177,6 +177,8 @@
 
 | 115 | v8.7 | 機能＋デザイン | レポートページ インタラクティブ強化：①【機能】`renderBalanceLineChart`に`onMonthClick`コールバックを追加・ポイントクリックで`openMonthDrilldown`を呼び出し（hover時カーソルpointer・ツールチップfooterに「クリックで詳細を表示」ヒント）②レポートページ月別収支折れ線グラフに`openMonthDrilldown`を接続・チャートラッパーを`chart-clickable-wrap`化して「ポイントで詳細」ヒントバッジ追加 ③月別表（`sec-monthly-table`）の各行に`data-month`属性を付与・データあり行に`.is-clickable`クラス追加しクリック/Enterキーで`openMonthDrilldown`を表示 ④【デザイン】`.rpt-month-row.is-clickable`のホバーリフトアニメーション（translateY(-1px)+box-shadow・0.15s cubic-bezier弾性）・SVGシェブロンアイコン（hover時opacity1+translateX(2px)）をデータあり行の月ラベル隣に追加・ダークモード対応 |
 
+| 116 | v8.8 | デザイン | 月ドリルダウンモーダル ビジュアル洗練：サマリー4セルを`.md-cells`グリッドに刷新しグラデーションカード化（収入=緑系/支出=赤系/残高黒字=インディゴ系/残高赤字=赤系/件数=サーフェス系）・`.md-cell::after`デコレーションサークル・`@keyframes md-cell-in` 0.32s cubic-bezier弾性スタッガードアニメーション（--md-si変数 60msステップ）・カテゴリ行に`.md-cat-dot`カラードット（8px丸・--md-cat-color連動）追加・`.md-cat-name`をflex化し`.md-cat-text`でellipsis対応・カテゴリ名を--md-cat-colorで着色・モバイル（480px以下）で2×2グリッドに変更・ダークモード対応（CSS変数ベース） |
+
 | 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
 
 ## 次スプリント候補（v5.44以降）
