@@ -1,5 +1,5 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v5.70
+// charts.js - グラフ描画 (Chart.js) v8.0
 // ============================================================
 
 const chartInstances = {};
@@ -110,7 +110,7 @@ function makeGradient(ctx, canvas, color, alpha1 = 0.25, alpha2 = 0.02) {
 }
 
 // ─── カテゴリ別支出ドーナツグラフ ────────────────────────────
-function renderDonutChart(canvasId, transactions, type) {
+function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
   destroyChart(canvasId);
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -143,6 +143,13 @@ function renderDonutChart(canvasId, transactions, type) {
 
   const { text: textColor, surface } = getThemeColors();
 
+  // ドリルダウンクリック対応 (v8.0)
+  if (onCategoryClick) {
+    canvas.classList.add('chart-clickable');
+  } else {
+    canvas.classList.remove('chart-clickable');
+  }
+
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'doughnut',
     data: {
@@ -162,6 +169,11 @@ function renderDonutChart(canvasId, transactions, type) {
       maintainAspectRatio: false,
       cutout: '62%',
       animation: { ...commonAnimation, animateRotate: true, animateScale: false },
+      onClick: onCategoryClick ? (_evt, elements) => {
+        if (!elements.length) return;
+        const idx = elements[0].index;
+        onCategoryClick(labels[idx], colors[idx]);
+      } : undefined,
       plugins: {
         legend: {
           position: 'bottom',

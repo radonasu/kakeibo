@@ -11613,3 +11613,174 @@ kbd {
 #kb-help-modal.modal-is-open .modal-wrap {
   animation: kb-help-modal-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
+
+/* ============================================================
+   グラフ ドリルダウンモーダル (v8.0)
+   ============================================================ */
+canvas.chart-clickable { cursor: pointer; }
+
+.dd-modal-box {
+  max-width: 520px;
+  width: 100%;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+}
+#dd-modal.modal-is-open .dd-modal-box {
+  animation: dd-box-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes dd-box-in {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.dd-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.dd-cat-info {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+.dd-cat-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+  box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 20%, transparent);
+}
+
+/* サマリー行 */
+.dd-summary {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: flex-start;
+  background: var(--surface-hover);
+  border-radius: var(--radius-btn);
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-3);
+  flex-wrap: wrap;
+}
+.dd-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+}
+.dd-summary-label {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+.dd-summary-value {
+  font-weight: 700;
+  color: var(--text);
+  font-size: var(--fs-md);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 取引リスト */
+.dd-list {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 0 var(--sp-4);
+}
+.dd-tx-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  border-radius: var(--radius-btn-sm);
+  transition: background 0.13s;
+  animation: dd-row-in 0.2s ease both;
+  animation-delay: calc(var(--dd-i, 0) * 28ms);
+}
+.dd-tx-row:last-child { border-bottom: none; }
+.dd-tx-row:hover { background: var(--surface-hover); }
+.dd-tx-row:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+@keyframes dd-row-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.dd-tx-date {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  min-width: 42px;
+}
+.dd-tx-memo {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+.dd-tx-amount {
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm);
+}
+.dd-tx-amount.expense { color: var(--danger-text); }
+.dd-tx-amount.income  { color: var(--success); }
+
+.dd-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--sp-8) var(--sp-4);
+  font-size: var(--fs-sm);
+}
+
+/* フッター */
+.dd-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+  margin-top: var(--sp-3);
+  flex-shrink: 0;
+}
+
+/* dd-list スクロールバー */
+.dd-list { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.dd-list::-webkit-scrollbar { width: 5px; }
+.dd-list::-webkit-scrollbar-track { background: transparent; }
+.dd-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* グラフ hover ヒント（クリック可能を示す） */
+.chart-clickable-wrap {
+  position: relative;
+}
+.chart-clickable-hint {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 2px 7px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.chart-clickable-wrap:hover .chart-clickable-hint { opacity: 1; }

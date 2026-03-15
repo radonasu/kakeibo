@@ -1427,8 +1427,9 @@ ${eventsSection ? `<div>${eventsSection}</div>` : ''}
 ${showWidget('chart') ? `<div class="dash-full"><div class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ</h3>
-    <div class="chart-wrap" style="height:220px">
+    <div class="chart-wrap chart-clickable-wrap" style="height:220px">
       <canvas id="donut-expense"></canvas>
+      <span class="chart-clickable-hint">タップで詳細</span>
     </div>
   </div>
   <div class="card chart-card">
@@ -1684,7 +1685,9 @@ function bindDashboard() {
   setTimeout(() => {
     if (document.getElementById('donut-expense')) {
       const txs = getTransactionsByMonth(appState.month);
-      renderDonutChart('donut-expense', txs, 'expense');
+      renderDonutChart('donut-expense', txs, 'expense',
+        (catName, catColor) => openCategoryDrilldown(catName, catColor, appState.month, 'expense')
+      );
     }
     if (document.getElementById('monthly-bar')) {
       renderMonthlyBarChart('monthly-bar');
@@ -3536,8 +3539,9 @@ function renderReports() {
   </div>
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ（年間）</h3>
-    <div class="chart-wrap" style="height:240px">
+    <div class="chart-wrap chart-clickable-wrap" style="height:240px">
       <canvas id="report-donut"></canvas>
+      <span class="chart-clickable-hint">タップで詳細</span>
     </div>
   </div>
 </div>
@@ -4023,7 +4027,9 @@ function bindReports() {
 
   setTimeout(() => {
     renderBalanceLineChart('report-bar', months12);
-    renderDonutChart('report-donut', allTxs, 'expense');
+    renderDonutChart('report-donut', allTxs, 'expense',
+      (catName, catColor) => openCategoryDrilldown(catName, catColor, null, 'expense', allTxs, `${year}年`)
+    );
     renderCategoryBarChart('report-cat-expense', allTxs, 'expense');
     renderPaymentMethodChart('report-payment-donut', allTxs);
     renderMemberExpenseChart('report-member-bar', allTxs);
@@ -5467,6 +5473,102 @@ function esc2(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+// ============================================================
+// グラフ ドリルダウンモーダル (v8.0)
+// ============================================================
+function openCategoryDrilldown(catName, catColor, month, type, txsPool, periodLabel) {
+  const allTxs = txsPool || (month
+    ? getTransactionsByMonth(month)
+    : appData.transactions);
+
+  const txs = allTxs
+    .filter(t => t.type === type)
+    .filter(t => {
+      const cat = getCategoryById(t.categoryId);
+      const name = cat ? cat.name : 'その他';
+      return name === catName;
+    })
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  // カテゴリドット・タイトル
+  const dotEl = document.getElementById('dd-cat-dot');
+  const titleEl = document.getElementById('dd-modal-title');
+  if (dotEl) dotEl.style.background = catColor || '#6b7280';
+  if (titleEl) titleEl.textContent = catName;
+
+  // サマリー
+  const total = txs.reduce((s, t) => s + (Number(t.amount) || 0), 0);
+  const summaryEl = document.getElementById('dd-summary');
+  if (summaryEl) {
+    const monthLabel = periodLabel ||
+      (month
+        ? (() => { const [y, m] = month.split('-'); return `${y}年${parseInt(m, 10)}月`; })()
+        : '全期間');
+    summaryEl.innerHTML = `
+      <div class="dd-summary-item">
+        <span class="dd-summary-label">合計</span>
+        <span class="dd-summary-value" style="color:${catColor || 'var(--primary)'}">${formatMoney(total)}</span>
+      </div>
+      <div class="dd-summary-item">
+        <span class="dd-summary-label">件数</span>
+        <span class="dd-summary-value">${txs.length}件</span>
+      </div>
+      <div class="dd-summary-item">
+        <span class="dd-summary-label">対象期間</span>
+        <span class="dd-summary-value">${monthLabel}</span>
+      </div>
+    `;
+  }
+
+  // 取引一覧
+  const listEl = document.getElementById('dd-list');
+  if (listEl) {
+    if (txs.length === 0) {
+      listEl.innerHTML = '<div class="dd-empty">取引データがありません</div>';
+    } else {
+      listEl.innerHTML = txs.map((t, i) => {
+        const dateStr = t.date ? t.date.slice(5).replace('-', '/') : '–';
+        const memo = t.memo || '（メモなし）';
+        return `<div class="dd-tx-row" data-id="${t.id}" style="--dd-i:${i}" role="button" tabindex="0">
+          <span class="dd-tx-date">${dateStr}</span>
+          <span class="dd-tx-memo" title="${esc2(memo)}">${esc2(memo)}</span>
+          <span class="dd-tx-amount ${type}">${type === 'expense' ? '−' : '+'}${formatMoney(t.amount)}</span>
+        </div>`;
+      }).join('');
+
+      // クリックで取引編集モーダルを開く
+      listEl.querySelectorAll('.dd-tx-row').forEach(row => {
+        const open = () => { hideModal('dd-modal'); setTimeout(() => openTxModal(row.dataset.id), 120); };
+        row.addEventListener('click', open);
+        row.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+        });
+      });
+    }
+  }
+
+  // 「このカテゴリで追加」ボタン
+  const addBtn = document.getElementById('dd-add-btn');
+  if (addBtn) {
+    const matchCat = appData.categories.find(c => c.name === catName && c.type === type);
+    addBtn.onclick = () => {
+      hideModal('dd-modal');
+      setTimeout(() => openTxModal(null, matchCat ? { categoryId: matchCat.id, type } : { type }), 120);
+    };
+  }
+
+  showModal('dd-modal');
+}
+
+// ドリルダウンモーダル 閉じるハンドラー（即時登録：script は body 末尾なので DOM 確定済み）
+{
+  const close = () => hideModal('dd-modal');
+  document.getElementById('dd-modal-close')?.addEventListener('click', close);
+  document.getElementById('dd-modal-close2')?.addEventListener('click', close);
+  const ddModal = document.getElementById('dd-modal');
+  if (ddModal) ddModal.addEventListener('click', e => { if (e.target === ddModal) close(); });
 }
 
 function monthSelector(id, value) {

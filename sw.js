@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.9'; // v7.9: キーボードショートカット + ヘルプモーダル
+const CACHE_NAME = 'kakeibo-v8.0'; // v8.0: グラフカテゴリドリルダウン
 const ASSETS = [
   './index.html',
   './css/style.css',

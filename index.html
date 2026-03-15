@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=7.9">
+  <link rel="stylesheet" href="css/style.css?v=8.0">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -340,6 +340,27 @@
     </div>
   </div>
 </div>
+<!-- グラフ ドリルダウンモーダル (v8.0) -->
+<div id="dd-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="dd-modal-title">
+  <div class="modal-box dd-modal-box">
+    <div class="modal-header dd-modal-header">
+      <div class="dd-cat-info">
+        <span class="dd-cat-dot" id="dd-cat-dot" aria-hidden="true"></span>
+        <h2 class="modal-title" id="dd-modal-title"></h2>
+      </div>
+      <button class="modal-close" id="dd-modal-close" aria-label="閉じる">✕</button>
+    </div>
+    <div class="dd-summary" id="dd-summary"></div>
+    <div class="dd-list" id="dd-list"></div>
+    <div class="modal-footer dd-modal-footer">
+      <button class="btn btn-ghost" id="dd-modal-close2">閉じる</button>
+      <button class="btn btn-primary" id="dd-add-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        このカテゴリで追加
+      </button>
+    </div>
+  </div>
+</div>
 <!-- Gキーシーケンスヒント -->
 <div id="kb-g-hint" class="kb-g-hint" aria-hidden="true">
   <div class="kb-g-hint-top"><kbd>G</kbd><span class="kb-g-dots">…</span></div>
@@ -347,15 +368,15 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=7.9"></script>
-<script src="js/config.js?v=7.9"></script>
-<script src="js/data.js?v=7.9"></script>
-<script src="js/export.js?v=7.9"></script>
-<script src="js/charts.js?v=7.9"></script>
-<script src="js/sync.js?v=7.9"></script>
-<script src="js/app.js?v=7.9"></script>
+<script src="js/icons.js?v=8.0"></script>
+<script src="js/config.js?v=8.0"></script>
+<script src="js/data.js?v=8.0"></script>
+<script src="js/export.js?v=8.0"></script>
+<script src="js/charts.js?v=8.0"></script>
+<script src="js/sync.js?v=8.0"></script>
+<script src="js/app.js?v=8.0"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=7.9"></script>
+<script src="js/pwa.js?v=8.0"></script>
 
 </body>
 </html>
