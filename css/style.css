@@ -2021,7 +2021,7 @@ mark.tx-hl {
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background .15s, border-color .15s, color .15s;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
   white-space: nowrap;
 }
 .btn-preset:hover {
@@ -3073,6 +3073,9 @@ body {
 [data-theme="dark"] .type-toggle { background: var(--surface-2); }
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); }
 [data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.6); }
+/* 収支テキストのコントラスト改善（ダーク：WCAG AA準拠） */
+[data-theme="dark"] .income  { color: #34d399; }
+[data-theme="dark"] .expense { color: #fb7185; }
 
 /* ============================================================
    マイクロインタラクション (v5.8)
@@ -3455,9 +3458,9 @@ body {
 
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
-[data-theme="dark"] .step-num { background: rgba(99,102,241,.2); color: #a5b4fc; }
-[data-theme="dark"] .step-card:hover { border-color: #a5b4fc; }
-[data-theme="dark"] .empty-month-btn { background: rgba(99,102,241,.18); color: #a5b4fc; }
+[data-theme="dark"] .step-num { background: rgba(99,102,241,.2); color: var(--primary-end); }
+[data-theme="dark"] .step-card:hover { border-color: var(--primary-end); }
+[data-theme="dark"] .empty-month-btn { background: rgba(99,102,241,.18); color: var(--primary-end); }
 [data-theme="dark"] .empty-month-btn:hover { background: rgba(99,102,241,.28); }
 
 /* レスポンシブ */
@@ -4806,10 +4809,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-ws-pill.empty { color: var(--text-muted); font-size: 10px; }
 
 /* 支出ヒートマップ */
-.cal-cell.heat-1 { background: color-mix(in srgb, #ef4444  8%, var(--surface)); }
-.cal-cell.heat-2 { background: color-mix(in srgb, #ef4444 18%, var(--surface)); }
-.cal-cell.heat-3 { background: color-mix(in srgb, #ef4444 30%, var(--surface)); }
-.cal-cell.heat-4 { background: color-mix(in srgb, #ef4444 44%, var(--surface)); }
+.cal-cell.heat-1 { background: color-mix(in srgb, var(--expense)  8%, var(--surface)); }
+.cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) 18%, var(--surface)); }
+.cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) 30%, var(--surface)); }
+.cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 44%, var(--surface)); }
 
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
 .cal-cell.selected {

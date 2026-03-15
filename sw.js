@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.6.0'; // v9.6.0: CSS変数補完(--fs-md/--radius-card)・ハードコード色をCSS変数化・サマリーカードタブレット2列レイアウト
+const CACHE_NAME = 'kakeibo-v9.7.0'; // v9.7.0: ダークモード収支テキストコントラスト改善(WCAG AA)・btn-presetトランジション修正・ヒートマップCSS変数化
 const ASSETS = [
   './index.html',
   './css/style.css',
