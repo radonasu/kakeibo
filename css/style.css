@@ -12218,3 +12218,38 @@ canvas.chart-clickable { cursor: pointer; }
 @media (max-width: 480px) {
   .md-cat-row { grid-template-columns: 60px 1fr 60px 28px; }
 }
+
+/* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */
+.rpt-month-row.is-clickable {
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s cubic-bezier(.34,1.56,.64,1), box-shadow 0.15s;
+}
+.rpt-month-row.is-clickable:hover {
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.rpt-month-row.is-clickable:hover .rpt-row-chevron {
+  opacity: 1;
+  transform: translateX(2px);
+}
+.rpt-month-row.is-clickable:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.rpt-month-label {
+  font-variant-numeric: tabular-nums;
+}
+.rpt-row-chevron {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
+  margin-left: 4px;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+[data-theme="dark"] .rpt-month-row.is-clickable:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}

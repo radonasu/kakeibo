@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.6'; // v8.6: 月別棒グラフ → 月ドリルダウンモーダル
+const CACHE_NAME = 'kakeibo-v8.7'; // v8.7: レポートページ インタラクティブ強化（月別折れ線グラフ＋月別表ドリルダウン）
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -294,7 +294,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
 }
 
 // ─── 月別残高折れ線グラフ（レポート用）──────────────────────
-function renderBalanceLineChart(canvasId, months) {
+function renderBalanceLineChart(canvasId, months, onMonthClick) {
   destroyChart(canvasId);
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -312,6 +312,13 @@ function renderBalanceLineChart(canvasId, months) {
   const { text: textColor, grid: gridColor } = getThemeColors();
   const lineColor = '#4f46e5';
   const ctx2d = canvas.getContext('2d');
+
+  const tooltipCallbacks = {
+    label: ctx => `収支: ${formatMoney(ctx.raw)}`,
+  };
+  if (onMonthClick) {
+    tooltipCallbacks.footer = () => 'クリックで詳細を表示';
+  }
 
   chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'line',
@@ -339,9 +346,7 @@ function renderBalanceLineChart(canvasId, months) {
       animation: commonAnimation,
       plugins: {
         legend: { display: false },
-        tooltip: commonTooltip({
-          label: ctx => `収支: ${formatMoney(ctx.raw)}`,
-        }),
+        tooltip: commonTooltip(tooltipCallbacks),
       },
       scales: {
         x: {
@@ -359,6 +364,16 @@ function renderBalanceLineChart(canvasId, months) {
           border: { display: false },
         },
       },
+      ...(onMonthClick ? {
+        onClick: (_evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          if (months[idx]) onMonthClick(months[idx]);
+        },
+        onHover: (_evt, elements) => {
+          canvas.style.cursor = elements.length ? 'pointer' : 'default';
+        },
+      } : {}),
     },
   });
 }

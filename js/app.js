@@ -3784,8 +3784,9 @@ function renderReports() {
     const expense = calcTotal(txs, 'expense');
     const balance = income - expense;
     const mo = parseInt(ym.split('-')[1]);
-    return `<tr>
-      <td>${mo}月</td>
+    const hasData = txs.length > 0;
+    return `<tr class="rpt-month-row${hasData ? ' is-clickable' : ''}" data-month="${ym}" role="${hasData ? 'button' : ''}" tabindex="${hasData ? '0' : '-1'}" title="${hasData ? mo + '月の詳細を表示' : ''}">
+      <td><span class="rpt-month-label">${mo}月</span>${hasData ? '<svg class="rpt-row-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg>' : ''}</td>
       <td class="income">${income ? formatMoney(income) : '—'}</td>
       <td class="expense">${expense ? formatMoney(expense) : '—'}</td>
       <td class="${balance >= 0 ? 'income' : 'expense'}">${formatMoney(balance)}</td>
@@ -3878,8 +3879,9 @@ function renderReports() {
 <div id="sec-monthly-charts" class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">月別収支</h3>
-    <div class="chart-wrap" style="height:240px">
+    <div class="chart-wrap chart-clickable-wrap" style="height:240px">
       <canvas id="report-bar"></canvas>
+      <span class="chart-clickable-hint">ポイントで詳細</span>
     </div>
   </div>
   <div class="card chart-card">
@@ -4372,7 +4374,7 @@ function bindReports() {
   };
 
   setTimeout(() => {
-    renderBalanceLineChart('report-bar', months12);
+    renderBalanceLineChart('report-bar', months12, month => openMonthDrilldown(month));
     renderDonutChart('report-donut', allTxs, 'expense',
       (catName, catColor) => openCategoryDrilldown(catName, catColor, null, 'expense', allTxs, `${year}年`)
     );
@@ -4460,6 +4462,20 @@ function bindReports() {
     }
   });
 
+
+  // 月別表: 行クリックで月ドリルダウンモーダル (v8.7)
+  document.getElementById('sec-monthly-table')?.addEventListener('click', e => {
+    const row = e.target.closest('.rpt-month-row.is-clickable');
+    if (!row || !row.dataset.month) return;
+    openMonthDrilldown(row.dataset.month);
+  });
+  document.getElementById('sec-monthly-table')?.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const row = e.target.closest('.rpt-month-row.is-clickable');
+    if (!row || !row.dataset.month) return;
+    e.preventDefault();
+    openMonthDrilldown(row.dataset.month);
+  });
 
   // ヒートマップ: 日付セルクリックで月カレンダーへ遷移 (v5.82)
   document.getElementById('sec-heatmap')?.addEventListener('click', e => {
