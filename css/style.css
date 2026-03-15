@@ -270,8 +270,8 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: rgba(255,255,255,.07); color: #e2e8f0; }
 .nav-item.active {
-  background: rgba(99,102,241,.2);
-  color: #a5b4fc;
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary-end);
   font-weight: 700;
 }
 .nav-item.active::before {
@@ -294,8 +294,8 @@ select:focus:not(:focus-visible) {
 }
 .nav-icon svg { display: block; }
 .nav-item.active .nav-icon {
-  background: rgba(124,58,237,.25);
-  color: #c4b5fd;
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+  color: var(--primary-end);
   border-radius: 8px;
   padding: 2px;
 }
@@ -358,7 +358,7 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
   transition: color .15s;
 }
-.btn-sidebar-logout:hover { color: #e11d48; }
+.btn-sidebar-logout:hover { color: var(--expense); }
 
 .sidebar-offline-badge {
   font-size: var(--fs-xs);
@@ -556,9 +556,9 @@ select:focus:not(:focus-visible) {
 .btn-primary {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(99,102,241,.35);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
 }
-.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px rgba(99,102,241,.5); }
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 50%, transparent); }
 
 .btn-ghost {
   background: var(--surface-2);
@@ -573,7 +573,7 @@ select:focus:not(:focus-visible) {
   color: var(--danger-text);
   border: 1.5px solid var(--danger-border);
 }
-.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px rgba(225,29,72,.2); }
+.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) 20%, transparent); }
 
 .btn-sm { padding: 6px 12px; font-size: var(--fs-xs); border-radius: var(--radius-btn-sm); }
 
@@ -724,13 +724,13 @@ select:focus:not(:focus-visible) {
 .form-group.has-error select,
 .form-group.has-error textarea {
   border-color: var(--danger-text) !important;
-  box-shadow: 0 0 0 3px rgba(220,38,38,.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger-text) 10%, transparent);
 }
 .form-group.has-success input,
 .form-group.has-success select,
 .form-group.has-success textarea {
   border-color: var(--success) !important;
-  box-shadow: 0 0 0 3px rgba(5,150,105,.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 10%, transparent);
 }
 /* インラインフィールドメッセージ */
 .field-msg {
