@@ -402,6 +402,8 @@ select:focus:not(:focus-visible) {
   padding: var(--sp-8);
   max-width: 1120px;
   width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 /* ── 共通コンポーネント ───────────────────────────────── */
@@ -4753,14 +4755,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 週次サマリー行 (v5.93) */
 .cal-week-summary {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--sp-1);
-  padding: 3px var(--sp-3) 4px;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
+  display: none;
 }
 .cal-week-summary:last-of-type { border-bottom: none; }
 
@@ -6036,6 +6031,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-gauge-svg {
   display: block;
   width: 120px;
+  height: auto;
   overflow: visible;
 }
 .hs-gauge-track {

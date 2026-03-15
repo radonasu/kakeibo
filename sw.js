@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.1'; // v9.1: 月間支出ペースウィジェット（日数経過vs予算消化2バー比較・3色ステータスバッジ・ダークモード対応）
+const CACHE_NAME = 'kakeibo-v9.1a'; // v9.1a: バグ修正4件（モバイルはみ出し・カレンダー週間合計非表示・家計スコアゲージ・AIアドバイスモーダル）
 const ASSETS = [
   './index.html',
   './css/style.css',

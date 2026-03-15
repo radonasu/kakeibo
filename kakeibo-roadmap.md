@@ -183,6 +183,8 @@
 
 | 118 | v9.0 | デザイン | 月ドリルダウン ビジュアル洗練：①月切替スライドアニメーション（prev/nextナビ時にスクロールエリアが方向に応じて左/右からフェードスライドインする `@keyframes md-slide-from-left/right` 0.28s cubic-bezier・`.md-modal-box.md-slide-prev/next .md-scroll-body`に適用・Voidリフロー経由で再発動） ②ヘッダー貯蓄率バッジ（`openMonthDrilldown`内で`md-month-info`のinnerHTMLを再構築・月タイトル隣に`.md-savings-badge`ピルを動的生成・貯蓄率20%以上=緑`good`/0%以上=黄`warn`/赤字=赤`bad`の3色コーディング・`+XX%`/`-XX%`形式で表示） ③「この月を見る」ボタンに月名付与（`viewBtn.textContent = '${mo}月を見る →'`形式で遷移先を明示） ④`.md-month-info`に`flex:1;flex-wrap:wrap;row-gap:3px`追加でバッジ折り返し対応・ダークモード対応 |
 
+| 119 | v9.1 | 機能＋デザイン | 月間支出ペースウィジェット：`renderPaceWidget(ym)`を新設・月の経過日数%と予算/収入消化%を2本の横バーで並べて比較表示・予算設定あり→予算合計を基準、なし→今月収入を基準に自動切替・差分10pt以内を「👍 ペース良好」(緑)/10pt以内を「⚠️ 概ね順調」(黄)/超過を「🚨 ペース速め」(赤)の3状態にステータスバッジで色分け・`pace-bar-in` scaleX 0.85s cubic-bezier弾性アニメーション・ステータス別メッセージカード（success-bg/warning-bg/danger-bg背景・border付き）・ダッシュボードカスタマイズに「支出ペース」追加・ダークモード完全対応 |
+
 | 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
 
 ## 次スプリント候補（v5.44以降）

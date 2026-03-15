@@ -1690,7 +1690,7 @@ ${showWidget('chart') ? `<div class="dash-full"><div class="charts-row">
 </div>
 
 <!-- AI家計アドバイスモーダル (v6.1) -->
-<div id="advice-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="advice-modal-title">
+<div id="advice-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="advice-modal-title">
   <div class="modal">
     <div class="modal-header">
       <h2 id="advice-modal-title">🤖 AI家計アドバイス</h2>
@@ -1972,9 +1972,9 @@ function bindDashboard() {
   const advClose  = document.getElementById('advice-modal-close');
   const advClose2 = document.getElementById('advice-modal-close2');
   const advModal  = document.getElementById('advice-modal');
-  if (advClose  && advModal) advClose.addEventListener('click',  () => { advModal.style.display = 'none'; });
-  if (advClose2 && advModal) advClose2.addEventListener('click', () => { advModal.style.display = 'none'; });
-  if (advModal) advModal.addEventListener('click', e => { if (e.target === advModal) advModal.style.display = 'none'; });
+  if (advClose  && advModal) advClose.addEventListener('click',  () => { hideModal(advModal); });
+  if (advClose2 && advModal) advClose2.addEventListener('click', () => { hideModal(advModal); });
+  if (advModal) advModal.addEventListener('click', e => { if (e.target === advModal) hideModal(advModal); });
 
   // ── ウィジェット折りたたみ バインド (v7.0) ─────────────────
   document.querySelectorAll('.card-collapse-btn[data-collapse-target]').forEach(btn => {
@@ -6561,7 +6561,7 @@ function openAdviceModal(month) {
   const badge = document.getElementById('adv-month-badge');
   if (badge) badge.textContent = `📅 ${y}年${Number(m)}月`;
 
-  modal.style.display = 'flex';
+  showModal(modal);
 
   const bodyEl   = document.getElementById('adv-body');
   const copyBtn  = document.getElementById('adv-copy-btn');
@@ -8165,15 +8165,15 @@ function openRecurringConfirmModal(templates) {
 
   closeBtn.onclick = skipBtn.onclick;
 
-  modal.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('rc-modal-open')));
+  showModal(modal);
+  requestAnimationFrame(() => modal.classList.add('rc-modal-open'));
 }
 
 function closeRecurringConfirmModal() {
   const modal = document.getElementById('rc-modal');
   if (!modal) return;
   modal.classList.remove('rc-modal-open');
-  setTimeout(() => { modal.style.display = 'none'; }, 300);
+  hideModal(modal);
 }
 
 function _markRecurringSkipped(ids) {
@@ -11133,7 +11133,7 @@ function openEventModal(id, presetMonth) {
   document.getElementById('ev-color-selected').value = ev ? (ev.color||'#6366f1') : '#6366f1';
 
   document.getElementById('ev-modal-title').textContent = id ? 'イベントを編集' : '収支予定を追加';
-  modal.classList.add('open');
+  showModal(modal);
 
   // 絵文字選択
   document.getElementById('ev-emoji-grid').querySelectorAll('.ev-emoji-chip').forEach(btn => {
@@ -11157,7 +11157,7 @@ function openEventModal(id, presetMonth) {
 
 function closeEventModal() {
   const modal = document.getElementById('ev-modal');
-  if (modal) modal.classList.remove('open');
+  if (modal) hideModal(modal);
 }
 
 function saveEventForm() {
