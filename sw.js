@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.8.0'; // v9.8.0: --income/--expenseダークモード変数追加・カレンダー/チャレンジ/バッジの#ef4444系ハードコード色をCSS変数化・--text-sub追加
+const CACHE_NAME = 'kakeibo-v9.9.0'; // v9.9.0: focus-visible追加(チップ・日付ボタン)・nt-textarea hover追加・スペーシングCSS変数化・モバイル@media補完
 const ASSETS = [
   './index.html',
   './css/style.css',
