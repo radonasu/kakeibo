@@ -4684,19 +4684,68 @@ function renderCategories() {
 
   const budgets = appData.budgets || {};
 
-  const catRow = (c) => `
-    <tr>
-      <td><span class="color-dot" style="background:${c.color}"></span>${esc2(c.name)}</td>
-      <td>${esc2(c.yayoiAccount)}</td>
-      <td><span class="cat-fixed-badge ${c.isFixed ? 'is-fixed' : 'is-var'}">${c.isFixed ? '固定' : '変動'}</span></td>
-      ${c.type === 'expense'
-        ? `<td><input class="budget-input" type="number" min="0" step="100" data-id="${c.id}" value="${budgets[c.id] || ''}" placeholder="なし"></td>`
-        : '<td class="text-muted">—</td>'}
-      <td class="actions">
-        <button class="btn-icon edit-cat" data-id="${c.id}" title="編集">✏️</button>
-        <button class="btn-icon delete-cat" data-id="${c.id}" title="削除">🗑️</button>
-      </td>
-    </tr>`;
+  // 今月の支出を集計 (v9.5)
+  const ym = appState.month;
+  const monthTxs = getTransactions().filter(t => t.date && t.date.startsWith(ym));
+  const spentMap = {};
+  monthTxs.filter(t => t.type === 'expense').forEach(t => {
+    spentMap[t.categoryId] = (spentMap[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+
+  const catCard = (c, idx) => {
+    const icon = CAT_ICONS[c.name] || '📌';
+    const spent = spentMap[c.id] || 0;
+    const budget = budgets[c.id] || 0;
+    const pct = budget > 0 ? Math.min(Math.round(spent / budget * 100), 999) : 0;
+    const overBudget = budget > 0 && spent > budget;
+    const warnBudget = budget > 0 && pct >= 80;
+    const barState = overBudget ? 'over' : warnBudget ? 'warn' : 'ok';
+    const barColor = overBudget ? 'var(--expense)' : warnBudget ? 'var(--warning)' : c.color;
+
+    const statsSection = c.type === 'expense' ? `
+      <div class="cat-card-stats">
+        <div class="cat-stat-row">
+          <span class="cat-stat-lbl">今月の支出</span>
+          <span class="cat-stat-val ${overBudget ? 'over' : ''}" style="color:${spent > 0 ? c.color : 'var(--text-muted)'}">
+            ${spent > 0 ? '¥' + spent.toLocaleString('ja-JP') : '—'}
+          </span>
+        </div>
+        <div class="cat-stat-row cat-budget-row">
+          <label class="cat-stat-lbl" for="budget-${c.id}">月次予算</label>
+          <input class="budget-input cat-budget-input" id="budget-${c.id}" type="number" min="0" step="100" data-id="${c.id}" value="${budget || ''}" placeholder="未設定">
+        </div>
+        ${budget > 0 ? `
+        <div class="cat-budget-bar-wrap">
+          <div class="cat-budget-bar-fill" style="--cat-bar-pct:${Math.min(pct,100)}%; --cat-bar-clr:${barColor}; --cc-i:${idx}"></div>
+        </div>
+        <div class="cat-budget-pct ${barState}">${pct}% 使用${overBudget ? ' ⚠️' : ''}</div>
+        ` : ''}
+      </div>` : '';
+
+    return `
+<div class="cat-card" style="--cat-clr:${c.color}; --cc-i:${idx}">
+  <div class="cat-card-accent"></div>
+  <div class="cat-card-header">
+    <div class="cat-card-icon"><span aria-hidden="true">${icon}</span></div>
+    <div class="cat-card-info">
+      <div class="cat-card-name">${esc2(c.name)}</div>
+      <div class="cat-card-meta">
+        <span class="cat-fixed-badge ${c.isFixed ? 'is-fixed' : 'is-var'}">${c.isFixed ? '固定費' : '変動費'}</span>
+        ${c.yayoiAccount ? `<span class="cat-yayoi-tag">${esc2(c.yayoiAccount)}</span>` : ''}
+      </div>
+    </div>
+    <div class="cat-card-actions">
+      <button class="btn-icon edit-cat" data-id="${c.id}" title="編集" aria-label="${esc2(c.name)}を編集">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2a1.5 1.5 0 0 1 2.1 2.1L4.7 12.5l-2.7.6.6-2.7L11 2z"/></svg>
+      </button>
+      <button class="btn-icon delete-cat" data-id="${c.id}" title="削除" aria-label="${esc2(c.name)}を削除">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 14 4"/><path d="M5 4V2h6v2M6 7v5M10 7v5"/><path d="M3 4l1 9h8l1-9"/></svg>
+      </button>
+    </div>
+  </div>
+  ${statsSection}
+</div>`;
+  };
 
   return `
 <div class="page-header">
@@ -4708,22 +4757,16 @@ function renderCategories() {
 </div>
 
 <div class="card">
-  <h3 class="card-title section-label expense">支出カテゴリ</h3>
-  <div class="table-wrap">
-    <table class="tx-table">
-      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>タイプ</th><th>月次予算 (¥)</th><th></th></tr></thead>
-      <tbody>${expCats.map(catRow).join('') || '<tr><td colspan="5" class="empty">なし</td></tr>'}</tbody>
-    </table>
+  <h3 class="card-title section-label expense">支出カテゴリ <span class="cat-month-label">${ym.replace('-', '年')}月</span></h3>
+  <div class="cat-card-grid">
+    ${expCats.map((c, i) => catCard(c, i)).join('') || '<p class="empty" style="padding:var(--sp-4)">カテゴリがありません</p>'}
   </div>
 </div>
 
 <div class="card">
   <h3 class="card-title section-label income">収入カテゴリ</h3>
-  <div class="table-wrap">
-    <table class="tx-table">
-      <thead><tr><th>カテゴリ名</th><th>弥生勘定科目</th><th>タイプ</th><th>月次予算</th><th></th></tr></thead>
-      <tbody>${incCats.map(catRow).join('') || '<tr><td colspan="5" class="empty">なし</td></tr>'}</tbody>
-    </table>
+  <div class="cat-card-grid cat-card-grid--income">
+    ${incCats.map((c, i) => catCard(c, i)).join('') || '<p class="empty" style="padding:var(--sp-4)">カテゴリがありません</p>'}
   </div>
 </div>
 
