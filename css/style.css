@@ -57,6 +57,7 @@
   --fs-xs:      12px;   /* 極小：バッジ、ラベル、ヒント */
   --fs-sm:      13px;   /* 小：サブテキスト、テーブル */
   --fs-base:    14px;   /* 基本：本文、ボタン、入力 */
+  --fs-md:      15px;   /* 中基本：カード数値・取引金額 */
   --fs-lg:      15px;   /* 中：カードタイトル */
   --fs-xl:      16px;   /* 大：モーダル見出し */
   --fs-2xl:     20px;   /* 特大：ページタイトル（モバイル）*/
@@ -97,6 +98,7 @@
   --radius-btn:      12px;  /* ボタン角丸（統一） */
   --radius-btn-sm:    8px;  /* 小ボタン角丸 */
   --radius-badge:   999px;  /* バッジ・pill */
+  --radius-card:     14px;  /* カード角丸（モーダル内カード等） */
   --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
 }
 
@@ -339,7 +341,7 @@ select:focus:not(:focus-visible) {
 }
 .sidebar-user-status {
   font-size: var(--fs-2xs);
-  color: #10b981;
+  color: var(--success);
 }
 
 .btn-sidebar-logout {
@@ -2824,11 +2826,12 @@ body {
   .sync-toast { bottom: 80px !important; }
   .update-toast { bottom: 80px; }
 
-  .summary-cards { grid-template-columns: 1fr; gap: 12px; }
+  .summary-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .summary-cards .summary-card:nth-child(3) { grid-column: 1 / -1; }
+  .summary-amount { font-size: var(--fs-3xl); }
   .charts-row    { grid-template-columns: 1fr; }
   .export-grid   { grid-template-columns: 1fr; }
 
-  .summary-amount { font-size: var(--fs-3xl); }
   .filter-bar { gap: 8px; }
   .filter-bar select, .filter-bar .month-sel { font-size: var(--fs-xs); padding: 7px 9px; }
   .tx-table th, .tx-table td { padding: 8px 9px; }
@@ -2859,6 +2862,10 @@ body {
 
 @media (max-width: 480px) {
   .auth-card { padding: 28px 24px; }
+  /* サマリーカード: 480px以下で1列に戻す */
+  .summary-cards { grid-template-columns: 1fr; }
+  .summary-cards .summary-card:nth-child(3) { grid-column: auto; }
+  .summary-amount { font-size: var(--fs-4xl); }
 }
 
 /* ============================================================
@@ -5749,7 +5756,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: transparent;
 }
 .pt-expiring {
-  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--warning) 0%, #f97316 100%);
   border-color: transparent;
 }
 .pt-summary-label {
@@ -7214,8 +7221,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 4px;
   transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
 }
-.ch-bar-ok   { background: linear-gradient(90deg, #10b981, #34d399); }
-.ch-bar-warn { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
+.ch-bar-warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
 .ch-bar-over { background: linear-gradient(90deg, #ef4444, #f87171); }
 
 .ch-progress-label {
@@ -7230,7 +7237,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   min-width: 36px;
   text-align: right;
 }
-.ch-progress-pct.ch-pct-ok   { color: #10b981; }
+.ch-progress-pct.ch-pct-ok   { color: var(--success); }
 .ch-progress-pct.ch-pct-over { color: #ef4444; }
 
 /* -- ステータスバッジ -- */
@@ -7371,7 +7378,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   min-width: 36px;
   text-align: right;
 }
-.ch-widget-pct.ch-pct-ok   { color: #10b981; }
+.ch-widget-pct.ch-pct-ok   { color: var(--success); }
 .ch-widget-pct.ch-pct-over { color: #ef4444; }
 
 /* -- ダークモード対応 -- */
@@ -7445,7 +7452,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 最少支出: 緑系グラデーション */
 .dow-stat-min {
-  background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+  background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%);
   color: #fff;
 }
 
@@ -7669,9 +7676,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid color-mix(in srgb, #6366f1 30%, transparent);
 }
 .cat-fixed-badge.is-var {
-  background: color-mix(in srgb, #10b981 10%, transparent);
-  color: #10b981;
-  border: 1px solid color-mix(in srgb, #10b981 28%, transparent);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
+  border: 1px solid color-mix(in srgb, var(--success) 28%, transparent);
 }
 [data-theme="dark"] .cat-fixed-badge.is-fixed {
   background: color-mix(in srgb, #818cf8 18%, transparent);
@@ -7703,8 +7710,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
 .fv-stat-fixed { background: linear-gradient(135deg, #4338ca, #6366f1); }
-.fv-stat-var   { background: linear-gradient(135deg, #065f46, #10b981); }
-.fv-stat-rate  { background: linear-gradient(135deg, #92400e, #f59e0b); }
+.fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
+.fv-stat-rate  { background: linear-gradient(135deg, #92400e, var(--warning)); }
 /* デコレーションサークル */
 .fv-stat-card::after {
   content: '';
@@ -7731,7 +7738,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* テーブルセル */
 .fv-fixed-val { color: #6366f1; font-weight: 600; font-variant-numeric: tabular-nums; }
-.fv-var-val   { color: #10b981; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fv-var-val   { color: var(--success); font-weight: 600; font-variant-numeric: tabular-nums; }
 .fv-month-cell { font-weight: 600; }
 
 /* 固定費率バッジ */
@@ -7743,8 +7750,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: 600;
 }
 .fv-rate-badge.high { background: color-mix(in srgb, #6366f1 12%, transparent); color: #6366f1; }
-.fv-rate-badge.mid  { background: color-mix(in srgb, #f59e0b 12%, transparent); color: #d97706; }
-.fv-rate-badge.low  { background: color-mix(in srgb, #10b981 10%, transparent); color: #059669; }
+.fv-rate-badge.mid  { background: color-mix(in srgb, var(--warning) 12%, transparent); color: var(--warning); }
+.fv-rate-badge.low  { background: color-mix(in srgb, var(--success) 10%, transparent); color: var(--success); }
 [data-theme="dark"] .fv-rate-badge.high { color: #a5b4fc; }
 [data-theme="dark"] .fv-rate-badge.mid  { color: #fbbf24; }
 [data-theme="dark"] .fv-rate-badge.low  { color: #6ee7b7; }
@@ -7807,7 +7814,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-seg-var {
   height: 100%;
-  background: #10b981;
+  background: var(--success);
   flex: 1;
   animation: fv-seg-in 0.6s ease both;
   animation-delay: calc(var(--fv-ri, 0) * 22ms + 0.06s);
@@ -8500,20 +8507,20 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hm-stat-card:nth-child(2)::before { background: var(--danger-text); }
 .hm-stat-card:nth-child(3) {
-  background: linear-gradient(135deg, #fffbeb 0%, var(--surface) 100%);
-  border-color: color-mix(in srgb, #f59e0b 30%, transparent);
+  background: linear-gradient(135deg, var(--warning-bg) 0%, var(--surface) 100%);
+  border-color: color-mix(in srgb, var(--warning) 30%, transparent);
 }
-.hm-stat-card:nth-child(3)::before { background: #f59e0b; }
+.hm-stat-card:nth-child(3)::before { background: var(--warning); }
 .hm-stat-card:nth-child(4) {
   background: linear-gradient(135deg, var(--success-bg) 0%, var(--surface) 100%);
   border-color: var(--success-border);
 }
-.hm-stat-card:nth-child(4)::before { background: #10b981; }
+.hm-stat-card:nth-child(4)::before { background: var(--success); }
 
 [data-theme="dark"] .hm-stat-card:nth-child(1) { background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 15%, var(--surface)) 0%, var(--surface) 100%); }
 [data-theme="dark"] .hm-stat-card:nth-child(2) { background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 12%, var(--surface)) 0%, var(--surface) 100%); }
-[data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(135deg, color-mix(in srgb, #f59e0b 12%, var(--surface)) 0%, var(--surface) 100%); }
-[data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(135deg, color-mix(in srgb, #10b981 12%, var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(135deg, color-mix(in srgb, var(--warning) 12%, var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(135deg, color-mix(in srgb, var(--success) 12%, var(--surface)) 0%, var(--surface) 100%); }
 
 .hm-stat-label {
   font-size: var(--fs-xs);
@@ -8809,7 +8816,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { transform: scaleX(1); }
 }
 .debt-bar-great { background: var(--income); }
-.debt-bar-mid   { background: #f59e0b; }
+.debt-bar-mid   { background: var(--warning); }
 .debt-bar-low   { background: var(--expense); }
 
 /* 完済予定 ピルスタイル (v5.85) */
@@ -8951,7 +8958,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-result-label { color: var(--text-muted); font-size: var(--fs-xs); display: flex; align-items: center; }
 .sim-result-col-head { text-align: center; }
 .sim-col-base { color: #6366f1; }
-.sim-col-accel { color: #10b981; }
+.sim-col-accel { color: var(--success); }
 .sim-result-val { text-align: center; font-weight: 600; color: var(--text); }
 .sim-val-better { color: #059669; }
 
@@ -9042,13 +9049,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, #6366f1 10%, transparent) !important;
 }
 .sim-col-accel-head {
-  background: color-mix(in srgb, #10b981 10%, transparent) !important;
+  background: color-mix(in srgb, var(--success) 10%, transparent) !important;
 }
 [data-theme="dark"] .sim-col-base-head {
   background: color-mix(in srgb, #6366f1 18%, transparent) !important;
 }
 [data-theme="dark"] .sim-col-accel-head {
-  background: color-mix(in srgb, #10b981 18%, transparent) !important;
+  background: color-mix(in srgb, var(--success) 18%, transparent) !important;
 }
 
 /* セル スタッガードフェードイン */
@@ -9062,10 +9069,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 改善値セル — 薄い緑背景ハイライト */
 .sim-val-better {
-  background: color-mix(in srgb, #10b981 6%, transparent);
+  background: color-mix(in srgb, var(--success) 6%, transparent);
 }
 [data-theme="dark"] .sim-val-better {
-  background: color-mix(in srgb, #10b981 12%, transparent);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
 }
 
 /* 節約バナー入場 & デコレーション */
@@ -9348,8 +9355,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* サマリーカード種別グラデーション */
 .ev-sum-this { background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%); border-top: none; }
-.ev-sum-next { background: linear-gradient(135deg, #059669 0%, #10b981 100%); border-top: none; }
-.ev-sum-year { background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%); border-top: none; }
+.ev-sum-next { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); border-top: none; }
+.ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; }
@@ -9542,8 +9549,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--ev-mi, 0) * 35ms + 0.12s);
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
-.ev-month-progress.ev-pm-done .ev-prog-fill { background: #10b981; }
-.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: #f59e0b; }
+.ev-month-progress.ev-pm-done .ev-prog-fill { background: var(--success); }
+.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: var(--warning); }
 .ev-prog-pct {
   font-size: 10px;
   font-weight: 700;
@@ -9552,8 +9559,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: right;
   flex-shrink: 0;
 }
-.ev-month-progress.ev-pm-done .ev-prog-pct { color: #10b981; }
-.ev-month-progress.ev-pm-mid  .ev-prog-pct { color: #f59e0b; }
+.ev-month-progress.ev-pm-done .ev-prog-pct { color: var(--success); }
+.ev-month-progress.ev-pm-mid  .ev-prog-pct { color: var(--warning); }
 
 /* --- 月別追加ボタン --- */
 .ev-add-month {
@@ -12105,7 +12112,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* 深刻度別 */
 .opp-sev-high  { --opp-accent: var(--danger-text, #ef4444); }
-.opp-sev-medium { --opp-accent: #f59e0b; }
+.opp-sev-medium { --opp-accent: var(--warning); }
 .opp-sev-low   { --opp-accent: var(--primary); }
 
 /* ダークモード */
