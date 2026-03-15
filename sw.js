@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.4'; // v9.4: 支払方法別月次推移ビジュアル洗練＋サマリーカード3枚＋テーブル行左ボーダー
+const CACHE_NAME = 'kakeibo-v9.4.1'; // v9.4.1: スクロール停止バグ修正（overflow-x:clip）
 const ASSETS = [
   './index.html',
   './css/style.css',
