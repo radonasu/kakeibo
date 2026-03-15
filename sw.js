@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.5'; // v8.5: ボトムナビSVGアイコン化・バッジバグ修正・FABパルス
+const CACHE_NAME = 'kakeibo-v8.6'; // v8.6: 月別棒グラフ → 月ドリルダウンモーダル
 const ASSETS = [
   './index.html',
   './css/style.css',

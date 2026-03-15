@@ -175,6 +175,8 @@
 
 | 111 | v8.3 | 機能＋デザイン | 目標達成コンフェッティ＋セクションタブ洗練：①【機能】`triggerConfetti()`関数を新設・140個のパーティクル（rect/circle/stripの3形状・10色）をCanvas APIで描画・重力・横揺れwobble・フェードアウトで3.2秒のお祝いアニメーション・貯蓄目標の「達成済みにする」ボタン押下時に自動発火・既存confetti-canvasの重複防止処理付き ②【デザイン】`.section-tab.is-active`に`var(--primary-light)`背景ピル追加（border-radius上部2px）・`.tab-icon`に`scale(1.2)`弾性トランジション（0.2s cubic-bezier）でアクティブタブアイコン強調・ダークモード時は`rgba(124,58,237,.15)`背景・`.tx-table tbody tr:hover`に`translateY(-1px)` + `box-shadow`リフト（0.15s cubic-bezier弾性）で取引行ホバー立体感・ダークモード対応 |
 
+| 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

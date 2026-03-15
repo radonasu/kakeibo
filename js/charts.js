@@ -200,7 +200,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
 }
 
 // ─── 月別収支棒グラフ（過去12ヶ月）────────────────────────────
-function renderMonthlyBarChart(canvasId) {
+function renderMonthlyBarChart(canvasId, onMonthClick) {
   destroyChart(canvasId);
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
@@ -215,6 +215,7 @@ function renderMonthlyBarChart(canvasId) {
   });
 
   const { text: textColor, grid: gridColor } = getThemeColors();
+  const clickable = typeof onMonthClick === 'function';
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -247,6 +248,14 @@ function renderMonthlyBarChart(canvasId) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      onClick: clickable ? (event, elements) => {
+        if (elements.length > 0) {
+          onMonthClick(months[elements[0].index]);
+        }
+      } : undefined,
+      onHover: clickable ? (event, elements) => {
+        event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+      } : undefined,
       plugins: {
         legend: {
           position: 'top',
@@ -260,6 +269,7 @@ function renderMonthlyBarChart(canvasId) {
         },
         tooltip: commonTooltip({
           label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+          footer: clickable ? () => 'クリックで詳細を表示' : undefined,
         }),
       },
       scales: {

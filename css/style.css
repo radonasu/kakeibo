@@ -12102,3 +12102,119 @@ canvas.chart-clickable { cursor: pointer; }
   .opp-challenge-btn { width: 100%; text-align: center; }
   .opp-header-badge { display: none; }
 }
+
+/* ============================================================
+   月ドリルダウンモーダル (v8.6)
+   ============================================================ */
+.md-modal-box {
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#md-modal.modal-is-open .md-modal-box {
+  animation: dd-box-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.md-month-info {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+.md-calendar-icon {
+  font-size: var(--fs-lg);
+  flex-shrink: 0;
+}
+
+/* スクロール可能な本文エリア */
+.md-scroll-body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0 var(--sp-1);
+  margin: 0 calc(-1 * var(--sp-1));
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.md-scroll-body::-webkit-scrollbar { width: 5px; }
+.md-scroll-body::-webkit-scrollbar-track { background: transparent; }
+.md-scroll-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* セクション見出し */
+.md-section-title {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: var(--sp-3) 0 var(--sp-2);
+  padding-bottom: var(--sp-1);
+  border-bottom: 1px solid var(--border);
+}
+
+/* カテゴリ内訳 */
+.md-cats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.md-cat-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 76px 34px;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  animation: md-cat-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--md-i, 0) * 40ms);
+}
+@keyframes md-cat-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+.md-cat-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+  font-weight: 500;
+}
+.md-cat-bar-wrap {
+  height: 8px;
+  background: var(--surface-hover);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.md-cat-bar {
+  height: 100%;
+  background: var(--md-cat-color, var(--primary));
+  border-radius: 99px;
+  transform-origin: left;
+  animation: md-bar-fill 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(var(--md-i, 0) * 40ms + 0.1s);
+}
+@keyframes md-bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.md-cat-amount {
+  text-align: right;
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.md-cat-pct {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+}
+
+/* md-list の取引行は dd-tx-row を流用 */
+#md-list .dd-tx-row { margin: 0 calc(-1 * var(--sp-1)); padding-left: var(--sp-1); padding-right: var(--sp-1); }
+
+@media (max-width: 480px) {
+  .md-cat-row { grid-template-columns: 60px 1fr 60px 28px; }
+}
