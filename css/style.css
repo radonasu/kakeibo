@@ -11785,3 +11785,130 @@ canvas.chart-clickable { cursor: pointer; }
   transition: opacity 0.2s;
 }
 .chart-clickable-wrap:hover .chart-clickable-hint { opacity: 1; }
+
+/* ============================================================
+   年次インサイト (v8.2)
+   ============================================================ */
+#sec-insights { padding: var(--sp-2) 0; }
+
+.yi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: var(--sp-4);
+}
+
+@keyframes yi-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.95); }
+  to   { opacity: 1; transform: none; }
+}
+
+.yi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  position: relative;
+  overflow: hidden;
+  animation: yi-card-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--yi-si, 0) * 60ms);
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s ease;
+}
+.yi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.yi-card::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+[data-theme="dark"] .yi-card::before {
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+}
+
+.yi-card-icon {
+  font-size: var(--fs-xl);
+  line-height: 1;
+}
+.yi-card-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-semi);
+  letter-spacing: 0.01em;
+}
+.yi-card-value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.yi-card-unit {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  margin-left: 2px;
+  opacity: 0.75;
+}
+.yi-card-sub {
+  font-size: var(--fs-xs);
+  margin-top: auto;
+}
+.yi-sub-muted { color: var(--text-muted); }
+
+.yi-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.yi-diff-up   { color: var(--danger-text);  font-weight: var(--fw-semi); }
+.yi-diff-down { color: var(--income);        font-weight: var(--fw-semi); }
+
+.yi-half-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+.yi-half-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.yi-half-sep {
+  width: 1px;
+  background: var(--border);
+  margin: 0 var(--sp-3);
+  flex-shrink: 0;
+}
+.yi-half-label {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.yi-half-val {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .yi-grid { grid-template-columns: repeat(2, 1fr); }
+}

@@ -167,6 +167,8 @@
 
 | 109 | v8.1 | 機能＋デザイン | 為替レート バックグラウンド自動更新＋ボタンホバー洗練：①【機能】`autoRefreshFXRatesIfStale()`関数を新設・`initApp()`から呼び出し・最終自動取得（`kakeibo_fx_updated_v1`）から24時間以上経過していた場合にFrankfurter.app APIへ静かにバックグラウンドfetch・成功時はlocalStorageに保存し資産ページが開いていれば`renderCurrentPage()`で即反映・失敗時はサイレント無視（設定ページの手動取得ボタンで代替可能）・toast通知なし ②【デザイン】`.btn:hover`に`translateY(-2px)` + cubic-bezier弾性transitionを追加（0.15s → 0.15s cubic-bezier(.34,1.56,.64,1)）・`.btn-primary:hover`のbox-shadowを強化（0 6px 18px rgba(99,102,241,.5)）・`.btn-danger:hover`にglow（0 4px 12px rgba(225,29,72,.2)）・`.btn-ghost:hover`にborder強調・`.card`と`.summary-card`のtransitionをeaseからcubic-bezier(.34,1.56,.64,1)に変更しリフトアニメーションに弾性を付与 |
 
+| 110 | v8.2 | 機能＋デザイン | 年次インサイトセクション：レポートページのsection-tabsに「💡 年次インサイト」タブを追加・`renderInsightsSection(year, allTxs, months12)`関数が8種のインサイトカードを自動生成（①年間貯蓄率＋S/A/B/C/Dグレードバッジ ②最高貯蓄月（月名・貯蓄率・収支内訳）③最低月（月名・貯蓄率・超過額）④黒字継続最長記録 ⑤月平均支出＋前年比▲▼ ⑥上半期vs下半期支出比較 ⑦最大支出カテゴリ（カテゴリカラー連動） ⑧無支出日数合計）・`yi-grid` auto-fill minmax(175px,1fr) レスポンシブグリッド・`yi-card-in` 0.38s cubic-bezier弾性スタッガードアニメーション（--yi-si変数 60msステップ）・カード右上デコレーションサークル（::before）・ホバー時translateY(-3px)＋shadow・貯蓄グレードバッジ（円形・白テキスト）・前年比バッジ yi-diff-up/yi-diff-down カラーコーディング・上半期/下半期 yi-half-row 2セル分割レイアウト・ダークモード対応・モバイル2列グリッド対応 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

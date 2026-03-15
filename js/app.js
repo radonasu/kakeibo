@@ -3205,6 +3205,156 @@ function saveTxFromModal(keepOpen = false) {
 // ============================================================
 // 年間支出ヒートマップ (v5.82)
 // ============================================================
+// ============================================================
+// 年次インサイトセクション (v8.2)
+// ============================================================
+function renderInsightsSection(year, allTxs, months12) {
+  const monthData = months12.map(ym => {
+    const txs = getTransactionsByMonth(ym);
+    const income  = calcTotal(txs, 'income');
+    const expense = calcTotal(txs, 'expense');
+    const balance = income - expense;
+    const savingsRate = income > 0 ? Math.round((balance / income) * 100) : null;
+    const mo = parseInt(ym.split('-')[1]);
+    return { ym, mo, income, expense, balance, savingsRate };
+  });
+
+  const activeMonths = monthData.filter(m => m.income > 0 || m.expense > 0);
+  if (activeMonths.length === 0) {
+    return `<div id="sec-insights" class="card"><p class="empty" style="padding:var(--sp-8);text-align:center">データがまだありません。取引を追加するとインサイトが表示されます。</p></div>`;
+  }
+
+  // 最高/最低 貯蓄率月
+  const moWithSavings = activeMonths.filter(m => m.savingsRate !== null);
+  const bestMonth  = moWithSavings.length ? moWithSavings.reduce((a,b) => a.savingsRate > b.savingsRate ? a : b) : null;
+  const worstMonth = moWithSavings.length > 1 ? moWithSavings.reduce((a,b) => a.savingsRate < b.savingsRate ? a : b) : null;
+
+  // 前半/後半比較
+  const h1Expense = monthData.filter(m => m.mo <= 6).reduce((s,m) => s + m.expense, 0);
+  const h2Expense = monthData.filter(m => m.mo >= 7).reduce((s,m) => s + m.expense, 0);
+
+  // 最長黒字連続
+  let maxStreak = 0, curStreak = 0;
+  for (const m of monthData) {
+    if (m.balance >= 0 && (m.income > 0 || m.expense > 0)) { curStreak++; maxStreak = Math.max(maxStreak, curStreak); }
+    else curStreak = 0;
+  }
+
+  // 最大支出カテゴリ
+  const catMap = {};
+  allTxs.filter(t => t.type === 'expense').forEach(t => {
+    const cat   = appData.categories.find(c => c.id === t.categoryId);
+    const name  = cat ? cat.name  : 'その他';
+    const color = cat ? cat.color : '#6b7280';
+    if (!catMap[name]) catMap[name] = { amount: 0, color };
+    catMap[name].amount += Number(t.amount) || 0;
+  });
+  const catEntries = Object.entries(catMap).sort((a,b) => b[1].amount - a[1].amount);
+  const topCat = catEntries[0] || null;
+
+  // 年間貯蓄率
+  const yearIncome  = calcTotal(allTxs, 'income');
+  const yearExpense = calcTotal(allTxs, 'expense');
+  const yearSavingsRate = yearIncome > 0 ? Math.round(((yearIncome - yearExpense) / yearIncome) * 100) : 0;
+  const savingsGrade = yearSavingsRate >= 20 ? { label:'S', color:'#8b5cf6' }
+    : yearSavingsRate >= 15 ? { label:'A', color:'#10b981' }
+    : yearSavingsRate >= 10 ? { label:'B', color:'#3b82f6' }
+    : yearSavingsRate >=  5 ? { label:'C', color:'#f59e0b' }
+    : { label:'D', color:'#ef4444' };
+
+  // 月平均支出 前年比
+  const prevYear      = year - 1;
+  const prevAllTxs    = appData.transactions.filter(t => t.date && t.date.startsWith(String(prevYear)));
+  const prevYearExp   = calcTotal(prevAllTxs, 'expense');
+  const currMonthCnt  = new Set(allTxs.filter(t=>t.type==='expense').map(t=>t.date.substring(0,7))).size;
+  const prevMonthCnt  = new Set(prevAllTxs.filter(t=>t.type==='expense').map(t=>t.date.substring(0,7))).size;
+  const currAvgMo     = currMonthCnt > 0 ? Math.round(yearExpense / currMonthCnt) : 0;
+  const prevAvgMo     = prevMonthCnt > 0 ? Math.round(prevYearExp  / prevMonthCnt) : 0;
+  const avgDiff       = prevAvgMo > 0 ? Math.round((currAvgMo - prevAvgMo) / prevAvgMo * 100) : null;
+
+  // 取引なし日
+  const noSpendDays = activeMonths.reduce((s, m) => {
+    const txsInMonth = getTransactionsByMonth(m.ym);
+    const daysInMonth = new Date(year, m.mo, 0).getDate();
+    const expDays = new Set(txsInMonth.filter(t=>t.type==='expense').map(t=>t.date)).size;
+    return s + (daysInMonth - expDays);
+  }, 0);
+
+  return `<div id="sec-insights">
+  <div class="yi-grid">
+
+    <div class="yi-card" style="--yi-si:0">
+      <div class="yi-card-icon" aria-hidden="true">💰</div>
+      <div class="yi-card-label">年間貯蓄率</div>
+      <div class="yi-card-value" style="color:${savingsGrade.color}">${yearSavingsRate}<span class="yi-card-unit">%</span></div>
+      <div class="yi-card-sub"><span class="yi-grade-badge" style="background:${savingsGrade.color}">${savingsGrade.label}</span> ${yearSavingsRate >= 20 ? '優秀な節約' : yearSavingsRate >= 10 ? '良好な貯蓄' : yearSavingsRate >= 0 ? '改善の余地あり' : '支出超過'}</div>
+    </div>
+
+    ${bestMonth ? `<div class="yi-card" style="--yi-si:1">
+      <div class="yi-card-icon" aria-hidden="true">🏆</div>
+      <div class="yi-card-label">最高貯蓄月（${bestMonth.mo}月）</div>
+      <div class="yi-card-value income">${bestMonth.savingsRate}<span class="yi-card-unit">%</span></div>
+      <div class="yi-card-sub yi-sub-muted">収入 ${formatMoney(bestMonth.income)} / 支出 ${formatMoney(bestMonth.expense)}</div>
+    </div>` : ''}
+
+    ${worstMonth ? `<div class="yi-card" style="--yi-si:2">
+      <div class="yi-card-icon" aria-hidden="true">📉</div>
+      <div class="yi-card-label">最低月（${worstMonth.mo}月）</div>
+      <div class="yi-card-value expense">${worstMonth.savingsRate}<span class="yi-card-unit">%</span></div>
+      <div class="yi-card-sub yi-sub-muted">${worstMonth.balance < 0 ? `支出超過 ${formatMoney(Math.abs(worstMonth.balance))}` : `残高 ${formatMoney(worstMonth.balance)}`}</div>
+    </div>` : ''}
+
+    <div class="yi-card" style="--yi-si:3">
+      <div class="yi-card-icon" aria-hidden="true">🔥</div>
+      <div class="yi-card-label">黒字継続最長記録</div>
+      <div class="yi-card-value" style="color:#f97316">${maxStreak}<span class="yi-card-unit">ヶ月</span></div>
+      <div class="yi-card-sub yi-sub-muted">今年の連続黒字</div>
+    </div>
+
+    <div class="yi-card" style="--yi-si:4">
+      <div class="yi-card-icon" aria-hidden="true">📊</div>
+      <div class="yi-card-label">月平均支出</div>
+      <div class="yi-card-value">${formatMoney(currAvgMo)}</div>
+      ${avgDiff !== null
+        ? `<div class="yi-card-sub">${avgDiff > 0 ? `<span class="yi-diff-up">▲${Math.abs(avgDiff)}% 前年比増</span>` : avgDiff < 0 ? `<span class="yi-diff-down">▼${Math.abs(avgDiff)}% 前年比減</span>` : '<span class="yi-sub-muted">前年比 ±0%</span>'}</div>`
+        : '<div class="yi-card-sub yi-sub-muted">前年比較データなし</div>'}
+    </div>
+
+    <div class="yi-card" style="--yi-si:5">
+      <div class="yi-card-icon" aria-hidden="true">↔️</div>
+      <div class="yi-card-label">上半期 vs 下半期</div>
+      <div class="yi-half-row">
+        <div class="yi-half-cell">
+          <div class="yi-half-label">1〜6月</div>
+          <div class="yi-half-val expense">${formatMoney(h1Expense)}</div>
+        </div>
+        <div class="yi-half-sep"></div>
+        <div class="yi-half-cell">
+          <div class="yi-half-label">7〜12月</div>
+          <div class="yi-half-val expense">${formatMoney(h2Expense)}</div>
+        </div>
+      </div>
+      <div class="yi-card-sub yi-sub-muted">${h1Expense > h2Expense ? '上半期の支出が多い' : h2Expense > h1Expense ? '下半期の支出が多い' : '前後半ほぼ均等'}</div>
+    </div>
+
+    ${topCat ? `<div class="yi-card" style="--yi-si:6;--yi-cat-color:${topCat[1].color}">
+      <div class="yi-card-icon" aria-hidden="true">🏷️</div>
+      <div class="yi-card-label">最大支出カテゴリ</div>
+      <div class="yi-card-value" style="font-size:var(--fs-lg);color:var(--yi-cat-color)">${esc2(topCat[0])}</div>
+      <div class="yi-card-sub yi-sub-muted">${formatMoney(topCat[1].amount)}（${yearExpense > 0 ? Math.round(topCat[1].amount/yearExpense*100) : 0}%）</div>
+    </div>` : ''}
+
+    <div class="yi-card" style="--yi-si:7">
+      <div class="yi-card-icon" aria-hidden="true">🌿</div>
+      <div class="yi-card-label">無支出日数（合計）</div>
+      <div class="yi-card-value income">${noSpendDays}<span class="yi-card-unit">日</span></div>
+      <div class="yi-card-sub yi-sub-muted">${activeMonths.length}ヶ月分の集計</div>
+    </div>
+
+  </div>
+</div>`;
+}
+
 function renderHeatmapSection(year, yearTxs) {
   // 日別支出マップ構築
   const dayMap = {};
@@ -3528,6 +3678,7 @@ function renderReports() {
   <button class="section-tab" data-target="sec-fixed"><span class="tab-icon">🔒</span> 固変分析</button>
   <button class="section-tab" data-target="sec-heatmap"><span class="tab-icon">🗓️</span> ヒートマップ</button>
   <button class="section-tab" data-target="sec-tags"><span class="tab-icon">🔖</span> タグ別</button>
+  <button class="section-tab" data-target="sec-insights"><span class="tab-icon">💡</span> 年次インサイト</button>
 </div>
 
 <div id="sec-monthly-charts" class="charts-row">
@@ -4000,7 +4151,8 @@ ${(() => {
 </div>`;
 })()}
 ${renderHeatmapSection(year, allTxs)}
-${renderTagSection(year, allTxs)}`;
+${renderTagSection(year, allTxs)}
+${renderInsightsSection(year, allTxs, months12)}`;
 }
 
 function bindReports() {
