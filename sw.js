@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.0.0'; // v10.0.0: ボタン/バリデーション/サイドバーのハードコードrgba→color-mix変換・btn-primary/danger shadowをCSS変数連動に・サイドバーアクティブナビをprimary-end変数化
+const CACHE_NAME = 'kakeibo-v10.1.0'; // v10.1.0: rgba(124,58,237)・rgba(99,102,241)・赤/緑/黄系rgba値を全てcolor-mix CSS変数に変換・--focus-ring変数化・@keyframesアニメーション内のtransparent化含む
 const ASSETS = [
   './index.html',
   './css/style.css',
