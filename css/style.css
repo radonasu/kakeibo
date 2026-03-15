@@ -51,6 +51,9 @@
   --expense-end:    #fb7185;   /* expense gradient end */
   --income-deep:    #065f46;   /* deep income (net-worth) */
 
+  /* ── サブテキスト（補助テキスト）(v9.8) ──────────────── */
+  --text-sub:       var(--text-muted);
+
   /* ── タイポグラフィスケール ─────────────────────────── */
   /* フォントサイズ（8pxグリッドベース） */
   --fs-2xs:     10px;   /* 最小：セクションラベル、ステータス */
@@ -3041,6 +3044,9 @@ body {
   --income-end:     #34d399;
   --expense-end:    #fb7185;
   --income-deep:    #064e3b;
+  /* 収支基本色（ダーク: WCAG AA準拠, v9.8） */
+  --income:         #34d399;
+  --expense:        #fb7185;
 }
 
 /* ダークモード — コンポーネント固有の上書き */
@@ -3073,9 +3079,7 @@ body {
 [data-theme="dark"] .type-toggle { background: var(--surface-2); }
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); }
 [data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.6); }
-/* 収支テキストのコントラスト改善（ダーク：WCAG AA準拠） */
-[data-theme="dark"] .income  { color: #34d399; }
-[data-theme="dark"] .expense { color: #fb7185; }
+/* 収支テキスト: [data-theme="dark"] にて --income/#34d399, --expense/#fb7185 を定義済み（v9.8）*/
 
 /* ============================================================
    マイクロインタラクション (v5.8)
@@ -4643,7 +4647,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* btn-success */
 .btn-success { background: var(--success); color: #fff; border: none; }
-.btn-success:hover { background: #047857; }
+.btn-success:hover { background: var(--income-deep); }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
@@ -4754,7 +4758,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   color: var(--text-muted);
 }
-.cal-dow.sun { color: #ef4444; }
+.cal-dow.sun { color: var(--expense); }
 .cal-dow.sat { color: var(--primary); }
 
 .cal-grid {
@@ -4803,8 +4807,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--success);
 }
 .cal-ws-pill.exp {
-  background: color-mix(in srgb, #ef4444 10%, var(--surface));
-  color: #ef4444;
+  background: color-mix(in srgb, var(--expense) 10%, var(--surface));
+  color: var(--expense);
 }
 .cal-ws-pill.empty { color: var(--text-muted); font-size: 10px; }
 
@@ -4839,7 +4843,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
 }
-.cal-date-num.sun:not(.today) { color: #ef4444; }
+.cal-date-num.sun:not(.today) { color: var(--expense); }
 .cal-date-num.sat:not(.today) { color: var(--primary); }
 
 .cal-amount {
@@ -4851,7 +4855,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-overflow: ellipsis;
 }
 .cal-amount.inc { color: var(--success); }
-.cal-amount.exp { color: #ef4444; }
+.cal-amount.exp { color: var(--expense); }
 
 /* 日別詳細パネル */
 .cal-day-panel {
@@ -4958,8 +4962,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   flex-shrink: 0;
 }
-.cal-panel-amt.income  { color: var(--success); }
-.cal-panel-amt.expense { color: #ef4444; }
+.cal-panel-amt.income  { color: var(--income); }
+.cal-panel-amt.expense { color: var(--expense); }
 
 .cal-panel-empty {
   text-align: center;
@@ -4969,10 +4973,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ダークモード */
-[data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, #ef4444 12%, var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, #ef4444 22%, var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, #ef4444 35%, var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, #ef4444 50%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) 12%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) 22%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) 35%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 50%, var(--surface)); }
 [data-theme="dark"] .cal-cell.selected {
   background: color-mix(in srgb, var(--primary) 25%, var(--surface));
 }
@@ -5091,8 +5095,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: 700;
 }
-.cal-ev-amount.inc { color: var(--success); }
-.cal-ev-amount.exp { color: #ef4444; }
+.cal-ev-amount.inc { color: var(--income); }
+.cal-ev-amount.exp { color: var(--expense); }
 .cal-ev-badge {
   font-size: 10px;
   font-weight: 600;
@@ -5116,8 +5120,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 3px 10px;
   border-radius: 99px;
 }
-.cal-ev-total.inc { background: color-mix(in srgb, var(--success) 10%, transparent); color: var(--success); }
-.cal-ev-total.exp { background: color-mix(in srgb, #ef4444 10%, transparent); color: #ef4444; }
+.cal-ev-total.inc { background: color-mix(in srgb, var(--income) 10%, transparent); color: var(--income); }
+.cal-ev-total.exp { background: color-mix(in srgb, var(--expense) 10%, transparent); color: var(--expense); }
 
 @keyframes cal-ev-item-in {
   0%   { opacity: 0; transform: translateX(-6px); }
@@ -5627,8 +5631,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
   flex-shrink: 0;
 }
-.csv-badge-auto   { background: #e0f2fe; color: #0369a1; }
-.csv-badge-manual { background: #fef9c3; color: #854d0e; }
+.csv-badge-auto   { background: color-mix(in srgb, var(--primary) 10%, transparent); color: var(--primary); }
+.csv-badge-manual { background: var(--warning-bg); color: var(--warning); }
 
 [data-theme="dark"] .csv-badge-auto   { background: rgba(14,165,233,0.2); color: #7dd3fc; }
 [data-theme="dark"] .csv-badge-manual { background: rgba(234,179,8,0.2);  color: #fde047; }
@@ -5882,13 +5886,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge);
 }
 .pt-urgent-badge {
-  background: rgba(239,68,68,.12);
-  color: #dc2626;
+  background: var(--danger-bg);
+  color: var(--danger-text);
   font-weight: 600;
 }
 .pt-soon-badge {
-  background: rgba(245,158,11,.12);
-  color: #b45309;
+  background: var(--warning-bg);
+  color: var(--warning);
   font-weight: 600;
 }
 .pt-exp-expired {
@@ -5985,10 +5989,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-widget-expiry-header {
   font-size: var(--fs-xs);
   font-weight: 700;
-  color: #b45309;
+  color: var(--warning);
   margin-bottom: var(--sp-2);
 }
-[data-theme="dark"] .pt-widget-expiry-header { color: #fbbf24; }
 .pt-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
 .pt-widget-item {
   display: flex; align-items: center; gap: var(--sp-3);
@@ -6120,11 +6123,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { transform: scale(0.4) rotate(-15deg); opacity: 0; }
   to   { transform: scale(1) rotate(0deg); opacity: 1; }
 }
-.hs-grade-s { background: #ede9fe; color: #6d28d9; }
-.hs-grade-a { background: #d1fae5; color: #047857; }
+.hs-grade-s { background: var(--primary-light);  color: var(--primary-dark); }
+.hs-grade-a { background: var(--success-bg);     color: var(--income-deep); }
 .hs-grade-b { background: #dbeafe; color: #1d4ed8; }
-.hs-grade-c { background: #fef9c3; color: #854d0e; }
-.hs-grade-d { background: #fee2e2; color: #b91c1c; }
+.hs-grade-c { background: var(--warning-bg);     color: var(--warning); }
+.hs-grade-d { background: var(--danger-bg);      color: var(--danger-text); }
 [data-theme="dark"] .hs-grade-s { background: rgba(109,40,217,.25); color: #a78bfa; }
 [data-theme="dark"] .hs-grade-a { background: rgba(4,120,87,.25);   color: #34d399; }
 [data-theme="dark"] .hs-grade-b { background: rgba(29,78,216,.25);  color: #60a5fa; }
@@ -7226,7 +7229,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
-.ch-bar-over { background: linear-gradient(90deg, #ef4444, #f87171); }
+.ch-bar-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
 
 .ch-progress-label {
   font-size: var(--fs-xs);
@@ -7240,8 +7243,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   min-width: 36px;
   text-align: right;
 }
-.ch-progress-pct.ch-pct-ok   { color: var(--success); }
-.ch-progress-pct.ch-pct-over { color: #ef4444; }
+.ch-progress-pct.ch-pct-ok   { color: var(--income); }
+.ch-progress-pct.ch-pct-over { color: var(--expense); }
 
 /* -- ステータスバッジ -- */
 .ch-status {
@@ -7252,10 +7255,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
   flex-shrink: 0;
 }
-.ch-status-active { background: #dbeafe; color: #1d4ed8; }
-.ch-status-done   { background: #d1fae5; color: #065f46; }
-.ch-status-fail   { background: #fee2e2; color: #991b1b; }
-.ch-status-over   { background: #fef3c7; color: #92400e; }
+.ch-status-active { background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary); }
+.ch-status-done   { background: var(--success-bg); color: var(--income-deep); }
+.ch-status-fail   { background: var(--danger-bg); color: var(--danger-text); }
+.ch-status-over   { background: var(--warning-bg); color: var(--warning); }
 
 /* -- カードアクション -- */
 .ch-card-actions {
@@ -7381,8 +7384,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   min-width: 36px;
   text-align: right;
 }
-.ch-widget-pct.ch-pct-ok   { color: var(--success); }
-.ch-widget-pct.ch-pct-over { color: #ef4444; }
+.ch-widget-pct.ch-pct-ok   { color: var(--income); }
+.ch-widget-pct.ch-pct-over { color: var(--expense); }
 
 /* -- ダークモード対応 -- */
 [data-theme="dark"] .ch-status-active { background: #1e3a5f; color: #93c5fd; }
@@ -7489,9 +7492,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-left: var(--sp-1);
   vertical-align: middle;
 }
-.dow-pct-high { background: #fee2e2; color: #991b1b; }
-.dow-pct-mid  { background: #fef3c7; color: #92400e; }
-.dow-pct-low  { background: #d1fae5; color: #065f46; }
+.dow-pct-high { background: var(--danger-bg);  color: var(--danger-text); }
+.dow-pct-mid  { background: var(--warning-bg); color: var(--warning); }
+.dow-pct-low  { background: var(--success-bg); color: var(--income-deep); }
 
 /* ─ テーブル行の曜日カラー左ボーダー ─ */
 .dow-table-row { border-left: 3px solid var(--dow-row-color, var(--border)); }
@@ -10587,7 +10590,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 18px;
   padding: 0 5px;
   border-radius: 999px;
-  background: #ef4444;
+  background: var(--danger-text);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -10595,7 +10598,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-left: auto;
   flex-shrink: 0;
   letter-spacing: 0;
-  box-shadow: 0 1px 4px rgba(239,68,68,.45);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--danger-text) 45%, transparent);
 }
 
 @keyframes nav-badge-pop {
@@ -10672,7 +10675,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 16px;
   padding: 0 4px;
   border-radius: 999px;
-  background: #ef4444;
+  background: var(--danger-text);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
