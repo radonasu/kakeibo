@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.9'; // v8.9: 月ドリルダウン 前月/翌月ナビ＋収入カテゴリ内訳＋ダッシュボードサマリーカードタップ対応
+const CACHE_NAME = 'kakeibo-v9.0'; // v9.0: 月ドリルダウン ビジュアル洗練（月切替スライドアニメ・貯蓄率バッジ・月名ボタン）
 const ASSETS = [
   './index.html',
   './css/style.css',

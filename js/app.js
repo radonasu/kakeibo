@@ -5943,7 +5943,7 @@ function openCategoryDrilldown(catName, catColor, month, type, txsPool, periodLa
 }
 
 // ─── 月ドリルダウンモーダル (v8.6) ────────────────────────────────────
-function openMonthDrilldown(month) {
+function openMonthDrilldown(month, direction) {
   appState.mdCurrentMonth = month;
   const [y, mo] = month.split('-');
   const monthLabel = `${y}年${parseInt(mo, 10)}月`;
@@ -5952,9 +5952,23 @@ function openMonthDrilldown(month) {
   const expense = calcTotal(txs, 'expense');
   const balance = income - expense;
 
-  // タイトル
-  const titleEl = document.getElementById('md-modal-title');
-  if (titleEl) titleEl.textContent = monthLabel;
+  // スライドアニメーション (v9.0)
+  const _mdBox = document.querySelector('.md-modal-box');
+  if (_mdBox && direction) {
+    const _sc = direction === 'prev' ? 'md-slide-prev' : 'md-slide-next';
+    _mdBox.classList.remove('md-slide-prev', 'md-slide-next');
+    void _mdBox.offsetWidth;
+    _mdBox.classList.add(_sc);
+  }
+
+  // タイトル + 貯蓄率バッジ (v9.0)
+  const infoEl = document.querySelector('.md-month-info');
+  if (infoEl) {
+    const sRate = income > 0 ? Math.round((income - expense) / income * 100) : null;
+    const sCls = sRate === null ? 'warn' : sRate >= 20 ? 'good' : sRate >= 0 ? 'warn' : 'bad';
+    const sLabel = sRate !== null ? `${sRate >= 0 ? '+' : ''}${sRate}%` : '—';
+    infoEl.innerHTML = `<span class="md-calendar-icon" aria-hidden="true">📅</span><h2 class="modal-title" id="md-modal-title">${esc2(monthLabel)}</h2><span class="md-savings-badge ${sCls}" title="貯蓄率">${sLabel}</span>`;
+  }
 
   // 前月/翌月ナビ ボタン状態更新
   const today = todayStr().substring(0, 7);
@@ -5967,13 +5981,13 @@ function openMonthDrilldown(month) {
     const hasPrev = allMonths.includes(prevMonth);
     prevBtn.disabled = !hasPrev;
     prevBtn.style.opacity = hasPrev ? '' : '0.3';
-    prevBtn.onclick = hasPrev ? () => openMonthDrilldown(prevMonth) : null;
+    prevBtn.onclick = hasPrev ? () => openMonthDrilldown(prevMonth, 'prev') : null;
   }
   if (nextBtn) {
     const hasNext = nextMonth <= today;
     nextBtn.disabled = !hasNext;
     nextBtn.style.opacity = hasNext ? '' : '0.3';
-    nextBtn.onclick = hasNext ? () => openMonthDrilldown(nextMonth) : null;
+    nextBtn.onclick = hasNext ? () => openMonthDrilldown(nextMonth, 'next') : null;
   }
 
   // サマリー（グラデーションセルカード）
@@ -6090,9 +6104,10 @@ function openMonthDrilldown(month) {
     }
   }
 
-  // 「この月を見る」ボタン
+  // 「この月を見る」ボタン (v9.0: 月名付き)
   const viewBtn = document.getElementById('md-view-btn');
   if (viewBtn) {
+    viewBtn.textContent = `${parseInt(mo, 10)}月を見る →`;
     viewBtn.onclick = () => {
       hideModal('md-modal');
       appState.month = month;

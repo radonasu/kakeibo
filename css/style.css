@@ -12414,3 +12414,52 @@ canvas.chart-clickable { cursor: pointer; }
 [data-theme="dark"] .rpt-month-row.is-clickable:hover {
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
+
+/* ─── 月ドリルダウン ビジュアル洗練 (v9.0) ─────────────────────────── */
+
+/* 月切替スライドアニメーション */
+@keyframes md-slide-from-left {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes md-slide-from-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.md-modal-box.md-slide-prev .md-scroll-body {
+  animation: md-slide-from-left 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.md-modal-box.md-slide-next .md-scroll-body {
+  animation: md-slide-from-right 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 貯蓄率バッジ */
+.md-savings-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.md-savings-badge.good {
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-color: color-mix(in srgb, var(--success) 28%, transparent);
+  color: var(--success);
+}
+.md-savings-badge.warn {
+  background: var(--warning-bg);
+  border-color: color-mix(in srgb, var(--warning) 28%, transparent);
+  color: var(--warning);
+}
+.md-savings-badge.bad {
+  background: var(--danger-bg);
+  border-color: color-mix(in srgb, var(--danger-text) 28%, transparent);
+  color: var(--danger-text);
+}
+
+/* md-month-info: バッジ追加で flex:1 & wrap 対応 */
+.md-month-info { flex: 1; flex-wrap: wrap; row-gap: 3px; }
