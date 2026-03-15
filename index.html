@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=8.8">
+  <link rel="stylesheet" href="css/style.css?v=8.9">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -373,9 +373,17 @@
 <div id="md-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="md-modal-title">
   <div class="modal-box md-modal-box">
     <div class="modal-header dd-modal-header">
-      <div class="md-month-info">
-        <span class="md-calendar-icon" aria-hidden="true">📅</span>
-        <h2 class="modal-title" id="md-modal-title"></h2>
+      <div class="md-month-nav">
+        <button class="md-nav-btn" id="md-prev-btn" aria-label="前月">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="md-month-info">
+          <span class="md-calendar-icon" aria-hidden="true">📅</span>
+          <h2 class="modal-title" id="md-modal-title"></h2>
+        </div>
+        <button class="md-nav-btn" id="md-next-btn" aria-label="翌月">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
       <button class="modal-close" id="md-modal-close" aria-label="閉じる">✕</button>
     </div>
@@ -383,6 +391,8 @@
     <div class="md-scroll-body">
       <h3 class="md-section-title">支出カテゴリ内訳</h3>
       <div id="md-cats" class="md-cats"></div>
+      <h3 class="md-section-title md-income-title">収入カテゴリ内訳</h3>
+      <div id="md-income-cats" class="md-cats"></div>
       <h3 class="md-section-title">最近の取引</h3>
       <div id="md-list"></div>
     </div>
@@ -400,15 +410,15 @@
 </div>
 
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=8.8"></script>
-<script src="js/config.js?v=8.8"></script>
-<script src="js/data.js?v=8.8"></script>
-<script src="js/export.js?v=8.8"></script>
-<script src="js/charts.js?v=8.8"></script>
-<script src="js/sync.js?v=8.8"></script>
-<script src="js/app.js?v=8.8"></script>
+<script src="js/icons.js?v=8.9"></script>
+<script src="js/config.js?v=8.9"></script>
+<script src="js/data.js?v=8.9"></script>
+<script src="js/export.js?v=8.9"></script>
+<script src="js/charts.js?v=8.9"></script>
+<script src="js/sync.js?v=8.9"></script>
+<script src="js/app.js?v=8.9"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=8.8"></script>
+<script src="js/pwa.js?v=8.9"></script>
 
 </body>
 </html>

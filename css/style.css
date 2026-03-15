@@ -12118,6 +12118,35 @@ canvas.chart-clickable { cursor: pointer; }
   animation: dd-box-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* 前月/翌月ナビ (v8.9) */
+.md-month-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.md-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn-sm);
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+}
+.md-nav-btn:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--primary-light, color-mix(in srgb, var(--primary) 8%, transparent));
+  border-color: var(--primary);
+  transform: scale(1.1);
+}
+.md-nav-btn:active:not(:disabled) { transform: scale(0.92); }
+.md-nav-btn:disabled { cursor: default; }
 .md-month-info {
   display: flex;
   align-items: center;
@@ -12128,6 +12157,17 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-lg);
   flex-shrink: 0;
 }
+
+/* ダッシュボードサマリーカード クリック可能 (v8.9) */
+.dash-sum-clickable {
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s;
+}
+.dash-sum-clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+.dash-sum-clickable:active { transform: translateY(-1px); }
 
 /* スクロール可能な本文エリア */
 .md-scroll-body {
@@ -12216,6 +12256,18 @@ canvas.chart-clickable { cursor: pointer; }
   text-align: right;
   color: var(--text-muted);
   font-size: var(--fs-2xs);
+}
+
+/* 収入カテゴリ内訳 緑系 (v8.9) */
+.md-cat-bar-income {
+  background: var(--success, #10b981);
+}
+.md-cat-amount-income {
+  color: var(--success, #10b981);
+}
+.md-income-title {
+  color: var(--success, #10b981);
+  border-bottom-color: color-mix(in srgb, var(--success, #10b981) 25%, transparent);
 }
 
 /* md-list の取引行は dd-tx-row を流用 */

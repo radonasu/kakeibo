@@ -1565,17 +1565,17 @@ function renderDashboard() {
 </div>
 
 <div class="summary-cards">
-  <div class="card summary-card income">
+  <div class="card summary-card income dash-sum-clickable" role="button" tabindex="0" title="タップで詳細を表示" data-drill="${appState.month}">
     <div class="summary-label">今月の収入</div>
     <div class="summary-amount js-countup" data-value="${income}">${formatMoney(income)}</div>
     ${diffSign(income, prevIncome)}
   </div>
-  <div class="card summary-card expense">
+  <div class="card summary-card expense dash-sum-clickable" role="button" tabindex="0" title="タップで詳細を表示" data-drill="${appState.month}">
     <div class="summary-label">今月の支出</div>
     <div class="summary-amount js-countup" data-value="${expense}">${formatMoney(expense)}</div>
     ${diffSign(expense, prevExpense)}
   </div>
-  <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'}">
+  <div class="card summary-card balance ${balance >= 0 ? 'positive' : 'negative'} dash-sum-clickable" role="button" tabindex="0" title="タップで詳細を表示" data-drill="${appState.month}">
     <div class="summary-label">今月の残高</div>
     <div class="summary-amount js-countup" data-value="${balance}">${formatMoney(balance)}</div>
     ${(() => { const prev = prevIncome - prevExpense; return prev !== 0 ? diffSign(balance, prev) : ''; })()}
@@ -1666,6 +1666,14 @@ function bindDashboard() {
     }
   });
 
+  // サマリーカード タップで月ドリルダウン起動
+  document.querySelectorAll('.dash-sum-clickable').forEach(card => {
+    const drill = card.dataset.drill;
+    if (!drill) return;
+    const open = () => openMonthDrilldown(drill);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
   // シェアボタン
   on('btn-share-summary', 'click', () => openShareModal(appState.month));
   // サマリーカード数値カウントアップ
@@ -5936,6 +5944,7 @@ function openCategoryDrilldown(catName, catColor, month, type, txsPool, periodLa
 
 // ─── 月ドリルダウンモーダル (v8.6) ────────────────────────────────────
 function openMonthDrilldown(month) {
+  appState.mdCurrentMonth = month;
   const [y, mo] = month.split('-');
   const monthLabel = `${y}年${parseInt(mo, 10)}月`;
   const txs = getTransactionsByMonth(month);
@@ -5946,6 +5955,26 @@ function openMonthDrilldown(month) {
   // タイトル
   const titleEl = document.getElementById('md-modal-title');
   if (titleEl) titleEl.textContent = monthLabel;
+
+  // 前月/翌月ナビ ボタン状態更新
+  const today = todayStr().substring(0, 7);
+  const allMonths = getAvailableMonths();
+  const prevMonth = adjMonth(month, -1);
+  const nextMonth = adjMonth(month, 1);
+  const prevBtn = document.getElementById('md-prev-btn');
+  const nextBtn = document.getElementById('md-next-btn');
+  if (prevBtn) {
+    const hasPrev = allMonths.includes(prevMonth);
+    prevBtn.disabled = !hasPrev;
+    prevBtn.style.opacity = hasPrev ? '' : '0.3';
+    prevBtn.onclick = hasPrev ? () => openMonthDrilldown(prevMonth) : null;
+  }
+  if (nextBtn) {
+    const hasNext = nextMonth <= today;
+    nextBtn.disabled = !hasNext;
+    nextBtn.style.opacity = hasNext ? '' : '0.3';
+    nextBtn.onclick = hasNext ? () => openMonthDrilldown(nextMonth) : null;
+  }
 
   // サマリー（グラデーションセルカード）
   const summaryEl = document.getElementById('md-summary');
@@ -5970,33 +5999,59 @@ function openMonthDrilldown(month) {
     `;
   }
 
-  // カテゴリ別支出内訳（上位5件）
-  const expenseTxs = txs.filter(t => t.type === 'expense');
-  const catMap = {};
-  expenseTxs.forEach(t => {
-    const cat = getCategoryById(t.categoryId);
-    const name  = cat ? cat.name  : 'その他';
-    const color = cat ? cat.color : '#6b7280';
-    if (!catMap[name]) catMap[name] = { total: 0, color };
-    catMap[name].total += Number(t.amount) || 0;
-  });
-  const catList = Object.entries(catMap)
-    .sort((a, b) => b[1].total - a[1].total)
-    .slice(0, 5);
-  const maxCatTotal = catList[0]?.[1].total || 1;
+  // カテゴリ別内訳を構築するヘルパー
+  function buildCatList(catTxs) {
+    const catMap = {};
+    catTxs.forEach(t => {
+      const cat = getCategoryById(t.categoryId);
+      const name  = cat ? cat.name  : 'その他';
+      const color = cat ? cat.color : '#6b7280';
+      if (!catMap[name]) catMap[name] = { total: 0, color };
+      catMap[name].total += Number(t.amount) || 0;
+    });
+    return Object.entries(catMap).sort((a, b) => b[1].total - a[1].total).slice(0, 5);
+  }
 
+  // カテゴリ別支出内訳（上位5件）
+  const expList = buildCatList(txs.filter(t => t.type === 'expense'));
+  const maxExp = expList[0]?.[1].total || 1;
   const catsEl = document.getElementById('md-cats');
   if (catsEl) {
-    if (catList.length === 0) {
+    if (expList.length === 0) {
       catsEl.innerHTML = '<div class="dd-empty">支出データがありません</div>';
     } else {
-      catsEl.innerHTML = catList.map(([name, { total, color }], i) => {
-        const barPct   = Math.round(total / maxCatTotal * 100);
+      catsEl.innerHTML = expList.map(([name, { total, color }], i) => {
+        const barPct   = Math.round(total / maxExp * 100);
         const sharePct = expense > 0 ? Math.round(total / expense * 100) : 0;
         return `<div class="md-cat-row" style="--md-i:${i};--md-cat-color:${color}">
           <div class="md-cat-name" title="${esc2(name)}"><span class="md-cat-dot" aria-hidden="true"></span><span class="md-cat-text">${esc2(name)}</span></div>
           <div class="md-cat-bar-wrap"><div class="md-cat-bar" style="width:${barPct}%"></div></div>
           <div class="md-cat-amount">${formatMoney(total)}</div>
+          <div class="md-cat-pct">${sharePct}%</div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  // 収入カテゴリ内訳（上位5件）
+  const incList = buildCatList(txs.filter(t => t.type === 'income'));
+  const maxInc = incList[0]?.[1].total || 1;
+  const incomeCatsEl = document.getElementById('md-income-cats');
+  const incomeTitleEl = document.querySelector('.md-income-title');
+  if (incomeCatsEl) {
+    if (incList.length === 0) {
+      incomeCatsEl.style.display = 'none';
+      if (incomeTitleEl) incomeTitleEl.style.display = 'none';
+    } else {
+      incomeCatsEl.style.display = '';
+      if (incomeTitleEl) incomeTitleEl.style.display = '';
+      incomeCatsEl.innerHTML = incList.map(([name, { total, color }], i) => {
+        const barPct   = Math.round(total / maxInc * 100);
+        const sharePct = income > 0 ? Math.round(total / income * 100) : 0;
+        return `<div class="md-cat-row md-cat-row-income" style="--md-i:${i};--md-cat-color:${color}">
+          <div class="md-cat-name" title="${esc2(name)}"><span class="md-cat-dot" aria-hidden="true"></span><span class="md-cat-text">${esc2(name)}</span></div>
+          <div class="md-cat-bar-wrap"><div class="md-cat-bar md-cat-bar-income" style="width:${barPct}%"></div></div>
+          <div class="md-cat-amount md-cat-amount-income">${formatMoney(total)}</div>
           <div class="md-cat-pct">${sharePct}%</div>
         </div>`;
       }).join('');

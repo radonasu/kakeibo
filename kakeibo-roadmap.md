@@ -179,6 +179,8 @@
 
 | 116 | v8.8 | デザイン | 月ドリルダウンモーダル ビジュアル洗練：サマリー4セルを`.md-cells`グリッドに刷新しグラデーションカード化（収入=緑系/支出=赤系/残高黒字=インディゴ系/残高赤字=赤系/件数=サーフェス系）・`.md-cell::after`デコレーションサークル・`@keyframes md-cell-in` 0.32s cubic-bezier弾性スタッガードアニメーション（--md-si変数 60msステップ）・カテゴリ行に`.md-cat-dot`カラードット（8px丸・--md-cat-color連動）追加・`.md-cat-name`をflex化し`.md-cat-text`でellipsis対応・カテゴリ名を--md-cat-colorで着色・モバイル（480px以下）で2×2グリッドに変更・ダークモード対応（CSS変数ベース） |
 
+| 117 | v8.9 | 機能 | 月ドリルダウン 前月/翌月ナビ＋収入カテゴリ内訳＋ダッシュボードタップ対応：①モーダルヘッダーに`md-prev-btn`/`md-next-btn`SVGナビゲーションボタンを追加・前月/翌月が存在する場合のみ有効化（データなし月はdisabled+opacity0.3）・クリックで`openMonthDrilldown(prevMonth/nextMonth)`を呼び出し ②`openMonthDrilldown`に`buildCatList()`ヘルパーを抽出し収入カテゴリ内訳（上位5件）を追加・バーを緑系（--success）・金額を緑テキスト・収入データなし時はセクション非表示 ③ダッシュボードサマリーカード3枚（収入/支出/残高）に`.dash-sum-clickable`クラス+`data-drill`属性を追加・タップ/Enterキーで`openMonthDrilldown`起動 ④CSS：`.md-month-nav`ナビラッパー・`.md-nav-btn`ボタン（ホバー時primaryカラーグロー+弾性scale）・`.md-cat-bar-income`緑バー・`.md-income-title`緑タイトル・`.dash-sum-clickable`ホバーリフトアニメーション（translateY(-3px)+shadow） |
+
 | 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
 
 ## 次スプリント候補（v5.44以降）
