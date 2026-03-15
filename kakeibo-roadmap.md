@@ -189,6 +189,8 @@
 
 | 121 | v9.3 | 機能＋デザイン | 支払方法別月次推移スタック棒グラフ：【機能】`renderPaymentTrendChart(canvasId, year)`をcharts.jsに新設・年間12ヶ月の支払方法別支出をスタック棒グラフで可視化・現金/クレカ/口座振替/銀行振込/電子マネー/その他の6種・データのある支払方法のみ自動表示・ツールチップに月合計フッター付き・PAYMENT_METHOD_COLORSでドーナツグラフと色完全統一・レポートページsec-payment内にpm-trend-cardとして追加（既存のドーナツ+集計テーブルの下に全幅配置）・renderReports()のsetTimeoutにrenderPaymentTrendChart呼び出し追加・【デザイン】`.pm-trend-card` `pm-trend-in` 0.4s cubic-bezier弾性入場アニメーション・`.pm-trend-hint`サブテキスト・ダークモード対応 |
 
+| 122 | v9.4 | デザイン | 支払方法別月次推移 ビジュアル洗練＋サマリーカード追加：pm-trendカード上部に`.pm-summary-grid` 3カラムグリッドを追加（①年間最多利用支払方法＋金額・件数バッジ ②デジタル決済率=クレカ+電子マネー÷年間支出% ③月別変動=最多・最少支出月の月名と金額）・各カードに`--pm-sum-color`CSS変数で支払方法カラー連動グラデーション背景（color-mix 10/4%）＋ボーダー（22%着色）＋右上デコレーションサークル(::before)・`pm-sum-in` 0.38s cubic-bezier弾性スタッガードアニメーション（65msステップ）・支払方法別集計テーブル行に`.pm-table-row`クラス追加し`--pm-row-color`カラー左ボーダー3px＋`pm-row-in` 0.28s cubic-bezierスタッガードアニメーション（50ms×インデックスステップ）・モバイル600px以下は2列グリッド（3枚目全幅）・ダークモード対応 |
+
 | 114 | v8.6 | 機能＋デザイン | 月別棒グラフ → 月ドリルダウンモーダル：①【機能】`renderMonthlyBarChart`に第2引数`onMonthClick(month)`コールバックを追加しChart.js `options.onClick`でバーセグメントクリックを検出・`onHover`でカーソル切替（pointer/default）・ツールチップfooterに「クリックで詳細を表示」ヒント表示 ②ダッシュボードの月別棒グラフラッパーを`chart-clickable-wrap`化しヒントバッジ追加 ③`openMonthDrilldown(month)`関数を新設・月別収支4セルサマリー（収入/支出/残高/件数）・支出カテゴリ内訳上位5件（バーグラフ＋金額＋シェア%・`md-cat-bar` scaleXアニメーション0.65s・`md-cat-in`スタッガードアニメーション40msステップ）・最近の取引8件（dd-tx-row流用・クリックで編集モーダル遷移）・「この月を見る →」ボタンで取引一覧に月フィルター付きナビゲート ④`md-modal` HTML追加 ⑤【デザイン】`.md-modal-box` flex column・max-height 85vh・`dd-box-in`入場アニメーション流用・`.md-scroll-body`スクロール可能本文エリア（flex:1・thin scrollbar）・`.md-section-title`大文字小見出し（letter-spacing 0.05em・border-bottom）・ダークモード対応・モバイルレスポンシブ（480px以下でカラムグリッド調整） |
 
 ## 次スプリント候補（v5.44以降）

@@ -4054,10 +4054,10 @@ function renderReports() {
               if (!total) return '<tr><td colspan="4" class="empty">データがありません</td></tr>';
               return Object.entries(pmMap)
                 .sort((a, b) => b[1].amount - a[1].amount)
-                .map(([pm, v]) => {
+                .map(([pm, v], idx) => {
                   const color = pmColors[pm] || '#6b7280';
                   const pct = total > 0 ? Math.round(v.amount / total * 100) : 0;
-                  return `<tr>
+                  return `<tr class="pm-table-row" style="--pm-row-color:${color};--pm-ri:${idx}">
                     <td><span class="color-dot" style="background:${color}"></span>${esc2(pm)}</td>
                     <td class="text-muted">${v.count}件</td>
                     <td class="expense">${formatMoney(v.amount)}</td>
@@ -4070,6 +4070,51 @@ function renderReports() {
       </div>
     </div>
   </div>
+  ${(() => {
+    const pmColors2 = { '現金': '#10b981', 'クレカ': '#6366f1', '口座振替': '#8b5cf6', '銀行振込': '#f59e0b', '電子マネー': '#06b6d4', 'その他': '#6b7280' };
+    const expTxsAll = allTxs.filter(t => t.type === 'expense');
+    const totalAll  = expTxsAll.reduce((s, t) => s + (Number(t.amount) || 0), 0);
+    if (!totalAll) return '';
+    const pmMapAll = {};
+    expTxsAll.forEach(t => {
+      const pm = t.paymentMethod || 'その他';
+      if (!pmMapAll[pm]) pmMapAll[pm] = { amount: 0, count: 0 };
+      pmMapAll[pm].amount += Number(t.amount) || 0;
+      pmMapAll[pm].count++;
+    });
+    const sortedAll = Object.entries(pmMapAll).sort((a, b) => b[1].amount - a[1].amount);
+    const topPm     = sortedAll[0];
+    const topColor  = topPm ? (pmColors2[topPm[0]] || '#6b7280') : '#6366f1';
+    const digitalAmt = (pmMapAll['クレカ']?.amount || 0) + (pmMapAll['電子マネー']?.amount || 0);
+    const digitalPct = totalAll > 0 ? Math.round(digitalAmt / totalAll * 100) : 0;
+    const monthlyAll = Array.from({ length: 12 }, (_, i) => {
+      const m = `${year}-${String(i + 1).padStart(2, '0')}`;
+      const amt = getTransactionsByMonth(m).filter(t => t.type === 'expense').reduce((s, t) => s + (Number(t.amount) || 0), 0);
+      return { label: `${i + 1}月`, amount: amt };
+    }).filter(m => m.amount > 0);
+    const maxM = monthlyAll.length > 0 ? monthlyAll.reduce((a, b) => a.amount > b.amount ? a : b) : null;
+    const minM = monthlyAll.length > 1 ? monthlyAll.reduce((a, b) => a.amount < b.amount ? a : b) : null;
+    return `<div class="pm-summary-grid">
+      <div class="pm-sum-card" style="--pm-sum-color:${topColor}">
+        <div class="pm-sum-icon" aria-hidden="true">🏆</div>
+        <div class="pm-sum-label">年間最多利用</div>
+        <div class="pm-sum-value">${esc2(topPm[0])}</div>
+        <div class="pm-sum-sub">${formatMoney(topPm[1].amount)} · ${topPm[1].count}件</div>
+      </div>
+      <div class="pm-sum-card" style="--pm-sum-color:#06b6d4">
+        <div class="pm-sum-icon" aria-hidden="true">📱</div>
+        <div class="pm-sum-label">デジタル決済率</div>
+        <div class="pm-sum-value">${digitalPct}%</div>
+        <div class="pm-sum-sub">クレカ+電子マネー ${formatMoney(digitalAmt)}</div>
+      </div>
+      <div class="pm-sum-card" style="--pm-sum-color:#f59e0b">
+        <div class="pm-sum-icon" aria-hidden="true">📊</div>
+        <div class="pm-sum-label">月別変動</div>
+        <div class="pm-sum-value">${maxM ? maxM.label + ' 最多' : '—'}</div>
+        <div class="pm-sum-sub">${maxM ? formatMoney(maxM.amount) : '—'}${minM && minM.label !== maxM.label ? ' / ' + minM.label + ' 最少 ' + formatMoney(minM.amount) : ''}</div>
+      </div>
+    </div>`;
+  })()}
   <div class="card pm-trend-card">
     <h3 class="card-title">📈 支払方法別 月次推移（${year}年）</h3>
     <p class="pm-trend-hint">毎月の支払方法ごとの支出を積み上げで表示します</p>
