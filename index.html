@@ -35,7 +35,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=7.8">
+  <link rel="stylesheet" href="css/style.css?v=7.9">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Supabase SDK（クラウド同期・認証用） -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -310,16 +310,52 @@
   </div>
 </div>
 
+<!-- ─── キーボードショートカットヘルプモーダル (v7.9) ─── -->
+<div id="kb-help-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="kb-help-title">
+  <div class="modal-wrap kb-help-wrap">
+    <div class="modal-header">
+      <h2 class="modal-title" id="kb-help-title">⌨️ キーボードショートカット</h2>
+      <button class="modal-close" id="kb-help-close" aria-label="閉じる">✕</button>
+    </div>
+    <div class="kb-help-body">
+      <div class="kb-group">
+        <div class="kb-group-title">取引</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>N</kbd></div><span>新規取引を追加</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>/</kbd></div><span>取引を検索</span></div>
+      </div>
+      <div class="kb-group">
+        <div class="kb-group-title">ナビゲーション</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>D</kbd></div><span>ダッシュボード</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>T</kbd></div><span>取引一覧</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>R</kbd></div><span>レポート</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>C</kbd></div><span>カレンダー</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>S</kbd></div><span>設定</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>A</kbd></div><span>資産管理</span></div>
+      </div>
+      <div class="kb-group">
+        <div class="kb-group-title">その他</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>?</kbd></div><span>このヘルプを表示</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>Esc</kbd></div><span>モーダルを閉じる</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Gキーシーケンスヒント -->
+<div id="kb-g-hint" class="kb-g-hint" aria-hidden="true">
+  <div class="kb-g-hint-top"><kbd>G</kbd><span class="kb-g-dots">…</span></div>
+  <div class="kb-g-hint-sub">D=ダッシュ&nbsp;&nbsp;T=取引&nbsp;&nbsp;R=レポート&nbsp;&nbsp;C=カレンダー&nbsp;&nbsp;S=設定&nbsp;&nbsp;A=資産</div>
+</div>
+
 <!-- JS: 読み込み順序が重要 -->
-<script src="js/icons.js?v=7.8"></script>
-<script src="js/config.js?v=7.8"></script>
-<script src="js/data.js?v=7.8"></script>
-<script src="js/export.js?v=7.8"></script>
-<script src="js/charts.js?v=7.8"></script>
-<script src="js/sync.js?v=7.8"></script>
-<script src="js/app.js?v=7.8"></script>
+<script src="js/icons.js?v=7.9"></script>
+<script src="js/config.js?v=7.9"></script>
+<script src="js/data.js?v=7.9"></script>
+<script src="js/export.js?v=7.9"></script>
+<script src="js/charts.js?v=7.9"></script>
+<script src="js/sync.js?v=7.9"></script>
+<script src="js/app.js?v=7.9"></script>
 <!-- PWA: インストール促進・更新通知・オフライン表示・SW登録 -->
-<script src="js/pwa.js?v=7.8"></script>
+<script src="js/pwa.js?v=7.9"></script>
 
 </body>
 </html>

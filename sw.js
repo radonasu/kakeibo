@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v7.8'; // v7.8: 連続入力モード + フォームフィールド入場アニメーション
+const CACHE_NAME = 'kakeibo-v7.9'; // v7.9: キーボードショートカット + ヘルプモーダル
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -7918,6 +7918,104 @@ function initNotifCenter() {
 }
 
 // ============================================================
+// ── キーボードショートカット (v7.9) ──────────────────────────
+function initKeyboardShortcuts() {
+  let gPending = false;
+  let gTimer = null;
+  const gHint = document.getElementById('kb-g-hint');
+
+  function clearG() {
+    gPending = false;
+    clearTimeout(gTimer);
+    if (gHint) gHint.classList.remove('visible');
+  }
+
+  function isTyping() {
+    const el = document.activeElement;
+    if (!el) return false;
+    const tag = el.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
+  }
+
+  function openModal() {
+    return document.querySelector('.modal-overlay.modal-is-open');
+  }
+
+  document.addEventListener('keydown', e => {
+    // テキスト入力中は ESC のみ受け付ける
+    if (isTyping()) {
+      if (e.key === 'Escape') {
+        clearG();
+        const m = openModal();
+        if (m) { hideModal(m); e.preventDefault(); }
+      }
+      return;
+    }
+
+    // Gシーケンス中の2文字目
+    if (gPending) {
+      clearG();
+      const map = { d:'dashboard', t:'transactions', r:'reports', c:'calendar', s:'settings', a:'assets' };
+      const page = map[e.key.toLowerCase()];
+      if (page) { navigate(page); e.preventDefault(); }
+      return;
+    }
+
+    switch (e.key) {
+      case 'g':
+      case 'G':
+        if (openModal()) return;
+        gPending = true;
+        if (gHint) gHint.classList.add('visible');
+        gTimer = setTimeout(clearG, 1500);
+        e.preventDefault();
+        break;
+
+      case 'n':
+      case 'N':
+        if (openModal()) return;
+        openTxModal(null);
+        e.preventDefault();
+        break;
+
+      case '/':
+        if (openModal()) return;
+        e.preventDefault();
+        if (appState.page !== 'transactions') {
+          navigate('transactions');
+          setTimeout(() => {
+            const el = document.getElementById('filter-search');
+            if (el) { el.focus(); el.select(); }
+          }, 120);
+        } else {
+          const el = document.getElementById('filter-search');
+          if (el) { el.focus(); el.select(); }
+        }
+        break;
+
+      case '?':
+        if (openModal()) return;
+        showKbHelp();
+        e.preventDefault();
+        break;
+
+      case 'Escape':
+        clearG();
+        const m = openModal();
+        if (m) { hideModal(m); e.preventDefault(); }
+        break;
+    }
+  });
+
+  document.getElementById('kb-help-close')?.addEventListener('click', hideKbHelp);
+  document.getElementById('kb-help-modal')?.addEventListener('click', e => {
+    if (e.target.id === 'kb-help-modal') hideKbHelp();
+  });
+}
+
+function showKbHelp() { showModal('kb-help-modal'); }
+function hideKbHelp()  { hideModal('kb-help-modal'); }
+
 function initApp() {
   // SVGアイコン初期化（emoji → SVG差し替え）
   if (typeof initNavIcons === 'function') initNavIcons();
@@ -8012,6 +8110,9 @@ function initApp() {
 
   // 通知センター初期化（v6.8）
   initNotifCenter();
+
+  // キーボードショートカット（v7.9）
+  initKeyboardShortcuts();
 
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
