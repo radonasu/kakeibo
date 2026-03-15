@@ -12657,3 +12657,19 @@ canvas.chart-clickable { cursor: pointer; }
   .pace-daily-grid { grid-template-columns: 1fr 1fr; }
   .pace-daily-highlight { grid-column: 1 / -1; }
 }
+
+/* ── 支払方法別月次推移カード (v9.3) ──────────────────────── */
+.pm-trend-card {
+  margin-top: var(--sp-4);
+  animation: pm-trend-in 0.4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.pm-trend-hint {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  margin: calc(-1 * var(--sp-2)) 0 var(--sp-3);
+}
+@keyframes pm-trend-in {
+  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+[data-theme="dark"] .pm-trend-card { background: var(--surface); }

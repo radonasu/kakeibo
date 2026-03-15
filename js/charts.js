@@ -627,6 +627,99 @@ function renderPaymentMethodChart(canvasId, transactions) {
   });
 }
 
+// ─── 支払方法別 月次推移スタック棒グラフ（v9.3）─────────────
+function renderPaymentTrendChart(canvasId, year) {
+  destroyChart(canvasId);
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const months  = Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, '0')}`);
+  const labels  = months.map(m => `${parseInt(m.split('-')[1])}月`);
+  const pmKeys  = ['現金', 'クレカ', '口座振替', '銀行振込', '電子マネー', 'その他'];
+
+  const pmData = {};
+  pmKeys.forEach(pm => {
+    pmData[pm] = months.map(m =>
+      getTransactionsByMonth(m)
+        .filter(t => t.type === 'expense' && (t.paymentMethod || 'その他') === pm)
+        .reduce((s, t) => s + (Number(t.amount) || 0), 0)
+    );
+  });
+
+  const activeKeys = pmKeys.filter(pm => pmData[pm].some(v => v > 0));
+  if (activeKeys.length === 0) {
+    const c = canvas.getContext('2d');
+    const { text } = getThemeColors();
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = text;
+    c.font = '13px system-ui';
+    c.textAlign = 'center';
+    c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
+    return;
+  }
+
+  const { text: textColor, grid: gridColor } = getThemeColors();
+
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: activeKeys.map(pm => ({
+        label: pm,
+        data: pmData[pm],
+        backgroundColor: (PAYMENT_METHOD_COLORS[pm] || '#6b7280') + 'cc',
+        borderColor:      PAYMENT_METHOD_COLORS[pm] || '#6b7280',
+        borderWidth: 0,
+        borderRadius: 4,
+        borderSkipped: false,
+      })),
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { size: 11 },
+            color: textColor,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 14,
+          },
+        },
+        tooltip: commonTooltip({
+          label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
+          footer: ctxList => {
+            const total = ctxList.reduce((s, c) => s + c.raw, 0);
+            return total > 0 ? `合計: ${formatMoney(total)}` : undefined;
+          },
+        }),
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid:  { display: false },
+          ticks: { font: { size: 10 }, color: textColor },
+          border: { color: gridColor },
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          grid:  { color: gridColor + '60', drawBorder: false },
+          ticks: {
+            font: { size: 10 },
+            color: textColor,
+            callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
+          },
+          border: { display: false },
+        },
+      },
+    },
+  });
+}
+
 // ─── 前年比較グラフ（レポート用）────────────────────────────
 function renderYoYChart(canvasId, year) {
   destroyChart(canvasId);

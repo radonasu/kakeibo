@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v9.2'; // v9.2: 支出ペースウィジェット ビジュアル洗練＋1日あたり残り予算セル追加
+const CACHE_NAME = 'kakeibo-v9.3'; // v9.3: 支払方法別月次推移スタック棒グラフ追加＋pm-trend-cardアニメーション
 const ASSETS = [
   './index.html',
   './css/style.css',
