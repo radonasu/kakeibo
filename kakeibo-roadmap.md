@@ -169,6 +169,8 @@
 
 | 110 | v8.2 | 機能＋デザイン | 年次インサイトセクション：レポートページのsection-tabsに「💡 年次インサイト」タブを追加・`renderInsightsSection(year, allTxs, months12)`関数が8種のインサイトカードを自動生成（①年間貯蓄率＋S/A/B/C/Dグレードバッジ ②最高貯蓄月（月名・貯蓄率・収支内訳）③最低月（月名・貯蓄率・超過額）④黒字継続最長記録 ⑤月平均支出＋前年比▲▼ ⑥上半期vs下半期支出比較 ⑦最大支出カテゴリ（カテゴリカラー連動） ⑧無支出日数合計）・`yi-grid` auto-fill minmax(175px,1fr) レスポンシブグリッド・`yi-card-in` 0.38s cubic-bezier弾性スタッガードアニメーション（--yi-si変数 60msステップ）・カード右上デコレーションサークル（::before）・ホバー時translateY(-3px)＋shadow・貯蓄グレードバッジ（円形・白テキスト）・前年比バッジ yi-diff-up/yi-diff-down カラーコーディング・上半期/下半期 yi-half-row 2セル分割レイアウト・ダークモード対応・モバイル2列グリッド対応 |
 
+| 111 | v8.3 | 機能＋デザイン | 目標達成コンフェッティ＋セクションタブ洗練：①【機能】`triggerConfetti()`関数を新設・140個のパーティクル（rect/circle/stripの3形状・10色）をCanvas APIで描画・重力・横揺れwobble・フェードアウトで3.2秒のお祝いアニメーション・貯蓄目標の「達成済みにする」ボタン押下時に自動発火・既存confetti-canvasの重複防止処理付き ②【デザイン】`.section-tab.is-active`に`var(--primary-light)`背景ピル追加（border-radius上部2px）・`.tab-icon`に`scale(1.2)`弾性トランジション（0.2s cubic-bezier）でアクティブタブアイコン強調・ダークモード時は`rgba(124,58,237,.15)`背景・`.tx-table tbody tr:hover`に`translateY(-1px)` + `box-shadow`リフト（0.15s cubic-bezier弾性）で取引行ホバー立体感・ダークモード対応 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

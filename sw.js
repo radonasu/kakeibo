@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.2'; // v8.2: 年次インサイトセクション追加（レポートページ）
+const CACHE_NAME = 'kakeibo-v8.3'; // v8.3: 目標達成コンフェッティアニメーション・セクションタブ改善
 const ASSETS = [
   './index.html',
   './css/style.css',
