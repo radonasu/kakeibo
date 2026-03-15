@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.4'; // v8.4: 節約機会スキャン・ワンタップチャレンジ化
+const CACHE_NAME = 'kakeibo-v8.5'; // v8.5: ボトムナビSVGアイコン化・バッジバグ修正・FABパルス
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -8141,13 +8141,14 @@ function calcNavBadges() {
 
 function updateNavBadges() {
   const badges = calcNavBadges();
-  document.querySelectorAll('.nav-item[data-page]').forEach(el => {
-    const count = badges[el.dataset.page] || 0;
-    let badge = el.querySelector('.nav-badge');
+
+  // サイドバー nav-item バッジ更新（既存）
+  function applyBadge(el, count, badgeClass) {
+    let badge = el.querySelector('.' + badgeClass);
     if (count > 0) {
       if (!badge) {
         badge = document.createElement('span');
-        badge.className = 'nav-badge';
+        badge.className = badgeClass;
         el.appendChild(badge);
       }
       const prev = badge.textContent;
@@ -8161,7 +8162,17 @@ function updateNavBadges() {
     } else if (badge) {
       badge.remove();
     }
+  }
+
+  document.querySelectorAll('.nav-item[data-page]').forEach(el => {
+    applyBadge(el, badges[el.dataset.page] || 0, 'nav-badge');
   });
+
+  // v8.5: ボトムナビ bottom-nav-item バッジ更新（バグ修正）
+  document.querySelectorAll('.bottom-nav-item[data-page]').forEach(el => {
+    applyBadge(el, badges[el.dataset.page] || 0, 'bottom-nav-badge');
+  });
+
   // ベルバッジ更新 (v6.8)
   updateBellBadge();
 }
@@ -8605,9 +8616,24 @@ function initApp() {
     });
   });
 
-  // グローバルFAB（どのページからでも取引追加）
+  // グローバルFAB（どのページからでも取引追加）v8.5: パルスアニメーション追加
   const fab = document.getElementById('global-fab');
-  if (fab) fab.addEventListener('click', () => openTxModal(null));
+  if (fab) {
+    fab.addEventListener('click', () => {
+      fab.classList.remove('fab-pulsing');
+      openTxModal(null);
+    });
+    // 初回起動時のみパルスで視線誘導（クリック or 3サイクル後に停止）
+    const fabPulseKey = 'kk_fab_pulse_v1';
+    if (!localStorage.getItem(fabPulseKey)) {
+      fab.classList.add('fab-pulsing');
+      setTimeout(() => {
+        fab.classList.remove('fab-pulsing');
+        localStorage.setItem(fabPulseKey, '1');
+      }, 7000);
+      fab.addEventListener('click', () => localStorage.setItem(fabPulseKey, '1'), { once: true });
+    }
+  }
 
   // リップルエフェクト（ボタン・ナビ）
   document.addEventListener('click', e => {
