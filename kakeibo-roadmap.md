@@ -165,12 +165,14 @@
 
 | 108 | v8.0 | 機能＋デザイン | グラフ カテゴリ ドリルダウン：①【機能】ダッシュボードとレポートページの支出ドーナツグラフをクリック/タップするとカテゴリ別取引詳細モーダルを表示・`renderDonutChart`に第4引数`onCategoryClick(catName, catColor)`コールバックを追加しChart.js `options.onClick`でセグメントクリックを検出・`openCategoryDrilldown(catName, catColor, month, type, txsPool, periodLabel)`関数を新設・モーダルにカテゴリカラードット+名前ヘッダー・合計金額/件数/対象期間の3セルサマリー・取引一覧（日付/摘要/金額）を表示・取引行クリックで編集モーダルへ遷移・「このカテゴリで追加」ボタンでカテゴリ事前入力済みの追加モーダルを起動・レポートページは年間フィルタ済みデータ(`allTxs`)を渡し年度ラベルを表示 ②【デザイン】`canvas.chart-clickable`CSS変数でポインタカーソル切替・チャートラッパーホバー時に「タップで詳細」ヒントバッジ表示（`.chart-clickable-hint`・opacity transition 0.2s）・`dd-box-in`弾性入場アニメーション（0.32s cubic-bezier）・`dd-row-in`取引行スタッガードアニメーション（0.2s・28msステップ）・dd-listカスタムスクロールバー（thin・border色）・ダークモード対応・モバイルレスポンシブ対応 |
 
+| 109 | v8.1 | 機能＋デザイン | 為替レート バックグラウンド自動更新＋ボタンホバー洗練：①【機能】`autoRefreshFXRatesIfStale()`関数を新設・`initApp()`から呼び出し・最終自動取得（`kakeibo_fx_updated_v1`）から24時間以上経過していた場合にFrankfurter.app APIへ静かにバックグラウンドfetch・成功時はlocalStorageに保存し資産ページが開いていれば`renderCurrentPage()`で即反映・失敗時はサイレント無視（設定ページの手動取得ボタンで代替可能）・toast通知なし ②【デザイン】`.btn:hover`に`translateY(-2px)` + cubic-bezier弾性transitionを追加（0.15s → 0.15s cubic-bezier(.34,1.56,.64,1)）・`.btn-primary:hover`のbox-shadowを強化（0 6px 18px rgba(99,102,241,.5)）・`.btn-danger:hover`にglow（0 4px 12px rgba(225,29,72,.2)）・`.btn-ghost:hover`にborder強調・`.card`と`.summary-card`のtransitionをeaseからcubic-bezier(.34,1.56,.64,1)に変更しリフトアニメーションに弾性を付与 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
 - 月次レポートPDF出力：弥生連携強化・家族共有用PDF生成（✅ v7.6完了）
 - 複数通貨対応：外貨建て資産の円換算表示（✅ v5.19完了）
-- 為替レート自動取得：APIから最新レートを自動更新
+- 為替レート自動取得：APIから最新レートを自動更新（✅ v8.1完了）
 
 ### デザイン/UI系
 - タイポグラフィ統一：フォントサイズ階層・行間・余白のリズム

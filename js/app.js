@@ -8216,6 +8216,9 @@ function initApp() {
   // キーボードショートカット（v7.9）
   initKeyboardShortcuts();
 
+  // 為替レート バックグラウンド自動更新（v8.1）
+  autoRefreshFXRatesIfStale();
+
   // スワイプジェスチャー（v5.22）
   initSwipeGestures();
 
@@ -8224,6 +8227,22 @@ function initApp() {
     if (e.touches.length > 1) e.preventDefault();
   }, { passive: false });
   document.addEventListener('gesturestart', e => e.preventDefault());
+}
+
+// ── 為替レート バックグラウンド自動更新（v8.1） ──────────
+// 最終自動取得から24時間以上経過していたら静かにバックグラウンドで更新
+async function autoRefreshFXRatesIfStale() {
+  const STALE_MS = 24 * 60 * 60 * 1000; // 24時間
+  const lastUpdated = getFXRatesUpdatedAt();
+  const isStale = !lastUpdated || (Date.now() - new Date(lastUpdated).getTime() > STALE_MS);
+  if (!isStale) return;
+  try {
+    await fetchAndSaveExchangeRates();
+    // 資産ページが開いていれば再描画
+    if (appState.page === 'assets') renderCurrentPage();
+  } catch (_) {
+    // サイレント失敗（設定ページで手動取得可能）
+  }
 }
 
 // ── サイドバー開閉（オーバーレイ管理込み） ──────────────

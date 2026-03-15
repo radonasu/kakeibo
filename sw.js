@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v8.0'; // v8.0: グラフカテゴリドリルダウン
+const CACHE_NAME = 'kakeibo-v8.1'; // v8.1: 為替レートバックグラウンド自動更新＋ボタンホバー洗練
 const ASSETS = [
   './index.html',
   './css/style.css',
