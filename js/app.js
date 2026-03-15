@@ -4686,7 +4686,7 @@ function renderCategories() {
 
   // 今月の支出を集計 (v9.5)
   const ym = appState.month;
-  const monthTxs = getTransactions().filter(t => t.date && t.date.startsWith(ym));
+  const monthTxs = getTransactionsByMonth(ym);
   const spentMap = {};
   monthTxs.filter(t => t.type === 'expense').forEach(t => {
     spentMap[t.categoryId] = (spentMap[t.categoryId] || 0) + (Number(t.amount) || 0);
