@@ -361,6 +361,180 @@ function generateInsights(ym) {
 }
 
 // ============================================================
+// 節約機会スキャン (v8.4)
+// ============================================================
+function detectSavingsOpportunities(ym) {
+  const opps = [];
+  const txs = getTransactionsByMonth(ym);
+  if (txs.length === 0) return opps;
+
+  const [y, m] = ym.split('-').map(Number);
+  const prevDate = new Date(y, m - 2, 1);
+  const prevYm   = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+  const prevTxs  = getTransactionsByMonth(prevYm);
+
+  const catThis = {};
+  const catPrev = {};
+  txs.filter(t => t.type === 'expense').forEach(t => {
+    catThis[t.categoryId] = (catThis[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+  prevTxs.filter(t => t.type === 'expense').forEach(t => {
+    catPrev[t.categoryId] = (catPrev[t.categoryId] || 0) + (Number(t.amount) || 0);
+  });
+
+  // 1. 予算超過カテゴリ
+  const budgets = appData.budgets || {};
+  appData.categories.filter(c => c.type === 'expense' && budgets[c.id] > 0).forEach(c => {
+    const spent  = catThis[c.id] || 0;
+    const budget = budgets[c.id];
+    if (spent > budget) {
+      const over = spent - budget;
+      opps.push({
+        severity: 'high',
+        icon: '⚠️',
+        title: `${c.name}が予算超過`,
+        desc: `予算 ${formatMoney(budget)} に対して ${formatMoney(spent)} 使用（${formatMoney(over)} オーバー）`,
+        saving: over,
+        categoryId: c.id,
+        categoryName: c.name,
+        categoryColor: c.color,
+        challengeType: 'budget',
+        challengeTarget: budget,
+        emoji: '🎯',
+      });
+    }
+  });
+
+  // 2. 先月比30%以上・¥3,000以上増加カテゴリ（未予算含む）
+  Object.entries(catThis).forEach(([id, sum]) => {
+    const prev = catPrev[id] || 0;
+    if (prev > 0 && sum > prev * 1.3 && (sum - prev) >= 3000) {
+      const pct  = Math.round((sum - prev) / prev * 100);
+      const cat  = getCategoryById(id);
+      if (!cat) return;
+      // 予算超過ですでに追加済みなら重複しない
+      if (opps.find(o => o.categoryId === id)) return;
+      const suggested = Math.round(sum * 0.9 / 1000) * 1000; // 10%削減目標
+      opps.push({
+        severity: 'medium',
+        icon: '📈',
+        title: `${cat.name}が先月比 ${pct}% 増`,
+        desc: `先月 ${formatMoney(prev)} → 今月 ${formatMoney(sum)}。10%削減なら ${formatMoney(sum - suggested)} 節約`,
+        saving: sum - suggested,
+        categoryId: id,
+        categoryName: cat.name,
+        categoryColor: cat.color,
+        challengeType: 'budget',
+        challengeTarget: suggested,
+        emoji: '📉',
+      });
+    }
+  });
+
+  // 3. サブスク合計が月支出の20%超
+  const activeSubs = (appData.subscriptions || []).filter(s => !s.paused);
+  if (activeSubs.length >= 3) {
+    const totalExpense = calcTotal(txs, 'expense');
+    const monthlySubTotal = activeSubs.reduce((sum, s) => {
+      const amt = Number(s.amount) || 0;
+      return sum + (s.cycle === 'yearly' ? Math.round(amt / 12) : amt);
+    }, 0);
+    if (totalExpense > 0 && monthlySubTotal > totalExpense * 0.2) {
+      opps.push({
+        severity: 'medium',
+        icon: '📱',
+        title: `サブスク合計が支出の ${Math.round(monthlySubTotal / totalExpense * 100)}%`,
+        desc: `月 ${formatMoney(monthlySubTotal)} のサブスク費。1〜2件見直すと年間 ${formatMoney(monthlySubTotal * 2)} 以上節約できる可能性があります`,
+        saving: monthlySubTotal * 0.2,
+        categoryId: null,
+        challengeType: null,
+        emoji: '✂️',
+        actionLabel: 'サブスクを確認 →',
+        actionPage: 'subscriptions',
+      });
+    }
+  }
+
+  // 4. 支出上位カテゴリで先月と比べて削減余地あり（先月より10%以上減らせた実績がある）
+  const sorted = Object.entries(catThis).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  sorted.forEach(([id, sum]) => {
+    const prev = catPrev[id] || 0;
+    // 先月より高い かつ 予算超過でもスパイクでもない場合
+    if (prev > 0 && sum > prev && !opps.find(o => o.categoryId === id)) {
+      // 3ヶ月前のデータも確認して平均と比較
+      const prev2Date = new Date(y, m - 3, 1);
+      const prev2Ym   = `${prev2Date.getFullYear()}-${String(prev2Date.getMonth() + 1).padStart(2, '0')}`;
+      const prev2Txs  = getTransactionsByMonth(prev2Ym);
+      const prev2Sum  = prev2Txs.filter(t => t.type === 'expense' && t.categoryId === id)
+                                 .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+      if (prev2Sum > 0 && prev > prev2Sum * 1.2 && sum > prev2Sum * 1.2) {
+        const cat = getCategoryById(id);
+        if (!cat) return;
+        const suggested = Math.round(prev2Sum / 1000) * 1000 || Math.round(sum * 0.85 / 1000) * 1000;
+        opps.push({
+          severity: 'low',
+          icon: '💡',
+          title: `${cat.name}の支出が高止まり`,
+          desc: `2ヶ月前 ${formatMoney(prev2Sum)} → 先月 ${formatMoney(prev)} → 今月 ${formatMoney(sum)}。目標 ${formatMoney(suggested)} に設定してみましょう`,
+          saving: sum - suggested,
+          categoryId: id,
+          categoryName: cat.name,
+          categoryColor: cat.color,
+          challengeType: 'budget',
+          challengeTarget: suggested,
+          emoji: '🏆',
+        });
+      }
+    }
+  });
+
+  return opps.slice(0, 5);
+}
+
+function renderSavingsOppsWidget(ym) {
+  const opps = detectSavingsOpportunities(ym);
+  if (opps.length === 0) return '';
+
+  const totalSaving = opps.reduce((s, o) => s + (o.saving || 0), 0);
+  const cards = opps.map((o, i) => {
+    const clr = o.severity === 'high' ? '#ef4444' : o.severity === 'medium' ? '#f59e0b' : '#6366f1';
+    const actionBtn = o.challengeType
+      ? `<button class="btn btn-sm opp-challenge-btn"
+           data-cat="${o.categoryId || ''}"
+           data-type="${o.challengeType}"
+           data-target="${o.challengeTarget || ''}"
+           data-name="${esc2(o.categoryName ? `${o.categoryName}節約チャレンジ` : 'サブスク節約')}"
+           data-emoji="${o.emoji || '🏆'}"
+           data-color="${clr}">
+           🏆 チャレンジを作成
+         </button>`
+      : o.actionPage
+        ? `<button class="btn btn-sm btn-ghost" onclick="navigate('${o.actionPage}')">
+             ${esc2(o.actionLabel || '確認する')}
+           </button>`
+        : '';
+    return `<div class="opp-card opp-sev-${o.severity}" style="--opp-accent:${clr};--opp-i:${i}">
+      <div class="opp-card-left">
+        <div class="opp-icon" style="background:${clr}22;color:${clr}">${o.icon}</div>
+      </div>
+      <div class="opp-card-body">
+        <div class="opp-title">${esc2(o.title)}</div>
+        <div class="opp-desc">${esc2(o.desc)}</div>
+        ${o.saving > 0 ? `<div class="opp-saving">節約可能額 <strong>${formatMoney(Math.round(o.saving))}</strong></div>` : ''}
+      </div>
+      ${actionBtn ? `<div class="opp-card-action">${actionBtn}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  return makeCollapsibleCard('savingsOpps',
+    `<h3 class="card-title">🔍 節約機会スキャン</h3>
+     <span class="opp-header-badge">${opps.length}件 / 合計 ${formatMoney(Math.round(totalSaving))} 節約できる可能性</span>`,
+    `<div class="opp-list">${cards}</div>`,
+    'opp-widget-card'
+  );
+}
+
+// ============================================================
 // 家計スコアカード (v5.49)
 // ============================================================
 function calculateHealthScore(ym) {
@@ -1188,6 +1362,9 @@ function renderDashboard() {
   // 年次累計サマリーウィジェット（v6.4）
   const yearSummarySection = showWidget('yearSummary') ? renderYearSummaryWidget() : '';
 
+  // 節約機会スキャンウィジェット（v8.4）
+  const savingsOppsSection = showWidget('savingsOpps') ? renderSavingsOppsWidget(appState.month) : '';
+
   // 今週の家計ウィジェット（v5.72）
   const wk = getWeeklyStats();
   const wkMaxExpense = Math.max(...wk.daily.map(d => d.expense), 1);
@@ -1414,6 +1591,7 @@ ${categoryCompareSection ? `<div>${categoryCompareSection}</div>` : ''}
 ${forecastSection ? `<div>${forecastSection}</div>` : ''}
 ${healthScoreSection ? `<div>${healthScoreSection}</div>` : ''}
 ${insightSection ? `<div>${insightSection}</div>` : ''}
+${savingsOppsSection ? `<div>${savingsOppsSection}</div>` : ''}
 ${aiAdviceSection ? `<div>${aiAdviceSection}</div>` : ''}
 ${notesSection ? `<div>${notesSection}</div>` : ''}
 ${pointSection ? `<div>${pointSection}</div>` : ''}
@@ -1667,6 +1845,21 @@ function bindDashboard() {
     });
     autoResize();
   })();
+
+  // 節約機会スキャン：チャレンジ作成ボタン（v8.4）
+  document.querySelectorAll('.opp-challenge-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      appState.challengePrefill = {
+        categoryId: btn.dataset.cat || '',
+        type: btn.dataset.type || 'budget',
+        targetAmount: btn.dataset.target || '',
+        name: btn.dataset.name || '',
+        emoji: btn.dataset.emoji || '🏆',
+        color: btn.dataset.color || '#6366f1',
+      };
+      navigate('challenges');
+    });
+  });
 
   // 今週ウィジェット バーアニメーション（v5.72）
   document.querySelectorAll('.wk-bar-fill[data-wk-animate]').forEach((el, idx) => {
@@ -4785,6 +4978,7 @@ function renderSettings() {
       { key: 'forecast',        label: '今月末収支予測',  icon: '📈' },
       { key: 'healthScore',   label: '家計スコア',      icon: '🏅' },
       { key: 'insight',       label: '今月のインサイト',icon: '💡' },
+      { key: 'savingsOpps',   label: '節約機会スキャン', icon: '🔍' },
       { key: 'notes',         label: '今月のメモ',      icon: '📝' },
       { key: 'budget',        label: '予算進捗',        icon: '📊' },
       { key: 'goals',         label: '貯蓄目標',        icon: '🎯' },
@@ -9725,6 +9919,13 @@ function bindChallenges() {
 
   on('ch-add-btn', 'click', () => openChallengeModal(null));
 
+  // 節約機会スキャンからのプリフィル自動起動（v8.4）
+  if (appState.challengePrefill) {
+    const pf = appState.challengePrefill;
+    appState.challengePrefill = null;
+    setTimeout(() => openChallengeModal(null, pf), 200);
+  }
+
   const list = document.querySelector('.ch-cards-list');
   const arch = document.querySelector('.ch-archive-list');
   const handler = e => {
@@ -9745,7 +9946,7 @@ function bindChallenges() {
   if (arch) arch.addEventListener('click', handler);
 }
 
-function openChallengeModal(ch) {
+function openChallengeModal(ch, prefill) {
   const overlay = document.getElementById('ch-modal-overlay');
   const title   = document.getElementById('ch-modal-title');
   const nameEl  = document.getElementById('ch-name');
@@ -9770,13 +9971,13 @@ function openChallengeModal(ch) {
     perEl.value   = ch.period || currentYearMonth();
     editId.value  = ch.id;
   } else {
-    title.textContent = 'チャレンジを作成';
-    nameEl.value  = '';
-    emojiEl.value = '🏆';
-    colorEl.value = CHALLENGE_COLORS[0];
-    typeEl.value  = 'budget';
-    catEl.value   = '';
-    amtEl.value   = '';
+    title.textContent = prefill ? '🔍 節約チャレンジを作成' : 'チャレンジを作成';
+    nameEl.value  = prefill?.name  || '';
+    emojiEl.value = prefill?.emoji || '🏆';
+    colorEl.value = prefill?.color || CHALLENGE_COLORS[0];
+    typeEl.value  = prefill?.type  || 'budget';
+    catEl.value   = prefill?.categoryId || '';
+    amtEl.value   = prefill?.targetAmount || '';
     daysEl.value  = '';
     perEl.value   = currentYearMonth();
     editId.value  = '';
