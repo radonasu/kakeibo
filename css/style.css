@@ -92,6 +92,7 @@
   --fs-4xl:     30px;   /* 最大：金額 */
 
   /* フォントウェイト */
+  --fw-light:   300;
   --fw-normal:  400;
   --fw-medium:  500;
   --fw-semi:    600;
@@ -272,7 +273,7 @@ select:focus:not(:focus-visible) {
   border-radius: 8px;
   padding: 6px 10px;
   font-size: var(--fs-base);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   flex-shrink: 0;
   transition: background .15s;
 }
@@ -318,7 +319,7 @@ select:focus:not(:focus-visible) {
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 .nav-item.active::before {
   content: '';
@@ -371,7 +372,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #fff;
   flex-shrink: 0;
 }
@@ -943,7 +944,7 @@ select:focus:not(:focus-visible) {
 
 .diff {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   margin-top: 6px;
   display: inline-block;
   background: rgba(255,255,255,.2);
@@ -1000,7 +1001,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
 }
 .tx-table tfoot .total-row td {
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   border-top: 2px solid var(--border);
   border-bottom: none;
   background: var(--surface-2);
@@ -1585,7 +1586,7 @@ select:focus:not(:focus-visible) {
   background: var(--primary);
   color: #fff;
   font-size: var(--fs-2xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -1620,7 +1621,7 @@ select:focus:not(:focus-visible) {
 }
 .adv-filter-label {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-muted);
   letter-spacing: .02em;
 }
@@ -1684,7 +1685,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text-muted);
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   cursor: pointer;
   line-height: 1.6;
   transition: border-color .18s, color .18s, background .18s, transform .15s, box-shadow .18s;
@@ -1702,7 +1703,7 @@ select:focus:not(:focus-visible) {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 14%, transparent);
   color: var(--primary);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 .adv-preset-chip.active::after {
@@ -1731,7 +1732,7 @@ mark.tx-hl {
   color: var(--primary);
   border-radius: 3px;
   padding: 0 2px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-style: normal;
   animation: tx-hl-in 0.25s ease both;
 }
@@ -1750,7 +1751,7 @@ mark.tx-hl {
   padding: 2px 8px;
   border-radius: 99px;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
@@ -1789,7 +1790,7 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text-muted);
   font-size: 18px;
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   line-height: 1;
   cursor: pointer;
   padding: 0;
@@ -2115,7 +2116,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: 9px 16px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   cursor: pointer;
   transition: opacity .15s;
   white-space: nowrap;
@@ -2150,10 +2151,10 @@ mark.tx-hl {
   flex-direction: column;
   gap: 2px;
 }
-.scan-ok     { font-weight: 700; color: var(--income); }
+.scan-ok     { font-weight: var(--fw-bold); color: var(--income); }
 .scan-detail { color: var(--text); }
 .scan-note   { color: var(--text-muted); }
-.scan-err    { font-weight: 600; color: var(--expense); background: var(--danger-bg); border-color: var(--danger-border); }
+.scan-err    { font-weight: var(--fw-semi); color: var(--expense); background: var(--danger-bg); border-color: var(--danger-border); }
 
 /* 複数レシート一覧 */
 .multi-receipt-list {
@@ -2170,7 +2171,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: 6px 14px;
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   cursor: pointer;
 }
 .multi-receipt-list .btn-mr-all:hover { opacity: .85; }
@@ -2196,7 +2197,7 @@ mark.tx-hl {
   flex: 1;
 }
 .multi-receipt-store {
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-size: var(--fs-sm);
   white-space: nowrap;
   overflow: hidden;
@@ -2218,7 +2219,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: 5px 10px;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   cursor: pointer;
 }
 .btn-mr-fill {
@@ -2306,7 +2307,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 
 .budget-nums {
@@ -2314,7 +2315,7 @@ mark.tx-hl {
   color: var(--text-muted);
   white-space: nowrap;
 }
-.budget-nums.over { color: var(--expense); font-weight: 700; }
+.budget-nums.over { color: var(--expense); font-weight: var(--fw-bold); }
 .budget-sep { color: var(--text-muted); }
 
 .budget-track {
@@ -2444,7 +2445,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-base);
-  font-weight: 800;
+  font-weight: var(--fw-black);
   color: #fff;
   flex-shrink: 0;
 }
@@ -2869,7 +2870,7 @@ body {
 
 .bottom-nav-item.active {
   color: var(--primary);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 
 .bottom-nav-item.active::before {
@@ -2983,7 +2984,7 @@ body {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #fff;
   font-size: 28px;
-  font-weight: 300;
+  font-weight: var(--fw-light);
   line-height: 1;
   border: none;
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12);
@@ -3345,7 +3346,7 @@ body {
   padding: 1px 7px;
   border-radius: 20px;
   font-size: var(--fs-2xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   vertical-align: middle;
@@ -3397,7 +3398,7 @@ body {
   background: var(--surface);
   color: var(--text);
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   text-align: center;
 }
 .recurring-day-input:focus {
@@ -4255,13 +4256,13 @@ body {
 .yoy-summary-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   letter-spacing: .04em;
   margin-bottom: var(--sp-1);
 }
 .yoy-summary-value {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   margin-bottom: var(--sp-1);
 }
@@ -5134,7 +5135,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 .cal-ev-nav {
   font-size: var(--fs-xs);
@@ -5179,7 +5180,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-ev-info { flex: 1; min-width: 0; }
 .cal-ev-name {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -5199,13 +5200,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .cal-ev-amount {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 .cal-ev-amount.inc { color: var(--income); }
 .cal-ev-amount.exp { color: var(--expense); }
 .cal-ev-badge {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   padding: 2px 6px;
   border-radius: 99px;
 }
@@ -5222,7 +5223,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .cal-ev-total {
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   padding: 3px 10px;
   border-radius: 99px;
 }
@@ -5288,7 +5289,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .insight-title {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-primary);
   line-height: 1.3;
   margin-bottom: 2px;
@@ -5379,11 +5380,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-widget-total-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .sub-widget-total-amount {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
@@ -5409,7 +5410,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-widget-info { flex: 1; min-width: 0; }
 .sub-widget-name {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -5419,7 +5420,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sub-widget-amount {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -5427,7 +5428,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-cycle-badge {
   font-size: 10px;
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
 }
 
 /* ── サブスクページ ── */
@@ -5475,14 +5476,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-summary-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   text-transform: uppercase;
   letter-spacing: .05em;
   margin-bottom: var(--sp-1);
 }
 .sub-summary-amount {
   font-size: var(--fs-3xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
@@ -5533,7 +5534,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-body { flex: 1; min-width: 0; }
 .sub-card-name {
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -5547,7 +5548,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge);
   background: var(--surface-hover);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .sub-next-billing {
   font-size: var(--fs-2xs);
@@ -5575,7 +5576,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sub-card-amount {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -5583,7 +5584,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-cycle-unit {
   font-size: 11px;
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
 }
 .sub-monthly-equiv {
   font-size: var(--fs-2xs);
@@ -5641,7 +5642,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   font-size: var(--fs-sm);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   padding: var(--sp-1) 0;
   list-style: none;
   display: flex; align-items: center; gap: var(--sp-2);
@@ -5733,7 +5734,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 2px 8px;
   border-radius: 9999px;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -5784,7 +5785,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .csv-preview-section { margin: var(--sp-4) 0 var(--sp-3); }
 .csv-preview-label {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-muted);
   margin-bottom: var(--sp-2);
 }
@@ -5874,20 +5875,20 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-summary-label {
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: rgba(255,255,255,0.75);
   letter-spacing: .04em;
   margin-bottom: var(--sp-1);
 }
 .pt-summary-amount {
   font-size: var(--fs-2xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #fff;
   line-height: 1.1;
 }
 .pt-summary-unit {
   font-size: var(--fs-sm);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   margin-left: 4px;
 }
 .pt-summary-sub {
@@ -5976,7 +5977,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card-body { flex: 1; min-width: 0; }
 .pt-card-name {
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -5994,12 +5995,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-urgent-badge {
   background: var(--danger-bg);
   color: var(--danger-text);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .pt-soon-badge {
   background: var(--warning-bg);
   color: var(--warning);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .pt-exp-expired {
   background: color-mix(in srgb, var(--text-muted) 15%, transparent);
@@ -6015,12 +6016,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-card-balance {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--pt-accent, var(--text));
 }
 .pt-unit {
   font-size: var(--fs-xs);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   color: var(--text-muted);
   margin-left: 2px;
 }
@@ -6091,10 +6092,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-3);
 }
 .pt-widget-total-label { font-size: var(--fs-xs); color: var(--text-muted); }
-.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: 700; color: var(--text); }
+.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--text); }
 .pt-widget-expiry-header {
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--warning);
   margin-bottom: var(--sp-2);
 }
@@ -6114,12 +6115,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-widget-info { flex: 1; min-width: 0; }
 .pt-widget-name {
-  font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+  font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .pt-widget-exp  { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; }
 .pt-widget-balance {
-  font-size: var(--fs-sm); font-weight: 700; color: var(--text); flex-shrink: 0;
+  font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text); flex-shrink: 0;
 }
 
 @media (max-width: 520px) {
@@ -6265,7 +6266,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hs-item-max {
   font-size: var(--fs-xs);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   color: var(--text-faint);
 }
 .hs-bar-track {
@@ -6312,12 +6313,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-trend-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   letter-spacing: 0.02em;
 }
 .hs-prev-badge {
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   padding: 2px 8px;
   border-radius: 99px;
   letter-spacing: 0.01em;
@@ -6345,7 +6346,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hs-spark-label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-family: inherit;
 }
 .hs-spark-label-now {
@@ -6414,20 +6415,20 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-summary-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   letter-spacing: .04em;
   margin-bottom: var(--sp-2);
   position: relative; z-index: 1;
 }
 .wl-summary-value {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--primary);
   position: relative; z-index: 1;
 }
 .wl-summary-unit {
   font-size: var(--fs-sm);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   color: var(--text-muted);
   margin-left: 2px;
 }
@@ -6483,7 +6484,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card-name {
   font-size: var(--fs-md);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -6513,7 +6514,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card-price {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--wl-accent, var(--text));
 }
 .wl-card-actions {
@@ -6529,7 +6530,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 2px 8px;
   border-radius: 99px;
   font-size: var(--fs-2xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 .wl-pri-high {
   background: var(--danger-bg);
@@ -6573,7 +6574,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-archive-summary {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-muted);
   cursor: pointer;
   padding: var(--sp-3) var(--sp-4);
@@ -6605,7 +6606,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-archive-emoji { font-size: 18px; flex-shrink: 0; }
 .wl-archive-name  { flex: 1; font-size: var(--fs-sm); color: var(--text-muted); text-decoration: line-through; }
 .wl-archive-date  { font-size: var(--fs-xs); color: var(--text-muted); }
-.wl-archive-price { font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
+.wl-archive-price { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text-muted); }
 .wl-archive-del   { flex-shrink: 0; }
 
 /* ダッシュボードウィジェット */
@@ -6621,11 +6622,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wish-widget-total-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .wish-widget-total-amount {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--primary);
 }
 .wish-widget-list {
@@ -6655,7 +6656,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wish-widget-name {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -6663,7 +6664,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wish-widget-price {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   flex-shrink: 0;
 }
@@ -6726,7 +6727,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .memo-cat-hint-text strong {
   color: var(--text);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .memo-cat-hint-btn {
   padding: 3px 12px;
@@ -6734,7 +6735,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--primary);
   color: #fff;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   border: none;
   cursor: pointer;
   flex-shrink: 0;
@@ -6805,7 +6806,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 3px 12px;
   border-radius: 99px;
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.02em;
 }
 .fc-good    { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
@@ -6914,7 +6915,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 1px 5px;
   border-radius: 4px;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   vertical-align: middle;
   margin-left: 2px;
 }
@@ -6944,11 +6945,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   margin-bottom: 4px;
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 .fc-cell-amount {
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 .fc-cell-amount.income  { color: var(--income);  }
@@ -7228,13 +7229,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:#fff; }
 .ch-sum-total::before { background:#fff; }
 .ch-summary-label { font-size: var(--fs-xs); opacity:0.85; margin-bottom: var(--sp-1); }
-.ch-summary-value { font-size: var(--fs-3xl); font-weight: 700; line-height: 1; }
+.ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: 1; }
 .ch-summary-unit  { font-size: var(--fs-sm); font-weight:400; margin-left: 2px; opacity:0.8; }
 
 /* -- セクションタイトル -- */
 .ch-section-title {
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-sub);
   margin: var(--sp-4) 0 var(--sp-2);
 }
@@ -7295,7 +7296,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ch-card-name {
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7344,7 +7345,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ch-progress-pct {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-sub);
   min-width: 36px;
   text-align: right;
@@ -7355,7 +7356,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* -- ステータスバッジ -- */
 .ch-status {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   padding: 2px 8px;
   border-radius: 10px;
   white-space: nowrap;
@@ -7394,7 +7395,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-archive-summary {
   cursor: pointer;
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-sub);
   padding: var(--sp-3) var(--sp-4);
   background: var(--surface);
@@ -7476,7 +7477,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
 }
 .ch-widget-body  { flex: 1; min-width: 0; }
-.ch-widget-name  { font-size: var(--fs-sm); font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.ch-widget-name  { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); margin-bottom: 4px; }
 .ch-widget-progress {
   display: flex;
   align-items: center;
@@ -7485,7 +7486,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-widget-label { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
 .ch-widget-pct {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-sub);
   min-width: 36px;
   text-align: right;
@@ -7570,17 +7571,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .dow-stat-icon { font-size: 30px; line-height: 1; flex-shrink: 0; position: relative; z-index: 1; }
 .dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
-.dow-stat-day  { font-size: var(--fs-xl); font-weight: 700; color: #fff !important; }
+.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff !important; }
 .dow-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.8); }
 .dow-stat-amount {
   font-size: var(--fs-2xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #fff;
   line-height: 1.1;
 }
 .dow-stat-unit {
   font-size: var(--fs-xs);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   color: rgba(255,255,255,0.75);
   margin-left: 3px;
 }
@@ -7592,7 +7593,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .dow-pct-badge {
   display: inline-block;
   font-size: var(--fs-2xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   border-radius: 10px;
   padding: 1px 6px;
   margin-left: var(--sp-1);
@@ -7604,7 +7605,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* ─ テーブル行の曜日カラー左ボーダー ─ */
 .dow-table-row { border-left: 3px solid var(--dow-row-color, var(--border)); }
-.dow-table-row.dow-row-max td:last-child { font-weight: 700; }
+.dow-table-row.dow-row-max td:last-child { font-weight: var(--fw-bold); }
 
 /* ミニバーグラフ (合計支出セル内) */
 .dow-mini-bar-track {
@@ -7690,7 +7691,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: var(--ct-color, var(--primary));
   background: color-mix(in srgb, var(--ct-color, var(--primary)) 12%, transparent);
   color: var(--ct-color, var(--primary));
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) 20%, transparent);
 }
 .ct-chip.is-selected .ct-chip-name::after {
@@ -7725,7 +7726,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: 2px; }
-.ct-stat-value { font-size: var(--fs-lg); font-weight: 700; color: var(--text); line-height: 1.2; }
+.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: 1.2; }
 .ct-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 3px; }
 
 /* テーブル */
@@ -7737,9 +7738,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-right: 4px;
   vertical-align: middle;
 }
-.ct-month-cell { font-weight: 600; color: var(--text); }
+.ct-month-cell { font-weight: var(--fw-semi); color: var(--text); }
 .ct-cell-val   { font-variant-numeric: tabular-nums; }
-.ct-row-total  { font-weight: 700; color: var(--text); border-left: 1px solid var(--border); }
+.ct-row-total  { font-weight: var(--fw-bold); color: var(--text); border-left: 1px solid var(--border); }
 .ct-row-empty td { color: var(--text-muted); opacity: 0.5; }
 
 /* テーブル行アニメーション */
@@ -7779,7 +7780,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 2px 8px;
   border-radius: 20px;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   letter-spacing: 0.02em;
 }
 .cat-fixed-badge.is-fixed {
@@ -7845,13 +7846,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-icon  { font-size: 18px; margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.82); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: 700; color: #fff; line-height: 1.2; margin: 2px 0; }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff; line-height: 1.2; margin: 2px 0; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: rgba(255,255,255,0.75); }
 
 /* テーブルセル */
-.fv-fixed-val { color: var(--primary); font-weight: 600; font-variant-numeric: tabular-nums; }
-.fv-var-val   { color: var(--success); font-weight: 600; font-variant-numeric: tabular-nums; }
-.fv-month-cell { font-weight: 600; }
+.fv-fixed-val { color: var(--primary); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.fv-var-val   { color: var(--success); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.fv-month-cell { font-weight: var(--fw-semi); }
 
 /* 固定費率バッジ */
 .fv-rate-badge {
@@ -7859,7 +7860,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 2px 7px;
   border-radius: 20px;
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .fv-rate-badge.high { background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary); }
 .fv-rate-badge.mid  { background: color-mix(in srgb, var(--warning) 12%, transparent); color: var(--warning); }
@@ -7892,7 +7893,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { transform: scaleX(1); }
 }
 .fv-pct-txt { font-size: var(--fs-xs); color: var(--text-muted); vertical-align: middle; }
-.fv-cat-amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+.fv-cat-amt { font-variant-numeric: tabular-nums; font-weight: var(--fw-semi); }
 
 /* カテゴリ別テーブル行: 左ボーダー + 入場アニメーション (v5.71) */
 .fv-cat-table tbody tr {
@@ -8053,13 +8054,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wk-cell-value {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   line-height: 1.2;
 }
 .wk-cell-value.wk-today-exp { color: var(--danger-text); }
 .wk-cell-value.wk-nospend   { color: var(--success); }
-.wk-unit  { font-size: var(--fs-sm); font-weight: 500; }
+.wk-unit  { font-size: var(--fs-sm); font-weight: var(--fw-medium); }
 .wk-cell-sub {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
@@ -8071,7 +8072,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge, 20px);
   padding: 1px 6px;
   margin-top: 4px;
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .wk-diff-up   { background: var(--danger-bg);   color: var(--danger-text); }
 .wk-diff-down { background: var(--success-bg); color: var(--income-deep); }
@@ -8145,11 +8146,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-bar-label {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 .wk-today-label {
   color: var(--danger-text);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   background: var(--danger-bg);
   border-radius: 99px;
   padding: 1px 5px;
@@ -8229,7 +8230,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .qa-card-title {
   font-size: var(--fs-base);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   margin: 0;
   transition: color 0.25s;
@@ -8242,7 +8243,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-subtext {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
 }
 .qa-chevron {
   font-size: 18px;
@@ -8296,7 +8297,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   color: var(--text-muted);
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
 }
@@ -8350,7 +8351,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .qa-yen {
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--qa-accent);
   margin-right: 2px;
   flex-shrink: 0;
@@ -8362,11 +8363,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   outline: none !important;
   background: transparent;
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   padding: var(--sp-2) 0;
 }
-.qa-amount-input::placeholder { color: var(--text-muted); font-weight: 400; }
+.qa-amount-input::placeholder { color: var(--text-muted); font-weight: var(--fw-normal); }
 .qa-cat-select {
   flex: 1;
   padding: var(--sp-2) var(--sp-3);
@@ -8375,7 +8376,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--bg);
   color: var(--text);
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   cursor: pointer;
   transition: border-color 0.15s;
   min-width: 0;
@@ -8407,7 +8408,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
   padding: var(--sp-2) var(--sp-4);
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   white-space: nowrap;
   border-radius: var(--radius-btn, 10px);
   background: var(--qa-accent);
@@ -8536,7 +8537,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: color 0.3s;
 }
 .nt-char-count.nt-cnt-warn   { color: var(--warning); }
-.nt-char-count.nt-cnt-danger { color: var(--danger-text); font-weight: 600; }
+.nt-char-count.nt-cnt-danger { color: var(--danger-text); font-weight: var(--fw-semi); }
 
 .nt-status {
   font-size: var(--fs-2xs);
@@ -8546,7 +8547,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .nt-status.nt-saved {
   color: var(--success);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   opacity: 1;
   display: inline-block;
   animation: nt-saved-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -8644,12 +8645,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hm-stat-value {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
 }
 .hm-stat-unit {
   font-size: var(--fs-sm);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   color: var(--text-muted);
   margin-left: 2px;
 }
@@ -8836,7 +8837,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; gap: var(--sp-2);
   font-size: var(--fs-xs); margin-top: var(--sp-1);
 }
-.asset-breakdown-item { font-weight: 600; }
+.asset-breakdown-item { font-weight: var(--fw-semi); }
 .asset-total  { color: var(--income); }
 .debt-total   { color: var(--expense); }
 .asset-breakdown-sep { color: var(--text-muted); }
@@ -8884,10 +8885,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 18px; flex-shrink: 0;
 }
 .debt-type-badge {
-  font-size: var(--fs-xs); font-weight: 600;
+  font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: 2px 8px; border-radius: var(--radius-badge, 99px);
 }
-.debt-name { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
+.debt-name { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); }
 .debt-card-actions { display: flex; gap: var(--sp-1); }
 
 /* 残高行 */
@@ -8895,13 +8896,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: var(--sp-3); margin-bottom: var(--sp-3);
 }
-.debt-balance { font-size: var(--fs-xl); font-weight: 700; color: var(--expense); }
+.debt-balance { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--expense); }
 .debt-balance-meta { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-1); }
 .debt-meta-right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-1); }
 /* 年利・月返済バッジ: --debt-accent カラー連動 (v5.85) */
 .debt-rate-badge,
 .debt-monthly-badge {
-  font-size: var(--fs-xs); font-weight: 600;
+  font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: 2px 8px; border-radius: var(--radius-badge, 99px);
   background: color-mix(in srgb, var(--debt-accent, var(--primary)) 12%, transparent);
   color: var(--debt-accent, var(--primary));
@@ -8913,7 +8914,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; justify-content: space-between; align-items: center;
   font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: 4px;
 }
-.debt-progress-label { font-weight: 600; color: var(--text); }
+.debt-progress-label { font-weight: var(--fw-semi); color: var(--text); }
 .debt-bar-track {
   height: 8px; border-radius: 99px;
   background: var(--surface-hover);
@@ -8937,7 +8938,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 完済予定 ピルスタイル (v5.85) */
 .debt-end-pill {
   display: inline-flex; align-items: center; gap: 4px;
-  font-size: var(--fs-xs); font-weight: 600;
+  font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: 3px 10px; border-radius: 99px;
   background: var(--surface-hover);
   border: 1px solid var(--border);
@@ -8947,7 +8948,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 履歴 */
 .debt-history { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--border); }
-.debt-history-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--sp-2); }
+.debt-history-title { font-size: var(--fs-xs); font-weight: var(--fw-semi); color: var(--text-muted); margin-bottom: var(--sp-2); }
 .debt-entry-row {
   display: flex; align-items: center; gap: var(--sp-2);
   padding: var(--sp-1) 0; border-bottom: 1px solid var(--border);
@@ -8956,7 +8957,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-entry-row:last-child { border-bottom: none; }
 .debt-entry-date   { color: var(--text-muted); min-width: 72px; }
 .debt-entry-note   { flex: 1; color: var(--text-muted); }
-.debt-entry-balance { font-weight: 600; color: var(--expense); }
+.debt-entry-balance { font-weight: var(--fw-semi); color: var(--expense); }
 .debt-history-more { font-size: var(--fs-xs); color: var(--text-muted); text-align: center; padding: var(--sp-1) 0; }
 
 /* 空状態 */
@@ -8964,13 +8965,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center; padding: var(--sp-12) var(--sp-4);
 }
 .empty-debt-icon { font-size: 48px; margin-bottom: var(--sp-3); }
-.empty-debt-msg  { font-size: var(--fs-md); font-weight: 600; color: var(--text); margin-bottom: var(--sp-2); }
+.empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-2); }
 .empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
 
 /* アーカイブ */
 .debt-archive { margin-top: var(--sp-6); }
 .debt-archive-summary {
-  cursor: pointer; font-size: var(--fs-sm); font-weight: 600;
+  cursor: pointer; font-size: var(--fs-sm); font-weight: var(--fw-semi);
   color: var(--text-muted); padding: var(--sp-2) 0;
   list-style: none; user-select: none;
 }
@@ -8985,8 +8986,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-widget-cell { flex: 1; padding: var(--sp-2) var(--sp-3); text-align: center; }
 .debt-widget-divider { width: 1px; background: var(--border); align-self: stretch; }
 .debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: 2px; }
-.debt-widget-cell-value { font-size: var(--fs-md); font-weight: 700; color: var(--text); }
-.debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: 400; }
+.debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); }
+.debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: var(--fw-normal); }
 
 .debt-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
 .debt-widget-item {
@@ -9000,7 +9001,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 16px; flex-shrink: 0;
 }
 .debt-widget-info { flex: 1; min-width: 0; }
-.debt-widget-name { font-size: var(--fs-sm); font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.debt-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .debt-widget-bar-row { display: flex; align-items: center; gap: var(--sp-2); margin-top: 3px; }
 .debt-widget-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
 .debt-widget-bar-fill {
@@ -9008,7 +9009,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px; transition: width .7s;
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
-.debt-widget-balance { font-size: var(--fs-sm); font-weight: 700; color: var(--expense); flex-shrink: 0; }
+.debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; }
 
 @media (max-width: 600px) {
   .debt-balance-row { flex-direction: column; }
@@ -9034,7 +9035,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-3);
 }
 .sim-loan-name {
-  font-size: var(--fs-base); font-weight: 700; color: var(--text);
+  font-size: var(--fs-base); font-weight: var(--fw-bold); color: var(--text);
   margin-right: var(--sp-1);
 }
 .sim-loan-stat {
@@ -9067,14 +9068,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom: 1px solid var(--border);
 }
 .sim-result-grid > div:nth-child(-n+3) { /* header row */
-  font-weight: 700; background: var(--surface-hover);
+  font-weight: var(--fw-bold); background: var(--surface-hover);
 }
 .sim-result-grid > div:nth-last-child(-n+3) { border-bottom: none; }
 .sim-result-label { color: var(--text-muted); font-size: var(--fs-xs); display: flex; align-items: center; }
 .sim-result-col-head { text-align: center; }
 .sim-col-base { color: var(--primary); }
 .sim-col-accel { color: var(--success); }
-.sim-result-val { text-align: center; font-weight: 600; color: var(--text); }
+.sim-result-val { text-align: center; font-weight: var(--fw-semi); color: var(--text); }
 .sim-val-better { color: var(--success); }
 
 /* 節約バナー */
@@ -9090,7 +9091,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-savings-item { text-align: center; }
 .sim-savings-label { font-size: var(--fs-xs); color: var(--income-deep); margin-bottom: 4px; }
 [data-theme="dark"] .sim-savings-label { color: var(--income-end); }
-.sim-savings-value { font-size: var(--fs-xl); font-weight: 800; color: var(--success); }
+.sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); }
 [data-theme="dark"] .sim-savings-value { color: var(--income-end); }
 .sim-savings-divider { width: 1px; height: 48px; background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) 30%, transparent); }
@@ -9098,7 +9099,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* グラフ */
 .sim-chart-wrap { margin-top: var(--sp-3); }
 .sim-chart-title {
-  font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text-muted);
   margin-bottom: var(--sp-2);
 }
 .sim-no-data {
@@ -9271,7 +9272,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sb-banner-num {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #fff;
   line-height: 1.1;
 }
@@ -9280,7 +9281,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-banner-lbl {
   font-size: var(--fs-2xs);
   color: rgba(255,255,255,0.8);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   margin-top: 2px;
 }
 .sb-banner-div {
@@ -9341,7 +9342,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* テーブルヘッダー */
 .sb-col-suggest {
   color: var(--primary);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 
 /* テーブル行: カテゴリカラー左ボーダー */
@@ -9364,7 +9365,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 提案予算: カテゴリカラー連動 */
 .sb-suggested {
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--sb-cat-color, var(--primary));
   font-size: var(--fs-md);
 }
@@ -9377,7 +9378,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 2px 7px;
   border-radius: var(--radius-badge);
   font-size: var(--fs-2xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   white-space: nowrap;
 }
 .sb-diff-pill.sb-diff-up   { background: var(--danger-bg);     color: var(--danger-text);  border: 1px solid var(--danger-border); }
@@ -9408,7 +9409,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: rgba(255,255,255,0.25);
   border-radius: 99px;
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   margin-left: 4px;
   transition: transform .2s cubic-bezier(.34,1.56,.64,1);
 }
@@ -9474,10 +9475,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
-.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; }
-.ev-sum-card .ev-sum-count small { color: rgba(255,255,255,.70); font-size: var(--fs-xs); font-weight: 400; margin-left: 2px; }
-.ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: 600; }
-.ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: 600; }
+.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: 1.1; }
+.ev-sum-card .ev-sum-count small { color: rgba(255,255,255,.70); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: 2px; }
+.ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-none  { color: rgba(255,255,255,.60); font-size: var(--fs-xs); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--sp-1); }
 
@@ -9511,7 +9512,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ev-month-label {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   min-width: 28px;
 }
@@ -9521,7 +9522,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex: 1;
   flex-wrap: wrap;
 }
-.ev-mtot { font-size: var(--fs-2xs); font-weight: 600; }
+.ev-mtot { font-size: var(--fs-2xs); font-weight: var(--fw-semi); }
 .ev-income  { color: var(--income); }
 .ev-expense { color: var(--expense); }
 .ev-month-body { display: flex; flex-direction: column; gap: var(--sp-2); min-height: 32px; }
@@ -9565,14 +9566,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-card-info { flex: 1; min-width: 0; }
 .ev-card-name {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ev-name-done { text-decoration: line-through; color: var(--text-muted); }
 .ev-card-meta { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
 .ev-type-badge {
-  font-size: 10px; font-weight: 600;
+  font-size: 10px; font-weight: var(--fw-semi);
   padding: 1px 6px;
   border-radius: 99px;
 }
@@ -9581,7 +9582,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-cat-badge { font-size: var(--fs-2xs); color: var(--text-muted); }
 .ev-card-amount {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   flex-shrink: 0;
   margin-left: auto;
 }
@@ -9668,7 +9669,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-month-progress.ev-pm-mid  .ev-prog-fill { background: var(--warning); }
 .ev-prog-pct {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-muted);
   min-width: 26px;
   text-align: right;
@@ -9683,7 +9684,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 24px; height: 24px;
   border-radius: 50%;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-muted);
   background: var(--surface-hover);
   border: 1px solid var(--border);
@@ -9725,11 +9726,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
 }
 .ev-widget-info { flex: 1; min-width: 0; }
-.ev-widget-name { font-size: var(--fs-sm); font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ev-widget-meta { display: flex; gap: 6px; margin-top: 2px; }
-.ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: 600; }
+.ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: var(--fw-semi); }
 .ev-widget-cat   { font-size: var(--fs-xs); color: var(--text-muted); }
-.ev-widget-amount { font-size: var(--fs-sm); font-weight: 700; flex-shrink: 0; }
+.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; }
 
 /* --- 絵文字グリッド（モーダル内）--- */
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
@@ -10004,7 +10005,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--primary) 10%, transparent);
   color: var(--primary);
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   margin-bottom: 14px;
 }
 .adv-month-badge::before {
@@ -10049,7 +10050,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .adv-text h3 {
   font-size: var(--fs-base);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   margin: 14px 0 6px;
   color: var(--primary);
 }
@@ -10062,7 +10063,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   list-style-type: disc;
 }
 .adv-text strong {
-  font-weight: 700;
+  font-weight: var(--fw-bold);
 }
 .adv-text p {
   margin: 6px 0;
@@ -10272,12 +10273,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .yr-cell-value {
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 .yr-unit {
   font-size: var(--fs-sm);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
   margin-left: 1px;
 }
 .yr-cell-sub {
@@ -10316,7 +10317,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px;
   padding: 1px 7px;
   margin-top: var(--sp-1);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .yr-prev-down { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
 .yr-prev-up   { background: var(--danger-bg);  color: var(--danger-text); border: 1px solid var(--danger-border); }
@@ -10363,7 +10364,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .yr-avg-val {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--danger-text);
 }
 .yr-avg-income { color: var(--success); }
@@ -10379,7 +10380,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .yr-topcat-amt {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--danger-text);
 }
 /* ::after デコレーションサークル（左下）*/
@@ -10501,13 +10502,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px;
   padding: 2px var(--sp-3);
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   margin-bottom: var(--sp-2);
   color: #fff;
 }
 .ci-title {
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: #fff;
   margin: 0 0 var(--sp-1);
 }
@@ -10549,7 +10550,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ci-cell-value {
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-main);
 }
 .ci-cell-value.income  { color: var(--income); }
@@ -10583,7 +10584,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ci-savings-pct {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--success);
   min-width: 40px;
   text-align: right;
@@ -10597,7 +10598,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px;
   padding: 3px var(--sp-3);
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .ci-budget-pill.ok   { background: var(--success-bg);  color: var(--success);     border: 1px solid var(--success-border); }
 .ci-budget-pill.over { background: var(--danger-bg);   color: var(--danger-text); border: 1px solid var(--danger-border); }
@@ -10613,13 +10614,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); }
 .ci-score-badge {
   font-size: var(--fs-lg);
-  font-weight: 800;
+  font-weight: var(--fw-black);
   color: var(--primary);
 }
 /* セクションタイトル */
 .ci-section-title {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -10634,7 +10635,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
 }
-.ci-challenge-name { flex: 1; font-size: var(--fs-sm); font-weight: 500; color: var(--text-main); }
+.ci-challenge-name { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); }
 .ci-badge {
   display: inline-flex;
   align-items: center;
@@ -10642,7 +10643,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px;
   padding: 2px var(--sp-2);
   font-size: var(--fs-2xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 .ci-badge.achieved { background: var(--success-bg); color: var(--success); }
 .ci-badge.failed   { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
@@ -10658,15 +10659,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--ci-ev-accent, var(--primary));
 }
 .ci-event-icon  { font-size: 18px; flex-shrink: 0; }
-.ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: 500; color: var(--text-main); }
-.ci-event-amount { font-size: var(--fs-sm); font-weight: 700; color: var(--text-sub); }
+.ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); }
+.ci-event-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-sub); }
 /* フッター */
 .ci-footer { padding: 0 var(--sp-5) var(--sp-5); }
 .ci-ok-btn {
   width: 100%;
   padding: 14px;
   font-size: var(--fs-base);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   border-radius: var(--radius-btn);
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   color: #fff;
@@ -10702,7 +10703,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--danger-text);
   color: #fff;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   line-height: 1;
   margin-left: auto;
   flex-shrink: 0;
@@ -10787,7 +10788,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--danger-text);
   color: #fff;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   line-height: 16px;
   text-align: center;
   pointer-events: none;
@@ -11138,7 +11139,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 4px 12px;
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   border: 1.5px solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
@@ -11161,7 +11162,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: var(--primary);
   color: #fff;
   background: var(--primary);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
@@ -11170,7 +11171,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: color-mix(in srgb, var(--primary) 60%, transparent);
   color: var(--primary);
   background: color-mix(in srgb, var(--primary) 8%, transparent);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
 }
 
 @keyframes date-quick-pop {
@@ -11463,7 +11464,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .rc-title {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text-primary);
   margin: 0 0 2px;
 }
@@ -11557,7 +11558,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .rc-item-name {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -11579,7 +11580,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .rc-type-badge {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   padding: 1px 6px;
   border-radius: 99px;
 }
@@ -11588,7 +11589,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .rc-item-amount {
   font-size: var(--fs-sm);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   color: var(--text-primary);
 }
@@ -11720,7 +11721,7 @@ kbd {
   font-size: var(--fs-xs);
   font-family: inherit;
   color: var(--text);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.02em;
   line-height: 1;
   white-space: nowrap;
@@ -11746,7 +11747,7 @@ kbd {
 }
 .kb-group-title {
   font-size: var(--fs-xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-muted);
@@ -11815,7 +11816,7 @@ kbd {
 }
 .kb-g-dots {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--primary);
   animation: kb-dots-pulse 0.8s ease infinite;
 }
@@ -11900,10 +11901,10 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-summary-label {
   color: var(--text-muted);
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 .dd-summary-value {
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--text);
   font-size: var(--fs-md);
   font-variant-numeric: tabular-nums;
@@ -11955,7 +11956,7 @@ canvas.chart-clickable { cursor: pointer; }
   color: var(--text);
 }
 .dd-tx-amount {
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   font-size: var(--fs-sm);
@@ -12344,7 +12345,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* セクション見出し */
 .md-section-title {
   font-size: var(--fs-xs);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -12379,7 +12380,7 @@ canvas.chart-clickable { cursor: pointer; }
   gap: 5px;
   overflow: hidden;
   color: var(--md-cat-color, var(--text));
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 .md-cat-name .md-cat-text {
   overflow: hidden;
@@ -12407,7 +12408,7 @@ canvas.chart-clickable { cursor: pointer; }
 .md-cat-amount {
   text-align: right;
   color: var(--text);
-  font-weight: 600;
+  font-weight: var(--fw-semi);
   font-variant-numeric: tabular-nums;
 }
 .md-cat-pct {
@@ -12466,11 +12467,11 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cell-label {
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 .md-cell-value {
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   overflow: hidden;
@@ -12478,7 +12479,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cell-value small {
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   margin-left: 1px;
   opacity: 0.8;
 }
@@ -12596,7 +12597,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: inline-flex;
   align-items: center;
   font-size: var(--fs-2xs);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   padding: 2px 8px;
   border-radius: 99px;
   border: 1px solid;
@@ -12889,7 +12890,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .pm-sum-value {
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--pm-sum-color);
   white-space: nowrap;
   overflow: hidden;
