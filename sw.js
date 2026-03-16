@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v12.4.0'; // v12.4.0: 家計スコアSVGゲージはみ出し修正（overflow:hidden）＋gapスペーシング変数化49箇所
+const CACHE_NAME = 'kakeibo-v12.5.0'; // v12.5.0: paddingスペーシング変数化28箇所をvar(--sp-*)に統一
 const ASSETS = [
   './index.html',
   './css/style.css',

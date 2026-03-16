@@ -452,7 +452,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   color: var(--sidebar-text-muted);
   text-align: center;
-  padding: 8px;
+  padding: var(--sp-2);
 }
 
 /* ── メインエリア ─────────────────────────────────────── */
@@ -472,7 +472,7 @@ select:focus:not(:focus-visible) {
   display: none;
   align-items: center;
   gap: var(--sp-3);
-  padding: 12px 16px;
+  padding: var(--sp-3) var(--sp-4);
   background: var(--sidebar-bg);
   color: var(--sidebar-text-hi);
   position: sticky;
@@ -735,7 +735,7 @@ select:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: 8px 20px;
+  padding: var(--sp-2) var(--sp-5);
   background: var(--warning-bg);
   border-bottom: 1px solid var(--warning-border);
   color: var(--warning);
@@ -1921,7 +1921,7 @@ mark.tx-hl {
   display: flex;
   gap: var(--sp-1);
   background: var(--bg);
-  padding: 4px;
+  padding: var(--sp-1);
   border-radius: calc(var(--radius-btn-sm) + 4px);
   margin-bottom: var(--sp-5);
 }
@@ -1950,7 +1950,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 16px;
+  padding: var(--sp-4);
 }
 
 .modal {
@@ -2110,7 +2110,7 @@ mark.tx-hl {
 }
 
 .btn-preset {
-  padding: 4px 12px;
+  padding: var(--sp-1) var(--sp-3);
   background: var(--surface-2);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-badge);
@@ -2150,7 +2150,7 @@ mark.tx-hl {
   background: var(--surface-2);
   border: 2px dashed var(--border);
   border-radius: var(--radius-md);
-  padding: 12px;
+  padding: var(--sp-3);
 }
 
 .btn-receipt {
@@ -2610,7 +2610,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   z-index: 9000;
-  padding: 20px;
+  padding: var(--sp-5);
 }
 
 .auth-card {
@@ -2619,7 +2619,7 @@ mark.tx-hl {
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
   width: 100%;
   max-width: 420px;
-  padding: 40px 40px;
+  padding: var(--sp-10);
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -2660,7 +2660,7 @@ mark.tx-hl {
   display: flex;
   background: var(--surface-2);
   border-radius: var(--radius-btn);
-  padding: 4px;
+  padding: var(--sp-1);
   gap: var(--sp-1);
   margin-bottom: 28px;
 }
@@ -2704,7 +2704,7 @@ mark.tx-hl {
 .auth-footer {
   text-align: center;
   margin-top: var(--sp-6);
-  padding-top: 20px;
+  padding-top: var(--sp-5);
   border-top: 1px solid var(--border);
 }
 
@@ -2791,7 +2791,7 @@ body {
 .install-banner-text span { font-size: var(--fs-xs); color: var(--sidebar-text-muted); }
 .install-banner-close {
   background: none; border: none; color: var(--sidebar-text-muted);
-  font-size: 20px; padding: 4px 8px; cursor: pointer;
+  font-size: 20px; padding: var(--sp-1) var(--sp-2); cursor: pointer;
 }
 .install-banner-close:hover { color: var(--sidebar-text-hi); }
 
@@ -2803,7 +2803,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--sidebar-text-hi);
-  padding: 20px;
+  padding: var(--sp-5);
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   text-align: center;
   z-index: 8000;
@@ -2858,7 +2858,7 @@ body {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 12px 20px;
+  padding: var(--sp-3) var(--sp-5);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -2939,7 +2939,7 @@ body {
   background: var(--primary-light);
   color: var(--primary);
   transform: scale(1.1);
-  padding: 4px;
+  padding: var(--sp-1);
   width: 32px; height: 32px;
   border-radius: var(--radius-sm);
 }
@@ -2958,7 +2958,7 @@ body {
   #mobile-header { display: flex; }
 
   #main-wrapper { margin-left: 0; }
-  #main-content { padding: 16px; padding-bottom: 88px; }
+  #main-content { padding: var(--sp-4); padding-bottom: 88px; }
 
   /* ボトムナビ表示 */
   #bottom-nav {
@@ -3001,7 +3001,7 @@ body {
   }
   .modal-footer .btn {
     min-height: 48px;
-    padding: 12px 20px;
+    padding: var(--sp-3) var(--sp-5);
     font-size: var(--fs-base);
     flex: 1;
   }
@@ -3588,7 +3588,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 40px 20px;
+  padding: var(--sp-10) var(--sp-5);
   color: var(--text-muted);
 }
 .empty-month-icon { font-size: 36px; line-height: 1; }
@@ -3896,7 +3896,7 @@ body {
 
 .asset-history {
   margin-top: var(--sp-3);
-  padding-top: 4px;
+  padding-top: var(--sp-1);
 }
 .asset-history-title {
   font-size: var(--fs-2xs);
@@ -3937,7 +3937,7 @@ body {
   font-size: var(--fs-xs);
   color: var(--text-faint);
   text-align: center;
-  padding-top: 8px;
+  padding-top: var(--sp-2);
 }
 
 /* 空状態 */
@@ -6740,7 +6740,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .wl-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: var(--radius-sm); }
   .wl-card-price { font-size: var(--fs-md); }
   .wl-card-actions { gap: var(--sp-1); }
-  .wl-card-actions .btn-sm { padding: 4px 8px; font-size: var(--fs-xs); }
+  .wl-card-actions .btn-sm { padding: var(--sp-1) var(--sp-2); font-size: var(--fs-xs); }
 }
 
 /* ============================================================
@@ -7201,7 +7201,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ミニスパークライン */
 .asset-sparkline-wrap {
   margin-top: 10px;
-  padding-top: 8px;
+  padding-top: var(--sp-2);
   border-top: 1px solid var(--border);
 }
 .asset-sparkline-label {
@@ -8731,7 +8731,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   line-height: 13px;
   text-align: right;
-  padding-right: 4px;
+  padding-right: var(--sp-1);
   white-space: nowrap;
 }
 .hm-grid-wrap {
@@ -9099,7 +9099,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-extra-row { display: flex; flex-direction: column; gap: var(--sp-2); }
 .sim-preset-row { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 .sim-preset {
-  font-size: var(--fs-sm); padding: 4px 12px; border-radius: 99px;
+  font-size: var(--fs-sm); padding: var(--sp-1) var(--sp-3); border-radius: 99px;
   border: 1px solid var(--border); transition: all var(--dur-fast);
 }
 .sim-preset:hover {
@@ -10049,7 +10049,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
+  padding: var(--sp-1) var(--sp-3);
   border-radius: 99px;
   background: color-mix(in srgb, var(--primary) 10%, transparent);
   color: var(--primary);
@@ -10180,7 +10180,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   justify-content: flex-end;
   gap: var(--sp-2);
   margin-top: var(--sp-4);
-  padding-top: 12px;
+  padding-top: var(--sp-3);
   border-top: 1px solid var(--border);
 }
 
@@ -11185,7 +11185,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 12px;
+  padding: var(--sp-1) var(--sp-3);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
@@ -11496,7 +11496,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  padding-right: 32px;
+  padding-right: var(--sp-8);
 }
 
 .rc-header-icon {
