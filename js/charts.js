@@ -545,6 +545,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
 }
 
 // ─── 支払方法別ドーナツグラフ（レポート用）──────────────────
+// app.js でも参照するためグローバル定数として定義
 const PAYMENT_METHOD_COLORS = {
   '現金':       '#10b981',
   'クレカ':     '#6366f1',
@@ -553,6 +554,18 @@ const PAYMENT_METHOD_COLORS = {
   '電子マネー': '#06b6d4',
   'その他':     '#6b7280',
 };
+
+// 曜日別カラー定数（app.jsと共用・7曜日固有色）
+// renderDayOfWeekChart および app.js のテーブル描画で参照
+const DOW_COLORS_HEX = [
+  '#ef4444',  // 日: red
+  '#6366f1',  // 月: indigo
+  '#8b5cf6',  // 火: violet
+  '#3b82f6',  // 水: blue
+  '#14b8a6',  // 木: teal
+  '#f59e0b',  // 金: amber
+  '#0891b2',  // 土: cyan
+];
 
 function renderPaymentMethodChart(canvasId, transactions) {
   destroyChart(canvasId);
@@ -833,19 +846,16 @@ function renderDayOfWeekChart(canvasId, transactions) {
   if (!canvas) return;
 
   const DOW_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
-  // 7曜日それぞれ個別カラー（app.jsと統一）
-  const DOW_COLORS = [
-    'rgba(239,68,68,0.85)',    // 日: red
-    'rgba(99,102,241,0.85)',   // 月: indigo
-    'rgba(139,92,246,0.85)',   // 火: violet
-    'rgba(59,130,246,0.85)',   // 水: blue
-    'rgba(20,184,166,0.85)',   // 木: teal
-    'rgba(245,158,11,0.85)',   // 金: amber
-    'rgba(8,145,178,0.85)',    // 土: cyan
-  ];
-  const DOW_BORDERS = [
-    '#ef4444', '#6366f1', '#8b5cf6', '#3b82f6', '#14b8a6', '#f59e0b', '#0891b2',
-  ];
+  // グローバル定数 DOW_COLORS_HEX を参照（app.js と共用）
+  const DOW_BORDERS = DOW_COLORS_HEX;
+  // バー背景色は border色に 85% opacity を付与
+  function hexToRgba(hex, a) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+  const DOW_COLORS = DOW_COLORS_HEX.map(c => hexToRgba(c, 0.85));
 
   const dowTotals   = new Array(7).fill(0);
   const dowCounts   = new Array(7).fill(0);

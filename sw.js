@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v12.6.0'; // v12.6.0: font-sizeタイポグラフィ変数化完全化（--fs-3xs/--fs-icon/--fs-icon-lg追加・82箇所変換）
+const CACHE_NAME = 'kakeibo-v12.7.0'; // v12.7.0: JSハードコード色DRY化（DOW_COLORS_HEX共通化・pmColorsをPAYMENT_METHOD_COLORSに統合・getCSSVar化）
 const ASSETS = [
   './index.html',
   './css/style.css',

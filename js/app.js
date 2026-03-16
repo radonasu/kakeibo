@@ -3017,7 +3017,7 @@ function bindTxModal() {
     if (!name) { alert('カテゴリ名を入力してください'); return; }
     const newCat = addCategory({
       name, yayoiAccount: yayoi || name, type: activeType,
-      color: activeType === 'expense' ? '#6b7280' : '#059669',
+      color: activeType === 'expense' ? getCSSVar('--text-muted') : getCSSVar('--income'),
     });
     // チップグリッドを更新して新しいカテゴリを選択状態にする
     const hi = document.getElementById('tx-category');
@@ -3819,8 +3819,8 @@ function renderTagSection(year, yearTxs) {
   }
 
   function tagColor(tag) {
-    if (tag === 'タグなし') return '#94a3b8';
-    const palette = ['#6366f1','#0891b2','#059669','#d97706','#7c3aed','#db2777','#ea580c','#0d9488','#e11d48','#64748b'];
+    if (tag === 'タグなし') return getCSSVar('--text-faint');
+    const palette = TAG_COLORS;
     let h = 0;
     for (let i = 0; i < tag.length; i++) h = (h * 31 + tag.charCodeAt(i)) & 0xFFFF;
     return palette[h % palette.length];
@@ -4059,13 +4059,12 @@ function renderReports() {
                 pmMap[pm].amount += Number(t.amount) || 0;
                 pmMap[pm].count++;
               });
-              const pmColors = { '現金': '#10b981', 'クレカ': '#6366f1', '口座振替': '#8b5cf6', '銀行振込': '#f59e0b', '電子マネー': '#06b6d4', 'その他': '#6b7280' };
               const total = Object.values(pmMap).reduce((s, v) => s + v.amount, 0);
               if (!total) return '<tr><td colspan="4" class="empty">データがありません</td></tr>';
               return Object.entries(pmMap)
                 .sort((a, b) => b[1].amount - a[1].amount)
                 .map(([pm, v], idx) => {
-                  const color = pmColors[pm] || '#6b7280';
+                  const color = PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted');
                   const pct = total > 0 ? Math.round(v.amount / total * 100) : 0;
                   return `<tr class="pm-table-row" style="--pm-row-color:${color};--pm-ri:${idx}">
                     <td><span class="color-dot" style="background:${color}"></span>${esc2(pm)}</td>
@@ -4081,7 +4080,6 @@ function renderReports() {
     </div>
   </div>
   ${(() => {
-    const pmColors2 = { '現金': '#10b981', 'クレカ': '#6366f1', '口座振替': '#8b5cf6', '銀行振込': '#f59e0b', '電子マネー': '#06b6d4', 'その他': '#6b7280' };
     const expTxsAll = allTxs.filter(t => t.type === 'expense');
     const totalAll  = expTxsAll.reduce((s, t) => s + (Number(t.amount) || 0), 0);
     if (!totalAll) return '';
@@ -4094,7 +4092,7 @@ function renderReports() {
     });
     const sortedAll = Object.entries(pmMapAll).sort((a, b) => b[1].amount - a[1].amount);
     const topPm     = sortedAll[0];
-    const topColor  = topPm ? (pmColors2[topPm[0]] || '#6b7280') : '#6366f1';
+    const topColor  = topPm ? (PAYMENT_METHOD_COLORS[topPm[0]] || getCSSVar('--text-muted')) : getCSSVar('--primary');
     const digitalAmt = (pmMapAll['クレカ']?.amount || 0) + (pmMapAll['電子マネー']?.amount || 0);
     const digitalPct = totalAll > 0 ? Math.round(digitalAmt / totalAll * 100) : 0;
     const monthlyAll = Array.from({ length: 12 }, (_, i) => {
@@ -4233,8 +4231,7 @@ ${(appData.members && appData.members.length > 0) ? `
 ${(() => {
   // ── 曜日別支出分析 (v5.67 ビジュアル洗練) ──────────────────────────────────
   const DOW_LABELS  = ['日','月','火','水','木','金','土'];
-  // 7曜日それぞれに個別カラー
-  const DOW_COLORS_HEX = ['#ef4444','#6366f1','#8b5cf6','#3b82f6','#14b8a6','#f59e0b','#0891b2'];
+  // DOW_COLORS_HEX はグローバル定数（charts.js で定義・app.js/charts.js 共用）
   const dowTotals   = new Array(7).fill(0);
   const dowCounts   = new Array(7).fill(0);
   const dowDateSets = Array.from({ length: 7 }, () => new Set());
@@ -6071,7 +6068,7 @@ function openCategoryDrilldown(catName, catColor, month, type, txsPool, periodLa
   // カテゴリドット・タイトル
   const dotEl = document.getElementById('dd-cat-dot');
   const titleEl = document.getElementById('dd-modal-title');
-  if (dotEl) dotEl.style.background = catColor || '#6b7280';
+  if (dotEl) dotEl.style.background = catColor || getCSSVar('--text-muted');
   if (titleEl) titleEl.textContent = catName;
 
   // サマリー
