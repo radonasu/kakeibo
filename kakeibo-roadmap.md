@@ -229,6 +229,8 @@
 
 | 141 | v11.3 | デザイン＋アクセシビリティ | CSS変数化最終仕上げ＋フォーカスリング補完：①【CSS変数化】`.modal-overlay` background `rgba(15,23,42,.45)` → `color-mix(in srgb, var(--sidebar-bg) 45%, transparent)`（モーダルオーバーレイがサイドバー色変数に追従）②【CSS変数化】`.pwa-ios-guide` background `rgba(15,23,42,.95)` → `color-mix(in srgb, var(--sidebar-bg) 95%, transparent)`（iOSインストールガイド背景を変数化）③【CSS変数化】`.btn-dark-toggle` color `rgba(241,245,249,.75)` → `color-mix(in srgb, var(--sidebar-text-hi) 75%, transparent)`（ダークモードトグルボタン文字色をsidebar変数に統合）④【アクセシビリティ】`.filter-search:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（取引検索テキスト入力のフォーカスリング補完・他フォーム要素と統一）⑤【アクセシビリティ】`.quick-cat-form input:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（クイックカテゴリ追加フォームのフォーカスリング補完）⑥【アクセシビリティ】`.budget-input:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（予算入力フィールドのフォーカスリング補完）⑦【CSS変数化】app.js「担当者なし」カラードットのインラインスタイル`background:#94a3b8` → `background:var(--text-faint)`（ダークモードのtext-faint自動追従） |
 
+| 142 | v11.4 | バグ修正 | 未定義CSS変数エイリアス追加（8変数・視覚的バグ解消）：Pythonスクリプトによる全CSS変数の使用箇所と定義箇所の照合で8種の未定義変数を発見・修正。`:root`の「エイリアス変数」ブロックに追加：①`--radius-md: var(--radius-btn)`（4箇所使用・未定義のため`border-radius:0px`相当になっていた）②`--fw-semibold: var(--fw-semi)`（`.cc-col-header`の`font-weight`が効いていなかった）③`--text-main: var(--text)`（5箇所でテキスト色が継承値頼みだった）④`--text-primary: var(--text)`（4箇所）⑤`--surface-1: var(--surface)`（5箇所で`background:transparent`になっていた）⑥`--card-bg: var(--surface)`（`.yi-card`の背景が透明になっていた）⑦`--text-2: var(--text)`（`.kb-row > span`のショートカット説明テキスト色が未定義だった）⑧`--danger: var(--danger-text)`（`.rc-close:hover`と`.rc-type-exp`の赤色が効いていなかった） |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
