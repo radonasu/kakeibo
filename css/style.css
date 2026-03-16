@@ -225,7 +225,7 @@ select:focus:not(:focus-visible) {
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 8px;
   padding: 6px 10px;
-  font-size: 14px;
+  font-size: var(--fs-base);
   font-weight: 700;
   flex-shrink: 0;
   transition: background .15s;
@@ -324,7 +324,7 @@ select:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
@@ -351,7 +351,7 @@ select:focus:not(:focus-visible) {
   background: none;
   border: none;
   color: #64748b;
-  font-size: 14px;
+  font-size: var(--fs-base);
   padding: 4px 6px;
   border-radius: 6px;
   cursor: pointer;
@@ -591,7 +591,7 @@ select:focus:not(:focus-visible) {
 .btn-icon {
   background: none;
   border: none;
-  font-size: 14px;
+  font-size: var(--fs-base);
   padding: 0;
   min-width: 32px;
   min-height: 32px;
@@ -1139,7 +1139,7 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
 }
 .tx-sort-badge-x {
-  font-size: 10px;
+  font-size: var(--fs-2xs);
   opacity: .6;
   margin-left: 1px;
 }
@@ -1349,7 +1349,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   padding: 1px 8px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
   background: color-mix(in srgb, var(--tc, var(--primary)) 12%, transparent);
   color: var(--tc, var(--primary));
@@ -1394,7 +1394,7 @@ select:focus:not(:focus-visible) {
 }
 .tx-tag-filter-row::-webkit-scrollbar { display: none; }
 .tx-tag-filter-label {
-  font-size: 12px;
+  font-size: var(--fs-xs);
   flex-shrink: 0;
   margin-right: 2px;
   opacity: 0.6;
@@ -1538,7 +1538,7 @@ select:focus:not(:focus-visible) {
   border-radius: 99px;
   background: var(--primary);
   color: #fff;
-  font-size: 10px;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   line-height: 1;
 }
@@ -1661,7 +1661,7 @@ select:focus:not(:focus-visible) {
 }
 .adv-preset-chip.active::after {
   content: ' ✓';
-  font-size: 10px;
+  font-size: var(--fs-2xs);
 }
 @keyframes preset-chip-in {
   from { opacity: 0; transform: scale(0.78) translateY(5px); }
@@ -2394,7 +2394,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: var(--fs-base);
   font-weight: 800;
   color: #fff;
   flex-shrink: 0;
@@ -2404,6 +2404,56 @@ mark.tx-hl {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+.sync-user-email-text {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+}
+.sync-cloud-status-ok {
+  font-size: var(--fs-2xs);
+  color: var(--income);
+  font-weight: var(--fw-semi);
+}
+/* Supabase接続ステータスバッジ */
+.supabase-status-pill {
+  display: inline-block;
+  font-size: var(--fs-2xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-badge);
+  font-weight: var(--fw-bold);
+}
+.supabase-status-pill.ok {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.supabase-status-pill.ng {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+/* Supabase管理者設定通知 */
+.supabase-admin-notice {
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+}
+.supabase-admin-notice-label {
+  font-weight: var(--fw-bold);
+  color: var(--success);
+}
+.supabase-admin-notice-sub {
+  color: var(--text-muted);
+  margin-left: var(--sp-2);
+}
+[data-theme="dark"] .supabase-admin-notice {
+  background: color-mix(in srgb, var(--success) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+}
+[data-theme="dark"] .sync-cloud-status-ok {
+  color: var(--income);
 }
 
 .sql-block {

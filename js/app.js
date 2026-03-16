@@ -621,7 +621,7 @@ function renderHealthScoreCard(ym) {
   const hs = calculateHealthScore(ym);
   if (!hs) return '';
 
-  const gradeColors = { S: '#7c3aed', A: '#059669', B: '#2563eb', C: '#d97706', D: '#dc2626' };
+  const gradeColors = { S: 'var(--primary)', A: 'var(--success)', B: '#2563eb', C: 'var(--warning)', D: 'var(--danger-text)' };
   const gradeColor  = gradeColors[hs.grade] || 'var(--primary)';
   const gaugeOffset = (163.36 * (1 - hs.total / 100)).toFixed(2);
 
@@ -5261,8 +5261,8 @@ function renderSettings() {
     <div id="sync-logged-info" class="sync-user-card">
       <div class="sync-user-avatar" id="sync-user-avatar">${user ? user.email[0].toUpperCase() : '?'}</div>
       <div class="sync-user-info">
-        <span id="sync-user-email" style="font-size:13px;font-weight:600">${esc2(user ? user.email : '')}</span>
-        <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
+        <span id="sync-user-email" class="sync-user-email-text">${esc2(user ? user.email : '')}</span>
+        <span class="sync-cloud-status-ok">✓ クラウド同期が有効です</span>
       </div>
     </div>
     <div class="sync-btn-row">
@@ -5274,8 +5274,8 @@ function renderSettings() {
       <div class="sync-user-card">
         <div class="sync-user-avatar" id="sync-user-avatar">?</div>
         <div class="sync-user-info">
-          <span id="sync-user-email" style="font-size:13px;font-weight:600"></span>
-          <span style="font-size:11px;color:var(--income);font-weight:600">✓ クラウド同期が有効です</span>
+          <span id="sync-user-email" class="sync-user-email-text"></span>
+          <span class="sync-cloud-status-ok">✓ クラウド同期が有効です</span>
         </div>
       </div>
       <div class="sync-btn-row">
@@ -5290,14 +5290,14 @@ function renderSettings() {
     </div>`}
 
     ${adminCfg ? `
-    <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;font-size:13px">
-      <span style="font-weight:700;color:#059669">✓ Supabase接続設定済み</span>
-      <span style="color:#64748b;margin-left:8px">（管理者によって設定されています）</span>
+    <div class="supabase-admin-notice">
+      <span class="supabase-admin-notice-label">✓ Supabase接続設定済み</span>
+      <span class="supabase-admin-notice-sub">（管理者によって設定されています）</span>
     </div>` : `
     <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
-      <summary style="cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
+      <summary style="cursor:pointer;font-size:var(--fs-sm);color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
         <span>⚙️ Supabase接続設定</span>
-        ${(cfg.url && cfg.anonKey) ? '<span style="font-size:11px;background:#d1fae5;color:#059669;padding:2px 8px;border-radius:20px;font-weight:700">設定済み</span>' : '<span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 8px;border-radius:20px;font-weight:700">未設定</span>'}
+        ${(cfg.url && cfg.anonKey) ? '<span class="supabase-status-pill ok">設定済み</span>' : '<span class="supabase-status-pill ng">未設定</span>'}
       </summary>
       <div style="margin-top:14px">
         <div class="form-group">
