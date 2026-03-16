@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.8.0'; // v10.8.0: ハードコード色CSS変数化第7弾 — cat-chip/csv-badge/hs-grade/hs-trend/ch-status-fail/dow-pct-high/fv-stat-var・rate/bulk-bar/pt-exp-expiredのダークモードradiusy→CSS変数化（14箇所）
+const CACHE_NAME = 'kakeibo-v10.9.0'; // v10.9.0: ハードコード色CSS変数化完全化 — グラデーション末端色・フォールバック値・サイドバー固有色の全域CSS変数化（sidebar-text/primary-mid/warning-end/expense-deep/pink/orange等10変数追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

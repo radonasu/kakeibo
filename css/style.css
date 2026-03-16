@@ -18,6 +18,10 @@
   --surface:       #ffffff;
   --surface-2:     #f8fafc;
   --sidebar-bg:    #0f172a;
+  --sidebar-text:       #e2e8f0;  /* サイドバー本文テキスト（常時ダーク背景用） */
+  --sidebar-text-hi:    #f1f5f9;  /* サイドバー強調テキスト */
+  --sidebar-text-muted: #94a3b8;  /* サイドバーミュートテキスト */
+  --sidebar-surface:    #1e293b;  /* サイドバー内セレクトオプション背景 */
   --sidebar-w:     248px;
   --text:          #0f172a;
   --text-muted:    #64748b;
@@ -59,6 +63,17 @@
   --income-deep:    #065f46;   /* deep income (net-worth) */
   --teal:           #0e7490;   /* teal/cyan gradient start (v10.7) */
   --teal-end:       #22d3ee;   /* teal/cyan gradient end (v10.7) */
+  /* ── 追加グラデーション色 (v10.9) ──────────────────────── */
+  --primary-mid:      #818cf8;  /* primary gradient mid（indigo-400） */
+  --primary-hover:    #4f46e5;  /* primary hover state（indigo-600） */
+  --primary-deep:     #312e81;  /* deep indigo（onboarding/auth bg） */
+  --primary-deepest:  #1e1b4b;  /* deepest indigo（auth overlay） */
+  --primary-darker:   #4c1d95;  /* darker violet（auth overlay end） */
+  --indigo-mid:       #4338ca;  /* indigo-700（onboarding gradient mid） */
+  --warning-end:      #fbbf24;  /* warning gradient end（amber-400） */
+  --expense-deep:     #9f1239;  /* deep rose（negative net-worth） */
+  --pink:             #f472b6;  /* pink-400（brand icon accent） */
+  --orange:           #f97316;  /* orange-500（pt-expiring gradient end） */
 
   /* ── サブテキスト（補助テキスト）(v9.8) ──────────────── */
   --text-sub:       var(--text-muted);
@@ -183,7 +198,7 @@ select:focus:not(:focus-visible) {
 #sidebar {
   width: var(--sidebar-w);
   background: var(--sidebar-bg);
-  color: #e2e8f0;
+  color: var(--sidebar-text);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -209,7 +224,7 @@ select:focus:not(:focus-visible) {
 .brand-icon {
   width: 38px;
   height: 38px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-end), #f472b6);
+  background: linear-gradient(135deg, var(--primary), var(--primary-end), var(--pink));
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -222,7 +237,7 @@ select:focus:not(:focus-visible) {
 .brand-name {
   font-size: var(--fs-lg);
   font-weight: var(--fw-black);
-  color: #f1f5f9;
+  color: var(--sidebar-text-hi);
   letter-spacing: var(--ls-snug);
 }
 
@@ -236,7 +251,7 @@ select:focus:not(:focus-visible) {
 .account-select {
   flex: 1;
   background: rgba(255,255,255,.08);
-  color: #f1f5f9;
+  color: var(--sidebar-text-hi);
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 8px;
   padding: 6px 8px;
@@ -247,12 +262,12 @@ select:focus:not(:focus-visible) {
   transition: background .15s;
 }
 .account-select:focus { outline: none; border-color: var(--primary); }
-.account-select option { background: #1e293b; color: #f1f5f9; }
+.account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
 .account-select:hover { background: rgba(255,255,255,.13); }
 
 .btn-account-add {
   background: rgba(255,255,255,.1);
-  color: #f1f5f9;
+  color: var(--sidebar-text-hi);
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 8px;
   padding: 6px 10px;
@@ -285,7 +300,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  color: #94a3b8;
+  color: var(--sidebar-text-muted);
   border-radius: 10px;
   cursor: pointer;
   transition: background .15s, color .15s;
@@ -299,7 +314,7 @@ select:focus:not(:focus-visible) {
   position: relative;
 }
 
-.nav-item:hover { background: rgba(255,255,255,.07); color: #e2e8f0; }
+.nav-item:hover { background: rgba(255,255,255,.07); color: var(--sidebar-text); }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
@@ -351,7 +366,7 @@ select:focus:not(:focus-visible) {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #818cf8);
+  background: linear-gradient(135deg, var(--primary), var(--primary-mid));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -368,7 +383,7 @@ select:focus:not(:focus-visible) {
 .sidebar-user-email {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
-  color: #e2e8f0;
+  color: var(--sidebar-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -381,7 +396,7 @@ select:focus:not(:focus-visible) {
 .btn-sidebar-logout {
   background: none;
   border: none;
-  color: #64748b;
+  color: var(--sidebar-text-muted);
   font-size: var(--fs-base);
   padding: 4px 6px;
   border-radius: 6px;
@@ -393,7 +408,7 @@ select:focus:not(:focus-visible) {
 
 .sidebar-offline-badge {
   font-size: var(--fs-xs);
-  color: #64748b;
+  color: var(--sidebar-text-muted);
   text-align: center;
   padding: 8px;
 }
@@ -417,7 +432,7 @@ select:focus:not(:focus-visible) {
   gap: 12px;
   padding: 12px 16px;
   background: var(--sidebar-bg);
-  color: #f8fafc;
+  color: var(--sidebar-text-hi);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -427,7 +442,7 @@ select:focus:not(:focus-visible) {
 #hamburger {
   background: none;
   border: none;
-  color: #f8fafc;
+  color: var(--sidebar-text-hi);
   font-size: 22px;
   padding: 4px 6px;
   display: flex;
@@ -2094,7 +2109,7 @@ mark.tx-hl {
 }
 
 .btn-receipt {
-  background: linear-gradient(135deg, var(--primary), #7c3aed);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #fff;
   border: none;
   border-radius: var(--radius-sm);
@@ -2424,7 +2439,7 @@ mark.tx-hl {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--income), #34d399);
+  background: linear-gradient(135deg, var(--income), var(--income-end));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2492,7 +2507,7 @@ mark.tx-hl {
 
 .sql-block {
   background: var(--sidebar-bg);
-  color: #e2e8f0;
+  color: var(--sidebar-text);
   padding: 14px 16px;
   border-radius: var(--radius-sm);
   font-size: var(--fs-xs);
@@ -2545,7 +2560,7 @@ mark.tx-hl {
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4c1d95 100%);
+  background: linear-gradient(135deg, var(--primary-deepest) 0%, var(--primary-deep) 40%, var(--primary-darker) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2572,7 +2587,7 @@ mark.tx-hl {
 .auth-logo-icon {
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--primary), #818cf8);
+  background: linear-gradient(135deg, var(--primary), var(--primary-mid));
   border-radius: 18px;
   display: flex;
   align-items: center;
@@ -2708,7 +2723,7 @@ body {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   background: var(--sidebar-bg);
-  color: #f8fafc;
+  color: var(--sidebar-text-hi);
   padding: 14px 16px;
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
   z-index: 8000;
@@ -2728,12 +2743,12 @@ body {
 .install-banner-icon { font-size: 28px; flex-shrink: 0; }
 .install-banner-text { flex: 1; }
 .install-banner-text strong { display: block; font-size: var(--fs-base); }
-.install-banner-text span { font-size: var(--fs-xs); color: #94a3b8; }
+.install-banner-text span { font-size: var(--fs-xs); color: var(--sidebar-text-muted); }
 .install-banner-close {
-  background: none; border: none; color: #64748b;
+  background: none; border: none; color: var(--sidebar-text-muted);
   font-size: 20px; padding: 4px 8px; cursor: pointer;
 }
-.install-banner-close:hover { color: #f8fafc; }
+.install-banner-close:hover { color: var(--sidebar-text-hi); }
 
 /* ── iOS インストールガイド ── */
 .pwa-ios-guide {
@@ -2742,7 +2757,7 @@ body {
   background: rgba(15,23,42,.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: #f8fafc;
+  color: var(--sidebar-text-hi);
   padding: 20px;
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   text-align: center;
@@ -2754,12 +2769,12 @@ body {
 
 .ios-guide-close {
   position: absolute; top: 8px; right: 12px;
-  background: none; border: none; color: #94a3b8;
+  background: none; border: none; color: var(--sidebar-text-muted);
   font-size: 22px; cursor: pointer;
 }
 .ios-guide-icon { font-size: 36px; margin-bottom: 8px; }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: 6px; }
-.ios-guide-steps { font-size: var(--fs-sm); color: #cbd5e1; line-height: var(--lh-normal); }
+.ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
 .ios-guide-arrow {
   font-size: 24px; color: var(--primary);
   animation: pwa-bounce 1.5s infinite;
@@ -3090,7 +3105,7 @@ body {
   justify-content: center;
 }
 .btn-dark-toggle svg { display: block; }
-.btn-dark-toggle:hover { background: rgba(255,255,255,.12); color: #f1f5f9; }
+.btn-dark-toggle:hover { background: rgba(255,255,255,.12); color: var(--sidebar-text-hi); }
 
 /* ============================================================
    ダークモード — CSS変数オーバーライド
@@ -3134,9 +3149,9 @@ body {
   --expense:        #fb7185;
   /* infoカラートークン（ダーク, v10.6） */
   --info:           #60a5fa;  /* blue-400 */
-  --info-bg:        color-mix(in srgb, #2563eb 22%, transparent);
+  --info-bg:        color-mix(in srgb, var(--info) 22%, transparent);
   --info-text:      #93c5fd;  /* blue-300 */
-  --info-border:    color-mix(in srgb, #2563eb 32%, transparent);
+  --info-border:    color-mix(in srgb, var(--info) 32%, transparent);
   --warning-deep:   var(--warning);  /* ダークモードではwarning変数（#fbbf24）に追従 */
 }
 
@@ -3396,7 +3411,7 @@ body {
 
 /* ── ウェルカムヒーロー ──────────────────────────────────── */
 .onboarding-hero {
-  background: linear-gradient(135deg, #312e81 0%, #4338ca 40%, var(--primary) 100%);
+  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
   padding: 44px 32px 36px;
   color: #fff;
@@ -4824,7 +4839,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   letter-spacing: var(--ls-tight);
 }
 .cal-sum-value.income  { color: var(--success); }
-.cal-sum-value.expense { color: var(--expense, #ef4444); }
+.cal-sum-value.expense { color: var(--expense); }
 
 /* カレンダーグリッド */
 .cal-grid-wrap {
@@ -5854,7 +5869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: transparent;
 }
 .pt-expiring {
-  background: linear-gradient(135deg, var(--warning) 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--warning) 0%, var(--orange) 100%);
   border-color: transparent;
 }
 .pt-summary-label {
@@ -6444,8 +6459,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 高優先度カードのパルス */
 @keyframes wl-urgent-glow {
-  0%, 100% { border-left-color: var(--wl-accent, #ef4444); box-shadow: 0 0 0 0 transparent; }
-  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, #ef4444) 70%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
+  0%, 100% { border-left-color: var(--wl-accent, var(--expense)); box-shadow: 0 0 0 0 transparent; }
+  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
 }
 .wl-card.wl-high {
   animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both,
@@ -6716,7 +6731,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .memo-cat-hint-btn {
   padding: 3px 12px;
   border-radius: var(--radius-btn-sm);
-  background: var(--primary, #6366f1);
+  background: var(--primary);
   color: #fff;
   font-size: var(--fs-xs);
   font-weight: 600;
@@ -6725,7 +6740,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
   transition: background 0.15s;
 }
-.memo-cat-hint-btn:hover { background: var(--primary-hover, #4f46e5); }
+.memo-cat-hint-btn:hover { background: var(--primary-hover); }
 [data-theme="dark"] .memo-cat-hint {
   background: color-mix(in srgb, var(--primary) 8%, transparent);
   border-color: color-mix(in srgb, var(--primary) 25%, transparent);
@@ -7130,7 +7145,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: linear-gradient(135deg, var(--income-deep) 0%, var(--income) 60%, var(--income-end) 100%);
 }
 .summary-card.net-worth-card.negative {
-  background: linear-gradient(135deg, #9f1239 0%, var(--expense) 100%);
+  background: linear-gradient(135deg, var(--expense-deep) 0%, var(--expense) 100%);
 }
 
 /* ミニスパークライン */
@@ -7247,7 +7262,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 4px solid var(--ch-accent, #6366f1);
+  border-left: 4px solid var(--ch-accent, var(--primary));
   position: relative;
   overflow: hidden;
   animation: ch-card-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
@@ -7268,7 +7283,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--ch-accent, #6366f1) 12%, transparent);
+  background: color-mix(in srgb, var(--ch-accent, var(--primary)) 12%, transparent);
   flex-shrink: 0;
 }
 .ch-card-body { flex: 1; min-width: 0; }
@@ -7319,7 +7334,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
 }
 .ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
-.ch-bar-warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.ch-bar-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
 .ch-bar-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
 
 .ch-progress-label {
@@ -7418,7 +7433,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: border-color 0.15s, background 0.15s;
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); }
-.ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light, #ede9fe); }
+.ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light); }
 
 .ch-color-grid {
   display: flex;
@@ -7457,7 +7472,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  background: color-mix(in srgb, var(--ch-accent, #6366f1) 12%, transparent);
+  background: color-mix(in srgb, var(--ch-accent, var(--primary)) 12%, transparent);
   flex-shrink: 0;
 }
 .ch-widget-body  { flex: 1; min-width: 0; }
@@ -7808,7 +7823,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
 .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
-.fv-stat-rate  { background: linear-gradient(135deg, #92400e, var(--warning)); }
+.fv-stat-rate  { background: linear-gradient(135deg, var(--warning-deep), var(--warning)); }
 /* デコレーションサークル */
 .fv-stat-card::after {
   content: '';
@@ -8043,7 +8058,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   line-height: 1.2;
 }
 .wk-cell-value.wk-today-exp { color: var(--danger-text); }
-.wk-cell-value.wk-nospend   { color: var(--success, #10b981); }
+.wk-cell-value.wk-nospend   { color: var(--success); }
 .wk-unit  { font-size: var(--fs-sm); font-weight: 500; }
 .wk-cell-sub {
   font-size: var(--fs-2xs);
@@ -8103,7 +8118,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-bar-fill {
   width: 70%;
   min-width: 8px;
-  background: var(--primary, #7c3aed);
+  background: var(--primary);
   border-radius: 5px 5px 2px 2px;
   min-height: 3px;
   position: relative;
@@ -8111,12 +8126,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
-  background: var(--danger-text, #ef4444);
+  background: var(--danger-text);
   animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
 }
 .wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
-  background: var(--danger-text, #ef4444);
+  background: var(--danger-text);
   animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
 }
 
@@ -8133,7 +8148,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: 500;
 }
 .wk-today-label {
-  color: var(--danger-text, #ef4444);
+  color: var(--danger-text);
   font-weight: 700;
   background: var(--danger-bg);
   border-radius: 99px;
@@ -8178,8 +8193,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   z-index: 0;
 }
 /* タイプ別アクセントカラー連動 */
-.qa-card[data-qa-type="expense"] { --qa-accent: var(--danger-text, #ef4444); }
-.qa-card[data-qa-type="income"]  { --qa-accent: var(--income, #10b981); }
+.qa-card[data-qa-type="expense"] { --qa-accent: var(--danger-text); }
+.qa-card[data-qa-type="income"]  { --qa-accent: var(--income); }
 .qa-card[data-qa-type="expense"]::before {
   background: radial-gradient(circle, color-mix(in srgb, var(--expense) 7%, transparent) 0%, transparent 70%);
 }
@@ -8297,9 +8312,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 18%, transparent);
 }
 .qa-type-btn.qa-type-active[data-qa-type="income"] {
-  background: var(--success-bg, #f0fdf4);
-  border-color: var(--income, #10b981);
-  color: var(--income, #10b981);
+  background: var(--success-bg);
+  border-color: var(--income);
+  color: var(--income);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--success) 18%, transparent);
 }
 [data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"] {
@@ -8506,8 +8521,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--primary);
   transition: width 0.3s, background-color 0.3s;
 }
-.nt-progress-fill.nt-prog-warn   { background: var(--warning, #f59e0b); }
-.nt-progress-fill.nt-prog-danger { background: var(--danger-text, #ef4444); }
+.nt-progress-fill.nt-prog-warn   { background: var(--warning); }
+.nt-progress-fill.nt-prog-danger { background: var(--danger-text); }
 
 .nt-footer {
   display: flex;
@@ -8520,8 +8535,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   transition: color 0.3s;
 }
-.nt-char-count.nt-cnt-warn   { color: var(--warning, #f59e0b); }
-.nt-char-count.nt-cnt-danger { color: var(--danger-text, #ef4444); font-weight: 600; }
+.nt-char-count.nt-cnt-warn   { color: var(--warning); }
+.nt-char-count.nt-cnt-danger { color: var(--danger-text); font-weight: 600; }
 
 .nt-status {
   font-size: var(--fs-2xs);
@@ -8530,7 +8545,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: opacity 0.3s;
 }
 .nt-status.nt-saved {
-  color: var(--success, #10b981);
+  color: var(--success);
   font-weight: 600;
   opacity: 1;
   display: inline-block;
@@ -8643,7 +8658,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   margin-top: 2px;
 }
-.hm-stat-sub.expense { color: var(--danger-text, #ef4444); }
+.hm-stat-sub.expense { color: var(--danger-text); }
 
 .hm-outer-wrap {
   display: flex;
@@ -9006,7 +9021,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .modal-lg { max-width: 640px; width: 95vw; }
 
 .sim-modal-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end, #5b21b6) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   color: #fff;
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
@@ -9454,9 +9469,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   pointer-events: none;
 }
 /* サマリーカード種別グラデーション */
-.ev-sum-this { background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%); border-top: none; }
+.ev-sum-this { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%); border-top: none; }
 .ev-sum-next { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); border-top: none; }
-.ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%); border-top: none; }
+.ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: 700; line-height: 1.1; }
@@ -10324,7 +10339,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .yr-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--primary-end, #6366f1)));
+  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--primary-end)));
   border-radius: 99px;
   width: 0;
 }
@@ -10441,7 +10456,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 .ci-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end, #7c3aed) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   padding: var(--sp-6) var(--sp-5) var(--sp-4);
   position: relative;
   color: #fff;
@@ -10563,7 +10578,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-savings-fill {
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--success) 0%, #34d399 100%);
+  background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
   transition: width 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
 }
 .ci-savings-pct {
@@ -10653,7 +10668,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-base);
   font-weight: 700;
   border-radius: var(--radius-btn);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end, #7c3aed) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -10712,7 +10727,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   background: none;
   border: none;
-  color: #e2e8f0;
+  color: var(--sidebar-text);
   width: 36px;
   height: 36px;
   display: flex;
@@ -10777,7 +10792,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   pointer-events: none;
   box-shadow: 0 1px 4px color-mix(in srgb, var(--expense) 50%, transparent);
-  border: 1.5px solid var(--sidebar-bg, #0f172a);
+  border: 1.5px solid var(--sidebar-bg);
 }
 
 @keyframes notif-badge-pop {
@@ -11041,11 +11056,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom-color: rgba(255,255,255,.07);
 }
 [data-theme="dark"] .notif-panel-title {
-  color: #f1f5f9;
+  color: var(--text);
 }
 [data-theme="dark"] .notif-mark-read {
   border-color: rgba(255,255,255,.12);
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 [data-theme="dark"] .notif-mark-read:hover {
   background: color-mix(in srgb, var(--primary) 18%, transparent);
@@ -11077,23 +11092,23 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .notif-item.notif-type-success .notif-item-icon { background: color-mix(in srgb, var(--success) 14%, transparent); }
 [data-theme="dark"] .notif-item.notif-type-info    .notif-item-icon { background: color-mix(in srgb, var(--primary) 14%, transparent); }
 [data-theme="dark"] .notif-item-title {
-  color: #f1f5f9;
+  color: var(--text);
 }
 [data-theme="dark"] .notif-item-body {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 [data-theme="dark"] .notif-unread-dot {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 [data-theme="dark"] .notif-group-label {
-  color: #64748b;
+  color: var(--text-faint);
 }
 [data-theme="dark"] .notif-group-label.notif-type-danger  { color: var(--expense-end); }
 [data-theme="dark"] .notif-group-label.notif-type-warning { color: var(--warning); }
 [data-theme="dark"] .notif-group-label.notif-type-success { color: var(--income-end); }
 [data-theme="dark"] .notif-group-label.notif-type-info    { color: var(--primary-end); }
 [data-theme="dark"] .notif-empty {
-  color: #64748b;
+  color: var(--text-faint);
 }
 
 /* モバイル調整 */
@@ -12230,7 +12245,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 /* 深刻度別 */
-.opp-sev-high  { --opp-accent: var(--danger-text, #ef4444); }
+.opp-sev-high  { --opp-accent: var(--danger-text); }
 .opp-sev-medium { --opp-accent: var(--warning); }
 .opp-sev-low   { --opp-accent: var(--primary); }
 
@@ -12403,14 +12418,14 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* 収入カテゴリ内訳 緑系 (v8.9) */
 .md-cat-bar-income {
-  background: var(--success, #10b981);
+  background: var(--success);
 }
 .md-cat-amount-income {
-  color: var(--success, #10b981);
+  color: var(--success);
 }
 .md-income-title {
-  color: var(--success, #10b981);
-  border-bottom-color: color-mix(in srgb, var(--success, #10b981) 25%, transparent);
+  color: var(--success);
+  border-bottom-color: color-mix(in srgb, var(--success) 25%, transparent);
 }
 
 /* md-list の取引行は dd-tx-row を流用 */
@@ -12684,7 +12699,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .pace-bar-days { background: linear-gradient(90deg, var(--primary), var(--primary-end)); }
 .pace-bar-expense.pace-good { background: linear-gradient(90deg, var(--success), var(--income-end)); }
-.pace-bar-expense.pace-warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.pace-bar-expense.pace-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
 .pace-bar-expense.pace-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
 .pace-bar-value {
   font-size: var(--fs-xs);
