@@ -6,6 +6,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  color-scheme: light;  /* ブラウザUIのデフォルトをライトモードに固定 */
   --primary:       #7c3aed;
   --primary-dark:  #6d28d9;
   --primary-light: #ede9fe;
@@ -68,6 +69,7 @@
   --fs-4xl:     30px;   /* 最大：金額 */
 
   /* フォントウェイト */
+  --fw-normal:  400;
   --fw-medium:  500;
   --fw-semi:    600;
   --fw-bold:    700;
@@ -111,6 +113,27 @@ html {
   overscroll-behavior-x: none;
   scroll-behavior: smooth;
 }
+
+/* ── グローバルカスタムスクロールバー (v10.5) ────────────── */
+/* Webkit系（Chrome/Safari/Edge） */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+::-webkit-scrollbar-corner { background: transparent; }
+/* Firefox */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+/* ダークモード調整 */
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
+[data-theme="dark"] * { scrollbar-color: rgba(255,255,255,.18) transparent; }
+/* サイドバーは常にダーク背景 */
+#sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); }
+#sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
+#sidebar-nav { scrollbar-color: rgba(255,255,255,.18) transparent; }
 body {
   overflow-x: clip;
   width: 100%;
@@ -1492,7 +1515,7 @@ select:focus:not(:focus-visible) {
 .filter-bar select:hover,
 .filter-bar .month-sel:hover { border-color: var(--border-strong); }
 .filter-bar select:focus,
-.filter-bar .month-sel:focus { outline: none; border-color: var(--primary); }
+.filter-bar .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
 .filter-search {
   padding: 8px 11px;
@@ -1754,6 +1777,7 @@ mark.tx-hl {
   border-color: var(--primary);
   color: var(--primary);
   background: var(--primary-light);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 .month-nav-btn:active:not(:disabled) {
   transform: scale(0.9);
@@ -1771,7 +1795,9 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
 }
+.month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
 /* サマリーミニ (v5.54 刷新) */
 .summary-mini {
@@ -3062,6 +3088,7 @@ body {
    ダークモード — CSS変数オーバーライド
    ============================================================ */
 [data-theme="dark"] {
+  color-scheme: dark;  /* date/time inputのブラウザUIをダーク化 */
   --bg:            #0f172a;
   --surface:       #1e293b;
   --surface-2:     #162032;

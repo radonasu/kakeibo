@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.4.0'; // v10.4.0: 残存ハードコード色CSS変数化 — #6366f1/#fca5a5/#fcd34d/#6ee7b7を全域一掃（pt-total/fv-stat-fixed/sim-col-base/sim-savings-banner/ch-status/dow-pct/wk-diff/asset-badge/notif-group-label等 計25箇所）
+const CACHE_NAME = 'kakeibo-v10.5.0'; // v10.5.0: デザイン洗練 — グローバルカスタムスクロールバー・color-scheme設定・--fw-normal変数追加・フィルターバーfocus ring・月ナビhover glow・date inputダークモード改善
 const ASSETS = [
   './index.html',
   './css/style.css',
