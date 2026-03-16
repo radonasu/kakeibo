@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v12.0.0'; // v12.0.0: アニメーション変数完全化（--dur-quick/appear/gentle・--ease-out-expo/sine追加・全CSS残存duration/easingをCSS変数化）
+const CACHE_NAME = 'kakeibo-v12.1.0'; // v12.1.0: marginスペーシング変数化（margin-bottom/top の全ハードコードpx値をvar(--sp-*)に変換・計55箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
