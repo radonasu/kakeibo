@@ -45,6 +45,12 @@
   /* インタラクション */
   --surface-hover:    #eef2f7;
   --focus-ring:       color-mix(in srgb, var(--primary) 15%, transparent);
+  /* infoカラートークン (v10.6) */
+  --info:             #2563eb;  /* blue-600 */
+  --info-bg:          #dbeafe;  /* blue-100 */
+  --info-text:        #1d4ed8;  /* blue-700 */
+  --info-border:      #bfdbfe;  /* blue-200 */
+  --warning-deep:     #92400e;  /* amber-800: 白背景用濃色warningテキスト */
 
   /* ── グラデーション端点色 (v5.65) ─────────────────────── */
   --primary-end:    #a78bfa;   /* primary gradient end */
@@ -3124,6 +3130,12 @@ body {
   /* 収支基本色（ダーク: WCAG AA準拠, v9.8） */
   --income:         #34d399;
   --expense:        #fb7185;
+  /* infoカラートークン（ダーク, v10.6） */
+  --info:           #60a5fa;  /* blue-400 */
+  --info-bg:        color-mix(in srgb, #2563eb 22%, transparent);
+  --info-text:      #93c5fd;  /* blue-300 */
+  --info-border:    color-mix(in srgb, #2563eb 32%, transparent);
+  --warning-deep:   var(--warning);  /* ダークモードではwarning変数（#fbbf24）に追従 */
 }
 
 /* ダークモード — コンポーネント固有の上書き */
@@ -3899,7 +3911,7 @@ body {
   padding: 2px 8px;
   border-radius: var(--radius-badge);
   background: var(--warning-bg);
-  color: #92400e;
+  color: var(--warning-deep);
   white-space: nowrap;
   flex-shrink: 0;
   border: 1px solid var(--warning-border);
@@ -6202,12 +6214,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hs-grade-s { background: var(--primary-light);  color: var(--primary-dark); }
 .hs-grade-a { background: var(--success-bg);     color: var(--income-deep); }
-.hs-grade-b { background: #dbeafe; color: #1d4ed8; }
+.hs-grade-b { background: var(--info-bg); color: var(--info-text); }
 .hs-grade-c { background: var(--warning-bg);     color: var(--warning); }
 .hs-grade-d { background: var(--danger-bg);      color: var(--danger-text); }
 [data-theme="dark"] .hs-grade-s { background: rgba(109,40,217,.25); color: #a78bfa; }
 [data-theme="dark"] .hs-grade-a { background: rgba(4,120,87,.25);   color: #34d399; }
-[data-theme="dark"] .hs-grade-b { background: rgba(29,78,216,.25);  color: #60a5fa; }
+[data-theme="dark"] .hs-grade-b { background: var(--info-bg);         color: var(--info-text); }
 [data-theme="dark"] .hs-grade-c { background: rgba(133,77,14,.25);  color: #fbbf24; }
 [data-theme="dark"] .hs-grade-d { background: rgba(185,28,28,.25);  color: #f87171; }
 /* ──── Message ──── */
@@ -7046,7 +7058,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--primary);
 }
 [data-theme="dark"] .dw-slider::after {
-  background: #e5e7eb;
+  background: rgba(255,255,255,.88);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -7465,7 +7477,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-widget-pct.ch-pct-over { color: var(--expense); }
 
 /* -- ダークモード対応 -- */
-[data-theme="dark"] .ch-status-active { background: #1e3a5f; color: #93c5fd; }
+[data-theme="dark"] .ch-status-active { background: var(--info-bg); color: var(--info-text); }
 [data-theme="dark"] .ch-status-done   { background: var(--income-deep); color: var(--income-end); }
 [data-theme="dark"] .ch-status-fail   { background: #7f1d1d; color: var(--expense-end); }
 [data-theme="dark"] .ch-status-over   { background: var(--warning-border); color: var(--warning); }
@@ -7530,7 +7542,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
-  background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--expense) 75%, black) 0%, var(--expense) 100%);
   color: #fff;
 }
 /* 最少支出: 緑系グラデーション */
@@ -8100,7 +8112,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--danger-text, #ef4444);
   animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
 }
-.wk-weekend     .wk-bar-fill { background: #8b5cf6; }
+.wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
   background: var(--danger-text, #ef4444);
   animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
@@ -8716,18 +8728,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   z-index: 2;
 }
-/* 支出量ヒートマップ色（赤系グラデーション） */
+/* 支出量ヒートマップ色（--expense連動, v10.6） */
 .hm-lv0 { background: var(--border); }
-.hm-lv1 { background: #fecaca; }
-.hm-lv2 { background: #f87171; }
-.hm-lv3 { background: #ef4444; }
-.hm-lv4 { background: #b91c1c; }
+.hm-lv1 { background: color-mix(in srgb, var(--expense) 22%, white); }
+.hm-lv2 { background: color-mix(in srgb, var(--expense) 55%, white); }
+.hm-lv3 { background: var(--expense); }
+.hm-lv4 { background: color-mix(in srgb, var(--expense) 80%, black); }
 
 [data-theme="dark"] .hm-lv0 { background: var(--border); }
-[data-theme="dark"] .hm-lv1 { background: #7f1d1d; }
-[data-theme="dark"] .hm-lv2 { background: #991b1b; }
-[data-theme="dark"] .hm-lv3 { background: #dc2626; }
-[data-theme="dark"] .hm-lv4 { background: #f87171; }
+[data-theme="dark"] .hm-lv1 { background: color-mix(in srgb, var(--expense) 30%, black); }
+[data-theme="dark"] .hm-lv2 { background: color-mix(in srgb, var(--expense) 55%, black); }
+[data-theme="dark"] .hm-lv3 { background: var(--expense); }
+[data-theme="dark"] .hm-lv4 { background: var(--expense-end); }
 [data-theme="dark"] .hm-today {
   outline-color: rgba(255,255,255,0.7);
 }
@@ -10717,12 +10729,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 未読あり状態 */
 .btn-notif-bell.has-unread {
-  color: #fbbf24;
+  color: var(--warning);
 }
 /* パネル開いた状態 */
 .btn-notif-bell[aria-expanded="true"] {
   background: color-mix(in srgb, var(--primary) 22%, transparent);
-  color: #c4b5fd;
+  color: var(--primary-end);
 }
 /* ベルシェイクアニメーション */
 @keyframes notif-bell-ring {
@@ -11009,21 +11021,21 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* ダークモード */
 [data-theme="dark"] .btn-notif-bell {
-  color: #cbd5e1;
+  color: var(--border-strong);
 }
 [data-theme="dark"] .btn-notif-bell:hover {
-  color: #f1f5f9;
+  color: var(--text);
 }
 [data-theme="dark"] .notif-bell-badge {
   border-color: var(--sidebar-bg);
 }
 [data-theme="dark"] .notif-panel {
-  background: #1e293b;
+  background: var(--surface);
   border-color: rgba(255,255,255,.08);
   box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.3);
 }
 [data-theme="dark"] .notif-panel-header {
-  background: #0f172a;
+  background: var(--bg);
   border-bottom-color: rgba(255,255,255,.07);
 }
 [data-theme="dark"] .notif-panel-title {
@@ -11035,8 +11047,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 [data-theme="dark"] .notif-mark-read:hover {
   background: color-mix(in srgb, var(--primary) 18%, transparent);
-  color: #a78bfa;
-  border-color: #a78bfa;
+  color: var(--primary-end);
+  border-color: var(--primary-end);
 }
 [data-theme="dark"] .notif-item:not(.notif-read) {
   background: color-mix(in srgb, var(--primary) 6%, transparent);
@@ -11051,9 +11063,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-top-color: rgba(255,255,255,.07);
 }
 [data-theme="dark"] .notif-panel-footer {
-  background: #0f172a;
+  background: var(--bg);
   border-top-color: rgba(255,255,255,.07);
-  color: #475569;
+  color: var(--border-strong);
 }
 [data-theme="dark"] .notif-item-icon {
   background: rgba(255,255,255,.06);
