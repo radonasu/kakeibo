@@ -237,6 +237,8 @@
 
 | 145 | v11.7 | デザイン | アニメーションduration変数化完全化 第2弾 — `--dur-faster:0.18s`追加・shorthand形式duration値184箇所を一斉CSS変数化：①`:root`に`--dur-faster:0.18s`を追加（モーダル・行入場・チェックボックスアニメーション等で使用されていた0.18s値を変数化し5段階duration体系を完成）②`transition:`内の`.15s`（shorthand・92箇所）→`var(--dur-fast)`・`.2s`（34箇所）→`var(--dur-base)`・`.25s`（5箇所）→`var(--dur-mid)`・`.3s`（13箇所）→`var(--dur-slow)`・`.18s`/`0.18s`（計40箇所）→`var(--dur-faster)`を一斉変換③`animation:`内の`.2s`・`.3s`・`.18s`・`.25s`も同様に変換（`calc()`内スタッガー遅延値は除外）。これにより全transitionとanimationのduration値が`var(--dur-*)`に統一されデザイン速度体系の一括制御が完成 |
 
+| 146 | v11.8 | デザイン | letter-spacing変数システム完全化 — `--ls-display/-tighter/-fine/-label/-cap/-caps`追加・CSS全域38箇所をvar(--ls-*)に統一：①`:root`の字間変数ブロックを拡張しpxスケール2種（`--ls-display:-1.5px`超大数値/スコア用・`--ls-tighter:-1px`大見出し/サマリー金額用）・emスケール4種（`--ls-fine:0.01em`小テキスト微細・`--ls-label:0.02em`ラベル/キャプション7箇所・`--ls-cap:0.04em`バッジ/アクセント3箇所・`--ls-caps:0.05em`見出しcaps3箇所）を追加②`.summary-amount`の`-1px`→`var(--ls-tighter)`・`.hs-score-num`の`-1.5px`→`var(--ls-display)`・`0.02em`系7箇所→`var(--ls-label)`・`0.04em`系3箇所→`var(--ls-cap)`・`0.05em`系3箇所→`var(--ls-caps)`・`0.01em`系3箇所→`var(--ls-fine)`を一斉変換③既存5変数(tight/snug/normal/wide/wider)と合わせ計11変数のletter-spacingデザインシステムを完成（残存4箇所は1用途特殊値として意図的に維持） |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
