@@ -4162,7 +4162,7 @@ ${(appData.members && appData.members.length > 0) ? `
           const totalExp = calcTotal(allTxs.filter(t => t.type === 'expense'), 'expense');
           const pct = totalExp ? Math.round(exp / totalExp * 100) : 0;
           return `<tr>
-            <td><span class="color-dot" style="background:#94a3b8"></span>担当者なし</td>
+            <td><span class="color-dot" style="background:var(--text-faint)"></span>担当者なし</td>
             <td class="income">${inc ? formatMoney(inc) : '—'}</td>
             <td class="expense">${exp ? formatMoney(exp) : '—'}</td>
             <td class="${net >= 0 ? 'income' : 'expense'}">${formatMoney(net)}</td>

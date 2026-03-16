@@ -227,6 +227,8 @@
 
 | 140 | v11.2 | デザイン | ハードコードborder-radius CSS変数化 — `--radius-xs:6px`/`--radius-xl:20px`を`:root`に新規追加・全CSS内ハードコードborder-radius値（6/8/10/12/20/24px）をCSS変数に一斉変換（計60箇所以上）：`6px`→`var(--radius-xs)`（ハンバーガー・ログアウトボタン等）・`8px`→`var(--radius-btn-sm)`（入力フィールド・ナビアイコン等 計15箇所）・`10px`→`var(--radius-sm)`（ナビアイテム・サイドバーカード・各種カード等 計20箇所）・`12px`→`var(--radius-btn)`（ブランドアイコン・FAB・各種アイコン背景等 計18箇所）・`20px`→`var(--radius-xl)`（ステータスバッジ・ラベル等 計8箇所）・`24px`→`var(--radius-lg)`（グローバルFAB・認証パネル・ボトムナビ等 計3箇所）。残存18px(auth-logo-icon特有)/9px(認証タブ内側)/0px(モバイルモーダルリセット)は意図的なデザインとして維持 |
 
+| 141 | v11.3 | デザイン＋アクセシビリティ | CSS変数化最終仕上げ＋フォーカスリング補完：①【CSS変数化】`.modal-overlay` background `rgba(15,23,42,.45)` → `color-mix(in srgb, var(--sidebar-bg) 45%, transparent)`（モーダルオーバーレイがサイドバー色変数に追従）②【CSS変数化】`.pwa-ios-guide` background `rgba(15,23,42,.95)` → `color-mix(in srgb, var(--sidebar-bg) 95%, transparent)`（iOSインストールガイド背景を変数化）③【CSS変数化】`.btn-dark-toggle` color `rgba(241,245,249,.75)` → `color-mix(in srgb, var(--sidebar-text-hi) 75%, transparent)`（ダークモードトグルボタン文字色をsidebar変数に統合）④【アクセシビリティ】`.filter-search:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（取引検索テキスト入力のフォーカスリング補完・他フォーム要素と統一）⑤【アクセシビリティ】`.quick-cat-form input:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（クイックカテゴリ追加フォームのフォーカスリング補完）⑥【アクセシビリティ】`.budget-input:focus`に`box-shadow: 0 0 0 3px var(--focus-ring)`追加（予算入力フィールドのフォーカスリング補完）⑦【CSS変数化】app.js「担当者なし」カラードットのインラインスタイル`background:#94a3b8` → `background:var(--text-faint)`（ダークモードのtext-faint自動追従） |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
