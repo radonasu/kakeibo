@@ -235,6 +235,8 @@
 
 | 144 | v11.6 | デザイン | アニメーションduration変数化完全化 — `--dur-mid:0.25s`追加・transition/animationのhardcode duration値71箇所をCSS変数に一斉変換：①`:root`に`--dur-mid:0.25s`を追加（`--dur-fast`/`--dur-base`/`--dur-slow`に続く4段階アニメーション速度スケール完全化）②`transition:`プロパティ内の`0.15s`→`var(--dur-fast)`（37箇所）・`0.2s`→`var(--dur-base)`（22箇所）・`0.25s`→`var(--dur-mid)`（10箇所）・`0.3s`→`var(--dur-slow)`（2箇所）を一斉変換③`animation:`プロパティ内の同値も変数化（duration位置のみ・`calc()`内スタッガー遅延値は精度維持のため除外）。これによりアニメーション速度体系を`:root`変数だけで一括制御できるデザインシステム基盤を完成 |
 
+| 145 | v11.7 | デザイン | アニメーションduration変数化完全化 第2弾 — `--dur-faster:0.18s`追加・shorthand形式duration値184箇所を一斉CSS変数化：①`:root`に`--dur-faster:0.18s`を追加（モーダル・行入場・チェックボックスアニメーション等で使用されていた0.18s値を変数化し5段階duration体系を完成）②`transition:`内の`.15s`（shorthand・92箇所）→`var(--dur-fast)`・`.2s`（34箇所）→`var(--dur-base)`・`.25s`（5箇所）→`var(--dur-mid)`・`.3s`（13箇所）→`var(--dur-slow)`・`.18s`/`0.18s`（計40箇所）→`var(--dur-faster)`を一斉変換③`animation:`内の`.2s`・`.3s`・`.18s`・`.25s`も同様に変換（`calc()`内スタッガー遅延値は除外）。これにより全transitionとanimationのduration値が`var(--dur-*)`に統一されデザイン速度体系の一括制御が完成 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

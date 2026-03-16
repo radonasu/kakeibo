@@ -124,8 +124,9 @@
   --sp-10: 40px;   /* 超大：セクション間 */
   --sp-12: 48px;   /* 最大：空状態パディング */
 
-  /* ── アニメーション/トランジション変数 (v11.5) ─────── */
+  /* ── アニメーション/トランジション変数 (v11.5/v11.7) ─── */
   --dur-fast:    0.15s;                            /* クイック（ホバー・色変化） */
+  --dur-faster:  var(--dur-faster);                            /* やや緩め（モーダル・行入場） */
   --dur-base:    0.2s;                             /* 標準アニメーション */
   --dur-mid:     0.25s;                            /* 中速（フェード・色遷移） */
   --dur-slow:    0.3s;                             /* ゆっくりした遷移 */
@@ -228,7 +229,7 @@ select:focus:not(:focus-visible) {
   top: 0; left: 0;
   height: 100vh;
   z-index: 200;
-  transition: transform .25s var(--ease-std);
+  transition: transform var(--dur-mid) var(--ease-std);
 }
 
 #sidebar-brand {
@@ -281,7 +282,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   cursor: pointer;
   min-width: 0;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .account-select:focus { outline: none; border-color: var(--primary); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
@@ -296,7 +297,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   flex-shrink: 0;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .btn-account-add:hover { background: rgba(255,255,255,.18); }
 
@@ -325,7 +326,7 @@ select:focus:not(:focus-visible) {
   color: var(--sidebar-text-muted);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast), color var(--dur-fast);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   border: none;
@@ -358,7 +359,7 @@ select:focus:not(:focus-visible) {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   border-radius: var(--radius-btn-sm);
-  transition: background .2s, color .2s;
+  transition: background var(--dur-base), color var(--dur-base);
 }
 .nav-icon svg { display: block; }
 .nav-item.active .nav-icon {
@@ -424,7 +425,7 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color .15s;
+  transition: color var(--dur-fast);
 }
 .btn-sidebar-logout:hover { color: var(--expense); }
 
@@ -612,7 +613,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   border: none;
-  transition: background .15s, transform .15s var(--ease-bounce), box-shadow .15s;
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
   white-space: nowrap;
   cursor: pointer;
   box-shadow: var(--shadow-btn-base);
@@ -668,14 +669,14 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   opacity: .65;
-  transition: opacity .15s, background .15s;
+  transition: opacity var(--dur-fast), background var(--dur-fast);
   box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); }
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
   color: var(--warning);
-  transition: opacity .18s, background .18s, transform .18s, box-shadow .18s;
+  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster);
 }
 .dup-tx:hover {
   background: var(--warning-bg) !important;
@@ -758,7 +759,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   color: var(--text);
   background: var(--surface);
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
   appearance: auto;
 }
 .form-group input[type="text"]:hover,
@@ -809,7 +810,7 @@ select:focus:not(:focus-visible) {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height .2s ease, opacity .2s ease, margin-top .2s ease;
+  transition: max-height var(--dur-base) ease, opacity var(--dur-base) ease, margin-top var(--dur-base) ease;
 }
 .field-msg.show {
   max-height: 40px;
@@ -839,7 +840,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: border-color .15s, background .15s, color .15s, box-shadow .15s, transform .1s;
+  transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform .1s;
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   text-align: center;
@@ -1009,7 +1010,7 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
 }
 .tx-table tbody tr {
-  transition: background .15s, box-shadow .15s, transform .15s var(--ease-bounce);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast) var(--ease-bounce);
 }
 .tx-table tbody tr:hover {
   background: var(--surface-2);
@@ -1067,7 +1068,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: border-color .15s, background .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast);
   vertical-align: middle;
 }
 .tx-cb:hover:not(:checked):not(:indeterminate) {
@@ -1086,7 +1087,7 @@ select:focus:not(:focus-visible) {
   width: 5px; height: 9px;
   border: 2px solid #fff;
   border-top: none; border-left: none;
-  animation: cb-check-in .2s var(--ease-bounce) both;
+  animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-cb:indeterminate {
   background: var(--primary);
@@ -1101,7 +1102,7 @@ select:focus:not(:focus-visible) {
   background: #fff;
   border-radius: 1px;
   transform: translateY(-50%);
-  animation: cb-dash-in .18s ease both;
+  animation: cb-dash-in var(--dur-faster) ease both;
 }
 [data-theme="dark"] .tx-cb {
   background: var(--surface-2);
@@ -1113,7 +1114,7 @@ select:focus:not(:focus-visible) {
 /* 選択行ハイライト (v5.56) */
 .tx-table tbody tr.tx-selected {
   background: color-mix(in srgb, var(--primary) 7%, transparent);
-  transition: background .18s;
+  transition: background var(--dur-faster);
 }
 .tx-table tbody tr.tx-selected td {
   border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border)) !important;
@@ -1141,7 +1142,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
-  transition: color .15s, background .15s;
+  transition: color var(--dur-fast), background var(--dur-fast);
   position: relative;
 }
 .tx-th-sort:hover {
@@ -1168,8 +1169,8 @@ select:focus:not(:focus-visible) {
 .tx-th-active .tx-sort-icon {
   opacity: 1;
 }
-.tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  .25s var(--ease-bounce) both; }
-.tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc .25s var(--ease-bounce) both; }
+.tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  var(--dur-mid) var(--ease-bounce) both; }
+.tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc var(--dur-mid) var(--ease-bounce) both; }
 .tx-sort-none {
   opacity: .25;
 }
@@ -1190,11 +1191,11 @@ select:focus:not(:focus-visible) {
   background: var(--primary-light);
   border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
   cursor: pointer;
-  transition: background .15s, transform .1s, box-shadow .15s;
+  transition: background var(--dur-fast), transform .1s, box-shadow var(--dur-fast);
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
-  animation: tx-sort-badge-in .2s ease both;
+  animation: tx-sort-badge-in var(--dur-base) ease both;
 }
 .tx-sort-badge:hover {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
@@ -1276,7 +1277,7 @@ select:focus:not(:focus-visible) {
   padding: 2px 10px 2px 8px;
   border-radius: var(--radius-badge);
   width: fit-content;
-  animation: bulk-count-pop .3s var(--ease-bounce) both;
+  animation: bulk-count-pop var(--dur-slow) var(--ease-bounce) both;
 }
 .bulk-count::before {
   content: '☑';
@@ -1314,7 +1315,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .bulk-sel:hover { border-color: var(--primary); }
 .bulk-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
@@ -1555,7 +1556,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color .15s;
+  transition: border-color var(--dur-fast);
 }
 .filter-bar select:hover,
 .filter-bar .month-sel:hover { border-color: var(--border-strong); }
@@ -1569,7 +1570,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   flex: 1;
   min-width: 120px;
-  transition: border-color .15s;
+  transition: border-color var(--dur-fast);
 }
 .filter-search:hover { border-color: var(--border-strong); }
 .filter-search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
@@ -1582,7 +1583,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   position: relative;
   border-color: var(--border);
-  transition: border-color .15s, color .15s, background .15s;
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
 }
 .adv-filter-toggle svg { flex-shrink: 0; }
 .adv-filter-toggle:hover { border-color: var(--primary); color: var(--primary); }
@@ -1663,7 +1664,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   width: 130px;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .adv-filter-input[type="number"] { width: 110px; }
 .adv-filter-input:hover { border-color: var(--border-strong); }
@@ -1709,7 +1710,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-medium);
   cursor: pointer;
   line-height: var(--lh-normal);
-  transition: border-color .18s, color .18s, background .18s, transform .15s, box-shadow .18s;
+  transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-faster);
   animation: preset-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--pi) * 38ms);
 }
@@ -1815,7 +1816,7 @@ mark.tx-hl {
   line-height: 1;
   cursor: pointer;
   padding: 0;
-  transition: border-color .15s, color .15s, background .15s, transform .1s;
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform .1s;
   flex-shrink: 0;
 }
 .month-nav-btn:hover:not(:disabled) {
@@ -1840,7 +1841,7 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
@@ -1911,7 +1912,7 @@ mark.tx-hl {
   background: transparent;
   color: var(--text-muted);
   border-radius: var(--radius-btn-sm);
-  transition: background .2s, color .2s, box-shadow .2s;
+  transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
   cursor: pointer;
 }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
@@ -1965,7 +1966,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast), color var(--dur-fast);
 }
 .modal-close:hover { background: var(--bg); color: var(--text); }
 
@@ -1996,7 +1997,7 @@ mark.tx-hl {
   border-radius: 50%;
   cursor: pointer;
   border: 3px solid transparent;
-  transition: transform .15s, border-color .15s;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
 .color-swatch:hover   { transform: scale(1.2); }
 .color-swatch.selected { border-color: var(--text); transform: scale(1.1); }
@@ -2052,7 +2053,7 @@ mark.tx-hl {
   cursor: pointer;
   margin-left: 8px;
   vertical-align: middle;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .btn-inline-add:hover { background: var(--primary-light); }
 
@@ -2095,7 +2096,7 @@ mark.tx-hl {
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background .15s, border-color .15s, color .15s, transform .15s;
+  transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
   white-space: nowrap;
 }
 .btn-preset:hover {
@@ -2139,7 +2140,7 @@ mark.tx-hl {
   font-size: 13px;
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: opacity .15s;
+  transition: opacity var(--dur-fast);
   white-space: nowrap;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
@@ -2156,7 +2157,7 @@ mark.tx-hl {
   padding: 9px 12px;
   font-size: 16px;
   cursor: pointer;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .btn-receipt-file:hover    { background: var(--surface-hover); }
 .btn-receipt-file.disabled { opacity: .5; pointer-events: none; }
@@ -2204,7 +2205,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   gap: 8px;
-  transition: opacity .2s;
+  transition: opacity var(--dur-base);
 }
 .multi-receipt-item.added {
   opacity: .45;
@@ -2386,7 +2387,7 @@ mark.tx-hl {
   text-align: right;
   background: var(--surface);
   color: var(--text);
-  transition: border-color .15s;
+  transition: border-color var(--dur-fast);
 }
 .budget-input:hover { border-color: var(--border-strong); }
 .budget-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
@@ -2416,7 +2417,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: opacity .15s, transform .1s;
+  transition: opacity var(--dur-fast), transform .1s;
 }
 .btn-tpl:hover { opacity: 0.75; transform: translateY(-1px); }
 
@@ -2428,7 +2429,7 @@ mark.tx-hl {
   border-radius: 50%;
   background: var(--text-faint);
   flex-shrink: 0;
-  transition: background .3s;
+  transition: background var(--dur-slow);
 }
 
 .sync-status-row {
@@ -2555,7 +2556,7 @@ mark.tx-hl {
   font-weight: var(--fw-medium);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .3s, transform .3s;
+  transition: opacity var(--dur-slow), transform var(--dur-slow);
   z-index: 9999;
   white-space: nowrap;
   box-shadow: var(--shadow-md);
@@ -2575,7 +2576,7 @@ mark.tx-hl {
   margin-left: auto;
   margin-right: 10px;
   flex-shrink: 0;
-  transition: background .3s;
+  transition: background var(--dur-slow);
 }
 
 /* ── 認証スクリーン ─────────────────────────────────────── */
@@ -2651,7 +2652,7 @@ mark.tx-hl {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
-  transition: background .2s, color .2s, box-shadow .2s;
+  transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
 }
 .auth-tab.active {
   background: #fff;
@@ -2750,7 +2751,7 @@ body {
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
   z-index: 8000;
   transform: translateY(100%);
-  transition: transform .3s var(--ease-std);
+  transition: transform var(--dur-slow) var(--ease-std);
   box-shadow: 0 -4px 20px rgba(0,0,0,.2);
 }
 #pwa-install-banner.show { transform: translateY(0); }
@@ -2785,7 +2786,7 @@ body {
   text-align: center;
   z-index: 8000;
   transform: translateY(100%);
-  transition: transform .3s ease;
+  transition: transform var(--dur-slow) ease;
 }
 .pwa-ios-guide.show { transform: translateY(0); }
 
@@ -2820,7 +2821,7 @@ body {
   font-weight: var(--fw-semi);
   z-index: 9999;
   transform: translateY(-100%);
-  transition: transform .3s ease;
+  transition: transform var(--dur-slow) ease;
 }
 .offline-indicator.show { transform: translateY(0); }
 
@@ -2844,7 +2845,7 @@ body {
   font-weight: var(--fw-medium);
   z-index: 9999;
   opacity: 0;
-  transition: opacity .3s, transform .3s;
+  transition: opacity var(--dur-slow), transform var(--dur-slow);
   box-shadow: var(--shadow-md);
   white-space: nowrap;
 }
@@ -2884,7 +2885,7 @@ body {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: color .15s;
+  transition: color var(--dur-fast);
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
@@ -2909,7 +2910,7 @@ body {
   margin-bottom: 2px;
   border-radius: var(--radius-btn);
   padding: 2px;
-  transition: background .2s, color .2s, transform .2s;
+  transition: background var(--dur-base), color var(--dur-base), transform var(--dur-base);
 }
 .bottom-nav-icon svg { display: block; }
 .bottom-nav-item.active .bottom-nav-icon {
@@ -3011,7 +3012,7 @@ body {
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12);
   z-index: 130;
   cursor: pointer;
-  transition: transform .2s var(--ease-bounce), box-shadow .2s;
+  transition: transform var(--dur-base) var(--ease-bounce), box-shadow var(--dur-base);
   -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
@@ -3040,7 +3041,7 @@ body {
   width: 22px;
   height: 22px;
   stroke: currentColor;
-  transition: stroke .15s, transform .2s var(--ease-bounce);
+  transition: stroke var(--dur-fast), transform var(--dur-base) var(--ease-bounce);
 }
 .bottom-nav-item.active .bottom-nav-icon svg { stroke: var(--primary); }
 
@@ -3093,13 +3094,13 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: color .15s;
+  transition: color var(--dur-fast);
 }
 .modal-details summary:hover { color: var(--text); }
 .modal-details summary::before {
   content: '▶';
   font-size: 9px;
-  transition: transform .2s;
+  transition: transform var(--dur-base);
 }
 .modal-details[open] summary::before { transform: rotate(90deg); }
 .modal-details .modal-details-body {
@@ -3118,7 +3119,7 @@ body {
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
   line-height: 1;
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast), color var(--dur-fast);
   color: color-mix(in srgb, var(--sidebar-text-hi) 75%, transparent);
   flex-shrink: 0;
   margin-left: auto;
@@ -3230,12 +3231,12 @@ body {
 }
 
 /* ── モーダルアニメーション ── */
-.modal-overlay { opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) ease; }
 .modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
 .modal-overlay .modal {
   transform: translateY(20px) scale(0.96);
   opacity: 0;
-  transition: transform .28s var(--ease-bounce), opacity .18s ease;
+  transition: transform .28s var(--ease-bounce), opacity var(--dur-faster) ease;
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(1);
@@ -3269,7 +3270,7 @@ body {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.tx-table tbody tr { animation: row-in .18s ease both; }
+.tx-table tbody tr { animation: row-in var(--dur-faster) ease both; }
 .tx-table tbody tr:nth-child(2)  { animation-delay: .04s; }
 .tx-table tbody tr:nth-child(3)  { animation-delay: .08s; }
 .tx-table tbody tr:nth-child(4)  { animation-delay: .12s; }
@@ -3280,7 +3281,7 @@ body {
 .tx-table tbody tr:nth-child(9)  { animation-delay: .32s; }
 .tx-table tbody tr:nth-child(10) { animation-delay: .36s; }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
-.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in .2s ease both; }
+.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) ease both; }
 .tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: .025s; }
 .tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: .050s; }
 .tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: .075s; }
@@ -3315,7 +3316,7 @@ body {
   100% { transform: scale(1.1); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
-  animation: nav-icon-pop .3s var(--ease-bounce) both;
+  animation: nav-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
 
 /* ── 予算アラート通知UI ── */
@@ -3495,7 +3496,7 @@ body {
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(0,0,0,.2);
-  transition: transform .15s, box-shadow .15s;
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .onboarding-cta:hover {
   transform: translateY(-2px);
@@ -3519,7 +3520,7 @@ body {
   flex-direction: column;
   gap: var(--sp-2);
   cursor: pointer;
-  transition: box-shadow .18s, transform .18s, border-color .18s;
+  transition: box-shadow var(--dur-faster), transform var(--dur-faster), border-color var(--dur-faster);
   box-shadow: var(--shadow-sm);
 }
 .step-card:hover {
@@ -3584,7 +3585,7 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) 20%, white); }
 
@@ -3625,7 +3626,7 @@ body {
   padding: 7px 14px;
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
-  transition: background .2s, border-color .2s, transform .15s;
+  transition: background var(--dur-base), border-color var(--dur-base), transform var(--dur-fast);
   white-space: nowrap;
 }
 .btn-share:hover {
@@ -3706,7 +3707,7 @@ body {
   font-weight: var(--fw-medium);
   box-shadow: var(--shadow-md);
   opacity: 0;
-  transition: opacity .3s var(--ease-std), transform .3s var(--ease-std);
+  transition: opacity var(--dur-slow) var(--ease-std), transform var(--dur-slow) var(--ease-std);
   z-index: 9999;
   white-space: nowrap;
   pointer-events: none;
@@ -3806,7 +3807,7 @@ body {
 
 .asset-card {
   margin-bottom: 12px;
-  transition: box-shadow .2s, transform .2s;
+  transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .asset-card:hover {
   box-shadow: var(--shadow-md);
@@ -4078,7 +4079,7 @@ body {
   z-index: 195;
   background: rgba(0,0,0,.4);
   opacity: 0;
-  transition: opacity .25s ease;
+  transition: opacity var(--dur-mid) ease;
   -webkit-tap-highlight-color: transparent;
 }
 #sidebar-overlay.active {
@@ -4332,7 +4333,7 @@ body {
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  transition: color .18s, border-color .18s, background .18s;
+  transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster);
   white-space: nowrap;
   line-height: 1;
 }
@@ -4349,7 +4350,7 @@ body {
 }
 .section-tab .tab-icon {
   font-size: 13px;
-  transition: transform .2s var(--ease-bounce);
+  transition: transform var(--dur-base) var(--ease-bounce);
 }
 .section-tab.is-active .tab-icon {
   transform: scale(1.2);
@@ -5166,7 +5167,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: background .15s;
+  transition: background var(--dur-fast);
 }
 .cal-ev-nav:hover { background: color-mix(in srgb, var(--primary) 10%, transparent); }
 
@@ -5182,7 +5183,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   border-bottom: 1px solid var(--border);
   border-left: 3px solid var(--cal-ev-color, var(--primary));
-  transition: background .15s;
+  transition: background var(--dur-fast);
   animation: cal-ev-item-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--cal-ev-i, 0) * 50ms);
 }
@@ -6090,7 +6091,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   font-size: 18px;
   cursor: pointer;
-  transition: border-color .15s, background .15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast);
   display: flex; align-items: center; justify-content: center;
 }
 .pt-emoji-btn.is-active { border-color: var(--primary); background: var(--primary)1a; }
@@ -6102,7 +6103,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 2.5px solid transparent;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform .15s, border-color .15s;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(1.18); }
 
@@ -7697,7 +7698,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color 0.18s, background 0.18s, color 0.18s, transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-faster), background var(--dur-faster), color var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-fast);
   user-select: none;
   animation: ct-chip-in 0.30s var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * 40ms);
@@ -7838,7 +7839,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
   color: #fff;
-  transition: transform 0.18s, box-shadow 0.18s;
+  transition: transform var(--dur-faster), box-shadow var(--dur-faster);
   animation: fv-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
@@ -8320,7 +8321,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: all 0.18s var(--ease-std);
+  transition: all var(--dur-faster) var(--ease-std);
 }
 .qa-type-btn:hover {
   border-color: var(--primary);
@@ -9072,7 +9073,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-preset-row { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 .sim-preset {
   font-size: var(--fs-sm); padding: 4px 12px; border-radius: 99px;
-  border: 1px solid var(--border); transition: all .15s;
+  border: 1px solid var(--border); transition: all var(--dur-fast);
 }
 .sim-preset:hover {
   background: var(--primary); color: #fff; border-color: var(--primary);
@@ -9159,7 +9160,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* プリセットボタン強化 */
 .sim-preset {
   position: relative; overflow: hidden;
-  transition: all .2s var(--ease-bounce);
+  transition: all var(--dur-base) var(--ease-bounce);
 }
 .sim-preset:active { transform: scale(0.88); }
 .sim-preset.sim-preset-active {
@@ -9323,7 +9324,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: border-color .15s, background .15s, box-shadow .15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast);
   vertical-align: middle;
 }
 .sb-check:hover:not(:checked) {
@@ -9342,7 +9343,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 4px; height: 8px;
   border: 2px solid #fff;
   border-top: none; border-left: none;
-  animation: cb-check-in .2s var(--ease-bounce) both;
+  animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
 
 /* 全選択ラベル */
@@ -9369,7 +9370,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* テーブル行: カテゴリカラー左ボーダー */
 .sb-row {
   border-left: 3px solid var(--sb-cat-color, var(--border));
-  transition: background .15s;
+  transition: background var(--dur-fast);
   animation: sb-row-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--sb-i, 0) * 45ms + 0.12s);
 }
@@ -9432,10 +9433,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   margin-left: 4px;
-  transition: transform .2s var(--ease-bounce);
+  transition: transform var(--dur-base) var(--ease-bounce);
 }
 .sb-apply-count.sb-count-pop {
-  animation: sb-count-pop .25s var(--ease-bounce) both;
+  animation: sb-count-pop var(--dur-mid) var(--ease-bounce) both;
 }
 @keyframes sb-count-pop {
   0%   { transform: scale(1); }
@@ -9564,7 +9565,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ev-card-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * 55ms);
-  transition: opacity .2s;
+  transition: opacity var(--dur-base);
 }
 .ev-card::before {
   content: '';
@@ -9638,7 +9639,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   flex-shrink: 0;
   background: var(--surface);
-  transition: background .15s, border-color .15s, transform .12s;
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform .12s;
 }
 .ev-done-cb::after {
   content: '';
@@ -9649,12 +9650,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom: 2px solid #fff;
   transform: rotate(-45deg) scale(0);
   transform-origin: center;
-  transition: transform .15s var(--ease-bounce);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .ev-done-cb:checked {
   background: var(--primary);
   border-color: var(--primary);
-  animation: ev-cb-pop .2s var(--ease-bounce);
+  animation: ev-cb-pop var(--dur-base) var(--ease-bounce);
 }
 .ev-done-cb:checked::after { transform: rotate(-45deg) scale(1); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
@@ -9711,7 +9712,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: background .15s, color .15s, transform .15s, box-shadow .15s;
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .ev-add-month:hover {
   background: var(--primary); color: #fff; border-color: var(--primary);
@@ -9732,7 +9733,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--ev-accent, var(--primary));
   animation: ev-widget-item-in .32s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-wi, 0) * 50ms);
-  transition: transform .15s;
+  transition: transform var(--dur-fast);
 }
 .ev-widget-item:hover { transform: translateX(2px); }
 @keyframes ev-widget-item-in {
@@ -9776,7 +9777,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color .15s, background .15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast);
 }
 .ev-emoji-chip:hover  { background: color-mix(in srgb, var(--primary) 10%, transparent); }
 .ev-emoji-chip.selected { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
@@ -9817,7 +9818,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color .18s, color .18s, background .18s, box-shadow .18s, transform .18s;
+  transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-faster);
   animation: sf-chip-in 0.32s var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * 45ms);
   white-space: nowrap;
@@ -9844,7 +9845,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 8px;
   line-height: 1;
   flex-shrink: 0;
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast), color var(--dur-fast);
 }
 .sf-chip-del:hover {
   background: var(--danger-bg);
@@ -10756,7 +10757,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-btn-sm);
-  transition: background 0.18s, color 0.18s;
+  transition: background var(--dur-faster), color var(--dur-faster);
   flex-shrink: 0;
 }
 .btn-notif-bell:hover {
@@ -10788,7 +10789,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .btn-notif-bell.has-unread svg {
   display: inline-block;
   transform-origin: 50% 4px;
-  transition: color 0.18s;
+  transition: color var(--dur-faster);
 }
 .btn-notif-bell.notif-bell-ringing svg {
   animation: notif-bell-ring 0.7s ease-in-out both;
@@ -10851,7 +10852,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transform: translateY(-8px) scale(0.97);
   opacity: 0;
-  transition: transform 0.22s var(--ease-bounce), opacity 0.18s ease;
+  transition: transform 0.22s var(--ease-bounce), opacity var(--dur-faster) ease;
 }
 .notif-panel.notif-panel-open {
   transform: translateY(0) scale(1);
@@ -11404,7 +11405,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   background: var(--warning-bg);
   border: 1px solid var(--warning-border);
-  animation: calc-preview-in 0.18s ease both;
+  animation: calc-preview-in var(--dur-faster) ease both;
 }
 
 @keyframes calc-preview-in {
@@ -11508,7 +11509,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-sm);
-  transition: background .15s, color .15s;
+  transition: background var(--dur-fast), color var(--dur-fast);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); }
 
@@ -11531,7 +11532,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1.5px solid var(--border);
   background: var(--surface-1);
   cursor: pointer;
-  transition: border-color .15s, background .15s, transform .15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast);
   animation: rc-item-in .28s var(--ease-bounce) both;
   animation-delay: calc(var(--rc-i, 0) * 50ms);
 }
@@ -11814,7 +11815,7 @@ kbd {
   box-shadow: 0 4px 20px rgba(0,0,0,0.14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.22s var(--ease-bounce);
+  transition: opacity var(--dur-faster) ease, transform 0.22s var(--ease-bounce);
   z-index: 9998;
   max-width: calc(100vw - 32px);
 }
@@ -12057,7 +12058,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   animation: yi-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--yi-si, 0) * 60ms);
-  transition: transform 0.18s var(--ease-bounce), box-shadow 0.18s ease;
+  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) ease;
 }
 .yi-card:hover {
   transform: translateY(-3px);
@@ -12958,7 +12959,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   animation: cat-cg-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--cc-i, 0) * 45ms);
-  transition: box-shadow .18s, transform .15s var(--ease-bounce);
+  transition: box-shadow var(--dur-faster), transform var(--dur-fast) var(--ease-bounce);
 }
 .cat-card:hover {
   box-shadow: var(--shadow-md);
@@ -13059,7 +13060,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
   color: var(--text);
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color var(--dur-base), box-shadow var(--dur-base);
 }
 .cat-budget-input:focus {
   outline: none;
