@@ -1685,7 +1685,7 @@ ${yearSummarySection ? `<div class="dash-full">${yearSummarySection}</div>` : ''
 ${categoryCompareSection ? `<div>${categoryCompareSection}</div>` : ''}
 ${paceSection ? `<div>${paceSection}</div>` : ''}
 ${forecastSection ? `<div>${forecastSection}</div>` : ''}
-${healthScoreSection ? `<div>${healthScoreSection}</div>` : ''}
+${healthScoreSection ? `<div class="dash-full">${healthScoreSection}</div>` : ''}
 ${insightSection ? `<div>${insightSection}</div>` : ''}
 ${savingsOppsSection ? `<div>${savingsOppsSection}</div>` : ''}
 ${aiAdviceSection ? `<div>${aiAdviceSection}</div>` : ''}
@@ -2579,7 +2579,16 @@ function bindTransactions() {
   on('filter-search', 'input', e => {
     appState.txFilter.search = e.target.value;
     clearTimeout(_searchTimer);
-    _searchTimer = setTimeout(() => renderCurrentPage(), 300);
+    _searchTimer = setTimeout(() => {
+      const searchEl = document.getElementById('filter-search');
+      const pos = searchEl ? searchEl.selectionStart : null;
+      renderCurrentPage();
+      const newSearchEl = document.getElementById('filter-search');
+      if (newSearchEl && appState.txFilter.search) {
+        newSearchEl.focus();
+        if (pos !== null) try { newSearchEl.setSelectionRange(pos, pos); } catch(e) {}
+      }
+    }, 300);
   });
   // 月次PDFボタン (v7.6)
   on('btn-monthly-pdf', 'click', () => doMonthlyExportPDF(appState.month));
@@ -3411,8 +3420,9 @@ function closeTxModal() {
   const modal = document.getElementById('tx-modal');
   // 連続入力で1件以上追加済みの場合は閉じるときにページ再描画
   const addedCount = parseInt(document.getElementById('tx-added-count')?.textContent, 10) || 0;
-  if (modal) hideModal(modal);
+  if (modal) { hideModal(modal); modal.remove(); } // DOMから完全削除して前回データの残留を防止
   appState.editingTxId = null;
+  appState.templateData = null; // テンプレートデータもクリア
   if (addedCount > 0) {
     renderCurrentPage();
     checkBudgetAlerts(appState.month);
@@ -8985,7 +8995,8 @@ function initApp() {
   // ハンバーガーメニュー（モバイル）
   const hamburger = document.getElementById('hamburger');
   if (hamburger) {
-    hamburger.addEventListener('click', () => {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation(); // documentのクリックハンドラが即座に閉じるのを防止
       const sidebar = document.getElementById('sidebar');
       if (sidebar.classList.contains('open')) {
         closeSidebar();
@@ -9000,7 +9011,7 @@ function initApp() {
     const sidebar = document.getElementById('sidebar');
     if (sidebar && sidebar.classList.contains('open') &&
         !sidebar.contains(e.target) &&
-        e.target.id !== 'hamburger') {
+        !e.target.closest('#hamburger')) {
       closeSidebar();
     }
   });

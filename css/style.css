@@ -471,7 +471,7 @@ select:focus:not(:focus-visible) {
 #mobile-header {
   display: none;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-3);
   padding: 12px 16px;
   background: var(--sidebar-bg);
   color: var(--sidebar-text-hi);
@@ -486,11 +486,14 @@ select:focus:not(:focus-visible) {
   border: none;
   color: var(--sidebar-text-hi);
   font-size: 22px;
-  padding: 4px 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--sp-2);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-btn-sm);
+  -webkit-tap-highlight-color: transparent;
 }
 #hamburger:hover { background: rgba(255,255,255,.1); }
 
@@ -731,7 +734,7 @@ select:focus:not(:focus-visible) {
 .dup-modal-banner {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   padding: 8px 20px;
   background: var(--warning-bg);
   border-bottom: 1px solid var(--warning-border);
@@ -1399,7 +1402,7 @@ select:focus:not(:focus-visible) {
 .cat-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   padding: 3px 10px;
   border-radius: 999px;
   font-size: var(--fs-xs);
@@ -1461,7 +1464,7 @@ select:focus:not(:focus-visible) {
 .tx-tag-preview {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--sp-1);
   margin-top: 6px;
 }
 /* ── タグフィルターチップ行 (v5.62) ─────────────────── */
@@ -1916,7 +1919,7 @@ mark.tx-hl {
 /* ── タイプトグル（モーダル） ────────────────────────── */
 .type-toggle {
   display: flex;
-  gap: 4px;
+  gap: var(--sp-1);
   background: var(--bg);
   padding: 4px;
   border-radius: calc(var(--radius-btn-sm) + 4px);
@@ -2008,7 +2011,7 @@ mark.tx-hl {
 .color-palette {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-bottom: var(--sp-2);
 }
 .color-swatch {
@@ -2029,7 +2032,7 @@ mark.tx-hl {
 .year-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 .year-label { font-size: var(--fs-xl); font-weight: var(--fw-bold); min-width: 60px; text-align: center; }
 
@@ -2037,7 +2040,7 @@ mark.tx-hl {
 .export-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--sp-4);
 }
 .export-block {
   background: var(--surface-2);
@@ -2047,7 +2050,7 @@ mark.tx-hl {
 }
 .export-block h4 { font-size: var(--fs-sm); font-weight: var(--fw-bold); margin-bottom: 6px; }
 .export-block .hint { margin-bottom: var(--sp-3); }
-.export-range { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.export-range { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
 .export-range select {
   padding: 7px 10px;
   border: 1.5px solid var(--border);
@@ -2142,7 +2145,7 @@ mark.tx-hl {
   margin-bottom: var(--sp-4);
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--sp-2);
   align-items: flex-start;
   background: var(--surface-2);
   border: 2px dashed var(--border);
@@ -2201,7 +2204,7 @@ mark.tx-hl {
 .multi-receipt-list {
   display: none;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-top: var(--sp-2);
 }
 .multi-receipt-list .btn-mr-all {
@@ -2223,7 +2226,7 @@ mark.tx-hl {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
-  gap: 8px;
+  gap: var(--sp-2);
   transition: opacity var(--dur-base);
 }
 .multi-receipt-item.added {
@@ -2307,7 +2310,7 @@ mark.tx-hl {
 /* APIキー設定 */
 .api-key-row {
   display: flex;
-  gap: 8px;
+  gap: var(--sp-2);
   align-items: center;
 }
 .api-key-row input { flex: 1; }
@@ -2425,7 +2428,7 @@ mark.tx-hl {
 .template-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .btn-tpl {
@@ -2462,7 +2465,7 @@ mark.tx-hl {
 
 .sync-btn-row {
   display: flex;
-  gap: 8px;
+  gap: var(--sp-2);
   flex-wrap: wrap;
   margin-top: var(--sp-3);
 }
@@ -2658,7 +2661,7 @@ mark.tx-hl {
   background: var(--surface-2);
   border-radius: var(--radius-btn);
   padding: 4px;
-  gap: 4px;
+  gap: var(--sp-1);
   margin-bottom: 28px;
 }
 
@@ -2778,7 +2781,7 @@ body {
 .install-banner-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-3);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -2859,7 +2862,7 @@ body {
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-3);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   z-index: 9999;
@@ -2970,13 +2973,13 @@ body {
   .sync-toast { bottom: 80px !important; }
   .update-toast { bottom: 80px; }
 
-  .summary-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .summary-cards { grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
   .summary-cards .summary-card:nth-child(3) { grid-column: 1 / -1; }
   .summary-amount { font-size: var(--fs-3xl); }
   .charts-row    { grid-template-columns: 1fr; }
   .export-grid   { grid-template-columns: 1fr; }
 
-  .filter-bar { gap: 8px; }
+  .filter-bar { gap: var(--sp-2); }
   .filter-bar select, .filter-bar .month-sel { font-size: var(--fs-xs); padding: 7px 9px; }
   .tx-table th, .tx-table td { padding: 8px 9px; }
   .page-title { font-size: var(--fs-2xl); }
@@ -3360,7 +3363,7 @@ body {
 .notif-toggle-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
@@ -3401,7 +3404,7 @@ body {
 .recurring-toggle-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
@@ -3422,7 +3425,7 @@ body {
 .recurring-day-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-bottom: 6px;
 }
 .recurring-day-prefix,
@@ -3505,7 +3508,7 @@ body {
 .onboarding-cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   background: #fff;
   color: var(--primary-dark);
   font-size: var(--fs-base);
@@ -3628,7 +3631,7 @@ body {
 .page-header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   flex-wrap: wrap;
   min-width: 0;
   flex-shrink: 1;
@@ -3706,7 +3709,7 @@ body {
 /* モバイル */
 @media (max-width: 640px) {
   .modal-share { width: calc(100% - 24px); }
-  .share-modal-body { padding: 8px 14px 20px; gap: 12px; }
+  .share-modal-body { padding: 8px 14px 20px; gap: var(--sp-3); }
   .share-hint { display: none; }
 }
 
@@ -3806,7 +3809,7 @@ body {
   padding: 0 2px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 .asset-count-badge {
   display: inline-flex;
@@ -3864,7 +3867,7 @@ body {
 }
 .asset-card-actions {
   display: flex;
-  gap: 4px;
+  gap: var(--sp-1);
   flex-shrink: 0;
 }
 
@@ -3872,7 +3875,7 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--sp-3);
   padding: 12px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -3906,7 +3909,7 @@ body {
 .asset-entry-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   padding: 6px 0;
   border-bottom: 1px solid var(--border);
   font-size: var(--fs-sm);
@@ -4017,7 +4020,7 @@ body {
 .fx-rate-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 .fx-currency-label {
   display: flex;
@@ -4525,7 +4528,7 @@ body {
 .goal-amounts {
   display: flex;
   align-items: baseline;
-  gap: 4px;
+  gap: var(--sp-1);
   font-size: var(--fs-base);
   margin-bottom: var(--sp-1);
   flex-wrap: wrap;
@@ -6338,6 +6341,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .hs-grade-badge { font-size: 18px; width: 40px; height: 40px; }
   .hs-main { gap: var(--sp-3); }
 }
+@media (max-width: 360px) {
+  .hs-main { flex-wrap: wrap; justify-content: center; }
+  .hs-msg  { text-align: center; flex-basis: 100%; }
+}
 
 /* v7.1: 家計スコア推移スパークライン */
 .hs-trend-wrap {
@@ -6567,7 +6574,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-priority-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   padding: 2px 8px;
   border-radius: 99px;
   font-size: var(--fs-2xs);
@@ -6869,7 +6876,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fc-progress-wrap {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-bottom: var(--sp-3, 12px);
 }
 .fc-progress-track {
@@ -7066,7 +7073,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   font-size: var(--fs-sm, 13px);
   color: var(--text);
   user-select: none;
@@ -7215,7 +7222,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 .asset-balance-main .asset-balance {
   font-size: var(--fs-4xl);
@@ -7231,7 +7238,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .asset-neworth-diff {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-top: var(--sp-1);
   flex-wrap: wrap;
 }
@@ -7458,7 +7465,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-emoji-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--sp-1);
   margin-top: var(--sp-1);
 }
 .ch-emoji-btn {
@@ -8978,7 +8985,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 完済予定 ピルスタイル (v5.85) */
 .debt-end-pill {
-  display: inline-flex; align-items: center; gap: 4px;
+  display: inline-flex; align-items: center; gap: var(--sp-1);
   font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: 3px 10px; border-radius: 99px;
   background: var(--surface-hover);
@@ -9369,7 +9376,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-actions-top {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-bottom: var(--sp-2);
 }
 .sb-select-all-wrap {
@@ -9521,7 +9528,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-none  { color: rgba(255,255,255,.60); font-size: var(--fs-xs); }
-.ev-sum-amounts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--sp-1); }
+.ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
 /* --- 年間グリッド --- */
 .ev-year-grid {
@@ -9559,7 +9566,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ev-month-totals {
   display: flex;
-  gap: 4px;
+  gap: var(--sp-1);
   flex: 1;
   flex-wrap: wrap;
 }
@@ -9612,7 +9619,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ev-name-done { text-decoration: line-through; color: var(--text-muted); }
-.ev-card-meta { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
+.ev-card-meta { display: flex; gap: var(--sp-1); margin-top: 2px; flex-wrap: wrap; }
 .ev-type-badge {
   font-size: 10px; font-weight: var(--fw-semi);
   padding: 1px 6px;
@@ -9642,7 +9649,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-done-label {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   font-size: var(--fs-xs);
   color: var(--text-muted);
   cursor: pointer;
@@ -9786,7 +9793,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-emoji-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 .ev-emoji-chip {
   font-size: 20px;
@@ -9881,7 +9888,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sf-save-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   color: var(--primary);
   font-size: var(--fs-sm);
 }
@@ -10170,7 +10177,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: var(--sp-2);
   margin-top: var(--sp-4);
   padding-top: 12px;
   border-top: 1px solid var(--border);
@@ -10635,7 +10642,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-budget-pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   border-radius: 99px;
   padding: 3px var(--sp-3);
   font-size: var(--fs-xs);
@@ -11810,7 +11817,7 @@ kbd {
 .kb-keys {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   flex-shrink: 0;
 }
 .kb-row > span {

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v12.1.0'; // v12.1.0: marginスペーシング変数化（margin-bottom/top の全ハードコードpx値をvar(--sp-*)に変換・計55箇所）
+const CACHE_NAME = 'kakeibo-v12.2.0'; // v12.2.0: gapスペーシング変数化（gap: 4/8/12/16px → var(--sp-1/2/3/4)に変換・計49箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
