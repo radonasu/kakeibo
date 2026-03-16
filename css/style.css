@@ -853,7 +853,7 @@ select:focus:not(:focus-visible) {
 
 /* ダークモード */
 [data-theme="dark"] .cat-chip.selected {
-  background: rgba(99, 102, 241, .18);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
 }
 @supports (background: color-mix(in srgb, red 10%, white)) {
   [data-theme="dark"] .cat-chip.selected {
@@ -1216,7 +1216,7 @@ select:focus:not(:focus-visible) {
   animation: bulk-slide-up .28s cubic-bezier(.34,1.4,.64,1) both;
 }
 [data-theme="dark"] .bulk-bar {
-  background: color-mix(in srgb, #1e293b 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   border-top-color: color-mix(in srgb, var(--primary) 40%, var(--border));
   box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 50%, transparent),
               0 -8px 32px rgba(0,0,0,.3);
@@ -5725,8 +5725,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .csv-badge-auto   { background: color-mix(in srgb, var(--primary) 10%, transparent); color: var(--primary); }
 .csv-badge-manual { background: var(--warning-bg); color: var(--warning); }
 
-[data-theme="dark"] .csv-badge-auto   { background: rgba(14,165,233,0.2); color: #7dd3fc; }
-[data-theme="dark"] .csv-badge-manual { background: rgba(234,179,8,0.2);  color: #fde047; }
+[data-theme="dark"] .csv-badge-auto   { background: color-mix(in srgb, var(--primary) 20%, transparent); color: var(--primary-end); }
+[data-theme="dark"] .csv-badge-manual { background: color-mix(in srgb, var(--warning) 20%, transparent); color: var(--warning); }
 
 /* 検出バッジ行 */
 .csv-detect-row {
@@ -5987,7 +5987,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: 600;
 }
 .pt-exp-expired {
-  background: rgba(100,116,139,.15);
+  background: color-mix(in srgb, var(--text-muted) 15%, transparent);
   color: var(--text-muted);
   text-decoration: line-through;
 }
@@ -6219,11 +6219,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-grade-b { background: var(--info-bg); color: var(--info-text); }
 .hs-grade-c { background: var(--warning-bg);     color: var(--warning); }
 .hs-grade-d { background: var(--danger-bg);      color: var(--danger-text); }
-[data-theme="dark"] .hs-grade-s { background: rgba(109,40,217,.25); color: #a78bfa; }
-[data-theme="dark"] .hs-grade-a { background: rgba(4,120,87,.25);   color: #34d399; }
-[data-theme="dark"] .hs-grade-b { background: var(--info-bg);         color: var(--info-text); }
-[data-theme="dark"] .hs-grade-c { background: rgba(133,77,14,.25);  color: #fbbf24; }
-[data-theme="dark"] .hs-grade-d { background: rgba(185,28,28,.25);  color: #f87171; }
+[data-theme="dark"] .hs-grade-s { background: color-mix(in srgb, var(--primary) 25%, transparent);      color: var(--primary-end); }
+[data-theme="dark"] .hs-grade-a { background: color-mix(in srgb, var(--success) 25%, transparent);      color: var(--income-end); }
+[data-theme="dark"] .hs-grade-b { background: var(--info-bg);                                            color: var(--info-text); }
+[data-theme="dark"] .hs-grade-c { background: color-mix(in srgb, var(--warning) 25%, transparent);      color: var(--warning); }
+[data-theme="dark"] .hs-grade-d { background: color-mix(in srgb, var(--danger-text) 25%, transparent);  color: var(--expense-end); }
 /* ──── Message ──── */
 .hs-msg {
   flex: 1;
@@ -6310,8 +6310,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-trend-up   { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
 .hs-trend-down { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
 .hs-trend-flat { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
-[data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) 18%, transparent); color: #34d399; border-color: color-mix(in srgb, var(--success) 30%, transparent); }
-[data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) 18%, transparent); color: #f87171; border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
+[data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--income-end); border-color: color-mix(in srgb, var(--success) 30%, transparent); }
+[data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) 18%, transparent); color: var(--expense-end); border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
 [data-theme="dark"] .hs-trend-flat { background: rgba(255,255,255,.07); color: var(--text-muted); }
 .hs-spark-svg {
   display: block;
@@ -7481,7 +7481,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* -- ダークモード対応 -- */
 [data-theme="dark"] .ch-status-active { background: var(--info-bg); color: var(--info-text); }
 [data-theme="dark"] .ch-status-done   { background: var(--income-deep); color: var(--income-end); }
-[data-theme="dark"] .ch-status-fail   { background: #7f1d1d; color: var(--expense-end); }
+[data-theme="dark"] .ch-status-fail   { background: var(--danger-bg); color: var(--expense-end); }
 [data-theme="dark"] .ch-status-over   { background: var(--warning-border); color: var(--warning); }
 [data-theme="dark"] .ch-emoji-btn.active { background: var(--primary-light); }
 
@@ -7610,7 +7610,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* -- ダークモード -- */
-[data-theme="dark"] .dow-pct-high { background: #7f1d1d; color: var(--expense-end); }
+[data-theme="dark"] .dow-pct-high { background: var(--danger-bg); color: var(--expense-end); }
 [data-theme="dark"] .dow-pct-mid  { background: var(--warning-border); color: var(--warning); }
 [data-theme="dark"] .dow-pct-low  { background: var(--income-deep); color: var(--income-end); }
 [data-theme="dark"] .dow-mini-bar-track { background: rgba(255,255,255,0.06); }
@@ -7821,8 +7821,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* ダークモード */
 [data-theme="dark"] .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
-[data-theme="dark"] .fv-stat-var   { background: linear-gradient(135deg, #064e3b, #059669); }
-[data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, #78350f, #d97706); }
+[data-theme="dark"] .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--success)); }
+[data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, var(--warning-border), var(--warning)); }
 /* 入場アニメーション */
 @keyframes fv-card-in {
   from { opacity: 0; transform: translateY(12px) scale(0.94); }
