@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.6.0'; // v10.6.0: ハードコード色CSS変数化第5弾 — infoセマンティックトークン追加・ヒートマップ/曜日最多/通知ベル/スライダー等をCSS変数に一斉変換
+const CACHE_NAME = 'kakeibo-v10.7.0'; // v10.7.0: ハードコード色CSS変数化第6弾 — --teal/--teal-end追加・サブスク/ほしいもの/節約チャレンジtealグラデーション変数化・ローン管理グラデーションをprimary/expense変数に変換・スケルトンシマーをborder/bg変数化
 const ASSETS = [
   './index.html',
   './css/style.css',

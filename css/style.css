@@ -57,6 +57,8 @@
   --income-end:     #34d399;   /* income gradient end */
   --expense-end:    #fb7185;   /* expense gradient end */
   --income-deep:    #065f46;   /* deep income (net-worth) */
+  --teal:           #0e7490;   /* teal/cyan gradient start (v10.7) */
+  --teal-end:       #22d3ee;   /* teal/cyan gradient end (v10.7) */
 
   /* ── サブテキスト（補助テキスト）(v9.8) ──────────────── */
   --text-sub:       var(--text-muted);
@@ -4152,9 +4154,9 @@ body {
 .sk-bone {
   background: linear-gradient(
     90deg,
-    #e2e8f0 0%,
-    #f1f5f9 40%,
-    #e2e8f0 80%
+    var(--border) 0%,
+    var(--bg) 40%,
+    var(--border) 80%
   );
   background-size: 1600px 100%;
   animation: sk-shimmer 1.6s ease-in-out infinite;
@@ -4209,9 +4211,9 @@ body {
 [data-theme="dark"] .sk-bone {
   background: linear-gradient(
     90deg,
-    #1e293b 0%,
-    #2d3f55 40%,
-    #1e293b 80%
+    var(--surface) 0%,
+    var(--border) 40%,
+    var(--surface) 80%
   );
   background-size: 1600px 100%;
   animation: sk-shimmer 1.6s ease-in-out infinite;
@@ -5447,7 +5449,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* グラデーション (v5.44) */
 .sub-summary-card.sub-monthly { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
-.sub-summary-card.sub-yearly  { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
+.sub-summary-card.sub-yearly  { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
 .sub-summary-card.sub-monthly .sub-summary-label,
 .sub-summary-card.sub-monthly .sub-summary-sub,
 .sub-summary-card.sub-yearly  .sub-summary-label,
@@ -6381,7 +6383,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-summary-card::after  { width: 48px; height: 48px; bottom: -16px; left: 8px; }
 /* グラデーション 3種 */
 .wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
-.wl-sum-budget { background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%); }
+.wl-sum-budget { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
 .wl-sum-done   { background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%); }
 /* グラデーションカード内のテキストを白に */
 .wl-sum-count .wl-summary-label,
@@ -7208,7 +7210,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-sum-active::before { background:#fff; }
 .ch-sum-achieved  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); color:#fff; }
 .ch-sum-achieved::before { background:#fff; }
-.ch-sum-total     { background: linear-gradient(135deg,#0891b2 0%,#06b6d4 100%); color:#fff; }
+.ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:#fff; }
 .ch-sum-total::before { background:#fff; }
 .ch-summary-label { font-size: var(--fs-xs); opacity:0.85; margin-bottom: var(--sp-1); }
 .ch-summary-value { font-size: var(--fs-3xl); font-weight: 700; line-height: 1; }
@@ -8775,8 +8777,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
    ============================================================ */
 
 /* サマリーカード */
-.debt-summary-total  { background: linear-gradient(135deg, #6366f1 0%, var(--primary-end, #818cf8) 100%); color: #fff; }
-.debt-summary-monthly { background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); color: #fff; }
+.debt-summary-total  { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); color: #fff; }
+.debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: #fff; }
 .debt-summary-total .summary-label,
 .debt-summary-monthly .summary-label { color: rgba(255,255,255,0.85); }
 .debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: .85; }
