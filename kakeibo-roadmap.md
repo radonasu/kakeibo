@@ -231,6 +231,8 @@
 
 | 142 | v11.4 | バグ修正 | 未定義CSS変数エイリアス追加（8変数・視覚的バグ解消）：Pythonスクリプトによる全CSS変数の使用箇所と定義箇所の照合で8種の未定義変数を発見・修正。`:root`の「エイリアス変数」ブロックに追加：①`--radius-md: var(--radius-btn)`（4箇所使用・未定義のため`border-radius:0px`相当になっていた）②`--fw-semibold: var(--fw-semi)`（`.cc-col-header`の`font-weight`が効いていなかった）③`--text-main: var(--text)`（5箇所でテキスト色が継承値頼みだった）④`--text-primary: var(--text)`（4箇所）⑤`--surface-1: var(--surface)`（5箇所で`background:transparent`になっていた）⑥`--card-bg: var(--surface)`（`.yi-card`の背景が透明になっていた）⑦`--text-2: var(--text)`（`.kb-row > span`のショートカット説明テキスト色が未定義だった）⑧`--danger: var(--danger-text)`（`.rc-close:hover`と`.rc-type-exp`の赤色が効いていなかった） |
 
+| 143 | v11.5 | デザイン | アニメーション変数システム完全化 — `--dur-*`/`--ease-*`/`--lh-tighter`追加・easing関数112箇所+line-height19箇所を一斉変数化：①`:root`に`--dur-fast:0.15s`・`--dur-base:0.2s`・`--dur-slow:0.3s`・`--ease-std:cubic-bezier(.4,0,.2,1)`・`--ease-bounce:cubic-bezier(.34,1.56,.64,1)`の5変数を追加（アニメーション/トランジション変数システム）②行間変数に`--lh-tighter:1.1`を追加（見出しアイコン・バッジ等の最密行間）③全CSSの`cubic-bezier(.4,0,.2,1)`系（`0.4,0,0.2,1`・`.4, 0, .2, 1`・`0.4, 0, 0.2, 1`の全表記）を`var(--ease-std)`に一斉変換（22箇所）④`cubic-bezier(.34,1.56,.64,1)`系（`0.34,1.56,0.64,1`・`0.34, 1.56, 0.64, 1`の全表記）を`var(--ease-bounce)`に一斉変換（90箇所）⑤`line-height:1.1`→`var(--lh-tighter)`（8箇所）・`1.2`→`var(--lh-tight)`（6箇所）・`1.6`→`var(--lh-normal)`（4箇所）・`1.75`→`var(--lh-relaxed)`（1箇所）に変換（計131箇所変換。残存するcubic-bezierは意図的バリエーション） |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

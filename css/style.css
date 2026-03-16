@@ -100,6 +100,7 @@
   --fw-black:   800;
 
   /* 行間 */
+  --lh-tighter: 1.1;   /* 最密：見出し内アイコン・バッジ等 */
   --lh-tight:   1.2;
   --lh-snug:    1.45;
   --lh-normal:  1.6;
@@ -122,6 +123,13 @@
   --sp-8:  32px;   /* 特大：メインコンテンツ余白 */
   --sp-10: 40px;   /* 超大：セクション間 */
   --sp-12: 48px;   /* 最大：空状態パディング */
+
+  /* ── アニメーション/トランジション変数 (v11.5) ─────── */
+  --dur-fast:    0.15s;                            /* クイック（ホバー・色変化） */
+  --dur-base:    0.2s;                             /* 標準アニメーション */
+  --dur-slow:    0.3s;                             /* ゆっくりした遷移 */
+  --ease-std:    cubic-bezier(.4, 0, .2, 1);       /* 標準イージング（Material） */
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);  /* 弾性バウンス */
 
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
   --radius-btn:      12px;  /* ボタン角丸（統一） */
@@ -219,7 +227,7 @@ select:focus:not(:focus-visible) {
   top: 0; left: 0;
   height: 100vh;
   z-index: 200;
-  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  transition: transform .25s var(--ease-std);
 }
 
 #sidebar-brand {
@@ -553,7 +561,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
 }
 .card-collapse-btn svg {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s var(--ease-std);
   pointer-events: none;
 }
 .card-collapse-btn[aria-expanded="false"] svg {
@@ -561,8 +569,8 @@ select:focus:not(:focus-visible) {
 }
 .card-collapse-body {
   overflow: hidden;
-  transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity   0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: max-height 0.32s var(--ease-std),
+              opacity   0.28s var(--ease-std);
   max-height: 2000px;
   opacity: 1;
 }
@@ -603,7 +611,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   border: none;
-  transition: background .15s, transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s;
+  transition: background .15s, transform .15s var(--ease-bounce), box-shadow .15s;
   white-space: nowrap;
   cursor: pointer;
   box-shadow: var(--shadow-btn-base);
@@ -687,7 +695,7 @@ select:focus:not(:focus-visible) {
   82%  { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
-.dup-popping { animation: dup-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.dup-popping { animation: dup-pop 0.45s var(--ease-bounce); }
 
 /* 複製元行フラッシュ */
 @keyframes tx-dup-row-flash {
@@ -710,7 +718,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-wide);
-  animation: dup-banner-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: dup-banner-in 0.3s var(--ease-bounce);
 }
 .dup-modal-banner svg { flex-shrink: 0; opacity: 0.85; }
 @keyframes dup-banner-in {
@@ -1000,7 +1008,7 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
 }
 .tx-table tbody tr {
-  transition: background .15s, box-shadow .15s, transform .15s cubic-bezier(.34,1.56,.64,1);
+  transition: background .15s, box-shadow .15s, transform .15s var(--ease-bounce);
 }
 .tx-table tbody tr:hover {
   background: var(--surface-2);
@@ -1077,7 +1085,7 @@ select:focus:not(:focus-visible) {
   width: 5px; height: 9px;
   border: 2px solid #fff;
   border-top: none; border-left: none;
-  animation: cb-check-in .2s cubic-bezier(.34,1.56,.64,1) both;
+  animation: cb-check-in .2s var(--ease-bounce) both;
 }
 .tx-cb:indeterminate {
   background: var(--primary);
@@ -1159,8 +1167,8 @@ select:focus:not(:focus-visible) {
 .tx-th-active .tx-sort-icon {
   opacity: 1;
 }
-.tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  .25s cubic-bezier(.34,1.56,.64,1) both; }
-.tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc .25s cubic-bezier(.34,1.56,.64,1) both; }
+.tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  .25s var(--ease-bounce) both; }
+.tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc .25s var(--ease-bounce) both; }
 .tx-sort-none {
   opacity: .25;
 }
@@ -1267,7 +1275,7 @@ select:focus:not(:focus-visible) {
   padding: 2px 10px 2px 8px;
   border-radius: var(--radius-badge);
   width: fit-content;
-  animation: bulk-count-pop .3s cubic-bezier(.34,1.56,.64,1) both;
+  animation: bulk-count-pop .3s var(--ease-bounce) both;
 }
 .bulk-count::before {
   content: '☑';
@@ -1416,7 +1424,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   line-height: 1.5;
   transition: background 0.15s, transform 0.15s;
-  animation: tag-chip-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: tag-chip-in 0.2s var(--ease-bounce) both;
 }
 .tx-tag-chip:hover {
   background: color-mix(in srgb, var(--tc, var(--primary)) 20%, transparent);
@@ -1606,7 +1614,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 0.28s var(--ease-std);
   overflow: hidden;
   margin-bottom: var(--sp-2);
 }
@@ -1699,9 +1707,9 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  line-height: 1.6;
+  line-height: var(--lh-normal);
   transition: border-color .18s, color .18s, background .18s, transform .15s, box-shadow .18s;
-  animation: preset-chip-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: preset-chip-in 0.3s var(--ease-bounce) both;
   animation-delay: calc(var(--pi) * 38ms);
 }
 .adv-preset-chip:hover {
@@ -1767,7 +1775,7 @@ mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
-  animation: tx-hl-badge-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: tx-hl-badge-in 0.25s var(--ease-bounce) both;
 }
 
 /* ── v5.95: 詳細フィルターパネル グループ入場アニメーション ── */
@@ -1865,7 +1873,7 @@ mark.tx-hl {
 .smi-amount {
   font-size: var(--fs-lg);
   font-weight: var(--fw-black);
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .smi-divider {
   width: 1px;
@@ -2343,7 +2351,7 @@ mark.tx-hl {
   border-radius: 4px;
   min-width: 2px;
   transform-origin: left center;
-  animation: budget-fill-in 0.7s cubic-bezier(.4, 0, .2, 1) both;
+  animation: budget-fill-in 0.7s var(--ease-std) both;
 }
 .budget-fill.warn { background: var(--warning); }
 .budget-fill.over { background: var(--expense); }
@@ -2741,7 +2749,7 @@ body {
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
   z-index: 8000;
   transform: translateY(100%);
-  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  transition: transform .3s var(--ease-std);
   box-shadow: 0 -4px 20px rgba(0,0,0,.2);
 }
 #pwa-install-banner.show { transform: translateY(0); }
@@ -3002,7 +3010,7 @@ body {
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12);
   z-index: 130;
   cursor: pointer;
-  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+  transition: transform .2s var(--ease-bounce), box-shadow .2s;
   -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
@@ -3031,7 +3039,7 @@ body {
   width: 22px;
   height: 22px;
   stroke: currentColor;
-  transition: stroke .15s, transform .2s cubic-bezier(.34,1.56,.64,1);
+  transition: stroke .15s, transform .2s var(--ease-bounce);
 }
 .bottom-nav-item.active .bottom-nav-icon svg { stroke: var(--primary); }
 
@@ -3054,7 +3062,7 @@ body {
   justify-content: center;
   line-height: 1;
   pointer-events: none;
-  animation: nav-badge-pop .35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: nav-badge-pop .35s var(--ease-bounce) both;
 }
 
 @media (max-width: 768px) {
@@ -3209,12 +3217,12 @@ body {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.page-enter { animation: page-fade-in .22s cubic-bezier(.4,0,.2,1) both; }
+.page-enter { animation: page-fade-in .22s var(--ease-std) both; }
 
 /* ── カードホバーリフト ── */
-.card { transition: box-shadow .22s cubic-bezier(.34,1.56,.64,1), transform .22s cubic-bezier(.34,1.56,.64,1); }
+.card { transition: box-shadow .22s var(--ease-bounce), transform .22s var(--ease-bounce); }
 .card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
-.summary-card { transition: box-shadow .28s cubic-bezier(.34,1.56,.64,1), transform .28s cubic-bezier(.34,1.56,.64,1); }
+.summary-card { transition: box-shadow .28s var(--ease-bounce), transform .28s var(--ease-bounce); }
 .summary-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 16px 48px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1);
@@ -3226,7 +3234,7 @@ body {
 .modal-overlay .modal {
   transform: translateY(20px) scale(0.96);
   opacity: 0;
-  transition: transform .28s cubic-bezier(.34,1.56,.64,1), opacity .18s ease;
+  transition: transform .28s var(--ease-bounce), opacity .18s ease;
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(1);
@@ -3306,7 +3314,7 @@ body {
   100% { transform: scale(1.1); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
-  animation: nav-icon-pop .3s cubic-bezier(.34,1.56,.64,1) both;
+  animation: nav-icon-pop .3s var(--ease-bounce) both;
 }
 
 /* ── 予算アラート通知UI ── */
@@ -3697,7 +3705,7 @@ body {
   font-weight: var(--fw-medium);
   box-shadow: var(--shadow-md);
   opacity: 0;
-  transition: opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1);
+  transition: opacity .3s var(--ease-std), transform .3s var(--ease-std);
   z-index: 9999;
   white-space: nowrap;
   pointer-events: none;
@@ -3854,7 +3862,7 @@ body {
   font-weight: var(--fw-black);
   letter-spacing: var(--ls-tight);
   color: var(--text);
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .asset-date-label {
   font-size: var(--fs-xs);
@@ -4340,7 +4348,7 @@ body {
 }
 .section-tab .tab-icon {
   font-size: 13px;
-  transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .2s var(--ease-bounce);
 }
 .section-tab.is-active .tab-icon {
   transform: scale(1.2);
@@ -5174,7 +5182,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom: 1px solid var(--border);
   border-left: 3px solid var(--cal-ev-color, var(--primary));
   transition: background .15s;
-  animation: cal-ev-item-in .35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: cal-ev-item-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--cal-ev-i, 0) * 50ms);
 }
 .cal-ev-item:last-child { border-bottom: none; }
@@ -5896,7 +5904,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
   color: #fff;
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .pt-summary-unit {
   font-size: var(--fs-sm);
@@ -6196,7 +6204,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-width: 11;
   stroke-linecap: round;
   stroke-dasharray: 163.36 163.36;
-  animation: hs-gauge-in 1.1s cubic-bezier(.4,0,.2,1) both;
+  animation: hs-gauge-in 1.1s var(--ease-std) both;
   animation-delay: 0.1s;
 }
 @keyframes hs-gauge-in {
@@ -6235,7 +6243,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,.12);
-  animation: hs-badge-in 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  animation: hs-badge-in 0.5s var(--ease-bounce) both;
   animation-delay: 0.85s;
 }
 @keyframes hs-badge-in {
@@ -6292,7 +6300,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--hs-bar-color, var(--primary));
   border-radius: 99px;
   transform-origin: left;
-  animation: hs-fill-in 0.7s cubic-bezier(.4,0,.2,1) both;
+  animation: hs-fill-in 0.7s var(--ease-std) both;
 }
 @keyframes hs-fill-in {
   from { transform: scaleX(0); }
@@ -6461,7 +6469,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both;
+  animation: wl-card-in 0.35s var(--ease-std) both;
   animation-delay: calc(var(--wl-i, 0) * 60ms);
   transition: box-shadow 0.2s, transform 0.2s;
 }
@@ -6476,7 +6484,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
 }
 .wl-card.wl-high {
-  animation: wl-card-in 0.35s cubic-bezier(.4,0,.2,1) both,
+  animation: wl-card-in 0.35s var(--ease-std) both,
              wl-urgent-glow 2.4s ease-in-out calc(var(--wl-i, 0) * 60ms + 0.4s) infinite;
 }
 .wl-card-icon {
@@ -6962,7 +6970,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fc-cell-amount {
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
-  line-height: 1.2;
+  line-height: var(--lh-tight);
 }
 .fc-cell-amount.income  { color: var(--income);  }
 .fc-cell-amount.expense { color: var(--expense); }
@@ -7278,7 +7286,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 4px solid var(--ch-accent, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: ch-card-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: ch-card-in 0.35s var(--ease-bounce) both;
   animation-delay: calc(var(--ch-i, 0) * 60ms);
   transition: box-shadow 0.2s, transform 0.2s;
 }
@@ -7344,7 +7352,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-bar-fill {
   height: 100%;
   border-radius: 4px;
-  transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+  transition: width 0.7s var(--ease-std);
 }
 .ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
@@ -7551,7 +7559,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.2s, transform 0.2s;
-  animation: dow-card-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: dow-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--dow-i, 0) * 80ms);
 }
 .dow-stat-card:hover {
@@ -7589,7 +7597,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
   color: #fff;
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .dow-stat-unit {
   font-size: var(--fs-xs);
@@ -7633,7 +7641,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 4px;
   background: var(--dow-row-color, var(--primary));
   width: var(--dow-bar-w, 0%);
-  animation: dow-bar-fill 0.7s cubic-bezier(0.4,0,0.2,1) both;
+  animation: dow-bar-fill 0.7s var(--ease-std) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * 60ms + 0.2s);
 }
 
@@ -7690,7 +7698,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.15s;
   user-select: none;
-  animation: ct-chip-in 0.30s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: ct-chip-in 0.30s var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * 40ms);
 }
 .ct-chip:hover {
@@ -7738,7 +7746,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: 2px; }
-.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: 1.2; }
+.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tight); }
 .ct-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 3px; }
 
 /* テーブル */
@@ -7830,7 +7838,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   color: #fff;
   transition: transform 0.18s, box-shadow 0.18s;
-  animation: fv-card-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: fv-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
@@ -7858,7 +7866,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-icon  { font-size: 18px; margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.82); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff; line-height: 1.2; margin: 2px 0; }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff; line-height: var(--lh-tight); margin: 2px 0; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: rgba(255,255,255,0.75); }
 
 /* テーブルセル */
@@ -8068,7 +8076,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--text);
-  line-height: 1.2;
+  line-height: var(--lh-tight);
 }
 .wk-cell-value.wk-today-exp { color: var(--danger-text); }
 .wk-cell-value.wk-nospend   { color: var(--success); }
@@ -8102,7 +8110,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  animation: wk-col-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: wk-col-in 0.45s var(--ease-bounce) both;
   animation-delay: calc(var(--wk-i, 0) * 55ms);
 }
 .wk-bar-wrap {
@@ -8260,7 +8268,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-chevron {
   font-size: 18px;
   color: var(--text-muted);
-  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1), color 0.25s;
+  transition: transform 0.22s var(--ease-std), color 0.25s;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -8311,7 +8319,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+  transition: all 0.18s var(--ease-std);
 }
 .qa-type-btn:hover {
   border-color: var(--primary);
@@ -8437,7 +8445,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 .qa-card .qa-submit-btn.qa-sent {
-  animation: qa-btn-pop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  animation: qa-btn-pop 0.4s var(--ease-bounce);
 }
 
 /* モバイル最適化 */
@@ -8562,7 +8570,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   opacity: 1;
   display: inline-block;
-  animation: nt-saved-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: nt-saved-pop 0.35s var(--ease-bounce) both;
 }
 
 /* 保存日時ピル */
@@ -8611,7 +8619,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3);
   position: relative;
   overflow: hidden;
-  animation: hm-stat-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: hm-stat-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--hm-si, 0) * 65ms);
 }
 .hm-stat-card::before {
@@ -8732,7 +8740,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 13px;
   border-radius: 3px;
   cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s;
+  transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s;
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
   transform: scale(1.6);
@@ -8816,7 +8824,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-summary-monthly {
   position: relative;
   overflow: hidden;
-  animation: debt-sum-in 0.38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: debt-sum-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--ds-i, 0) * 70ms);
 }
 @keyframes debt-sum-in {
@@ -8857,7 +8865,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 負債カード */
 .debt-card {
   border-left: 4px solid var(--debt-accent, var(--primary));
-  animation: debt-card-in .38s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: debt-card-in .38s var(--ease-bounce) both;
   animation-delay: calc(var(--dc-i, 0) * 60ms);
   position: relative;
   overflow: hidden;
@@ -8878,7 +8886,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 低返済率カードのパルスアニメーション (v5.85) */
 .debt-card.debt-low {
-  animation: debt-card-in .38s cubic-bezier(0.34,1.56,0.64,1) both,
+  animation: debt-card-in .38s var(--ease-bounce) both,
              debt-low-glow 2.4s ease-in-out calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
@@ -8978,7 +8986,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .empty-debt-icon { font-size: 48px; margin-bottom: var(--sp-3); }
 .empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-2); }
-.empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.6; }
+.empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
 
 /* アーカイブ */
 .debt-archive { margin-top: var(--sp-6); }
@@ -9150,13 +9158,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* プリセットボタン強化 */
 .sim-preset {
   position: relative; overflow: hidden;
-  transition: all .2s cubic-bezier(0.34,1.56,0.64,1);
+  transition: all .2s var(--ease-bounce);
 }
 .sim-preset:active { transform: scale(0.88); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: #fff; border-color: var(--primary);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
-  animation: sim-preset-pop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: sim-preset-pop 0.3s var(--ease-bounce) both;
 }
 @keyframes sim-preset-pop {
   from { transform: scale(0.82); }
@@ -9228,7 +9236,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 節約値 — 更新時バウンス */
 .sim-savings-value { display: inline-block; }
 .sim-val-pop {
-  animation: sim-val-pop 0.38s cubic-bezier(0.34,1.56,0.64,1);
+  animation: sim-val-pop 0.38s var(--ease-bounce);
 }
 @keyframes sim-val-pop {
   from { transform: scale(1.22); }
@@ -9256,7 +9264,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* モーダル入場アニメーション */
 #smart-budget-modal .modal {
-  animation: sb-modal-in 0.42s cubic-bezier(.34,1.56,.64,1) both;
+  animation: sb-modal-in 0.42s var(--ease-bounce) both;
 }
 @keyframes sb-modal-in {
   from { opacity: 0; transform: scale(0.94) translateY(20px); }
@@ -9271,7 +9279,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-card);
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-3);
-  animation: sb-banner-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: sb-banner-in 0.38s var(--ease-bounce) both;
   animation-delay: 0.1s;
 }
 @keyframes sb-banner-in {
@@ -9286,7 +9294,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xl);
   font-weight: var(--fw-bold);
   color: #fff;
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .sb-banner-num.sb-bn-up   { color: var(--expense-end); }
 .sb-banner-num.sb-bn-down { color: var(--income-end); }
@@ -9333,7 +9341,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 4px; height: 8px;
   border: 2px solid #fff;
   border-top: none; border-left: none;
-  animation: cb-check-in .2s cubic-bezier(.34,1.56,.64,1) both;
+  animation: cb-check-in .2s var(--ease-bounce) both;
 }
 
 /* 全選択ラベル */
@@ -9361,7 +9369,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-row {
   border-left: 3px solid var(--sb-cat-color, var(--border));
   transition: background .15s;
-  animation: sb-row-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: sb-row-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--sb-i, 0) * 45ms + 0.12s);
 }
 .sb-row:hover {
@@ -9423,10 +9431,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   margin-left: 4px;
-  transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .2s var(--ease-bounce);
 }
 .sb-apply-count.sb-count-pop {
-  animation: sb-count-pop .25s cubic-bezier(.34,1.56,.64,1) both;
+  animation: sb-count-pop .25s var(--ease-bounce) both;
 }
 @keyframes sb-count-pop {
   0%   { transform: scale(1); }
@@ -9459,7 +9467,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   position: relative;
   overflow: hidden;
-  animation: ev-card-in .38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: ev-card-in .38s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-si,0) * 70ms);
   color: #fff;
 }
@@ -9487,7 +9495,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
-.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: 1.1; }
+.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-count small { color: rgba(255,255,255,.70); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: 2px; }
 .ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
@@ -9553,7 +9561,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--ev-accent, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: ev-card-in .35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: ev-card-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * 55ms);
   transition: opacity .2s;
 }
@@ -9640,12 +9648,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom: 2px solid #fff;
   transform: rotate(-45deg) scale(0);
   transform-origin: center;
-  transition: transform .15s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .15s var(--ease-bounce);
 }
 .ev-done-cb:checked {
   background: var(--primary);
   border-color: var(--primary);
-  animation: ev-cb-pop .2s cubic-bezier(.34,1.56,.64,1);
+  animation: ev-cb-pop .2s var(--ease-bounce);
 }
 .ev-done-cb:checked::after { transform: rotate(-45deg) scale(1); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
@@ -9721,7 +9729,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   border-left: 3px solid var(--ev-accent, var(--primary));
-  animation: ev-widget-item-in .32s cubic-bezier(.34,1.56,.64,1) both;
+  animation: ev-widget-item-in .32s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-wi, 0) * 50ms);
   transition: transform .15s;
 }
@@ -9809,7 +9817,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   cursor: pointer;
   transition: border-color .18s, color .18s, background .18s, box-shadow .18s, transform .18s;
-  animation: sf-chip-in 0.32s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: sf-chip-in 0.32s var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * 45ms);
   white-space: nowrap;
   max-width: 140px;
@@ -9887,7 +9895,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   text-align: center;
   gap: var(--sp-1);
-  animation: tg-stat-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: tg-stat-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--tg-si, 0) * 65ms);
 }
 .tg-stat-icon { font-size: 22px; line-height: 1; }
@@ -9900,7 +9908,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xl);
   font-weight: var(--fw-black);
   color: var(--text);
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
 }
 .tg-stat-unit {
   font-size: var(--fs-sm);
@@ -9909,7 +9917,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-left: 2px;
 }
 .tg-table tbody tr {
-  animation: tg-row-in 0.28s cubic-bezier(.4,0,.2,1) both;
+  animation: tg-row-in 0.28s var(--ease-std) both;
   animation-delay: calc(var(--tg-i, 0) * 40ms + 0.1s);
 }
 @keyframes tg-stat-in {
@@ -9970,7 +9978,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   color: var(--text-muted);
   margin: 4px 0 12px;
-  line-height: 1.6;
+  line-height: var(--lh-normal);
 }
 .adv-widget-hint {
   display: flex;
@@ -9989,7 +9997,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: none; }
 }
 #advice-modal .modal {
-  animation: adv-modal-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: adv-modal-in 0.38s var(--ease-bounce);
 }
 
 /* ウィジェットボタン */
@@ -10057,7 +10065,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* アドバイステキスト */
 .adv-text {
   font-size: var(--fs-sm);
-  line-height: 1.75;
+  line-height: var(--lh-relaxed);
   color: var(--text);
 }
 .adv-text h3 {
@@ -10121,7 +10129,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-copy-done {
   color: var(--success) !important;
   border-color: var(--success) !important;
-  animation: adv-copy-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: adv-copy-pop 0.3s var(--ease-bounce);
 }
 
 /* エラー表示 */
@@ -10134,7 +10142,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--danger-bg);
   color: var(--danger-text);
   font-size: var(--fs-sm);
-  line-height: 1.6;
+  line-height: var(--lh-normal);
 }
 
 /* フッター */
@@ -10275,7 +10283,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .yr-cell {
   border-radius: var(--radius-md);
   padding: var(--sp-3);
-  animation: yr-cell-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: yr-cell-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--yr-i, 0) * 0.08s);
 }
 .yr-cell-label {
@@ -10286,7 +10294,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .yr-cell-value {
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
-  line-height: 1.2;
+  line-height: var(--lh-tight);
 }
 .yr-unit {
   font-size: var(--fs-sm);
@@ -10462,7 +10470,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow-y: auto;
   padding: 0;
   border-radius: var(--radius-lg, 20px);
-  animation: ci-modal-in 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: ci-modal-in 0.42s var(--ease-bounce) both;
 }
 @keyframes ci-modal-in {
   from { opacity: 0; transform: scale(0.88) translateY(20px); }
@@ -10546,7 +10554,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
-  animation: ci-cell-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: ci-cell-in 0.38s var(--ease-bounce) both;
 }
 .ci-cell:nth-child(1) { animation-delay: 0.15s; }
 .ci-cell:nth-child(2) { animation-delay: 0.22s; }
@@ -10592,7 +10600,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: 99px;
   background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
-  transition: width 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+  transition: width 0.9s var(--ease-bounce) 0.3s;
 }
 .ci-savings-pct {
   font-size: var(--fs-sm);
@@ -10730,7 +10738,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .nav-badge-pop {
-  animation: nav-badge-pop 0.35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: nav-badge-pop 0.35s var(--ease-bounce) both;
 }
 
 /* ── 通知センター (v6.8) ─────────────────────────────────────── */
@@ -10814,7 +10822,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 .notif-badge-pop {
-  animation: notif-badge-pop 0.35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: notif-badge-pop 0.35s var(--ease-bounce) both;
 }
 
 /* 通知オーバーレイ */
@@ -10842,7 +10850,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transform: translateY(-8px) scale(0.97);
   opacity: 0;
-  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), opacity 0.18s ease;
+  transition: transform 0.22s var(--ease-bounce), opacity 0.18s ease;
 }
 .notif-panel.notif-panel-open {
   transform: translateY(0) scale(1);
@@ -10935,7 +10943,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   position: relative;
   transition: background 0.15s, transform 0.15s;
-  animation: notif-item-in 0.3s cubic-bezier(.34,1.56,.64,1) both;
+  animation: notif-item-in 0.3s var(--ease-bounce) both;
   animation-delay: calc(var(--ni, 0) * 35ms);
 }
 /* 未読アイテムに薄い背景 */
@@ -11194,7 +11202,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .date-quick-btn.date-quick-pop {
-  animation: date-quick-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: date-quick-pop 0.35s var(--ease-bounce);
 }
 
 .date-quick-btn:focus-visible {
@@ -11261,7 +11269,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--amt-chip-color, var(--primary));
   border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-  animation: amt-chip-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: amt-chip-in 0.28s var(--ease-bounce) both;
   white-space: nowrap;
 }
 
@@ -11291,7 +11299,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 
-.amt-chip-pop { animation: amt-chip-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.amt-chip-pop { animation: amt-chip-pop 0.35s var(--ease-bounce); }
 
 [data-theme="dark"] .amt-hist-chip {
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 15%, var(--surface-2));
@@ -11331,7 +11339,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   cursor: pointer;
   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-  animation: memo-chip-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: memo-chip-in 0.28s var(--ease-bounce) both;
   max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -11364,7 +11372,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 
-.memo-chip-pop { animation: memo-chip-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.memo-chip-pop { animation: memo-chip-pop 0.35s var(--ease-bounce); }
 
 [data-theme="dark"] .memo-hist-chip {
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 15%, var(--surface-2));
@@ -11466,7 +11474,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 2rem;
   line-height: 1;
   flex-shrink: 0;
-  animation: rc-icon-spin 0.6s cubic-bezier(.34,1.56,.64,1) both;
+  animation: rc-icon-spin 0.6s var(--ease-bounce) both;
 }
 
 @keyframes rc-icon-spin {
@@ -11523,7 +11531,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-1);
   cursor: pointer;
   transition: border-color .15s, background .15s, transform .15s;
-  animation: rc-item-in .28s cubic-bezier(.34,1.56,.64,1) both;
+  animation: rc-item-in .28s var(--ease-bounce) both;
   animation-delay: calc(var(--rc-i, 0) * 50ms);
 }
 
@@ -11617,7 +11625,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* モーダルオープンアニメーション */
 .rc-modal-open .rc-wrap {
-  animation: rc-wrap-in .38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: rc-wrap-in .38s var(--ease-bounce) both;
 }
 
 @keyframes rc-wrap-in {
@@ -11640,7 +11648,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; transform: translateY(8px) scale(.995); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-.page-enter { animation: page-fade-in .24s cubic-bezier(.4,0,.2,1) both; }
+.page-enter { animation: page-fade-in .24s var(--ease-std) both; }
 
 /* ナビボタン リップルエフェクト */
 .nav-item, .bottom-nav-item {
@@ -11805,7 +11813,7 @@ kbd {
   box-shadow: 0 4px 20px rgba(0,0,0,0.14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.18s ease, transform 0.22s var(--ease-bounce);
   z-index: 9998;
   max-width: calc(100vw - 32px);
 }
@@ -11846,7 +11854,7 @@ kbd {
   to   { opacity: 1; transform: none; }
 }
 #kb-help-modal.modal-is-open .modal-wrap {
-  animation: kb-help-modal-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: kb-help-modal-in 0.32s var(--ease-bounce) both;
 }
 
 /* ============================================================
@@ -11862,7 +11870,7 @@ canvas.chart-clickable { cursor: pointer; }
   flex-direction: column;
 }
 #dd-modal.modal-is-open .dd-modal-box {
-  animation: dd-box-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: dd-box-in 0.32s var(--ease-bounce) both;
 }
 @keyframes dd-box-in {
   from { opacity: 0; transform: scale(0.94) translateY(12px); }
@@ -12046,9 +12054,9 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-2);
   position: relative;
   overflow: hidden;
-  animation: yi-card-in 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: yi-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--yi-si, 0) * 60ms);
-  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s ease;
+  transition: transform 0.18s var(--ease-bounce), box-shadow 0.18s ease;
 }
 .yi-card:hover {
   transform: translateY(-3px);
@@ -12083,7 +12091,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
   color: var(--text-main);
-  line-height: 1.1;
+  line-height: var(--lh-tighter);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
@@ -12181,7 +12189,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-btn);
   border-left: 3px solid var(--opp-accent, var(--primary));
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
-  animation: opp-card-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: opp-card-in 0.32s var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * 60ms);
 }
 
@@ -12242,7 +12250,7 @@ canvas.chart-clickable { cursor: pointer; }
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1),
+  transition: transform 0.15s var(--ease-bounce),
               box-shadow 0.15s ease,
               filter 0.15s ease;
 }
@@ -12286,7 +12294,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
 }
 #md-modal.modal-is-open .md-modal-box {
-  animation: dd-box-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: dd-box-in 0.32s var(--ease-bounce) both;
 }
 
 /* 前月/翌月ナビ (v8.9) */
@@ -12307,7 +12315,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-hover);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s var(--ease-bounce);
   flex-shrink: 0;
 }
 .md-nav-btn:hover:not(:disabled) {
@@ -12332,7 +12340,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ダッシュボードサマリーカード クリック可能 (v8.9) */
 .dash-sum-clickable {
   cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s;
+  transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s;
 }
 .dash-sum-clickable:hover {
   transform: translateY(-3px);
@@ -12379,7 +12387,7 @@ canvas.chart-clickable { cursor: pointer; }
   align-items: center;
   gap: var(--sp-2);
   font-size: var(--fs-xs);
-  animation: md-cat-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: md-cat-in 0.28s var(--ease-bounce) both;
   animation-delay: calc(var(--md-i, 0) * 40ms);
 }
 @keyframes md-cat-in {
@@ -12410,7 +12418,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--md-cat-color, var(--primary));
   border-radius: 99px;
   transform-origin: left;
-  animation: md-bar-fill 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: md-bar-fill 0.65s var(--ease-std) both;
   animation-delay: calc(var(--md-i, 0) * 40ms + 0.1s);
 }
 @keyframes md-bar-fill {
@@ -12459,7 +12467,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-2) var(--sp-2);
   position: relative;
   overflow: hidden;
-  animation: md-cell-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: md-cell-in 0.32s var(--ease-bounce) both;
   animation-delay: calc(var(--md-si, 0) * 60ms);
 }
 .md-cell::after {
@@ -12554,7 +12562,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */
 .rpt-month-row.is-clickable {
   cursor: pointer;
-  transition: background 0.15s, transform 0.15s cubic-bezier(.34,1.56,.64,1), box-shadow 0.15s;
+  transition: background 0.15s, transform 0.15s var(--ease-bounce), box-shadow 0.15s;
 }
 .rpt-month-row.is-clickable:hover {
   background: var(--surface-hover);
@@ -12675,7 +12683,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  animation: pace-row-in .28s cubic-bezier(.34,1.56,.64,1) both;
+  animation: pace-row-in .28s var(--ease-bounce) both;
   animation-delay: calc(var(--pbr-i, 0) * 80ms);
 }
 .pace-bar-label {
@@ -12706,7 +12714,7 @@ canvas.chart-clickable { cursor: pointer; }
   height: 100%;
   border-radius: 99px;
   transform-origin: left;
-  animation: pace-bar-in .85s cubic-bezier(.34,1.56,.64,1) both;
+  animation: pace-bar-in .85s var(--ease-bounce) both;
   animation-delay: calc(var(--pbr-i, 0) * 80ms + 60ms);
   position: relative;
 }
@@ -12751,7 +12759,7 @@ canvas.chart-clickable { cursor: pointer; }
   grid-template-columns: 1fr 1fr 1.2fr;
   gap: var(--sp-2);
   margin-top: var(--sp-3);
-  animation: pace-daily-in .35s cubic-bezier(.34,1.56,.64,1) .14s both;
+  animation: pace-daily-in .35s var(--ease-bounce) .14s both;
 }
 .pace-daily-cell {
   background: var(--surface-hover);
@@ -12776,7 +12784,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
+  line-height: var(--lh-tight);
 }
 .pace-daily-val .pace-unit { font-size: 10px; font-weight: var(--fw-normal); }
 .pace-daily-val.pace-good { color: var(--success); }
@@ -12836,7 +12844,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ── 支払方法別月次推移カード (v9.3) ──────────────────────── */
 .pm-trend-card {
   margin-top: var(--sp-4);
-  animation: pm-trend-in 0.4s cubic-bezier(.34,1.56,.64,1) both;
+  animation: pm-trend-in 0.4s var(--ease-bounce) both;
 }
 .pm-trend-hint {
   font-size: var(--fs-xs);
@@ -12852,7 +12860,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ── 支払方法テーブル行 左ボーダー (v9.4) ──────────────────── */
 .pm-table-row {
   border-left: 3px solid var(--pm-row-color, var(--border));
-  animation: pm-row-in 0.28s cubic-bezier(.34,1.56,.64,1) both;
+  animation: pm-row-in 0.28s var(--ease-bounce) both;
   animation-delay: calc(var(--pm-ri, 0) * 50ms + 0.05s);
 }
 @keyframes pm-row-in {
@@ -12876,7 +12884,7 @@ canvas.chart-clickable { cursor: pointer; }
     color-mix(in srgb, var(--pm-sum-color) 10%, var(--surface)),
     color-mix(in srgb, var(--pm-sum-color) 4%, var(--surface)));
   border: 1px solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
-  animation: pm-sum-in 0.38s cubic-bezier(.34,1.56,.64,1) both;
+  animation: pm-sum-in 0.38s var(--ease-bounce) both;
 }
 .pm-sum-card:nth-child(1) { animation-delay: 0ms; }
 .pm-sum-card:nth-child(2) { animation-delay: 65ms; }
@@ -12947,9 +12955,9 @@ canvas.chart-clickable { cursor: pointer; }
   flex-direction: column;
   gap: var(--sp-3);
   overflow: hidden;
-  animation: cat-cg-in .35s cubic-bezier(.34,1.56,.64,1) both;
+  animation: cat-cg-in .35s var(--ease-bounce) both;
   animation-delay: calc(var(--cc-i, 0) * 45ms);
-  transition: box-shadow .18s, transform .15s cubic-bezier(.34,1.56,.64,1);
+  transition: box-shadow .18s, transform .15s var(--ease-bounce);
 }
 .cat-card:hover {
   box-shadow: var(--shadow-md);
@@ -13069,7 +13077,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--cat-bar-clr, var(--primary));
   border-radius: 999px;
   transform-origin: left;
-  animation: cat-bar-in .7s cubic-bezier(.4,0,.2,1) both;
+  animation: cat-bar-in .7s var(--ease-std) both;
   animation-delay: calc(var(--cc-i, 0) * 45ms + .1s);
 }
 .cat-budget-pct {
