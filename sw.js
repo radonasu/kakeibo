@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v11.1.0'; // v11.1.0: JSファイルハードコード色CSS変数化 — app.js・charts.jsの残存ハードコード色をCSS変数/getCSSVar()に変換（severity/gradeColors/sparkColors/barColor/cat fallback/goal/sub/pt/ev/ch/wl優先度/debt sim chart等 計50箇所以上）
+const CACHE_NAME = 'kakeibo-v11.2.0'; // v11.2.0: ハードコードborder-radius CSS変数化 第8弾 — --radius-xs(6px)/--radius-xl(20px)を新規追加・全CSS内border-radius 6/8/10/12/20/24pxをCSS変数に一斉変換（計60箇所超）
 const ASSETS = [
   './index.html',
   './css/style.css',

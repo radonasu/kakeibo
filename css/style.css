@@ -126,8 +126,10 @@
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
   --radius-btn:      12px;  /* ボタン角丸（統一） */
   --radius-btn-sm:    8px;  /* 小ボタン角丸 */
+  --radius-xs:        6px;  /* 超小要素角丸（ハンバーガー・アイコンボタン等） */
   --radius-badge:   999px;  /* バッジ・pill */
   --radius-card:     14px;  /* カード角丸（モーダル内カード等） */
+  --radius-xl:       20px;  /* セミピル（ステータスバッジ等） */
   --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
 }
 
@@ -226,7 +228,7 @@ select:focus:not(:focus-visible) {
   width: 38px;
   height: 38px;
   background: linear-gradient(135deg, var(--primary), var(--primary-end), var(--pink));
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,7 +256,7 @@ select:focus:not(:focus-visible) {
   background: rgba(255,255,255,.08);
   color: var(--sidebar-text-hi);
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   padding: 6px 8px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -270,7 +272,7 @@ select:focus:not(:focus-visible) {
   background: rgba(255,255,255,.1);
   color: var(--sidebar-text-hi);
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   padding: 6px 10px;
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
@@ -302,7 +304,7 @@ select:focus:not(:focus-visible) {
   gap: 10px;
   padding: 10px 12px;
   color: var(--sidebar-text-muted);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background .15s, color .15s;
   font-size: var(--fs-sm);
@@ -336,14 +338,14 @@ select:focus:not(:focus-visible) {
   width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   transition: background .2s, color .2s;
 }
 .nav-icon svg { display: block; }
 .nav-item.active .nav-icon {
   background: color-mix(in srgb, var(--primary) 25%, transparent);
   color: var(--primary-end);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   padding: 2px;
 }
 
@@ -359,7 +361,7 @@ select:focus:not(:focus-visible) {
   gap: 10px;
   padding: 10px 12px;
   background: rgba(255,255,255,.06);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid rgba(255,255,255,.08);
 }
 
@@ -400,7 +402,7 @@ select:focus:not(:focus-visible) {
   color: var(--sidebar-text-muted);
   font-size: var(--fs-base);
   padding: 4px 6px;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
   transition: color .15s;
@@ -449,7 +451,7 @@ select:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
 }
 #hamburger:hover { background: rgba(255,255,255,.1); }
 
@@ -2010,7 +2012,7 @@ mark.tx-hl {
 .export-range select {
   padding: 7px 10px;
   border: 1.5px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
 }
 
@@ -2043,7 +2045,7 @@ mark.tx-hl {
   align-items: center;
   padding: var(--sp-3);
   background: var(--surface-2);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1.5px dashed var(--border);
 }
 .quick-cat-form input {
@@ -2390,7 +2392,7 @@ mark.tx-hl {
 .btn-tpl {
   padding: 5px 14px;
   border: 1.5px solid;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   background: transparent;
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
@@ -2433,7 +2435,7 @@ mark.tx-hl {
   padding: var(--sp-4);
   background: linear-gradient(135deg, var(--success-bg), var(--income-light));
   border: 1px solid var(--success-border);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
 }
 
 .sync-user-avatar {
@@ -2529,7 +2531,7 @@ mark.tx-hl {
   color: var(--text);
   border: 1px solid var(--border);
   padding: 10px 20px;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   opacity: 0;
@@ -2571,7 +2573,7 @@ mark.tx-hl {
 
 .auth-card {
   background: #fff;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 24px 64px rgba(0,0,0,.35);
   width: 100%;
   max-width: 420px;
@@ -2615,7 +2617,7 @@ mark.tx-hl {
 .auth-tabs {
   display: flex;
   background: var(--surface-2);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   padding: 4px;
   gap: 4px;
   margin-bottom: 28px;
@@ -2642,7 +2644,7 @@ mark.tx-hl {
   width: 100%;
   padding: 14px;
   font-size: var(--fs-lg);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   margin-top: 6px;
   justify-content: center;
 }
@@ -2650,7 +2652,7 @@ mark.tx-hl {
 .auth-error {
   background: var(--danger-bg);
   border: 1px solid var(--danger-border);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 11px 14px;
   font-size: var(--fs-sm);
   color: var(--danger-text);
@@ -2696,7 +2698,7 @@ mark.tx-hl {
 
 .install-tab {
   background: var(--surface-2);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 14px 16px;
   border: 1px solid var(--border);
 }
@@ -2815,7 +2817,7 @@ body {
   color: var(--text);
   border: 1px solid var(--border);
   padding: 12px 20px;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2886,7 +2888,7 @@ body {
   width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 2px;
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   padding: 2px;
   transition: background .2s, color .2s, transform .2s;
 }
@@ -2897,7 +2899,7 @@ body {
   transform: scale(1.1);
   padding: 4px;
   width: 32px; height: 32px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
 }
 .bottom-nav-label { font-size: var(--fs-2xs); line-height: 1; }
 
@@ -3094,7 +3096,7 @@ body {
   border: none;
   font-size: 16px;
   padding: 5px 8px;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   cursor: pointer;
   line-height: 1;
   transition: background .15s, color .15s;
@@ -3344,7 +3346,7 @@ body {
   gap: 3px;
   margin-left: 6px;
   padding: 1px 7px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   background: color-mix(in srgb, var(--primary) 12%, transparent);
@@ -3375,7 +3377,7 @@ body {
 .recurring-day-group {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 10px 14px;
 }
 .recurring-day-row {
@@ -3394,7 +3396,7 @@ body {
   width: 64px;
   padding: 6px 8px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   background: var(--surface);
   color: var(--text);
   font-size: var(--fs-base);
@@ -3470,7 +3472,7 @@ body {
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   padding: 12px 28px;
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(0,0,0,.2);
@@ -3558,7 +3560,7 @@ body {
   background: var(--primary-light);
   color: var(--primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 9px 20px;
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
@@ -3626,7 +3628,7 @@ body {
 
 .share-canvas-wrap {
   width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   line-height: 0;
@@ -3635,7 +3637,7 @@ body {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
 }
 
 .share-hint {
@@ -3773,7 +3775,7 @@ body {
   justify-content: center;
   background: var(--primary-light);
   color: var(--primary-dark);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   padding: 1px 8px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -3809,7 +3811,7 @@ body {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -4819,7 +4821,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-sum-item {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4);
   display: flex;
   flex-direction: column;
@@ -4846,7 +4848,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-grid-wrap {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   overflow: hidden;
   animation: cal-fade-in 0.25s ease;
 }
@@ -4968,7 +4970,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-day-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   overflow: hidden;
 }
 .cal-panel-animate {
@@ -5104,7 +5106,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-events-section {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   overflow: hidden;
   animation: cal-fade-in 0.25s ease;
 }
@@ -5402,7 +5404,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
 .sub-widget-icon {
   width: 32px; height: 32px;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
@@ -5525,7 +5527,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sub-card-icon {
   width: 44px; height: 44px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 22px;
   flex-shrink: 0;
@@ -5659,7 +5661,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-emoji-btn {
   width: 34px; height: 34px;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   font-size: 18px;
   cursor: pointer;
@@ -5968,7 +5970,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .pt-card-icon {
   width: 44px; height: 44px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 22px;
   flex-shrink: 0;
@@ -6065,7 +6067,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-emoji-btn {
   width: 34px; height: 34px;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   font-size: 18px;
   cursor: pointer;
@@ -6103,13 +6105,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-widget-item {
   display: flex; align-items: center; gap: var(--sp-3);
   padding: var(--sp-2) var(--sp-3);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--surface-hover);
 }
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) 8%, transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .pt-widget-icon {
-  width: 36px; height: 36px; border-radius: 8px;
+  width: 36px; height: 36px; border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
 }
@@ -6475,7 +6477,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   background: color-mix(in srgb, var(--wl-accent, var(--primary)) 15%, var(--surface-hover));
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   flex-shrink: 0;
 }
 .wl-card-body {
@@ -6596,7 +6598,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-archive-item {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-4);
   display: flex;
   align-items: center;
@@ -6647,7 +6649,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   background: var(--surface-hover);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
 .wish-widget-info {
@@ -6671,7 +6673,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ウィジェット高優先度ハイライト */
 .wish-widget-item.wl-high {
   background: var(--danger-bg);
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   padding: var(--sp-1) var(--sp-2);
   margin: 0 calc(var(--sp-2) * -1);
 }
@@ -6688,7 +6690,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   }
   .wl-summary-card { padding: var(--sp-3); }
   .wl-card { padding: var(--sp-3); gap: var(--sp-3); }
-  .wl-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: 10px; }
+  .wl-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: var(--radius-sm); }
   .wl-card-price { font-size: var(--fs-md); }
   .wl-card-actions { gap: var(--sp-1); }
   .wl-card-actions .btn-sm { padding: 4px 8px; font-size: var(--fs-xs); }
@@ -7102,7 +7104,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
   padding: 2px 7px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   margin-left: 8px;
   vertical-align: middle;
   white-space: nowrap;
@@ -7280,7 +7282,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 28px;
   width: 48px;
   height: 48px;
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7358,7 +7360,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 10px;
   font-weight: var(--fw-semi);
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -7424,7 +7426,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 36px;
   height: 36px;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
   font-size: 18px;
   cursor: pointer;
@@ -7468,7 +7470,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-widget-icon {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7508,7 +7510,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   }
   .ch-sum-total { grid-column: span 2; }
   .ch-progress-label { display: none; }
-  .ch-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: 10px; }
+  .ch-card-icon { width: 40px; height: 40px; font-size: 22px; border-radius: var(--radius-sm); }
 }
 
 /* ============================================================
@@ -7594,7 +7596,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-block;
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 1px 6px;
   margin-left: var(--sp-1);
   vertical-align: middle;
@@ -7670,7 +7672,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: 5px;
   padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   border: 1.5px solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
@@ -7778,7 +7780,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   padding: 2px 8px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   letter-spacing: 0.02em;
@@ -7858,7 +7860,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-rate-badge {
   display: inline-block;
   padding: 2px 7px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
 }
@@ -9060,7 +9062,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 結果グリッド */
 .sim-result-grid {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 0; border: 1px solid var(--border); border-radius: 10px;
+  gap: 0; border: 1px solid var(--border); border-radius: var(--radius-sm);
   overflow: hidden; margin: var(--sp-4) 0;
 }
 .sim-result-grid > div {
@@ -9104,7 +9106,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sim-no-data {
   text-align: center; color: var(--text-muted); font-size: var(--fs-sm);
-  padding: var(--sp-4); background: var(--surface-hover); border-radius: 8px;
+  padding: var(--sp-4); background: var(--surface-hover); border-radius: var(--radius-btn-sm);
   margin: var(--sp-3) 0;
 }
 
@@ -11788,7 +11790,7 @@ kbd {
   gap: 6px;
   background: var(--surface);
   border: 1.5px solid color-mix(in srgb, var(--primary) 35%, var(--border));
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   padding: var(--sp-2) var(--sp-5);
   box-shadow: 0 4px 20px rgba(0,0,0,0.14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
   opacity: 0;
@@ -12958,7 +12960,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-card-icon {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--cat-clr, var(--primary)) 14%, transparent);
   display: flex;
   align-items: center;
