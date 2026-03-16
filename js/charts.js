@@ -24,7 +24,7 @@ function commonTooltip(callbacks) {
     backgroundColor: 'rgba(15,23,42,0.92)',
     titleColor:      '#f8fafc',
     bodyColor:       '#cbd5e1',
-    borderColor:     'rgba(99,102,241,0.5)',
+    borderColor:     getCSSVar('--primary') + '80',
     borderWidth:     1,
     padding:         { x: 12, y: 8 },
     cornerRadius:    8,
@@ -120,7 +120,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
   filtered.forEach(t => {
     const cat = getCategoryById(t.categoryId);
     const name  = cat ? cat.name  : 'その他';
-    const color = cat ? cat.color : '#6b7280';
+    const color = cat ? cat.color : getCSSVar('--text-muted');
     if (!catMap[name]) catMap[name] = { amount: 0, color };
     catMap[name].amount += Number(t.amount) || 0;
   });
@@ -215,7 +215,9 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
   });
 
   const { text: textColor, grid: gridColor } = getThemeColors();
-  const clickable = typeof onMonthClick === 'function';
+  const incomeClr  = getCSSVar('--income');
+  const expenseClr = getCSSVar('--expense');
+  const clickable  = typeof onMonthClick === 'function';
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -225,22 +227,22 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
         {
           label: '収入',
           data: incomeData,
-          backgroundColor: 'rgba(5,150,105,0.75)',
-          borderColor: '#059669',
+          backgroundColor: incomeClr + 'bf',
+          borderColor: incomeClr,
           borderWidth: 0,
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: 'rgba(5,150,105,0.95)',
+          hoverBackgroundColor: incomeClr + 'f2',
         },
         {
           label: '支出',
           data: expenseData,
-          backgroundColor: 'rgba(220,38,38,0.75)',
-          borderColor: '#dc2626',
+          backgroundColor: expenseClr + 'bf',
+          borderColor: expenseClr,
           borderWidth: 0,
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: 'rgba(220,38,38,0.95)',
+          hoverBackgroundColor: expenseClr + 'f2',
         },
       ],
     },
@@ -310,7 +312,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
   });
 
   const { text: textColor, grid: gridColor } = getThemeColors();
-  const lineColor = '#4f46e5';
+  const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
   const tooltipCallbacks = {
@@ -389,7 +391,7 @@ function renderCategoryBarChart(canvasId, transactions, type) {
   filtered.forEach(t => {
     const cat = getCategoryById(t.categoryId);
     const name  = cat ? cat.name  : 'その他';
-    const color = cat ? cat.color : '#6b7280';
+    const color = cat ? cat.color : getCSSVar('--text-muted');
     if (!catMap[name]) catMap[name] = { amount: 0, color };
     catMap[name].amount += Number(t.amount) || 0;
   });
@@ -473,7 +475,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
   );
 
   const labels = members.map(m => m.name);
-  const colors = members.map(m => m.color || '#6b7280');
+  const colors = members.map(m => m.color || getCSSVar('--text-muted'));
   const { text: textColor, grid: gridColor } = getThemeColors();
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
@@ -568,7 +570,7 @@ function renderPaymentMethodChart(canvasId, transactions) {
 
   const labels = Object.keys(pmMap).sort((a, b) => pmMap[b].amount - pmMap[a].amount);
   const data   = labels.map(k => pmMap[k].amount);
-  const colors = labels.map(k => PAYMENT_METHOD_COLORS[k] || '#6b7280');
+  const colors = labels.map(k => PAYMENT_METHOD_COLORS[k] || getCSSVar('--text-muted'));
   const total  = data.reduce((s, v) => s + v, 0);
 
   if (data.length === 0) {
@@ -667,8 +669,8 @@ function renderPaymentTrendChart(canvasId, year) {
       datasets: activeKeys.map(pm => ({
         label: pm,
         data: pmData[pm],
-        backgroundColor: (PAYMENT_METHOD_COLORS[pm] || '#6b7280') + 'cc',
-        borderColor:      PAYMENT_METHOD_COLORS[pm] || '#6b7280',
+        backgroundColor: (PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted')) + 'cc',
+        borderColor:      PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted'),
         borderWidth: 0,
         borderRadius: 4,
         borderSkipped: false,
@@ -735,6 +737,8 @@ function renderYoYChart(canvasId, year) {
   const prevInc  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${prevYear}-${String(i+1).padStart(2,'0')}`), 'income'));
 
   const { text: textColor, grid: gridColor } = getThemeColors();
+  const expClr = getCSSVar('--expense');
+  const incClr = getCSSVar('--income');
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -744,17 +748,17 @@ function renderYoYChart(canvasId, year) {
         {
           label: `${year}年 支出`,
           data: thisExp,
-          backgroundColor: 'rgba(220,38,38,0.75)',
+          backgroundColor: expClr + 'bf',
           borderRadius: 5,
           borderSkipped: false,
-          hoverBackgroundColor: 'rgba(220,38,38,0.95)',
+          hoverBackgroundColor: expClr + 'f2',
           order: 1,
         },
         {
           label: `${prevYear}年 支出`,
           data: prevExp,
-          backgroundColor: 'rgba(220,38,38,0.22)',
-          borderColor: 'rgba(220,38,38,0.45)',
+          backgroundColor: expClr + '38',
+          borderColor: expClr + '73',
           borderWidth: 1,
           borderRadius: 5,
           borderSkipped: false,
@@ -763,17 +767,17 @@ function renderYoYChart(canvasId, year) {
         {
           label: `${year}年 収入`,
           data: thisInc,
-          backgroundColor: 'rgba(5,150,105,0.75)',
+          backgroundColor: incClr + 'bf',
           borderRadius: 5,
           borderSkipped: false,
-          hoverBackgroundColor: 'rgba(5,150,105,0.95)',
+          hoverBackgroundColor: incClr + 'f2',
           order: 3,
         },
         {
           label: `${prevYear}年 収入`,
           data: prevInc,
-          backgroundColor: 'rgba(5,150,105,0.22)',
-          borderColor: 'rgba(5,150,105,0.45)',
+          backgroundColor: incClr + '38',
+          borderColor: incClr + '73',
           borderWidth: 1,
           borderRadius: 5,
           borderSkipped: false,
@@ -939,7 +943,7 @@ function renderNetWorthChart(canvasId) {
   });
 
   const { text: textColor, grid: gridColor } = getThemeColors();
-  const lineColor = '#6366f1';
+  const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
   chartInstances[canvasId] = new Chart(ctx2d, {
@@ -1127,7 +1131,7 @@ function renderFixedVariableDonut(canvasId, allTxs) {
       labels: ['固定費', '変動費'],
       datasets: [{
         data: [fixedAmt, varAmt],
-        backgroundColor: ['#6366f1', '#10b981'],
+        backgroundColor: [getCSSVar('--primary'), getCSSVar('--success')],
         borderColor: surface,
         borderWidth: 3,
         hoverOffset: 10,
@@ -1163,6 +1167,9 @@ function renderFixedVariableTrend(canvasId, year) {
   if (!canvas) return;
 
   const { text, grid, surface, isDark } = getThemeColors();
+  const primaryClr = getCSSVar('--primary');
+  const successClr = getCSSVar('--success');
+  const warningClr = getCSSVar('--warning');
   const months12 = [];
   for (let m = 1; m <= 12; m++) months12.push(`${year}-${String(m).padStart(2,'0')}`);
 
@@ -1185,15 +1192,6 @@ function renderFixedVariableTrend(canvasId, year) {
   const labels = months12.map((_, i) => `${i + 1}月`);
   const ctx    = canvas.getContext('2d');
 
-  // グラデーション塗り（固定費）
-  const gFixed = ctx.createLinearGradient(0, 0, 0, 220);
-  gFixed.addColorStop(0, 'rgba(99,102,241,0.28)');
-  gFixed.addColorStop(1, 'rgba(99,102,241,0.02)');
-
-  const gVar = ctx.createLinearGradient(0, 0, 0, 220);
-  gVar.addColorStop(0, 'rgba(16,185,129,0.22)');
-  gVar.addColorStop(1, 'rgba(16,185,129,0.02)');
-
   chartInstances[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -1203,7 +1201,7 @@ function renderFixedVariableTrend(canvasId, year) {
           type: 'bar',
           label: '固定費',
           data: fixedData,
-          backgroundColor: 'rgba(99,102,241,0.80)',
+          backgroundColor: primaryClr + 'cc',
           borderRadius: 5,
           order: 2,
         },
@@ -1211,7 +1209,7 @@ function renderFixedVariableTrend(canvasId, year) {
           type: 'bar',
           label: '変動費',
           data: varData,
-          backgroundColor: 'rgba(16,185,129,0.72)',
+          backgroundColor: successClr + 'b8',
           borderRadius: 5,
           order: 2,
         },
@@ -1219,10 +1217,10 @@ function renderFixedVariableTrend(canvasId, year) {
           type: 'line',
           label: '固定費率(%)',
           data: rateData,
-          borderColor: '#f59e0b',
-          backgroundColor: 'rgba(245,158,11,0.12)',
+          borderColor: warningClr,
+          backgroundColor: warningClr + '1f',
           borderWidth: 2.5,
-          pointBackgroundColor: '#f59e0b',
+          pointBackgroundColor: warningClr,
           pointRadius: 4,
           tension: 0.35,
           fill: false,
@@ -1269,7 +1267,7 @@ function renderFixedVariableTrend(canvasId, year) {
           beginAtZero: true,
           max: 100,
           grid: { drawOnChartArea: false },
-          ticks: { font: { size: 10 }, color: '#f59e0b', callback: v => v + '%' },
+          ticks: { font: { size: 10 }, color: warningClr, callback: v => v + '%' },
           border: { color: grid },
         },
       },

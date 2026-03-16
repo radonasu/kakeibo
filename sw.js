@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v11.0.0'; // v11.0.0: font-weightデザインシステム完全化 — --fw-light追加・全ハードコードfont-weight値（155箇所）をCSS変数に変換（700→--fw-bold/600→--fw-semi/500→--fw-medium/400→--fw-normal/800→--fw-black/300→--fw-light）
+const CACHE_NAME = 'kakeibo-v11.1.0'; // v11.1.0: JSファイルハードコード色CSS変数化 — app.js・charts.jsの残存ハードコード色をCSS変数/getCSSVar()に変換（severity/gradeColors/sparkColors/barColor/cat fallback/goal/sub/pt/ev/ch/wl優先度/debt sim chart等 計50箇所以上）
 const ASSETS = [
   './index.html',
   './css/style.css',

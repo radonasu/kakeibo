@@ -497,7 +497,7 @@ function renderSavingsOppsWidget(ym) {
 
   const totalSaving = opps.reduce((s, o) => s + (o.saving || 0), 0);
   const cards = opps.map((o, i) => {
-    const clr = o.severity === 'high' ? '#ef4444' : o.severity === 'medium' ? '#f59e0b' : '#6366f1';
+    const clr = o.severity === 'high' ? 'var(--danger-text)' : o.severity === 'medium' ? 'var(--warning)' : 'var(--primary)';
     const actionBtn = o.challengeType
       ? `<button class="btn btn-sm opp-challenge-btn"
            data-cat="${o.categoryId || ''}"
@@ -621,7 +621,7 @@ function renderHealthScoreCard(ym) {
   const hs = calculateHealthScore(ym);
   if (!hs) return '';
 
-  const gradeColors = { S: 'var(--primary)', A: 'var(--success)', B: '#2563eb', C: 'var(--warning)', D: 'var(--danger-text)' };
+  const gradeColors = { S: 'var(--primary)', A: 'var(--success)', B: 'var(--info-text)', C: 'var(--warning)', D: 'var(--danger-text)' };
   const gradeColor  = gradeColors[hs.grade] || 'var(--primary)';
   const gaugeOffset = (163.36 * (1 - hs.total / 100)).toFixed(2);
 
@@ -697,7 +697,7 @@ function renderHealthScoreCard(ym) {
   const itemsHtml = hs.items.map((item, i) => {
     const ratio    = item.score / item.max;
     const pctW     = Math.round(ratio * 100);
-    const barColor = ratio >= 0.8 ? gradeColor : ratio >= 0.5 ? '#f59e0b' : '#ef4444';
+    const barColor = ratio >= 0.8 ? gradeColor : ratio >= 0.5 ? 'var(--warning)' : 'var(--danger-text)';
     return `<div class="hs-item hs-d${i}">
       <div class="hs-item-header">
         <span class="hs-item-label">${item.icon} ${item.label}</span>
@@ -843,8 +843,8 @@ function buildForecastSparkline(fc) {
   return `<svg class="fc-sparkline" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
   <defs>
     <linearGradient id="fc-spark-grad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--fc-spark-color, #ef4444)" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="var(--fc-spark-color, #ef4444)" stop-opacity="0.03"/>
+      <stop offset="0%" stop-color="var(--fc-spark-color, var(--expense))" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="var(--fc-spark-color, var(--expense))" stop-opacity="0.03"/>
     </linearGradient>
   </defs>
   ${avgLine}
@@ -968,7 +968,7 @@ function renderForecastCard(ym) {
 
   const statusColors = { good: 'var(--success)', caution: 'var(--primary)', alert: 'var(--danger-text)' };
   const statusBg     = { good: 'var(--success-bg)', caution: 'var(--primary-light)', alert: 'var(--danger-bg)' };
-  const sparkColors  = { good: '#10b981', caution: '#6366f1', alert: '#ef4444' };
+  const sparkColors  = { good: 'var(--success)', caution: 'var(--primary)', alert: 'var(--danger-text)' };
   const color    = statusColors[fc.status];
   const bgColor  = statusBg[fc.status];
   const sparkCol = sparkColors[fc.status];
@@ -1272,7 +1272,7 @@ function renderDashboard() {
       const tgt = Number(g.targetAmount) || 0;
       const svd = Number(g.savedAmount) || 0;
       const pct = tgt > 0 ? Math.min(Math.round(svd / tgt * 100), 100) : 0;
-      const clr = g.color || '#6366f1';
+      const clr = g.color || 'var(--primary)';
       const MINI_C = 81.68;
       const miniOff = (MINI_C * (1 - pct / 100)).toFixed(2);
       return `<div class="goal-dash-item" style="--goal-accent:${clr}">
@@ -1315,7 +1315,7 @@ function renderDashboard() {
       const days = subDaysUntilBilling(s);
       const urgentCls = days <= 3 ? 'sub-urgent' : days <= 7 ? 'sub-soon' : '';
       return `<div class="sub-widget-item ${urgentCls}">
-        <div class="sub-widget-icon" style="background:${s.color || '#6366f1'}22;color:${s.color || '#6366f1'}">${s.emoji || '📱'}</div>
+        <div class="sub-widget-icon" style="background:color-mix(in srgb,${s.color||'var(--primary)'} 13%,transparent);color:${s.color||'var(--primary)'}">${s.emoji || '📱'}</div>
         <div class="sub-widget-info">
           <div class="sub-widget-name">${esc2(s.name)}</div>
           <div class="sub-widget-next">${days === 0 ? '今日請求' : `${days}日後に請求`}</div>
@@ -1348,7 +1348,7 @@ function renderDashboard() {
       const d = pointDaysUntilExpiry(p);
       const urgCls = d <= 7 ? 'pt-urgent' : 'pt-soon';
       return `<div class="pt-widget-item ${urgCls}">
-        <div class="pt-widget-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+        <div class="pt-widget-icon" style="background:color-mix(in srgb,${p.color||'var(--primary)'} 13%,transparent);color:${p.color||'var(--primary)'}">${p.emoji||'🎫'}</div>
         <div class="pt-widget-info">
           <div class="pt-widget-name">${esc2(p.name)}</div>
           <div class="pt-widget-exp">${d === 0 ? '今日期限' : `${d}日後に期限`}</div>
@@ -1359,7 +1359,7 @@ function renderDashboard() {
   </div>` : `
   <div class="pt-widget-list">
     ${allPoints.slice(0, 3).map(p => `<div class="pt-widget-item">
-      <div class="pt-widget-icon" style="background:${p.color||'#6366f1'}22;color:${p.color||'#6366f1'}">${p.emoji||'🎫'}</div>
+      <div class="pt-widget-icon" style="background:color-mix(in srgb,${p.color||'var(--primary)'} 13%,transparent);color:${p.color||'var(--primary)'}">${p.emoji||'🎫'}</div>
       <div class="pt-widget-info">
         <div class="pt-widget-name">${esc2(p.name)}</div>
         <div class="pt-widget-exp">${formatMoney(Math.round((Number(p.balance)||0)*(Number(p.pointValue)||1)))}</div>
@@ -1520,7 +1520,7 @@ function renderDashboard() {
     const isIncome = t.type === 'income';
     return `<tr>
       <td>${formatDate(t.date)}</td>
-      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${cat ? cat.name : '—'}</span></td>
+      <td><span class="cat-badge" style="background:color-mix(in srgb,${cat ? cat.color : 'var(--text-muted)'} 12%,transparent);color:${cat ? cat.color : 'var(--text-muted)'}">${cat ? cat.name : '—'}</span></td>
       <td class="memo-cell">${esc2(t.memo || '—')}</td>
       <td>${mem ? mem.name : '—'}</td>
       <td class="amount ${isIncome ? 'income' : 'expense'}">${isIncome ? '+' : '-'}${formatMoney(t.amount)}</td>
@@ -1554,7 +1554,7 @@ function renderDashboard() {
       const pct = prog.pct;
       const isOver = ch.type === 'budget' && prog.actual > prog.target;
       const barCls = isOver ? 'ch-bar-over' : prog.isOnTrack ? 'ch-bar-ok' : 'ch-bar-warn';
-      return `<div class="ch-widget-item" style="--ch-accent:${ch.color || '#6366f1'}">
+      return `<div class="ch-widget-item" style="--ch-accent:${ch.color || 'var(--primary)'}">
         <div class="ch-widget-icon">${ch.emoji || '🏆'}</div>
         <div class="ch-widget-body">
           <div class="ch-widget-name">${esc2(ch.name)}</div>
@@ -1626,8 +1626,8 @@ function renderDashboard() {
       const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
       const isIncome = ev.type === 'income';
       const monthLabel = ev.month === ym ? '今月' : '来月';
-      return `<div class="ev-widget-item" style="--ev-accent:${ev.color||'#6366f1'};--ev-wi:${wi}">
-        <div class="ev-widget-icon" style="background:${ev.color||'#6366f1'}22;color:${ev.color||'#6366f1'}">${ev.emoji||'📅'}</div>
+      return `<div class="ev-widget-item" style="--ev-accent:${ev.color||'var(--primary)'};--ev-wi:${wi}">
+        <div class="ev-widget-icon" style="background:color-mix(in srgb,${ev.color||'var(--primary)'} 13%,transparent);color:${ev.color||'var(--primary)'}">${ev.emoji||'📅'}</div>
         <div class="ev-widget-info">
           <div class="ev-widget-name">${esc2(ev.name)}</div>
           <div class="ev-widget-meta">
@@ -1960,7 +1960,7 @@ function bindDashboard() {
         targetAmount: btn.dataset.target || '',
         name: btn.dataset.name || '',
         emoji: btn.dataset.emoji || '🏆',
-        color: btn.dataset.color || '#6366f1',
+        color: btn.dataset.color || 'var(--primary)',
       };
       navigate('challenges');
     });
@@ -2112,7 +2112,7 @@ function renderTxRow(t, query = '') {
   return `<tr data-id="${t.id}" data-type="${t.type}"${isSel ? ' class="tx-selected"' : ''}>
       ${cbCol}
       <td>${formatDate(t.date)}</td>
-      <td><span class="cat-badge" style="background:${cat ? cat.color : '#6b7280'}20;color:${cat ? cat.color : '#6b7280'}">${badgeIcon}${catName}</span></td>
+      <td><span class="cat-badge" style="background:color-mix(in srgb,${cat ? cat.color : 'var(--text-muted)'} 12%,transparent);color:${cat ? cat.color : 'var(--text-muted)'}">${badgeIcon}${catName}</span></td>
       <td class="memo-cell"><span class="tx-memo-text">${memoText}</span>${tagChips}</td>
       <td class="tx-col-pay">${esc2(t.paymentMethod || '—')}</td>
       <td class="tx-col-mem">${mem ? esc2(mem.name) : '—'}</td>
@@ -2285,7 +2285,7 @@ function renderTransactions() {
   <div class="template-list">
     ${templates.map(tpl => {
       const cat = getCategoryById(tpl.categoryId);
-      const col = cat ? cat.color : '#6b7280';
+      const col = cat ? cat.color : 'var(--text-muted)';
       return `<button class="btn-tpl" data-tid="${tpl.id}" style="border-color:${col};color:${col}">${esc2(tpl.name)}</button>`;
     }).join('')}
   </div>
@@ -3543,7 +3543,7 @@ function renderInsightsSection(year, allTxs, months12) {
   allTxs.filter(t => t.type === 'expense').forEach(t => {
     const cat   = appData.categories.find(c => c.id === t.categoryId);
     const name  = cat ? cat.name  : 'その他';
-    const color = cat ? cat.color : '#6b7280';
+    const color = cat ? cat.color : 'var(--text-muted)';
     if (!catMap[name]) catMap[name] = { amount: 0, color };
     catMap[name].amount += Number(t.amount) || 0;
   });
@@ -3554,11 +3554,11 @@ function renderInsightsSection(year, allTxs, months12) {
   const yearIncome  = calcTotal(allTxs, 'income');
   const yearExpense = calcTotal(allTxs, 'expense');
   const yearSavingsRate = yearIncome > 0 ? Math.round(((yearIncome - yearExpense) / yearIncome) * 100) : 0;
-  const savingsGrade = yearSavingsRate >= 20 ? { label:'S', color:'#8b5cf6' }
-    : yearSavingsRate >= 15 ? { label:'A', color:'#10b981' }
-    : yearSavingsRate >= 10 ? { label:'B', color:'#3b82f6' }
-    : yearSavingsRate >=  5 ? { label:'C', color:'#f59e0b' }
-    : { label:'D', color:'#ef4444' };
+  const savingsGrade = yearSavingsRate >= 20 ? { label:'S', color:'var(--primary)' }
+    : yearSavingsRate >= 15 ? { label:'A', color:'var(--success)' }
+    : yearSavingsRate >= 10 ? { label:'B', color:'var(--info-text)' }
+    : yearSavingsRate >=  5 ? { label:'C', color:'var(--warning)' }
+    : { label:'D', color:'var(--danger-text)' };
 
   // 月平均支出 前年比
   const prevYear      = year - 1;
@@ -3605,7 +3605,7 @@ function renderInsightsSection(year, allTxs, months12) {
     <div class="yi-card" style="--yi-si:3">
       <div class="yi-card-icon" aria-hidden="true">🔥</div>
       <div class="yi-card-label">黒字継続最長記録</div>
-      <div class="yi-card-value" style="color:#f97316">${maxStreak}<span class="yi-card-unit">ヶ月</span></div>
+      <div class="yi-card-value" style="color:var(--warning)">${maxStreak}<span class="yi-card-unit">ヶ月</span></div>
       <div class="yi-card-sub yi-sub-muted">今年の連続黒字</div>
     </div>
 
@@ -4101,13 +4101,13 @@ function renderReports() {
         <div class="pm-sum-value">${esc2(topPm[0])}</div>
         <div class="pm-sum-sub">${formatMoney(topPm[1].amount)} · ${topPm[1].count}件</div>
       </div>
-      <div class="pm-sum-card" style="--pm-sum-color:#06b6d4">
+      <div class="pm-sum-card" style="--pm-sum-color:var(--teal-end)">
         <div class="pm-sum-icon" aria-hidden="true">📱</div>
         <div class="pm-sum-label">デジタル決済率</div>
         <div class="pm-sum-value">${digitalPct}%</div>
         <div class="pm-sum-sub">クレカ+電子マネー ${formatMoney(digitalAmt)}</div>
       </div>
-      <div class="pm-sum-card" style="--pm-sum-color:#f59e0b">
+      <div class="pm-sum-card" style="--pm-sum-color:var(--warning)">
         <div class="pm-sum-icon" aria-hidden="true">📊</div>
         <div class="pm-sum-label">月別変動</div>
         <div class="pm-sum-value">${maxM ? maxM.label + ' 最多' : '—'}</div>
@@ -4145,7 +4145,7 @@ ${(appData.members && appData.members.length > 0) ? `
               ? Math.round(exp / calcTotal(allTxs.filter(t => t.type === 'expense'), 'expense') * 100)
               : 0;
             return `<tr>
-              <td><span class="color-dot" style="background:${m.color || '#6b7280'}"></span>${esc2(m.name)}</td>
+              <td><span class="color-dot" style="background:${m.color || 'var(--text-muted)'}"></span>${esc2(m.name)}</td>
               <td class="income">${inc ? formatMoney(inc) : '—'}</td>
               <td class="expense">${exp ? formatMoney(exp) : '—'}</td>
               <td class="${net >= 0 ? 'income' : 'expense'}">${formatMoney(net)}</td>
@@ -6214,7 +6214,7 @@ function openMonthDrilldown(month, direction) {
     catTxs.forEach(t => {
       const cat = getCategoryById(t.categoryId);
       const name  = cat ? cat.name  : 'その他';
-      const color = cat ? cat.color : '#6b7280';
+      const color = cat ? cat.color : 'var(--text-muted)';
       if (!catMap[name]) catMap[name] = { total: 0, color };
       catMap[name].total += Number(t.amount) || 0;
     });
@@ -7331,7 +7331,7 @@ function renderGoals() {
     const saved     = Number(g.savedAmount)  || 0;
     const pct       = target > 0 ? Math.min(Math.round(saved / target * 100), 100) : 0;
     const remaining = Math.max(target - saved, 0);
-    const color     = g.color || '#6366f1';
+    const color     = g.color || 'var(--primary)';
     const emoji     = g.emoji || '🎯';
     const accentStyle = isDone
       ? `style="--goal-accent:var(--success)"`
@@ -7767,8 +7767,8 @@ function renderCalendar() {
         ${monthEvents.map((ev, i) => {
           const cat = (appData.categories||[]).find(c => c.id === ev.categoryId);
           const isIncome = ev.type === 'income';
-          return `<div class="cal-ev-item${ev.done ? ' cal-ev-done' : ''}" style="--cal-ev-color:${ev.color||'#6366f1'};--cal-ev-i:${i}">
-            <div class="cal-ev-icon" style="background:${ev.color||'#6366f1'}18;color:${ev.color||'#6366f1'}" aria-hidden="true">${ev.emoji||'📅'}</div>
+          return `<div class="cal-ev-item${ev.done ? ' cal-ev-done' : ''}" style="--cal-ev-color:${ev.color||'var(--primary)'};--cal-ev-i:${i}">
+            <div class="cal-ev-icon" style="background:color-mix(in srgb,${ev.color||'var(--primary)'} 9%,transparent);color:${ev.color||'var(--primary)'}" aria-hidden="true">${ev.emoji||'📅'}</div>
             <div class="cal-ev-info">
               <div class="cal-ev-name">${esc2(ev.name)}</div>
               ${cat ? `<div class="cal-ev-cat" style="color:${cat.color}">${esc2(cat.name)}</div>` : ''}
@@ -7853,7 +7853,7 @@ function renderDayPanel(dateStr) {
       const cat = getCategoryById(t.categoryId);
       const mem = getMemberById(t.memberId);
       const isIncome = t.type === 'income';
-      const dotColor = (cat && cat.color) ? cat.color : (isIncome ? '#059669' : '#e11d48');
+      const dotColor = (cat && cat.color) ? cat.color : (isIncome ? 'var(--income)' : 'var(--expense)');
       return `
         <div class="cal-panel-tx">
           <div class="cal-panel-dot" style="background:${dotColor}"></div>
@@ -8228,7 +8228,7 @@ function openRecurringConfirmModal(templates) {
   body.innerHTML = templates.map((tpl, i) => {
     const cat = getCategoryById(tpl.categoryId);
     const catName = cat ? esc2(cat.name) : '不明';
-    const catColor = cat ? cat.color : '#aaa';
+    const catColor = cat ? cat.color : 'var(--text-muted)';
     const typeLabel = tpl.type === 'income' ? '収入' : '支出';
     const typeClass = tpl.type === 'income' ? 'rc-type-inc' : 'rc-type-exp';
     const day = tpl.recurringDay;
@@ -9230,8 +9230,8 @@ function renderSubscriptions() {
     const progCls = days <= 3 ? 'prog-urgent' : days <= 7 ? 'prog-soon' : 'prog-normal';
     return `
 <div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}" style="--sub-i:${idx || 0};--sub-progress:${progress}%">
-  <div class="sub-card-color-bar" style="background:${s.color || '#6366f1'}"></div>
-  <div class="sub-card-icon" style="background:${s.color || '#6366f1'}22;color:${s.color || '#6366f1'}">${s.emoji || '📱'}</div>
+  <div class="sub-card-color-bar" style="background:${s.color || 'var(--primary)'}"></div>
+  <div class="sub-card-icon" style="background:color-mix(in srgb,${s.color||'var(--primary)'} 13%,transparent);color:${s.color||'var(--primary)'}">${s.emoji || '📱'}</div>
   <div class="sub-card-body">
     <div class="sub-card-name">${esc2(s.name)}</div>
     <div class="sub-card-meta">
@@ -9719,7 +9719,7 @@ function renderPoints() {
     const days = pointDaysUntilExpiry(p);
     const urgCls = days !== null && days <= 7 ? 'pt-urgent' : days !== null && days <= 30 ? 'pt-soon' : '';
     const yenVal = Math.round((Number(p.balance) || 0) * (Number(p.pointValue) || 1));
-    const accent = p.color || '#6366f1';
+    const accent = p.color || 'var(--primary)';
     let expiryHtml = '';
     if (days !== null) {
       if (days < 0)      expiryHtml = `<span class="pt-exp-badge pt-exp-expired">期限切れ</span>`;
@@ -9987,7 +9987,7 @@ function renderWishlist() {
 
   const priLabel  = p => ({ high: '優先度：高', medium: '優先度：中', low: '優先度：低' }[p] || '優先度：中');
   const priCls    = p => ({ high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[p] || 'wl-pri-medium');
-  const priAccent = p => ({ high: '#ef4444', medium: '#f59e0b', low: '#10b981' }[p] || '#6366f1');
+  const priAccent = p => ({ high: 'var(--danger-text)', medium: 'var(--warning)', low: 'var(--success)' }[p] || 'var(--primary)');
 
   const cards = sorted.length > 0 ? sorted.map((w, i) =>
     `<div class="wl-card${w.priority === 'high' ? ' wl-high' : ''}" style="--wl-i:${i};--wl-accent:${priAccent(w.priority)}" data-id="${w.id}">
@@ -10215,7 +10215,7 @@ function renderChallenges() {
           : `<span class="ch-status ch-status-active">進行中</span>`;
     const typeLabel = ch.type === 'budget' ? '予算チャレンジ' : 'ノースペンドデー';
     const catName = ch.categoryId ? (getCategoryById(ch.categoryId) || {}).name || '' : '全カテゴリ';
-    return `<div class="ch-card${isDone ? ' ch-card-done' : ''}" style="--ch-accent:${ch.color || '#6366f1'};--ch-i:${i}" data-id="${ch.id}">
+    return `<div class="ch-card${isDone ? ' ch-card-done' : ''}" style="--ch-accent:${ch.color || 'var(--primary)'};--ch-i:${i}" data-id="${ch.id}">
       <div class="ch-card-accent"></div>
       <div class="ch-card-icon">${ch.emoji || '🏆'}</div>
       <div class="ch-card-body">
@@ -10859,27 +10859,29 @@ function renderDebtSimChart(base, accel, extra) {
     if (m === 0 && y > 0) return `${y}年後`;
     return '';
   });
-  const muted = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#9ca3af';
-  const border = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#e5e7eb';
+  const muted = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim();
+  const border = getComputedStyle(document.documentElement).getPropertyValue('--border').trim();
+  const primaryClr = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+  const successClr = getComputedStyle(document.documentElement).getPropertyValue('--success').trim();
   const grad1 = ctx.createLinearGradient(0, 0, 0, 200);
-  grad1.addColorStop(0, 'rgba(99,102,241,0.25)');
-  grad1.addColorStop(1, 'rgba(99,102,241,0.02)');
+  grad1.addColorStop(0, primaryClr + '40');
+  grad1.addColorStop(1, primaryClr + '05');
   const datasets = [{
     label: '現在の計画',
     data: baseData.map(p => p.balance),
-    borderColor: '#6366f1',
+    borderColor: primaryClr,
     backgroundColor: grad1,
     fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
   }];
   if (accel) {
     const accelData = downsample(accel.schedule, 60);
     const grad2 = ctx.createLinearGradient(0, 0, 0, 200);
-    grad2.addColorStop(0, 'rgba(16,185,129,0.2)');
-    grad2.addColorStop(1, 'rgba(16,185,129,0.02)');
+    grad2.addColorStop(0, successClr + '33');
+    grad2.addColorStop(1, successClr + '05');
     datasets.push({
       label: `繰上返済後`,
       data: accelData.map(p => p.balance),
-      borderColor: '#10b981',
+      borderColor: successClr,
       backgroundColor: grad2,
       fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
     });
@@ -10893,7 +10895,7 @@ function renderDebtSimChart(base, accel, extra) {
       plugins: {
         legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11 } } },
         tooltip: {
-          backgroundColor: '#1e293b', borderColor: '#6366f1', borderWidth: 1, cornerRadius: 8, padding: 10,
+          backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--surface').trim(), borderColor: primaryClr, borderWidth: 1, cornerRadius: 8, padding: 10,
           callbacks: {
             label: c => ` ${c.dataset.label}: ${formatMoney(c.raw)}`,
             title: items => `${items[0].label || (Math.round(items[0].dataIndex * step + 1) + 'ヶ月後')}`,
@@ -11105,9 +11107,9 @@ function renderEvents() {
     const cat = (appData.categories||[]).find(c=>c.id===ev.categoryId);
     const isIncome = ev.type === 'income';
     const doneCls = ev.done ? ' ev-card-done' : '';
-    return `<div class="card ev-card${doneCls}" style="--ev-accent:${ev.color||'#6366f1'};--ev-ci:${idx}" data-id="${ev.id}">
+    return `<div class="card ev-card${doneCls}" style="--ev-accent:${ev.color||'var(--primary)'};--ev-ci:${idx}" data-id="${ev.id}">
   <div class="ev-card-header">
-    <div class="ev-card-icon-wrap" style="background:${ev.color||'#6366f1'}18;color:${ev.color||'#6366f1'}">${ev.emoji||'📅'}</div>
+    <div class="ev-card-icon-wrap" style="background:color-mix(in srgb,${ev.color||'var(--primary)'} 9%,transparent);color:${ev.color||'var(--primary)'}">${ev.emoji||'📅'}</div>
     <div class="ev-card-info">
       <div class="ev-card-name ${ev.done?'ev-name-done':''}">${esc2(ev.name)}</div>
       <div class="ev-card-meta">
