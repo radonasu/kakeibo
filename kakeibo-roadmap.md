@@ -239,6 +239,8 @@
 
 | 146 | v11.8 | デザイン | letter-spacing変数システム完全化 — `--ls-display/-tighter/-fine/-label/-cap/-caps`追加・CSS全域38箇所をvar(--ls-*)に統一：①`:root`の字間変数ブロックを拡張しpxスケール2種（`--ls-display:-1.5px`超大数値/スコア用・`--ls-tighter:-1px`大見出し/サマリー金額用）・emスケール4種（`--ls-fine:0.01em`小テキスト微細・`--ls-label:0.02em`ラベル/キャプション7箇所・`--ls-cap:0.04em`バッジ/アクセント3箇所・`--ls-caps:0.05em`見出しcaps3箇所）を追加②`.summary-amount`の`-1px`→`var(--ls-tighter)`・`.hs-score-num`の`-1.5px`→`var(--ls-display)`・`0.02em`系7箇所→`var(--ls-label)`・`0.04em`系3箇所→`var(--ls-cap)`・`0.05em`系3箇所→`var(--ls-caps)`・`0.01em`系3箇所→`var(--ls-fine)`を一斉変換③既存5変数(tight/snug/normal/wide/wider)と合わせ計11変数のletter-spacingデザインシステムを完成（残存4箇所は1用途特殊値として意図的に維持） |
 
+| 147 | v11.9 | デザイン | アニメーション変数システム最終化 — easing第3系統・長尺duration変数7種追加・計98箇所CSS変数化：①`:root`に7変数を追加（`--dur-medium:0.35s`カード/セル入場・`--dur-long:0.4s`ウィジェット入場・`--dur-modal:0.42s`モーダル入場・`--dur-fill:0.7s`プログレスバー塗り・`--dur-pulse:2.4s`パルスループ・`--ease-enter:cubic-bezier(.22,1,.36,1)`自然な減速入場/ease-out-quart系・`--ease-overshoot:cubic-bezier(.34,1.4,.64,1)`強めオーバーシュートバウンス）②`cubic-bezier(0.22,1,0.36,1)`を`var(--ease-enter)`に変換（15箇所：fc-card-in/wk-card-in/nt-card-in/fc-cell-in/wk-cell-in/qa-field-in/fg-in等）③`cubic-bezier(0.34,1.4,0.64,1)`を`var(--ease-overshoot)`に変換（4箇所：bulk-slide-up/sim-modal-in/notif-empty-in等）④`0.35s`→`var(--dur-medium)`（21箇所・animation-delay除外）⑤`0.4s`→`var(--dur-long)`（23箇所）⑥`0.42s`→`var(--dur-modal)`（4箇所）⑦`0.7s`→`var(--dur-fill)`（11箇所）⑧`2.4s`→`var(--dur-pulse)`（10箇所：wk-today-pulse/hm-today-pulse/insight-alert-pulse/sub-urgent-glow/pt-urgent-glow/wl-urgent-glow等）。これにより全easing/durationがCSS変数に統一されアニメーション速度体系の一括制御が完成 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

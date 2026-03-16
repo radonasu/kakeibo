@@ -131,14 +131,21 @@
   --sp-10: 40px;   /* 超大：セクション間 */
   --sp-12: 48px;   /* 最大：空状態パディング */
 
-  /* ── アニメーション/トランジション変数 (v11.5/v11.7) ─── */
+  /* ── アニメーション/トランジション変数 (v11.5/v11.7/v11.9) ─── */
   --dur-fast:    0.15s;                            /* クイック（ホバー・色変化） */
   --dur-faster:  0.18s;                            /* やや緩め（モーダル・行入場） */
   --dur-base:    0.2s;                             /* 標準アニメーション */
   --dur-mid:     0.25s;                            /* 中速（フェード・色遷移） */
   --dur-slow:    0.3s;                             /* ゆっくりした遷移 */
+  --dur-medium:  0.35s;                            /* 中尺（カード・セル入場） */
+  --dur-long:    0.4s;                             /* やや長め（ウィジェット入場） */
+  --dur-modal:   0.42s;                            /* モーダル入場アニメーション */
+  --dur-fill:    0.7s;                             /* 長尺（プログレスバー塗り） */
+  --dur-pulse:   2.4s;                             /* パルスループアニメーション */
   --ease-std:    cubic-bezier(.4, 0, .2, 1);       /* 標準イージング（Material） */
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);  /* 弾性バウンス */
+  --ease-enter:  cubic-bezier(.22, 1, .36, 1);     /* 自然な減速入場（ease-out-quart系） */
+  --ease-overshoot: cubic-bezier(.34, 1.4, .64, 1); /* 強めオーバーシュートバウンス */
 
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
   --radius-btn:      12px;  /* ボタン角丸（統一） */
@@ -1258,7 +1265,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: var(--sp-4);
   flex-wrap: wrap;
-  animation: bulk-slide-up .28s cubic-bezier(.34,1.4,.64,1) both;
+  animation: bulk-slide-up .28s var(--ease-overshoot) both;
 }
 [data-theme="dark"] .bulk-bar {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
@@ -2360,7 +2367,7 @@ mark.tx-hl {
   border-radius: 4px;
   min-width: 2px;
   transform-origin: left center;
-  animation: budget-fill-in 0.7s var(--ease-std) both;
+  animation: budget-fill-in var(--dur-fill) var(--ease-std) both;
 }
 .budget-fill.warn { background: var(--warning); }
 .budget-fill.over { background: var(--expense); }
@@ -5349,7 +5356,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .insight-item {
-  animation: insight-in 0.35s ease both;
+  animation: insight-in var(--dur-medium) ease both;
 }
 .insight-item:nth-child(1) { animation-delay: 0.04s; }
 .insight-item:nth-child(2) { animation-delay: 0.10s; }
@@ -5357,7 +5364,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .insight-item:nth-child(4) { animation-delay: 0.22s; }
 
 .insight-item.insight-alert {
-  animation: insight-in 0.35s ease both, insight-alert-pulse 2.4s ease-in-out 0.8s infinite;
+  animation: insight-in var(--dur-medium) ease both, insight-alert-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
 }
 .insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, 0.8s; }
 .insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, 0.8s; }
@@ -5543,7 +5550,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both;
+  animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both;
 }
 .sub-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
 .sub-card-color-bar {
@@ -5635,7 +5642,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-progress-fill {
   height: 100%;
   width: var(--sub-progress, 0%);
-  animation: sub-bar-fill 0.7s ease-out calc(var(--sub-i, 0) * 55ms + 0.2s) both;
+  animation: sub-bar-fill var(--dur-fill) ease-out calc(var(--sub-i, 0) * 55ms + 0.2s) both;
 }
 .sub-card-progress-fill.prog-normal { background: var(--primary); opacity: 0.5; }
 .sub-card-progress-fill.prog-soon   { background: var(--warning); }
@@ -5644,11 +5651,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 状態クラス */
 .sub-card.sub-urgent {
   border-color: var(--danger-border);
-  animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both,
-             sub-urgent-glow 2.4s ease-in-out calc(var(--sub-i, 0) * 55ms + 0.4s) infinite;
+  animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both,
+             sub-urgent-glow var(--dur-pulse) ease-in-out calc(var(--sub-i, 0) * 55ms + var(--dur-long)) infinite;
 }
 .sub-card.sub-soon   { border-color: var(--warning); opacity: 0.9; }
-.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both; }
+.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both; }
 
 /* 空状態 */
 .sub-empty {
@@ -5976,13 +5983,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both;
+  animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both;
 }
 .pt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
 .pt-card.pt-urgent {
   border-left: 3px solid var(--danger-border);
-  animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both,
-             pt-urgent-glow 2.4s ease-in-out calc(var(--pt-i, 0) * 55ms + 0.4s) infinite;
+  animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both,
+             pt-urgent-glow var(--dur-pulse) ease-in-out calc(var(--pt-i, 0) * 55ms + var(--dur-long)) infinite;
 }
 .pt-card.pt-soon   { border-left: 3px solid var(--warning); }
 
@@ -6072,7 +6079,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-exp-bar-fill {
   height: 100%;
   width: var(--pt-progress, 0%);
-  animation: pt-bar-fill 0.7s ease-out calc(var(--pt-i, 0) * 55ms + 0.2s) both;
+  animation: pt-bar-fill var(--dur-fill) ease-out calc(var(--pt-i, 0) * 55ms + 0.2s) both;
 }
 .pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: 0.6; }
 .pt-exp-bar-fill.prog-soon   { background: var(--warning); }
@@ -6309,7 +6316,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--hs-bar-color, var(--primary));
   border-radius: 99px;
   transform-origin: left;
-  animation: hs-fill-in 0.7s var(--ease-std) both;
+  animation: hs-fill-in var(--dur-fill) var(--ease-std) both;
 }
 @keyframes hs-fill-in {
   from { transform: scaleX(0); }
@@ -6365,7 +6372,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: visible;
 }
 .hs-spark-line {
-  transition: stroke 0.4s;
+  transition: stroke var(--dur-long);
 }
 .hs-spark-dot {
   transition: r var(--dur-base), fill var(--dur-base);
@@ -6478,7 +6485,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  animation: wl-card-in 0.35s var(--ease-std) both;
+  animation: wl-card-in var(--dur-medium) var(--ease-std) both;
   animation-delay: calc(var(--wl-i, 0) * 60ms);
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
@@ -6493,8 +6500,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
 }
 .wl-card.wl-high {
-  animation: wl-card-in 0.35s var(--ease-std) both,
-             wl-urgent-glow 2.4s ease-in-out calc(var(--wl-i, 0) * 60ms + 0.4s) infinite;
+  animation: wl-card-in var(--dur-medium) var(--ease-std) both,
+             wl-urgent-glow var(--dur-pulse) ease-in-out calc(var(--wl-i, 0) * 60ms + var(--dur-long)) infinite;
 }
 .wl-card-icon {
   font-size: 28px;
@@ -6811,7 +6818,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-top: 3px solid var(--fc-color, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: fc-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fc-card-in var(--dur-long) var(--ease-enter) both;
 }
 .forecast-card::before {
   content: '';
@@ -6824,8 +6831,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* alert状態: 左ボーダーパルス */
 .forecast-card.fc-status-alert {
   border-left: 3px solid var(--danger-text);
-  animation: fc-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both,
-             fc-alert-glow 2.4s ease-in-out 0.8s infinite;
+  animation: fc-card-in var(--dur-long) var(--ease-enter) both,
+             fc-alert-glow var(--dur-pulse) ease-in-out 0.8s infinite;
 }
 
 /* ステータスバッジ */
@@ -6872,7 +6879,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: 99px;
   background: var(--fc-color, var(--primary));
-  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width var(--dur-fill) var(--ease-enter);
 }
 /* TODAYマーカー */
 .fc-progress-today {
@@ -6886,7 +6893,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 2.5px solid var(--fc-color, var(--primary));
   box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
   pointer-events: none;
-  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: left var(--dur-fill) var(--ease-enter);
 }
 .fc-progress-label {
   font-size: var(--fs-xs);
@@ -6963,7 +6970,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm);
   padding: var(--sp-3, 12px) var(--sp-2, 8px);
   text-align: center;
-  animation: fc-cell-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fc-cell-in var(--dur-medium) var(--ease-enter) both;
   animation-delay: calc(0.15s + var(--fc-i, 0) * 0.07s);
 }
 .fc-cell-balance {
@@ -7088,7 +7095,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,.25);
-  transition: transform var(--dur-base) cubic-bezier(0.22,1,0.36,1);
+  transition: transform var(--dur-base) var(--ease-enter);
 }
 .dw-item input:checked ~ .dw-slider {
   background: var(--primary);
@@ -7118,7 +7125,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .asset-card {
-  animation: asset-card-in .38s cubic-bezier(.22,1,.36,1) both;
+  animation: asset-card-in .38s var(--ease-enter) both;
   animation-delay: calc(var(--ac-i, 0) * 60ms);
   border-left: 4px solid var(--asset-accent, var(--border));
 }
@@ -7295,7 +7302,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 4px solid var(--ch-accent, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: ch-card-in 0.35s var(--ease-bounce) both;
+  animation: ch-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ch-i, 0) * 60ms);
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
@@ -7361,7 +7368,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-bar-fill {
   height: 100%;
   border-radius: 4px;
-  transition: width 0.7s var(--ease-std);
+  transition: width var(--dur-fill) var(--ease-std);
 }
 .ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
@@ -7650,7 +7657,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 4px;
   background: var(--dow-row-color, var(--primary));
   width: var(--dow-bar-w, 0%);
-  animation: dow-bar-fill 0.7s var(--ease-std) both;
+  animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * 60ms + 0.2s);
 }
 
@@ -7914,7 +7921,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: 3px;
   transform-origin: left center;
-  animation: fv-bar-fill 0.7s ease both;
+  animation: fv-bar-fill var(--dur-fill) ease both;
   animation-delay: calc(var(--fv-ci, 0) * 40ms);
 }
 @keyframes fv-bar-fill {
@@ -8013,7 +8020,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-top: 3px solid var(--primary);
   position: relative;
   overflow: hidden;
-  animation: wk-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: wk-card-in var(--dur-long) var(--ease-enter) both;
 }
 .wk-widget-card::before {
   content: '';
@@ -8044,7 +8051,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm, 8px);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
-  animation: wk-cell-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: wk-cell-in var(--dur-medium) var(--ease-enter) both;
   animation-delay: 0.12s;
 }
 .wk-summary-row .wk-cell:nth-child(2) { animation-delay: 0.19s; }
@@ -8157,12 +8164,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
 }
 .wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse 2.4s ease-in-out 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
 }
 
 .wk-bar-amount {
@@ -8315,7 +8322,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-type-row {
   display: flex;
   gap: var(--sp-2);
-  animation: qa-field-in 0.28s cubic-bezier(0.22,1,0.36,1) both;
+  animation: qa-field-in 0.28s var(--ease-enter) both;
   animation-delay: 0.04s;
 }
 .qa-type-btn {
@@ -8355,7 +8362,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in 0.28s cubic-bezier(0.22,1,0.36,1) both;
+  animation: qa-field-in 0.28s var(--ease-enter) both;
   animation-delay: 0.10s;
 }
 .qa-amount-wrap {
@@ -8416,7 +8423,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in 0.28s cubic-bezier(0.22,1,0.36,1) both;
+  animation: qa-field-in 0.28s var(--ease-enter) both;
   animation-delay: 0.16s;
 }
 .qa-memo-input {
@@ -8454,7 +8461,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 .qa-card .qa-submit-btn.qa-sent {
-  animation: qa-btn-pop 0.4s var(--ease-bounce);
+  animation: qa-btn-pop var(--dur-long) var(--ease-bounce);
 }
 
 /* モバイル最適化 */
@@ -8482,7 +8489,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   border-top: 3px solid var(--primary);
-  animation: nt-card-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: nt-card-in var(--dur-long) var(--ease-enter) both;
 }
 .nt-card::before {
   content: '';
@@ -8579,7 +8586,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   opacity: 1;
   display: inline-block;
-  animation: nt-saved-pop 0.35s var(--ease-bounce) both;
+  animation: nt-saved-pop var(--dur-medium) var(--ease-bounce) both;
 }
 
 /* 保存日時ピル */
@@ -8741,7 +8748,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 週列スタッガードフェードイン */
 .hm-col-wrap {
   display: contents;
-  animation: hm-col-in 0.35s ease both;
+  animation: hm-col-in var(--dur-medium) ease both;
   animation-delay: calc(var(--hm-wi, 0) * 8ms);
 }
 .hm-cell {
@@ -8771,7 +8778,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   outline: 2px solid rgba(255,255,255,0.9);
   outline-offset: -2px;
   border-radius: 3px;
-  animation: hm-today-pulse 2.4s ease-in-out infinite;
+  animation: hm-today-pulse var(--dur-pulse) ease-in-out infinite;
   position: relative;
   z-index: 2;
 }
@@ -8896,7 +8903,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 低返済率カードのパルスアニメーション (v5.85) */
 .debt-card.debt-low {
   animation: debt-card-in .38s var(--ease-bounce) both,
-             debt-low-glow 2.4s ease-in-out calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
+             debt-low-glow var(--dur-pulse) ease-in-out calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
   0%, 100% { border-left-color: var(--debt-accent, var(--expense)); }
@@ -8953,7 +8960,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-bar-fill {
   height: 100%; border-radius: 99px;
   transform-origin: left center;
-  animation: debt-bar-fill-in 0.7s ease both;
+  animation: debt-bar-fill-in var(--dur-fill) ease both;
   animation-delay: calc(var(--dbi, 0) * 40ms + 0.2s);
 }
 @keyframes debt-bar-fill-in {
@@ -9152,7 +9159,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* モーダル入場アニメーション */
 #debt-sim-modal .modal-content {
-  animation: sim-modal-in 0.42s cubic-bezier(0.34,1.4,0.64,1) both;
+  animation: sim-modal-in var(--dur-modal) var(--ease-overshoot) both;
 }
 @keyframes sim-modal-in {
   from { opacity: 0; transform: translateY(28px) scale(0.96); }
@@ -9182,7 +9189,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 結果グリッドラッパー — フェードイン */
 .sim-result-grid-wrap {
-  animation: sim-grid-in 0.35s ease both;
+  animation: sim-grid-in var(--dur-medium) ease both;
 }
 @keyframes sim-grid-in {
   from { opacity: 0; transform: translateY(10px); }
@@ -9273,7 +9280,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* モーダル入場アニメーション */
 #smart-budget-modal .modal {
-  animation: sb-modal-in 0.42s var(--ease-bounce) both;
+  animation: sb-modal-in var(--dur-modal) var(--ease-bounce) both;
 }
 @keyframes sb-modal-in {
   from { opacity: 0; transform: scale(0.94) translateY(20px); }
@@ -9959,7 +9966,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
     var(--surface) 0%,
     color-mix(in srgb, var(--primary) 5%, var(--surface)) 100%
   );
-  animation: adv-card-in 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  animation: adv-card-in var(--dur-long) cubic-bezier(0.34, 1.2, 0.64, 1) both;
 }
 .adv-widget-card::before {
   content: '';
@@ -10109,7 +10116,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--primary);
   background: color-mix(in srgb, var(--primary) 4%, transparent);
-  animation: adv-section-in 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) calc(var(--adv-si, 0) * 0.08s) both;
+  animation: adv-section-in var(--dur-medium) cubic-bezier(0.34, 1.2, 0.64, 1) calc(var(--adv-si, 0) * 0.08s) both;
 }
 .adv-section:nth-child(2) {
   border-left-color: var(--success);
@@ -10237,7 +10244,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 44px;
   display: block;
   margin-bottom: var(--sp-3);
-  animation: txEmptyBounce 2.4s ease-in-out infinite;
+  animation: txEmptyBounce var(--dur-pulse) ease-in-out infinite;
 }
 @keyframes txEmptyBounce {
   0%, 100% { transform: translateY(0); }
@@ -10260,7 +10267,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .yr-widget-card {
-  animation: yr-card-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: yr-card-in var(--dur-long) cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   position: relative;
   overflow: hidden;
   border-top: 3px solid var(--primary);
@@ -10479,7 +10486,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow-y: auto;
   padding: 0;
   border-radius: var(--radius-lg, 20px);
-  animation: ci-modal-in 0.42s var(--ease-bounce) both;
+  animation: ci-modal-in var(--dur-modal) var(--ease-bounce) both;
 }
 @keyframes ci-modal-in {
   from { opacity: 0; transform: scale(0.88) translateY(20px); }
@@ -10747,7 +10754,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .nav-badge-pop {
-  animation: nav-badge-pop 0.35s var(--ease-bounce) both;
+  animation: nav-badge-pop var(--dur-medium) var(--ease-bounce) both;
 }
 
 /* ── 通知センター (v6.8) ─────────────────────────────────────── */
@@ -10799,7 +10806,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: color var(--dur-faster);
 }
 .btn-notif-bell.notif-bell-ringing svg {
-  animation: notif-bell-ring 0.7s ease-in-out both;
+  animation: notif-bell-ring var(--dur-fill) ease-in-out both;
 }
 .btn-notif-bell.has-unread:hover svg {
   animation: notif-bell-ring 0.65s ease-in-out both;
@@ -10831,7 +10838,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 .notif-badge-pop {
-  animation: notif-badge-pop 0.35s var(--ease-bounce) both;
+  animation: notif-badge-pop var(--dur-medium) var(--ease-bounce) both;
 }
 
 /* 通知オーバーレイ */
@@ -11052,7 +11059,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-size: var(--fs-sm);
   text-align: center;
-  animation: notif-empty-in 0.42s cubic-bezier(.34,1.4,.64,1) both;
+  animation: notif-empty-in var(--dur-modal) var(--ease-overshoot) both;
 }
 .notif-empty-icon {
   font-size: 40px;
@@ -11211,7 +11218,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .date-quick-btn.date-quick-pop {
-  animation: date-quick-pop 0.35s var(--ease-bounce);
+  animation: date-quick-pop var(--dur-medium) var(--ease-bounce);
 }
 
 .date-quick-btn:focus-visible {
@@ -11308,7 +11315,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 
-.amt-chip-pop { animation: amt-chip-pop 0.35s var(--ease-bounce); }
+.amt-chip-pop { animation: amt-chip-pop var(--dur-medium) var(--ease-bounce); }
 
 [data-theme="dark"] .amt-hist-chip {
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 15%, var(--surface-2));
@@ -11381,7 +11388,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   100% { transform: scale(1); }
 }
 
-.memo-chip-pop { animation: memo-chip-pop 0.35s var(--ease-bounce); }
+.memo-chip-pop { animation: memo-chip-pop var(--dur-medium) var(--ease-bounce); }
 
 [data-theme="dark"] .memo-hist-chip {
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 15%, var(--surface-2));
@@ -11717,7 +11724,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .tx-modal-anim .receipt-scan-area,
 .tx-modal-anim .form-group,
 .tx-modal-anim .modal-details {
-  animation: fg-in var(--dur-base) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
   animation-delay: calc(var(--fg-i, 0) * 28ms);
 }
 .btn-continue {
@@ -12853,7 +12860,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ── 支払方法別月次推移カード (v9.3) ──────────────────────── */
 .pm-trend-card {
   margin-top: var(--sp-4);
-  animation: pm-trend-in 0.4s var(--ease-bounce) both;
+  animation: pm-trend-in var(--dur-long) var(--ease-bounce) both;
 }
 .pm-trend-hint {
   font-size: var(--fs-xs);
