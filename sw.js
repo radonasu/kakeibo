@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.3.0'; // v10.3.0: 旧プライマリ色#6366f1系完全除去・cat-fixed-badge/fv-seg/fv-rate-badge/fv-fixed-valをvar(--primary)/var(--primary-end)に統一・badge-recurring/btn-share/notif-badge dark mode変数化・asset-currency-badge warning変数化・empty-month-btn:hover color-mix化
+const CACHE_NAME = 'kakeibo-v10.4.0'; // v10.4.0: 残存ハードコード色CSS変数化 — #6366f1/#fca5a5/#fcd34d/#6ee7b7を全域一掃（pt-total/fv-stat-fixed/sim-col-base/sim-savings-banner/ch-status/dow-pct/wk-diff/asset-badge/notif-group-label等 計25箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',

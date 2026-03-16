@@ -3355,7 +3355,7 @@ body {
 
 /* ── ウェルカムヒーロー ──────────────────────────────────── */
 .onboarding-hero {
-  background: linear-gradient(135deg, #312e81 0%, #4338ca 40%, #6366f1 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
   padding: 44px 32px 36px;
   color: #fff;
@@ -3723,7 +3723,7 @@ body {
 }
 [data-theme="dark"] .asset-count-badge {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
-  color: #a5b4fc;
+  color: var(--primary-end);
 }
 
 .asset-card {
@@ -3879,7 +3879,7 @@ body {
 }
 [data-theme="dark"] .asset-currency-badge {
   background: color-mix(in srgb, var(--warning) 15%, transparent);
-  color: #fcd34d;
+  color: var(--warning);
   border-color: color-mix(in srgb, var(--warning) 30%, transparent);
 }
 
@@ -5809,7 +5809,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
 }
 .pt-total {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   border-color: transparent;
 }
 .pt-expiring {
@@ -7062,12 +7062,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 [data-theme="dark"] .asset-balance-delta.up {
   background: color-mix(in srgb, var(--success) 15%, transparent);
-  color: #6ee7b7;
+  color: var(--income-end);
   border-color: color-mix(in srgb, var(--success) 30%, transparent);
 }
 [data-theme="dark"] .asset-balance-delta.down {
   background: color-mix(in srgb, var(--expense) 15%, transparent);
-  color: #fca5a5;
+  color: var(--expense-end);
   border-color: color-mix(in srgb, var(--expense) 30%, transparent);
 }
 
@@ -7439,10 +7439,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* -- ダークモード対応 -- */
 [data-theme="dark"] .ch-status-active { background: #1e3a5f; color: #93c5fd; }
-[data-theme="dark"] .ch-status-done   { background: #064e3b; color: #6ee7b7; }
-[data-theme="dark"] .ch-status-fail   { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .ch-status-over   { background: #78350f; color: #fcd34d; }
-[data-theme="dark"] .ch-emoji-btn.active { background: #312e81; }
+[data-theme="dark"] .ch-status-done   { background: var(--income-deep); color: var(--income-end); }
+[data-theme="dark"] .ch-status-fail   { background: #7f1d1d; color: var(--expense-end); }
+[data-theme="dark"] .ch-status-over   { background: var(--warning-border); color: var(--warning); }
+[data-theme="dark"] .ch-emoji-btn.active { background: var(--primary-light); }
 
 /* -- モバイル対応 -- */
 @media (max-width: 480px) {
@@ -7569,9 +7569,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* -- ダークモード -- */
-[data-theme="dark"] .dow-pct-high { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .dow-pct-mid  { background: #78350f; color: #fcd34d; }
-[data-theme="dark"] .dow-pct-low  { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .dow-pct-high { background: #7f1d1d; color: var(--expense-end); }
+[data-theme="dark"] .dow-pct-mid  { background: var(--warning-border); color: var(--warning); }
+[data-theme="dark"] .dow-pct-low  { background: var(--income-deep); color: var(--income-end); }
 [data-theme="dark"] .dow-mini-bar-track { background: rgba(255,255,255,0.06); }
 
 /* -- モバイル対応 -- */
@@ -7743,7 +7743,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 [data-theme="dark"] .cat-fixed-badge.is-var {
   background: color-mix(in srgb, var(--income-end) 15%, transparent);
-  color: #6ee7b7;
+  color: var(--income-end);
   border-color: color-mix(in srgb, var(--income-end) 32%, transparent);
 }
 
@@ -7765,7 +7765,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-.fv-stat-fixed { background: linear-gradient(135deg, #4338ca, #6366f1); }
+.fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(135deg, #92400e, var(--warning)); }
 /* デコレーションサークル */
@@ -7779,7 +7779,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   pointer-events: none;
 }
 /* ダークモード */
-[data-theme="dark"] .fv-stat-fixed { background: linear-gradient(135deg, #312e81, #4f46e5); }
+[data-theme="dark"] .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
 [data-theme="dark"] .fv-stat-var   { background: linear-gradient(135deg, #064e3b, #059669); }
 [data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, #78350f, #d97706); }
 /* 入場アニメーション */
@@ -7810,7 +7810,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-rate-badge.low  { background: color-mix(in srgb, var(--success) 10%, transparent); color: var(--success); }
 [data-theme="dark"] .fv-rate-badge.high { color: var(--primary-end); }
 [data-theme="dark"] .fv-rate-badge.mid  { color: var(--warning); }
-[data-theme="dark"] .fv-rate-badge.low  { color: #6ee7b7; }
+[data-theme="dark"] .fv-rate-badge.low  { color: var(--income-end); }
 
 /* カテゴリ別ミニバー */
 .fv-mini-bar {
@@ -8018,8 +8018,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: 600;
 }
 .wk-diff-up   { background: var(--danger-bg);   color: var(--danger-text); }
-.wk-diff-down { background: var(--success-bg, #d1fae5); color: #065f46; }
-[data-theme="dark"] .wk-diff-down { background: #064e3b; color: #6ee7b7; }
+.wk-diff-down { background: var(--success-bg); color: var(--income-deep); }
+[data-theme="dark"] .wk-diff-down { background: var(--income-deep); color: var(--income-end); }
 
 /* バーグラフ行 */
 .wk-bars {
@@ -9016,27 +9016,27 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-result-grid > div:nth-last-child(-n+3) { border-bottom: none; }
 .sim-result-label { color: var(--text-muted); font-size: var(--fs-xs); display: flex; align-items: center; }
 .sim-result-col-head { text-align: center; }
-.sim-col-base { color: #6366f1; }
+.sim-col-base { color: var(--primary); }
 .sim-col-accel { color: var(--success); }
 .sim-result-val { text-align: center; font-weight: 600; color: var(--text); }
-.sim-val-better { color: #059669; }
+.sim-val-better { color: var(--success); }
 
 /* 節約バナー */
 .sim-savings-banner {
   display: flex; align-items: center; justify-content: center; gap: var(--sp-4);
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-  border: 1px solid #6ee7b7; border-radius: 12px;
+  background: linear-gradient(135deg, var(--success-bg), var(--income-light));
+  border: 1px solid var(--success-border); border-radius: var(--radius-card);
   padding: var(--sp-4); margin-bottom: var(--sp-4);
 }
 [data-theme="dark"] .sim-savings-banner {
   background: color-mix(in srgb, var(--success) 10%, transparent); border-color: color-mix(in srgb, var(--success) 30%, transparent);
 }
 .sim-savings-item { text-align: center; }
-.sim-savings-label { font-size: var(--fs-xs); color: #065f46; margin-bottom: 4px; }
-[data-theme="dark"] .sim-savings-label { color: #6ee7b7; }
-.sim-savings-value { font-size: var(--fs-xl); font-weight: 800; color: #059669; }
-[data-theme="dark"] .sim-savings-value { color: #34d399; }
-.sim-savings-divider { width: 1px; height: 48px; background: #6ee7b7; }
+.sim-savings-label { font-size: var(--fs-xs); color: var(--income-deep); margin-bottom: 4px; }
+[data-theme="dark"] .sim-savings-label { color: var(--income-end); }
+.sim-savings-value { font-size: var(--fs-xl); font-weight: 800; color: var(--success); }
+[data-theme="dark"] .sim-savings-value { color: var(--income-end); }
+.sim-savings-divider { width: 1px; height: 48px; background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) 30%, transparent); }
 
 /* グラフ */
@@ -9105,13 +9105,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* ヘッダー列 — カラー背景バッジ */
 .sim-col-base-head {
-  background: color-mix(in srgb, #6366f1 10%, transparent) !important;
+  background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
 }
 .sim-col-accel-head {
   background: color-mix(in srgb, var(--success) 10%, transparent) !important;
 }
 [data-theme="dark"] .sim-col-base-head {
-  background: color-mix(in srgb, #6366f1 18%, transparent) !important;
+  background: color-mix(in srgb, var(--primary) 18%, transparent) !important;
 }
 [data-theme="dark"] .sim-col-accel-head {
   background: color-mix(in srgb, var(--success) 18%, transparent) !important;
@@ -9219,8 +9219,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: #fff;
   line-height: 1.1;
 }
-.sb-banner-num.sb-bn-up   { color: #fca5a5; }
-.sb-banner-num.sb-bn-down { color: #6ee7b7; }
+.sb-banner-num.sb-bn-up   { color: var(--expense-end); }
+.sb-banner-num.sb-bn-down { color: var(--income-end); }
 .sb-banner-lbl {
   font-size: var(--fs-2xs);
   color: rgba(255,255,255,0.8);
@@ -11047,10 +11047,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .notif-group-label {
   color: #64748b;
 }
-[data-theme="dark"] .notif-group-label.notif-type-danger  { color: #fca5a5; }
-[data-theme="dark"] .notif-group-label.notif-type-warning { color: #fcd34d; }
-[data-theme="dark"] .notif-group-label.notif-type-success { color: #6ee7b7; }
-[data-theme="dark"] .notif-group-label.notif-type-info    { color: #a78bfa; }
+[data-theme="dark"] .notif-group-label.notif-type-danger  { color: var(--expense-end); }
+[data-theme="dark"] .notif-group-label.notif-type-warning { color: var(--warning); }
+[data-theme="dark"] .notif-group-label.notif-type-success { color: var(--income-end); }
+[data-theme="dark"] .notif-group-label.notif-type-info    { color: var(--primary-end); }
 [data-theme="dark"] .notif-empty {
   color: #64748b;
 }
