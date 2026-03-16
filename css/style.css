@@ -127,6 +127,7 @@
   /* ── アニメーション/トランジション変数 (v11.5) ─────── */
   --dur-fast:    0.15s;                            /* クイック（ホバー・色変化） */
   --dur-base:    0.2s;                             /* 標準アニメーション */
+  --dur-mid:     0.25s;                            /* 中速（フェード・色遷移） */
   --dur-slow:    0.3s;                             /* ゆっくりした遷移 */
   --ease-std:    cubic-bezier(.4, 0, .2, 1);       /* 標準イージング（Material） */
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);  /* 弾性バウンス */
@@ -553,7 +554,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background 0.15s, color 0.15s, transform 0.25s;
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid);
   margin-left: var(--sp-2);
 }
 .card-collapse-btn:hover {
@@ -561,7 +562,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
 }
 .card-collapse-btn svg {
-  transition: transform 0.25s var(--ease-std);
+  transition: transform var(--dur-mid) var(--ease-std);
   pointer-events: none;
 }
 .card-collapse-btn[aria-expanded="false"] svg {
@@ -718,7 +719,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-wide);
-  animation: dup-banner-in 0.3s var(--ease-bounce);
+  animation: dup-banner-in var(--dur-slow) var(--ease-bounce);
 }
 .dup-modal-banner svg { flex-shrink: 0; opacity: 0.85; }
 @keyframes dup-banner-in {
@@ -1423,8 +1424,8 @@ select:focus:not(:focus-visible) {
   border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
   white-space: nowrap;
   line-height: 1.5;
-  transition: background 0.15s, transform 0.15s;
-  animation: tag-chip-in 0.2s var(--ease-bounce) both;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+  animation: tag-chip-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-tag-chip:hover {
   background: color-mix(in srgb, var(--tc, var(--primary)) 20%, transparent);
@@ -1477,7 +1478,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: background 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
   flex-shrink: 0;
   user-select: none;
   line-height: 1.5;
@@ -1709,7 +1710,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   line-height: var(--lh-normal);
   transition: border-color .18s, color .18s, background .18s, transform .15s, box-shadow .18s;
-  animation: preset-chip-in 0.3s var(--ease-bounce) both;
+  animation: preset-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--pi) * 38ms);
 }
 .adv-preset-chip:hover {
@@ -1754,7 +1755,7 @@ mark.tx-hl {
   padding: 0 2px;
   font-weight: var(--fw-bold);
   font-style: normal;
-  animation: tx-hl-in 0.25s ease both;
+  animation: tx-hl-in var(--dur-mid) ease both;
 }
 [data-theme="dark"] mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 28%, transparent);
@@ -1775,7 +1776,7 @@ mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
-  animation: tx-hl-badge-in 0.25s var(--ease-bounce) both;
+  animation: tx-hl-badge-in var(--dur-mid) var(--ease-bounce) both;
 }
 
 /* ── v5.95: 詳細フィルターパネル グループ入場アニメーション ── */
@@ -1784,13 +1785,13 @@ mark.tx-hl {
   to   { opacity: 1; transform: none; }
 }
 .adv-filter-panel.open .adv-filter-group {
-  animation: adv-grp-in 0.25s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  animation: adv-grp-in var(--dur-mid) cubic-bezier(0.34, 1.2, 0.64, 1) both;
 }
 .adv-filter-panel.open .adv-filter-group:nth-child(2) {
   animation-delay: 0.05s;
 }
 .adv-filter-panel.open .adv-filter-clear {
-  animation: adv-grp-in 0.25s cubic-bezier(0.34, 1.2, 0.64, 1) 0.08s both;
+  animation: adv-grp-in var(--dur-mid) cubic-bezier(0.34, 1.2, 0.64, 1) 0.08s both;
 }
 
 /* 月ナビ (v5.99) */
@@ -4588,7 +4589,7 @@ body {
 .goal-achieved-summary::before {
   content: '▶';
   font-size: 10px;
-  transition: transform 0.2s ease;
+  transition: transform var(--dur-base) ease;
   display: inline-block;
 }
 details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
@@ -4636,7 +4637,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-2);
   font-size: 20px;
   cursor: pointer;
-  transition: border-color 0.15s, transform 0.15s, background 0.15s;
+  transition: border-color var(--dur-fast), transform var(--dur-fast), background var(--dur-fast);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4662,7 +4663,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   border: 3px solid transparent;
   cursor: pointer;
-  transition: transform 0.15s, border-color 0.15s;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
   padding: 0;
 }
 .goal-color-btn:hover { transform: scale(1.15); }
@@ -4868,7 +4869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in 0.25s ease;
+  animation: cal-fade-in var(--dur-mid) ease;
 }
 
 .cal-dow-row {
@@ -4899,7 +4900,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background var(--dur-fast) ease;
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -5126,7 +5127,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in 0.25s ease;
+  animation: cal-fade-in var(--dur-mid) ease;
 }
 .cal-events-header {
   display: flex;
@@ -5279,7 +5280,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-md);
   border-left: 3px solid transparent;
   background: var(--surface-hover);
-  transition: background 0.15s;
+  transition: background var(--dur-fast);
 }
 .insight-item:hover { background: color-mix(in srgb, var(--primary) 6%, var(--surface-hover)); }
 
@@ -5416,7 +5417,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-btn);
   background: var(--surface-hover);
-  transition: background 0.15s;
+  transition: background var(--dur-fast);
 }
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
@@ -5532,7 +5533,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow 0.15s, transform 0.15s;
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in 0.35s ease-out calc(var(--sub-i, 0) * 55ms) both;
 }
@@ -5667,7 +5668,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   list-style: none;
   display: flex; align-items: center; gap: var(--sp-2);
 }
-.sub-inactive-section summary::before { content: '▶'; font-size: 10px; transition: transform 0.2s; }
+.sub-inactive-section summary::before { content: '▶'; font-size: 10px; transition: transform var(--dur-base); }
 .sub-inactive-section[open] summary::before { transform: rotate(90deg); }
 .sub-inactive-section .sub-cards-list { margin-top: var(--sp-3); margin-bottom: 0; }
 
@@ -5965,7 +5966,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow 0.15s, transform 0.15s;
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in 0.35s ease-out calc(var(--pt-i, 0) * 55ms) both;
 }
@@ -6359,7 +6360,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: stroke 0.4s;
 }
 .hs-spark-dot {
-  transition: r 0.2s, fill 0.2s;
+  transition: r var(--dur-base), fill var(--dur-base);
 }
 .hs-spark-dot-last {
   filter: drop-shadow(0 0 3px var(--hs-grade-color, var(--primary)));
@@ -6471,7 +6472,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-4);
   animation: wl-card-in 0.35s var(--ease-std) both;
   animation-delay: calc(var(--wl-i, 0) * 60ms);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .wl-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
 @keyframes wl-card-in {
@@ -6731,7 +6732,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   margin-top: var(--sp-2);
   font-size: var(--fs-xs);
-  animation: memo-hint-in 0.2s ease;
+  animation: memo-hint-in var(--dur-base) ease;
 }
 .memo-cat-hint-icon {
   font-size: 16px;
@@ -6759,7 +6760,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.15s;
+  transition: background var(--dur-fast);
 }
 .memo-cat-hint-btn:hover { background: var(--primary-hover); }
 [data-theme="dark"] .memo-cat-hint {
@@ -7035,7 +7036,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 10px 12px;
   border-radius: var(--radius-sm, 8px);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background var(--dur-fast);
   position: relative;
 }
 .dw-item:hover {
@@ -7067,7 +7068,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--border);
   border-radius: 11px;
   flex-shrink: 0;
-  transition: background 0.2s;
+  transition: background var(--dur-base);
 }
 .dw-slider::after {
   content: '';
@@ -7079,7 +7080,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,.25);
-  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  transition: transform var(--dur-base) cubic-bezier(0.22,1,0.36,1);
 }
 .dw-item input:checked ~ .dw-slider {
   background: var(--primary);
@@ -7288,7 +7289,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ch-card-in 0.35s var(--ease-bounce) both;
   animation-delay: calc(var(--ch-i, 0) * 60ms);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .ch-card:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
@@ -7451,7 +7452,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color var(--dur-fast), background var(--dur-fast);
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); }
 .ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light); }
@@ -7469,7 +7470,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   cursor: pointer;
   outline: none;
-  transition: transform 0.15s, border-color 0.15s;
+  transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
 .ch-color-btn:hover  { transform: scale(1.15); }
 .ch-color-btn.active { border-color: var(--text); transform: scale(1.1); }
@@ -7558,7 +7559,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: none;
   position: relative;
   overflow: hidden;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow var(--dur-base), transform var(--dur-base);
   animation: dow-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--dow-i, 0) * 80ms);
 }
@@ -7696,7 +7697,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.15s;
+  transition: border-color 0.18s, background 0.18s, color 0.18s, transform var(--dur-fast), box-shadow var(--dur-fast);
   user-select: none;
   animation: ct-chip-in 0.30s var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * 40ms);
@@ -8199,7 +8200,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-top: 3px solid var(--qa-accent);
   background: var(--surface);
   position: relative;
-  transition: box-shadow 0.2s, border-top-color 0.25s;
+  transition: box-shadow var(--dur-base), border-top-color var(--dur-mid);
 }
 /* デコレーションサークル（右上） */
 .qa-card::before {
@@ -8210,7 +8211,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 50%;
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 7%, transparent) 0%, transparent 70%);
   pointer-events: none;
-  transition: background 0.25s;
+  transition: background var(--dur-mid);
   z-index: 0;
 }
 /* タイプ別アクセントカラー連動 */
@@ -8253,7 +8254,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   color: var(--text);
   margin: 0;
-  transition: color 0.25s;
+  transition: color var(--dur-mid);
 }
 /* タイトルをタイプカラーに連動 */
 .qa-card[data-qa-type="expense"] .qa-card-title,
@@ -8268,7 +8269,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-chevron {
   font-size: 18px;
   color: var(--text-muted);
-  transition: transform 0.22s var(--ease-std), color 0.25s;
+  transition: transform 0.22s var(--ease-std), color var(--dur-mid);
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -8357,7 +8358,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn, 10px);
   background: var(--bg);
   padding: 0 var(--sp-2) 0 var(--sp-3);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .qa-amount-wrap:focus-within {
   border-color: var(--qa-accent);
@@ -8375,7 +8376,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--qa-accent);
   margin-right: 2px;
   flex-shrink: 0;
-  transition: color 0.25s;
+  transition: color var(--dur-mid);
 }
 .qa-amount-input {
   width: 110px;
@@ -8398,7 +8399,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: border-color var(--dur-fast);
   min-width: 0;
 }
 .qa-cat-select:focus { border-color: var(--qa-accent); outline: none; }
@@ -8418,7 +8419,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--bg);
   color: var(--text);
   font-size: var(--fs-sm);
-  transition: border-color 0.15s;
+  transition: border-color var(--dur-fast);
   min-width: 0;
 }
 .qa-memo-input::placeholder { color: var(--text-muted); }
@@ -8433,7 +8434,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn, 10px);
   background: var(--qa-accent);
   border-color: var(--qa-accent);
-  transition: background 0.25s, border-color 0.25s, filter 0.15s, transform 0.15s;
+  transition: background var(--dur-mid), border-color var(--dur-mid), filter var(--dur-fast), transform var(--dur-fast);
 }
 .qa-card .qa-submit-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
 .qa-card .qa-submit-btn:active { transform: scale(0.95); filter: brightness(0.95); }
@@ -8508,7 +8509,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   resize: none;
   overflow-y: auto;
   box-sizing: border-box;
-  transition: border-color 0.2s, border-left-color 0.25s, box-shadow 0.2s;
+  transition: border-color var(--dur-base), border-left-color var(--dur-mid), box-shadow var(--dur-base);
 }
 .nt-textarea::placeholder {
   color: var(--text-muted);
@@ -8540,7 +8541,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: 99px;
   background: var(--primary);
-  transition: width 0.3s, background-color 0.3s;
+  transition: width var(--dur-slow), background-color var(--dur-slow);
 }
 .nt-progress-fill.nt-prog-warn   { background: var(--warning); }
 .nt-progress-fill.nt-prog-danger { background: var(--danger-text); }
@@ -8554,7 +8555,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .nt-char-count {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  transition: color 0.3s;
+  transition: color var(--dur-slow);
 }
 .nt-char-count.nt-cnt-warn   { color: var(--warning); }
 .nt-char-count.nt-cnt-danger { color: var(--danger-text); font-weight: var(--fw-semi); }
@@ -8563,7 +8564,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity var(--dur-slow);
 }
 .nt-status.nt-saved {
   color: var(--success);
@@ -8740,7 +8741,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 13px;
   border-radius: 3px;
   cursor: pointer;
-  transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s;
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
   transform: scale(1.6);
@@ -9164,7 +9165,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: #fff; border-color: var(--primary);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
-  animation: sim-preset-pop 0.3s var(--ease-bounce) both;
+  animation: sim-preset-pop var(--dur-slow) var(--ease-bounce) both;
 }
 @keyframes sim-preset-pop {
   from { transform: scale(0.82); }
@@ -10129,7 +10130,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-copy-done {
   color: var(--success) !important;
   border-color: var(--success) !important;
-  animation: adv-copy-pop 0.3s var(--ease-bounce);
+  animation: adv-copy-pop var(--dur-slow) var(--ease-bounce);
 }
 
 /* エラー表示 */
@@ -10433,7 +10434,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 100%;
   height: 44px;
   display: block;
-  animation: yr-spark-in 0.55s ease 0.3s both;
+  animation: yr-spark-in 0.55s ease var(--dur-slow) both;
 }
 @keyframes yr-spark-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -10513,7 +10514,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   font-size: 14px;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
+  transition: background var(--dur-base);
 }
 .ci-close:hover { background: rgba(255,255,255,0.38); }
 .ci-month-badge {
@@ -10600,7 +10601,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: 99px;
   background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
-  transition: width 0.9s var(--ease-bounce) 0.3s;
+  transition: width 0.9s var(--ease-bounce) var(--dur-slow);
 }
 .ci-savings-pct {
   font-size: var(--fs-sm);
@@ -10693,7 +10694,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .ci-ok-btn:hover {
   transform: translateY(-1px);
@@ -10881,7 +10882,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 3px 10px;
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
 }
 .notif-mark-read:hover {
   background: var(--primary-light);
@@ -10942,8 +10943,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: left;
   cursor: pointer;
   position: relative;
-  transition: background 0.15s, transform 0.15s;
-  animation: notif-item-in 0.3s var(--ease-bounce) both;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+  animation: notif-item-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ni, 0) * 35ms);
 }
 /* 未読アイテムに薄い背景 */
@@ -11164,7 +11165,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), transform 0.12s;
   line-height: 1.4;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -11268,7 +11269,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 10%, var(--surface));
   color: var(--amt-chip-color, var(--primary));
   border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
-  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
   animation: amt-chip-in 0.28s var(--ease-bounce) both;
   white-space: nowrap;
 }
@@ -11338,7 +11339,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
   animation: memo-chip-in 0.28s var(--ease-bounce) both;
   max-width: 160px;
   overflow: hidden;
@@ -11387,7 +11388,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 #tx-amount.calc-mode {
   border-color: var(--warning);
   background: var(--warning-bg);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color var(--dur-base), background var(--dur-base);
 }
 
 [data-theme="dark"] #tx-amount.calc-mode {
@@ -11708,7 +11709,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .tx-modal-anim .receipt-scan-area,
 .tx-modal-anim .form-group,
 .tx-modal-anim .modal-details {
-  animation: fg-in 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fg-in var(--dur-base) cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--fg-i, 0) * 28ms);
 }
 .btn-continue {
@@ -11948,7 +11949,7 @@ canvas.chart-clickable { cursor: pointer; }
   cursor: pointer;
   border-radius: var(--radius-btn-sm);
   transition: background 0.13s;
-  animation: dd-row-in 0.2s ease both;
+  animation: dd-row-in var(--dur-base) ease both;
   animation-delay: calc(var(--dd-i, 0) * 28ms);
 }
 .dd-tx-row:last-child { border-bottom: none; }
@@ -12024,7 +12025,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: 2px 7px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity var(--dur-base);
 }
 .chart-clickable-wrap:hover .chart-clickable-hint { opacity: 1; }
 
@@ -12250,9 +12251,9 @@ canvas.chart-clickable { cursor: pointer; }
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s var(--ease-bounce),
-              box-shadow 0.15s ease,
-              filter 0.15s ease;
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) ease,
+              filter var(--dur-fast) ease;
 }
 
 .opp-challenge-btn:hover {
@@ -12315,7 +12316,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-hover);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s var(--ease-bounce);
+  transition: color var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce);
   flex-shrink: 0;
 }
 .md-nav-btn:hover:not(:disabled) {
@@ -12340,7 +12341,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ダッシュボードサマリーカード クリック可能 (v8.9) */
 .dash-sum-clickable {
   cursor: pointer;
-  transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s;
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .dash-sum-clickable:hover {
   transform: translateY(-3px);
@@ -12562,7 +12563,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */
 .rpt-month-row.is-clickable {
   cursor: pointer;
-  transition: background 0.15s, transform 0.15s var(--ease-bounce), box-shadow 0.15s;
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .rpt-month-row.is-clickable:hover {
   background: var(--surface-hover);
@@ -12588,7 +12589,7 @@ canvas.chart-clickable { cursor: pointer; }
   margin-left: 4px;
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
 }
 [data-theme="dark"] .rpt-month-row.is-clickable:hover {
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v11.5.0'; // v11.5.0: アニメーション変数システム — --dur-fast/--dur-base/--dur-slow/--ease-std/--ease-bounce/--lh-tighter追加・ease関数112箇所+line-height19箇所を変数化
+const CACHE_NAME = 'kakeibo-v11.6.0'; // v11.6.0: --dur-mid追加・transition/animationのduration値71箇所をCSS変数化
 const ASSETS = [
   './index.html',
   './css/style.css',
