@@ -3275,7 +3275,7 @@ body {
 }
 [data-theme="dark"] .notif-badge.notif-granted {
   background: color-mix(in srgb, var(--success) 15%, transparent);
-  color: #34d399;
+  color: var(--income-end);
 }
 
 /* ============================================================
@@ -3296,8 +3296,8 @@ body {
   white-space: nowrap;
 }
 [data-theme="dark"] .badge-recurring {
-  background: rgba(129,140,248,.18);
-  color: #a5b4fc;
+  background: color-mix(in srgb, var(--primary-end) 18%, transparent);
+  color: var(--primary-end);
 }
 
 .recurring-toggle-label {
@@ -3508,7 +3508,7 @@ body {
   cursor: pointer;
   transition: background .15s;
 }
-.empty-month-btn:hover { background: #c7d2fe; }
+.empty-month-btn:hover { background: color-mix(in srgb, var(--primary) 20%, white); }
 
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
@@ -3598,11 +3598,11 @@ body {
 [data-theme="dark"] .btn-share {
   background: color-mix(in srgb, var(--primary) 15%, transparent);
   border-color: color-mix(in srgb, var(--primary-end) 35%, transparent);
-  color: #a5b4fc;
+  color: var(--primary-end);
 }
 [data-theme="dark"] .btn-share:hover {
   background: color-mix(in srgb, var(--primary) 25%, transparent);
-  border-color: #a5b4fc;
+  border-color: var(--primary-end);
 }
 
 /* モバイル */
@@ -3871,16 +3871,16 @@ body {
   font-weight: var(--fw-semi);
   padding: 2px 8px;
   border-radius: var(--radius-badge);
-  background: #fef3c7;
+  background: var(--warning-bg);
   color: #92400e;
   white-space: nowrap;
   flex-shrink: 0;
-  border: 1px solid #fde68a;
+  border: 1px solid var(--warning-border);
 }
 [data-theme="dark"] .asset-currency-badge {
-  background: rgba(251,191,36,.15);
+  background: color-mix(in srgb, var(--warning) 15%, transparent);
   color: #fcd34d;
-  border-color: rgba(251,191,36,.3);
+  border-color: color-mix(in srgb, var(--warning) 30%, transparent);
 }
 
 .asset-balance-jpy {
@@ -7727,9 +7727,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   letter-spacing: 0.02em;
 }
 .cat-fixed-badge.is-fixed {
-  background: color-mix(in srgb, #6366f1 12%, transparent);
-  color: #6366f1;
-  border: 1px solid color-mix(in srgb, #6366f1 30%, transparent);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
 }
 .cat-fixed-badge.is-var {
   background: color-mix(in srgb, var(--success) 10%, transparent);
@@ -7737,14 +7737,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid color-mix(in srgb, var(--success) 28%, transparent);
 }
 [data-theme="dark"] .cat-fixed-badge.is-fixed {
-  background: color-mix(in srgb, #818cf8 18%, transparent);
-  color: #a5b4fc;
-  border-color: color-mix(in srgb, #818cf8 35%, transparent);
+  background: color-mix(in srgb, var(--primary-end) 18%, transparent);
+  color: var(--primary-end);
+  border-color: color-mix(in srgb, var(--primary-end) 35%, transparent);
 }
 [data-theme="dark"] .cat-fixed-badge.is-var {
-  background: color-mix(in srgb, #34d399 15%, transparent);
+  background: color-mix(in srgb, var(--income-end) 15%, transparent);
   color: #6ee7b7;
-  border-color: color-mix(in srgb, #34d399 32%, transparent);
+  border-color: color-mix(in srgb, var(--income-end) 32%, transparent);
 }
 
 /* サマリーカードグリッド (v5.71 グラデーション刷新) */
@@ -7793,7 +7793,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-stat-sub   { font-size: var(--fs-xs); color: rgba(255,255,255,0.75); }
 
 /* テーブルセル */
-.fv-fixed-val { color: #6366f1; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fv-fixed-val { color: var(--primary); font-weight: 600; font-variant-numeric: tabular-nums; }
 .fv-var-val   { color: var(--success); font-weight: 600; font-variant-numeric: tabular-nums; }
 .fv-month-cell { font-weight: 600; }
 
@@ -7805,11 +7805,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: 600;
 }
-.fv-rate-badge.high { background: color-mix(in srgb, #6366f1 12%, transparent); color: #6366f1; }
+.fv-rate-badge.high { background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary); }
 .fv-rate-badge.mid  { background: color-mix(in srgb, var(--warning) 12%, transparent); color: var(--warning); }
 .fv-rate-badge.low  { background: color-mix(in srgb, var(--success) 10%, transparent); color: var(--success); }
-[data-theme="dark"] .fv-rate-badge.high { color: #a5b4fc; }
-[data-theme="dark"] .fv-rate-badge.mid  { color: #fbbf24; }
+[data-theme="dark"] .fv-rate-badge.high { color: var(--primary-end); }
+[data-theme="dark"] .fv-rate-badge.mid  { color: var(--warning); }
 [data-theme="dark"] .fv-rate-badge.low  { color: #6ee7b7; }
 
 /* カテゴリ別ミニバー */
@@ -7862,7 +7862,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-seg-fixed {
   height: 100%;
-  background: #6366f1;
+  background: var(--primary);
   width: calc(var(--fv-fi, 0) * 1%);
   animation: fv-seg-in 0.6s ease both;
   animation-delay: calc(var(--fv-ri, 0) * 22ms);
@@ -7880,8 +7880,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-[data-theme="dark"] .fv-seg-fixed { background: #818cf8; }
-[data-theme="dark"] .fv-seg-var   { background: #34d399; }
+[data-theme="dark"] .fv-seg-fixed { background: var(--primary-end); }
+[data-theme="dark"] .fv-seg-var   { background: var(--income-end); }
 
 /* 月別テーブル行アニメーション */
 .fv-month-table tbody tr {

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v10.2.0'; // v10.2.0: フォントサイズCSS変数化（btn-account-add/sidebar-avatar/btn-icon等）・gradeColorsをCSS変数化・設定ページ同期セクションのインラインスタイルをCSSクラスに置換・supabase-status-pill/supabase-admin-notice新規クラス追加
+const CACHE_NAME = 'kakeibo-v10.3.0'; // v10.3.0: 旧プライマリ色#6366f1系完全除去・cat-fixed-badge/fv-seg/fv-rate-badge/fv-fixed-valをvar(--primary)/var(--primary-end)に統一・badge-recurring/btn-share/notif-badge dark mode変数化・asset-currency-badge warning変数化・empty-month-btn:hover color-mix化
 const ASSETS = [
   './index.html',
   './css/style.css',
