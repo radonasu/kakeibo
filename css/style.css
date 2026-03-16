@@ -106,12 +106,19 @@
   --lh-normal:  1.6;
   --lh-relaxed: 1.75;
 
-  /* 字間 */
+  /* 字間（pxスケール） */
+  --ls-display: -1.5px;   /* 超大数値・スコア表示 */
+  --ls-tighter: -1px;     /* 大見出し・サマリー金額 */
   --ls-tight:  -0.5px;
   --ls-snug:   -0.2px;
   --ls-normal:  0px;
   --ls-wide:    0.4px;
   --ls-wider:   0.8px;
+  /* 字間（emスケール） */
+  --ls-fine:    0.01em;   /* 小テキスト微細 */
+  --ls-label:   0.02em;   /* ラベル・キャプション */
+  --ls-cap:     0.04em;   /* バッジ・アクセント */
+  --ls-caps:    0.05em;   /* 見出しcaps */
 
   /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
   --sp-1:   4px;   /* 極小：アイコン余白、バッジ */
@@ -959,7 +966,7 @@ select:focus:not(:focus-visible) {
 .summary-amount {
   font-size: var(--fs-4xl);
   font-weight: var(--fw-black);
-  letter-spacing: -1px;
+  letter-spacing: var(--ls-tighter);
   color: #fff;
   line-height: var(--lh-tight);
 }
@@ -1645,7 +1652,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
-  letter-spacing: .02em;
+  letter-spacing: var(--ls-label);
 }
 .adv-filter-row {
   display: flex;
@@ -3973,7 +3980,7 @@ body {
   font-size: 11px;
   color: var(--text-muted);
   margin-top: 4px;
-  letter-spacing: 0.01em;
+  letter-spacing: var(--ls-fine);
 }
 
 .asset-foreign-hint {
@@ -4279,7 +4286,7 @@ body {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: var(--fw-semi);
-  letter-spacing: .04em;
+  letter-spacing: var(--ls-cap);
   margin-bottom: var(--sp-1);
 }
 .yoy-summary-value {
@@ -5500,7 +5507,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-weight: var(--fw-semi);
   text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: var(--ls-caps);
   margin-bottom: var(--sp-1);
 }
 .sub-summary-amount {
@@ -5899,7 +5906,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: rgba(255,255,255,0.75);
-  letter-spacing: .04em;
+  letter-spacing: var(--ls-cap);
   margin-bottom: var(--sp-1);
 }
 .pt-summary-amount {
@@ -6224,7 +6231,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-score-num {
   font-size: 36px;
   font-weight: var(--fw-black);
-  letter-spacing: -1.5px;
+  letter-spacing: var(--ls-display);
   line-height: 1;
   color: var(--hs-grade-color, var(--text));
 }
@@ -6336,14 +6343,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: var(--fw-medium);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-label);
 }
 .hs-prev-badge {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   padding: 2px 8px;
   border-radius: 99px;
-  letter-spacing: 0.01em;
+  letter-spacing: var(--ls-fine);
 }
 .hs-trend-up   { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
 .hs-trend-down { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
@@ -6438,7 +6445,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: var(--fw-semi);
-  letter-spacing: .04em;
+  letter-spacing: var(--ls-cap);
   margin-bottom: var(--sp-2);
   position: relative; z-index: 1;
 }
@@ -6829,7 +6836,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 99px;
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-label);
 }
 .fc-good    { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
 .fc-caution { background: var(--primary-light); color: var(--primary-dark); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); }
@@ -7609,7 +7616,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* ─ テーブル曜日セル ─ */
-.dow-label-cell { letter-spacing: 0.02em; font-size: var(--fs-base); }
+.dow-label-cell { letter-spacing: var(--ls-label); font-size: var(--fs-base); }
 
 /* パーセンテージバッジ (色分け) */
 .dow-pct-badge {
@@ -7803,7 +7810,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-xl);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-label);
 }
 .cat-fixed-badge.is-fixed {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
@@ -10429,7 +10436,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 9px;
   color: var(--text-muted);
   opacity: 0.7;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-label);
 }
 .yr-spark {
   width: 100%;
@@ -10645,7 +10652,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--ls-caps);
   margin: 0 0 var(--sp-2);
 }
 /* チャレンジ */
@@ -11744,7 +11751,7 @@ kbd {
   font-family: inherit;
   color: var(--text);
   font-weight: var(--fw-bold);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--ls-label);
   line-height: 1;
   white-space: nowrap;
   user-select: none;
@@ -12087,7 +12094,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: var(--fw-semi);
-  letter-spacing: 0.01em;
+  letter-spacing: var(--ls-fine);
 }
 .yi-card-value {
   font-size: var(--fs-2xl);
@@ -12370,7 +12377,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--ls-caps);
   margin: var(--sp-3) 0 var(--sp-2);
   padding-bottom: var(--sp-1);
   border-bottom: 1px solid var(--border);
