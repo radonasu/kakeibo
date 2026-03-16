@@ -233,6 +233,8 @@
 
 | 143 | v11.5 | デザイン | アニメーション変数システム完全化 — `--dur-*`/`--ease-*`/`--lh-tighter`追加・easing関数112箇所+line-height19箇所を一斉変数化：①`:root`に`--dur-fast:0.15s`・`--dur-base:0.2s`・`--dur-slow:0.3s`・`--ease-std:cubic-bezier(.4,0,.2,1)`・`--ease-bounce:cubic-bezier(.34,1.56,.64,1)`の5変数を追加（アニメーション/トランジション変数システム）②行間変数に`--lh-tighter:1.1`を追加（見出しアイコン・バッジ等の最密行間）③全CSSの`cubic-bezier(.4,0,.2,1)`系（`0.4,0,0.2,1`・`.4, 0, .2, 1`・`0.4, 0, 0.2, 1`の全表記）を`var(--ease-std)`に一斉変換（22箇所）④`cubic-bezier(.34,1.56,.64,1)`系（`0.34,1.56,0.64,1`・`0.34, 1.56, 0.64, 1`の全表記）を`var(--ease-bounce)`に一斉変換（90箇所）⑤`line-height:1.1`→`var(--lh-tighter)`（8箇所）・`1.2`→`var(--lh-tight)`（6箇所）・`1.6`→`var(--lh-normal)`（4箇所）・`1.75`→`var(--lh-relaxed)`（1箇所）に変換（計131箇所変換。残存するcubic-bezierは意図的バリエーション） |
 
+| 144 | v11.6 | デザイン | アニメーションduration変数化完全化 — `--dur-mid:0.25s`追加・transition/animationのhardcode duration値71箇所をCSS変数に一斉変換：①`:root`に`--dur-mid:0.25s`を追加（`--dur-fast`/`--dur-base`/`--dur-slow`に続く4段階アニメーション速度スケール完全化）②`transition:`プロパティ内の`0.15s`→`var(--dur-fast)`（37箇所）・`0.2s`→`var(--dur-base)`（22箇所）・`0.25s`→`var(--dur-mid)`（10箇所）・`0.3s`→`var(--dur-slow)`（2箇所）を一斉変換③`animation:`プロパティ内の同値も変数化（duration位置のみ・`calc()`内スタッガー遅延値は精度維持のため除外）。これによりアニメーション速度体系を`:root`変数だけで一括制御できるデザインシステム基盤を完成 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系
