@@ -162,7 +162,8 @@
   --radius-badge:   999px;  /* バッジ・pill */
   --radius-card:     14px;  /* カード角丸（モーダル内カード等） */
   --radius-xl:       20px;  /* セミピル（ステータスバッジ等） */
-  --shadow-btn-base: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-card-hover: 0 4px 12px rgba(0,0,0,.08);  /* カードホバー時の浮き上がりシャドウ */
 
   /* ── エイリアス変数（旧名→新名の前方互換性解消 v11.4）─── */
   --radius-md:       var(--radius-btn);   /* = 12px（--radius-btn の別名） */
@@ -5563,7 +5564,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both;
 }
-.sub-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+.sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .sub-card-color-bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
@@ -5996,7 +5997,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both;
 }
-.pt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+.pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .pt-card.pt-urgent {
   border-left: 3px solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both,
@@ -6505,7 +6506,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--wl-i, 0) * 60ms);
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
-.wl-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); transform: translateY(-1px); }
+.wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -7323,7 +7324,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .ch-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
 }
 .ch-card.ch-card-done { opacity: 0.75; }
@@ -12223,7 +12224,9 @@ canvas.chart-clickable { cursor: pointer; }
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
   animation: opp-card-in 0.32s var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * 60ms);
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
+.opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 
 .opp-card-left { flex-shrink: 0; }
 

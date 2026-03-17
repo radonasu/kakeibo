@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v12.7.0'; // v12.7.0: JSハードコード色DRY化（DOW_COLORS_HEX共通化・pmColorsをPAYMENT_METHOD_COLORSに統合・getCSSVar化）
+const CACHE_NAME = 'kakeibo-v12.8.0'; // v12.8.0: --shadow-card-hover変数追加・カードホバー状態統一（sub/pt/wl/ch/opp-card）
 const ASSETS = [
   './index.html',
   './css/style.css',
