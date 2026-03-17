@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v14.7.0'; // v14.7.0: --white CSS変数追加・#fff 69箇所をvar(--white)に変換・ripple-anim duration変数化
+const CACHE_NAME = 'kakeibo-v14.8.0'; // v14.8.0: --radius-nano/hairline/bar/toggle/toggle-inner/indicator追加・border-radius 11箇所変数化・--dur-enter/--ease-spring追加・animation 1箇所変数化
 const ASSETS = [
   './index.html',
   './css/style.css',
