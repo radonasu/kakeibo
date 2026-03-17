@@ -233,6 +233,14 @@
   /* ── 黒スクリム（モーダル・サイドバー背景オーバーレイ v13.6) ─ */
   --scrim:           rgba(0,0,0,.4);   /* 標準オーバーレイ（サイドバー・フォーカスリング） */
   --scrim-strong:    rgba(0,0,0,.6);   /* 強オーバーレイ（ダークモードモーダル・サイドバー） */
+
+  /* ── 黒影色トークン（box-shadow/filter複合値内の黒色部分 v14.0) ─ */
+  --black-05:  rgba(0,0,0,.05);  /* フォームフォーカス微薄影 */
+  --black-08:  rgba(0,0,0,.08);  /* カードレール・ドロップシャドウ */
+  --black-10:  rgba(0,0,0,.1);   /* タイプボタン薄影 */
+  --black-12:  rgba(0,0,0,.12);  /* FABベース影・バルクバーライト */
+  --black-14:  rgba(0,0,0,.14);  /* FABホバー影・バルクバーライト（強） */
+  --black-30:  rgba(0,0,0,.3);   /* バルクバーダーク影 */
 }
 
 html {
@@ -863,7 +871,7 @@ select:focus:not(:focus-visible) {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--focus-ring), 0 1px 3px rgba(0,0,0,.05);
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 1px 3px var(--black-05);
 }
 .hint {
   font-size: var(--fs-xs);
@@ -1330,7 +1338,7 @@ select:focus:not(:focus-visible) {
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   border-top: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
   box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 60%, transparent),
-              0 -8px 32px rgba(0,0,0,.14);
+              0 -8px 32px var(--black-14);
   padding: var(--sp-3) var(--sp-5);
   display: flex;
   align-items: center;
@@ -1342,7 +1350,7 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   border-top-color: color-mix(in srgb, var(--primary) 40%, var(--border));
   box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 50%, transparent),
-              0 -8px 32px rgba(0,0,0,.3);
+              0 -8px 32px var(--black-30);
 }
 /* バー情報エリア */
 .bulk-bar-info {
@@ -2000,8 +2008,8 @@ mark.tx-hl {
   transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
   cursor: pointer;
 }
-.type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
-.type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
+.type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -3094,7 +3102,7 @@ body {
   font-weight: var(--fw-light);
   line-height: 1;
   border: none;
-  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12);
   z-index: var(--z-fab);
   cursor: pointer;
   transition: transform var(--dur-base) var(--ease-bounce), box-shadow var(--dur-base);
@@ -3106,15 +3114,15 @@ body {
 #global-fab svg { color: #fff; stroke: #fff; }
 #global-fab:hover {
   transform: scale(1.12);
-  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px rgba(0,0,0,.14);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
 }
 #global-fab:active { transform: scale(0.93); }
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
 @keyframes fab-pulse {
-  0%   { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12), 0 0 0 0 color-mix(in srgb, var(--primary) 38%, transparent); }
-  60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12), 0 0 0 12px transparent; }
-  100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12), 0 0 0 0 transparent; }
+  0%   { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 color-mix(in srgb, var(--primary) 38%, transparent); }
+  60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 12px transparent; }
+  100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 transparent; }
 }
 #global-fab.fab-pulsing { animation: fab-pulse 2.2s ease-out infinite; }
 #global-fab.fab-pulsing:hover,
@@ -8222,7 +8230,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transform: translateX(-50%);
   width: 70%;
   height: 100%;
-  background: rgba(0,0,0,.04);
+  background: var(--black-05);
   border-radius: 5px;
   pointer-events: none;
 }
@@ -11141,7 +11149,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 40px;
   line-height: 1;
   margin-bottom: var(--sp-2);
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.08));
+  filter: drop-shadow(0 2px 8px var(--black-08));
 }
 .notif-empty-sub {
   font-size: var(--fs-xs);
@@ -11902,10 +11910,10 @@ kbd {
   border: 1.5px solid color-mix(in srgb, var(--primary) 35%, var(--border));
   border-radius: var(--radius-btn);
   padding: var(--sp-2) var(--sp-5);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
+  box-shadow: 0 4px 20px var(--black-14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-faster) ease, transform 0.22s var(--ease-bounce);
+  transition: opacity var(--dur-faster) ease, transform var(--dur-appear) var(--ease-bounce);
   z-index: var(--z-kbd-hint);
   max-width: calc(100vw - 32px);
 }
