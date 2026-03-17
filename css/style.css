@@ -166,6 +166,7 @@
   --radius-xl:       20px;  /* セミピル（ステータスバッジ等） */
   --radius-circle:   50%;   /* 円形（アバター・アイコンボタン・ドット等） */
   --radius-2xs:       4px;  /* 極小角丸（スクロールバー・チェックボックス等） */
+  --radius-3xs:       3px;  /* 最極小角丸（ハイライトマーク・ミニバー・ヒートマップセル等） */
   --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
   --shadow-card-hover: 0 4px 12px rgba(0,0,0,.08);  /* カードホバー時の浮き上がりシャドウ */
   --shadow-sticky:    0 2px 8px rgba(0,0,0,.2);     /* スティッキーヘッダー */
@@ -228,6 +229,10 @@
   --on-dark-label:   rgba(255,255,255,.75);  /* ラベルテキスト */
   --on-dark-title:   rgba(255,255,255,.80);  /* タイトルテキスト */
   --on-dark-hint:    rgba(255,255,255,.85);  /* サブラベルテキスト */
+
+  /* ── 黒スクリム（モーダル・サイドバー背景オーバーレイ v13.6) ─ */
+  --scrim:           rgba(0,0,0,.4);   /* 標準オーバーレイ（サイドバー・フォーカスリング） */
+  --scrim-strong:    rgba(0,0,0,.6);   /* 強オーバーレイ（ダークモードモーダル・サイドバー） */
 }
 
 html {
@@ -1832,7 +1837,7 @@ select:focus:not(:focus-visible) {
 mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 18%, transparent);
   color: var(--primary);
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   padding: 0 2px;
   font-weight: var(--fw-bold);
   font-style: normal;
@@ -3287,7 +3292,7 @@ body {
 [data-theme="dark"] .budget-item { background: var(--surface-2); }
 [data-theme="dark"] .type-toggle { background: var(--surface-2); }
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); }
-[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.6); }
+[data-theme="dark"] .modal-overlay { background: var(--scrim-strong); }
 /* 収支テキスト: [data-theme="dark"] にて --income/#34d399, --expense/#fb7185 を定義済み（v9.8）*/
 
 /* ============================================================
@@ -4157,7 +4162,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: var(--z-sidebar-overlay);
-  background: rgba(0,0,0,.4);
+  background: var(--scrim);
   opacity: 0;
   transition: opacity var(--dur-mid) ease;
   -webkit-tap-highlight-color: transparent;
@@ -4338,7 +4343,7 @@ body {
 }
 
 [data-theme="dark"] #sidebar-overlay {
-  background: rgba(0,0,0,.6);
+  background: var(--scrim-strong);
 }
 
 /* ── 前年比較（YoY）スタイル (v5.27) ────────────────────── */
@@ -6242,7 +6247,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   top: 0; left: 0; right: 0;
   height: 3px;
   background: var(--hs-grade-color, var(--primary));
-  border-radius: 3px 3px 0 0;
+  border-radius: var(--radius-3xs) var(--radius-3xs) 0 0;
 }
 .health-score-card::after {
   content: '';
@@ -7085,7 +7090,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ダークモード */
 [data-theme="dark"] .fc-progress-today {
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 3px var(--scrim);
 }
 [data-theme="dark"] .fc-cell {
   background: var(--on-dark-subtle);
@@ -7982,7 +7987,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 70px;
   height: 6px;
   background: var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   vertical-align: middle;
   overflow: hidden;
   margin-right: 4px;
@@ -7990,7 +7995,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-mini-fill {
   display: block;
   height: 100%;
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   transform-origin: left center;
   animation: fv-bar-fill var(--dur-fill) ease both;
   animation-delay: calc(var(--fv-ci, 0) * 40ms);
@@ -8825,7 +8830,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-cell {
   width: 13px;
   height: 13px;
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
@@ -8848,7 +8853,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-today {
   outline: 2px solid rgba(255,255,255,0.9);
   outline-offset: -2px;
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   animation: hm-today-pulse var(--dur-pulse) ease-in-out infinite;
   position: relative;
   z-index: 2;
@@ -9719,7 +9724,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   -webkit-appearance: none;
   width: 14px; height: 14px;
   border: 1.5px solid var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius-3xs);
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
