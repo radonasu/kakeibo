@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v13.0.0'; // v13.0.0: z-indexデザインシステム完全化（14変数追加・19箇所変換）
+const CACHE_NAME = 'kakeibo-v13.1.0'; // v13.1.0: border-radius pill変数化（85箇所を--radius-badge変換）
 const ASSETS = [
   './index.html',
   './css/style.css',
