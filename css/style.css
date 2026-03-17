@@ -693,7 +693,7 @@ select:focus:not(:focus-visible) {
 .card-collapse-body {
   overflow: hidden;
   transition: max-height var(--dur-pop) var(--ease-std),
-              opacity   0.28s var(--ease-std);
+              opacity   var(--dur-gentle) var(--ease-std);
   max-height: 2000px;
   opacity: 1;
 }
@@ -1162,7 +1162,7 @@ select:focus:not(:focus-visible) {
 @media (max-width: 600px) {
   .tx-col-pay, .tx-col-mem { display: none; }
 }
-.empty { text-align: center; color: var(--text-muted); padding: 40px !important; }
+.empty { text-align: center; color: var(--text-muted); padding: var(--sp-10) !important; }
 
 /* ── 一括操作 (v5.55 / v5.56デザイン洗練) ───────────────── */
 /* チェックボックス列 */
@@ -2671,7 +2671,7 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: var(--sp-2-5) 20px;
+  padding: var(--sp-2-5) var(--sp-5);
   border-radius: var(--radius-lg);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -2903,7 +2903,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   color: var(--sidebar-text-hi);
   padding: var(--sp-5);
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  padding-bottom: calc(var(--sp-5) + env(safe-area-inset-bottom));
   text-align: center;
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
@@ -3107,7 +3107,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .auth-card { padding: 28px 24px; }
+  .auth-card { padding: 28px var(--sp-6); }
   /* サマリーカード: 480px以下で1列に戻す */
   .summary-cards { grid-template-columns: 1fr; }
   .summary-cards .summary-card:nth-child(3) { grid-column: auto; }
@@ -3612,7 +3612,7 @@ body {
   color: var(--primary-dark);
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
-  padding: 12px 28px;
+  padding: var(--sp-3) 28px;
   border-radius: var(--radius-btn);
   border: none;
   cursor: pointer;
@@ -3702,7 +3702,7 @@ body {
   color: var(--primary);
   border: none;
   border-radius: var(--radius-sm);
-  padding: 9px 20px;
+  padding: 9px var(--sp-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   cursor: pointer;
@@ -3719,7 +3719,7 @@ body {
 
 /* レスポンシブ */
 @media (max-width: 640px) {
-  .onboarding-hero { padding: 32px 20px 28px; }
+  .onboarding-hero { padding: var(--sp-8) var(--sp-5) 28px; }
   .onboarding-title { font-size: var(--fs-2xl); }
   .onboarding-steps { grid-template-columns: 1fr; }
   .step-card { flex-direction: row; align-items: flex-start; gap: var(--sp-3-5); }
@@ -3764,7 +3764,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: var(--sp-3-5);
-  padding: 12px 20px 24px;
+  padding: var(--sp-3) var(--sp-5) var(--sp-6);
 }
 
 .share-canvas-wrap {
