@@ -162,6 +162,9 @@
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
+  --dur-arc:     0.85s;                            /* アーク入場（ペースバー塗り・スコアバッジ遅延） */
+  --dur-wave:    1s;                               /* SVGストローク/波形アニメーション（ゴールリング等） */
+  --dur-rest:    1.5s;                             /* ゆるやかループ（PWAバウンス・ADVシマー等） */
   --ease-plain:  ease;                             /* ブラウザデフォルトease */
   --ease-out:    ease-out;                         /* 標準ease-out */
   --ease-in-out: ease-in-out;                      /* 標準ease-in-out */
@@ -169,6 +172,7 @@
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);  /* 弾性バウンス */
   --ease-enter:  cubic-bezier(.22, 1, .36, 1);     /* 自然な減速入場（ease-out-quart系） */
   --ease-overshoot: cubic-bezier(.34, 1.4, .64, 1); /* 強めオーバーシュートバウンス */
+  --ease-soft-bounce: cubic-bezier(.34, 1.2, .64, 1); /* 穏やかバウンス（グループ入場・バー塗り等） */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); /* SVGプログレス/ストローク向け指数減速 */
   --ease-out-sine: cubic-bezier(.25, .46, .45, .94); /* スライド/ページ遷移向けサイン減速 */
 
@@ -1907,13 +1911,13 @@ mark.tx-hl {
   to   { opacity: 1; transform: none; }
 }
 .adv-filter-panel.open .adv-filter-group {
-  animation: adv-grp-in var(--dur-mid) cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) both;
 }
 .adv-filter-panel.open .adv-filter-group:nth-child(2) {
   animation-delay: 0.05s;
 }
 .adv-filter-panel.open .adv-filter-clear {
-  animation: adv-grp-in var(--dur-mid) cubic-bezier(0.34, 1.2, 0.64, 1) 0.08s both;
+  animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) 0.08s both;
 }
 
 /* 月ナビ (v5.99) */
@@ -2921,7 +2925,7 @@ body {
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
 .ios-guide-arrow {
   font-size: 24px; color: var(--primary);
-  animation: pwa-bounce 1.5s infinite;
+  animation: pwa-bounce var(--dur-rest) infinite;
   margin-top: var(--sp-2);
 }
 @keyframes pwa-bounce {
@@ -4546,7 +4550,7 @@ body {
   stroke-linecap: round;
   stroke-dasharray: 125.66;
   stroke-dashoffset: 125.66;
-  transition: stroke-dashoffset 1s var(--ease-out-expo);
+  transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 
 .goal-emoji { font-size: var(--fs-icon-lg); line-height: 1; position: relative; z-index: 1; }
@@ -4843,7 +4847,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-linecap: round;
   stroke-dasharray: 81.68;
   stroke-dashoffset: 81.68;
-  transition: stroke-dashoffset 1s var(--ease-out-expo);
+  transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 .goal-dash-emoji { font-size: var(--fs-icon); line-height: 1; position: relative; z-index: 1; }
 
@@ -6368,7 +6372,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
   box-shadow: var(--shadow-badge);
   animation: hs-badge-in var(--dur-badge) var(--ease-bounce) both;
-  animation-delay: 0.85s;
+  animation-delay: var(--dur-arc);
 }
 @keyframes hs-badge-in {
   from { transform: scale(0.4) rotate(-15deg); opacity: 0; }
@@ -9809,7 +9813,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--primary);
   transform-origin: left;
   transform: scaleX(0);
-  animation: ev-prog-grow .65s cubic-bezier(.34,1.2,.64,1) both;
+  animation: ev-prog-grow var(--dur-swing) var(--ease-soft-bounce) both;
   animation-delay: calc(var(--ev-mi, 0) * 35ms + 0.12s);
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
@@ -10078,7 +10082,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
     var(--surface) 0%,
     color-mix(in srgb, var(--primary) 5%, var(--surface)) 100%
   );
-  animation: adv-card-in var(--dur-long) cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  animation: adv-card-in var(--dur-long) var(--ease-soft-bounce) both;
 }
 .adv-widget-card::before {
   content: '';
@@ -10187,7 +10191,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
     var(--surface-hover) 75%
   );
   background-size: 800px 100%;
-  animation: adv-shimmer 1.5s infinite linear;
+  animation: adv-shimmer var(--dur-rest) infinite linear;
 }
 
 /* アドバイステキスト */
@@ -10228,7 +10232,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--primary);
   background: color-mix(in srgb, var(--primary) 4%, transparent);
-  animation: adv-section-in var(--dur-medium) cubic-bezier(0.34, 1.2, 0.64, 1) calc(var(--adv-si, 0) * 0.08s) both;
+  animation: adv-section-in var(--dur-medium) var(--ease-soft-bounce) calc(var(--adv-si, 0) * 0.08s) both;
 }
 .adv-section:nth-child(2) {
   border-left-color: var(--success);
@@ -12844,7 +12848,7 @@ canvas.chart-clickable { cursor: pointer; }
   height: 100%;
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: pace-bar-in .85s var(--ease-bounce) both;
+  animation: pace-bar-in var(--dur-arc) var(--ease-bounce) both;
   animation-delay: calc(var(--pbr-i, 0) * 80ms + 60ms);
   position: relative;
 }
