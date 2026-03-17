@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v13.1.0'; // v13.1.0: border-radius pill変数化（85箇所を--radius-badge変換）
+const CACHE_NAME = 'kakeibo-v13.2.0'; // v13.2.0: border-radius circle/2xs変数化（81箇所を--radius-circle/--radius-2xs変換）
 const ASSETS = [
   './index.html',
   './css/style.css',
