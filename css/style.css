@@ -216,19 +216,29 @@
 
   /* ── 白オーバーレイシステム (暗背景上の半透明白 v13.4) ─── */
   --on-dark-subtle:  rgba(255,255,255,.04);  /* 最微薄装飾 */
+  --on-dark-ghost:   rgba(255,255,255,.05);  /* ゴースト背景（タグフィルター等） */
   --on-dark-dim:     rgba(255,255,255,.06);  /* 微薄背景 */
   --on-dark-divider: rgba(255,255,255,.07);  /* 薄分割線・ホバー */
   --on-dark-bg:      rgba(255,255,255,.08);  /* 入力・要素背景 */
   --on-dark-tint:    rgba(255,255,255,.09);  /* 境界色 */
   --on-dark-base:    rgba(255,255,255,.10);  /* 薄着色・ホバー */
   --on-dark-border:  rgba(255,255,255,.12);  /* ボーダー */
+  --on-dark-deco:    rgba(255,255,255,.14);  /* デコレーション（ラジアルグラデーション用） */
   --on-dark-strong:  rgba(255,255,255,.18);  /* 強調・ホバー */
   --on-dark-ripple:  rgba(255,255,255,.20);  /* リップル・アクティブ */
+  --on-dark-press:   rgba(255,255,255,.22);  /* 押下状態 */
   --on-dark-overlay: rgba(255,255,255,.25);  /* バッジ・仕切り */
   --on-dark-text:    rgba(255,255,255,.30);  /* セクションテキスト */
+  --on-dark-drop:    rgba(255,255,255,.35);  /* リップルアニメーション・スパーク */
+  --on-dark-hover:   rgba(255,255,255,.38);  /* ホバー状態（閉じるボタン等） */
+  --on-dark-half:    rgba(255,255,255,.50);  /* 半透明（フォーカスリング等） */
+  --on-dark-muted:   rgba(255,255,255,.65);  /* ミュートテキスト（サブラベル） */
+  --on-dark-soft:    rgba(255,255,255,.70);  /* ソフトテキスト（ユニットラベル） */
   --on-dark-label:   rgba(255,255,255,.75);  /* ラベルテキスト */
   --on-dark-title:   rgba(255,255,255,.80);  /* タイトルテキスト */
   --on-dark-hint:    rgba(255,255,255,.85);  /* サブラベルテキスト */
+  --on-dark-high:    rgba(255,255,255,.88);  /* 高透明度テキスト（スライダーつまみ等） */
+  --on-dark-opaque:  rgba(255,255,255,.90);  /* 不透明アウトライン（ヒートマップ今日セル） */
 
   /* ── 黒スクリム（モーダル・サイドバー背景オーバーレイ v13.6) ─ */
   --scrim:           rgba(0,0,0,.4);   /* 標準オーバーレイ（サイドバー・フォーカスリング） */
@@ -1615,7 +1625,7 @@ select:focus:not(:focus-visible) {
   border-color: var(--border);
 }
 [data-theme="dark"] .tx-tag-filter-all {
-  background: rgba(255,255,255,0.05);
+  background: var(--on-dark-ghost);
   border-color: var(--border);
 }
 [data-theme="dark"] .tx-tag-filter-all.active {
@@ -3392,7 +3402,7 @@ body {
 .ripple-wave {
   position: absolute;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.35);
+  background: var(--on-dark-drop);
   transform: scale(0);
   animation: ripple-anim .55s linear;
   pointer-events: none;
@@ -6008,7 +6018,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-summary-sub {
   font-size: var(--fs-2xs);
-  color: rgba(255,255,255,0.65);
+  color: var(--on-dark-muted);
   margin-top: var(--sp-1);
 }
 /* デコレーションサークル */
@@ -6530,7 +6540,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-sum-done .wl-summary-value  { color: #fff; }
 .wl-sum-count .wl-summary-unit,
 .wl-sum-budget .wl-summary-unit,
-.wl-sum-done .wl-summary-unit   { color: rgba(255,255,255,.70); }
+.wl-sum-done .wl-summary-unit   { color: var(--on-dark-soft); }
 
 .wl-summary-label {
   font-size: var(--fs-xs);
@@ -6975,7 +6985,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   background: var(--surface);
   border: 2.5px solid var(--fc-color, var(--primary));
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+  box-shadow: 0 0 0 3px var(--on-dark-half);
   pointer-events: none;
   transition: left var(--dur-fill) var(--ease-enter);
 }
@@ -7196,7 +7206,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--primary);
 }
 [data-theme="dark"] .dw-slider::after {
-  background: rgba(255,255,255,.88);
+  background: var(--on-dark-high);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -8859,7 +8869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 今日のセル */
 .hm-today {
-  outline: 2px solid rgba(255,255,255,0.9);
+  outline: 2px solid var(--on-dark-opaque);
   outline-offset: -2px;
   border-radius: var(--radius-3xs);
   animation: hm-today-pulse var(--dur-pulse) ease-in-out infinite;
@@ -8879,7 +8889,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .hm-lv3 { background: var(--expense); }
 [data-theme="dark"] .hm-lv4 { background: var(--expense-end); }
 [data-theme="dark"] .hm-today {
-  outline-color: rgba(255,255,255,0.7);
+  outline-color: var(--on-dark-soft);
 }
 
 .hm-legend {
@@ -9577,7 +9587,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   top: -20px; right: -20px;
   width: 90px; height: 90px;
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, rgba(255,255,255,.14) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-deco) 0%, transparent 70%);
   pointer-events: none;
 }
 .ev-sum-card::after {
@@ -10549,7 +10559,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ダークモード */
 [data-theme="dark"] .yr-progress-track { background: var(--on-dark-bg); }
 [data-theme="dark"] .yr-elapsed-badge  { background: var(--on-dark-divider); }
-[data-theme="dark"] .yr-spark-wrap::before { color: rgba(255,255,255,0.35); }
+[data-theme="dark"] .yr-spark-wrap::before { color: var(--on-dark-drop); }
 /* モバイル対応 */
 @media (max-width: 600px) {
   .yr-cells { gap: var(--sp-2); }
@@ -10605,7 +10615,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: var(--sp-3); right: var(--sp-3);
   z-index: 2;
-  background: rgba(255,255,255,0.22);
+  background: var(--on-dark-press);
   border: none;
   color: #fff;
   width: 32px; height: 32px;
@@ -10615,7 +10625,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; justify-content: center;
   transition: background var(--dur-base);
 }
-.ci-close:hover { background: rgba(255,255,255,0.38); }
+.ci-close:hover { background: var(--on-dark-hover); }
 .ci-month-badge {
   display: inline-block;
   background: var(--on-dark-overlay);
