@@ -164,6 +164,11 @@
   --radius-xl:       20px;  /* セミピル（ステータスバッジ等） */
   --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
   --shadow-card-hover: 0 4px 12px rgba(0,0,0,.08);  /* カードホバー時の浮き上がりシャドウ */
+  --shadow-sticky:    0 2px 8px rgba(0,0,0,.2);     /* スティッキーヘッダー */
+  --shadow-row-hover: 0 2px 8px rgba(0,0,0,.06);    /* テーブル行ホバー */
+  --shadow-row-selected: 0 2px 8px rgba(0,0,0,.25); /* テーブル行選択（ダーク） */
+  --shadow-summary-hover: 0 16px 48px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1); /* サマリーカードホバー */
+  --shadow-panel:     0 8px 32px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.3); /* パネル（ダークモード） */
 
   /* ── エイリアス変数（旧名→新名の前方互換性解消 v11.4）─── */
   --radius-md:       var(--radius-btn);   /* = 12px（--radius-btn の別名） */
@@ -482,7 +487,7 @@ select:focus:not(:focus-visible) {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  box-shadow: var(--shadow-sticky);
 }
 
 #hamburger {
@@ -1040,13 +1045,13 @@ select:focus:not(:focus-visible) {
 }
 .tx-table tbody tr:hover {
   background: var(--surface-2);
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  box-shadow: var(--shadow-row-hover);
   transform: translateY(-1px);
   position: relative;
   z-index: 1;
 }
 [data-theme="dark"] .tx-table tbody tr:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  box-shadow: var(--shadow-row-selected);
 }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
@@ -1660,7 +1665,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  box-shadow: var(--shadow-row-hover);
 }
 .adv-filter-group {
   display: flex;
@@ -1711,7 +1716,7 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .adv-filter-inner {
   background: var(--surface);
   border-color: var(--border);
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  box-shadow: var(--shadow-row-selected);
 }
 [data-theme="dark"] .adv-filter-input {
   background: var(--bg);
@@ -3253,7 +3258,7 @@ body {
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce); }
 .summary-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1);
+  box-shadow: var(--shadow-summary-hover);
 }
 
 /* ── モーダルアニメーション ── */
@@ -11103,7 +11108,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .notif-panel {
   background: var(--surface);
   border-color: rgba(255,255,255,.08);
-  box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.3);
+  box-shadow: var(--shadow-panel);
 }
 [data-theme="dark"] .notif-panel-header {
   background: var(--bg);
