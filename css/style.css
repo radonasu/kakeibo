@@ -171,6 +171,19 @@
   --shadow-row-selected: 0 2px 8px rgba(0,0,0,.25); /* テーブル行選択（ダーク） */
   --shadow-summary-hover: 0 16px 48px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1); /* サマリーカードホバー */
   --shadow-panel:     0 8px 32px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.3); /* パネル（ダークモード） */
+  /* ── box-shadow デザインシステム完全化 (v13.3) ── */
+  --shadow-auth:      0 24px 64px rgba(0,0,0,.35);  /* 認証カード大シャドウ */
+  --shadow-tab:       0 1px 4px rgba(0,0,0,.12);    /* アクティブタブ (ライト) */
+  --shadow-tab-dark:  0 1px 4px rgba(0,0,0,.3);     /* アクティブタブ (ダーク) */
+  --shadow-up-md:     0 -4px 20px rgba(0,0,0,.2);   /* 上向き中シャドウ (バナー) */
+  --shadow-up-sm:     0 -2px 12px rgba(0,0,0,.06);  /* 上向き小シャドウ (ボトムナビ) */
+  --shadow-cta:       0 4px 16px rgba(0,0,0,.2);    /* CTAボタン通常 */
+  --shadow-cta-hover: 0 6px 20px rgba(0,0,0,.28);   /* CTAボタンホバー */
+  --shadow-tabs-dark: 0 2px 8px rgba(0,0,0,.3);     /* ダークモードセクションタブ */
+  --shadow-badge:     0 2px 8px rgba(0,0,0,.12);    /* バッジ・グレードアイコン */
+  --shadow-toggle:    0 1px 3px rgba(0,0,0,.25);    /* トグルスイッチつまみ */
+  --shadow-hover-md:  0 8px 24px rgba(0,0,0,.18);   /* ホバー中シャドウ */
+  --shadow-hover-sm:  0 6px 20px rgba(0,0,0,.1);    /* ホバー小シャドウ */
 
   /* ── z-indexレイヤーシステム (v13.0) ──────────────── */
   --z-sticky-tabs:    90;   /* セクションタブ (sticky) */
@@ -2643,7 +2656,7 @@ mark.tx-hl {
 .auth-card {
   background: #fff;
   border-radius: var(--radius-lg);
-  box-shadow: 0 24px 64px rgba(0,0,0,.35);
+  box-shadow: var(--shadow-auth);
   width: 100%;
   max-width: 420px;
   padding: var(--sp-10);
@@ -2706,7 +2719,7 @@ mark.tx-hl {
 .auth-tab.active {
   background: #fff;
   color: var(--primary);
-  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+  box-shadow: var(--shadow-tab);
 }
 
 .auth-submit {
@@ -2801,7 +2814,7 @@ body {
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
   transition: transform var(--dur-slow) var(--ease-std);
-  box-shadow: 0 -4px 20px rgba(0,0,0,.2);
+  box-shadow: var(--shadow-up-md);
 }
 #pwa-install-banner.show { transform: translateY(0); }
 
@@ -2918,7 +2931,7 @@ body {
   border-top: 1px solid var(--border);
   z-index: var(--z-bottom-nav);
   padding-bottom: env(safe-area-inset-bottom);
-  box-shadow: 0 -2px 12px rgba(0,0,0,.06);
+  box-shadow: var(--shadow-up-sm);
 }
 
 .bottom-nav-item {
@@ -3234,7 +3247,7 @@ body {
 [data-theme="dark"] .auth-tab.active {
   background: var(--surface-2);
   color: var(--primary);
-  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  box-shadow: var(--shadow-tab-dark);
 }
 [data-theme="dark"] .sync-user-card {
   background: linear-gradient(135deg, var(--success-bg) 0%, var(--success-border) 100%);
@@ -3544,12 +3557,12 @@ body {
   border-radius: var(--radius-btn);
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  box-shadow: var(--shadow-cta);
   transition: transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .onboarding-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,.28);
+  box-shadow: var(--shadow-cta-hover);
 }
 .onboarding-cta:active { transform: scale(.97); }
 
@@ -4409,7 +4422,7 @@ body {
 }
 
 [data-theme="dark"] .section-tabs {
-  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  box-shadow: var(--shadow-tabs-dark);
 }
 
 @media (max-width: 768px) {
@@ -6294,7 +6307,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  box-shadow: var(--shadow-badge);
   animation: hs-badge-in 0.5s var(--ease-bounce) both;
   animation-delay: 0.85s;
 }
@@ -7134,7 +7147,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 16px;
   border-radius: var(--radius-circle);
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  box-shadow: var(--shadow-toggle);
   transition: transform var(--dur-base) var(--ease-enter);
 }
 .dw-item input:checked ~ .dw-slider {
@@ -7897,7 +7910,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: fv-card-in 0.38s var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
-.fv-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.fv-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover-md); }
 .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(135deg, var(--warning-deep), var(--warning)); }
@@ -8657,8 +8670,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-today-pulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3px rgba(239,68,68,0.5); }
-  50%       { box-shadow: 0 0 0 2px rgba(255,255,255,0.7), 0 0 8px 2px rgba(239,68,68,0.4); }
+  0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3px color-mix(in srgb, var(--expense) 50%, transparent); }
+  50%       { box-shadow: 0 0 0 2px rgba(255,255,255,0.7), 0 0 8px 2px color-mix(in srgb, var(--expense) 40%, transparent); }
 }
 
 .hm-summary-row {
@@ -9082,7 +9095,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-widget-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: var(--radius-badge); overflow: hidden; }
 .debt-widget-bar-fill {
   height: 100%; background: var(--debt-accent, var(--primary));
-  border-radius: var(--radius-badge); transition: width .7s;
+  border-radius: var(--radius-badge); transition: width var(--dur-fill);
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
 .debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; }
@@ -11719,7 +11732,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 20%, transparent) 0%, transparent 70%);
   opacity: 0;
   transform: scale(0);
-  transition: opacity .4s, transform .4s;
+  transition: opacity var(--dur-long), transform var(--dur-long);
   pointer-events: none;
 }
 
@@ -12402,7 +12415,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .dash-sum-clickable:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-hover-sm);
 }
 .dash-sum-clickable:active { transform: translateY(-1px); }
 
@@ -12625,7 +12638,7 @@ canvas.chart-clickable { cursor: pointer; }
 .rpt-month-row.is-clickable:hover {
   background: var(--surface-hover);
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-row-hover);
 }
 .rpt-month-row.is-clickable:hover .rpt-row-chevron {
   opacity: 1;
@@ -12649,7 +12662,7 @@ canvas.chart-clickable { cursor: pointer; }
   transition: opacity var(--dur-fast), transform var(--dur-fast);
 }
 [data-theme="dark"] .rpt-month-row.is-clickable:hover {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-row-selected);
 }
 
 /* ─── 月ドリルダウン ビジュアル洗練 (v9.0) ─────────────────────────── */
