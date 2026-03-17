@@ -170,6 +170,22 @@
   --shadow-summary-hover: 0 16px 48px rgba(0,0,0,.22), 0 4px 16px rgba(0,0,0,.1); /* サマリーカードホバー */
   --shadow-panel:     0 8px 32px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.3); /* パネル（ダークモード） */
 
+  /* ── z-indexレイヤーシステム (v13.0) ──────────────── */
+  --z-sticky-tabs:    90;   /* セクションタブ (sticky) */
+  --z-mobile-header: 100;   /* モバイルヘッダー (sticky) */
+  --z-fab:           130;   /* グローバルFABボタン */
+  --z-bottom-nav:    150;   /* ボトムナビゲーション */
+  --z-sidebar-overlay: 195; /* サイドバー背景オーバーレイ */
+  --z-sidebar:       200;   /* サイドバー・バルクバー */
+  --z-notif-overlay: 299;   /* 通知オーバーレイ */
+  --z-notif-panel:   300;   /* 通知パネル */
+  --z-modal:        1000;   /* モーダルオーバーレイ */
+  --z-modal-box:    1001;   /* モーダルボックス（モバイル全画面） */
+  --z-pwa-banner:   8000;   /* PWA・iOSインストールバナー */
+  --z-auth:         9000;   /* 認証画面 */
+  --z-kbd-hint:     9998;   /* キーボードショートカットヒント */
+  --z-toast:        9999;   /* トースト通知 */
+
   /* ── エイリアス変数（旧名→新名の前方互換性解消 v11.4）─── */
   --radius-md:       var(--radius-btn);   /* = 12px（--radius-btn の別名） */
   --fw-semibold:     var(--fw-semi);      /* = 600（--fw-semi の別名） */
@@ -256,7 +272,7 @@ select:focus:not(:focus-visible) {
   position: fixed;
   top: 0; left: 0;
   height: 100vh;
-  z-index: 200;
+  z-index: var(--z-sidebar);
   transition: transform var(--dur-mid) var(--ease-std);
 }
 
@@ -486,7 +502,7 @@ select:focus:not(:focus-visible) {
   color: var(--sidebar-text-hi);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-mobile-header);
   box-shadow: var(--shadow-sticky);
 }
 
@@ -1270,7 +1286,7 @@ select:focus:not(:focus-visible) {
 .bulk-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  z-index: 200;
+  z-index: var(--z-sidebar);
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
@@ -1958,7 +1974,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
   padding: var(--sp-4);
 }
 
@@ -2588,7 +2604,7 @@ mark.tx-hl {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-slow), transform var(--dur-slow);
-  z-index: 9999;
+  z-index: var(--z-toast);
   white-space: nowrap;
   box-shadow: var(--shadow-md);
 }
@@ -2618,7 +2634,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9000;
+  z-index: var(--z-auth);
   padding: var(--sp-5);
 }
 
@@ -2780,7 +2796,7 @@ body {
   color: var(--sidebar-text-hi);
   padding: 14px 16px;
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
-  z-index: 8000;
+  z-index: var(--z-pwa-banner);
   transform: translateY(100%);
   transition: transform var(--dur-slow) var(--ease-std);
   box-shadow: 0 -4px 20px rgba(0,0,0,.2);
@@ -2815,7 +2831,7 @@ body {
   padding: var(--sp-5);
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   text-align: center;
-  z-index: 8000;
+  z-index: var(--z-pwa-banner);
   transform: translateY(100%);
   transition: transform var(--dur-slow) ease;
 }
@@ -2850,7 +2866,7 @@ body {
   padding-top: calc(6px + env(safe-area-inset-top));
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
-  z-index: 9999;
+  z-index: var(--z-toast);
   transform: translateY(-100%);
   transition: transform var(--dur-slow) ease;
 }
@@ -2874,7 +2890,7 @@ body {
   gap: var(--sp-3);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
-  z-index: 9999;
+  z-index: var(--z-toast);
   opacity: 0;
   transition: opacity var(--dur-slow), transform var(--dur-slow);
   box-shadow: var(--shadow-md);
@@ -2898,7 +2914,7 @@ body {
   bottom: 0; left: 0; right: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
-  z-index: 150;
+  z-index: var(--z-bottom-nav);
   padding-bottom: env(safe-area-inset-bottom);
   box-shadow: 0 -2px 12px rgba(0,0,0,.06);
 }
@@ -3002,7 +3018,7 @@ body {
     max-height: none;
     border-radius: 0;
     margin: 0;
-    z-index: 1001;
+    z-index: var(--z-modal-box);
   }
   .modal-footer {
     flex-shrink: 0;
@@ -3041,7 +3057,7 @@ body {
   line-height: 1;
   border: none;
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px rgba(0,0,0,.12);
-  z-index: 130;
+  z-index: var(--z-fab);
   cursor: pointer;
   transition: transform var(--dur-base) var(--ease-bounce), box-shadow var(--dur-base);
   -webkit-tap-highlight-color: transparent;
@@ -3739,7 +3755,7 @@ body {
   box-shadow: var(--shadow-md);
   opacity: 0;
   transition: opacity var(--dur-slow) var(--ease-std), transform var(--dur-slow) var(--ease-std);
-  z-index: 9999;
+  z-index: var(--z-toast);
   white-space: nowrap;
   pointer-events: none;
   overflow: hidden;
@@ -4107,7 +4123,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 195;
+  z-index: var(--z-sidebar-overlay);
   background: rgba(0,0,0,.4);
   opacity: 0;
   transition: opacity var(--dur-mid) ease;
@@ -4334,7 +4350,7 @@ body {
 .section-tabs {
   position: sticky;
   top: 0;
-  z-index: 90;
+  z-index: var(--z-sticky-tabs);
   background: var(--surface);
   border-bottom: 2px solid var(--border);
   display: flex;
@@ -10867,7 +10883,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .notif-overlay {
   position: fixed;
   inset: 0;
-  z-index: 299;
+  z-index: var(--z-notif-overlay);
   background: transparent;
 }
 
@@ -10882,7 +10898,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
-  z-index: 300;
+  z-index: var(--z-notif-panel);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -11852,7 +11868,7 @@ kbd {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-faster) ease, transform 0.22s var(--ease-bounce);
-  z-index: 9998;
+  z-index: var(--z-kbd-hint);
   max-width: calc(100vw - 32px);
 }
 .kb-g-hint.visible {
