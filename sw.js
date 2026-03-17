@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v14.2.0'; // v14.2.0: アニメーション変数システム完全化（--dur-pop/lift/snap/badge/spark/spin/swing/glide/shimmer/gauge・--ease-plain/out/in-out追加・全ease keyword/残存duration値をCSS変数化）
+const CACHE_NAME = 'kakeibo-v14.3.0'; // v14.3.0: スペーシング変数補完 — --sp-3-5:14px追加・CSS全域の14px/4px(shorthand)をvar(--sp-*)に一斉変換（35箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',

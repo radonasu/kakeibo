@@ -129,6 +129,7 @@
   --sp-2:     8px;   /* 小：要素内の隙間 */
   --sp-2-5:  10px;   /* 小+：コンパクトな入力パディング */
   --sp-3:    12px;   /* 中小：コンパクトなパディング */
+  --sp-3-5:  14px;   /* 中小+：テーブルセル・バナー等の中間パディング */
   --sp-4:    16px;   /* 中：標準パディング・マージン */
   --sp-5:    20px;   /* 中大：カード・モーダル */
   --sp-6:    24px;   /* 大：メインカードパディング */
@@ -534,7 +535,7 @@ select:focus:not(:focus-visible) {
   border: none;
   color: var(--sidebar-text-muted);
   font-size: var(--fs-base);
-  padding: 4px var(--sp-1-5);
+  padding: var(--sp-1) var(--sp-1-5);
   border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
@@ -869,7 +870,7 @@ select:focus:not(:focus-visible) {
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 10px var(--sp-4);
+  padding: var(--sp-2-5) var(--sp-4);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-base);
@@ -1110,7 +1111,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
 }
 .tx-table th {
-  padding: var(--sp-2-5) 14px;
+  padding: var(--sp-2-5) var(--sp-3-5);
   text-align: left;
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -1121,7 +1122,7 @@ select:focus:not(:focus-visible) {
   letter-spacing: var(--ls-wide);
 }
 .tx-table td {
-  padding: 11px 14px;
+  padding: 11px var(--sp-3-5);
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
@@ -1161,8 +1162,8 @@ select:focus:not(:focus-visible) {
 
 /* ── 一括操作 (v5.55 / v5.56デザイン洗練) ───────────────── */
 /* チェックボックス列 */
-.tx-cb-th { width: 40px; padding: 8px 0 8px 14px !important; }
-.tx-cb-cell { width: 40px; padding: 8px 0 8px 14px !important; vertical-align: middle; }
+.tx-cb-th { width: 40px; padding: var(--sp-2) 0 var(--sp-2) var(--sp-3-5) !important; }
+.tx-cb-cell { width: 40px; padding: var(--sp-2) 0 var(--sp-2) var(--sp-3-5) !important; vertical-align: middle; }
 
 /* カスタムチェックボックス (v5.56) */
 @keyframes cb-check-in {
@@ -1453,7 +1454,7 @@ select:focus:not(:focus-visible) {
 
 /* 全期間 月グループ行 (v5.29) */
 .tx-month-group-row td {
-  padding: var(--sp-1-5) 14px;
+  padding: var(--sp-1-5) var(--sp-3-5);
   background: var(--surface-2);
   border-top: 2px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -2283,7 +2284,7 @@ mark.tx-hl {
   background: var(--success-bg);
   border: 1.5px solid var(--success-border);
   border-radius: var(--radius-sm);
-  padding: var(--sp-2-5) 14px;
+  padding: var(--sp-2-5) var(--sp-3-5);
   font-size: var(--fs-xs);
   display: flex;
   flex-direction: column;
@@ -2307,7 +2308,7 @@ mark.tx-hl {
   color: #fff;
   border: none;
   border-radius: var(--radius-sm);
-  padding: var(--sp-1-5) 14px;
+  padding: var(--sp-1-5) var(--sp-3-5);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   cursor: pointer;
@@ -2526,7 +2527,7 @@ mark.tx-hl {
 }
 
 .btn-tpl {
-  padding: 5px 14px;
+  padding: 5px var(--sp-3-5);
   border: 1.5px solid;
   border-radius: var(--radius-xl);
   background: transparent;
@@ -2552,7 +2553,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: 7px;
-  margin-bottom: 14px;
+  margin-bottom: var(--sp-3-5);
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
@@ -2647,7 +2648,7 @@ mark.tx-hl {
 .sql-block {
   background: var(--sidebar-bg);
   color: var(--sidebar-text);
-  padding: 14px 16px;
+  padding: var(--sp-3-5) var(--sp-4);
   border-radius: var(--radius-sm);
   font-size: var(--fs-xs);
   font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Courier New', monospace;
@@ -2732,7 +2733,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-4xl);
-  margin: 0 auto 14px;
+  margin: 0 auto var(--sp-3-5);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
@@ -2778,7 +2779,7 @@ mark.tx-hl {
 
 .auth-submit {
   width: 100%;
-  padding: 14px;
+  padding: var(--sp-3-5);
   font-size: var(--fs-lg);
   border-radius: var(--radius-btn);
   margin-top: var(--sp-1-5);
@@ -2789,7 +2790,7 @@ mark.tx-hl {
   background: var(--danger-bg);
   border: 1px solid var(--danger-border);
   border-radius: var(--radius-sm);
-  padding: 11px 14px;
+  padding: 11px var(--sp-3-5);
   font-size: var(--fs-sm);
   color: var(--danger-text);
   margin-bottom: var(--sp-4);
@@ -2824,7 +2825,7 @@ mark.tx-hl {
 .install-guide-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: var(--sp-3-5);
   margin-top: var(--sp-3);
 }
 
@@ -2835,7 +2836,7 @@ mark.tx-hl {
 .install-tab {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
-  padding: 14px 16px;
+  padding: var(--sp-3-5) var(--sp-4);
   border: 1px solid var(--border);
 }
 
@@ -2863,8 +2864,8 @@ body {
   bottom: 0; left: 0; right: 0;
   background: var(--sidebar-bg);
   color: var(--sidebar-text-hi);
-  padding: 14px 16px;
-  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  padding: var(--sp-3-5) var(--sp-4);
+  padding-bottom: calc(var(--sp-3-5) + env(safe-area-inset-bottom));
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
   transition: transform var(--dur-slow) var(--ease-std);
@@ -3447,7 +3448,7 @@ body {
   gap: var(--sp-1-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
-  padding: 4px var(--sp-2-5);
+  padding: var(--sp-1) var(--sp-2-5);
   border-radius: var(--radius-badge);
 }
 .notif-badge.notif-granted {
@@ -3514,7 +3515,7 @@ body {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: var(--sp-2-5) 14px;
+  padding: var(--sp-2-5) var(--sp-3-5);
 }
 .recurring-day-row {
   display: flex;
@@ -3717,7 +3718,7 @@ body {
   .onboarding-hero { padding: 32px 20px 28px; }
   .onboarding-title { font-size: var(--fs-2xl); }
   .onboarding-steps { grid-template-columns: 1fr; }
-  .step-card { flex-direction: row; align-items: flex-start; gap: 14px; }
+  .step-card { flex-direction: row; align-items: flex-start; gap: var(--sp-3-5); }
   .step-icon { font-size: var(--fs-icon-lg); }
 }
 
@@ -3739,7 +3740,7 @@ body {
   color: var(--primary);
   border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
   border-radius: var(--radius-sm);
-  padding: 7px 14px;
+  padding: 7px var(--sp-3-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   transition: background var(--dur-base), border-color var(--dur-base), transform var(--dur-fast);
@@ -3758,7 +3759,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: var(--sp-3-5);
   padding: 12px 20px 24px;
 }
 
@@ -3803,7 +3804,7 @@ body {
 /* モバイル */
 @media (max-width: 640px) {
   .modal-share { width: calc(100% - 24px); }
-  .share-modal-body { padding: 8px 14px 20px; gap: var(--sp-3); }
+  .share-modal-body { padding: var(--sp-2) var(--sp-3-5) var(--sp-5); gap: var(--sp-3); }
   .share-hint { display: none; }
 }
 
@@ -4278,7 +4279,7 @@ body {
   /* プリセットボタンのタッチ改善 */
   .btn-preset {
     min-height: 44px;
-    padding: var(--sp-2-5) 14px;
+    padding: var(--sp-2-5) var(--sp-3-5);
   }
 
   /* FABの下余白改善（ボトムナビ + セーフエリア） */
@@ -7907,7 +7908,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* -- モバイル対応 -- */
 @media (max-width: 560px) {
   .ct-chips { gap: var(--sp-1); }
-  .ct-chip  { padding: 4px var(--sp-2-5); }
+  .ct-chip  { padding: var(--sp-1) var(--sp-2-5); }
   .ct-table th, .ct-table td { font-size: var(--fs-xs); padding: var(--sp-1-5) 8px; }
   .ct-stat-row { grid-template-columns: repeat(2, 1fr); }
 }
@@ -9932,7 +9933,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px var(--sp-2-5) 4px 12px;
+  padding: var(--sp-1) var(--sp-2-5) var(--sp-1) var(--sp-3);
   border-radius: var(--radius-badge);
   border: 1.5px solid var(--border);
   background: var(--surface-hover);
@@ -10100,7 +10101,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-widget-desc {
   font-size: var(--fs-sm);
   color: var(--text-muted);
-  margin: 4px 0 12px;
+  margin: var(--sp-1) 0 var(--sp-3);
   line-height: var(--lh-normal);
 }
 .adv-widget-hint {
@@ -10149,7 +10150,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--primary);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
-  margin-bottom: 14px;
+  margin-bottom: var(--sp-3-5);
 }
 .adv-month-badge::before {
   content: '';
@@ -10194,11 +10195,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-text h3 {
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
-  margin: 14px 0 var(--sp-1-5);
+  margin: var(--sp-3-5) 0 var(--sp-1-5);
   color: var(--primary);
 }
 .adv-text ul {
-  margin: 4px 0 var(--sp-2-5) 18px;
+  margin: var(--sp-1) 0 var(--sp-2-5) 18px;
   padding: 0;
 }
 .adv-text li {
@@ -10219,7 +10220,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .adv-section {
   margin-bottom: var(--sp-2-5);
-  padding: var(--sp-2-5) 14px;
+  padding: var(--sp-2-5) var(--sp-3-5);
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--primary);
   background: color-mix(in srgb, var(--primary) 4%, transparent);
@@ -10260,7 +10261,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: flex-start;
   gap: var(--sp-2-5);
-  padding: 12px 14px;
+  padding: var(--sp-3) var(--sp-3-5);
   border-radius: var(--radius-sm);
   background: var(--danger-bg);
   color: var(--danger-text);
@@ -10808,7 +10809,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-footer { padding: 0 var(--sp-5) var(--sp-5); }
 .ci-ok-btn {
   width: 100%;
-  padding: 14px;
+  padding: var(--sp-3-5);
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   border-radius: var(--radius-btn);
@@ -11383,7 +11384,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .amt-hist-chip {
   display: inline-flex;
   align-items: center;
-  padding: 4px 11px;
+  padding: var(--sp-1) 11px;
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -11453,7 +11454,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .memo-hist-chip {
   display: inline-flex;
   align-items: center;
-  padding: 4px var(--sp-2-5);
+  padding: var(--sp-1) var(--sp-2-5);
   border-radius: var(--radius-badge);
   border: 1px solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) 28%, transparent);
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 10%, var(--surface));
@@ -12803,7 +12804,7 @@ canvas.chart-clickable { cursor: pointer; }
 .pace-widget-body.pace-status-over { border-top: 3px solid var(--danger-text); }
 
 .pace-widget-body { padding: var(--sp-2) 0 0; }
-.pace-bars { display: flex; flex-direction: column; gap: 14px; }
+.pace-bars { display: flex; flex-direction: column; gap: var(--sp-3-5); }
 .pace-bar-row {
   display: flex;
   align-items: center;
