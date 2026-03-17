@@ -150,6 +150,19 @@
   --dur-appear:  0.22s;                            /* クイック入場（行・バナー・カードホバー） */
   --dur-gentle:  0.28s;                            /* ゆるやか入場（スライド・ピル） */
   --dur-pulse:   2.4s;                             /* パルスループアニメーション */
+  --dur-pop:     0.32s;                            /* ポップ入場（モーダルボックス・チップ） */
+  --dur-lift:    0.38s;                            /* リフト入場（カード・バナー・バリデーション） */
+  --dur-snap:    0.45s;                            /* スナップ/バウンスポップ（dup・col-in等） */
+  --dur-badge:   0.5s;                             /* バッジ入場アニメーション */
+  --dur-spark:   0.55s;                            /* スパークライン・フェード */
+  --dur-spin:    0.6s;                             /* 回転・セグメントアニメーション */
+  --dur-swing:   0.65s;                            /* スウィング・バーフィル・ベル揺れ */
+  --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
+  --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
+  --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
+  --ease-plain:  ease;                             /* ブラウザデフォルトease */
+  --ease-out:    ease-out;                         /* 標準ease-out */
+  --ease-in-out: ease-in-out;                      /* 標準ease-in-out */
   --ease-std:    cubic-bezier(.4, 0, .2, 1);       /* 標準イージング（Material） */
   --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);  /* 弾性バウンス */
   --ease-enter:  cubic-bezier(.22, 1, .36, 1);     /* 自然な減速入場（ease-out-quart系） */
@@ -674,7 +687,7 @@ select:focus:not(:focus-visible) {
 }
 .card-collapse-body {
   overflow: hidden;
-  transition: max-height 0.32s var(--ease-std),
+  transition: max-height var(--dur-pop) var(--ease-std),
               opacity   0.28s var(--ease-std);
   max-height: 2000px;
   opacity: 1;
@@ -800,7 +813,7 @@ select:focus:not(:focus-visible) {
   82%  { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
-.dup-popping { animation: dup-pop 0.45s var(--ease-bounce); }
+.dup-popping { animation: dup-pop var(--dur-snap) var(--ease-bounce); }
 
 /* 複製元行フラッシュ */
 @keyframes tx-dup-row-flash {
@@ -809,7 +822,7 @@ select:focus:not(:focus-visible) {
   65%  { background-color: var(--warning-bg); }
   100% { background-color: transparent; }
 }
-.tx-dup-flash { animation: tx-dup-row-flash 0.65s ease-out; }
+.tx-dup-flash { animation: tx-dup-row-flash var(--dur-swing) var(--ease-out); }
 
 /* 複製モーダルバナー */
 .dup-modal-banner {
@@ -913,7 +926,7 @@ select:focus:not(:focus-visible) {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height var(--dur-base) ease, opacity var(--dur-base) ease, margin-top var(--dur-base) ease;
+  transition: max-height var(--dur-base) var(--ease-plain), opacity var(--dur-base) var(--ease-plain), margin-top var(--dur-base) var(--ease-plain);
 }
 .field-msg.show {
   max-height: 40px;
@@ -1205,7 +1218,7 @@ select:focus:not(:focus-visible) {
   background: #fff;
   border-radius: 1px;
   transform: translateY(-50%);
-  animation: cb-dash-in var(--dur-faster) ease both;
+  animation: cb-dash-in var(--dur-faster) var(--ease-plain) both;
 }
 [data-theme="dark"] .tx-cb {
   background: var(--surface-2);
@@ -1298,7 +1311,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
-  animation: tx-sort-badge-in var(--dur-base) ease both;
+  animation: tx-sort-badge-in var(--dur-base) var(--ease-plain) both;
 }
 .tx-sort-badge:hover {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
@@ -1859,7 +1872,7 @@ mark.tx-hl {
   padding: 0 2px;
   font-weight: var(--fw-bold);
   font-style: normal;
-  animation: tx-hl-in var(--dur-mid) ease both;
+  animation: tx-hl-in var(--dur-mid) var(--ease-plain) both;
 }
 [data-theme="dark"] mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 28%, transparent);
@@ -2889,7 +2902,7 @@ body {
   text-align: center;
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
-  transition: transform var(--dur-slow) ease;
+  transition: transform var(--dur-slow) var(--ease-plain);
 }
 .pwa-ios-guide.show { transform: translateY(0); }
 
@@ -2924,7 +2937,7 @@ body {
   font-weight: var(--fw-semi);
   z-index: var(--z-toast);
   transform: translateY(-100%);
-  transition: transform var(--dur-slow) ease;
+  transition: transform var(--dur-slow) var(--ease-plain);
 }
 .offline-indicator.show { transform: translateY(0); }
 
@@ -3134,7 +3147,7 @@ body {
   60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 12px transparent; }
   100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 transparent; }
 }
-#global-fab.fab-pulsing { animation: fab-pulse 2.2s ease-out infinite; }
+#global-fab.fab-pulsing { animation: fab-pulse 2.2s var(--ease-out) infinite; }
 #global-fab.fab-pulsing:hover,
 #global-fab.fab-pulsing:active { animation: none; }
 
@@ -3334,12 +3347,12 @@ body {
 }
 
 /* ── モーダルアニメーション ── */
-.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) ease; }
+.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-plain); }
 .modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
 .modal-overlay .modal {
   transform: translateY(20px) scale(0.96);
   opacity: 0;
-  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) ease;
+  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(1);
@@ -3373,7 +3386,7 @@ body {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.tx-table tbody tr { animation: row-in var(--dur-faster) ease both; }
+.tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-plain) both; }
 .tx-table tbody tr:nth-child(2)  { animation-delay: .04s; }
 .tx-table tbody tr:nth-child(3)  { animation-delay: .08s; }
 .tx-table tbody tr:nth-child(4)  { animation-delay: .12s; }
@@ -3384,7 +3397,7 @@ body {
 .tx-table tbody tr:nth-child(9)  { animation-delay: .32s; }
 .tx-table tbody tr:nth-child(10) { animation-delay: .36s; }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
-.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) ease both; }
+.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-plain) both; }
 .tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: .025s; }
 .tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: .050s; }
 .tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: .075s; }
@@ -4182,7 +4195,7 @@ body {
   z-index: var(--z-sidebar-overlay);
   background: var(--scrim);
   opacity: 0;
-  transition: opacity var(--dur-mid) ease;
+  transition: opacity var(--dur-mid) var(--ease-plain);
   -webkit-tap-highlight-color: transparent;
 }
 #sidebar-overlay.active {
@@ -4300,7 +4313,7 @@ body {
     var(--border) 80%
   );
   background-size: 1600px 100%;
-  animation: sk-shimmer 1.6s ease-in-out infinite;
+  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
@@ -4357,7 +4370,7 @@ body {
     var(--surface) 80%
   );
   background-size: 1600px 100%;
-  animation: sk-shimmer 1.6s ease-in-out infinite;
+  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
 }
 
 [data-theme="dark"] #sidebar-overlay {
@@ -4577,7 +4590,7 @@ body {
 .goal-progress-bar-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  transition: width 0.8s var(--ease-out-expo);
+  transition: width var(--dur-glide) var(--ease-out-expo);
   /* v5.32: CSS変数でグラデーション */
   background: linear-gradient(
     90deg,
@@ -4693,7 +4706,7 @@ body {
 .goal-achieved-summary::before {
   content: '▶';
   font-size: var(--fs-2xs);
-  transition: transform var(--dur-base) ease;
+  transition: transform var(--dur-base) var(--ease-plain);
   display: inline-block;
 }
 details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
@@ -4856,7 +4869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-dash-bar-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  transition: width 0.8s var(--ease-out-expo);
+  transition: width var(--dur-glide) var(--ease-out-expo);
   /* v5.32: CSS変数グラデーション */
   background: linear-gradient(
     90deg,
@@ -4973,7 +4986,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in var(--dur-mid) ease;
+  animation: cal-fade-in var(--dur-mid) var(--ease-plain);
 }
 
 .cal-dow-row {
@@ -5004,7 +5017,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   cursor: pointer;
-  transition: background var(--dur-fast) ease;
+  transition: background var(--dur-fast) var(--ease-plain);
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -5031,7 +5044,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   padding: 1px 7px;
   border-radius: var(--radius-badge);
-  animation: cal-ws-pill-in var(--dur-gentle) ease both;
+  animation: cal-ws-pill-in var(--dur-gentle) var(--ease-plain) both;
   animation-delay: calc(var(--ws-i, 0) * 55ms);
 }
 .cal-ws-pill.inc {
@@ -5231,7 +5244,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in var(--dur-mid) ease;
+  animation: cal-fade-in var(--dur-mid) var(--ease-plain);
 }
 .cal-events-header {
   display: flex;
@@ -5445,7 +5458,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .insight-item {
-  animation: insight-in var(--dur-medium) ease both;
+  animation: insight-in var(--dur-medium) var(--ease-plain) both;
 }
 .insight-item:nth-child(1) { animation-delay: 0.04s; }
 .insight-item:nth-child(2) { animation-delay: 0.10s; }
@@ -5453,7 +5466,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .insight-item:nth-child(4) { animation-delay: 0.22s; }
 
 .insight-item.insight-alert {
-  animation: insight-in var(--dur-medium) ease both, insight-alert-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
+  animation: insight-in var(--dur-medium) var(--ease-plain) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
 }
 .insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, 0.8s; }
 .insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, 0.8s; }
@@ -5639,7 +5652,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both;
+  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both;
 }
 .sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .sub-card-color-bar {
@@ -5731,7 +5744,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-progress-fill {
   height: 100%;
   width: var(--sub-progress, 0%);
-  animation: sub-bar-fill var(--dur-fill) ease-out calc(var(--sub-i, 0) * 55ms + 0.2s) both;
+  animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * 55ms + 0.2s) both;
 }
 .sub-card-progress-fill.prog-normal { background: var(--primary); opacity: 0.5; }
 .sub-card-progress-fill.prog-soon   { background: var(--warning); }
@@ -5740,11 +5753,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 状態クラス */
 .sub-card.sub-urgent {
   border-color: var(--danger-border);
-  animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both,
-             sub-urgent-glow var(--dur-pulse) ease-in-out calc(var(--sub-i, 0) * 55ms + var(--dur-long)) infinite;
+  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both,
+             sub-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--sub-i, 0) * 55ms + var(--dur-long)) infinite;
 }
 .sub-card.sub-soon   { border-color: var(--warning); opacity: 0.9; }
-.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in var(--dur-medium) ease-out calc(var(--sub-i, 0) * 55ms) both; }
+.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both; }
 
 /* 空状態 */
 .sub-empty {
@@ -6072,13 +6085,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both;
+  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * 55ms) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .pt-card.pt-urgent {
   border-left: 3px solid var(--danger-border);
-  animation: pt-card-in var(--dur-medium) ease-out calc(var(--pt-i, 0) * 55ms) both,
-             pt-urgent-glow var(--dur-pulse) ease-in-out calc(var(--pt-i, 0) * 55ms + var(--dur-long)) infinite;
+  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * 55ms) both,
+             pt-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--pt-i, 0) * 55ms + var(--dur-long)) infinite;
 }
 .pt-card.pt-soon   { border-left: 3px solid var(--warning); }
 
@@ -6168,7 +6181,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-exp-bar-fill {
   height: 100%;
   width: var(--pt-progress, 0%);
-  animation: pt-bar-fill var(--dur-fill) ease-out calc(var(--pt-i, 0) * 55ms + 0.2s) both;
+  animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * 55ms + 0.2s) both;
 }
 .pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: 0.6; }
 .pt-exp-bar-fill.prog-soon   { background: var(--warning); }
@@ -6310,7 +6323,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-width: 11;
   stroke-linecap: round;
   stroke-dasharray: 163.36 163.36;
-  animation: hs-gauge-in 1.1s var(--ease-std) both;
+  animation: hs-gauge-in var(--dur-gauge) var(--ease-std) both;
   animation-delay: 0.1s;
 }
 @keyframes hs-gauge-in {
@@ -6349,7 +6362,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   justify-content: center;
   flex-shrink: 0;
   box-shadow: var(--shadow-badge);
-  animation: hs-badge-in 0.5s var(--ease-bounce) both;
+  animation: hs-badge-in var(--dur-badge) var(--ease-bounce) both;
   animation-delay: 0.85s;
 }
 @keyframes hs-badge-in {
@@ -6595,7 +6608,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card.wl-high {
   animation: wl-card-in var(--dur-medium) var(--ease-std) both,
-             wl-urgent-glow var(--dur-pulse) ease-in-out calc(var(--wl-i, 0) * 60ms + var(--dur-long)) infinite;
+             wl-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--wl-i, 0) * 60ms + var(--dur-long)) infinite;
 }
 .wl-card-icon {
   font-size: 28px;
@@ -6841,7 +6854,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   margin-top: var(--sp-2);
   font-size: var(--fs-xs);
-  animation: memo-hint-in var(--dur-base) ease;
+  animation: memo-hint-in var(--dur-base) var(--ease-plain);
 }
 .memo-cat-hint-icon {
   font-size: var(--fs-xl);
@@ -6926,7 +6939,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .forecast-card.fc-status-alert {
   border-left: 3px solid var(--danger-text);
   animation: fc-card-in var(--dur-long) var(--ease-enter) both,
-             fc-alert-glow var(--dur-pulse) ease-in-out 0.8s infinite;
+             fc-alert-glow var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
 }
 
 /* ステータスバッジ */
@@ -7669,7 +7682,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   transition: box-shadow var(--dur-base), transform var(--dur-base);
-  animation: dow-card-in 0.38s var(--ease-bounce) both;
+  animation: dow-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--dow-i, 0) * 80ms);
 }
 .dow-stat-card:hover {
@@ -7875,7 +7888,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* テーブル行アニメーション */
 .ct-table tbody tr {
-  animation: ct-row-in var(--dur-appear) ease both;
+  animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
   animation-delay: calc(var(--ct-ri, 0) * 28ms);
 }
 
@@ -7948,7 +7961,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   color: #fff;
   transition: transform var(--dur-faster), box-shadow var(--dur-faster);
-  animation: fv-card-in 0.38s var(--ease-bounce) both;
+  animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * 65ms);
 }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover-md); }
@@ -8015,7 +8028,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   border-radius: var(--radius-3xs);
   transform-origin: left center;
-  animation: fv-bar-fill var(--dur-fill) ease both;
+  animation: fv-bar-fill var(--dur-fill) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ci, 0) * 40ms);
 }
 @keyframes fv-bar-fill {
@@ -8028,7 +8041,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* カテゴリ別テーブル行: 左ボーダー + 入場アニメーション (v5.71) */
 .fv-cat-table tbody tr {
   border-left: 3px solid var(--fv-cat-color, var(--border));
-  animation: fv-cat-row-in var(--dur-appear) ease both;
+  animation: fv-cat-row-in var(--dur-appear) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ci, 0) * 30ms);
 }
 @keyframes fv-cat-row-in {
@@ -8051,7 +8064,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   background: var(--primary);
   width: calc(var(--fv-fi, 0) * 1%);
-  animation: fv-seg-in 0.6s ease both;
+  animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ri, 0) * 22ms);
   transform-origin: left;
 }
@@ -8059,7 +8072,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%;
   background: var(--success);
   flex: 1;
-  animation: fv-seg-in 0.6s ease both;
+  animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ri, 0) * 22ms + 0.06s);
   transform-origin: right;
 }
@@ -8072,7 +8085,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 月別テーブル行アニメーション */
 .fv-month-table tbody tr {
-  animation: ct-row-in var(--dur-appear) ease both;
+  animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ri, 0) * 25ms);
 }
 
@@ -8220,7 +8233,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  animation: wk-col-in 0.45s var(--ease-bounce) both;
+  animation: wk-col-in var(--dur-snap) var(--ease-bounce) both;
   animation-delay: calc(var(--wk-i, 0) * 55ms);
 }
 .wk-bar-wrap {
@@ -8258,12 +8271,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
 }
 .wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) ease-in-out 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
 }
 
 .wk-bar-amount {
@@ -8393,7 +8406,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-body {
   padding: 0 var(--sp-4) var(--sp-4);
   border-top: 1px solid var(--border);
-  animation: qa-body-in var(--dur-appear) ease;
+  animation: qa-body-in var(--dur-appear) var(--ease-plain);
   position: relative;
   z-index: 1;
 }
@@ -8729,7 +8742,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3);
   position: relative;
   overflow: hidden;
-  animation: hm-stat-in 0.38s var(--ease-bounce) both;
+  animation: hm-stat-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--hm-si, 0) * 65ms);
 }
 .hm-stat-card::before {
@@ -8842,7 +8855,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 週列スタッガードフェードイン */
 .hm-col-wrap {
   display: contents;
-  animation: hm-col-in var(--dur-medium) ease both;
+  animation: hm-col-in var(--dur-medium) var(--ease-plain) both;
   animation-delay: calc(var(--hm-wi, 0) * 8ms);
 }
 .hm-cell {
@@ -8872,7 +8885,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   outline: 2px solid var(--on-dark-opaque);
   outline-offset: -2px;
   border-radius: var(--radius-3xs);
-  animation: hm-today-pulse var(--dur-pulse) ease-in-out infinite;
+  animation: hm-today-pulse var(--dur-pulse) var(--ease-in-out) infinite;
   position: relative;
   z-index: 2;
 }
@@ -8934,7 +8947,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-summary-monthly {
   position: relative;
   overflow: hidden;
-  animation: debt-sum-in 0.38s var(--ease-bounce) both;
+  animation: debt-sum-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--ds-i, 0) * 70ms);
 }
 @keyframes debt-sum-in {
@@ -8997,7 +9010,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 低返済率カードのパルスアニメーション (v5.85) */
 .debt-card.debt-low {
   animation: debt-card-in .38s var(--ease-bounce) both,
-             debt-low-glow var(--dur-pulse) ease-in-out calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
+             debt-low-glow var(--dur-pulse) var(--ease-in-out) calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
   0%, 100% { border-left-color: var(--debt-accent, var(--expense)); }
@@ -9054,7 +9067,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-bar-fill {
   height: 100%; border-radius: var(--radius-badge);
   transform-origin: left center;
-  animation: debt-bar-fill-in var(--dur-fill) ease both;
+  animation: debt-bar-fill-in var(--dur-fill) var(--ease-plain) both;
   animation-delay: calc(var(--dbi, 0) * 40ms + 0.2s);
 }
 @keyframes debt-bar-fill-in {
@@ -9283,7 +9296,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* 結果グリッドラッパー — フェードイン */
 .sim-result-grid-wrap {
-  animation: sim-grid-in var(--dur-medium) ease both;
+  animation: sim-grid-in var(--dur-medium) var(--ease-plain) both;
 }
 @keyframes sim-grid-in {
   from { opacity: 0; transform: translateY(10px); }
@@ -9306,7 +9319,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* セル スタッガードフェードイン */
 .sim-result-grid > div {
-  animation: sim-cell-in var(--dur-gentle) ease calc(var(--sim-ri,0) * 45ms) both;
+  animation: sim-cell-in var(--dur-gentle) var(--ease-plain) calc(var(--sim-ri,0) * 45ms) both;
 }
 @keyframes sim-cell-in {
   from { opacity: 0; }
@@ -9346,7 +9359,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 節約値 — 更新時バウンス */
 .sim-savings-value { display: inline-block; }
 .sim-val-pop {
-  animation: sim-val-pop 0.38s var(--ease-bounce);
+  animation: sim-val-pop var(--dur-lift) var(--ease-bounce);
 }
 @keyframes sim-val-pop {
   from { transform: scale(1.22); }
@@ -9355,7 +9368,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* チャートラッパー入場 */
 .sim-chart-wrap {
-  animation: sim-chart-in 0.45s ease 0.08s both;
+  animation: sim-chart-in var(--dur-snap) var(--ease-plain) 0.08s both;
 }
 @keyframes sim-chart-in {
   from { opacity: 0; transform: translateY(14px); }
@@ -9389,7 +9402,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-card);
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-3);
-  animation: sb-banner-in 0.38s var(--ease-bounce) both;
+  animation: sb-banner-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: 0.1s;
 }
 @keyframes sb-banner-in {
@@ -9479,7 +9492,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-row {
   border-left: 3px solid var(--sb-cat-color, var(--border));
   transition: background var(--dur-fast);
-  animation: sb-row-in 0.38s var(--ease-bounce) both;
+  animation: sb-row-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--sb-i, 0) * 45ms + 0.12s);
 }
 .sb-row:hover {
@@ -9839,7 +9852,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   border-left: 3px solid var(--ev-accent, var(--primary));
-  animation: ev-widget-item-in .32s var(--ease-bounce) both;
+  animation: ev-widget-item-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-wi, 0) * 50ms);
   transition: transform var(--dur-fast);
 }
@@ -9927,7 +9940,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   cursor: pointer;
   transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-faster);
-  animation: sf-chip-in 0.32s var(--ease-bounce) both;
+  animation: sf-chip-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * 45ms);
   white-space: nowrap;
   max-width: 140px;
@@ -10005,7 +10018,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   text-align: center;
   gap: var(--sp-1);
-  animation: tg-stat-in 0.38s var(--ease-bounce) both;
+  animation: tg-stat-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--tg-si, 0) * 65ms);
 }
 .tg-stat-icon { font-size: var(--fs-icon-lg); line-height: 1; }
@@ -10107,7 +10120,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: none; }
 }
 #advice-modal .modal {
-  animation: adv-modal-in 0.38s var(--ease-bounce);
+  animation: adv-modal-in var(--dur-lift) var(--ease-bounce);
 }
 
 /* ウィジェットボタン */
@@ -10118,7 +10131,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-widget-btn {
   width: 100%;
   justify-content: center;
-  animation: adv-btn-glow 2.8s ease-in-out infinite;
+  animation: adv-btn-glow 2.8s var(--ease-in-out) infinite;
 }
 
 /* 月バッジ */
@@ -10146,7 +10159,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   background: var(--primary);
   flex-shrink: 0;
-  animation: adv-dot-pulse 2s ease-in-out infinite;
+  animation: adv-dot-pulse 2s var(--ease-in-out) infinite;
 }
 
 /* スケルトンローディング */
@@ -10338,7 +10351,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 44px;
   display: block;
   margin-bottom: var(--sp-3);
-  animation: txEmptyBounce var(--dur-pulse) ease-in-out infinite;
+  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite;
 }
 @keyframes txEmptyBounce {
   0%, 100% { transform: translateY(0); }
@@ -10393,7 +10406,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .yr-cell {
   border-radius: var(--radius-md);
   padding: var(--sp-3);
-  animation: yr-cell-in 0.38s var(--ease-bounce) both;
+  animation: yr-cell-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--yr-i, 0) * 0.08s);
 }
 .yr-cell-label {
@@ -10543,7 +10556,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 100%;
   height: 44px;
   display: block;
-  animation: yr-spark-in 0.55s ease var(--dur-slow) both;
+  animation: yr-spark-in var(--dur-spark) var(--ease-plain) var(--dur-slow) both;
 }
 @keyframes yr-spark-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -10664,7 +10677,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
-  animation: ci-cell-in 0.38s var(--ease-bounce) both;
+  animation: ci-cell-in var(--dur-lift) var(--ease-bounce) both;
 }
 .ci-cell:nth-child(1) { animation-delay: 0.15s; }
 .ci-cell:nth-child(2) { animation-delay: 0.22s; }
@@ -10900,10 +10913,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: color var(--dur-faster);
 }
 .btn-notif-bell.notif-bell-ringing svg {
-  animation: notif-bell-ring var(--dur-fill) ease-in-out both;
+  animation: notif-bell-ring var(--dur-fill) var(--ease-in-out) both;
 }
 .btn-notif-bell.has-unread:hover svg {
-  animation: notif-bell-ring 0.65s ease-in-out both;
+  animation: notif-bell-ring var(--dur-swing) var(--ease-in-out) both;
 }
 
 /* ベルバッジ */
@@ -10960,7 +10973,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transform: translateY(-8px) scale(0.97);
   opacity: 0;
-  transition: transform 0.22s var(--ease-bounce), opacity var(--dur-faster) ease;
+  transition: transform 0.22s var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
 }
 .notif-panel.notif-panel-open {
   transform: translateY(0) scale(1);
@@ -11513,7 +11526,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn-sm);
   background: var(--warning-bg);
   border: 1px solid var(--warning-border);
-  animation: calc-preview-in var(--dur-faster) ease both;
+  animation: calc-preview-in var(--dur-faster) var(--ease-plain) both;
 }
 
 @keyframes calc-preview-in {
@@ -11584,7 +11597,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 2rem;
   line-height: 1;
   flex-shrink: 0;
-  animation: rc-icon-spin 0.6s var(--ease-bounce) both;
+  animation: rc-icon-spin var(--dur-spin) var(--ease-bounce) both;
 }
 
 @keyframes rc-icon-spin {
@@ -11794,7 +11807,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  animation: tx-banner-in var(--dur-appear) ease both;
+  animation: tx-banner-in var(--dur-appear) var(--ease-plain) both;
 }
 .tx-added-count-badge {
   background: var(--success);
@@ -11923,7 +11936,7 @@ kbd {
   box-shadow: 0 4px 20px var(--black-14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-faster) ease, transform var(--dur-appear) var(--ease-bounce);
+  transition: opacity var(--dur-faster) var(--ease-plain), transform var(--dur-appear) var(--ease-bounce);
   z-index: var(--z-kbd-hint);
   max-width: calc(100vw - 32px);
 }
@@ -11948,7 +11961,7 @@ kbd {
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--primary);
-  animation: kb-dots-pulse 0.8s ease infinite;
+  animation: kb-dots-pulse var(--dur-glide) var(--ease-plain) infinite;
 }
 .kb-g-hint-sub {
   font-size: var(--fs-xs);
@@ -11964,7 +11977,7 @@ kbd {
   to   { opacity: 1; transform: none; }
 }
 #kb-help-modal.modal-is-open .modal-wrap {
-  animation: kb-help-modal-in 0.32s var(--ease-bounce) both;
+  animation: kb-help-modal-in var(--dur-pop) var(--ease-bounce) both;
 }
 
 /* ============================================================
@@ -11980,7 +11993,7 @@ canvas.chart-clickable { cursor: pointer; }
   flex-direction: column;
 }
 #dd-modal.modal-is-open .dd-modal-box {
-  animation: dd-box-in 0.32s var(--ease-bounce) both;
+  animation: dd-box-in var(--dur-pop) var(--ease-bounce) both;
 }
 @keyframes dd-box-in {
   from { opacity: 0; transform: scale(0.94) translateY(12px); }
@@ -12058,7 +12071,7 @@ canvas.chart-clickable { cursor: pointer; }
   cursor: pointer;
   border-radius: var(--radius-btn-sm);
   transition: background var(--dur-quick);
-  animation: dd-row-in var(--dur-base) ease both;
+  animation: dd-row-in var(--dur-base) var(--ease-plain) both;
   animation-delay: calc(var(--dd-i, 0) * 28ms);
 }
 .dd-tx-row:last-child { border-bottom: none; }
@@ -12164,9 +12177,9 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-2);
   position: relative;
   overflow: hidden;
-  animation: yi-card-in 0.38s var(--ease-bounce) both;
+  animation: yi-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--yi-si, 0) * 60ms);
-  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) ease;
+  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
 }
 .yi-card:hover {
   transform: translateY(-3px);
@@ -12299,7 +12312,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-btn);
   border-left: 3px solid var(--opp-accent, var(--primary));
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
-  animation: opp-card-in 0.32s var(--ease-bounce) both;
+  animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * 60ms);
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
@@ -12406,7 +12419,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
 }
 #md-modal.modal-is-open .md-modal-box {
-  animation: dd-box-in 0.32s var(--ease-bounce) both;
+  animation: dd-box-in var(--dur-pop) var(--ease-bounce) both;
 }
 
 /* 前月/翌月ナビ (v8.9) */
@@ -12530,7 +12543,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--md-cat-color, var(--primary));
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: md-bar-fill 0.65s var(--ease-std) both;
+  animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
   animation-delay: calc(var(--md-i, 0) * 40ms + 0.1s);
 }
 @keyframes md-bar-fill {
@@ -12579,7 +12592,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-2) var(--sp-2);
   position: relative;
   overflow: hidden;
-  animation: md-cell-in 0.32s var(--ease-bounce) both;
+  animation: md-cell-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--md-si, 0) * 60ms);
 }
 .md-cell::after {
@@ -12996,7 +13009,7 @@ canvas.chart-clickable { cursor: pointer; }
     color-mix(in srgb, var(--pm-sum-color) 10%, var(--surface)),
     color-mix(in srgb, var(--pm-sum-color) 4%, var(--surface)));
   border: 1px solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
-  animation: pm-sum-in 0.38s var(--ease-bounce) both;
+  animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
 .pm-sum-card:nth-child(1) { animation-delay: 0ms; }
 .pm-sum-card:nth-child(2) { animation-delay: 65ms; }
