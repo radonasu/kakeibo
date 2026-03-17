@@ -17,6 +17,7 @@
   --bg:            #f1f5f9;
   --surface:       #ffffff;
   --surface-2:     #f8fafc;
+  --white:         #fff;    /* 純白定数（着色背景・グラデーション上テキスト・マーク等） */
   --sidebar-bg:    #0f172a;
   --sidebar-text:       #e2e8f0;  /* サイドバー本文テキスト（常時ダーク背景用） */
   --sidebar-text-hi:    #f1f5f9;  /* サイドバー強調テキスト */
@@ -375,7 +376,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-icon);
-  color: #fff;
+  color: var(--white);
   flex-shrink: 0;
 }
 
@@ -517,7 +518,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   flex-shrink: 0;
 }
 
@@ -749,7 +750,7 @@ select:focus:not(:focus-visible) {
 
 .btn-primary {
   background: var(--primary);
-  color: #fff;
+  color: var(--white);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 50%, transparent); }
@@ -1039,7 +1040,7 @@ select:focus:not(:focus-visible) {
 .summary-card {
   border-radius: var(--radius-lg);
   padding: var(--sp-6);
-  color: #fff;
+  color: var(--white);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -1085,7 +1086,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-4xl);
   font-weight: var(--fw-black);
   letter-spacing: var(--ls-tighter);
-  color: #fff;
+  color: var(--white);
   line-height: var(--lh-tight);
 }
 
@@ -1210,7 +1211,7 @@ select:focus:not(:focus-visible) {
   position: absolute;
   top: 1px; left: 4px;
   width: 5px; height: 9px;
-  border: 2px solid #fff;
+  border: 2px solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
@@ -1224,7 +1225,7 @@ select:focus:not(:focus-visible) {
   position: absolute;
   top: 50%; left: 3px;
   height: 2px;
-  background: #fff;
+  background: var(--white);
   border-radius: 1px;
   transform: translateY(-50%);
   animation: cb-dash-in var(--dur-faster) var(--ease-plain) both;
@@ -1397,7 +1398,7 @@ select:focus:not(:focus-visible) {
   gap: var(--sp-1);
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   background: var(--primary);
   padding: 2px var(--sp-2-5) 2px 8px;
   border-radius: var(--radius-badge);
@@ -1731,7 +1732,7 @@ select:focus:not(:focus-visible) {
   padding: 0 4px;
   border-radius: var(--radius-badge);
   background: var(--primary);
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   line-height: 1;
@@ -2258,7 +2259,7 @@ mark.tx-hl {
 
 .btn-receipt {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
+  color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
   padding: 9px 16px;
@@ -2313,7 +2314,7 @@ mark.tx-hl {
 .multi-receipt-list .btn-mr-all {
   align-self: flex-end;
   background: var(--primary);
-  color: #fff;
+  color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
   padding: var(--sp-1-5) var(--sp-3-5);
@@ -2377,7 +2378,7 @@ mark.tx-hl {
 .btn-mr-fill:hover { background: var(--surface-hover); }
 .btn-mr-add {
   background: var(--income);
-  color: #fff;
+  color: var(--white);
 }
 .btn-mr-add:hover { opacity: .85; }
 .btn-mr-add:disabled { opacity: .5; cursor: not-allowed; }
@@ -2593,7 +2594,7 @@ mark.tx-hl {
   justify-content: center;
   font-size: var(--fs-base);
   font-weight: var(--fw-black);
-  color: #fff;
+  color: var(--white);
   flex-shrink: 0;
 }
 
@@ -2717,7 +2718,7 @@ mark.tx-hl {
 }
 
 .auth-card {
-  background: #fff;
+  background: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-auth);
   width: 100%;
@@ -2780,7 +2781,7 @@ mark.tx-hl {
   transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
 }
 .auth-tab.active {
-  background: #fff;
+  background: var(--white);
   color: var(--primary);
   box-shadow: var(--shadow-tab);
 }
@@ -2938,7 +2939,7 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   background: var(--warning);
-  color: #fff;
+  color: var(--white);
   text-align: center;
   padding: var(--sp-1-5) 12px;
   padding-top: calc(var(--sp-1-5) + env(safe-area-inset-top));
@@ -3129,7 +3130,7 @@ body {
   height: 56px;
   border-radius: var(--radius-circle);
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
+  color: var(--white);
   font-size: 28px;
   font-weight: var(--fw-light);
   line-height: 1;
@@ -3143,7 +3144,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-#global-fab svg { color: #fff; stroke: #fff; }
+#global-fab svg { color: var(--white); stroke: var(--white); }
 #global-fab:hover {
   transform: scale(1.12);
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
@@ -3180,7 +3181,7 @@ body {
   height: 16px;
   padding: 0 4px;
   background: var(--expense);
-  color: #fff;
+  color: var(--white);
   font-size: 9px;
   font-weight: var(--fw-bold);
   border-radius: var(--radius-badge);
@@ -3426,7 +3427,7 @@ body {
   border-radius: var(--radius-circle);
   background: var(--on-dark-drop);
   transform: scale(0);
-  animation: ripple-anim .55s linear;
+  animation: ripple-anim var(--dur-spark) var(--ease-plain);
   pointer-events: none;
 }
 @keyframes ripple-anim {
@@ -3562,7 +3563,7 @@ body {
   background: linear-gradient(135deg, var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
   padding: 44px 32px 36px;
-  color: #fff;
+  color: var(--white);
   text-align: center;
   margin-bottom: var(--sp-5);
   position: relative;
@@ -3612,7 +3613,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  background: #fff;
+  background: var(--white);
   color: var(--primary-dark);
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
@@ -3853,7 +3854,7 @@ body {
   height: 20px;
   border-radius: var(--radius-circle);
   background: var(--text-faint);
-  color: #fff;
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4900,7 +4901,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* btn-success */
-.btn-success { background: var(--success); color: #fff; border: none; }
+.btn-success { background: var(--success); color: var(--white); border: none; }
 .btn-success:hover { background: var(--income-deep); }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
@@ -5092,7 +5093,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .cal-date-num.today {
   background: var(--primary);
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius-circle);
   font-weight: var(--fw-bold);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
@@ -5618,7 +5619,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-summary-card.sub-yearly  .sub-summary-label,
 .sub-summary-card.sub-yearly  .sub-summary-sub  { color: var(--on-dark-title); }
 .sub-summary-card.sub-monthly .sub-summary-amount,
-.sub-summary-card.sub-yearly  .sub-summary-amount { color: #fff; }
+.sub-summary-card.sub-yearly  .sub-summary-amount { color: var(--white); }
 
 .sub-summary-label {
   font-size: var(--fs-xs);
@@ -6030,7 +6031,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-summary-amount {
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   line-height: var(--lh-tighter);
 }
 .pt-summary-unit {
@@ -6544,7 +6545,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   border-radius: var(--radius-circle);
   opacity: 0.18;
-  background: #fff;
+  background: var(--white);
   pointer-events: none;
 }
 .wl-summary-card::before { width: 80px; height: 80px; top: -24px; right: -20px; }
@@ -6559,7 +6560,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-sum-done .wl-summary-label  { color: var(--on-dark-title); }
 .wl-sum-count .wl-summary-value,
 .wl-sum-budget .wl-summary-value,
-.wl-sum-done .wl-summary-value  { color: #fff; }
+.wl-sum-done .wl-summary-value  { color: var(--white); }
 .wl-sum-count .wl-summary-unit,
 .wl-sum-budget .wl-summary-unit,
 .wl-sum-done .wl-summary-unit   { color: var(--on-dark-soft); }
@@ -6613,7 +6614,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 高優先度カードのパルス */
 @keyframes wl-urgent-glow {
   0%, 100% { border-left-color: var(--wl-accent, var(--expense)); box-shadow: 0 0 0 0 transparent; }
-  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
+  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, var(--white)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--expense) 12%, transparent); }
 }
 .wl-card.wl-high {
   animation: wl-card-in var(--dur-medium) var(--ease-std) both,
@@ -6885,7 +6886,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 3px 12px;
   border-radius: var(--radius-btn-sm);
   background: var(--primary);
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   border: none;
@@ -7209,7 +7210,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 16px;
   height: 16px;
   border-radius: var(--radius-circle);
-  background: #fff;
+  background: var(--white);
   box-shadow: var(--shadow-toggle);
   transition: transform var(--dur-base) var(--ease-enter);
 }
@@ -7374,12 +7375,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   opacity: 0.15;
 }
-.ch-sum-active    { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color:#fff; }
-.ch-sum-active::before { background:#fff; }
-.ch-sum-achieved  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); color:#fff; }
-.ch-sum-achieved::before { background:#fff; }
-.ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:#fff; }
-.ch-sum-total::before { background:#fff; }
+.ch-sum-active    { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color:var(--white); }
+.ch-sum-active::before { background:var(--white); }
+.ch-sum-achieved  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); color:var(--white); }
+.ch-sum-achieved::before { background:var(--white); }
+.ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:var(--white); }
+.ch-sum-total::before { background:var(--white); }
 .ch-summary-label { font-size: var(--fs-xs); opacity:0.85; margin-bottom: var(--sp-1); }
 .ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: 1; }
 .ch-summary-unit  { font-size: var(--fs-sm); font-weight:400; margin-left: 2px; opacity:0.8; }
@@ -7713,22 +7714,22 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
   background: linear-gradient(135deg, color-mix(in srgb, var(--expense) 75%, black) 0%, var(--expense) 100%);
-  color: #fff;
+  color: var(--white);
 }
 /* 最少支出: 緑系グラデーション */
 .dow-stat-min {
   background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%);
-  color: #fff;
+  color: var(--white);
 }
 
 .dow-stat-icon { font-size: var(--fs-4xl); line-height: 1; flex-shrink: 0; position: relative; z-index: 1; }
 .dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
-.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff !important; }
+.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
 .dow-stat-amount {
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   line-height: var(--lh-tighter);
 }
 .dow-stat-unit {
@@ -7968,7 +7969,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
-  color: #fff;
+  color: var(--white);
   transition: transform var(--dur-faster), box-shadow var(--dur-faster);
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * 65ms);
@@ -7998,7 +7999,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-icon  { font-size: var(--fs-icon); margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: var(--on-dark-near); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff; line-height: var(--lh-tight); margin: 2px 0; }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tight); margin: 2px 0; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: var(--on-dark-label); }
 
 /* テーブルセル */
@@ -8945,8 +8946,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
    ============================================================ */
 
 /* サマリーカード */
-.debt-summary-total  { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); color: #fff; }
-.debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: #fff; }
+.debt-summary-total  { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); color: var(--white); }
+.debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: var(--white); }
 .debt-summary-total .summary-label,
 .debt-summary-monthly .summary-label { color: var(--on-dark-hint); }
 .debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: .85; }
@@ -9175,10 +9176,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .sim-modal-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
-.sim-modal-header .modal-title { color: #fff; }
+.sim-modal-header .modal-title { color: var(--white); }
 
 /* ローン情報バー */
 .sim-loan-info {
@@ -9206,7 +9207,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border); transition: all var(--dur-fast);
 }
 .sim-preset:hover {
-  background: var(--primary); color: #fff; border-color: var(--primary);
+  background: var(--primary); color: var(--white); border-color: var(--primary);
 }
 
 /* 結果グリッド */
@@ -9294,7 +9295,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sim-preset:active { transform: scale(0.88); }
 .sim-preset.sim-preset-active {
-  background: var(--primary); color: #fff; border-color: var(--primary);
+  background: var(--primary); color: var(--white); border-color: var(--primary);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
   animation: sim-preset-pop var(--dur-slow) var(--ease-bounce) both;
 }
@@ -9425,7 +9426,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-banner-num {
   font-size: var(--fs-xl);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   line-height: var(--lh-tighter);
 }
 .sb-banner-num.sb-bn-up   { color: var(--expense-end); }
@@ -9471,7 +9472,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: 1px; left: 4px;
   width: 4px; height: 8px;
-  border: 2px solid #fff;
+  border: 2px solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
@@ -9601,7 +9602,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ev-card-in .38s var(--ease-bounce) both;
   animation-delay: calc(var(--ev-si,0) * 70ms);
-  color: #fff;
+  color: var(--white);
 }
 .ev-sum-card::before {
   content: '';
@@ -9627,7 +9628,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: 2px; font-size: var(--fs-xs); }
-.ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
+.ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: 2px; }
 .ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
@@ -9776,8 +9777,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   left: 2px; top: 0px;
   width: 7px; height: 4px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+  border-left: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
   transform: rotate(-45deg) scale(0);
   transform-origin: center;
   transition: transform var(--dur-fast) var(--ease-bounce);
@@ -9845,7 +9846,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .ev-add-month:hover {
-  background: var(--primary); color: #fff; border-color: var(--primary);
+  background: var(--primary); color: var(--white); border-color: var(--primary);
   transform: scale(1.12);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
 }
@@ -10612,7 +10613,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
   padding: var(--sp-6) var(--sp-5) var(--sp-4);
   position: relative;
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius-lg, 20px) var(--radius-lg, 20px) 0 0;
   overflow: hidden;
 }
@@ -10639,7 +10640,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   z-index: 2;
   background: var(--on-dark-press);
   border: none;
-  color: #fff;
+  color: var(--white);
   width: 32px; height: 32px;
   border-radius: var(--radius-circle);
   cursor: pointer;
@@ -10656,12 +10657,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   margin-bottom: var(--sp-2);
-  color: #fff;
+  color: var(--white);
 }
 .ci-title {
   font-size: var(--fs-xl);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   margin: 0 0 var(--sp-1);
 }
 .ci-sub {
@@ -10822,7 +10823,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   border-radius: var(--radius-btn);
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
-  color: #fff;
+  color: var(--white);
   border: none;
   cursor: pointer;
   transition: transform var(--dur-fast), box-shadow var(--dur-fast);
@@ -10853,7 +10854,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 0 5px;
   border-radius: var(--radius-badge);
   background: var(--danger-text);
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   line-height: 1;
@@ -10892,7 +10893,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .btn-notif-bell:hover {
   background: var(--on-dark-border);
-  color: #fff;
+  color: var(--white);
 }
 .btn-notif-bell:active {
   transform: scale(0.92);
@@ -10938,7 +10939,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 0 4px;
   border-radius: var(--radius-badge);
   background: var(--danger-text);
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   line-height: 16px;
@@ -11312,7 +11313,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .date-quick-btn.active {
   border-color: var(--primary);
-  color: #fff;
+  color: var(--white);
   background: var(--primary);
   font-weight: var(--fw-semi);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 35%, transparent);
@@ -11359,7 +11360,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .date-quick-btn.active {
   background: var(--primary);
   border-color: var(--primary);
-  color: #fff;
+  color: var(--white);
 }
 
 [data-theme="dark"] .date-quick-btn.date-quick-today:not(.active) {
@@ -11820,7 +11821,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .tx-added-count-badge {
   background: var(--success);
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius-badge);
   padding: 1px 8px;
   font-size: var(--fs-xs);
@@ -12246,7 +12247,7 @@ canvas.chart-clickable { cursor: pointer; }
   width: 18px;
   height: 18px;
   border-radius: var(--radius-circle);
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   vertical-align: middle;
@@ -12380,7 +12381,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: 5px var(--sp-2-5);
   border-radius: var(--radius-btn);
   background: var(--opp-accent, var(--primary));
-  color: #fff;
+  color: var(--white);
   border: none;
   cursor: pointer;
   white-space: nowrap;
