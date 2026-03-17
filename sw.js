@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v13.3.0'; // v13.3.0: box-shadowデザインシステム完全化（12変数追加・14箇所変換・transition変数化残り）
+const CACHE_NAME = 'kakeibo-v13.4.0'; // v13.4.0: 白オーバーレイCSS変数化完全化（--on-dark-*14変数追加・77箇所変換・dur-gentle/slow残存変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',

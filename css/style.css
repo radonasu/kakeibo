@@ -210,6 +210,22 @@
   --card-bg:         var(--surface);      /* = --surface の別名 */
   --text-2:          var(--text);         /* = --text の別名 */
   --danger:          var(--danger-text);  /* = --danger-text の別名 */
+
+  /* ── 白オーバーレイシステム (暗背景上の半透明白 v13.4) ─── */
+  --on-dark-subtle:  rgba(255,255,255,.04);  /* 最微薄装飾 */
+  --on-dark-dim:     rgba(255,255,255,.06);  /* 微薄背景 */
+  --on-dark-divider: rgba(255,255,255,.07);  /* 薄分割線・ホバー */
+  --on-dark-bg:      rgba(255,255,255,.08);  /* 入力・要素背景 */
+  --on-dark-tint:    rgba(255,255,255,.09);  /* 境界色 */
+  --on-dark-base:    rgba(255,255,255,.10);  /* 薄着色・ホバー */
+  --on-dark-border:  rgba(255,255,255,.12);  /* ボーダー */
+  --on-dark-strong:  rgba(255,255,255,.18);  /* 強調・ホバー */
+  --on-dark-ripple:  rgba(255,255,255,.20);  /* リップル・アクティブ */
+  --on-dark-overlay: rgba(255,255,255,.25);  /* バッジ・仕切り */
+  --on-dark-text:    rgba(255,255,255,.30);  /* セクションテキスト */
+  --on-dark-label:   rgba(255,255,255,.75);  /* ラベルテキスト */
+  --on-dark-title:   rgba(255,255,255,.80);  /* タイトルテキスト */
+  --on-dark-hint:    rgba(255,255,255,.85);  /* サブラベルテキスト */
 }
 
 html {
@@ -232,13 +248,13 @@ html {
 /* Firefox */
 * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
 /* ダークモード調整 */
-[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); }
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
-[data-theme="dark"] * { scrollbar-color: rgba(255,255,255,.18) transparent; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--on-dark-strong); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--on-dark-text); }
+[data-theme="dark"] * { scrollbar-color: var(--on-dark-strong) transparent; }
 /* サイドバーは常にダーク背景 */
-#sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); }
-#sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
-#sidebar-nav { scrollbar-color: rgba(255,255,255,.18) transparent; }
+#sidebar-nav::-webkit-scrollbar-thumb { background: var(--on-dark-strong); }
+#sidebar-nav::-webkit-scrollbar-thumb:hover { background: var(--on-dark-text); }
+#sidebar-nav { scrollbar-color: var(--on-dark-strong) transparent; }
 body {
   overflow-x: clip;
   width: 100%;
@@ -293,7 +309,7 @@ select:focus:not(:focus-visible) {
 
 #sidebar-brand {
   padding: var(--sp-5) var(--sp-4) var(--sp-4);
-  border-bottom: 1px solid rgba(255,255,255,.07);
+  border-bottom: 1px solid var(--on-dark-divider);
 }
 
 .brand-row {
@@ -332,9 +348,9 @@ select:focus:not(:focus-visible) {
 
 .account-select {
   flex: 1;
-  background: rgba(255,255,255,.08);
+  background: var(--on-dark-bg);
   color: var(--sidebar-text-hi);
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-btn-sm);
   padding: 6px 8px;
   font-size: var(--fs-xs);
@@ -345,12 +361,12 @@ select:focus:not(:focus-visible) {
 }
 .account-select:focus { outline: none; border-color: var(--primary); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
-.account-select:hover { background: rgba(255,255,255,.13); }
+.account-select:hover { background: var(--on-dark-base); }
 
 .btn-account-add {
-  background: rgba(255,255,255,.1);
+  background: var(--on-dark-base);
   color: var(--sidebar-text-hi);
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-btn-sm);
   padding: 6px 10px;
   font-size: var(--fs-base);
@@ -358,7 +374,7 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
   transition: background var(--dur-fast);
 }
-.btn-account-add:hover { background: rgba(255,255,255,.18); }
+.btn-account-add:hover { background: var(--on-dark-strong); }
 
 #sidebar-nav {
   flex: 1;
@@ -370,7 +386,7 @@ select:focus:not(:focus-visible) {
 .nav-section {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  color: rgba(255,255,255,.3);
+  color: var(--on-dark-text);
   text-transform: uppercase;
   letter-spacing: var(--ls-wider);
   padding: 8px 8px 4px;
@@ -396,7 +412,7 @@ select:focus:not(:focus-visible) {
   position: relative;
 }
 
-.nav-item:hover { background: rgba(255,255,255,.07); color: var(--sidebar-text); }
+.nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
@@ -431,7 +447,7 @@ select:focus:not(:focus-visible) {
 /* サイドバー下部ユーザーエリア */
 .sidebar-footer {
   padding: var(--sp-3);
-  border-top: 1px solid rgba(255,255,255,.07);
+  border-top: 1px solid var(--on-dark-divider);
 }
 
 .sidebar-user-card {
@@ -439,9 +455,9 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  background: rgba(255,255,255,.06);
+  background: var(--on-dark-dim);
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid var(--on-dark-bg);
 }
 
 .sidebar-avatar {
@@ -535,7 +551,7 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-btn-sm);
   -webkit-tap-highlight-color: transparent;
 }
-#hamburger:hover { background: rgba(255,255,255,.1); }
+#hamburger:hover { background: var(--on-dark-base); }
 
 #mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; }
 
@@ -990,7 +1006,7 @@ select:focus:not(:focus-visible) {
   width: 100px;
   height: 100px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.1);
+  background: var(--on-dark-base);
 }
 .summary-card::before {
   content: '';
@@ -1000,7 +1016,7 @@ select:focus:not(:focus-visible) {
   width: 120px;
   height: 120px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.06);
+  background: var(--on-dark-dim);
   pointer-events: none;
 }
 
@@ -1031,7 +1047,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   margin-top: 6px;
   display: inline-block;
-  background: rgba(255,255,255,.2);
+  background: var(--on-dark-ripple);
   padding: 2px 8px;
   border-radius: var(--radius-badge);
 }
@@ -1313,7 +1329,7 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: var(--sp-4);
   flex-wrap: wrap;
-  animation: bulk-slide-up .28s var(--ease-overshoot) both;
+  animation: bulk-slide-up var(--dur-gentle) var(--ease-overshoot) both;
 }
 [data-theme="dark"] .bulk-bar {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
@@ -1678,7 +1694,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s var(--ease-std);
+  transition: grid-template-rows var(--dur-gentle) var(--ease-std);
   overflow: hidden;
   margin-bottom: var(--sp-2);
 }
@@ -3190,7 +3206,7 @@ body {
   justify-content: center;
 }
 .btn-dark-toggle svg { display: block; }
-.btn-dark-toggle:hover { background: rgba(255,255,255,.12); color: var(--sidebar-text-hi); }
+.btn-dark-toggle:hover { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
 
 /* ============================================================
    ダークモード — CSS変数オーバーライド
@@ -3298,7 +3314,7 @@ body {
 .modal-overlay .modal {
   transform: translateY(20px) scale(0.96);
   opacity: 0;
-  transition: transform .28s var(--ease-bounce), opacity var(--dur-faster) ease;
+  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) ease;
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(1);
@@ -3369,7 +3385,7 @@ body {
 @keyframes ripple-anim {
   to { transform: scale(4); opacity: 0; }
 }
-[data-theme="dark"] .ripple-wave { background: rgba(255,255,255,.2); }
+[data-theme="dark"] .ripple-wave { background: var(--on-dark-ripple); }
 
 /* ── ボトムナビ アクティブアイコン バウンス ── */
 @keyframes nav-icon-pop {
@@ -3511,7 +3527,7 @@ body {
   top: -40px; right: -40px;
   width: 180px; height: 180px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.06);
+  background: var(--on-dark-dim);
   pointer-events: none;
 }
 .onboarding-hero::after {
@@ -3520,7 +3536,7 @@ body {
   bottom: -30px; left: -30px;
   width: 140px; height: 140px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.04);
+  background: var(--on-dark-subtle);
   pointer-events: none;
 }
 .onboarding-icon {
@@ -5535,7 +5551,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   top: -20px; right: -20px;
   width: 88px; height: 88px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.10);
+  background: var(--on-dark-base);
   pointer-events: none;
 }
 .sub-summary-card::before {
@@ -5544,7 +5560,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   bottom: -28px; left: -18px;
   width: 110px; height: 110px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.07);
+  background: var(--on-dark-divider);
   pointer-events: none;
 }
 /* グラデーション (v5.44) */
@@ -5553,7 +5569,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-summary-card.sub-monthly .sub-summary-label,
 .sub-summary-card.sub-monthly .sub-summary-sub,
 .sub-summary-card.sub-yearly  .sub-summary-label,
-.sub-summary-card.sub-yearly  .sub-summary-sub  { color: rgba(255,255,255,.80); }
+.sub-summary-card.sub-yearly  .sub-summary-sub  { color: var(--on-dark-title); }
 .sub-summary-card.sub-monthly .sub-summary-amount,
 .sub-summary-card.sub-yearly  .sub-summary-amount { color: #fff; }
 
@@ -5960,7 +5976,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-summary-label {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
-  color: rgba(255,255,255,0.75);
+  color: var(--on-dark-label);
   letter-spacing: var(--ls-cap);
   margin-bottom: var(--sp-1);
 }
@@ -5986,7 +6002,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   width: 80px; height: 80px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,0.08);
+  background: var(--on-dark-bg);
   bottom: -20px; right: -20px;
 }
 .pt-summary-card::after {
@@ -5994,7 +6010,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   width: 50px; height: 50px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,0.06);
+  background: var(--on-dark-dim);
   bottom: 14px; right: 36px;
 }
 
@@ -6417,7 +6433,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-trend-flat { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
 [data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--income-end); border-color: color-mix(in srgb, var(--success) 30%, transparent); }
 [data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) 18%, transparent); color: var(--expense-end); border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
-[data-theme="dark"] .hs-trend-flat { background: rgba(255,255,255,.07); color: var(--text-muted); }
+[data-theme="dark"] .hs-trend-flat { background: var(--on-dark-divider); color: var(--text-muted); }
 .hs-spark-svg {
   display: block;
   width: 100%;
@@ -6493,7 +6509,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* グラデーションカード内のテキストを白に */
 .wl-sum-count .wl-summary-label,
 .wl-sum-budget .wl-summary-label,
-.wl-sum-done .wl-summary-label  { color: rgba(255,255,255,.80); }
+.wl-sum-done .wl-summary-label  { color: var(--on-dark-title); }
 .wl-sum-count .wl-summary-value,
 .wl-sum-budget .wl-summary-value,
 .wl-sum-done .wl-summary-value  { color: #fff; }
@@ -7070,8 +7086,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: 0 0 0 3px rgba(0,0,0,0.4);
 }
 [data-theme="dark"] .fc-cell {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.09);
+  background: var(--on-dark-subtle);
+  border-color: var(--on-dark-tint);
 }
 [data-theme="dark"] .fc-cell-balance {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
@@ -7080,8 +7096,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--expense) 12%, transparent);
 }
 [data-theme="dark"] .fc-low-conf {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.09);
+  background: var(--on-dark-subtle);
+  border-color: var(--on-dark-tint);
 }
 [data-theme="dark"] .fc-good    { background: color-mix(in srgb, var(--success) 15%, transparent);  border-color: color-mix(in srgb, var(--success) 30%, transparent); }
 [data-theme="dark"] .fc-caution { background: color-mix(in srgb, var(--primary) 15%, transparent); border-color: color-mix(in srgb, var(--primary) 30%, transparent); }
@@ -7159,7 +7175,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* ダークモード */
 [data-theme="dark"] .dw-slider {
-  background: rgba(255,255,255,.18);
+  background: var(--on-dark-strong);
 }
 [data-theme="dark"] .dw-item input:checked ~ .dw-slider {
   background: var(--primary);
@@ -7641,7 +7657,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,0.12);
+  background: var(--on-dark-border);
   pointer-events: none;
 }
 .dow-stat-card::before { width: 64px; height: 64px; bottom: -18px; right: -10px; }
@@ -7661,7 +7677,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .dow-stat-icon { font-size: var(--fs-4xl); line-height: 1; flex-shrink: 0; position: relative; z-index: 1; }
 .dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
 .dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff !important; }
-.dow-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.8); }
+.dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
 .dow-stat-amount {
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
@@ -7671,7 +7687,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .dow-stat-unit {
   font-size: var(--fs-xs);
   font-weight: var(--fw-normal);
-  color: rgba(255,255,255,0.75);
+  color: var(--on-dark-label);
   margin-left: 3px;
 }
 
@@ -7718,7 +7734,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .dow-pct-high { background: var(--danger-bg); color: var(--expense-end); }
 [data-theme="dark"] .dow-pct-mid  { background: var(--warning-border); color: var(--warning); }
 [data-theme="dark"] .dow-pct-low  { background: var(--income-deep); color: var(--income-end); }
-[data-theme="dark"] .dow-mini-bar-track { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .dow-mini-bar-track { background: var(--on-dark-dim); }
 
 /* -- モバイル対応 -- */
 @media (max-width: 560px) {
@@ -7767,7 +7783,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: border-color var(--dur-faster), background var(--dur-faster), color var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-fast);
   user-select: none;
-  animation: ct-chip-in 0.30s var(--ease-bounce) both;
+  animation: ct-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * 40ms);
 }
 .ct-chip:hover {
@@ -7921,7 +7937,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   bottom: -22px; right: -22px;
   width: 90px; height: 90px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,0.13);
+  background: var(--on-dark-base);
   pointer-events: none;
 }
 /* ダークモード */
@@ -7936,7 +7952,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fv-stat-icon  { font-size: var(--fs-icon); margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.82); }
 .fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: #fff; line-height: var(--lh-tight); margin: 2px 0; }
-.fv-stat-sub   { font-size: var(--fs-xs); color: rgba(255,255,255,0.75); }
+.fv-stat-sub   { font-size: var(--fs-xs); color: var(--on-dark-label); }
 
 /* テーブルセル */
 .fv-fixed-val { color: var(--primary); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
@@ -8203,7 +8219,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: 5px;
   pointer-events: none;
 }
-[data-theme="dark"] .wk-bar-wrap::after { background: rgba(255,255,255,.06); }
+[data-theme="dark"] .wk-bar-wrap::after { background: var(--on-dark-dim); }
 
 .wk-bar-fill {
   width: 70%;
@@ -8375,7 +8391,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .qa-type-row {
   display: flex;
   gap: var(--sp-2);
-  animation: qa-field-in 0.28s var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
   animation-delay: 0.04s;
 }
 .qa-type-btn {
@@ -8415,7 +8431,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in 0.28s var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
   animation-delay: 0.10s;
 }
 .qa-amount-wrap {
@@ -8476,7 +8492,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in 0.28s var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
   animation-delay: 0.16s;
 }
 .qa-memo-input {
@@ -8885,7 +8901,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-summary-total  { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); color: #fff; }
 .debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: #fff; }
 .debt-summary-total .summary-label,
-.debt-summary-monthly .summary-label { color: rgba(255,255,255,0.85); }
+.debt-summary-monthly .summary-label { color: var(--on-dark-hint); }
 .debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: .85; }
 
 /* サマリーカード デコレーションサークル + 入場アニメーション (v5.85) */
@@ -8907,7 +8923,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   top: -20px; right: -20px;
   width: 88px; height: 88px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.10);
+  background: var(--on-dark-base);
   pointer-events: none;
 }
 .debt-summary-total::before,
@@ -8917,7 +8933,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   bottom: -28px; left: -18px;
   width: 110px; height: 110px;
   border-radius: var(--radius-circle);
-  background: rgba(255,255,255,.07);
+  background: var(--on-dark-divider);
   pointer-events: none;
 }
 
@@ -9265,7 +9281,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* セル スタッガードフェードイン */
 .sim-result-grid > div {
-  animation: sim-cell-in 0.28s ease calc(var(--sim-ri,0) * 45ms) both;
+  animation: sim-cell-in var(--dur-gentle) ease calc(var(--sim-ri,0) * 45ms) both;
 }
 @keyframes sim-cell-in {
   from { opacity: 0; }
@@ -9369,14 +9385,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-banner-num.sb-bn-down { color: var(--income-end); }
 .sb-banner-lbl {
   font-size: var(--fs-2xs);
-  color: rgba(255,255,255,0.8);
+  color: var(--on-dark-title);
   font-weight: var(--fw-medium);
   margin-top: 2px;
 }
 .sb-banner-div {
   width: 1px;
   height: 32px;
-  background: rgba(255,255,255,0.25);
+  background: var(--on-dark-overlay);
   flex-shrink: 0;
 }
 
@@ -9495,7 +9511,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   min-width: 20px;
   height: 20px;
   padding: 0 5px;
-  background: rgba(255,255,255,0.25);
+  background: var(--on-dark-overlay);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -9555,7 +9571,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   bottom: -30px; left: -20px;
   width: 110px; height: 110px;
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-bg) 0%, transparent 70%);
   pointer-events: none;
 }
 /* サマリーカード種別グラデーション */
@@ -9563,11 +9579,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-next { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); border-top: none; }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
-.ev-sum-card .ev-sum-label  { color: rgba(255,255,255,.80); margin-bottom: 2px; font-size: var(--fs-xs); }
+.ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: 2px; font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: #fff; font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-count small { color: rgba(255,255,255,.70); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: 2px; }
 .ev-sum-card .ev-sum-inc   { color: rgba(255,255,255,.95); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
-.ev-sum-card .ev-sum-exp   { color: rgba(255,255,255,.85); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .ev-sum-card .ev-sum-none  { color: rgba(255,255,255,.60); font-size: var(--fs-xs); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
@@ -9986,7 +10002,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-left: 2px;
 }
 .tg-table tbody tr {
-  animation: tg-row-in 0.28s var(--ease-std) both;
+  animation: tg-row-in var(--dur-gentle) var(--ease-std) both;
   animation-delay: calc(var(--tg-i, 0) * 40ms + 0.1s);
 }
 @keyframes tg-stat-in {
@@ -10516,8 +10532,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
 }
 /* ダークモード */
-[data-theme="dark"] .yr-progress-track { background: rgba(255,255,255,0.08); }
-[data-theme="dark"] .yr-elapsed-badge  { background: rgba(255,255,255,0.07); }
+[data-theme="dark"] .yr-progress-track { background: var(--on-dark-bg); }
+[data-theme="dark"] .yr-elapsed-badge  { background: var(--on-dark-divider); }
 [data-theme="dark"] .yr-spark-wrap::before { color: rgba(255,255,255,0.35); }
 /* モバイル対応 */
 @media (max-width: 600px) {
@@ -10558,7 +10574,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: -40px; right: -40px;
   width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-strong) 0%, transparent 70%);
   pointer-events: none;
 }
 .ci-header::after {
@@ -10566,7 +10582,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   bottom: -60px; left: -30px;
   width: 140px; height: 140px;
-  background: radial-gradient(circle, rgba(255,255,255,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-base) 0%, transparent 70%);
   pointer-events: none;
 }
 .ci-header-inner { position: relative; z-index: 1; padding-right: 36px; }
@@ -10587,7 +10603,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-close:hover { background: rgba(255,255,255,0.38); }
 .ci-month-badge {
   display: inline-block;
-  background: rgba(255,255,255,0.25);
+  background: var(--on-dark-overlay);
   border-radius: var(--radius-badge);
   padding: 2px var(--sp-3);
   font-size: var(--fs-xs);
@@ -10603,7 +10619,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ci-sub {
   font-size: var(--fs-sm);
-  color: rgba(255,255,255,0.85);
+  color: var(--on-dark-hint);
   margin: 0;
 }
 .ci-body {
@@ -10769,11 +10785,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 /* ダークモード */
-[data-theme="dark"] .ci-savings-bar-wrap { background: rgba(255,255,255,0.08); }
-[data-theme="dark"] .ci-score-row       { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .ci-savings-bar-wrap { background: var(--on-dark-bg); }
+[data-theme="dark"] .ci-score-row       { background: var(--on-dark-dim); }
 [data-theme="dark"] .ci-event-item,
 [data-theme="dark"] .ci-challenge-item,
-[data-theme="dark"] .ci-cell            { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .ci-cell            { background: var(--on-dark-dim); }
 /* モバイル */
 @media (max-width: 480px) {
   .ci-cell-value { font-size: var(--fs-sm); }
@@ -10828,7 +10844,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
 }
 .btn-notif-bell:hover {
-  background: rgba(255,255,255,.12);
+  background: var(--on-dark-border);
   color: #fff;
 }
 .btn-notif-bell:active {
@@ -11138,18 +11154,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 [data-theme="dark"] .notif-panel {
   background: var(--surface);
-  border-color: rgba(255,255,255,.08);
+  border-color: var(--on-dark-bg);
   box-shadow: var(--shadow-panel);
 }
 [data-theme="dark"] .notif-panel-header {
   background: var(--bg);
-  border-bottom-color: rgba(255,255,255,.07);
+  border-bottom-color: var(--on-dark-divider);
 }
 [data-theme="dark"] .notif-panel-title {
   color: var(--text);
 }
 [data-theme="dark"] .notif-mark-read {
-  border-color: rgba(255,255,255,.12);
+  border-color: var(--on-dark-border);
   color: var(--text-muted);
 }
 [data-theme="dark"] .notif-mark-read:hover {
@@ -11161,21 +11177,21 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--primary) 6%, transparent);
 }
 [data-theme="dark"] .notif-item:hover {
-  background: rgba(255,255,255,.06);
+  background: var(--on-dark-dim);
 }
 [data-theme="dark"] .notif-item:not(.notif-read):hover {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
 [data-theme="dark"] .notif-item + .notif-group-label {
-  border-top-color: rgba(255,255,255,.07);
+  border-top-color: var(--on-dark-divider);
 }
 [data-theme="dark"] .notif-panel-footer {
   background: var(--bg);
-  border-top-color: rgba(255,255,255,.07);
+  border-top-color: var(--on-dark-divider);
   color: var(--border-strong);
 }
 [data-theme="dark"] .notif-item-icon {
-  background: rgba(255,255,255,.06);
+  background: var(--on-dark-dim);
 }
 [data-theme="dark"] .notif-item.notif-type-danger  .notif-item-icon { background: color-mix(in srgb, var(--expense) 14%, transparent); }
 [data-theme="dark"] .notif-item.notif-type-warning .notif-item-icon { background: color-mix(in srgb, var(--warning) 14%, transparent); }
@@ -11283,7 +11299,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 [data-theme="dark"] .date-quick-btn {
   background: var(--surface);
-  border-color: rgba(255,255,255,.12);
+  border-color: var(--on-dark-border);
   color: var(--text-muted);
 }
 
@@ -11338,7 +11354,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--amt-chip-color, var(--primary));
   border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
   transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
-  animation: amt-chip-in 0.28s var(--ease-bounce) both;
+  animation: amt-chip-in var(--dur-gentle) var(--ease-bounce) both;
   white-space: nowrap;
 }
 
@@ -11408,7 +11424,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   cursor: pointer;
   transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
-  animation: memo-chip-in 0.28s var(--ease-bounce) both;
+  animation: memo-chip-in var(--dur-gentle) var(--ease-bounce) both;
   max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -11600,7 +11616,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-1);
   cursor: pointer;
   transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast);
-  animation: rc-item-in .28s var(--ease-bounce) both;
+  animation: rc-item-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--rc-i, 0) * 50ms);
 }
 
@@ -12138,12 +12154,12 @@ canvas.chart-clickable { cursor: pointer; }
   right: -16px;
   width: 72px;
   height: 72px;
-  background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-divider) 0%, transparent 70%);
   border-radius: var(--radius-circle);
   pointer-events: none;
 }
 [data-theme="dark"] .yi-card::before {
-  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--on-dark-subtle) 0%, transparent 70%);
 }
 
 .yi-card-icon {
@@ -12458,7 +12474,7 @@ canvas.chart-clickable { cursor: pointer; }
   align-items: center;
   gap: var(--sp-2);
   font-size: var(--fs-xs);
-  animation: md-cat-in 0.28s var(--ease-bounce) both;
+  animation: md-cat-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--md-i, 0) * 40ms);
 }
 @keyframes md-cat-in {
@@ -12754,7 +12770,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  animation: pace-row-in .28s var(--ease-bounce) both;
+  animation: pace-row-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--pbr-i, 0) * 80ms);
 }
 .pace-bar-label {
@@ -12901,8 +12917,8 @@ canvas.chart-clickable { cursor: pointer; }
   background: color-mix(in srgb, var(--expense) 10%, transparent);
   border-color: color-mix(in srgb, var(--expense) 25%, transparent);
 }
-[data-theme="dark"] .pace-bar-track { background: rgba(255,255,255,.07); }
-[data-theme="dark"] .pace-daily-cell { background: rgba(255,255,255,.06); }
+[data-theme="dark"] .pace-bar-track { background: var(--on-dark-divider); }
+[data-theme="dark"] .pace-daily-cell { background: var(--on-dark-dim); }
 [data-theme="dark"] .pace-daily-highlight {
   background: color-mix(in srgb, var(--primary) 8%, transparent);
   border-color: color-mix(in srgb, var(--primary) 20%, transparent);
@@ -12931,7 +12947,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ── 支払方法テーブル行 左ボーダー (v9.4) ──────────────────── */
 .pm-table-row {
   border-left: 3px solid var(--pm-row-color, var(--border));
-  animation: pm-row-in 0.28s var(--ease-bounce) both;
+  animation: pm-row-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--pm-ri, 0) * 50ms + 0.05s);
 }
 @keyframes pm-row-in {
