@@ -105,10 +105,14 @@
 
   /* 行間 */
   --lh-tighter: 1.1;   /* 最密：見出し内アイコン・バッジ等 */
-  --lh-tight:   1.2;
-  --lh-snug:    1.45;
-  --lh-normal:  1.6;
-  --lh-relaxed: 1.75;
+  --lh-tight:   1.2;   /* 密：見出し・コンパクトテキスト */
+  --lh-short:   1.3;   /* 短行間：カレンダー極小テキスト・コンパクト本文 */
+  --lh-base:    1.4;   /* 基本行間：インサイト本文・ノートタイム等 */
+  --lh-snug:    1.45;  /* やや詰め：カード本文・リスト項目 */
+  --lh-loose:   1.5;   /* 緩め：タグチップ・フィルターチップ・説明テキスト */
+  --lh-normal:  1.6;   /* 標準：一般本文 */
+  --lh-ample:   1.65;  /* やや広め：メモエリア等の入力フィールド */
+  --lh-relaxed: 1.75;  /* 広め：読みやすいブロックテキスト */
 
   /* 字間（pxスケール） */
   --ls-display: -1.5px;   /* 超大数値・スコア表示 */
@@ -149,6 +153,7 @@
   --dur-modal:   0.42s;                            /* モーダル入場アニメーション */
   --dur-fill:    0.7s;                             /* 長尺（プログレスバー塗り） */
   --dur-quick:   0.12s;                            /* 超高速（ホバー色変化・即時フィードバック） */
+  --dur-press:   0.1s;                             /* 最速（ボタン押下トランスフォーム・タップ応答） */
   --dur-appear:  0.22s;                            /* クイック入場（行・バナー・カードホバー） */
   --dur-gentle:  0.28s;                            /* ゆるやか入場（スライド・ピル） */
   --dur-pulse:   2.4s;                             /* パルスループアニメーション */
@@ -974,7 +979,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform .1s;
+  transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-press);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   text-align: center;
@@ -1325,7 +1330,7 @@ select:focus:not(:focus-visible) {
   background: var(--primary-light);
   border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
   cursor: pointer;
-  transition: background var(--dur-fast), transform .1s, box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
@@ -1558,7 +1563,7 @@ select:focus:not(:focus-visible) {
   color: var(--tc, var(--primary));
   border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
   white-space: nowrap;
-  line-height: 1.5;
+  line-height: var(--lh-loose);
   transition: background var(--dur-fast), transform var(--dur-fast);
   animation: tag-chip-in var(--dur-base) var(--ease-bounce) both;
 }
@@ -1616,7 +1621,7 @@ select:focus:not(:focus-visible) {
   transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
   flex-shrink: 0;
   user-select: none;
-  line-height: 1.5;
+  line-height: var(--lh-loose);
   background: none;
 }
 .tx-tag-filter-all {
@@ -1950,7 +1955,7 @@ mark.tx-hl {
   line-height: 1;
   cursor: pointer;
   padding: 0;
-  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform .1s;
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press);
   flex-shrink: 0;
 }
 .month-nav-btn:hover:not(:disabled) {
@@ -2551,7 +2556,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: opacity var(--dur-fast), transform .1s;
+  transition: opacity var(--dur-fast), transform var(--dur-press);
 }
 .btn-tpl:hover { opacity: 0.75; transform: translateY(-1px); }
 
@@ -5112,7 +5117,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-amount {
   font-size: var(--fs-3xs);
   font-weight: var(--fw-semi);
-  line-height: 1.3;
+  line-height: var(--lh-short);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5447,14 +5452,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text-primary);
-  line-height: 1.3;
+  line-height: var(--lh-short);
   margin-bottom: 2px;
 }
 
 .insight-desc {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: var(--lh-base);
 }
 
 /* ダークモード */
@@ -8645,7 +8650,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text);
   font-size: var(--fs-sm);
   font-family: inherit;
-  line-height: 1.65;
+  line-height: var(--lh-ample);
   resize: none;
   overflow-y: auto;
   box-sizing: border-box;
@@ -8725,7 +8730,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   border-radius: var(--radius-badge);
   padding: 2px var(--sp-2);
-  line-height: 1.4;
+  line-height: var(--lh-base);
 }
 .nt-saved-at::before {
   content: '🕐';
@@ -11306,7 +11311,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   cursor: pointer;
   transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-quick);
-  line-height: 1.4;
+  line-height: var(--lh-base);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -12364,7 +12369,7 @@ canvas.chart-clickable { cursor: pointer; }
 .opp-desc {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: var(--lh-loose);
 }
 
 .opp-saving {
