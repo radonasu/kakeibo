@@ -134,7 +134,10 @@
   --ls-spread:  0.08em;  /* 見出しラベル大文字等の広字間 */
 
   /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
+  --sp-0-5:   2px;   /* 極微：ピクセル単位のgap・微小マージン */
+  --sp-0-75:  3px;   /* 極微+：密集チップ間隔・微小マージン */
   --sp-1:     4px;   /* 極小：アイコン余白、バッジ */
+  --sp-1-25:  5px;   /* 極小-：コンパクトなフィルター・バルクバー */
   --sp-1-5:   6px;   /* 極小+：ラベル余白、密集要素間 */
   --sp-2:     8px;   /* 小：要素内の隙間 */
   --sp-2-5:  10px;   /* 小+：コンパクトな入力パディング */
@@ -143,6 +146,7 @@
   --sp-4:    16px;   /* 中：標準パディング・マージン */
   --sp-5:    20px;   /* 中大：カード・モーダル */
   --sp-6:    24px;   /* 大：メインカードパディング */
+  --sp-7:    28px;   /* 大+：モーダルコンテンツ下マージン等 */
   --sp-8:    32px;   /* 特大：メインコンテンツ余白 */
   --sp-10:   40px;   /* 超大：セクション間 */
   --sp-12:   48px;   /* 最大：空状態パディング */
@@ -487,7 +491,7 @@ select:focus:not(:focus-visible) {
   background: none;
   width: 100%;
   text-align: left;
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
   position: relative;
 }
 
@@ -1002,7 +1006,7 @@ select:focus:not(:focus-visible) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   padding: var(--sp-3) var(--sp-1);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
@@ -1351,7 +1355,7 @@ select:focus:not(:focus-visible) {
 .tx-sort-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   padding: 3px 8px 3px var(--sp-1-5);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
@@ -1432,7 +1436,7 @@ select:focus:not(:focus-visible) {
 .bulk-bar-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
   min-width: 110px;
 }
 .bulk-count {
@@ -1579,8 +1583,8 @@ select:focus:not(:focus-visible) {
 .tx-tag-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
-  margin-top: 5px;
+  gap: var(--sp-0-75);
+  margin-top: var(--sp-1-25);
 }
 .tx-tag-chip {
   display: inline-flex;
@@ -1750,7 +1754,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-toggle {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   white-space: nowrap;
   position: relative;
   border-color: var(--border);
@@ -1810,7 +1814,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--sp-1-25);
 }
 .adv-filter-label {
   font-size: var(--fs-xs);
@@ -1868,7 +1872,7 @@ select:focus:not(:focus-visible) {
 .adv-preset-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: var(--sp-1-25);
   margin-bottom: var(--sp-1);
 }
 .adv-preset-chip {
@@ -1970,7 +1974,7 @@ mark.tx-hl {
 .month-nav {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .month-nav-btn {
   display: flex;
@@ -2031,7 +2035,7 @@ mark.tx-hl {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   padding: var(--sp-3) var(--sp-4);
 }
 .smi-income  { background: var(--income-light); }
@@ -2342,7 +2346,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .scan-ok     { font-weight: var(--fw-bold); color: var(--income); }
 .scan-detail { color: var(--text); }
@@ -2385,7 +2389,7 @@ mark.tx-hl {
 .multi-receipt-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
   min-width: 0;
   flex: 1;
 }
@@ -2499,7 +2503,7 @@ mark.tx-hl {
 .budget-cat-name {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   font-weight: var(--fw-semi);
 }
 
@@ -2646,7 +2650,7 @@ mark.tx-hl {
 .sync-user-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .sync-user-email-text {
   font-size: var(--fs-sm);
@@ -2811,7 +2815,7 @@ mark.tx-hl {
   border-radius: var(--radius-btn);
   padding: var(--sp-1);
   gap: var(--sp-1);
-  margin-bottom: 28px;
+  margin-bottom: var(--sp-7);
 }
 
 .auth-tab {
@@ -2898,7 +2902,7 @@ mark.tx-hl {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
 }
 
 /* ============================================================
@@ -3078,7 +3082,7 @@ body {
 .bottom-nav-icon {
   width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
   border-radius: var(--radius-btn);
   padding: 2px;
   transition: background var(--dur-base), color var(--dur-base), transform var(--dur-base);
@@ -3534,7 +3538,7 @@ body {
 .badge-recurring {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   margin-left: var(--sp-1-5);
   padding: 1px 7px;
   border-radius: var(--radius-xl);
@@ -3649,7 +3653,7 @@ body {
   font-size: var(--fs-base);
   opacity: .82;
   line-height: var(--lh-normal);
-  margin-bottom: 28px;
+  margin-bottom: var(--sp-7);
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -3789,7 +3793,7 @@ body {
 .btn-share {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   background: color-mix(in srgb, var(--primary) 10%, transparent);
   color: var(--primary);
   border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
@@ -4137,7 +4141,7 @@ body {
   font-size: var(--fs-base);
   color: var(--text-muted);
   font-weight: var(--fw-medium);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
 }
 
 .asset-fx-rate {
@@ -4493,7 +4497,7 @@ body {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   padding: var(--sp-2) var(--sp-3);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
@@ -4957,7 +4961,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 @media (max-width: 768px) {
   .goal-card-footer { gap: var(--sp-2); }
   .goal-card-footer .btn { flex: 1; justify-content: center; font-size: var(--fs-xs); }
-  .goal-deadline { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .goal-deadline { flex-direction: column; align-items: flex-start; gap: var(--sp-0-5); }
 }
 
 /* ── カレンダービュー (v5.39) ──────────────────────────────── */
@@ -5017,7 +5021,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 
 .cal-sum-label {
@@ -5234,7 +5238,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-panel-tx-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
   min-width: 0;
 }
 
@@ -5289,7 +5293,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .cal-sum-item     { padding: var(--sp-2) var(--sp-3); }
   .cal-sum-value    { font-size: var(--fs-base); }
   .cal-sum-label    { font-size: var(--fs-2xs); }
-  .cal-week-summary { padding: 2px var(--sp-2) 3px; gap: 3px; }
+  .cal-week-summary { padding: 2px var(--sp-2) 3px; gap: var(--sp-0-75); }
   .cal-ws-pill      { font-size: 9px; padding: 1px 5px; }
 }
 
@@ -5382,13 +5386,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-ev-done .cal-ev-name { text-decoration: line-through; color: var(--text-muted); }
 .cal-ev-cat {
   font-size: var(--fs-xs);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
 }
 .cal-ev-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 3px;
+  gap: var(--sp-0-75);
   flex-shrink: 0;
 }
 .cal-ev-amount {
@@ -5485,7 +5489,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   color: var(--text-primary);
   line-height: var(--lh-short);
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
 }
 
 .insight-desc {
@@ -5733,7 +5737,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sub-card-meta {
   display: flex; gap: var(--sp-2); align-items: center;
-  margin-top: 2px; flex-wrap: wrap;
+  margin-top: var(--sp-0-5); flex-wrap: wrap;
 }
 .sub-cycle-tag {
   font-size: var(--fs-2xs);
@@ -5757,14 +5761,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-memo {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .sub-card-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: var(--sp-0-5);
   flex-shrink: 0;
 }
 .sub-card-amount {
@@ -5883,7 +5887,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .sub-card { padding: var(--sp-3); gap: var(--sp-2); }
   .sub-card-icon { width: 38px; height: 38px; font-size: var(--fs-2xl); }
   .sub-card-amount { font-size: var(--fs-base); }
-  .sub-card-actions { gap: 2px; }
+  .sub-card-actions { gap: var(--sp-0-5); }
   .sub-emoji-btn { width: 30px; height: 30px; font-size: var(--fs-xl); }
 }
 
@@ -6176,7 +6180,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-card-meta {
   display: flex; gap: var(--sp-2); align-items: center;
-  margin-top: 2px; flex-wrap: wrap;
+  margin-top: var(--sp-0-5); flex-wrap: wrap;
 }
 .pt-exp-badge {
   font-size: var(--fs-2xs);
@@ -6205,7 +6209,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
 }
 .pt-card-right {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-0-5); flex-shrink: 0;
 }
 .pt-card-balance {
   font-size: var(--fs-lg);
@@ -7155,12 +7159,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .fc-cell-hint {
   font-size: var(--fs-2xs);
   color: var(--text-faint);
-  margin-top: 3px;
+  margin-top: var(--sp-0-75);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 
 /* モバイル: 3列→縦2+1 */
@@ -7204,7 +7208,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .dw-grid {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .dw-item {
   display: flex;
@@ -7296,7 +7300,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .asset-balance-delta {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
   padding: 2px 7px;
@@ -7768,7 +7772,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: 1; }
-.dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
+.dow-stat-info { display: flex; flex-direction: column; gap: var(--sp-0-75); position: relative; z-index: 1; }
 .dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
 .dow-stat-amount {
@@ -7810,7 +7814,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 4px;
   background: var(--surface-hover);
   border-radius: var(--radius-2xs);
-  margin-top: 5px;
+  margin-top: var(--sp-1-25);
   overflow: hidden;
   min-width: 60px;
 }
@@ -7866,7 +7870,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ct-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   padding: 5px 12px;
   border-radius: var(--radius-xl);
   border: 1.5px solid var(--border);
@@ -7923,9 +7927,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 3px;
   background: var(--ct-stat-color, var(--primary));
 }
-.ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: 2px; }
+.ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
 .ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tight); }
-.ct-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 3px; }
+.ct-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-0-75); }
 
 /* テーブル */
 .ct-tbl-dot {
@@ -8105,7 +8109,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 /* 月別テーブル 固定費率セグメントバー (v5.71) */
-.fv-seg-wrap { display: inline-flex; align-items: center; gap: 5px; }
+.fv-seg-wrap { display: inline-flex; align-items: center; gap: var(--sp-1-25); }
 .fv-seg-bar {
   display: flex;
   width: 52px;
@@ -8262,7 +8266,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-cell-sub {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
 }
 .wk-diff {
   display: inline-block;
@@ -8287,7 +8291,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--sp-0-5);
   animation: wk-col-in var(--dur-snap) var(--ease-bounce) both;
   animation-delay: calc(var(--wk-i, 0) * 55ms);
 }
@@ -8839,7 +8843,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-stat-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
 }
 .hm-stat-value {
   font-size: var(--fs-xl);
@@ -8855,7 +8859,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-stat-sub {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
 }
 .hm-stat-sub.expense { color: var(--danger-text); }
 
@@ -8871,7 +8875,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-dow-col {
   display: grid;
   grid-template-rows: repeat(7, 13px);
-  gap: 3px;
+  gap: var(--sp-0-75);
   padding-top: 22px;
   flex-shrink: 0;
 }
@@ -8889,7 +8893,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-month-row {
   position: relative;
   height: 20px;
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
 }
 .hm-month-label {
   position: absolute;
@@ -8905,7 +8909,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   grid-template-rows: repeat(7, 13px);
   grid-auto-flow: column;
   grid-auto-columns: 13px;
-  gap: 3px;
+  gap: var(--sp-0-75);
 }
 /* 週列スタッガードフェードイン */
 .hm-col-wrap {
@@ -8963,7 +8967,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-legend {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   justify-content: flex-end;
   margin-top: var(--sp-3);
 }
@@ -9183,7 +9187,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .debt-widget-cell { flex: 1; padding: var(--sp-2) var(--sp-3); text-align: center; }
 .debt-widget-divider { width: 1px; background: var(--border); align-self: stretch; }
-.debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: 2px; }
+.debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
 .debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); }
 .debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: var(--fw-normal); }
 
@@ -9200,7 +9204,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .debt-widget-info { flex: 1; min-width: 0; }
 .debt-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.debt-widget-bar-row { display: flex; align-items: center; gap: var(--sp-2); margin-top: 3px; }
+.debt-widget-bar-row { display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-0-75); }
 .debt-widget-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: var(--radius-badge); overflow: hidden; }
 .debt-widget-bar-fill {
   height: 100%; background: var(--debt-accent, var(--primary));
@@ -9480,7 +9484,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   color: var(--on-dark-title);
   font-weight: var(--fw-medium);
-  margin-top: 2px;
+  margin-top: var(--sp-0-5);
 }
 .sb-banner-div {
   width: 1px;
@@ -9572,7 +9576,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-diff-pill {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   padding: 2px 7px;
   border-radius: var(--radius-badge);
   font-size: var(--fs-2xs);
@@ -9672,7 +9676,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-sum-next { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); border-top: none; }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
-.ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: 2px; font-size: var(--fs-xs); }
+.ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: 2px; }
 .ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
@@ -9769,7 +9773,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ev-name-done { text-decoration: line-through; color: var(--text-muted); }
-.ev-card-meta { display: flex; gap: var(--sp-1); margin-top: 2px; flex-wrap: wrap; }
+.ev-card-meta { display: flex; gap: var(--sp-1); margin-top: var(--sp-0-5); flex-wrap: wrap; }
 .ev-type-badge {
   font-size: var(--fs-2xs); font-weight: var(--fw-semi);
   padding: 1px var(--sp-1-5);
@@ -9836,7 +9840,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ev-done-cb:checked::after { transform: rotate(-45deg) scale(1); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
 @keyframes ev-cb-pop { 0% { transform: scale(.7); } 100% { transform: scale(1); } }
-.ev-card-actions { display: flex; gap: 2px; }
+.ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
 /* --- 月別達成プログレスバー（v5.91）--- */
 .ev-month-progress {
@@ -9925,7 +9929,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .ev-widget-info { flex: 1; min-width: 0; }
 .ev-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ev-widget-meta { display: flex; gap: var(--sp-1-5); margin-top: 2px; }
+.ev-widget-meta { display: flex; gap: var(--sp-1-5); margin-top: var(--sp-0-5); }
 .ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: var(--fw-semi); }
 .ev-widget-cat   { font-size: var(--fs-xs); color: var(--text-muted); }
 .ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; }
@@ -9986,7 +9990,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sf-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   padding: var(--sp-1) var(--sp-2-5) var(--sp-1) var(--sp-3);
   border-radius: var(--radius-badge);
   border: 1.5px solid var(--border);
@@ -10554,7 +10558,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .yr-avg {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .yr-avg-label {
   font-size: var(--fs-2xs);
@@ -10837,7 +10841,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ci-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--sp-0-75);
   border-radius: var(--radius-badge);
   padding: 2px var(--sp-2);
   font-size: var(--fs-2xs);
@@ -11176,7 +11180,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .notif-item-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
   flex: 1;
   min-width: 0;
 }
@@ -11203,7 +11207,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   background: var(--primary);
   flex-shrink: 0;
-  margin-top: 5px;
+  margin-top: var(--sp-1-25);
   box-shadow: 0 0 0 2px var(--primary-light);
 }
 
@@ -11772,7 +11776,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: var(--sp-0-5);
   flex-shrink: 0;
 }
 
@@ -12093,7 +12097,7 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-summary-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
   min-width: 80px;
 }
 .dd-summary-label {
@@ -12311,7 +12315,7 @@ canvas.chart-clickable { cursor: pointer; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--sp-0-5);
 }
 .yi-half-sep {
   width: 1px;
@@ -12395,7 +12399,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-0-5);
 }
 
 .opp-desc {
@@ -12577,7 +12581,7 @@ canvas.chart-clickable { cursor: pointer; }
 .md-cat-name {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--sp-1-25);
   overflow: hidden;
   color: var(--md-cat-color, var(--text));
   font-weight: var(--fw-medium);
@@ -12642,7 +12646,7 @@ canvas.chart-clickable { cursor: pointer; }
 .md-cell {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: var(--sp-0-75);
   border-radius: var(--radius-btn);
   padding: var(--sp-2) var(--sp-2);
   position: relative;
@@ -12821,7 +12825,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 /* md-month-info: バッジ追加で flex:1 & wrap 対応 */
-.md-month-info { flex: 1; flex-wrap: wrap; row-gap: 3px; }
+.md-month-info { flex: 1; flex-wrap: wrap; row-gap: var(--sp-0-75); }
 
 /* ── 月間支出ペースウィジェット (v9.1 → v9.2) ──────────────── */
 @keyframes pace-bar-in {
@@ -12954,7 +12958,7 @@ canvas.chart-clickable { cursor: pointer; }
 .pace-daily-label {
   font-size: var(--fs-2xs);
   color: var(--text-faint);
-  margin-bottom: 3px;
+  margin-bottom: var(--sp-0-75);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
