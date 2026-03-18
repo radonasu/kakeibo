@@ -94,6 +94,13 @@
   --fs-4xl:     30px;   /* 最大：金額 */
   --fs-icon:    18px;   /* アイコン・絵文字サイズ */
   --fs-icon-lg: 22px;   /* 大アイコン・絵文字サイズ */
+  --fs-icon-xl:  24px;  /* 拡大アイコン（矢印・ガイドアイコン） */
+  --fs-icon-2xl: 28px;  /* カード・バナー絵文字（FAB・ウィッシュリスト・チャレンジ等） */
+  --fs-icon-3xl: 36px;  /* ガイド絵文字・スコア数値表示 */
+  --fs-icon-4xl: 40px;  /* 空状態絵文字（中） */
+  --fs-icon-5xl: 44px;  /* 空状態絵文字（大）・取引空状態 */
+  --fs-icon-6xl: 48px;  /* 空状態絵文字（特大）・負債・資産 */
+  --fs-icon-7xl: 56px;  /* ヒーロー絵文字（オンボーディング・ゴール） */
 
   /* フォントウェイト */
   --fw-light:   300;
@@ -2938,7 +2945,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
 }
-.install-banner-icon { font-size: 28px; flex-shrink: 0; }
+.install-banner-icon { font-size: var(--fs-icon-2xl); flex-shrink: 0; }
 .install-banner-text { flex: 1; }
 .install-banner-text strong { display: block; font-size: var(--fs-base); }
 .install-banner-text span { font-size: var(--fs-xs); color: var(--sidebar-text-muted); }
@@ -2970,11 +2977,11 @@ body {
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-icon-lg); cursor: pointer;
 }
-.ios-guide-icon { font-size: 36px; margin-bottom: var(--sp-2); }
+.ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
 .ios-guide-arrow {
-  font-size: 24px; color: var(--primary);
+  font-size: var(--fs-icon-xl); color: var(--primary);
   animation: pwa-bounce var(--dur-rest) infinite;
   margin-top: var(--sp-2);
 }
@@ -3180,7 +3187,7 @@ body {
   border-radius: var(--radius-circle);
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: var(--white);
-  font-size: 28px;
+  font-size: var(--fs-icon-2xl);
   font-weight: var(--fw-light);
   line-height: var(--lh-none);
   border: none;
@@ -3637,7 +3644,7 @@ body {
   pointer-events: none;
 }
 .onboarding-icon {
-  font-size: 56px;
+  font-size: var(--fs-icon-7xl);
   line-height: var(--lh-none);
   margin-bottom: var(--sp-4);
   display: block;
@@ -3744,7 +3751,7 @@ body {
   padding: var(--sp-10) var(--sp-5);
   color: var(--text-muted);
 }
-.empty-month-icon { font-size: 36px; line-height: var(--lh-none); }
+.empty-month-icon { font-size: var(--fs-icon-3xl); line-height: var(--lh-none); }
 .empty-month-msg {
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -4103,7 +4110,7 @@ body {
   margin-bottom: var(--sp-4);
 }
 .empty-asset-icon {
-  font-size: 48px;
+  font-size: var(--fs-icon-6xl);
   margin-bottom: var(--sp-4);
   display: block;
 }
@@ -4786,7 +4793,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   gap: var(--sp-3);
 }
-.empty-goal-icon { font-size: 56px; }
+.empty-goal-icon { font-size: var(--fs-icon-7xl); }
 .empty-goal-msg {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
@@ -5434,7 +5441,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 @media (max-width: 768px) {
   .cal-ev-item { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); }
-  .cal-ev-icon { width: 28px; height: 28px; font-size: 15px; }
+  .cal-ev-icon { width: 28px; height: 28px; font-size: var(--fs-md); }
   .cal-ev-name { font-size: var(--fs-xs); }
   .cal-ev-amount { font-size: var(--fs-xs); }
 }
@@ -5824,7 +5831,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-3); padding: var(--sp-10) var(--sp-4);
   color: var(--text-muted); text-align: center;
 }
-.sub-empty-icon { font-size: 40px; }
+.sub-empty-icon { font-size: var(--fs-icon-4xl); }
 .sub-empty p { font-size: var(--fs-sm); }
 
 /* 休止セクション */
@@ -6252,7 +6259,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-8) var(--sp-4);
   color: var(--text-muted);
 }
-.pt-empty-icon { font-size: 40px; display: block; margin-bottom: var(--sp-3); }
+.pt-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); }
 .pt-empty p { margin-bottom: var(--sp-4); }
 
 /* 絵文字・カラーグリッド（サブスクと同デザイン） */
@@ -6398,7 +6405,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: 1px;
 }
 .hs-score-num {
-  font-size: 36px;
+  font-size: var(--fs-icon-3xl);
   font-weight: var(--fw-black);
   letter-spacing: var(--ls-display);
   line-height: var(--lh-none);
@@ -6670,7 +6677,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
              wl-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--wl-i, 0) * 60ms + var(--dur-long)) infinite;
 }
 .wl-card-icon {
-  font-size: 28px;
+  font-size: var(--fs-icon-2xl);
   width: 48px;
   height: 48px;
   display: flex;
@@ -6757,7 +6764,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
 }
 .wl-empty-icon {
-  font-size: 48px;
+  font-size: var(--fs-icon-6xl);
   display: block;
   margin-bottom: var(--sp-3);
 }
@@ -7479,7 +7486,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-card.ch-card-done { opacity: 0.75; }
 
 .ch-card-icon {
-  font-size: 28px;
+  font-size: var(--fs-icon-2xl);
   width: 48px;
   height: 48px;
   border-radius: var(--radius-btn);
@@ -7586,7 +7593,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius);
   border: 1px dashed var(--border);
 }
-.ch-empty-icon { font-size: 40px; display: block; margin-bottom: var(--sp-3); }
+.ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); }
 .ch-empty p    { margin: 0 0 4px; font-size: var(--fs-base); }
 .ch-empty-sub  { font-size: var(--fs-sm); color: var(--text-faint); }
 
@@ -9166,7 +9173,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .empty-debt-state {
   text-align: center; padding: var(--sp-12) var(--sp-4);
 }
-.empty-debt-icon { font-size: 48px; margin-bottom: var(--sp-3); }
+.empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); }
 .empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-2); }
 .empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
 
@@ -9937,7 +9944,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* --- 絵文字グリッド（モーダル内）--- */
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
 .ev-emoji-preview-box {
-  font-size: 28px;
+  font-size: var(--fs-icon-2xl);
   width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   border: 2px solid var(--border);
@@ -10407,7 +10414,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
 }
 .tx-empty-icon {
-  font-size: 44px;
+  font-size: var(--fs-icon-5xl);
   display: block;
   margin-bottom: var(--sp-3);
   animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite;
@@ -11228,7 +11235,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: notif-empty-in var(--dur-modal) var(--ease-overshoot) both;
 }
 .notif-empty-icon {
-  font-size: 40px;
+  font-size: var(--fs-icon-4xl);
   line-height: var(--lh-none);
   margin-bottom: var(--sp-2);
   filter: drop-shadow(0 2px 8px var(--black-08));
