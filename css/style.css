@@ -199,6 +199,13 @@
   --dur-stagger-sm:  0.04s;   /* スタガー小 40ms（ct-chip/fv-bar/md-cat等） */
   --dur-stagger-md:  0.055s;  /* スタガー中 55ms（sub/pt/wk/ev-card等） */
   --dur-stagger-lg:  0.06s;   /* スタガー大 60ms（wl/ch/asset/debt/yi/opp等） */
+  --dur-stagger-xl:  0.07s;   /* スタガー特大 70ms（fc-i/wk-cell/ci-cell step） */
+  --dur-stagger-2xl: 0.08s;   /* スタガー超大 80ms（yr-i step） */
+  --dur-stagger-3xl: 0.10s;   /* スタガー最大 100ms（hs-bar series step） */
+  --dur-delay-xs:    0.04s;   /* 基点ディレイ極小 40ms（nth-child(1)最速基点） */
+  --dur-delay-sm:    0.10s;   /* 基点ディレイ小 100ms（汎用ショートディレイ） */
+  --dur-delay-md:    0.12s;   /* 基点ディレイ中 120ms（sb-i/ev-mi/wk-cell calc基点） */
+  --dur-delay-lg:    0.15s;   /* 基点ディレイ大 150ms（fc-i/ci-cell/hs-d0 calc基点） */
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
@@ -217,6 +224,7 @@
   --ease-spring:      cubic-bezier(.34, 1.3, .64, 1); /* バネ感入場（soft-bounceとbounceの中間） */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); /* SVGプログレス/ストローク向け指数減速 */
   --ease-out-sine: cubic-bezier(.25, .46, .45, .94); /* スライド/ページ遷移向けサイン減速 */
+  --ease-light-bounce: cubic-bezier(.34, 1.1, .64, 1); /* 弱めバウンス（cal-panel-in等：soft-bounce弱化版） */
 
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
   --radius-btn:      12px;  /* ボタン角丸（統一） */
@@ -5205,7 +5213,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
 }
 .cal-panel-animate {
-  animation: cal-panel-in var(--dur-appear) cubic-bezier(0.34, 1.1, 0.64, 1);
+  animation: cal-panel-in var(--dur-appear) var(--ease-light-bounce);
 }
 
 .cal-day-panel-header {
@@ -5555,18 +5563,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .insight-item {
   animation: insight-in var(--dur-medium) var(--ease-plain) both;
 }
-.insight-item:nth-child(1) { animation-delay: 0.04s; }
-.insight-item:nth-child(2) { animation-delay: 0.10s; }
-.insight-item:nth-child(3) { animation-delay: 0.16s; }
-.insight-item:nth-child(4) { animation-delay: 0.22s; }
+.insight-item:nth-child(1) { animation-delay: var(--dur-delay-xs); }
+.insight-item:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-lg)); }
+.insight-item:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-lg)); }
+.insight-item:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-lg)); }
 
 .insight-item.insight-alert {
   animation: insight-in var(--dur-medium) var(--ease-plain) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
-.insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, var(--dur-pulse-delay); }
-.insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, var(--dur-pulse-delay); }
-.insight-item.insight-alert:nth-child(3) { animation-delay: 0.16s, var(--dur-pulse-delay); }
-.insight-item.insight-alert:nth-child(4) { animation-delay: 0.22s, var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(1) { animation-delay: var(--dur-delay-xs), var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-lg)), var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-lg)), var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-lg)), var(--dur-pulse-delay); }
 
 /* インサイトタイトルをタイプカラーで着色 */
 .insight-item.insight-info    .insight-title { color: var(--primary); }
@@ -6419,7 +6427,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-linecap: round;
   stroke-dasharray: 163.36 163.36;
   animation: hs-gauge-in var(--dur-gauge) var(--ease-std) both;
-  animation-delay: 0.1s;
+  animation-delay: var(--dur-delay-sm);
 }
 @keyframes hs-gauge-in {
   from { stroke-dashoffset: 163.36; }
@@ -6520,10 +6528,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
-.hs-d0 .hs-bar-fill { animation-delay: 0.15s; }
-.hs-d1 .hs-bar-fill { animation-delay: 0.25s; }
-.hs-d2 .hs-bar-fill { animation-delay: 0.35s; }
-.hs-d3 .hs-bar-fill { animation-delay: 0.45s; }
+.hs-d0 .hs-bar-fill { animation-delay: var(--dur-delay-lg); }
+.hs-d1 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-3xl)); }
+.hs-d2 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-3xl)); }
+.hs-d3 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 3 * var(--dur-stagger-3xl)); }
 @media (max-width: 520px) {
   .hs-gauge-wrap { width: 100px; }
   .hs-gauge-svg  { width: 100px; }
@@ -7173,7 +7181,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
   animation: fc-cell-in var(--dur-medium) var(--ease-enter) both;
-  animation-delay: calc(0.15s + var(--fc-i, 0) * 0.07s);
+  animation-delay: calc(var(--dur-delay-lg) + var(--fc-i, 0) * var(--dur-stagger-xl));
 }
 .fc-cell-balance {
   background: var(--fc-bg, var(--primary-light));
@@ -8168,7 +8176,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--success);
   flex: 1;
   animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ri, 0) * 22ms + 0.06s);
+  animation-delay: calc(var(--fv-ri, 0) * 22ms + var(--dur-stagger-lg));
   transform-origin: right;
 }
 @keyframes fv-seg-in {
@@ -8254,10 +8262,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
   animation: wk-cell-in var(--dur-medium) var(--ease-enter) both;
-  animation-delay: 0.12s;
+  animation-delay: var(--dur-delay-md);
 }
-.wk-summary-row .wk-cell:nth-child(2) { animation-delay: 0.19s; }
-.wk-summary-row .wk-cell:nth-child(3) { animation-delay: 0.26s; }
+.wk-summary-row .wk-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-md) + var(--dur-stagger-xl)); }
+.wk-summary-row .wk-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-md) + 2 * var(--dur-stagger-xl)); }
 
 /* セル type別背景 */
 .wk-summary-row .wk-cell:nth-child(1) {
@@ -8525,7 +8533,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   gap: var(--sp-2);
   animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
-  animation-delay: 0.04s;
+  animation-delay: var(--dur-delay-xs);
 }
 .qa-type-btn {
   flex: 1;
@@ -8565,7 +8573,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   align-items: stretch;
   animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
-  animation-delay: 0.10s;
+  animation-delay: var(--dur-delay-sm);
 }
 .qa-amount-wrap {
   display: flex;
@@ -8626,7 +8634,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   align-items: stretch;
   animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
-  animation-delay: 0.16s;
+  animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-lg));
 }
 .qa-memo-input {
   flex: 1;
@@ -9498,7 +9506,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-3);
   animation: sb-banner-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: 0.1s;
+  animation-delay: var(--dur-delay-sm);
 }
 @keyframes sb-banner-in {
   from { opacity: 0; transform: translateY(-8px) scale(0.97); }
@@ -9588,7 +9596,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--sb-cat-color, var(--border));
   transition: background var(--dur-fast);
   animation: sb-row-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--sb-i, 0) * 45ms + 0.12s);
+  animation-delay: calc(var(--sb-i, 0) * 45ms + var(--dur-delay-md));
 }
 .sb-row:hover {
   background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) 6%, transparent);
@@ -9900,7 +9908,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transform-origin: left;
   transform: scaleX(0);
   animation: ev-prog-grow var(--dur-swing) var(--ease-soft-bounce) both;
-  animation-delay: calc(var(--ev-mi, 0) * 35ms + 0.12s);
+  animation-delay: calc(var(--ev-mi, 0) * 35ms + var(--dur-delay-md));
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
 .ev-month-progress.ev-pm-done .ev-prog-fill { background: var(--success); }
@@ -10502,7 +10510,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-md);
   padding: var(--sp-3);
   animation: yr-cell-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--yr-i, 0) * 0.08s);
+  animation-delay: calc(var(--yr-i, 0) * var(--dur-stagger-2xl));
 }
 .yr-cell-label {
   font-size: var(--fs-xs);
@@ -10774,9 +10782,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   animation: ci-cell-in var(--dur-lift) var(--ease-bounce) both;
 }
-.ci-cell:nth-child(1) { animation-delay: 0.15s; }
-.ci-cell:nth-child(2) { animation-delay: 0.22s; }
-.ci-cell:nth-child(3) { animation-delay: 0.29s; }
+.ci-cell:nth-child(1) { animation-delay: var(--dur-delay-lg); }
+.ci-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-xl)); }
+.ci-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-xl)); }
 @keyframes ci-cell-in {
   from { opacity: 0; transform: translateY(10px) scale(0.92); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
