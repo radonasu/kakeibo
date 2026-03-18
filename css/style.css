@@ -97,8 +97,9 @@
   --fs-icon:    18px;   /* アイコン・絵文字サイズ */
   --fs-icon-lg: 22px;   /* 大アイコン・絵文字サイズ */
   --fs-icon-xl:  24px;  /* 拡大アイコン（矢印・ガイドアイコン） */
-  --fs-icon-2xl: 28px;  /* カード・バナー絵文字（FAB・ウィッシュリスト・チャレンジ等） */
-  --fs-icon-3xl: 36px;  /* ガイド絵文字・スコア数値表示 */
+  --fs-icon-2xl: 28px;   /* カード・バナー絵文字（FAB・ウィッシュリスト・チャレンジ等） */
+  --fs-icon-2-5xl: 32px; /* 中大アイコン（繰り返し取引確認・モーダルヘッダーアイコン等） */
+  --fs-icon-3xl: 36px;   /* ガイド絵文字・スコア数値表示 */
   --fs-icon-4xl: 40px;  /* 空状態絵文字（中） */
   --fs-icon-5xl: 44px;  /* 空状態絵文字（大）・取引空状態 */
   --fs-icon-6xl: 48px;  /* 空状態絵文字（特大）・負債・資産 */
@@ -351,11 +352,18 @@ body {
   background: var(--bg);
   line-height: var(--lh-normal);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button { cursor: pointer; font-family: inherit; }
 input, select, textarea { font-family: inherit; }
 a { color: inherit; text-decoration: none; }
+
+/* ── テキスト選択スタイリング（v15.9）：ブランドカラー選択ハイライト ── */
+::selection {
+  background: color-mix(in srgb, var(--primary) 22%, transparent);
+  color: var(--text);
+}
 
 /* ── オートフィルスタイリング v15.2（Chromeオートフィル背景をテーマカラーに統一） ── */
 input:-webkit-autofill,
@@ -11665,7 +11673,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .rc-header-icon {
-  font-size: 2rem;
+  font-size: var(--fs-icon-2-5xl);
   line-height: var(--lh-none);
   flex-shrink: 0;
   animation: rc-icon-spin var(--dur-spin) var(--ease-bounce) both;
