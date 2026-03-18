@@ -410,6 +410,14 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
 }
 
+/* ── number input スピンボタン非表示 (v17.6) ────────────── */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="number"] { -moz-appearance: textfield; }
+
 /* ── オートフィルスタイリング v15.2（Chromeオートフィル背景をテーマカラーに統一） ── */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -562,6 +570,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item:hover .nav-icon { transform: scale(1.12); }
+.nav-item:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
@@ -1072,6 +1081,19 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-normal);
   opacity: 1;
 }
+/* ── セレクトボックス カスタム矢印 (v17.6) ──────────────── */
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2364748b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-3) center;
+  background-size: 16px 16px;
+  padding-right: var(--sp-8);
+}
+[data-theme="dark"] .form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2394a3b8' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
 .hint {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -1150,6 +1172,7 @@ select:focus:not(:focus-visible) {
 }
 
 .cat-chip:active { transform: translateY(0); }
+.cat-chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 
 .cat-chip.selected {
   border-color: var(--cat-color, var(--primary));
@@ -1806,6 +1829,8 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
   transform: scale(1.03);
 }
+.tx-tag-filter-chip:focus-visible,
+.tx-tag-filter-all:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 [data-theme="dark"] .tx-tag-chip {
   background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
   border-color: color-mix(in srgb, var(--tc, var(--primary)) 35%, transparent);
@@ -2016,6 +2041,7 @@ select:focus:not(:focus-visible) {
   transform: translateY(-1px);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 18%, transparent);
 }
+.adv-preset-chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .adv-preset-chip.active {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 14%, transparent);
@@ -3193,6 +3219,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
+.bottom-nav-item:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); border-radius: var(--radius-sm); }
 
 .bottom-nav-item.active {
   color: var(--primary);
@@ -4649,6 +4676,7 @@ body {
   border-bottom-color: var(--border-strong);
 }
 .section-tab:hover .tab-icon { transform: scale(1.1); }
+.section-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .section-tab.is-active {
   color: var(--primary);
   border-bottom-color: var(--primary);
@@ -10150,6 +10178,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transform: translateY(-1px);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 22%, transparent);
 }
+.sf-chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .sf-chip-del {
   display: inline-flex;
   align-items: center;
