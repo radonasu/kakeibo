@@ -196,16 +196,19 @@
   --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
   --dur-pulse-delay: 0.8s;
   --dur-stagger:     0.05s;   /* スタガー基本間隔 50ms（budget/adv/cal-ev/rc等） */
+  --dur-stagger-2xs: 0.025s;  /* スタガー最小 25ms（tx-sorting行・fv-ri step） */
+  --dur-stagger-xs:  0.045s;  /* スタガー極小 45ms（sim-ri/sb-i/sfi/cc-i step） */
   --dur-stagger-sm:  0.04s;   /* スタガー小 40ms（ct-chip/fv-bar/md-cat等） */
   --dur-stagger-md:  0.055s;  /* スタガー中 55ms（sub/pt/wk/ev-card等） */
   --dur-stagger-lg:  0.06s;   /* スタガー大 60ms（wl/ch/asset/debt/yi/opp等） */
   --dur-stagger-xl:  0.07s;   /* スタガー特大 70ms（fc-i/wk-cell/ci-cell step） */
-  --dur-stagger-2xl: 0.08s;   /* スタガー超大 80ms（yr-i step） */
+  --dur-stagger-2xl: 0.08s;   /* スタガー超大 80ms（yr-i/dow-i step） */
   --dur-stagger-3xl: 0.10s;   /* スタガー最大 100ms（hs-bar series step） */
   --dur-delay-xs:    0.04s;   /* 基点ディレイ極小 40ms（nth-child(1)最速基点） */
   --dur-delay-sm:    0.10s;   /* 基点ディレイ小 100ms（汎用ショートディレイ） */
   --dur-delay-md:    0.12s;   /* 基点ディレイ中 120ms（sb-i/ev-mi/wk-cell calc基点） */
   --dur-delay-lg:    0.15s;   /* 基点ディレイ大 150ms（fc-i/ci-cell/hs-d0 calc基点） */
+  --dur-delay-xl:    0.20s;   /* 基点ディレイ大+ 200ms（sub-bar/pt-bar/dow-bar offset delay） */
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
@@ -2011,7 +2014,7 @@ mark.tx-hl {
   animation-delay: var(--dur-stagger);
 }
 .adv-filter-panel.open .adv-filter-clear {
-  animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) 0.08s both;
+  animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) var(--dur-stagger-2xl) both;
 }
 
 /* 月ナビ (v5.99) */
@@ -3490,26 +3493,26 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 .tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-plain) both; }
-.tx-table tbody tr:nth-child(2)  { animation-delay: .04s; }
-.tx-table tbody tr:nth-child(3)  { animation-delay: .08s; }
-.tx-table tbody tr:nth-child(4)  { animation-delay: .12s; }
-.tx-table tbody tr:nth-child(5)  { animation-delay: .16s; }
-.tx-table tbody tr:nth-child(6)  { animation-delay: .20s; }
-.tx-table tbody tr:nth-child(7)  { animation-delay: .24s; }
-.tx-table tbody tr:nth-child(8)  { animation-delay: .28s; }
-.tx-table tbody tr:nth-child(9)  { animation-delay: .32s; }
-.tx-table tbody tr:nth-child(10) { animation-delay: .36s; }
+.tx-table tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-sm); }
+.tx-table tbody tr:nth-child(3)  { animation-delay: calc(2 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(4)  { animation-delay: calc(3 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(5)  { animation-delay: calc(4 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(6)  { animation-delay: calc(5 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(7)  { animation-delay: calc(6 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(8)  { animation-delay: calc(7 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(9)  { animation-delay: calc(8 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(10) { animation-delay: calc(9 * var(--dur-stagger-sm)); }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
 .tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-plain) both; }
-.tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: .025s; }
-.tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: .050s; }
-.tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: .075s; }
-.tx-table.tx-sorting tbody tr:nth-child(5)  { animation-delay: .100s; }
-.tx-table.tx-sorting tbody tr:nth-child(6)  { animation-delay: .125s; }
-.tx-table.tx-sorting tbody tr:nth-child(7)  { animation-delay: .150s; }
-.tx-table.tx-sorting tbody tr:nth-child(8)  { animation-delay: .175s; }
-.tx-table.tx-sorting tbody tr:nth-child(9)  { animation-delay: .200s; }
-.tx-table.tx-sorting tbody tr:nth-child(10) { animation-delay: .225s; }
+.tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-2xs); }
+.tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: calc(2 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: calc(3 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(5)  { animation-delay: calc(4 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(6)  { animation-delay: calc(5 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(7)  { animation-delay: calc(6 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(8)  { animation-delay: calc(7 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(9)  { animation-delay: calc(8 * var(--dur-stagger-2xs)); }
+.tx-table.tx-sorting tbody tr:nth-child(10) { animation-delay: calc(9 * var(--dur-stagger-2xs)); }
 
 /* ── リップルエフェクト ── */
 .btn { position: relative; overflow: hidden; }
@@ -5847,7 +5850,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-progress-fill {
   height: 100%;
   width: var(--sub-progress, 0%);
-  animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + 0.2s) both;
+  animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
 }
 .sub-card-progress-fill.prog-normal { background: var(--primary); opacity: 0.5; }
 .sub-card-progress-fill.prog-soon   { background: var(--warning); }
@@ -6284,7 +6287,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-exp-bar-fill {
   height: 100%;
   width: var(--pt-progress, 0%);
-  animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + 0.2s) both;
+  animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
 }
 .pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: 0.6; }
 .pt-exp-bar-fill.prog-soon   { background: var(--warning); }
@@ -7786,7 +7789,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-base), transform var(--dur-base);
   animation: dow-card-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--dow-i, 0) * 80ms);
+  animation-delay: calc(var(--dow-i, 0) * var(--dur-stagger-2xl));
 }
 .dow-stat-card:hover {
   box-shadow: var(--shadow-md);
@@ -7868,7 +7871,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--dow-row-color, var(--primary));
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
-  animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + 0.2s);
+  animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
 }
 
 /* -- ダークモード -- */
@@ -8189,7 +8192,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 月別テーブル行アニメーション */
 .fv-month-table tbody tr {
   animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ri, 0) * 25ms);
+  animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-2xs));
 }
 
 /* モバイル対応 */
@@ -9171,7 +9174,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%; border-radius: var(--radius-badge);
   transform-origin: left center;
   animation: debt-bar-fill-in var(--dur-fill) var(--ease-plain) both;
-  animation-delay: calc(var(--dbi, 0) * var(--dur-stagger-sm) + 0.2s);
+  animation-delay: calc(var(--dbi, 0) * var(--dur-stagger-sm) + var(--dur-delay-xl));
 }
 @keyframes debt-bar-fill-in {
   from { transform: scaleX(0); }
@@ -9422,7 +9425,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* セル スタッガードフェードイン */
 .sim-result-grid > div {
-  animation: sim-cell-in var(--dur-gentle) var(--ease-plain) calc(var(--sim-ri,0) * 45ms) both;
+  animation: sim-cell-in var(--dur-gentle) var(--ease-plain) calc(var(--sim-ri,0) * var(--dur-stagger-xs)) both;
 }
 @keyframes sim-cell-in {
   from { opacity: 0; }
@@ -9471,7 +9474,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* チャートラッパー入場 */
 .sim-chart-wrap {
-  animation: sim-chart-in var(--dur-snap) var(--ease-plain) 0.08s both;
+  animation: sim-chart-in var(--dur-snap) var(--ease-plain) var(--dur-stagger-2xl) both;
 }
 @keyframes sim-chart-in {
   from { opacity: 0; transform: translateY(14px); }
@@ -9596,7 +9599,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--sb-cat-color, var(--border));
   transition: background var(--dur-fast);
   animation: sb-row-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--sb-i, 0) * 45ms + var(--dur-delay-md));
+  animation-delay: calc(var(--sb-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-md));
 }
 .sb-row:hover {
   background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) 6%, transparent);
@@ -10044,7 +10047,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-faster);
   animation: sf-chip-in var(--dur-pop) var(--ease-bounce) both;
-  animation-delay: calc(var(--sfi, 0) * 45ms);
+  animation-delay: calc(var(--sfi, 0) * var(--dur-stagger-xs));
   white-space: nowrap;
   max-width: 140px;
   overflow: hidden;
@@ -10144,7 +10147,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .tg-table tbody tr {
   animation: tg-row-in var(--dur-gentle) var(--ease-std) both;
-  animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + 0.1s);
+  animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
 }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(6px); }
@@ -10326,7 +10329,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--primary);
   background: color-mix(in srgb, var(--primary) 4%, transparent);
-  animation: adv-section-in var(--dur-medium) var(--ease-soft-bounce) calc(var(--adv-si, 0) * 0.08s) both;
+  animation: adv-section-in var(--dur-medium) var(--ease-soft-bounce) calc(var(--adv-si, 0) * var(--dur-stagger-2xl)) both;
 }
 .adv-section:nth-child(2) {
   border-left-color: var(--success);
@@ -12647,7 +12650,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
-  animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm) + 0.1s);
+  animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
 }
 @keyframes md-bar-fill {
   from { transform: scaleX(0); }
@@ -13089,7 +13092,7 @@ canvas.chart-clickable { cursor: pointer; }
 .pm-table-row {
   border-left: 3px solid var(--pm-row-color, var(--border));
   animation: pm-row-in var(--dur-gentle) var(--ease-bounce) both;
-  animation-delay: calc(var(--pm-ri, 0) * var(--dur-stagger) + 0.05s);
+  animation-delay: calc(var(--pm-ri, 0) * var(--dur-stagger) + var(--dur-stagger));
 }
 @keyframes pm-row-in {
   from { opacity: 0; transform: translateX(-6px); }
@@ -13184,7 +13187,7 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-3);
   overflow: hidden;
   animation: cat-cg-in var(--dur-medium) var(--ease-bounce) both;
-  animation-delay: calc(var(--cc-i, 0) * 45ms);
+  animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs));
   transition: box-shadow var(--dur-faster), transform var(--dur-fast) var(--ease-bounce);
 }
 .cat-card:hover {
@@ -13306,7 +13309,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
-  animation-delay: calc(var(--cc-i, 0) * 45ms + .1s);
+  animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-sm));
 }
 .cat-budget-pct {
   font-size: var(--fs-2xs);
