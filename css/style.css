@@ -113,6 +113,7 @@
   --lh-normal:  1.6;   /* 標準：一般本文 */
   --lh-ample:   1.65;  /* やや広め：メモエリア等の入力フィールド */
   --lh-relaxed: 1.75;  /* 広め：読みやすいブロックテキスト */
+  --lh-none:    1;     /* フラット：アイコン・絵文字・数値バッジ等の行間抑制 */
 
   /* 字間（pxスケール） */
   --ls-display: -1.5px;   /* 超大数値・スコア表示 */
@@ -127,6 +128,10 @@
   --ls-label:   0.02em;   /* ラベル・キャプション */
   --ls-cap:     0.04em;   /* バッジ・アクセント */
   --ls-caps:    0.05em;   /* 見出しcaps */
+  /* 字間（emスケール・負値・特殊） */
+  --ls-micro:  -0.01em;  /* 金額テーブル数値微細詰め */
+  --ls-num:    -0.02em;  /* カード数値詰め（tabular-nums大表示） */
+  --ls-spread:  0.08em;  /* 見出しラベル大文字等の広字間 */
 
   /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
   --sp-1:     4px;   /* 極小：アイコン余白、バッジ */
@@ -1014,7 +1019,7 @@ select:focus:not(:focus-visible) {
 
 .cat-chip-icon {
   font-size: var(--fs-2xl);
-  line-height: 1;
+  line-height: var(--lh-none);
   pointer-events: none;
 }
 
@@ -1168,7 +1173,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface-2);
 }
 
-.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); }
 .tx-table td.actions { white-space: nowrap; text-align: right; width: 80px; }
 .tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -1528,7 +1533,7 @@ select:focus:not(:focus-visible) {
 }
 .cat-badge-icon {
   font-size: var(--fs-3xs);
-  line-height: 1;
+  line-height: var(--lh-none);
   flex-shrink: 0;
 }
 
@@ -1748,7 +1753,7 @@ select:focus:not(:focus-visible) {
   color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  line-height: 1;
+  line-height: var(--lh-none);
 }
 
 /* ── v5.94: 詳細フィルターパネル ── */
@@ -1952,7 +1957,7 @@ mark.tx-hl {
   color: var(--text-muted);
   font-size: var(--fs-icon);
   font-weight: var(--fw-medium);
-  line-height: 1;
+  line-height: var(--lh-none);
   cursor: pointer;
   padding: 0;
   transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press);
@@ -3060,7 +3065,7 @@ body {
   width: 32px; height: 32px;
   border-radius: var(--radius-sm);
 }
-.bottom-nav-label { font-size: var(--fs-2xs); line-height: 1; }
+.bottom-nav-label { font-size: var(--fs-2xs); line-height: var(--lh-none); }
 
 /* ============================================================
    レスポンシブ
@@ -3146,7 +3151,7 @@ body {
   color: var(--white);
   font-size: 28px;
   font-weight: var(--fw-light);
-  line-height: 1;
+  line-height: var(--lh-none);
   border: none;
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12);
   z-index: var(--z-fab);
@@ -3201,7 +3206,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: var(--lh-none);
   pointer-events: none;
   animation: nav-badge-pop .35s var(--ease-bounce) both;
 }
@@ -3257,7 +3262,7 @@ body {
   padding: 5px 8px;
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
-  line-height: 1;
+  line-height: var(--lh-none);
   transition: background var(--dur-fast), color var(--dur-fast);
   color: color-mix(in srgb, var(--sidebar-text-hi) 75%, transparent);
   flex-shrink: 0;
@@ -3602,7 +3607,7 @@ body {
 }
 .onboarding-icon {
   font-size: 56px;
-  line-height: 1;
+  line-height: var(--lh-none);
   margin-bottom: var(--sp-4);
   display: block;
 }
@@ -3680,7 +3685,7 @@ body {
   justify-content: center;
   flex-shrink: 0;
 }
-.step-icon { font-size: var(--fs-3xl); line-height: 1; }
+.step-icon { font-size: var(--fs-3xl); line-height: var(--lh-none); }
 .step-title {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
@@ -3708,7 +3713,7 @@ body {
   padding: var(--sp-10) var(--sp-5);
   color: var(--text-muted);
 }
-.empty-month-icon { font-size: 36px; line-height: 1; }
+.empty-month-icon { font-size: 36px; line-height: var(--lh-none); }
 .empty-month-msg {
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -3874,7 +3879,7 @@ body {
   font-size: var(--fs-2xs);
   font-style: normal;
   font-weight: var(--fw-bold);
-  line-height: 1;
+  line-height: var(--lh-none);
 }
 .kk-toast-body {
   flex: 1;
@@ -4474,7 +4479,7 @@ body {
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster);
   white-space: nowrap;
-  line-height: 1;
+  line-height: var(--lh-none);
 }
 .section-tab:hover {
   color: var(--text);
@@ -4567,7 +4572,7 @@ body {
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 
-.goal-emoji { font-size: var(--fs-icon-lg); line-height: 1; position: relative; z-index: 1; }
+.goal-emoji { font-size: var(--fs-icon-lg); line-height: var(--lh-none); position: relative; z-index: 1; }
 
 .goal-name {
   font-size: var(--fs-lg);
@@ -4863,7 +4868,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-dashoffset: 81.68;
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
-.goal-dash-emoji { font-size: var(--fs-icon); line-height: 1; position: relative; z-index: 1; }
+.goal-dash-emoji { font-size: var(--fs-icon); line-height: var(--lh-none); position: relative; z-index: 1; }
 
 .goal-dash-info  { flex: 1; min-width: 0; }
 
@@ -5097,7 +5102,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   color: var(--text-muted);
-  line-height: 1;
+  line-height: var(--lh-none);
   width: 22px;
   height: 22px;
   display: flex;
@@ -5438,7 +5443,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .insight-icon {
   font-size: var(--fs-2xl);
-  line-height: 1;
+  line-height: var(--lh-none);
   flex-shrink: 0;
   margin-top: 1px;
 }
@@ -6365,7 +6370,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: 36px;
   font-weight: var(--fw-black);
   letter-spacing: var(--ls-display);
-  line-height: 1;
+  line-height: var(--lh-none);
   color: var(--hs-grade-color, var(--text));
 }
 .hs-score-unit {
@@ -6882,7 +6887,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .memo-cat-hint-icon {
   font-size: var(--fs-xl);
   flex-shrink: 0;
-  line-height: 1;
+  line-height: var(--lh-none);
 }
 .memo-cat-hint-text {
   flex: 1;
@@ -7395,7 +7400,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:var(--white); }
 .ch-sum-total::before { background:var(--white); }
 .ch-summary-label { font-size: var(--fs-xs); opacity:0.85; margin-bottom: var(--sp-1); }
-.ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: 1; }
+.ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-none); }
 .ch-summary-unit  { font-size: var(--fs-sm); font-weight:400; margin-left: 2px; opacity:0.8; }
 
 /* -- セクションタイトル -- */
@@ -7735,7 +7740,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--white);
 }
 
-.dow-stat-icon { font-size: var(--fs-4xl); line-height: 1; flex-shrink: 0; position: relative; z-index: 1; }
+.dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: 1; }
 .dow-stat-info { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
 .dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
@@ -9987,7 +9992,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--border);
   color: var(--text-muted);
   font-size: 8px;
-  line-height: 1;
+  line-height: var(--lh-none);
   flex-shrink: 0;
   transition: background var(--dur-fast), color var(--dur-fast);
 }
@@ -10044,7 +10049,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: tg-stat-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--tg-si, 0) * 65ms);
 }
-.tg-stat-icon { font-size: var(--fs-icon-lg); line-height: 1; }
+.tg-stat-icon { font-size: var(--fs-icon-lg); line-height: var(--lh-none); }
 .tg-stat-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -10870,10 +10875,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  line-height: 1;
+  line-height: var(--lh-none);
   margin-left: auto;
   flex-shrink: 0;
-  letter-spacing: 0;
+  letter-spacing: var(--ls-normal);
   box-shadow: 0 1px 4px color-mix(in srgb, var(--danger-text) 45%, transparent);
 }
 
@@ -11193,7 +11198,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .notif-empty-icon {
   font-size: 40px;
-  line-height: 1;
+  line-height: var(--lh-none);
   margin-bottom: var(--sp-2);
   filter: drop-shadow(0 2px 8px var(--black-08));
 }
@@ -11618,7 +11623,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .rc-header-icon {
   font-size: 2rem;
-  line-height: 1;
+  line-height: var(--lh-none);
   flex-shrink: 0;
   animation: rc-icon-spin var(--dur-spin) var(--ease-bounce) both;
 }
@@ -11889,7 +11894,7 @@ kbd {
   color: var(--text);
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-label);
-  line-height: 1;
+  line-height: var(--lh-none);
   white-space: nowrap;
   user-select: none;
 }
@@ -11915,7 +11920,7 @@ kbd {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-spread);
   color: var(--text-muted);
   margin-bottom: var(--sp-2);
   padding-bottom: var(--sp-1);
@@ -12225,7 +12230,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 .yi-card-icon {
   font-size: var(--fs-xl);
-  line-height: 1;
+  line-height: var(--lh-none);
 }
 .yi-card-label {
   font-size: var(--fs-xs);
@@ -12238,7 +12243,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-weight: var(--fw-bold);
   color: var(--text-main);
   line-height: var(--lh-tighter);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--ls-num);
   font-variant-numeric: tabular-nums;
 }
 .yi-card-unit {
