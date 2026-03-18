@@ -194,7 +194,8 @@
   --dur-spin:    0.6s;                             /* 回転・セグメントアニメーション */
   --dur-swing:   0.65s;                            /* スウィング・バーフィル・ベル揺れ */
   --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
-  --dur-pulse-delay: 0.8s;                         /* パルス開始ディレイ（ページ表示後のパルスアニメーション遅延） */
+  --dur-pulse-delay: 0.8s;
+  --dur-stagger:     0.05s;                            /* スタガーアニメーション基本間隔（budget/adv等） */                         /* パルス開始ディレイ（ページ表示後のパルスアニメーション遅延） */
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
@@ -522,20 +523,25 @@ select:focus:not(:focus-visible) {
 }
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
+.nav-item:hover .nav-icon { transform: scale(1.12); }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
   font-weight: var(--fw-bold);
 }
-.nav-item.active::before {
+.nav-item::before {
   content: '';
   position: absolute;
   left: 0; top: 50%;
   transform: translateY(-50%);
   width: 3px;
-  height: 60%;
+  height: 0;
   background: var(--primary);
   border-radius: 0 var(--radius-3xs) var(--radius-3xs) 0;
+  transition: height var(--dur-appear) var(--ease-spring);
+}
+.nav-item.active::before {
+  height: 60%;
 }
 
 .nav-icon {
@@ -543,7 +549,7 @@ select:focus:not(:focus-visible) {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-base), color var(--dur-base);
+  transition: background var(--dur-base), color var(--dur-base), transform var(--dur-fast) var(--ease-bounce);
 }
 .nav-icon svg { display: block; }
 .nav-item.active .nav-icon {
@@ -551,6 +557,7 @@ select:focus:not(:focus-visible) {
   color: var(--primary-end);
   border-radius: var(--radius-btn-sm);
   padding: var(--sp-0-5);
+  transform: scale(1.05);
 }
 
 /* サイドバー下部ユーザーエリア */
@@ -1990,7 +1997,7 @@ mark.tx-hl {
   animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) both;
 }
 .adv-filter-panel.open .adv-filter-group:nth-child(2) {
-  animation-delay: 0.05s;
+  animation-delay: var(--dur-stagger);
 }
 .adv-filter-panel.open .adv-filter-clear {
   animation: adv-grp-in var(--dur-mid) var(--ease-soft-bounce) 0.08s both;
@@ -3453,14 +3460,14 @@ body {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
-.budget-item:nth-child(1) .budget-fill { animation-delay: 0.05s; }
-.budget-item:nth-child(2) .budget-fill { animation-delay: 0.10s; }
-.budget-item:nth-child(3) .budget-fill { animation-delay: 0.15s; }
-.budget-item:nth-child(4) .budget-fill { animation-delay: 0.20s; }
-.budget-item:nth-child(5) .budget-fill { animation-delay: 0.25s; }
-.budget-item:nth-child(6) .budget-fill { animation-delay: 0.30s; }
-.budget-item:nth-child(7) .budget-fill { animation-delay: 0.35s; }
-.budget-item:nth-child(8) .budget-fill { animation-delay: 0.40s; }
+.budget-item:nth-child(1) .budget-fill { animation-delay: var(--dur-stagger); }
+.budget-item:nth-child(2) .budget-fill { animation-delay: calc(2 * var(--dur-stagger)); }
+.budget-item:nth-child(3) .budget-fill { animation-delay: calc(3 * var(--dur-stagger)); }
+.budget-item:nth-child(4) .budget-fill { animation-delay: calc(4 * var(--dur-stagger)); }
+.budget-item:nth-child(5) .budget-fill { animation-delay: calc(5 * var(--dur-stagger)); }
+.budget-item:nth-child(6) .budget-fill { animation-delay: calc(6 * var(--dur-stagger)); }
+.budget-item:nth-child(7) .budget-fill { animation-delay: calc(7 * var(--dur-stagger)); }
+.budget-item:nth-child(8) .budget-fill { animation-delay: calc(8 * var(--dur-stagger)); }
 
 /* ── テーブル行ストッガード ── */
 @keyframes row-in {
