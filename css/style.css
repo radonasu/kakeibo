@@ -873,8 +873,10 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   padding: 0;
   box-shadow: none;
+  text-underline-offset: 2px;
+  transition: color var(--dur-fast), text-underline-offset var(--dur-fast);
 }
-.btn-link:hover { text-decoration: underline; }
+.btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: 4px; }
 
 .btn-icon {
   background: none;
@@ -888,10 +890,48 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   opacity: var(--opacity-dim);
-  transition: opacity var(--dur-fast), background var(--dur-fast);
+  transition: opacity var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), color var(--dur-fast);
   box-shadow: none;
 }
-.btn-icon:hover { opacity: 1; background: var(--bg); }
+.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(1.06); }
+.btn-icon:active { transform: scale(0.88); }
+
+/* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
+.edit-tx {
+  color: var(--text-muted);
+  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster), color var(--dur-faster);
+}
+.edit-tx:hover {
+  background: color-mix(in srgb, var(--primary) 10%, var(--bg)) !important;
+  color: var(--primary);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+  opacity: 1;
+}
+.edit-tx:active { transform: scale(0.88); }
+[data-theme="dark"] .edit-tx:hover {
+  background: color-mix(in srgb, var(--primary) 15%, var(--surface)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* ── 削除ボタン ホバー洗練 (v17.1) ─────────────────── */
+.delete-tx {
+  color: var(--text-muted);
+  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster), color var(--dur-faster);
+}
+.delete-tx:hover {
+  background: var(--danger-bg) !important;
+  color: var(--danger-text);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger-text) 20%, transparent);
+  opacity: 1;
+}
+.delete-tx:active { transform: scale(0.88); }
+[data-theme="dark"] .delete-tx:hover {
+  background: var(--danger-bg) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger-text) 25%, transparent);
+}
+
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
   color: var(--warning);
@@ -1787,7 +1827,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .filter-bar select:hover,
 .filter-bar .month-sel:hover { border-color: var(--border-strong); }
@@ -1802,7 +1842,7 @@ select:focus:not(:focus-visible) {
   flex: 1;
   min-width: 120px;
   caret-color: var(--primary);
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .filter-search::placeholder { color: var(--text-faint); opacity: 1; }
 .filter-search:hover { border-color: var(--border-strong); }
