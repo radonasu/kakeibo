@@ -349,6 +349,12 @@
   --opacity-deco:      0.10;  /* 装飾サークル薄（md-cell currentColor デコ等） */
   --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
+
+  /* ── コンポーネント固有サイズトークン (v17.3) ──────────── */
+  --size-badge-sm:  16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
+  --size-checkbox:  16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
+  --size-hm-cell:   13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
+  --size-hm-month:  20px;  /* ヒートマップ月ラベル行（高さ・行間） */
 }
 
 html {
@@ -1880,8 +1886,8 @@ select:focus:not(:focus-visible) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 16px;
-  height: 16px;
+  min-width: var(--size-badge-sm);
+  height: var(--size-badge-sm);
   padding: 0 4px;
   border-radius: var(--radius-badge);
   background: var(--primary);
@@ -3330,8 +3336,8 @@ body {
   position: absolute;
   top: 4px;
   right: calc(50% - 18px);
-  min-width: 16px;
-  height: 16px;
+  min-width: var(--size-badge-sm);
+  height: var(--size-badge-sm);
   padding: 0 4px;
   background: var(--expense);
   color: var(--white);
@@ -3626,8 +3632,8 @@ body {
   user-select: none;
 }
 .notif-toggle-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: var(--size-checkbox);
+  height: var(--size-checkbox);
   accent-color: var(--primary);
   cursor: pointer;
 }
@@ -3667,8 +3673,8 @@ body {
   user-select: none;
 }
 .recurring-toggle-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: var(--size-checkbox);
+  height: var(--size-checkbox);
   accent-color: var(--primary);
   cursor: pointer;
 }
@@ -4265,7 +4271,7 @@ body {
   display: block;
   font-size: var(--fs-3xs);
   color: var(--text-muted);
-  font-weight: normal;
+  font-weight: var(--fw-normal);
 }
 
 /* 為替レートグリッド */
@@ -4290,7 +4296,7 @@ body {
 .fx-currency-label small {
   font-size: var(--fs-3xs);
   color: var(--text-muted);
-  font-weight: normal;
+  font-weight: var(--fw-normal);
   margin-top: 1px;
 }
 .fx-input-wrap {
@@ -8986,7 +8992,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hm-dow-col span {
   font-size: var(--fs-4xs);
   color: var(--text-muted);
-  line-height: 13px;
+  line-height: var(--size-hm-cell);
   text-align: right;
   padding-right: var(--sp-1);
   white-space: nowrap;
@@ -8996,23 +9002,23 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hm-month-row {
   position: relative;
-  height: 20px;
+  height: var(--size-hm-month);
   margin-bottom: var(--sp-0-5);
 }
 .hm-month-label {
   position: absolute;
-  left: calc(var(--hm-week-col) * 16px);
+  left: calc(var(--hm-week-col) * (var(--size-hm-cell) + var(--sp-0-75)));
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  line-height: 20px;
+  line-height: var(--size-hm-month);
   white-space: nowrap;
   pointer-events: none;
 }
 .hm-grid {
   display: grid;
-  grid-template-rows: repeat(7, 13px);
+  grid-template-rows: repeat(7, var(--size-hm-cell));
   grid-auto-flow: column;
-  grid-auto-columns: 13px;
+  grid-auto-columns: var(--size-hm-cell);
   gap: var(--sp-0-75);
 }
 /* 週列スタッガードフェードイン */
@@ -9022,8 +9028,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--hm-wi, 0) * 8ms);
 }
 .hm-cell {
-  width: 13px;
-  height: 13px;
+  width: var(--size-hm-cell);
+  height: var(--size-hm-cell);
   border-radius: var(--radius-3xs);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
@@ -9337,7 +9343,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* ローン情報バー */
 .sim-loan-info {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
-  background: var(--surface-hover); border-radius: var(--sp-2); padding: var(--sp-3);
+  background: var(--surface-hover); border-radius: var(--radius-btn-sm); padding: var(--sp-3);
   margin-bottom: var(--sp-3);
 }
 .sim-loan-name {
@@ -9601,7 +9607,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sb-check {
   appearance: none;
   -webkit-appearance: none;
-  width: 16px; height: 16px;
+  width: var(--size-checkbox); height: var(--size-checkbox);
   border: 2px solid var(--border-strong);
   border-radius: var(--radius-2xs);
   background: var(--surface);
@@ -11087,15 +11093,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: 3px;
   right: 2px;
-  min-width: 16px;
-  height: 16px;
+  min-width: var(--size-badge-sm);
+  height: var(--size-badge-sm);
   padding: 0 4px;
   border-radius: var(--radius-badge);
   background: var(--danger-text);
   color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  line-height: 16px;
+  line-height: var(--size-badge-sm);
   text-align: center;
   pointer-events: none;
   box-shadow: 0 1px 4px color-mix(in srgb, var(--expense) 50%, transparent);
