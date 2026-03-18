@@ -397,6 +397,7 @@ body {
   line-height: var(--lh-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 button { cursor: pointer; font-family: inherit; }
@@ -744,6 +745,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
   line-height: var(--lh-snug);
   margin-bottom: var(--sp-4);
+  text-wrap: balance;
 }
 
 .card-header-row {
@@ -836,6 +838,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
+  text-wrap: balance;
 }
 
 /* ── ボタン ──────────────────────────────────────────── */
@@ -1017,7 +1020,9 @@ select:focus:not(:focus-visible) {
   margin-bottom: var(--sp-1-5);
   text-transform: uppercase;
   letter-spacing: var(--ls-wide);
+  transition: color var(--dur-fast);
 }
+.form-group:focus-within > label { color: var(--primary); }
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group input[type="date"],
@@ -1261,8 +1266,8 @@ select:focus:not(:focus-visible) {
   padding: var(--sp-0-5) var(--sp-2);
   border-radius: var(--radius-badge);
 }
-.diff.up   { }
-.diff.down { }
+.diff.up   { background: color-mix(in srgb, var(--white) 30%, transparent); }
+.diff.down { background: color-mix(in srgb, var(--white) 13%, transparent); opacity: var(--opacity-faded); }
 
 /* ── チャートエリア ───────────────────────────────────── */
 .charts-row {
@@ -4643,6 +4648,7 @@ body {
   background: var(--surface-2);
   border-bottom-color: var(--border-strong);
 }
+.section-tab:hover .tab-icon { transform: scale(1.1); }
 .section-tab.is-active {
   color: var(--primary);
   border-bottom-color: var(--primary);
@@ -9359,6 +9365,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 .sim-modal-header .modal-title { color: var(--white); }
+.sim-modal-header .modal-close { color: var(--white); }
 
 /* ローン情報バー */
 .sim-loan-info {

@@ -10688,7 +10688,7 @@ ${archivedSection}
   <div class="modal modal-lg">
     <div class="modal-header sim-modal-header">
       <h3 class="modal-title">📊 繰上返済シミュレーション</h3>
-      <button class="modal-close" id="debt-sim-modal-close" style="color:#fff">✕</button>
+      <button class="modal-close" id="debt-sim-modal-close">✕</button>
     </div>
     <div class="modal-body">
       <div class="sim-loan-info">

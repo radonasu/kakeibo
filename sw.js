@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.4.1'; // v17.4.1: hotfix — .dash-sum-clickable transitionにfilter追加（summary-card brightness hover修正）
+const CACHE_NAME = 'kakeibo-v17.5'; // v17.5: text-rendering/text-wrap balance追加・フォームfocus-withinラベル色変化・セクションタブhoverアイコン強化・diff badge視覚的区別・debt-simインラインcolor除去
 const ASSETS = [
   './index.html',
   './css/style.css',
