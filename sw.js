@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.4.0'; // v17.4.0: UIポリッシュ（モーダルblur強化・カードhoverボーダー・summary-card brightness・card-collapse focus-visible・section-tab 3px indicator・budget-item hover・tabular-nums 11箇所追加）
+const CACHE_NAME = 'kakeibo-v17.4.1'; // v17.4.1: hotfix — .dash-sum-clickable transitionにfilter追加（summary-card brightness hover修正）
 const ASSETS = [
   './index.html',
   './css/style.css',
