@@ -153,6 +153,7 @@
   --sp-2:     8px;   /* 小：要素内の隙間 */
   --sp-2-25:  9px;   /* 小中：ボタン・フォームパディング中間値 */
   --sp-2-5:  10px;   /* 小+：コンパクトな入力パディング */
+  --sp-2-75: 11px;   /* 小中：テーブルセル・トースト垂直パディング */
   --sp-3:    12px;   /* 中小：コンパクトなパディング */
   --sp-3-5:  14px;   /* 中小+：テーブルセル・バナー等の中間パディング */
   --sp-4:    16px;   /* 中：標準パディング・マージン */
@@ -160,7 +161,9 @@
   --sp-6:    24px;   /* 大：メインカードパディング */
   --sp-7:    28px;   /* 大+：モーダルコンテンツ下マージン等 */
   --sp-8:    32px;   /* 特大：メインコンテンツ余白 */
+  --sp-9:    36px;   /* 大特大：オンボーディング下・固定高さUI要素 */
   --sp-10:   40px;   /* 超大：セクション間 */
+  --sp-11:   44px;   /* 超大+：タッチターゲット・オンボーディング上 */
   --sp-12:   48px;   /* 最大：空状態パディング */
 
   /* ── アニメーション/トランジション変数 (v11.5/v11.7/v11.9) ─── */
@@ -1198,7 +1201,7 @@ select:focus:not(:focus-visible) {
   letter-spacing: var(--ls-wide);
 }
 .tx-table td {
-  padding: 11px var(--sp-3-5);
+  padding: var(--sp-2-75) var(--sp-3-5);
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
@@ -1314,7 +1317,7 @@ select:focus:not(:focus-visible) {
 }
 .tx-table tbody tr.tx-selected td:first-child {
   border-left: 3px solid var(--primary) !important;
-  padding-left: 11px !important;
+  padding-left: var(--sp-2-75) !important;
 }
 [data-theme="dark"] .tx-table tbody tr.tx-selected {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
@@ -2739,7 +2742,7 @@ mark.tx-hl {
 /* 同期トースト通知 */
 .sync-toast {
   position: fixed;
-  bottom: 28px;
+  bottom: var(--sp-7);
   left: 50%;
   transform: translateX(-50%) translateY(20px);
   background: var(--surface);
@@ -2868,7 +2871,7 @@ mark.tx-hl {
   background: var(--danger-bg);
   border: 1px solid var(--danger-border);
   border-radius: var(--radius-sm);
-  padding: 11px var(--sp-3-5);
+  padding: var(--sp-2-75) var(--sp-3-5);
   font-size: var(--fs-sm);
   color: var(--danger-text);
   margin-bottom: var(--sp-4);
@@ -3026,7 +3029,7 @@ body {
 /* ── 更新トースト ── */
 .update-toast {
   position: fixed;
-  bottom: 28px; left: 50%;
+  bottom: var(--sp-7); left: 50%;
   transform: translateX(-50%) translateY(20px);
   background: var(--surface);
   color: var(--text);
@@ -3181,7 +3184,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .auth-card { padding: 28px var(--sp-6); }
+  .auth-card { padding: var(--sp-7) var(--sp-6); }
   /* サマリーカード: 480px以下で1列に戻す */
   .summary-cards { grid-template-columns: 1fr; }
   .summary-cards .summary-card:nth-child(3) { grid-column: auto; }
@@ -3193,8 +3196,8 @@ body {
    ============================================================ */
 #global-fab {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: var(--sp-7);
+  right: var(--sp-7);
   width: 56px;
   height: 56px;
   border-radius: var(--radius-circle);
@@ -3631,7 +3634,7 @@ body {
 .onboarding-hero {
   background: linear-gradient(135deg, var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
-  padding: 44px var(--sp-8) 36px;
+  padding: var(--sp-11) var(--sp-8) var(--sp-9);
   color: var(--white);
   text-align: center;
   margin-bottom: var(--sp-5);
@@ -3897,7 +3900,7 @@ body {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 11px var(--sp-4) 11px var(--sp-3);
+  padding: var(--sp-2-75) var(--sp-4) var(--sp-2-75) var(--sp-3);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   box-shadow: var(--shadow-md);
@@ -6128,7 +6131,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 50px; height: 50px;
   border-radius: var(--radius-circle);
   background: var(--on-dark-dim);
-  bottom: 14px; right: 36px;
+  bottom: var(--sp-3-5); right: var(--sp-9);
 }
 
 /* カードリスト */
@@ -7778,7 +7781,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   pointer-events: none;
 }
 .dow-stat-card::before { width: 64px; height: 64px; bottom: -18px; right: -10px; }
-.dow-stat-card::after  { width: 36px; height: 36px; top: -12px; right: 28px; }
+.dow-stat-card::after  { width: 36px; height: 36px; top: -12px; right: var(--sp-7); }
 
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
@@ -8068,7 +8071,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-icon  { font-size: var(--fs-icon); margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: var(--on-dark-near); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tight); margin: 2px 0; }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tight); margin: var(--sp-0-5) 0; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: var(--on-dark-label); }
 
 /* テーブルセル */
