@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v15.1.0'; // v15.1.0: padding/margin残存ハードコード値CSS変数化（12px/8px/16px/4px独立値33箇所・border-radius/spacing/font-sizeフォールバック削除17箇所 計50箇所）
+const CACHE_NAME = 'kakeibo-v15.2.0'; // v15.2.0: フォームUX改善・アクセシビリティ向上（::placeholder統一・caret-color追加・autofillスタイリング・prefers-reduced-motion対応・--dur-fab-pulse/--dur-glow変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',

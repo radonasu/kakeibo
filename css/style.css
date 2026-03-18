@@ -162,6 +162,8 @@
   --dur-appear:  0.22s;                            /* クイック入場（行・バナー・カードホバー） */
   --dur-gentle:  0.28s;                            /* ゆるやか入場（スライド・ピル） */
   --dur-pulse:   2.4s;                             /* パルスループアニメーション */
+  --dur-fab-pulse: 2.2s;                           /* FABパルスループ（グローバルFAB） */
+  --dur-glow:    2.8s;                             /* グロウループ（詳細フィルターボタン等） */
   --dur-pop:     0.32s;                            /* ポップ入場（モーダルボックス・チップ） */
   --dur-lift:    0.38s;                            /* リフト入場（カード・バナー・バリデーション） */
   --dur-snap:    0.45s;                            /* スナップ/バウンスポップ（dup・col-in等） */
@@ -338,6 +340,17 @@ body {
 button { cursor: pointer; font-family: inherit; }
 input, select, textarea { font-family: inherit; }
 a { color: inherit; text-decoration: none; }
+
+/* ── オートフィルスタイリング v15.2（Chromeオートフィル背景をテーマカラーに統一） ── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px var(--surface) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--primary);
+  transition: background-color 9999s ease-in-out 0s;
+}
 
 /* ── フォーカス表示（キーボードナビ用） ─────────────────── */
 :focus-visible {
@@ -923,6 +936,18 @@ select:focus:not(:focus-visible) {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--focus-ring), 0 1px 3px var(--black-05);
+}
+/* ── フォームプレースホルダー・キャレット統一 v15.2 ── */
+.form-group input,
+.form-group textarea {
+  caret-color: var(--primary);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-faint);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-normal);
+  opacity: 1;
 }
 .hint {
   font-size: var(--fs-xs);
@@ -1714,8 +1739,10 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   flex: 1;
   min-width: 120px;
+  caret-color: var(--primary);
   transition: border-color var(--dur-fast);
 }
+.filter-search::placeholder { color: var(--text-faint); opacity: 1; }
 .filter-search:hover { border-color: var(--border-strong); }
 .filter-search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--focus-ring); }
 
@@ -3175,7 +3202,7 @@ body {
   60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 12px transparent; }
   100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 transparent; }
 }
-#global-fab.fab-pulsing { animation: fab-pulse 2.2s var(--ease-out) infinite; }
+#global-fab.fab-pulsing { animation: fab-pulse var(--dur-fab-pulse) var(--ease-out) infinite; }
 #global-fab.fab-pulsing:hover,
 #global-fab.fab-pulsing:active { animation: none; }
 
@@ -10159,7 +10186,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .adv-widget-btn {
   width: 100%;
   justify-content: center;
-  animation: adv-btn-glow 2.8s var(--ease-in-out) infinite;
+  animation: adv-btn-glow var(--dur-glow) var(--ease-in-out) infinite;
 }
 
 /* 月バッジ */
@@ -13284,5 +13311,16 @@ canvas.chart-clickable { cursor: pointer; }
   }
   .date-quick-btns {
     gap: var(--sp-1);
+  }
+}
+
+/* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }
