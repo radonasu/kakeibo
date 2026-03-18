@@ -179,6 +179,7 @@
   --dur-pulse:   2.4s;                             /* パルスループアニメーション */
   --dur-fab-pulse: 2.2s;                           /* FABパルスループ（グローバルFAB） */
   --dur-glow:    2.8s;                             /* グロウループ（詳細フィルターボタン等） */
+  --dur-cycle:   2s;                               /* サイクルループ（ドットパルス・2秒ループアニメーション） */
   --dur-pop:     0.32s;                            /* ポップ入場（モーダルボックス・チップ） */
   --dur-lift:    0.38s;                            /* リフト入場（カード・バナー・バリデーション） */
   --dur-snap:    0.45s;                            /* スナップ/バウンスポップ（dup・col-in等） */
@@ -3250,7 +3251,7 @@ body {
   justify-content: center;
   line-height: var(--lh-none);
   pointer-events: none;
-  animation: nav-badge-pop .35s var(--ease-bounce) both;
+  animation: nav-badge-pop var(--dur-medium) var(--ease-bounce) both;
 }
 
 @media (max-width: 768px) {
@@ -3405,7 +3406,7 @@ body {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.page-enter { animation: page-fade-in .22s var(--ease-std) both; }
+.page-enter { animation: page-fade-in var(--dur-appear) var(--ease-std) both; }
 
 /* ── カードホバーリフト ── */
 .card { transition: box-shadow var(--dur-appear) var(--ease-bounce), transform var(--dur-appear) var(--ease-bounce); }
@@ -5370,7 +5371,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-bottom: 1px solid var(--border);
   border-left: 3px solid var(--cal-ev-color, var(--primary));
   transition: background var(--dur-fast);
-  animation: cal-ev-item-in .35s var(--ease-bounce) both;
+  animation: cal-ev-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cal-ev-i, 0) * 50ms);
 }
 .cal-ev-item:last-child { border-bottom: none; }
@@ -7302,7 +7303,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .asset-card {
-  animation: asset-card-in .38s var(--ease-enter) both;
+  animation: asset-card-in var(--dur-lift) var(--ease-enter) both;
   animation-delay: calc(var(--ac-i, 0) * 60ms);
   border-left: 4px solid var(--asset-accent, var(--border));
 }
@@ -9058,7 +9059,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 負債カード */
 .debt-card {
   border-left: 4px solid var(--debt-accent, var(--primary));
-  animation: debt-card-in .38s var(--ease-bounce) both;
+  animation: debt-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--dc-i, 0) * 60ms);
   position: relative;
   overflow: hidden;
@@ -9079,7 +9080,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 /* 低返済率カードのパルスアニメーション (v5.85) */
 .debt-card.debt-low {
-  animation: debt-card-in .38s var(--ease-bounce) both,
+  animation: debt-card-in var(--dur-lift) var(--ease-bounce) both,
              debt-low-glow var(--dur-pulse) var(--ease-in-out) calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
@@ -9660,7 +9661,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   position: relative;
   overflow: hidden;
-  animation: ev-card-in .38s var(--ease-bounce) both;
+  animation: ev-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-si,0) * 70ms);
   color: var(--white);
 }
@@ -9754,7 +9755,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--ev-accent, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: ev-card-in .35s var(--ease-bounce) both;
+  animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * 55ms);
   transition: opacity var(--dur-base);
 }
@@ -9830,7 +9831,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   flex-shrink: 0;
   background: var(--surface);
-  transition: background var(--dur-fast), border-color var(--dur-fast), transform .12s;
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-quick);
 }
 .ev-done-cb::after {
   content: '';
@@ -10229,7 +10230,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   background: var(--primary);
   flex-shrink: 0;
-  animation: adv-dot-pulse 2s var(--ease-in-out) infinite;
+  animation: adv-dot-pulse var(--dur-cycle) var(--ease-in-out) infinite;
 }
 
 /* スケルトンローディング */
@@ -11818,7 +11819,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* モーダルオープンアニメーション */
 .rc-modal-open .rc-wrap {
-  animation: rc-wrap-in .38s var(--ease-bounce) both;
+  animation: rc-wrap-in var(--dur-lift) var(--ease-bounce) both;
 }
 
 @keyframes rc-wrap-in {
@@ -11841,7 +11842,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   from { opacity: 0; transform: translateY(8px) scale(.995); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-.page-enter { animation: page-fade-in .24s var(--ease-std) both; }
+.page-enter { animation: page-fade-in var(--dur-appear) var(--ease-std) both; }
 
 /* ナビボタン リップルエフェクト */
 .nav-item, .bottom-nav-item {
@@ -12954,7 +12955,7 @@ canvas.chart-clickable { cursor: pointer; }
   grid-template-columns: 1fr 1fr 1.2fr;
   gap: var(--sp-2);
   margin-top: var(--sp-3);
-  animation: pace-daily-in .35s var(--ease-bounce) .14s both;
+  animation: pace-daily-in var(--dur-medium) var(--ease-bounce) .14s both;
 }
 .pace-daily-cell {
   background: var(--surface-hover);
@@ -13150,7 +13151,7 @@ canvas.chart-clickable { cursor: pointer; }
   flex-direction: column;
   gap: var(--sp-3);
   overflow: hidden;
-  animation: cat-cg-in .35s var(--ease-bounce) both;
+  animation: cat-cg-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cc-i, 0) * 45ms);
   transition: box-shadow var(--dur-faster), transform var(--dur-fast) var(--ease-bounce);
 }
@@ -13272,7 +13273,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--cat-bar-clr, var(--primary));
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: cat-bar-in .7s var(--ease-std) both;
+  animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
   animation-delay: calc(var(--cc-i, 0) * 45ms + .1s);
 }
 .cat-budget-pct {
