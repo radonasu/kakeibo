@@ -195,7 +195,10 @@
   --dur-swing:   0.65s;                            /* スウィング・バーフィル・ベル揺れ */
   --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
   --dur-pulse-delay: 0.8s;
-  --dur-stagger:     0.05s;                            /* スタガーアニメーション基本間隔（budget/adv等） */                         /* パルス開始ディレイ（ページ表示後のパルスアニメーション遅延） */
+  --dur-stagger:     0.05s;   /* スタガー基本間隔 50ms（budget/adv/cal-ev/rc等） */
+  --dur-stagger-sm:  0.04s;   /* スタガー小 40ms（ct-chip/fv-bar/md-cat等） */
+  --dur-stagger-md:  0.055s;  /* スタガー中 55ms（sub/pt/wk/ev-card等） */
+  --dur-stagger-lg:  0.06s;   /* スタガー大 60ms（wl/ch/asset/debt/yi/opp等） */
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
@@ -5137,7 +5140,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: 1px var(--sp-1-75);
   border-radius: var(--radius-badge);
   animation: cal-ws-pill-in var(--dur-gentle) var(--ease-plain) both;
-  animation-delay: calc(var(--ws-i, 0) * 55ms);
+  animation-delay: calc(var(--ws-i, 0) * var(--dur-stagger-md));
 }
 .cal-ws-pill.inc {
   background: color-mix(in srgb, var(--success) 12%, var(--surface));
@@ -5393,7 +5396,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-left: 3px solid var(--cal-ev-color, var(--primary));
   transition: background var(--dur-fast);
   animation: cal-ev-item-in var(--dur-medium) var(--ease-bounce) both;
-  animation-delay: calc(var(--cal-ev-i, 0) * 50ms);
+  animation-delay: calc(var(--cal-ev-i, 0) * var(--dur-stagger));
 }
 .cal-ev-item:last-child { border-bottom: none; }
 .cal-ev-item:hover { background: var(--surface-hover); }
@@ -5744,7 +5747,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both;
+  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
 .sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .sub-card-color-bar {
@@ -5836,7 +5839,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-progress-fill {
   height: 100%;
   width: var(--sub-progress, 0%);
-  animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * 55ms + 0.2s) both;
+  animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + 0.2s) both;
 }
 .sub-card-progress-fill.prog-normal { background: var(--primary); opacity: 0.5; }
 .sub-card-progress-fill.prog-soon   { background: var(--warning); }
@@ -5845,11 +5848,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 状態クラス */
 .sub-card.sub-urgent {
   border-color: var(--danger-border);
-  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both,
-             sub-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--sub-i, 0) * 55ms + var(--dur-long)) infinite;
+  animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both,
+             sub-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-long)) infinite;
 }
 .sub-card.sub-soon   { border-color: var(--warning); opacity: 0.9; }
-.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * 55ms) both; }
+.sub-card.sub-inactive { opacity: 0.55; animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both; }
 
 /* 空状態 */
 .sub-empty {
@@ -6177,13 +6180,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
   box-shadow: var(--shadow-btn-base);
-  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * 55ms) both;
+  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .pt-card.pt-urgent {
   border-left: 3px solid var(--danger-border);
-  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * 55ms) both,
-             pt-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--pt-i, 0) * 55ms + var(--dur-long)) infinite;
+  animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
+             pt-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-long)) infinite;
 }
 .pt-card.pt-soon   { border-left: 3px solid var(--warning); }
 
@@ -6273,7 +6276,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-exp-bar-fill {
   height: 100%;
   width: var(--pt-progress, 0%);
-  animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * 55ms + 0.2s) both;
+  animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + 0.2s) both;
 }
 .pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: 0.6; }
 .pt-exp-bar-fill.prog-soon   { background: var(--warning); }
@@ -6685,7 +6688,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: var(--sp-4);
   animation: wl-card-in var(--dur-medium) var(--ease-std) both;
-  animation-delay: calc(var(--wl-i, 0) * 60ms);
+  animation-delay: calc(var(--wl-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
@@ -6700,7 +6703,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card.wl-high {
   animation: wl-card-in var(--dur-medium) var(--ease-std) both,
-             wl-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--wl-i, 0) * 60ms + var(--dur-long)) infinite;
+             wl-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--wl-i, 0) * var(--dur-stagger-lg) + var(--dur-long)) infinite;
 }
 .wl-card-icon {
   font-size: var(--fs-icon-2xl);
@@ -7325,7 +7328,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .asset-card {
   animation: asset-card-in var(--dur-lift) var(--ease-enter) both;
-  animation-delay: calc(var(--ac-i, 0) * 60ms);
+  animation-delay: calc(var(--ac-i, 0) * var(--dur-stagger-lg));
   border-left: 4px solid var(--asset-accent, var(--border));
 }
 
@@ -7502,7 +7505,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   animation: ch-card-in var(--dur-medium) var(--ease-bounce) both;
-  animation-delay: calc(var(--ch-i, 0) * 60ms);
+  animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .ch-card:hover {
@@ -7857,7 +7860,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--dow-row-color, var(--primary));
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
-  animation-delay: calc(var(--dow-bar-delay, 0) * 60ms + 0.2s);
+  animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + 0.2s);
 }
 
 /* -- ダークモード -- */
@@ -7914,7 +7917,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: border-color var(--dur-faster), background var(--dur-faster), color var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-fast);
   user-select: none;
   animation: ct-chip-in var(--dur-slow) var(--ease-bounce) both;
-  animation-delay: calc(var(--ct-i, 0) * 40ms);
+  animation-delay: calc(var(--ct-i, 0) * var(--dur-stagger-sm));
 }
 .ct-chip:hover {
   border-color: var(--ct-color, var(--primary));
@@ -8121,7 +8124,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-3xs);
   transform-origin: left center;
   animation: fv-bar-fill var(--dur-fill) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ci, 0) * 40ms);
+  animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-sm));
 }
 @keyframes fv-bar-fill {
   from { transform: scaleX(0); }
@@ -8326,7 +8329,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: var(--sp-0-5);
   animation: wk-col-in var(--dur-snap) var(--ease-bounce) both;
-  animation-delay: calc(var(--wk-i, 0) * 55ms);
+  animation-delay: calc(var(--wk-i, 0) * var(--dur-stagger-md));
 }
 .wk-bar-wrap {
   width: 100%;
@@ -9081,7 +9084,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .debt-card {
   border-left: 4px solid var(--debt-accent, var(--primary));
   animation: debt-card-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--dc-i, 0) * 60ms);
+  animation-delay: calc(var(--dc-i, 0) * var(--dur-stagger-lg));
   position: relative;
   overflow: hidden;
 }
@@ -9102,7 +9105,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 低返済率カードのパルスアニメーション (v5.85) */
 .debt-card.debt-low {
   animation: debt-card-in var(--dur-lift) var(--ease-bounce) both,
-             debt-low-glow var(--dur-pulse) var(--ease-in-out) calc(var(--dc-i, 0) * 60ms + 0.45s) infinite;
+             debt-low-glow var(--dur-pulse) var(--ease-in-out) calc(var(--dc-i, 0) * var(--dur-stagger-lg) + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
   0%, 100% { border-left-color: var(--debt-accent, var(--expense)); }
@@ -9160,7 +9163,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: 100%; border-radius: var(--radius-badge);
   transform-origin: left center;
   animation: debt-bar-fill-in var(--dur-fill) var(--ease-plain) both;
-  animation-delay: calc(var(--dbi, 0) * 40ms + 0.2s);
+  animation-delay: calc(var(--dbi, 0) * var(--dur-stagger-sm) + 0.2s);
 }
 @keyframes debt-bar-fill-in {
   from { transform: scaleX(0); }
@@ -9777,7 +9780,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
-  animation-delay: calc(var(--ev-ci,0) * 55ms);
+  animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
   transition: opacity var(--dur-base);
 }
 .ev-card::before {
@@ -9945,7 +9948,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   border-left: 3px solid var(--ev-accent, var(--primary));
   animation: ev-widget-item-in var(--dur-pop) var(--ease-bounce) both;
-  animation-delay: calc(var(--ev-wi, 0) * 50ms);
+  animation-delay: calc(var(--ev-wi, 0) * var(--dur-stagger));
   transition: transform var(--dur-fast);
 }
 .ev-widget-item:hover { transform: translateX(2px); }
@@ -10133,7 +10136,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .tg-table tbody tr {
   animation: tg-row-in var(--dur-gentle) var(--ease-std) both;
-  animation-delay: calc(var(--tg-i, 0) * 40ms + 0.1s);
+  animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + 0.1s);
 }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(6px); }
@@ -11747,7 +11750,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast);
   animation: rc-item-in var(--dur-gentle) var(--ease-bounce) both;
-  animation-delay: calc(var(--rc-i, 0) * 50ms);
+  animation-delay: calc(var(--rc-i, 0) * var(--dur-stagger));
 }
 
 @keyframes rc-item-in {
@@ -12270,7 +12273,7 @@ canvas.chart-clickable { cursor: pointer; }
   position: relative;
   overflow: hidden;
   animation: yi-card-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--yi-si, 0) * 60ms);
+  animation-delay: calc(var(--yi-si, 0) * var(--dur-stagger-lg));
   transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
 }
 .yi-card:hover {
@@ -12405,7 +12408,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-left: 3px solid var(--opp-accent, var(--primary));
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
   animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
-  animation-delay: calc(var(--opp-i, 0) * 60ms);
+  animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
@@ -12605,7 +12608,7 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-2);
   font-size: var(--fs-xs);
   animation: md-cat-in var(--dur-gentle) var(--ease-bounce) both;
-  animation-delay: calc(var(--md-i, 0) * 40ms);
+  animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm));
 }
 @keyframes md-cat-in {
   from { opacity: 0; transform: translateX(-8px); }
@@ -12636,7 +12639,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
-  animation-delay: calc(var(--md-i, 0) * 40ms + 0.1s);
+  animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm) + 0.1s);
 }
 @keyframes md-bar-fill {
   from { transform: scaleX(0); }
@@ -12685,7 +12688,7 @@ canvas.chart-clickable { cursor: pointer; }
   position: relative;
   overflow: hidden;
   animation: md-cell-in var(--dur-pop) var(--ease-bounce) both;
-  animation-delay: calc(var(--md-si, 0) * 60ms);
+  animation-delay: calc(var(--md-si, 0) * var(--dur-stagger-lg));
 }
 .md-cell::after {
   content: '';
@@ -13078,7 +13081,7 @@ canvas.chart-clickable { cursor: pointer; }
 .pm-table-row {
   border-left: 3px solid var(--pm-row-color, var(--border));
   animation: pm-row-in var(--dur-gentle) var(--ease-bounce) both;
-  animation-delay: calc(var(--pm-ri, 0) * 50ms + 0.05s);
+  animation-delay: calc(var(--pm-ri, 0) * var(--dur-stagger) + 0.05s);
 }
 @keyframes pm-row-in {
   from { opacity: 0; transform: translateX(-6px); }
