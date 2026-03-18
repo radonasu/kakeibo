@@ -157,7 +157,9 @@
   --sp-3:    12px;   /* 中小：コンパクトなパディング */
   --sp-3-5:  14px;   /* 中小+：テーブルセル・バナー等の中間パディング */
   --sp-4:    16px;   /* 中：標準パディング・マージン */
+  --sp-4-5:  18px;   /* 中+：ボタン横パディング・リスト字下げ */
   --sp-5:    20px;   /* 中大：カード・モーダル */
+  --sp-5-5:  22px;   /* 中大+：ヒートマップDOW列頭余白 */
   --sp-6:    24px;   /* 大：メインカードパディング */
   --sp-7:    28px;   /* 大+：モーダルコンテンツ下マージン等 */
   --sp-8:    32px;   /* 特大：メインコンテンツ余白 */
@@ -192,6 +194,7 @@
   --dur-spin:    0.6s;                             /* 回転・セグメントアニメーション */
   --dur-swing:   0.65s;                            /* スウィング・バーフィル・ベル揺れ */
   --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
+  --dur-pulse-delay: 0.8s;                         /* パルス開始ディレイ（ページ表示後のパルスアニメーション遅延） */
   --dur-shimmer: 1.6s;                             /* シマーアニメーション（スケルトンローディング） */
   --dur-gauge:   1.1s;                             /* ゲージ/大型SVGアニメーション */
   --dur-swell:   0.9s;                             /* 膨張（セービングス進捗バー塗り） */
@@ -792,7 +795,7 @@ select:focus:not(:focus-visible) {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: var(--sp-2-5) 18px;
+  padding: var(--sp-2-5) var(--sp-4-5);
   border-radius: var(--radius-btn);
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
@@ -5548,12 +5551,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .insight-item:nth-child(4) { animation-delay: 0.22s; }
 
 .insight-item.insight-alert {
-  animation: insight-in var(--dur-medium) var(--ease-plain) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
+  animation: insight-in var(--dur-medium) var(--ease-plain) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
-.insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, 0.8s; }
-.insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, 0.8s; }
-.insight-item.insight-alert:nth-child(3) { animation-delay: 0.16s, 0.8s; }
-.insight-item.insight-alert:nth-child(4) { animation-delay: 0.22s, 0.8s; }
+.insight-item.insight-alert:nth-child(1) { animation-delay: 0.04s, var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(2) { animation-delay: 0.10s, var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(3) { animation-delay: 0.16s, var(--dur-pulse-delay); }
+.insight-item.insight-alert:nth-child(4) { animation-delay: 0.22s, var(--dur-pulse-delay); }
 
 /* インサイトタイトルをタイプカラーで着色 */
 .insight-item.insight-info    .insight-title { color: var(--primary); }
@@ -7021,7 +7024,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .forecast-card.fc-status-alert {
   border-left: 3px solid var(--danger-text);
   animation: fc-card-in var(--dur-long) var(--ease-enter) both,
-             fc-alert-glow var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
+             fc-alert-glow var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
 
 /* ステータスバッジ */
@@ -8353,12 +8356,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
 .wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) 0.8s infinite;
+  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
 
 .wk-bar-amount {
@@ -8899,7 +8902,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: grid;
   grid-template-rows: repeat(7, 13px);
   gap: var(--sp-0-75);
-  padding-top: 22px;
+  padding-top: var(--sp-5-5);
   flex-shrink: 0;
 }
 .hm-dow-col span {
@@ -10280,7 +10283,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--primary);
 }
 .adv-text ul {
-  margin: var(--sp-1) 0 var(--sp-2-5) 18px;
+  margin: var(--sp-1) 0 var(--sp-2-5) var(--sp-4-5);
   padding: 0;
 }
 .adv-text li {
