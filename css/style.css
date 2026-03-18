@@ -333,7 +333,7 @@
   --black-14:  rgba(0,0,0,.14);  /* FABホバー影・バルクバーライト（強） */
   --black-30:  rgba(0,0,0,.3);   /* バルクバーダーク影 */
 
-  /* ── セマンティックopacityトークン (v17.0) ────────────── */
+  /* ── セマンティックopacityトークン (v17.0/v17.2) ─────── */
   --opacity-disabled:  0.3;   /* 無効/ロック要素（disabled ボタン・月ナビ等） */
   --opacity-ghost:     0.5;   /* 空セル・disabled 状態・ノーマルバー半透明 */
   --opacity-inactive:  0.55;  /* 非アクティブ/完了済み（サブスク休止・完了イベント等） */
@@ -343,6 +343,12 @@
   --opacity-faded:     0.75;  /* 達成/フェード済み要素（done カード・補足バッジ等） */
   --opacity-soft:      0.8;   /* 達成目標・フィルターアイコン等の軽い透過 */
   --opacity-near:      0.85;  /* グラデーションカード補助ラベル・バナーSVG等の準完全表示 */
+  --opacity-mild:      0.9;   /* 軽微抑制（sub-soon 等ほぼ通常だが微ディム） */
+  --opacity-watermark: 0.7;   /* ウォーターマークラベル（年次カード内テキスト等） */
+  --opacity-deco-sm:   0.07;  /* 装飾サークル最薄（hs-card グレードデコ等） */
+  --opacity-deco:      0.10;  /* 装飾サークル薄（md-cell currentColor デコ等） */
+  --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
+  --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
 }
 
 html {
@@ -5913,7 +5919,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both,
              sub-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-long)) infinite;
 }
-.sub-card.sub-soon   { border-color: var(--warning); opacity: 0.9; }
+.sub-card.sub-soon   { border-color: var(--warning); opacity: var(--opacity-mild); }
 .sub-card.sub-inactive { opacity: var(--opacity-inactive); animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both; }
 
 /* 空状態 */
@@ -6444,7 +6450,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 110px; height: 110px;
   border-radius: var(--radius-circle);
   background: var(--hs-grade-color, var(--primary));
-  opacity: 0.07;
+  opacity: var(--opacity-deco-sm);
   pointer-events: none;
 }
 /* ──── Main layout ──── */
@@ -6691,7 +6697,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   border-radius: var(--radius-circle);
-  opacity: 0.18;
+  opacity: var(--opacity-deco-lg);
   background: var(--white);
   pointer-events: none;
 }
@@ -7520,7 +7526,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 72px;
   height: 72px;
   border-radius: var(--radius-circle);
-  opacity: 0.15;
+  opacity: var(--opacity-deco-md);
 }
 .ch-sum-active    { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color:var(--white); }
 .ch-sum-active::before { background:var(--white); }
@@ -8908,7 +8914,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: 70px; height: 70px;
   border-radius: var(--radius-circle);
   top: -20px; right: -20px;
-  opacity: 0.18;
+  opacity: var(--opacity-deco-lg);
   pointer-events: none;
 }
 /* カード別グラデーション */
@@ -10706,7 +10712,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   top: 4px; left: 6px;
   font-size: var(--fs-4xs);
   color: var(--text-muted);
-  opacity: 0.7;
+  opacity: var(--opacity-watermark);
   letter-spacing: var(--ls-label);
 }
 .yr-spark {
@@ -12761,7 +12767,7 @@ canvas.chart-clickable { cursor: pointer; }
   height: 42px;
   border-radius: var(--radius-circle);
   background: currentColor;
-  opacity: 0.10;
+  opacity: var(--opacity-deco);
 }
 @keyframes md-cell-in {
   from { opacity: 0; transform: translateY(6px) scale(0.96); }

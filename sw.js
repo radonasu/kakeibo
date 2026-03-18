@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.1.0'; // v17.1.0: 取引アクションボタン（編集/削除）hover洗練（カラー別glow+scale）・btn-icon transform追加・btn-link color transition・フィルターバーbox-shadow transition統一
+const CACHE_NAME = 'kakeibo-v17.2.0'; // v17.2.0: 装飾サークルopacity変数化完備（--opacity-mild/watermark/deco-sm/deco/deco-md/deco-lg 6変数追加・7箇所変換）opacityトークンシステム完全化
 const ASSETS = [
   './index.html',
   './css/style.css',
