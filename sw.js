@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.3.0'; // v17.3.0: コンポーネント固有サイズトークン追加（--size-badge-sm/checkbox/hm-cell/hm-month 4変数・23箇所変換）font-weight変数化・border-radius統一
+const CACHE_NAME = 'kakeibo-v17.4.0'; // v17.4.0: UIポリッシュ（モーダルblur強化・カードhoverボーダー・summary-card brightness・card-collapse focus-visible・section-tab 3px indicator・budget-item hover・tabular-nums 11箇所追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
