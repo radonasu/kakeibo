@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v15.6.0'; // v15.6.0: アイコン絵文字フォントサイズ変数システム完全化（--fs-icon-xl〜--fs-icon-7xl 7変数追加・24/28/36/40/44/48/56px計20箇所CSS変数化・cal-ev-icon 15px→var(--fs-md)）
+const CACHE_NAME = 'kakeibo-v15.7.0'; // v15.7.0: CSS変数システム完全化（--fs-4xs/--fs-5xs/--sp-1-75/--sp-2-25追加・font-size 8/9px + spacing 7/9px + padding 8px 全箇所CSS変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',
