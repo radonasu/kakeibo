@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.6'; // v17.6: number input spin button非表示・セレクトカスタム矢印・focus-visible補完（section-tab/nav-item/bottom-nav-item/cat-chip/tx-tag-filter-chip/sf-chip/adv-preset-chip）
+const CACHE_NAME = 'kakeibo-v17.7'; // v17.7: #bottom-nav/.section-tabs グラスモーフィズム化（backdrop-filter blur+saturate）・bottom-nav-icon transition補完（width/height/padding/border-radius）・:active状態補完（tx-tag-filter-chip/all・section-tab・ct-chip・date-quick-btn）
 const ASSETS = [
   './index.html',
   './css/style.css',

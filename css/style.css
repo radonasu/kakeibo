@@ -1829,6 +1829,8 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
   transform: scale(1.03);
 }
+.tx-tag-filter-chip:active { transform: scale(0.92); }
+.tx-tag-filter-all:active  { transform: scale(0.92); }
 .tx-tag-filter-chip:focus-visible,
 .tx-tag-filter-all:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 [data-theme="dark"] .tx-tag-chip {
@@ -3195,7 +3197,9 @@ body {
   display: none;
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
   border-top: 1px solid var(--border);
   z-index: var(--z-bottom-nav);
   padding-bottom: env(safe-area-inset-bottom);
@@ -3241,7 +3245,9 @@ body {
   margin-bottom: var(--sp-0-5);
   border-radius: var(--radius-btn);
   padding: var(--sp-0-5);
-  transition: background var(--dur-base), color var(--dur-base), transform var(--dur-base);
+  transition: background var(--dur-base), color var(--dur-base), transform var(--dur-base),
+              width var(--dur-base) var(--ease-bounce), height var(--dur-base) var(--ease-bounce),
+              padding var(--dur-base), border-radius var(--dur-base);
 }
 .bottom-nav-icon svg { display: block; }
 .bottom-nav-item.active .bottom-nav-icon {
@@ -4637,7 +4643,9 @@ body {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky-tabs);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
   border-bottom: 3px solid var(--border);
   display: flex;
   gap: 0;
@@ -4676,6 +4684,7 @@ body {
   border-bottom-color: var(--border-strong);
 }
 .section-tab:hover .tab-icon { transform: scale(1.1); }
+.section-tab:active { transform: translateY(1px); }
 .section-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .section-tab.is-active {
   color: var(--primary);
@@ -8052,6 +8061,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transform: translateY(-2px);
   box-shadow: 0 3px 8px color-mix(in srgb, var(--ct-color, var(--primary)) 25%, transparent);
 }
+.ct-chip:active { transform: translateY(0); }
 .ct-chip.is-selected {
   border-color: var(--ct-color, var(--primary));
   background: color-mix(in srgb, var(--ct-color, var(--primary)) 12%, transparent);
@@ -11526,6 +11536,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
   transform: translateY(-1px);
 }
+.date-quick-btn:active { transform: scale(0.93); box-shadow: none; }
 
 .date-quick-btn.active {
   border-color: var(--primary);
