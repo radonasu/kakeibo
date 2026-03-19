@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.7'; // v17.7: #bottom-nav/.section-tabs グラスモーフィズム化（backdrop-filter blur+saturate）・bottom-nav-icon transition補完（width/height/padding/border-radius）・:active状態補完（tx-tag-filter-chip/all・section-tab・ct-chip・date-quick-btn）
+const CACHE_NAME = 'kakeibo-v17.8'; // v17.8: カードホバー状態一貫性統一（goal/debt/ev-card:hover追加・asset-card shadow-card-hover統一・sub/pt/debt/ch-widget-item hover追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

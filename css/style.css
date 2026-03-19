@@ -4148,7 +4148,7 @@ body {
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .asset-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
 }
 
@@ -4725,6 +4725,7 @@ body {
   padding: var(--sp-6);
   border-left: 4px solid var(--goal-accent, var(--primary));
 }
+.goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 
 .goal-card-header {
   display: flex;
@@ -5762,8 +5763,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-btn);
   background: var(--surface-hover);
-  transition: background var(--dur-fast);
+  transition: background var(--dur-fast), transform var(--dur-fast);
 }
+.sub-widget-item:hover { transform: translateX(2px); }
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
 .sub-widget-icon {
@@ -6472,7 +6474,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-sm);
   background: var(--surface-hover);
+  transition: transform var(--dur-fast);
 }
+.pt-widget-item:hover { transform: translateX(2px); }
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) 8%, transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .pt-widget-icon {
@@ -7838,7 +7842,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  transition: transform var(--dur-fast);
 }
+.ch-widget-item:hover { transform: translateX(2px); }
 .ch-widget-icon {
   width: 36px;
   height: 36px;
@@ -9226,6 +9232,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
 }
+.debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(12px) scale(0.97); }
   to   { opacity: 1; transform: none; }
@@ -9370,7 +9377,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; gap: var(--sp-2);
   padding: var(--sp-2); border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
+  transition: transform var(--dur-fast);
 }
+.debt-widget-item:hover { transform: translateX(2px); }
 .debt-widget-icon {
   width: 32px; height: 32px; border-radius: var(--radius-circle);
   display: flex; align-items: center; justify-content: center;
@@ -9920,8 +9929,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
-  transition: opacity var(--dur-base);
+  transition: opacity var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base);
 }
+.ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .ev-card::before {
   content: '';
   position: absolute;
