@@ -351,11 +351,13 @@
   --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3) ──────────── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12) ──── */
   --size-badge-sm:  16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-checkbox:  16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
   --size-hm-cell:   13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
   --size-hm-month:  20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-icon-sm:   32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
+  --size-icon-md:   36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
 }
 
 html {
@@ -625,8 +627,8 @@ select:focus:not(:focus-visible) {
 }
 
 .sidebar-avatar {
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   border-radius: var(--radius-circle);
   background: linear-gradient(135deg, var(--primary), var(--primary-mid));
   display: flex;
@@ -913,8 +915,8 @@ select:focus:not(:focus-visible) {
   border: none;
   font-size: var(--fs-base);
   padding: 0;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: var(--size-icon-sm);
+  min-height: var(--size-icon-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2289,8 +2291,8 @@ mark.tx-hl {
   font-size: var(--fs-icon);
   color: var(--text-muted);
   border-radius: var(--radius-btn-sm);
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2795,8 +2797,8 @@ mark.tx-hl {
 }
 
 .sync-user-avatar {
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   border-radius: var(--radius-circle);
   background: linear-gradient(135deg, var(--income), var(--income-end));
   display: flex;
@@ -3259,7 +3261,7 @@ body {
   color: var(--primary);
   transform: scale(1.1);
   padding: var(--sp-1);
-  width: 32px; height: 32px;
+  width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-sm);
 }
 .bottom-nav-label { font-size: var(--fs-2xs); line-height: var(--lh-none); }
@@ -5027,8 +5029,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-2);
 }
 .goal-color-btn {
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   border-radius: var(--radius-circle);
   border: 3px solid transparent;
   cursor: pointer;
@@ -5066,8 +5068,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* v5.32: ダッシュボード用ミニリング */
 .goal-dash-ring-wrap {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -5190,8 +5192,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-nav-btns { display: flex; gap: var(--sp-2); }
 
 .cal-nav-btn {
-  min-width: 36px;
-  height: 36px;
+  min-width: var(--size-icon-md);
+  height: var(--size-icon-md);
   font-size: var(--fs-lg);
   padding: 0 var(--sp-3);
   display: flex;
@@ -5381,8 +5383,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .cal-panel-close {
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   border-radius: var(--radius-btn);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -5792,7 +5794,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
 .sub-widget-icon {
-  width: 32px; height: 32px;
+  width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon);
@@ -6509,7 +6511,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) 8%, transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) 8%, transparent); }
 .pt-widget-icon {
-  width: 36px; height: 36px; border-radius: var(--radius-btn-sm);
+  width: var(--size-icon-md); height: var(--size-icon-md); border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon); flex-shrink: 0;
 }
@@ -7846,8 +7848,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-1);
 }
 .ch-emoji-btn {
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   border: 2px solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
@@ -7893,8 +7895,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .ch-widget-item:hover { transform: translateX(2px); }
 .ch-widget-icon {
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -9310,7 +9312,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .debt-info { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
 .debt-type-icon-wrap {
-  width: 36px; height: 36px; border-radius: var(--radius-circle);
+  width: var(--size-icon-md); height: var(--size-icon-md); border-radius: var(--radius-circle);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon); flex-shrink: 0;
 }
@@ -9435,7 +9437,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .debt-widget-item:hover { transform: translateX(2px); }
 .debt-widget-icon {
-  width: 32px; height: 32px; border-radius: var(--radius-circle);
+  width: var(--size-icon-sm); height: var(--size-icon-sm); border-radius: var(--radius-circle);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-xl); flex-shrink: 0;
 }
@@ -10160,7 +10162,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   100% { opacity: 1; transform: translateX(0); }
 }
 .ev-widget-icon {
-  width: 32px; height: 32px;
+  width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon);
@@ -10190,7 +10192,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .ev-emoji-chip {
   font-size: var(--fs-2xl);
-  width: 36px; height: 36px;
+  width: var(--size-icon-md); height: var(--size-icon-md);
   border-radius: var(--radius-btn-sm);
   border: 2px solid transparent;
   background: var(--surface-hover);
@@ -10933,7 +10935,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: var(--on-dark-press);
   border: none;
   color: var(--white);
-  width: 32px; height: 32px;
+  width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-circle);
   cursor: pointer;
   font-size: var(--fs-base);
@@ -11174,8 +11176,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: none;
   border: none;
   color: var(--sidebar-text);
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11405,8 +11407,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 .notif-item-icon {
   font-size: var(--fs-md);
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12736,8 +12738,8 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   border: 1px solid var(--border);
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
@@ -13405,8 +13407,8 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-2);
 }
 .cat-card-icon {
-  width: 36px;
-  height: 36px;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--cat-clr, var(--primary)) 14%, transparent);
   display: flex;

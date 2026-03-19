@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.11'; // v17.11: summary要素インタラクション統一（wl/ch/debt-archive・goal-achieved・sub-inactive全5種にhover+focus-visible+::beforeシェブロン追加）+ type-btn/sf-chip-del focus-visible + modal-details summary focus-visible
+const CACHE_NAME = 'kakeibo-v17.12'; // v17.12: アイコン要素サイズトークン完全化（--size-icon-sm:32px/--size-icon-md:36px を:rootに追加・CSS全域アイコン要素23箇所・合計36参照をvar()に変換）
 const ASSETS = [
   './index.html',
   './css/style.css',
