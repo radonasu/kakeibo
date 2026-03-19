@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.10'; // v17.10: アニメーション遅延変数化完結（--dur-stagger-mid 0.065s追加・65ms/70ms/80ms/60ms→CSS変数化8箇所）+ opacity変数化（bulk-count::before .9→var(--opacity-mild)）+ focus-visible補完（.btn/.month-nav-btn）
+const CACHE_NAME = 'kakeibo-v17.11'; // v17.11: summary要素インタラクション統一（wl/ch/debt-archive・goal-achieved・sub-inactive全5種にhover+focus-visible+::beforeシェブロン追加）+ type-btn/sf-chip-del focus-visible + modal-details summary focus-visible
 const ASSETS = [
   './index.html',
   './css/style.css',
