@@ -3898,6 +3898,16 @@ body {
   margin-top: auto;
 }
 
+/* ── 空状態 共通アニメーション (v17.9) ──────────────────── */
+@keyframes empty-state-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes empty-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
 /* ── 今月データなし（既存データあり） ───────────────────── */
 .empty-month-state {
   display: flex;
@@ -3906,8 +3916,9 @@ body {
   gap: var(--sp-2-5);
   padding: var(--sp-10) var(--sp-5);
   color: var(--text-muted);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.empty-month-icon { font-size: var(--fs-icon-3xl); line-height: var(--lh-none); }
+.empty-month-icon { font-size: var(--fs-icon-3xl); line-height: var(--lh-none); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-month-msg {
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -4265,11 +4276,14 @@ body {
   border-radius: var(--radius);
   border: 2px dashed var(--border);
   margin-bottom: var(--sp-4);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .empty-asset-icon {
   font-size: var(--fs-icon-6xl);
   margin-bottom: var(--sp-4);
   display: block;
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite;
+  animation-delay: var(--dur-delay-md);
 }
 .empty-asset-msg {
   font-size: var(--fs-lg);
@@ -4955,8 +4969,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-12) var(--sp-4);
   text-align: center;
   gap: var(--sp-3);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.empty-goal-icon { font-size: var(--fs-icon-7xl); }
+.empty-goal-icon { font-size: var(--fs-icon-7xl); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-goal-msg {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
@@ -5994,8 +6009,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; flex-direction: column; align-items: center;
   gap: var(--sp-3); padding: var(--sp-10) var(--sp-4);
   color: var(--text-muted); text-align: center;
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.sub-empty-icon { font-size: var(--fs-icon-4xl); }
+.sub-empty-icon { font-size: var(--fs-icon-4xl); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .sub-empty p { font-size: var(--fs-sm); }
 
 /* 休止セクション */
@@ -6423,8 +6439,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   padding: var(--sp-8) var(--sp-4);
   color: var(--text-muted);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.pt-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); }
+.pt-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .pt-empty p { margin-bottom: var(--sp-4); }
 
 /* 絵文字・カラーグリッド（サブスクと同デザイン） */
@@ -6930,19 +6947,22 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   padding: var(--sp-12) var(--sp-5);
   color: var(--text-muted);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .wl-empty-icon {
   font-size: var(--fs-icon-6xl);
   display: block;
   margin-bottom: var(--sp-3);
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite;
+  animation-delay: var(--dur-delay-md);
 }
 .wl-empty p {
   font-size: var(--fs-md);
   margin-bottom: var(--sp-2);
 }
 .wl-empty-sub {
-  font-size: var(--fs-sm) !important;
-  color: var(--text-faint, var(--text-muted));
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
 }
 
 /* アーカイブ（購入済み） */
@@ -7761,9 +7781,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface);
   border-radius: var(--radius);
   border: 1px dashed var(--border);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); }
-.ch-empty p    { margin: 0 0 4px; font-size: var(--fs-base); }
+.ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
+.ch-empty p    { margin: 0 0 var(--sp-1); font-size: var(--fs-base); }
 .ch-empty-sub  { font-size: var(--fs-sm); color: var(--text-faint); }
 
 /* -- 過去チャレンジアーカイブ -- */
@@ -9346,8 +9367,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 空状態 */
 .empty-debt-state {
   text-align: center; padding: var(--sp-12) var(--sp-4);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
-.empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); }
+.empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-2); }
 .empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
 
@@ -9834,7 +9856,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   animation: ev-card-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--ev-si,0) * 70ms);
+  animation-delay: calc(var(--ev-si,0) * var(--dur-stagger-xl));
   color: var(--white);
 }
 .ev-sum-card::before {
@@ -10591,6 +10613,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   padding: var(--sp-10) var(--sp-4);
   color: var(--text-muted);
+  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .tx-empty-icon {
   font-size: var(--fs-icon-5xl);

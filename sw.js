@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.8'; // v17.8: カードホバー状態一貫性統一（goal/debt/ev-card:hover追加・asset-card shadow-card-hover統一・sub/pt/debt/ch-widget-item hover追加）
+const CACHE_NAME = 'kakeibo-v17.9'; // v17.9: 空状態デザイン統一（empty-state-in/empty-icon-float共通keyframe追加・全10空状態コンテナ入場アニメーション・全アイコン浮遊ループ追加・wl-empty-sub !important除去・ev-sum-card 70ms→var変換）
 const ASSETS = [
   './index.html',
   './css/style.css',
