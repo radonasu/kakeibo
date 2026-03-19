@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.9'; // v17.9: 空状態デザイン統一（empty-state-in/empty-icon-float共通keyframe追加・全10空状態コンテナ入場アニメーション・全アイコン浮遊ループ追加・wl-empty-sub !important除去・ev-sum-card 70ms→var変換）
+const CACHE_NAME = 'kakeibo-v17.10'; // v17.10: アニメーション遅延変数化完結（--dur-stagger-mid 0.065s追加・65ms/70ms/80ms/60ms→CSS変数化8箇所）+ opacity変数化（bulk-count::before .9→var(--opacity-mild)）+ focus-visible補完（.btn/.month-nav-btn）
 const ASSETS = [
   './index.html',
   './css/style.css',

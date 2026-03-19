@@ -201,8 +201,9 @@
   --dur-stagger-sm:  0.04s;   /* スタガー小 40ms（ct-chip/fv-bar/md-cat等） */
   --dur-stagger-md:  0.055s;  /* スタガー中 55ms（sub/pt/wk/ev-card等） */
   --dur-stagger-lg:  0.06s;   /* スタガー大 60ms（wl/ch/asset/debt/yi/opp等） */
-  --dur-stagger-xl:  0.07s;   /* スタガー特大 70ms（fc-i/wk-cell/ci-cell step） */
-  --dur-stagger-2xl: 0.08s;   /* スタガー超大 80ms（yr-i/dow-i step） */
+  --dur-stagger-mid: 0.065s;  /* スタガー中大 65ms（fv-si/hm-si/tg-si/pm-sum step） */
+  --dur-stagger-xl:  0.07s;   /* スタガー特大 70ms（fc-i/wk-cell/ci-cell/ds-i step） */
+  --dur-stagger-2xl: 0.08s;   /* スタガー超大 80ms（yr-i/dow-i/pbr-i step） */
   --dur-stagger-3xl: 0.10s;   /* スタガー最大 100ms（hs-bar series step） */
   --dur-delay-xs:    0.04s;   /* 基点ディレイ極小 40ms（nth-child(1)最速基点） */
   --dur-delay-sm:    0.10s;   /* 基点ディレイ小 100ms（汎用ショートディレイ） */
@@ -867,6 +868,7 @@ select:focus:not(:focus-visible) {
 }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: scale(.97) translateY(0); }
+.btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring), var(--shadow-btn-base); }
 .btn:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; transform: none; }
 
 .btn-primary {
@@ -1598,7 +1600,7 @@ select:focus:not(:focus-visible) {
 .bulk-count::before {
   content: '☑';
   font-size: var(--fs-3xs);
-  opacity: .9;
+  opacity: var(--opacity-mild);
 }
 .bulk-total {
   font-size: var(--fs-xs);
@@ -2155,6 +2157,7 @@ mark.tx-hl {
   opacity: var(--opacity-disabled);
   cursor: not-allowed;
 }
+.month-nav-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 
 .month-sel {
   padding: var(--sp-2) var(--sp-2-5);
@@ -8221,7 +8224,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--white);
   transition: transform var(--dur-faster), box-shadow var(--dur-faster);
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--fv-si, 0) * 65ms);
+  animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
 }
 .fv-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover-md); }
 .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
@@ -9003,7 +9006,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   animation: hm-stat-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--hm-si, 0) * 65ms);
+  animation-delay: calc(var(--hm-si, 0) * var(--dur-stagger-mid));
 }
 .hm-stat-card::before {
   content: '';
@@ -9208,7 +9211,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   animation: debt-sum-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--ds-i, 0) * 70ms);
+  animation-delay: calc(var(--ds-i, 0) * var(--dur-stagger-xl));
 }
 @keyframes debt-sum-in {
   from { opacity: 0; transform: translateY(10px) scale(0.97); }
@@ -10286,7 +10289,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   text-align: center;
   gap: var(--sp-1);
   animation: tg-stat-in var(--dur-lift) var(--ease-bounce) both;
-  animation-delay: calc(var(--tg-si, 0) * 65ms);
+  animation-delay: calc(var(--tg-si, 0) * var(--dur-stagger-mid));
 }
 .tg-stat-icon { font-size: var(--fs-icon-lg); line-height: var(--lh-none); }
 .tg-stat-label {
@@ -13080,7 +13083,7 @@ canvas.chart-clickable { cursor: pointer; }
   align-items: center;
   gap: var(--sp-2);
   animation: pace-row-in var(--dur-gentle) var(--ease-bounce) both;
-  animation-delay: calc(var(--pbr-i, 0) * 80ms);
+  animation-delay: calc(var(--pbr-i, 0) * var(--dur-stagger-2xl));
 }
 .pace-bar-label {
   width: 66px;
@@ -13111,7 +13114,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: pace-bar-in var(--dur-arc) var(--ease-bounce) both;
-  animation-delay: calc(var(--pbr-i, 0) * 80ms + 60ms);
+  animation-delay: calc(var(--pbr-i, 0) * var(--dur-stagger-2xl) + var(--dur-stagger-lg));
   position: relative;
 }
 .pace-bar-days { background: linear-gradient(90deg, var(--primary), var(--primary-end)); }
@@ -13283,8 +13286,8 @@ canvas.chart-clickable { cursor: pointer; }
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
 .pm-sum-card:nth-child(1) { animation-delay: 0ms; }
-.pm-sum-card:nth-child(2) { animation-delay: 65ms; }
-.pm-sum-card:nth-child(3) { animation-delay: 130ms; }
+.pm-sum-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
+.pm-sum-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 .pm-sum-card::before {
   content: '';
   position: absolute;
