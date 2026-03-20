@@ -2683,6 +2683,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .budget-nums.over { color: var(--expense); font-weight: var(--fw-bold); }
 .budget-sep { color: var(--text-muted); }
@@ -2713,6 +2714,7 @@ mark.tx-hl {
   border-radius: var(--radius-badge);
   background: var(--surface-hover);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .budget-pct-badge.warn { color: var(--warning); background: var(--warning-bg); }
 .budget-pct-badge.over { color: var(--expense); background: var(--danger-bg); font-weight: var(--fw-bold); }
@@ -4879,6 +4881,7 @@ body {
   color: var(--goal-accent, var(--primary)); /* v5.32: goal colorで着色 */
   min-width: 34px;
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 /* 金額表示 */
@@ -4925,6 +4928,7 @@ body {
   font-weight: var(--fw-semi);
   color: var(--primary);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .goal-note {
@@ -5243,6 +5247,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   color: var(--text);
   letter-spacing: var(--ls-tight);
+  font-variant-numeric: tabular-nums;
 }
 .cal-sum-value.income  { color: var(--success); }
 .cal-sum-value.expense { color: var(--expense); }
@@ -5365,6 +5370,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
 }
 .cal-amount.inc { color: var(--success); }
 .cal-amount.exp { color: var(--expense); }
@@ -5473,6 +5479,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 .cal-panel-amt.income  { color: var(--income); }
 .cal-panel-amt.expense { color: var(--expense); }
@@ -5606,6 +5613,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-ev-amount {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
 }
 .cal-ev-amount.inc { color: var(--income); }
 .cal-ev-amount.exp { color: var(--expense); }
@@ -5631,6 +5639,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   padding: var(--sp-0-75) var(--sp-2-5);
   border-radius: var(--radius-badge);
+  font-variant-numeric: tabular-nums;
 }
 .cal-ev-total.inc { background: color-mix(in srgb, var(--income) 10%, transparent); color: var(--income); }
 .cal-ev-total.exp { background: color-mix(in srgb, var(--expense) 10%, transparent); color: var(--expense); }
@@ -6432,6 +6441,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--pt-accent, var(--text));
+  font-variant-numeric: tabular-nums;
 }
 .pt-unit {
   font-size: var(--fs-xs);
@@ -6442,6 +6452,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card-yen {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 .pt-card-actions {
   display: flex; gap: var(--sp-1); margin-top: var(--sp-1);
@@ -6507,7 +6518,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-3);
 }
 .pt-widget-total-label { font-size: var(--fs-xs); color: var(--text-muted); }
-.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--text); }
+.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
 .pt-widget-expiry-header {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -6940,6 +6951,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--wl-accent, var(--text));
+  font-variant-numeric: tabular-nums;
 }
 .wl-card-actions {
   display: flex;
@@ -7039,7 +7051,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .wl-archive-emoji { font-size: var(--fs-icon); flex-shrink: 0; }
 .wl-archive-name  { flex: 1; font-size: var(--fs-sm); color: var(--text-muted); text-decoration: line-through; }
 .wl-archive-date  { font-size: var(--fs-xs); color: var(--text-muted); }
-.wl-archive-price { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text-muted); }
+.wl-archive-price { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .wl-archive-del   { flex-shrink: 0; }
 
 /* ダッシュボードウィジェット */
@@ -8174,7 +8186,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
-.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tight); }
+.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tight); font-variant-numeric: tabular-nums; }
 .ct-stat-sub   { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-0-75); }
 
 /* テーブル */
@@ -8591,6 +8603,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
   min-height: 13px;
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 .wk-bar-label {
   font-size: var(--fs-2xs);
@@ -9349,7 +9362,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: var(--sp-3); margin-bottom: var(--sp-3);
 }
-.debt-balance { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--expense); font-variant-numeric: tabular-nums; }
+.debt-balance { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--expense); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
 .debt-balance-meta { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-1); }
 .debt-meta-right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-1); }
 /* 年利・月返済バッジ: --debt-accent カラー連動 (v5.85) */
@@ -9410,7 +9423,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-entry-row:last-child { border-bottom: none; }
 .debt-entry-date   { color: var(--text-muted); min-width: 72px; }
 .debt-entry-note   { flex: 1; color: var(--text-muted); }
-.debt-entry-balance { font-weight: var(--fw-semi); color: var(--expense); }
+.debt-entry-balance { font-weight: var(--fw-semi); color: var(--expense); font-variant-numeric: tabular-nums; }
 .debt-history-more { font-size: var(--fs-xs); color: var(--text-muted); text-align: center; padding: var(--sp-1) 0; }
 
 /* 空状態 */
@@ -9446,7 +9459,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .debt-widget-cell { flex: 1; padding: var(--sp-2) var(--sp-3); text-align: center; }
 .debt-widget-divider { width: 1px; background: var(--border); align-self: stretch; }
 .debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
-.debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); }
+.debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; }
 .debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: var(--fw-normal); }
 
 .debt-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
@@ -9471,7 +9484,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge); transition: width var(--dur-fill);
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
-.debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; }
+.debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
 @media (max-width: 600px) {
   .debt-balance-row { flex-direction: column; }
@@ -9538,7 +9551,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sim-result-col-head { text-align: center; }
 .sim-col-base { color: var(--primary); }
 .sim-col-accel { color: var(--success); }
-.sim-result-val { text-align: center; font-weight: var(--fw-semi); color: var(--text); }
+.sim-result-val { text-align: center; font-weight: var(--fw-semi); color: var(--text); font-variant-numeric: tabular-nums; }
 .sim-val-better { color: var(--success); }
 
 /* 節約バナー */
@@ -9738,6 +9751,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   color: var(--white);
   line-height: var(--lh-tighter);
+  font-variant-numeric: tabular-nums;
 }
 .sb-banner-num.sb-bn-up   { color: var(--expense-end); }
 .sb-banner-num.sb-bn-down { color: var(--income-end); }
@@ -9938,10 +9952,10 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); }
-.ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); }
+.ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); }
-.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
-.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
 .ev-sum-card .ev-sum-none  { color: var(--on-dark-faint); font-size: var(--fs-xs); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
@@ -10195,7 +10209,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-widget-meta { display: flex; gap: var(--sp-1-5); margin-top: var(--sp-0-5); }
 .ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: var(--fw-semi); }
 .ev-widget-cat   { font-size: var(--fs-xs); color: var(--text-muted); }
-.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; }
+.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
 /* --- 絵文字グリッド（モーダル内）--- */
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
@@ -11023,6 +11037,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
   color: var(--text-main);
+  font-variant-numeric: tabular-nums;
 }
 .ci-cell-value.income  { color: var(--income); }
 .ci-cell-value.expense { color: var(--expense); }
@@ -11131,7 +11146,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .ci-event-icon  { font-size: var(--fs-icon); flex-shrink: 0; }
 .ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); }
-.ci-event-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-sub); }
+.ci-event-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-sub); font-variant-numeric: tabular-nums; }
 /* フッター */
 .ci-footer { padding: 0 var(--sp-5) var(--sp-5); }
 .ci-ok-btn {
@@ -12689,6 +12704,7 @@ canvas.chart-clickable { cursor: pointer; }
 .opp-saving strong {
   font-weight: var(--fw-bold);
   font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
 }
 
 .opp-card-action {

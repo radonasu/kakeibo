@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.17'; // v17.17: tabular-nums拡充（pm-sum-value/dow-stat-amount/sim-savings-value/fv-stat-value/hm-stat-value/tg-stat-value）・:active補完（sf-chip/adv-preset-chip）・dash-sum-clickable:activeバグ修正（translateY(-1px)→0）
+const CACHE_NAME = 'kakeibo-v17.18'; // v17.18: tabular-nums全域拡充（budget-nums/budget-pct-badge/cal-amount/cal-sum-value/cal-panel-amt/cal-ev-amount/cal-ev-total/pt-card-balance/pt-card-yen/pt-widget-total-amount/wl-card-price/wl-archive-price/ct-stat-value/debt-entry-balance/debt-widget-cell-value/debt-widget-balance/ev-sum-count/ev-sum-inc/ev-sum-exp/ev-widget-amount/ci-cell-value/ci-event-amount/wk-bar-amount/opp-saving-strong/goal-pct/goal-monthly-target/sb-banner-num/sim-result-val）+ ls-num追加（pt-widget-total-amount/debt-balance）
 const ASSETS = [
   './index.html',
   './css/style.css',
