@@ -354,7 +354,7 @@
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20) ── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
   --size-badge-md:   20px;  /* 中バッジ（kk-toast-icon/cal-ev-count/hm-ev-count/tx-count badge等） */
@@ -367,6 +367,9 @@
   --size-icon-sm:    32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
   --size-icon-md:    36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
   --size-icon-lg:    40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
+  --size-brand-icon: 38px;  /* サイドバーブランドロゴアイコン（icon-md:36pxとicon-lg:40pxの中間） */
+  --size-touch:      44px;  /* 最小タッチターゲット（WCAG 2.5.5 / iOS HIG 44px推奨） */
+  --size-touch-lg:   48px;  /* 大タッチターゲット（モーダルボタン・フォーム入力・カードアイコン） */
   --size-mobile-bar: 56px;  /* モバイルバー標準高さ（ヘッダー・ボトムナビ・FAB・sticky-top-offset） */
 }
 
@@ -489,8 +492,8 @@ select:focus:not(:focus-visible) {
 }
 
 .brand-icon {
-  width: 38px;
-  height: 38px;
+  width: var(--size-brand-icon);
+  height: var(--size-brand-icon);
   background: linear-gradient(135deg, var(--primary), var(--primary-end), var(--pink));
   border-radius: var(--radius-btn);
   display: flex;
@@ -718,8 +721,8 @@ select:focus:not(:focus-visible) {
   border: none;
   color: var(--sidebar-text-hi);
   font-size: var(--fs-icon-lg);
-  min-width: 44px;
-  min-height: 44px;
+  min-width: var(--size-touch);
+  min-height: var(--size-touch);
   padding: var(--sp-2);
   display: flex;
   align-items: center;
@@ -3334,7 +3337,7 @@ body {
     padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom, 0px));
   }
   .modal-footer .btn {
-    min-height: 48px;
+    min-height: var(--size-touch-lg);
     padding: var(--sp-3) var(--sp-5);
     font-size: var(--fs-base);
     flex: 1;
@@ -4476,8 +4479,8 @@ body {
 
   /* ハンバーガー：44px */
   #hamburger {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: var(--size-touch);
+    min-height: var(--size-touch);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4493,14 +4496,14 @@ body {
   .filter-bar select,
   .filter-bar .month-sel,
   .filter-search {
-    min-height: 44px;
+    min-height: var(--size-touch);
     padding: var(--sp-2-5) 11px;
   }
 
   /* アクションボタン（ゴミ箱・編集等）：44px */
   .btn-icon {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: var(--size-touch);
+    min-height: var(--size-touch);
   }
 
   /* テーブル行タッチ余白 */
@@ -4530,13 +4533,13 @@ body {
   .form-group input[type="password"],
   .form-group input[type="url"],
   .form-group select {
-    min-height: 48px;
+    min-height: var(--size-touch-lg);
     padding: var(--sp-3) var(--sp-4);
   }
 
   /* プリセットボタンのタッチ改善 */
   .btn-preset {
-    min-height: 44px;
+    min-height: var(--size-touch);
     padding: var(--sp-2-5) var(--sp-3-5);
   }
 
@@ -4549,8 +4552,8 @@ body {
   .btn-month-nav,
   [class*="month-prev"],
   [class*="month-next"] {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: var(--size-touch);
+    min-height: var(--size-touch);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -5944,7 +5947,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-2xs) 0 0 var(--radius-2xs);
 }
 .sub-card-icon {
-  width: 44px; height: 44px;
+  width: var(--size-touch); height: var(--size-touch);
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon-lg);
@@ -6395,7 +6398,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card.pt-soon   .pt-card-color-bar { display: none; }
 
 .pt-card-icon {
-  width: 44px; height: 44px;
+  width: var(--size-touch); height: var(--size-touch);
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon-lg);
@@ -6909,8 +6912,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card-icon {
   font-size: var(--fs-icon-2xl);
-  width: 48px;
-  height: 48px;
+  width: var(--size-touch-lg);
+  height: var(--size-touch-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7732,8 +7735,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 
 .ch-card-icon {
   font-size: var(--fs-icon-2xl);
-  width: 48px;
-  height: 48px;
+  width: var(--size-touch-lg);
+  height: var(--size-touch-lg);
   border-radius: var(--radius-btn);
   display: flex;
   align-items: center;
@@ -10226,7 +10229,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
 .ev-emoji-preview-box {
   font-size: var(--fs-icon-2xl);
-  width: 44px; height: 44px;
+  width: var(--size-touch); height: var(--size-touch);
   display: flex; align-items: center; justify-content: center;
   border: 2px solid var(--border);
   border-radius: var(--radius-btn-sm);
