@@ -351,13 +351,16 @@
   --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12) ──── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13) ── */
   --size-badge-sm:  16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-checkbox:  16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
   --size-hm-cell:   13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
   --size-hm-month:  20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-icon-2xs:  24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
+  --size-icon-xs:   28px;  /* 極小アイコン要素（collapse-btn・color-swatch・step-num・ch-color-btn・ev-card-icon-wrap等） */
   --size-icon-sm:   32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
   --size-icon-md:   36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
+  --size-icon-lg:   40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
 }
 
 html {
@@ -595,7 +598,7 @@ select:focus:not(:focus-visible) {
 }
 
 .nav-icon {
-  width: 24px; height: 24px;
+  width: var(--size-icon-2xs); height: var(--size-icon-2xs);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   border-radius: var(--radius-btn-sm);
@@ -792,8 +795,8 @@ select:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: var(--size-icon-xs);
+  height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
   border: none;
   background: transparent;
@@ -2324,7 +2327,7 @@ mark.tx-hl {
   margin-bottom: var(--sp-2);
 }
 .color-swatch {
-  width: 28px; height: 28px;
+  width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
   cursor: pointer;
   border: 3px solid transparent;
@@ -3246,7 +3249,7 @@ body {
 }
 
 .bottom-nav-icon {
-  width: 24px; height: 24px;
+  width: var(--size-icon-2xs); height: var(--size-icon-2xs);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: var(--sp-0-5);
   border-radius: var(--radius-btn);
@@ -3875,7 +3878,7 @@ body {
 }
 .step-card:active { transform: scale(.98); }
 .step-num {
-  width: 28px; height: 28px;
+  width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
   background: var(--primary-light);
   color: var(--primary);
@@ -4591,11 +4594,11 @@ body {
 }
 
 /* スタッガードアニメーション（遅延）*/
-.sk-d1 { animation-delay: .10s; }
-.sk-d2 { animation-delay: .20s; }
-.sk-d3 { animation-delay: .30s; }
-.sk-d4 { animation-delay: .40s; }
-.sk-d5 { animation-delay: .50s; }
+.sk-d1 { animation-delay: var(--dur-delay-sm); }
+.sk-d2 { animation-delay: calc(2 * var(--dur-delay-sm)); }
+.sk-d3 { animation-delay: calc(3 * var(--dur-delay-sm)); }
+.sk-d4 { animation-delay: calc(4 * var(--dur-delay-sm)); }
+.sk-d5 { animation-delay: calc(5 * var(--dur-delay-sm)); }
 
 /* スケルトンレスポンシブ */
 @media (max-width: 768px) {
@@ -5629,7 +5632,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 @media (max-width: 768px) {
   .cal-ev-item { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); }
-  .cal-ev-icon { width: 28px; height: 28px; font-size: var(--fs-md); }
+  .cal-ev-icon { width: var(--size-icon-xs); height: var(--size-icon-xs); font-size: var(--fs-md); }
   .cal-ev-name { font-size: var(--fs-xs); }
   .cal-ev-amount { font-size: var(--fs-xs); }
 }
@@ -7058,8 +7061,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .wish-widget-icon {
   font-size: var(--fs-icon-lg);
-  width: 40px;
-  height: 40px;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7450,7 +7453,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .dw-item-icon {
   font-size: var(--fs-xl);
-  width: 24px;
+  width: var(--size-icon-2xs);
   text-align: center;
   flex-shrink: 0;
 }
@@ -7548,8 +7551,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 
 /* タイプアイコン円形背景 */
 .asset-type-icon {
-  width: 40px;
-  height: 40px;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
   border-radius: var(--radius-circle);
   display: inline-flex;
   align-items: center;
@@ -7870,8 +7873,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-1);
 }
 .ch-color-btn {
-  width: 28px;
-  height: 28px;
+  width: var(--size-icon-xs);
+  height: var(--size-icon-xs);
   border: 2px solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
@@ -10001,7 +10004,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-card-header { display: flex; align-items: flex-start; gap: var(--sp-2); }
 .ev-card-icon-wrap {
   flex-shrink: 0;
-  width: 28px; height: 28px;
+  width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-xl);
@@ -10124,7 +10127,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* --- 月別追加ボタン --- */
 .ev-add-month {
   flex-shrink: 0;
-  width: 24px; height: 24px;
+  width: var(--size-icon-2xs); height: var(--size-icon-2xs);
   border-radius: var(--radius-circle);
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
@@ -11927,7 +11930,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: var(--sp-4);
   right: var(--sp-4);
-  width: 28px; height: 28px;
+  width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
   border: none;
   background: var(--surface-hover);

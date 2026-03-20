@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.12'; // v17.12: アイコン要素サイズトークン完全化（--size-icon-sm:32px/--size-icon-md:36px を:rootに追加・CSS全域アイコン要素23箇所・合計36参照をvar()に変換）
+const CACHE_NAME = 'kakeibo-v17.13'; // v17.13: サイズトークン完全化 第3弾（--size-icon-2xs:24px/--size-icon-xs:28px/--size-icon-lg:40px を:rootに追加・24px×4箇所/28px×7箇所/40px×2箇所をvar()変換・スケルトンディレイsk-d1〜d5をcalc(N*--dur-delay-sm)変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',
