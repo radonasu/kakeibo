@@ -354,8 +354,10 @@
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14) ── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
+  --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
+  --size-badge-md:   20px;  /* 中バッジ（kk-toast-icon/cal-ev-count/hm-ev-count/tx-count badge等） */
   --size-checkbox:   16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
   --size-tx-cb:      17px;  /* 一括選択チェックボックス（--size-checkboxより1px大・取引行専用） */
   --size-hm-cell:    13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
@@ -1937,7 +1939,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
-  padding: 0 4px;
+  padding: 0 var(--sp-1);
   border-radius: var(--radius-badge);
   background: var(--primary);
   color: var(--white);
@@ -2089,7 +2091,7 @@ mark.tx-hl {
   background: color-mix(in srgb, var(--primary) 18%, transparent);
   color: var(--primary);
   border-radius: var(--radius-3xs);
-  padding: 0 2px;
+  padding: 0 var(--sp-0-5);
   font-weight: var(--fw-bold);
   font-style: normal;
   animation: tx-hl-in var(--dur-mid) var(--ease-plain) both;
@@ -3407,7 +3409,7 @@ body {
   right: calc(50% - 18px);
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
-  padding: 0 4px;
+  padding: 0 var(--sp-1);
   background: var(--expense);
   color: var(--white);
   font-size: var(--fs-4xs);
@@ -4092,8 +4094,8 @@ body {
 /* アイコンバッジ */
 .kk-toast-icon {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: var(--size-badge-md);
+  height: var(--size-badge-md);
   border-radius: var(--radius-circle);
   background: var(--text-faint);
   color: var(--white);
@@ -4151,8 +4153,8 @@ body {
 
 /* ── 資産管理ページ ───────────────────────────────────────── */
 .asset-list-header {
-  margin: 0 0 12px;
-  padding: 0 2px;
+  margin: 0 0 var(--sp-3);
+  padding: 0 var(--sp-0-5);
   display: flex;
   align-items: center;
   gap: var(--sp-2);
@@ -5540,8 +5542,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
-  height: 20px;
+  min-width: var(--size-badge-md);
+  height: var(--size-badge-md);
   padding: 0 var(--sp-1-5);
   border-radius: var(--radius-badge);
   background: color-mix(in srgb, var(--primary) 12%, transparent);
@@ -9243,7 +9245,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .hm-legend-text {
   font-size: var(--fs-xs);
   color: var(--text-muted);
-  margin: 0 4px;
+  margin: 0 var(--sp-1);
 }
 .hm-legend-cell {
   cursor: default !important;
@@ -9889,9 +9891,9 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 5px;
+  min-width: var(--size-badge-md);
+  height: var(--size-badge-md);
+  padding: 0 var(--sp-1-25);
   background: var(--on-dark-overlay);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
@@ -11192,9 +11194,9 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
+  min-width: var(--size-badge);
+  height: var(--size-badge);
+  padding: 0 var(--sp-1-25);
   border-radius: var(--radius-badge);
   background: var(--danger-text);
   color: var(--white);
@@ -11279,7 +11281,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   right: 2px;
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
-  padding: 0 4px;
+  padding: 0 var(--sp-1);
   border-radius: var(--radius-badge);
   background: var(--danger-text);
   color: var(--white);
@@ -11963,7 +11965,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--text-primary);
-  margin: 0 0 2px;
+  margin: 0 0 var(--sp-0-5);
 }
 
 .rc-sub {
@@ -12025,7 +12027,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 
 .rc-check {
-  width: 18px; height: 18px;
+  width: var(--size-badge); height: var(--size-badge);
   border-radius: var(--radius-2xs);
   accent-color: var(--primary);
   cursor: pointer;
@@ -12170,7 +12172,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   padding: 1px var(--sp-2);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
-  min-width: 20px;
+  min-width: var(--size-badge-md);
   text-align: center;
 }
 @keyframes tx-banner-in {
@@ -12589,8 +12591,8 @@ canvas.chart-clickable { cursor: pointer; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: var(--size-badge);
+  height: var(--size-badge);
   border-radius: var(--radius-circle);
   color: var(--white);
   font-size: var(--fs-2xs);

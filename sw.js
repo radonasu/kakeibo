@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.19'; // v17.19: ls-num拡充（sub-widget-total/sub-summary/pt-summary/wish-widget-total/ch-summary/dow-stat/fv-stat/hm-stat/sb-banner-num/sim-savings/ev-sum-count/tg-stat: 12箇所追加・計15箇所）+ ls-snug追加（ct-stat/wk-cell/pm-sum: 3箇所）+ wish-widget-total-amountにtabular-nums補完
+const CACHE_NAME = 'kakeibo-v17.20'; // v17.20: バッジサイズトークン追加（--size-badge:18px/--size-badge-md:20px）+ バッジ要素9箇所変数化 + padding変数化7箇所 + margin変数化3箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
