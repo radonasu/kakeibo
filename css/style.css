@@ -3779,6 +3779,7 @@ body {
 .recurring-day-input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 /* ============================================================
@@ -8817,10 +8818,10 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
   min-width: 0;
 }
-.qa-cat-select:focus { border-color: var(--qa-accent); outline: none; }
+.qa-cat-select:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--qa-accent) 18%, transparent); }
 /* メモ行 */
 .qa-memo-row {
   display: flex;
@@ -8837,11 +8838,11 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--bg);
   color: var(--text);
   font-size: var(--fs-sm);
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
   min-width: 0;
 }
 .qa-memo-input::placeholder { color: var(--text-muted); }
-.qa-memo-input:focus { border-color: var(--qa-accent); outline: none; }
+.qa-memo-input:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--qa-accent) 18%, transparent); }
 /* 追加ボタン タイプカラー連動 */
 .qa-card .qa-submit-btn {
   flex-shrink: 0;
@@ -13396,12 +13397,14 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   animation: cat-cg-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs));
-  transition: box-shadow var(--dur-faster), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-faster), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast);
 }
 .cat-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
 }
+.cat-card:active { transform: translateY(0); box-shadow: none; }
 .cat-card-accent {
   position: absolute;
   top: 0; left: 0; right: 0;
