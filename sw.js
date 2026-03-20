@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.16'; // v17.16: リストカード:activeプレスフィードバック統一（sub/pt/wl/ch/opp/goal/debt/ev/asset/yi 10種）・goal-card/debt-card transition追加（hover即時問題修正）・yi-card hover一貫性修正（-3px+shadow-md→-1px+shadow-card-hover）
+const CACHE_NAME = 'kakeibo-v17.17'; // v17.17: tabular-nums拡充（pm-sum-value/dow-stat-amount/sim-savings-value/fv-stat-value/hm-stat-value/tg-stat-value）・:active補完（sf-chip/adv-preset-chip）・dash-sum-clickable:activeバグ修正（translateY(-1px)→0）
 const ASSETS = [
   './index.html',
   './css/style.css',

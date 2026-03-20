@@ -2055,6 +2055,7 @@ select:focus:not(:focus-visible) {
   transform: translateY(-1px);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 18%, transparent);
 }
+.adv-preset-chip:active { transform: translateY(0); box-shadow: none; }
 .adv-preset-chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .adv-preset-chip.active {
   border-color: var(--primary);
@@ -8023,6 +8024,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   color: var(--white);
   line-height: var(--lh-tighter);
+  font-variant-numeric: tabular-nums;
 }
 .dow-stat-unit {
   font-size: var(--fs-xs);
@@ -8292,7 +8294,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .fv-stat-icon  { font-size: var(--fs-icon); margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: var(--on-dark-near); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tight); margin: var(--sp-0-5) 0; }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tight); margin: var(--sp-0-5) 0; font-variant-numeric: tabular-nums; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: var(--on-dark-label); }
 
 /* テーブルセル */
@@ -9094,6 +9096,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xl);
   font-weight: var(--fw-bold);
   color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 .hm-stat-unit {
   font-size: var(--fs-sm);
@@ -9551,7 +9554,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sim-savings-item { text-align: center; }
 .sim-savings-label { font-size: var(--fs-xs); color: var(--income-deep); margin-bottom: var(--sp-1); }
 [data-theme="dark"] .sim-savings-label { color: var(--income-end); }
-.sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); }
+.sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); font-variant-numeric: tabular-nums; }
 [data-theme="dark"] .sim-savings-value { color: var(--income-end); }
 .sim-savings-divider { width: 1px; height: 48px; background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) 30%, transparent); }
@@ -10273,6 +10276,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transform: translateY(-1px);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 22%, transparent);
 }
+.sf-chip:active { transform: translateY(0); box-shadow: none; }
 .sf-chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .sf-chip-del {
   display: inline-flex;
@@ -10353,6 +10357,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-black);
   color: var(--text);
   line-height: var(--lh-tighter);
+  font-variant-numeric: tabular-nums;
 }
 .tg-stat-unit {
   font-size: var(--fs-sm);
@@ -12798,7 +12803,7 @@ canvas.chart-clickable { cursor: pointer; }
   box-shadow: var(--shadow-hover-sm);
   filter: brightness(1.07);
 }
-.dash-sum-clickable:active { transform: translateY(-1px); }
+.dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: none; }
 
 /* スクロール可能な本文エリア */
 .md-scroll-body {
@@ -13367,6 +13372,7 @@ canvas.chart-clickable { cursor: pointer; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
 }
 .pm-sum-sub {
   font-size: var(--fs-xs);
