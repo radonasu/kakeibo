@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.15'; // v17.15: インタラクション一貫性改善（.cat-card:hover統一・shadow-card-hover+translateY(-1px)+border-color追加・:active補完）＋focus-ring補完（.recurring-day-input/.qa-cat-select/.qa-memo-input に box-shadow追加）
+const CACHE_NAME = 'kakeibo-v17.16'; // v17.16: リストカード:activeプレスフィードバック統一（sub/pt/wl/ch/opp/goal/debt/ev/asset/yi 10種）・goal-card/debt-card transition追加（hover即時問題修正）・yi-card hover一貫性修正（-3px+shadow-md→-1px+shadow-card-hover）
 const ASSETS = [
   './index.html',
   './css/style.css',

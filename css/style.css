@@ -4178,6 +4178,7 @@ body {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
 }
+.asset-card:active { transform: translateY(0); box-shadow: none; }
 
 .asset-card-header {
   display: flex;
@@ -4754,8 +4755,10 @@ body {
 .goal-card {
   padding: var(--sp-6);
   border-left: 4px solid var(--goal-accent, var(--primary));
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.goal-card:active { transform: translateY(0); box-shadow: none; }
 
 .goal-card-header {
   display: flex;
@@ -5919,6 +5922,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
 .sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.sub-card:active { transform: translateY(0); box-shadow: none; }
 .sub-card-color-bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
@@ -6358,6 +6362,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.pt-card:active { transform: translateY(0); box-shadow: none; }
 .pt-card.pt-urgent {
   border-left: 3px solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
@@ -6871,6 +6876,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: box-shadow var(--dur-base), transform var(--dur-base);
 }
 .wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.wl-card:active { transform: translateY(0); box-shadow: none; }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -7701,6 +7707,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
 }
+.ch-card:active { transform: translateY(0); box-shadow: none; }
 .ch-card.ch-card-done { opacity: var(--opacity-faded); }
 
 .ch-card-icon {
@@ -9289,8 +9296,10 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--dc-i, 0) * var(--dur-stagger-lg));
   position: relative;
   overflow: hidden;
+  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.debt-card:active { transform: translateY(0); box-shadow: none; }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(12px) scale(0.97); }
   to   { opacity: 1; transform: none; }
@@ -9997,6 +10006,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transition: opacity var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.ev-card:active { transform: translateY(0); box-shadow: none; }
 .ev-card::before {
   content: '';
   position: absolute;
@@ -12496,9 +12506,10 @@ canvas.chart-clickable { cursor: pointer; }
   transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
 }
 .yi-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
 }
+.yi-card:active { transform: translateY(0); box-shadow: none; }
 .yi-card::before {
   content: '';
   position: absolute;
@@ -12631,6 +12642,7 @@ canvas.chart-clickable { cursor: pointer; }
   transition: box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
+.opp-card:active { transform: translateY(0); box-shadow: none; }
 
 .opp-card-left { flex-shrink: 0; }
 
