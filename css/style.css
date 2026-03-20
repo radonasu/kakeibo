@@ -334,9 +334,11 @@
   --black-14:  rgba(0,0,0,.14);  /* FABホバー影・バルクバーライト（強） */
   --black-30:  rgba(0,0,0,.3);   /* バルクバーダーク影 */
 
-  /* ── セマンティックopacityトークン (v17.0/v17.2) ─────── */
+  /* ── セマンティックopacityトークン (v17.0/v17.2/v17.14) ── */
   --opacity-disabled:  0.3;   /* 無効/ロック要素（disabled ボタン・月ナビ等） */
+  --opacity-quarter:   0.25;  /* ソートアイコン非アクティブ等の薄め無効状態 */
   --opacity-ghost:     0.5;   /* 空セル・disabled 状態・ノーマルバー半透明 */
+  --opacity-mid:       0.45;  /* 追加済みアイテム（multi-receipt-item.added 等） */
   --opacity-inactive:  0.55;  /* 非アクティブ/完了済み（サブスク休止・完了イベント等） */
   --opacity-read:      0.58;  /* 既読通知（未読より僅かに明るく残る半透明状態） */
   --opacity-secondary: 0.6;   /* 補助テキスト・補助SVG（ラベル・サブライン等） */
@@ -350,17 +352,20 @@
   --opacity-deco:      0.10;  /* 装飾サークル薄（md-cell currentColor デコ等） */
   --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
+  --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13) ── */
-  --size-badge-sm:  16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
-  --size-checkbox:  16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
-  --size-hm-cell:   13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
-  --size-hm-month:  20px;  /* ヒートマップ月ラベル行（高さ・行間） */
-  --size-icon-2xs:  24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
-  --size-icon-xs:   28px;  /* 極小アイコン要素（collapse-btn・color-swatch・step-num・ch-color-btn・ev-card-icon-wrap等） */
-  --size-icon-sm:   32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
-  --size-icon-md:   36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
-  --size-icon-lg:   40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14) ── */
+  --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
+  --size-checkbox:   16px;  /* チェックボックス入力サイズ（notif/recurring toggle・sb-check 等） */
+  --size-tx-cb:      17px;  /* 一括選択チェックボックス（--size-checkboxより1px大・取引行専用） */
+  --size-hm-cell:    13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
+  --size-hm-month:   20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-icon-2xs:   24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
+  --size-icon-xs:    28px;  /* 極小アイコン要素（collapse-btn・color-swatch・step-num・ch-color-btn・ev-card-icon-wrap等） */
+  --size-icon-sm:    32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
+  --size-icon-md:    36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
+  --size-icon-lg:    40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
+  --size-mobile-bar: 56px;  /* モバイルバー標準高さ（ヘッダー・ボトムナビ・FAB・sticky-top-offset） */
 }
 
 html {
@@ -1384,7 +1389,7 @@ select:focus:not(:focus-visible) {
 .tx-cb {
   appearance: none;
   -webkit-appearance: none;
-  width: 17px; height: 17px;
+  width: var(--size-tx-cb); height: var(--size-tx-cb);
   border: 2px solid var(--border-strong);
   border-radius: var(--radius-bar);
   background: var(--surface);
@@ -1495,7 +1500,7 @@ select:focus:not(:focus-visible) {
 .tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  var(--dur-mid) var(--ease-bounce) both; }
 .tx-sort-icon.tx-desc svg { animation: tx-icon-bounce-desc var(--dur-mid) var(--ease-bounce) both; }
 .tx-sort-none {
-  opacity: .25;
+  opacity: var(--opacity-quarter);
 }
 /* ソートリセットピル */
 @keyframes tx-sort-badge-in {
@@ -1647,7 +1652,7 @@ select:focus:not(:focus-visible) {
   .bulk-bar {
     padding: var(--sp-2) var(--sp-3);
     gap: var(--sp-2);
-    bottom: 56px;
+    bottom: var(--size-mobile-bar);
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -2478,7 +2483,7 @@ mark.tx-hl {
   white-space: nowrap;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
-.btn-receipt:hover    { opacity: .88; }
+.btn-receipt:hover    { opacity: var(--opacity-near); }
 .btn-receipt:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 .btn-receipt-file {
@@ -2542,7 +2547,7 @@ mark.tx-hl {
   transition: opacity var(--dur-base);
 }
 .multi-receipt-item.added {
-  opacity: .45;
+  opacity: var(--opacity-mid);
   pointer-events: none;
 }
 .multi-receipt-info {
@@ -3346,8 +3351,8 @@ body {
   position: fixed;
   bottom: var(--sp-7);
   right: var(--sp-7);
-  width: 56px;
-  height: 56px;
+  width: var(--size-mobile-bar);
+  height: var(--size-mobile-bar);
   border-radius: var(--radius-circle);
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: var(--white);
@@ -3824,7 +3829,7 @@ body {
 }
 .onboarding-subtitle {
   font-size: var(--fs-base);
-  opacity: .82;
+  opacity: var(--opacity-soft);
   line-height: var(--lh-normal);
   margin-bottom: var(--sp-7);
   max-width: 400px;
@@ -4458,7 +4463,7 @@ body {
 @media (max-width: 768px) {
   /* ボトムナビ：56px（ガイドライン基準） */
   .bottom-nav-item {
-    min-height: 56px;
+    min-height: var(--size-mobile-bar);
     padding: var(--sp-2-5) var(--sp-1) var(--sp-2);
   }
 
@@ -4474,7 +4479,7 @@ body {
 
   /* モバイルヘッダー：56px */
   #mobile-header {
-    min-height: 56px;
+    min-height: var(--size-mobile-bar);
   }
 
   /* フィルターバーコントロール：44px */
@@ -4733,7 +4738,7 @@ body {
 
 @media (max-width: 768px) {
   .section-tabs {
-    top: 56px;
+    top: var(--size-mobile-bar);
     margin: 0 -16px;
     padding: 0 var(--sp-4);
     margin-bottom: var(--sp-4);
@@ -6246,7 +6251,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* #settings-tabs は .section-tabs を流用 — モバイルオフセット上書き */
 @media (max-width: 768px) {
-  #settings-tabs { top: 56px; }
+  #settings-tabs { top: var(--size-mobile-bar); }
 }
 
 /* ============================================================
@@ -12246,7 +12251,7 @@ kbd {
   pointer-events: none;
   transition: opacity var(--dur-faster) var(--ease-plain), transform var(--dur-appear) var(--ease-bounce);
   z-index: var(--z-kbd-hint);
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - var(--sp-8));
 }
 .kb-g-hint.visible {
   opacity: 1;
@@ -13141,7 +13146,7 @@ canvas.chart-clickable { cursor: pointer; }
   position: absolute;
   top: 0; left: 0;
   height: 100%;
-  opacity: .22;
+  opacity: var(--opacity-deco-xl);
   pointer-events: none;
 }
 .pace-bar-fill {
