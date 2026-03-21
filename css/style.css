@@ -1831,7 +1831,7 @@ select:focus:not(:focus-visible) {
   border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
   white-space: nowrap;
   line-height: var(--lh-loose);
-  transition: background var(--dur-fast), transform var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   animation: tag-chip-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-tag-chip:hover {
@@ -1886,7 +1886,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   flex-shrink: 0;
   user-select: none;
   line-height: var(--lh-loose);
@@ -2125,7 +2125,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-medium);
   cursor: pointer;
   line-height: var(--lh-normal);
-  transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-faster);
+  transition: border-color var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
   animation: preset-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--pi) * var(--dur-stagger-sub));
 }
@@ -4086,7 +4086,7 @@ body {
   padding: var(--sp-1-75) var(--sp-3-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
-  transition: background var(--dur-base), border-color var(--dur-base), transform var(--dur-fast);
+  transition: background var(--dur-base) var(--ease-plain), border-color var(--dur-base) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   white-space: nowrap;
 }
 .btn-share:hover {
@@ -5906,7 +5906,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-btn);
   background: var(--surface-hover);
-  transition: background var(--dur-fast), transform var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .sub-widget-item:hover  { transform: translateX(2px); }
 .sub-widget-item:active { transform: translateX(0); }
@@ -6633,7 +6633,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-sm);
   background: var(--surface-hover);
-  transition: transform var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .pt-widget-item:hover  { transform: translateX(2px); }
 .pt-widget-item:active { transform: translateX(0); }
@@ -8026,7 +8026,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  transition: transform var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .ch-widget-item:hover  { transform: translateX(2px); }
 .ch-widget-item:active { transform: translateX(0); }
@@ -8241,7 +8241,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color var(--dur-faster), background var(--dur-faster), color var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   user-select: none;
   animation: ct-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * var(--dur-stagger-sm));
@@ -8984,7 +8984,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-btn);
   background: var(--qa-accent);
   border-color: var(--qa-accent);
-  transition: background var(--dur-mid), border-color var(--dur-mid), filter var(--dur-fast), transform var(--dur-fast);
+  transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .qa-card .qa-submit-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
 .qa-card .qa-submit-btn:active { transform: scale(0.95); filter: brightness(0.95); }
@@ -9577,7 +9577,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; gap: var(--sp-2);
   padding: var(--sp-2); border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
-  transition: transform var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .debt-widget-item:hover  { transform: translateX(2px); }
 .debt-widget-item:active { transform: translateX(0); }

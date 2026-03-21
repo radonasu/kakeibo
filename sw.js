@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.42'; // v17.42: transition easing統一18箇所（全カード/カラーボタン/emoji-btn）+ opp-challenge-btn focus-visible追加
+const CACHE_NAME = 'kakeibo-v17.43'; // v17.43: transition easing統一10箇所（tx-tag-chip/filter-chip/adv-preset-chip/btn-share/sub-widget-item/pt-widget-item/ch-widget-item/ct-chip/qa-submit-btn/debt-widget-item）
 const ASSETS = [
   './index.html',
   './css/style.css',
