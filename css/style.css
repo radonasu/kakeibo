@@ -354,7 +354,7 @@
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21) ── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
   --size-badge-md:   20px;  /* 中バッジ（kk-toast-icon/cal-ev-count/hm-ev-count/tx-count badge等） */
@@ -365,6 +365,7 @@
   --size-icon-2xs:   24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
   --size-icon-xs:    28px;  /* 極小アイコン要素（collapse-btn・color-swatch・step-num・ch-color-btn・ev-card-icon-wrap等） */
   --size-icon-sm:    32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
+  --size-icon-sm-plus: 34px; /* やや大きめ小アイコン（絵文字ボタン・カレンダーイベントアイコン・月ナビボタン高等） */
   --size-icon-md:    36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
   --size-icon-lg:    40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
   --size-brand-icon: 38px;  /* サイドバーブランドロゴアイコン（icon-md:36pxとicon-lg:40pxの中間） */
@@ -1626,7 +1627,7 @@ select:focus:not(:focus-visible) {
 /* バーセパレーター */
 .bulk-bar-sep {
   width: 1px;
-  height: 32px;
+  height: var(--size-icon-sm);
   background: var(--border);
   flex-shrink: 0;
 }
@@ -1640,7 +1641,7 @@ select:focus:not(:focus-visible) {
 }
 .bulk-action-item { display: flex; }
 .bulk-sel {
-  height: 36px;
+  height: var(--size-icon-md);
   padding: 0 var(--sp-3);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-btn-sm);
@@ -1665,7 +1666,7 @@ select:focus:not(:focus-visible) {
   .bulk-bar-info { min-width: auto; flex-direction: row; gap: var(--sp-2); align-items: center; }
   .bulk-bar-sep  { display: none; }
   .bulk-bar-actions { gap: var(--sp-2); flex-shrink: 0; }
-  .bulk-sel { font-size: var(--fs-xs); padding: 0 var(--sp-2); height: 32px; }
+  .bulk-sel { font-size: var(--fs-xs); padding: 0 var(--sp-2); height: var(--size-icon-sm); }
 }
 
 /* 全期間 月グループ行 (v5.29) */
@@ -2147,7 +2148,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   width: 30px;
-  height: 34px;
+  height: var(--size-icon-sm-plus);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
@@ -5588,7 +5589,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   opacity: var(--opacity-inactive);
 }
 .cal-ev-icon {
-  width: 34px; height: 34px;
+  width: var(--size-icon-sm-plus); height: var(--size-icon-sm-plus);
   border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-icon);
@@ -6085,7 +6086,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-1);
 }
 .sub-emoji-btn {
-  width: 34px; height: 34px;
+  width: var(--size-icon-sm-plus); height: var(--size-icon-sm-plus);
   border: 2px solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
@@ -6497,7 +6498,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1);
 }
 .pt-emoji-btn {
-  width: 34px; height: 34px;
+  width: var(--size-icon-sm-plus); height: var(--size-icon-sm-plus);
   border: 2px solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
@@ -7143,7 +7144,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   }
   .wl-summary-card { padding: var(--sp-3); }
   .wl-card { padding: var(--sp-3); gap: var(--sp-3); }
-  .wl-card-icon { width: 40px; height: 40px; font-size: var(--fs-icon-lg); border-radius: var(--radius-sm); }
+  .wl-card-icon { width: var(--size-icon-lg); height: var(--size-icon-lg); font-size: var(--fs-icon-lg); border-radius: var(--radius-sm); }
   .wl-card-price { font-size: var(--fs-md); }
   .wl-card-actions { gap: var(--sp-1); }
   .wl-card-actions .btn-sm { padding: var(--sp-1) var(--sp-2); font-size: var(--fs-xs); }
@@ -7976,7 +7977,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   }
   .ch-sum-total { grid-column: span 2; }
   .ch-progress-label { display: none; }
-  .ch-card-icon { width: 40px; height: 40px; font-size: var(--fs-icon-lg); border-radius: var(--radius-sm); }
+  .ch-card-icon { width: var(--size-icon-lg); height: var(--size-icon-lg); font-size: var(--fs-icon-lg); border-radius: var(--radius-sm); }
 }
 
 /* ============================================================
@@ -9777,7 +9778,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .sb-banner-div {
   width: 1px;
-  height: 32px;
+  height: var(--size-icon-sm);
   background: var(--on-dark-overlay);
   flex-shrink: 0;
 }
@@ -12682,8 +12683,8 @@ canvas.chart-clickable { cursor: pointer; }
 .opp-card-left { flex-shrink: 0; }
 
 .opp-icon {
-  width: 34px;
-  height: 34px;
+  width: var(--size-icon-sm-plus);
+  height: var(--size-icon-sm-plus);
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
