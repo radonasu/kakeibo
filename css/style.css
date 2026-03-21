@@ -372,6 +372,7 @@
   --size-touch:      44px;  /* 最小タッチターゲット（WCAG 2.5.5 / iOS HIG 44px推奨） */
   --size-touch-lg:   48px;  /* 大タッチターゲット（モーダルボタン・フォーム入力・カードアイコン） */
   --size-mobile-bar: 56px;  /* モバイルバー標準高さ（ヘッダー・ボトムナビ・FAB・sticky-top-offset） */
+  --accent-w:         3px;  /* アクセント幅（左/上ボーダー・アクセントライン・インジケーター共通幅） */
 }
 
 html {
@@ -598,7 +599,7 @@ select:focus:not(:focus-visible) {
   position: absolute;
   left: 0; top: 50%;
   transform: translateY(-50%);
-  width: 3px;
+  width: var(--accent-w);
   height: 0;
   background: var(--primary);
   border-radius: 0 var(--radius-3xs) var(--radius-3xs) 0;
@@ -1368,8 +1369,8 @@ select:focus:not(:focus-visible) {
 .tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* 種別左ボーダーカラーアクセント (v5.54) */
-.tx-table tbody tr[data-type="income"]  td:first-child { border-left: 3px solid var(--income); }
-.tx-table tbody tr[data-type="expense"] td:first-child { border-left: 3px solid var(--expense); }
+.tx-table tbody tr[data-type="income"]  td:first-child { border-left: var(--accent-w) solid var(--income); }
+.tx-table tbody tr[data-type="expense"] td:first-child { border-left: var(--accent-w) solid var(--expense); }
 
 /* モバイルで支払方法・担当者列を非表示 (v5.54) */
 @media (max-width: 600px) {
@@ -1454,7 +1455,7 @@ select:focus:not(:focus-visible) {
   border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border)) !important;
 }
 .tx-table tbody tr.tx-selected td:first-child {
-  border-left: 3px solid var(--primary) !important;
+  border-left: var(--accent-w) solid var(--primary) !important;
   padding-left: var(--sp-2-75) !important;
 }
 [data-theme="dark"] .tx-table tbody tr.tx-selected {
@@ -1486,7 +1487,7 @@ select:focus:not(:focus-visible) {
 .tx-th-sort.tx-th-active {
   color: var(--primary);
   background: color-mix(in srgb, var(--primary) 6%, transparent);
-  border-bottom: 3px solid var(--primary) !important;
+  border-bottom: var(--accent-w) solid var(--primary) !important;
 }
 .tx-sort-icon {
   display: inline-flex;
@@ -4124,7 +4125,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 3px;
+  height: var(--accent-w);
   width: 100%;
   border-radius: 0 0 var(--radius) var(--radius);
   background: var(--primary);
@@ -4686,7 +4687,7 @@ body {
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(8px) saturate(1.1);
   -webkit-backdrop-filter: blur(8px) saturate(1.1);
-  border-bottom: 3px solid var(--border);
+  border-bottom: var(--accent-w) solid var(--border);
   display: flex;
   gap: 0;
   overflow-x: auto;
@@ -4711,7 +4712,7 @@ body {
   cursor: pointer;
   border: none;
   background: none;
-  border-bottom: 3px solid transparent;
+  border-bottom: var(--accent-w) solid transparent;
   margin-bottom: -3px;
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster);
@@ -5578,7 +5579,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   border-bottom: 1px solid var(--border);
-  border-left: 3px solid var(--cal-ev-color, var(--primary));
+  border-left: var(--accent-w) solid var(--cal-ev-color, var(--primary));
   transition: background var(--dur-fast);
   animation: cal-ev-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cal-ev-i, 0) * var(--dur-stagger));
@@ -5677,7 +5678,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radius-md);
-  border-left: 3px solid transparent;
+  border-left: var(--accent-w) solid transparent;
   background: var(--surface-hover);
   transition: background var(--dur-fast);
 }
@@ -5735,7 +5736,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes insight-alert-pulse {
-  0%, 100% { border-left-width: 3px; }
+  0%, 100% { border-left-width: var(--accent-w); }
   50%       { border-left-width: 5px; }
 }
 
@@ -6024,7 +6025,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-progress {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--border);
 }
 .sub-card-progress-fill {
@@ -6383,11 +6384,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .pt-card:active { transform: translateY(0); box-shadow: none; }
 .pt-card.pt-urgent {
-  border-left: 3px solid var(--danger-border);
+  border-left: var(--accent-w) solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
              pt-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-long)) infinite;
 }
-.pt-card.pt-soon   { border-left: 3px solid var(--warning); }
+.pt-card.pt-soon   { border-left: var(--accent-w) solid var(--warning); }
 
 .pt-card-color-bar {
   position: absolute;
@@ -6471,7 +6472,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-exp-bar {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--border);
 }
 .pt-exp-bar-fill {
@@ -6575,7 +6576,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--hs-grade-color, var(--primary));
   border-radius: var(--radius-3xs) var(--radius-3xs) 0 0;
 }
@@ -7235,7 +7236,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 
 .forecast-card {
-  border-top: 3px solid var(--fc-color, var(--primary));
+  border-top: var(--accent-w) solid var(--fc-color, var(--primary));
   position: relative;
   overflow: hidden;
   animation: fc-card-in var(--dur-long) var(--ease-enter) both;
@@ -7250,7 +7251,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 /* alert状態: 左ボーダーパルス */
 .forecast-card.fc-status-alert {
-  border-left: 3px solid var(--danger-text);
+  border-left: var(--accent-w) solid var(--danger-text);
   animation: fc-card-in var(--dur-long) var(--ease-enter) both,
              fc-alert-glow var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
@@ -8075,7 +8076,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .dow-pct-low  { background: var(--success-bg); color: var(--income-deep); }
 
 /* ─ テーブル行の曜日カラー左ボーダー ─ */
-.dow-table-row { border-left: 3px solid var(--dow-row-color, var(--border)); }
+.dow-table-row { border-left: var(--accent-w) solid var(--dow-row-color, var(--border)); }
 .dow-table-row.dow-row-max td:last-child { font-weight: var(--fw-bold); }
 
 /* ミニバーグラフ (合計支出セル内) */
@@ -8194,7 +8195,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
@@ -8369,7 +8370,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 
 /* カテゴリ別テーブル行: 左ボーダー + 入場アニメーション (v5.71) */
 .fv-cat-table tbody tr {
-  border-left: 3px solid var(--fv-cat-color, var(--border));
+  border-left: var(--accent-w) solid var(--fv-cat-color, var(--border));
   animation: fv-cat-row-in var(--dur-appear) var(--ease-plain) both;
   animation-delay: calc(var(--fv-ci, 0) * 30ms);
 }
@@ -8453,7 +8454,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 
 /* カード本体 */
 .wk-widget-card {
-  border-top: 3px solid var(--primary);
+  border-top: var(--accent-w) solid var(--primary);
   position: relative;
   overflow: hidden;
   animation: wk-card-in var(--dur-long) var(--ease-enter) both;
@@ -8651,7 +8652,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   padding: 0;
   overflow: hidden;
   border: 1.5px solid var(--border);
-  border-top: 3px solid var(--qa-accent);
+  border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
   transition: box-shadow var(--dur-base), border-top-color var(--dur-mid);
@@ -8927,7 +8928,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .nt-card {
   position: relative;
   overflow: hidden;
-  border-top: 3px solid var(--primary);
+  border-top: var(--accent-w) solid var(--primary);
   animation: nt-card-in var(--dur-long) var(--ease-enter) both;
 }
 .nt-card::before {
@@ -8953,7 +8954,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   max-height: 240px;
   padding: var(--sp-2) var(--sp-3);
   border: 1.5px solid var(--border);
-  border-left: 3px solid transparent;
+  border-left: var(--accent-w) solid transparent;
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
@@ -8985,7 +8986,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* 文字数プログレスバー */
 .nt-progress-bar {
   width: 100%;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--border);
   border-radius: var(--radius-badge);
   margin-top: var(--sp-2);
@@ -9622,7 +9623,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 /* ローン情報バー — 左アクセントボーダー */
 .sim-loan-info {
-  border-left: 3px solid var(--primary);
+  border-left: var(--accent-w) solid var(--primary);
 }
 
 /* プリセットボタン強化 */
@@ -9839,7 +9840,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 /* テーブル行: カテゴリカラー左ボーダー */
 .sb-row {
-  border-left: 3px solid var(--sb-cat-color, var(--border));
+  border-left: var(--accent-w) solid var(--sb-cat-color, var(--border));
   transition: background var(--dur-fast);
   animation: sb-row-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--sb-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-md));
@@ -10030,7 +10031,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* --- イベントカード --- */
 .ev-card {
   padding: var(--sp-2) var(--sp-3);
-  border-left: 3px solid var(--ev-accent, var(--primary));
+  border-left: var(--accent-w) solid var(--ev-accent, var(--primary));
   position: relative;
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
@@ -10202,7 +10203,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2);
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
-  border-left: 3px solid var(--ev-accent, var(--primary));
+  border-left: var(--accent-w) solid var(--ev-accent, var(--primary));
   animation: ev-widget-item-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-wi, 0) * var(--dur-stagger));
   transition: transform var(--dur-fast);
@@ -10423,7 +10424,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .adv-widget-card {
   position: relative;
   overflow: hidden;
-  border-top: 3px solid var(--primary);
+  border-top: var(--accent-w) solid var(--primary);
   background: linear-gradient(
     135deg,
     var(--surface) 0%,
@@ -10577,7 +10578,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-2-5);
   padding: var(--sp-2-5) var(--sp-3-5);
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--primary);
+  border-left: var(--accent-w) solid var(--primary);
   background: color-mix(in srgb, var(--primary) 4%, transparent);
   animation: adv-section-in var(--dur-medium) var(--ease-soft-bounce) calc(var(--adv-si, 0) * var(--dur-stagger-2xl)) both;
 }
@@ -10734,7 +10735,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   animation: yr-card-in var(--dur-long) var(--ease-out-sine) both;
   position: relative;
   overflow: hidden;
-  border-top: 3px solid var(--primary);
+  border-top: var(--accent-w) solid var(--primary);
 }
 .yr-widget-card::before {
   content: '';
@@ -11158,7 +11159,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
-  border-left: 3px solid var(--ci-ev-accent, var(--primary));
+  border-left: var(--accent-w) solid var(--ci-ev-accent, var(--primary));
 }
 .ci-event-icon  { font-size: var(--fs-icon); flex-shrink: 0; }
 .ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); }
@@ -11446,7 +11447,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   left: 0; top: 6px; bottom: 6px;
-  width: 3px;
+  width: var(--accent-w);
   border-radius: 0 var(--radius-nano) var(--radius-nano) 0;
   background: transparent;
 }
@@ -12671,7 +12672,7 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radius-btn);
-  border-left: 3px solid var(--opp-accent, var(--primary));
+  border-left: var(--accent-w) solid var(--opp-accent, var(--primary));
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
   animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
@@ -13162,9 +13163,9 @@ canvas.chart-clickable { cursor: pointer; }
 .pace-widget-card.pace-status-over::before { --pace-deco-color: color-mix(in srgb, var(--expense) 18%, transparent); }
 
 /* カード上部アクセントライン */
-.pace-widget-body.pace-status-good { border-top: 3px solid var(--success); }
-.pace-widget-body.pace-status-warn { border-top: 3px solid var(--warning); }
-.pace-widget-body.pace-status-over { border-top: 3px solid var(--danger-text); }
+.pace-widget-body.pace-status-good { border-top: var(--accent-w) solid var(--success); }
+.pace-widget-body.pace-status-warn { border-top: var(--accent-w) solid var(--warning); }
+.pace-widget-body.pace-status-over { border-top: var(--accent-w) solid var(--danger-text); }
 
 .pace-widget-body { padding: var(--sp-2) 0 0; }
 .pace-bars { display: flex; flex-direction: column; gap: var(--sp-3-5); }
@@ -13348,7 +13349,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── 支払方法テーブル行 左ボーダー (v9.4) ──────────────────── */
 .pm-table-row {
-  border-left: 3px solid var(--pm-row-color, var(--border));
+  border-left: var(--accent-w) solid var(--pm-row-color, var(--border));
   animation: pm-row-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--pm-ri, 0) * var(--dur-stagger) + var(--dur-stagger));
 }
@@ -13459,7 +13460,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-card-accent {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3px;
+  height: var(--accent-w);
   background: var(--cat-clr, var(--primary));
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
