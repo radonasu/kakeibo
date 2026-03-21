@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.25'; // v17.25: レイアウトサイズトークン6変数追加＋プログレスバーグラデーション — --size-main-max/modal/modal-sm/auth/month-btn/scrollbar + 7箇所gradient化
+const CACHE_NAME = 'kakeibo-v17.26'; // v17.26: デコレーションサイズトークン7変数追加＋モーダル大サイズ変数化＋28px spacing変数化 — --size-modal-lg/deco-sm/deco/deco-md/deco-lg/deco-xl/deco-2xl + 21箇所変換
 const ASSETS = [
   './index.html',
   './css/style.css',
