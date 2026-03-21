@@ -431,6 +431,16 @@
   --size-scrollbar-sm: 5px;  /* 細スクロールバー幅（dd-list・md-scroll-body等の狭いスクロール領域） */
   --size-input-num:  110px;  /* 数値入力フィールド幅（予算・詳細フィルター・QA金額入力等） */
   --size-sk-line:     14px;  /* スケルトンローディング行高（.adv-sk-line） */
+  /* ── コンポーネント固有サイズトークン追加 (v17.35) ─ */
+  --size-accent-bar:   4px;  /* カード左アクセントカラーバー幅（sub-card-color-bar・pt-card-color-bar等・accent-w:3pxより1px太い） */
+  --size-col-min:     80px;  /* フレックス列最小幅（日付列・ラベル列・アクション列・バッジ最大幅共通） */
+  --size-tx-memo:    160px;  /* 取引一覧メモセル最大幅（tx-table .memo-cell） */
+  --size-filter-text:130px;  /* 詳細フィルターテキスト入力幅（.adv-filter-input[type=text]） */
+  --size-chip-max:   140px;  /* チップ最大幅（保存フィルターチップ・CSV列マッピングバッジ等） */
+  --size-text-trunc: 180px;  /* テキスト省略表示最大幅（fx-input-wrap・wl-card-note等の truncate要素） */
+  --size-cat-chip-h:  60px;  /* カテゴリチップ最小高さ（.cat-chip：size-touch:44より高く2行テキスト想定） */
+  --size-cal-cell-h:  72px;  /* カレンダーセル・テキストエリア最小高さ（.cal-cell・.nt-textarea） */
+  --size-nt-deco:    130px;  /* ノートカード装飾グラデーションサークル（nt-card::before width/height） */
 }
 
 html {
@@ -1235,7 +1245,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   text-align: center;
-  min-height: 60px;
+  min-height: var(--size-cat-chip-h);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1423,8 +1433,8 @@ select:focus:not(:focus-visible) {
 }
 
 .tx-table td.amount { font-weight: var(--fw-bold); text-align: right; white-space: nowrap; font-size: var(--fs-md); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); }
-.tx-table td.actions { white-space: nowrap; text-align: right; width: 80px; }
-.tx-table td.memo-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tx-table td.actions { white-space: nowrap; text-align: right; width: var(--size-col-min); }
+.tx-table td.memo-cell { max-width: var(--size-tx-memo); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* 種別左ボーダーカラーアクセント (v5.54) */
 .tx-table tbody tr[data-type="income"]  td:first-child { border-left: var(--accent-w) solid var(--income); }
@@ -2062,7 +2072,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   background: var(--surface);
   color: var(--text);
-  width: 130px;
+  width: var(--size-filter-text);
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .adv-filter-input[type="number"] { width: var(--size-input-num); }
@@ -4336,7 +4346,7 @@ body {
   color: var(--text-muted);
   white-space: nowrap;
   flex-shrink: 0;
-  min-width: 80px;
+  min-width: var(--size-col-min);
 }
 .asset-entry-note {
   color: var(--text-muted);
@@ -4461,7 +4471,7 @@ body {
   align-items: center;
   gap: var(--sp-1-5);
   flex: 1;
-  max-width: 180px;
+  max-width: var(--size-text-trunc);
 }
 .fx-rate-input {
   flex: 1;
@@ -5353,7 +5363,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 
 .cal-cell {
-  min-height: 72px;
+  min-height: var(--size-cal-cell-h);
   padding: var(--sp-1) var(--sp-2);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -6007,7 +6017,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-card-color-bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 4px;
+  width: var(--size-accent-bar);
   border-radius: var(--radius-2xs) 0 0 var(--radius-2xs);
 }
 .sub-card-icon {
@@ -6264,7 +6274,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   color: var(--text-muted);
   white-space: nowrap;
-  min-width: 80px;
+  min-width: var(--size-col-min);
   flex-shrink: 0;
 }
 .csv-map-select {
@@ -6291,7 +6301,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   padding: var(--sp-1-25) var(--sp-2);
   white-space: nowrap;
-  max-width: 140px;
+  max-width: var(--size-chip-max);
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -6455,7 +6465,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-card-color-bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 4px;
+  width: var(--size-accent-bar);
   border-radius: var(--radius-2xs) 0 0 var(--radius-2xs);
 }
 .pt-card.pt-urgent .pt-card-color-bar,
@@ -7010,7 +7020,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 180px;
+  max-width: var(--size-text-trunc);
 }
 .wl-card-right {
   display: flex;
@@ -8998,8 +9008,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: -24px;
   right: -24px;
-  width: 130px;
-  height: 130px;
+  width: var(--size-nt-deco);
+  height: var(--size-nt-deco);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 10%, transparent) 0%, transparent 68%);
   pointer-events: none;
@@ -9012,7 +9022,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 
 .nt-textarea {
   width: 100%;
-  min-height: 72px;
+  min-height: var(--size-cal-cell-h);
   max-height: 240px;
   padding: var(--sp-2) var(--sp-3);
   border: 1.5px solid var(--border);
@@ -10357,7 +10367,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   animation: sf-chip-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * var(--dur-stagger-xs));
   white-space: nowrap;
-  max-width: 140px;
+  max-width: var(--size-chip-max);
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -12461,7 +12471,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   flex-direction: column;
   gap: var(--sp-0-5);
-  min-width: 80px;
+  min-width: var(--size-col-min);
 }
 .dd-summary-label {
   color: var(--text-muted);
@@ -13570,7 +13580,7 @@ canvas.chart-clickable { cursor: pointer; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 80px;
+  max-width: var(--size-col-min);
 }
 .cat-card-actions {
   display: flex;
