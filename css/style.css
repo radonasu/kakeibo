@@ -2418,7 +2418,7 @@ mark.tx-hl {
   border-radius: var(--radius-circle);
   cursor: pointer;
   border: 3px solid transparent;
-  transition: transform var(--dur-fast), border-color var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
 .color-swatch:hover   { transform: scale(1.2); }
 .color-swatch:active  { transform: scale(1.0); }
@@ -3945,7 +3945,7 @@ body {
   border: none;
   cursor: pointer;
   box-shadow: var(--shadow-cta);
-  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .onboarding-cta:hover {
   transform: translateY(-2px);
@@ -3969,7 +3969,7 @@ body {
   flex-direction: column;
   gap: var(--sp-2);
   cursor: pointer;
-  transition: box-shadow var(--dur-faster), transform var(--dur-faster), border-color var(--dur-faster);
+  transition: box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), border-color var(--dur-faster) var(--ease-plain);
   box-shadow: var(--shadow-sm);
 }
 .step-card:hover {
@@ -4267,7 +4267,7 @@ body {
 
 .asset-card {
   margin-bottom: var(--sp-3);
-  transition: box-shadow var(--dur-base), transform var(--dur-base);
+  transition: box-shadow var(--dur-base) var(--ease-plain), transform var(--dur-base) var(--ease-bounce);
 }
 .asset-card:hover {
   box-shadow: var(--shadow-card-hover);
@@ -4851,7 +4851,7 @@ body {
 .goal-card {
   padding: var(--sp-6);
   border-left: var(--size-accent-bar) solid var(--goal-accent, var(--primary));
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .goal-card:active { transform: translateY(0); box-shadow: none; }
@@ -5118,7 +5118,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-2);
   font-size: var(--fs-2xl);
   cursor: pointer;
-  transition: border-color var(--dur-fast), transform var(--dur-fast), background var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), background var(--dur-fast) var(--ease-plain);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5145,7 +5145,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   border: 3px solid transparent;
   cursor: pointer;
-  transition: transform var(--dur-fast), border-color var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
   padding: 0;
 }
 .goal-color-btn:hover  { transform: scale(1.15); }
@@ -6025,7 +6025,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
@@ -6192,7 +6192,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   border: 3px solid transparent;
   cursor: pointer;
-  transition: transform var(--dur-quick), box-shadow var(--dur-quick);
+  transition: transform var(--dur-quick) var(--ease-bounce), box-shadow var(--dur-quick) var(--ease-plain);
   outline: none;
 }
 .sub-color-btn:hover  { transform: scale(1.15); }
@@ -6467,7 +6467,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
@@ -6607,7 +6607,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border: 2.5px solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
-  transition: transform var(--dur-fast), border-color var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
 .pt-color-btn:hover  { transform: scale(1.1); }
 .pt-color-btn:active { transform: scale(1.0); }
@@ -6988,7 +6988,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-4);
   animation: wl-card-in var(--dur-medium) var(--ease-std) both;
   animation-delay: calc(var(--wl-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-base), transform var(--dur-base);
+  transition: box-shadow var(--dur-base) var(--ease-plain), transform var(--dur-base) var(--ease-bounce);
 }
 .wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .wl-card:active { transform: translateY(0); box-shadow: none; }
@@ -7819,7 +7819,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ch-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-base), transform var(--dur-base);
+  transition: box-shadow var(--dur-base) var(--ease-plain), transform var(--dur-base) var(--ease-bounce);
 }
 .ch-card:hover {
   box-shadow: var(--shadow-card-hover);
@@ -8010,7 +8010,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   cursor: pointer;
   outline: none;
-  transition: transform var(--dur-fast), border-color var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
 .ch-color-btn:hover  { transform: scale(1.15); }
 .ch-color-btn:active { transform: scale(1.0); }
@@ -8103,7 +8103,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border: none;
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-base), transform var(--dur-base);
+  transition: box-shadow var(--dur-base) var(--ease-plain), transform var(--dur-base) var(--ease-bounce);
   animation: dow-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--dow-i, 0) * var(--dur-stagger-2xl));
 }
@@ -8383,7 +8383,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
   color: var(--white);
-  transition: transform var(--dur-faster), box-shadow var(--dur-faster);
+  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
 }
@@ -9422,7 +9422,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--dc-i, 0) * var(--dur-stagger-lg));
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .debt-card:active { transform: translateY(0); box-shadow: none; }
@@ -10132,7 +10132,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
-  transition: opacity var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base);
+  transition: opacity var(--dur-base), box-shadow var(--dur-base) var(--ease-plain), transform var(--dur-base) var(--ease-bounce);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .ev-card:active { transform: translateY(0); box-shadow: none; }
@@ -11274,7 +11274,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--white);
   border: none;
   cursor: pointer;
-  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .ci-ok-btn:hover {
   transform: translateY(-1px);
@@ -12775,7 +12775,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
   animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-fast), transform var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); }
 .opp-card:active { transform: translateY(0); box-shadow: none; }
@@ -12852,6 +12852,7 @@ canvas.chart-clickable { cursor: pointer; }
 .opp-challenge-btn:active {
   transform: scale(0.96);
 }
+.opp-challenge-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 
 /* 深刻度別 */
 .opp-sev-high  { --opp-accent: var(--danger-text); }
