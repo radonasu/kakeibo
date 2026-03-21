@@ -404,13 +404,15 @@
   --size-deco-xs:     80px; /* 小装飾サークル（pt-summary-card::before・wl-summary-card::before・pm-sum-card::before等） */
   --size-deco-sm:     88px; /* 小装飾サークル（サマリーカード小・負債サマリー等のペア小円） */
   --size-deco:        90px; /* 標準装飾サークル（ウィジェット装飾・シミュレーション・イベントサマリー等） */
+  --size-deco-s-md:  100px; /* 中小装飾サークル（summary-card::after・debt-card::before等） */
   --size-deco-md:    110px; /* 中装飾サークル（サブスクサマリー・健康スコア・ペースウィジェット等 最多使用） */
   --size-deco-ml:    120px; /* 中大装飾サークル（summary-card::before・adv-widget::before・yr-widget::before等） */
   --size-deco-lg:    140px; /* 大装飾サークル（オンボーディング・予測カード・CIヘッダー等グラデーション） */
   --size-deco-xl:    160px; /* 特大装飾サークル（週次ウィジェット・CIヘッダー前面グラデーション） */
   --size-deco-2xl:   180px; /* 超大装飾サークル（オンボーディングヒーロー前面円） */
-  /* ── 家計スコア専用サイズトークン (v17.30) ─ */
-  --size-hs-gauge:   120px; /* 家計スコアSVGゲージ幅（hs-gauge-wrap・hs-gauge-svg） */
+  /* ── 家計スコア専用サイズトークン (v17.30/v17.31) ─ */
+  --size-hs-gauge:    120px; /* 家計スコアSVGゲージ幅・デフォルト（hs-gauge-wrap・hs-gauge-svg） */
+  --size-hs-gauge-sm: 100px; /* 家計スコアSVGゲージ幅・モバイル縮小（max-width:520px）*/
 }
 
 html {
@@ -1297,8 +1299,8 @@ select:focus:not(:focus-visible) {
   position: absolute;
   top: -20px;
   right: -20px;
-  width: 100px;
-  height: 100px;
+  width: var(--size-deco-s-md);
+  height: var(--size-deco-s-md);
   border-radius: var(--radius-circle);
   background: var(--on-dark-base);
 }
@@ -3047,6 +3049,10 @@ mark.tx-hl {
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
+}
+.auth-tab:not(.active):hover {
+  background: var(--surface-hover);
+  color: var(--text);
 }
 .auth-tab.active {
   background: var(--white);
@@ -6769,10 +6775,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-d2 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-3xl)); }
 .hs-d3 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 3 * var(--dur-stagger-3xl)); }
 @media (max-width: 520px) {
-  .hs-gauge-wrap { width: 100px; }
-  .hs-gauge-svg  { width: 100px; }
+  .hs-gauge-wrap { width: var(--size-hs-gauge-sm); }
+  .hs-gauge-svg  { width: var(--size-hs-gauge-sm); }
   .hs-score-num  { font-size: var(--fs-4xl); }
-  .hs-grade-badge { font-size: var(--fs-icon); width: 40px; height: 40px; }
+  .hs-grade-badge { font-size: var(--fs-icon); width: var(--size-icon-lg); height: var(--size-icon-lg); }
   .hs-main { gap: var(--sp-3); }
 }
 @media (max-width: 360px) {
@@ -9378,7 +9384,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   top: -28px; right: -28px;
-  width: 100px; height: 100px;
+  width: var(--size-deco-s-md); height: var(--size-deco-s-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--debt-accent, var(--primary)) 15%, transparent) 0%, transparent 70%);
   pointer-events: none;

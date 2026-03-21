@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.30'; // v17.30: 装飾サークル・ゲージサイズ変数3追加（size-deco-xxs:60px/size-deco-ml:120px/size-hs-gauge:120px）＋14箇所変換（sim-savings-banner::after/summary-card::before/adv-widget::before/yr-widget::before/hs-gauge/pm-sum-card::before/ci-header-inner）
+const CACHE_NAME = 'kakeibo-v17.31'; // v17.31: size-deco-s-md(100px)/size-hs-gauge-sm(100px)変数追加＋8箇所変換（summary-card::after/debt-card::before/hs-gauge-sm/hs-grade-badge-mobile）・auth-tab hover状態追加
 const ASSETS = [
   './index.html',
   './css/style.css',
