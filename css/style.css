@@ -377,13 +377,16 @@
   --size-icon-xl:    52px;  /* 特大アイコン要素（goal-ring-wrap・FABモバイル等） */
   --size-icon-2xl:   64px;  /* 超大アイコン要素（auth-logo-icon等） */
   --size-brand-icon: 38px;  /* サイドバーブランドロゴアイコン（icon-md:36pxとicon-lg:40pxの中間） */
+  --size-emoji-btn:  42px;  /* 絵文字ピッカーボタン・小デコ円（goal-emoji-btn・md-cell::after等） */
   --size-touch:      44px;  /* 最小タッチターゲット（WCAG 2.5.5 / iOS HIG 44px推奨） */
+  --size-grade-badge: 46px; /* グレードバッジ円（hs-grade-badge：size-touch:44とsize-touch-lg:48の中間） */
   --size-touch-lg:   48px;  /* 大タッチターゲット（モーダルボタン・フォーム入力・カードアイコン） */
   --size-mobile-bar: 56px;  /* モバイルバー標準高さ（ヘッダー・ボトムナビ・FAB・sticky-top-offset） */
   --accent-w:         3px;  /* アクセント幅（左/上ボーダー・アクセントライン・インジケーター共通幅） */
   /* ── プログレスバー・インジケータードットサイズ (v17.24) ─ */
   --size-bar-xs:      4px;  /* 極細バー（ウィジェット内ミニバー・DOWミニバー・イベント進捗バー） */
   --size-bar-sm:      6px;  /* 細バー（ダッシュボードミニバー・予測進捗・頻度ミニバー・カテゴリ予算バー） */
+  --size-bar-mid:     7px;  /* 中細バー（hs-bar-track・fv-seg-bar高さ：bar-sm:6とbar:8の中間） */
   --size-bar:         8px;  /* 標準バー（予算バー・チャレンジバー・負債バー・年間進捗・貯蓄バー・月別カテゴリバー） */
   --size-bar-md:     10px;  /* 中バー（目標進捗バー・ペースバー） */
   --size-dot-sm:      7px;  /* 小ドット（ヘッダー同期ドット） */
@@ -397,7 +400,9 @@
   --size-month-btn:   30px; /* 月ナビボタン幅（.month-nav-btn） */
   --size-scrollbar:    6px; /* スクロールバー幅・高さ */
   --size-modal-lg:   540px; /* 大モーダル最大幅（.modal-share / .ch-modal） */
-  /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26/v17.30) ─ */
+  --size-seg-bar:     52px; /* セグメントバー幅（fv-seg-bar通常幅） */
+  /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26/v17.30/v17.32) ─ */
+  --size-deco-4xs:    48px; /* 最極小装飾サークル（wl-summary-card::after：deco-3xs:50より微小） */
   --size-deco-3xs:    50px; /* 極小装飾サークル（pt-summary-card::after・ev-card::before等） */
   --size-deco-xxs:    60px; /* 準極小装飾サークル（sim-savings-banner::after等） */
   --size-deco-2xs:    72px; /* 超小装飾サークル（ch-summary-card::before・yi-card::before等） */
@@ -5069,8 +5074,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-2);
 }
 .goal-emoji-btn {
-  width: 42px;
-  height: 42px;
+  width: var(--size-emoji-btn);
+  height: var(--size-emoji-btn);
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface-2);
@@ -6699,8 +6704,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-grade-badge {
   font-size: var(--fs-icon-lg);
   font-weight: var(--fw-black);
-  width: 46px;
-  height: 46px;
+  width: var(--size-grade-badge);
+  height: var(--size-grade-badge);
   border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
@@ -6754,7 +6759,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   color: var(--text-faint);
 }
 .hs-bar-track {
-  height: 7px;
+  height: var(--size-bar-mid);
   background: var(--surface-hover);
   border-radius: var(--radius-badge);
   overflow: hidden;
@@ -6884,7 +6889,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   pointer-events: none;
 }
 .wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: -24px; right: -20px; }
-.wl-summary-card::after  { width: 48px; height: 48px; bottom: -16px; left: 8px; }
+.wl-summary-card::after  { width: var(--size-deco-4xs); height: var(--size-deco-4xs); bottom: -16px; left: 8px; }
 /* グラデーション 3種 */
 .wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
 .wl-sum-budget { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
@@ -8069,8 +8074,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--on-dark-border);
   pointer-events: none;
 }
-.dow-stat-card::before { width: 64px; height: 64px; bottom: -18px; right: -10px; }
-.dow-stat-card::after  { width: 36px; height: 36px; top: -12px; right: var(--sp-7); }
+.dow-stat-card::before { width: var(--size-icon-2xl); height: var(--size-icon-2xl); bottom: -18px; right: -10px; }
+.dow-stat-card::after  { width: var(--size-icon-md);  height: var(--size-icon-md);  top: -12px; right: var(--sp-7); }
 
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
@@ -8427,8 +8432,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .fv-seg-wrap { display: inline-flex; align-items: center; gap: var(--sp-1-25); }
 .fv-seg-bar {
   display: flex;
-  width: 52px;
-  height: 7px;
+  width: var(--size-seg-bar);
+  height: var(--size-bar-mid);
   border-radius: var(--radius-2xs);
   overflow: hidden;
   flex-shrink: 0;
@@ -9319,7 +9324,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: var(--white); }
 .debt-summary-total .summary-label,
 .debt-summary-monthly .summary-label { color: var(--on-dark-hint); }
-.debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: .85; }
+.debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: var(--opacity-near); }
 
 /* サマリーカード デコレーションサークル + 入場アニメーション (v5.85) */
 .debt-summary-total,
@@ -13008,8 +13013,8 @@ canvas.chart-clickable { cursor: pointer; }
   position: absolute;
   bottom: -10px;
   right: -10px;
-  width: 42px;
-  height: 42px;
+  width: var(--size-emoji-btn);
+  height: var(--size-emoji-btn);
   border-radius: var(--radius-circle);
   background: currentColor;
   opacity: var(--opacity-deco);
