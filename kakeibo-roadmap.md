@@ -4,6 +4,7 @@
 
 | # | バージョン | 種別 | 内容 |
 |---|-----------|------|------|
+| 225 | v17.36 | デザイン＋バグ修正 | バグ修正・マイクロインタラクション統一（v17.36）：①【バグ修正】`.filter-search`に`background: var(--surface); color: var(--text);`を追加（入力要素はCSSの`background`を継承しないためダークモードでブラウザデフォルトの白背景が表示される問題を修正）②【デザイン】`.section-tab`のtransitionに`transform var(--dur-press)`を追加（`:active { transform: translateY(1px) }`のプレスフィードバックがスムーズにアニメーションされるよう改善）③【変数化】`.section-tab`の`margin-bottom: -3px`を`calc(-1 * var(--accent-w))`に変換（`--accent-w: 3px`と連動し変数体系に統合）④【:active統一 9箇所】hover時にtransformがあるがactiveが欠落していた要素に一斉追加：`.fv-stat-card:active { transform: translateY(0); box-shadow: none }`・`.dow-stat-card:active { transform: translateY(0); box-shadow: none }`・`.btn-tpl:active { transform: translateY(0); opacity: 1 }`・`.color-swatch:active { transform: scale(1.0) }`・`.goal-emoji-btn:active { transform: scale(0.95) }`・`.goal-color-btn:active { transform: scale(1.0) }`・`.sub-color-btn:active { transform: scale(1.0) }`・`.ch-color-btn:active { transform: scale(1.0) }`・`.pt-color-btn`にhover/active両方を追加（`scale(1.1)`/`scale(1.0)`）。これにより全インタラクティブ要素のタップ/クリック時プレスフィードバックが統一された |
 | 1 | v5.5 | — | 既存実装（マルチアカウント・テンプレート・予算管理・レシートスキャン） |
 | 2 | v5.6 | 機能 | メモサジェスト：同カテゴリの直近メモをdatalistで候補表示 |
 | 3 | v5.7 | 機能 | レシートOCR Gemini移行：Claude Vision→Gemini 2.5 Flash（Cloudflare Workersプロキシ経由、無料枠1日1000回） |

@@ -1977,6 +1977,8 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   flex: 1;
   min-width: 120px;
+  background: var(--surface);
+  color: var(--text);
   caret-color: var(--primary);
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
@@ -2415,6 +2417,7 @@ mark.tx-hl {
   transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
 .color-swatch:hover   { transform: scale(1.2); }
+.color-swatch:active  { transform: scale(1.0); }
 .color-swatch.selected { border-color: var(--text); transform: scale(1.1); }
 
 /* ── セクションラベル ────────────────────────────────── */
@@ -2843,7 +2846,8 @@ mark.tx-hl {
   cursor: pointer;
   transition: opacity var(--dur-fast), transform var(--dur-press);
 }
-.btn-tpl:hover { opacity: var(--opacity-faded); transform: translateY(-1px); }
+.btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(-1px); }
+.btn-tpl:active { transform: translateY(0); opacity: 1; }
 
 /* ── クラウド同期 ─────────────────────────────────────── */
 .sync-dot {
@@ -4785,9 +4789,9 @@ body {
   border: none;
   background: none;
   border-bottom: var(--accent-w) solid transparent;
-  margin-bottom: -3px;
+  margin-bottom: calc(-1 * var(--accent-w));
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster);
+  transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster), transform var(--dur-press);
   white-space: nowrap;
   line-height: var(--lh-none);
 }
@@ -5110,7 +5114,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   justify-content: center;
   padding: 0;
 }
-.goal-emoji-btn:hover { border-color: var(--primary); transform: scale(1.1); }
+.goal-emoji-btn:hover  { border-color: var(--primary); transform: scale(1.1); }
+.goal-emoji-btn:active { transform: scale(0.95); }
 .goal-emoji-btn.selected {
   border-color: var(--primary);
   background: var(--primary-light);
@@ -5133,7 +5138,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-fast), border-color var(--dur-fast);
   padding: 0;
 }
-.goal-color-btn:hover { transform: scale(1.15); }
+.goal-color-btn:hover  { transform: scale(1.15); }
+.goal-color-btn:active { transform: scale(1.0); }
 .goal-color-btn.selected {
   border-color: var(--text);
   transform: scale(1.1);
@@ -6178,7 +6184,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-quick), box-shadow var(--dur-quick);
   outline: none;
 }
-.sub-color-btn:hover { transform: scale(1.15); }
+.sub-color-btn:hover  { transform: scale(1.15); }
+.sub-color-btn:active { transform: scale(1.0); }
 .sub-color-btn.selected {
   border-color: var(--surface);
   box-shadow: 0 0 0 3px currentColor, 0 0 0 5px var(--border);
@@ -6591,6 +6598,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
+.pt-color-btn:hover  { transform: scale(1.1); }
+.pt-color-btn:active { transform: scale(1.0); }
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(1.18); }
 
 /* ダッシュボードウィジェット */
@@ -7992,6 +8001,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-fast), border-color var(--dur-fast);
 }
 .ch-color-btn:hover  { transform: scale(1.15); }
+.ch-color-btn:active { transform: scale(1.0); }
 .ch-color-btn.active { border-color: var(--text); transform: scale(1.1); }
 
 /* -- ダッシュボードウィジェット -- */
@@ -8084,10 +8094,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   animation: dow-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--dow-i, 0) * var(--dur-stagger-2xl));
 }
-.dow-stat-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
+.dow-stat-card:hover  { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.dow-stat-card:active { transform: translateY(0); box-shadow: none; }
 /* 装飾サークル */
 .dow-stat-card::before,
 .dow-stat-card::after {
@@ -8366,7 +8374,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
 }
-.fv-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover-md); }
+.fv-stat-card:hover  { transform: translateY(-2px); box-shadow: var(--shadow-hover-md); }
+.fv-stat-card:active { transform: translateY(0); box-shadow: none; }
 .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(135deg, var(--warning-deep), var(--warning)); }
