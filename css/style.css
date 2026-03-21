@@ -656,6 +656,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item:hover .nav-icon { transform: scale(1.12); }
+.nav-item:active .nav-icon { transform: scale(1.0); }
 .nav-item:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
@@ -1835,6 +1836,7 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 20%, transparent);
   transform: scale(1.06);
 }
+.tx-tag-chip:active { transform: scale(1.0); }
 .tx-tag-label-hint {
   font-size: var(--fs-xs);
   font-weight: var(--fw-normal);
@@ -2740,6 +2742,7 @@ mark.tx-hl {
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
+.budget-item:active { transform: translateY(0); box-shadow: none; }
 
 .budget-item-hdr {
   display: flex;
@@ -3662,12 +3665,14 @@ body {
 /* ── カードホバーリフト ── */
 .card { transition: box-shadow var(--dur-appear) var(--ease-bounce), transform var(--dur-appear) var(--ease-bounce), border-color var(--dur-appear); }
 .card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--border-strong); }
+.card:active { transform: translateY(0); box-shadow: var(--shadow-sm); border-color: var(--border); }
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle); }
 .summary-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-summary-hover);
   filter: brightness(1.07);
 }
+.summary-card:active { transform: translateY(0); box-shadow: none; filter: none; }
 
 /* ── モーダルアニメーション ── */
 .modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-plain); }
@@ -4802,6 +4807,7 @@ body {
 }
 .section-tab:hover .tab-icon { transform: scale(1.1); }
 .section-tab:active { transform: translateY(1px); }
+.section-tab:active .tab-icon { transform: scale(1.0); }
 .section-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .section-tab.is-active {
   color: var(--primary);

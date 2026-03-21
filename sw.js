@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.36'; // v17.36: filter-search dark mode bug fix / section-tab transform追加+margin変数化 / :active統一9箇所（fv-stat/dow-stat/btn-tpl/color-swatch/goal-emoji/goal-color/sub-color/pt-color/ch-color）
+const CACHE_NAME = 'kakeibo-v17.37'; // v17.37: :active統一6箇所（card/summary-card/tx-tag-chip/budget-item/nav-item .nav-icon/section-tab .tab-icon）
 const ASSETS = [
   './index.html',
   './css/style.css',
