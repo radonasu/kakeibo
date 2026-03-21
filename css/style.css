@@ -394,6 +394,9 @@
   --size-scrollbar:    6px; /* スクロールバー幅・高さ */
   --size-modal-lg:   540px; /* 大モーダル最大幅（.modal-share / .ch-modal） */
   /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26) ─ */
+  --size-deco-3xs:    50px; /* 極小装飾サークル（pt-summary-card::after・ev-card::before等） */
+  --size-deco-2xs:    72px; /* 超小装飾サークル（ch-summary-card::before・yi-card::before等） */
+  --size-deco-xs:     80px; /* 小装飾サークル（pt-summary-card::before・wl-summary-card::before等） */
   --size-deco-sm:     88px; /* 小装飾サークル（サマリーカード小・負債サマリー等のペア小円） */
   --size-deco:        90px; /* 標準装飾サークル（ウィジェット装飾・シミュレーション・イベントサマリー等） */
   --size-deco-md:    110px; /* 中装飾サークル（サブスクサマリー・健康スコア・ペースウィジェット等 最多使用） */
@@ -6359,7 +6362,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-summary-card::before {
   content: '';
   position: absolute;
-  width: 80px; height: 80px;
+  width: var(--size-deco-xs); height: var(--size-deco-xs);
   border-radius: var(--radius-circle);
   background: var(--on-dark-bg);
   bottom: -20px; right: -20px;
@@ -6367,7 +6370,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .pt-summary-card::after {
   content: '';
   position: absolute;
-  width: 50px; height: 50px;
+  width: var(--size-deco-3xs); height: var(--size-deco-3xs);
   border-radius: var(--radius-circle);
   background: var(--on-dark-dim);
   bottom: var(--sp-3-5); right: var(--sp-9);
@@ -6866,7 +6869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--white);
   pointer-events: none;
 }
-.wl-summary-card::before { width: 80px; height: 80px; top: -24px; right: -20px; }
+.wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: -24px; right: -20px; }
 .wl-summary-card::after  { width: 48px; height: 48px; bottom: -16px; left: 8px; }
 /* グラデーション 3種 */
 .wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
@@ -7702,8 +7705,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: -18px;
   right: -18px;
-  width: 72px;
-  height: 72px;
+  width: var(--size-deco-2xs);
+  height: var(--size-deco-2xs);
   border-radius: var(--radius-circle);
   opacity: var(--opacity-deco-md);
 }
@@ -10071,7 +10074,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   top: -12px; right: -12px;
-  width: 50px; height: 50px;
+  width: var(--size-deco-3xs); height: var(--size-deco-3xs);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--ev-accent,var(--primary)) 15%, transparent) 0%, transparent 70%);
   pointer-events: none;
@@ -12578,8 +12581,8 @@ canvas.chart-clickable { cursor: pointer; }
   position: absolute;
   top: -16px;
   right: -16px;
-  width: 72px;
-  height: 72px;
+  width: var(--size-deco-2xs);
+  height: var(--size-deco-2xs);
   background: radial-gradient(circle, var(--on-dark-divider) 0%, transparent 70%);
   border-radius: var(--radius-circle);
   pointer-events: none;
@@ -12766,8 +12769,8 @@ canvas.chart-clickable { cursor: pointer; }
   cursor: pointer;
   white-space: nowrap;
   transition: transform var(--dur-fast) var(--ease-bounce),
-              box-shadow var(--dur-fast) ease,
-              filter var(--dur-fast) ease;
+              box-shadow var(--dur-fast) var(--ease-plain),
+              filter var(--dur-fast) var(--ease-plain);
 }
 
 .opp-challenge-btn:hover {
