@@ -381,6 +381,13 @@
   --size-dot-sm:      7px;  /* 小ドット（ヘッダー同期ドット） */
   --size-dot:         8px;  /* 標準ドット（同期ドット・カレンダードット・カテゴリドット・未読ドット） */
   --size-dot-md:     10px;  /* 中ドット（カラードット・レシートカテゴリドット） */
+  /* ── レイアウト・コンポーネント最大幅トークン (v17.25) ─ */
+  --size-main-max:  1120px; /* メインコンテンツ最大幅 */
+  --size-modal:      480px; /* 標準モーダル最大幅（.modal / .ci-wrap / .rc-wrap） */
+  --size-modal-sm:   380px; /* 小モーダル最大幅（.modal-sm） */
+  --size-auth:       420px; /* 認証カード最大幅（.auth-card） */
+  --size-month-btn:   30px; /* 月ナビボタン幅（.month-nav-btn） */
+  --size-scrollbar:    6px; /* スクロールバー幅・高さ */
 }
 
 html {
@@ -392,7 +399,7 @@ html {
 
 /* ── グローバルカスタムスクロールバー (v10.5) ────────────── */
 /* Webkit系（Chrome/Safari/Edge） */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: var(--size-scrollbar); height: var(--size-scrollbar); }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
@@ -747,7 +754,7 @@ select:focus:not(:focus-visible) {
 #main-content {
   flex: 1;
   padding: var(--sp-8);
-  max-width: 1120px;
+  max-width: var(--size-main-max);
   width: 100%;
   min-width: 0;
   overflow-x: clip;
@@ -2156,7 +2163,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
+  width: var(--size-month-btn);
   height: var(--size-icon-sm-plus);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
@@ -2291,7 +2298,7 @@ mark.tx-hl {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 480px;
+  max-width: var(--size-modal);
   max-height: 90vh;
   max-height: 90dvh;
   display: flex;
@@ -2299,7 +2306,7 @@ mark.tx-hl {
   overflow: hidden;
 }
 
-.modal-sm { max-width: 380px; }
+.modal-sm { max-width: var(--size-modal-sm); }
 
 .modal-header {
   display: flex;
@@ -2712,14 +2719,14 @@ mark.tx-hl {
 
 .budget-fill {
   height: 100%;
-  background: var(--primary);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 100%);
   border-radius: var(--radius-2xs);
   min-width: 2px;
   transform-origin: left center;
   animation: budget-fill-in var(--dur-fill) var(--ease-std) both;
 }
-.budget-fill.warn { background: var(--warning); }
-.budget-fill.over { background: var(--expense); }
+.budget-fill.warn { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
+.budget-fill.over { background: linear-gradient(90deg, var(--expense) 0%, var(--expense-end) 100%); }
 
 .budget-pct-badge {
   font-size: var(--fs-xs);
@@ -2960,7 +2967,7 @@ mark.tx-hl {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-auth);
   width: 100%;
-  max-width: 420px;
+  max-width: var(--size-auth);
   padding: var(--sp-10);
   max-height: 90vh;
   overflow-y: auto;
@@ -6725,7 +6732,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hs-bar-fill {
   height: 100%;
-  background: var(--hs-bar-color, var(--primary));
+  background: linear-gradient(90deg, var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) 68%, white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: hs-fill-in var(--dur-fill) var(--ease-std) both;
@@ -7307,7 +7314,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .fc-progress-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  background: var(--fc-color, var(--primary));
+  background: linear-gradient(90deg, var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) 70%, white) 100%);
   transition: width var(--dur-fill) var(--ease-enter);
 }
 /* TODAYマーカー */
@@ -8099,7 +8106,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .dow-mini-bar-fill {
   height: 100%;
   border-radius: var(--radius-2xs);
-  background: var(--dow-row-color, var(--primary));
+  background: linear-gradient(90deg, var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) 70%, white) 100%);
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
@@ -9420,9 +9427,9 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
-.debt-bar-great { background: var(--income); }
-.debt-bar-mid   { background: var(--warning); }
-.debt-bar-low   { background: var(--expense); }
+.debt-bar-great { background: linear-gradient(90deg, var(--income) 0%, var(--income-end) 100%); }
+.debt-bar-mid   { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
+.debt-bar-low   { background: linear-gradient(90deg, var(--expense) 0%, var(--expense-end) 100%); }
 
 /* 完済予定 ピルスタイル (v5.85) */
 .debt-end-pill {
@@ -10161,15 +10168,15 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   height: 100%;
   width: calc(var(--ev-prog, 0) * 1%);
   border-radius: var(--radius-badge);
-  background: var(--primary);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 100%);
   transform-origin: left;
   transform: scaleX(0);
   animation: ev-prog-grow var(--dur-swing) var(--ease-soft-bounce) both;
   animation-delay: calc(var(--ev-mi, 0) * 35ms + var(--dur-delay-md));
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
-.ev-month-progress.ev-pm-done .ev-prog-fill { background: var(--success); }
-.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: var(--warning); }
+.ev-month-progress.ev-pm-done .ev-prog-fill { background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%); }
+.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
 .ev-prog-pct {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
@@ -10954,7 +10961,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
    月初チェックインモーダル (v6.6)
    ================================================================ */
 .ci-wrap {
-  max-width: 480px;
+  max-width: var(--size-modal);
   width: 92%;
   max-height: 90vh;
   overflow-y: auto;
@@ -11939,7 +11946,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
    繰り返し取引 確認モーダル (v7.7)
    ============================================================ */
 .rc-wrap {
-  max-width: 480px;
+  max-width: var(--size-modal);
   border-radius: var(--radius-xl);
   overflow: hidden;
   padding: 0;
@@ -13576,7 +13583,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-budget-bar-fill {
   height: 100%;
   width: var(--cat-bar-pct, 0%);
-  background: var(--cat-bar-clr, var(--primary));
+  background: linear-gradient(90deg, var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) 72%, white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
