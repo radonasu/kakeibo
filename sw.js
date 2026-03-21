@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.33'; // v17.33: size-dot-lg(12px)/size-ev-cb(14px)/size-chip-del(15px)変数追加＋11箇所変換（fc-progress-today/ev-done-cb/sf-chip-del/wk-bar-wrap/fv-seg-bar-mobile/adv-month-badge）
+const CACHE_NAME = 'kakeibo-v17.34'; // v17.34: size-spark-h/lg/kbd/kbd-lg/sort-icon/sort-badge/scrollbar-sm/input-num/sk-line 9変数追加＋16箇所変換・kbd accent-w適用
 const ASSETS = [
   './index.html',
   './css/style.css',
