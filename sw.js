@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.23'; // v17.23: --accent-w:3px 追加 + 全アクセント幅42箇所変数化（border-X:3px solid×31・keyframe×1・height/width:3px×9 を一括変数化）
+const CACHE_NAME = 'kakeibo-v17.24'; // v17.24: プログレスバー・ドットサイズ変数化 — --size-bar-xs/sm/base/md + --size-dot-sm/base/md の7変数追加・計27箇所のhardcoded 4/6/7/8/10px を一括変数化
 const ASSETS = [
   './index.html',
   './css/style.css',
