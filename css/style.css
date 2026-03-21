@@ -1015,7 +1015,7 @@ select:focus:not(:focus-visible) {
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
 .edit-tx {
   color: var(--text-muted);
-  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster), color var(--dur-faster);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain);
 }
 .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) 10%, var(--bg)) !important;
@@ -1033,7 +1033,7 @@ select:focus:not(:focus-visible) {
 /* ── 削除ボタン ホバー洗練 (v17.1) ─────────────────── */
 .delete-tx {
   color: var(--text-muted);
-  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster), color var(--dur-faster);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain);
 }
 .delete-tx:hover {
   background: var(--danger-bg) !important;
@@ -1051,7 +1051,7 @@ select:focus:not(:focus-visible) {
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
   color: var(--warning);
-  transition: opacity var(--dur-faster), background var(--dur-faster), transform var(--dur-faster), box-shadow var(--dur-faster);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
 }
 .dup-tx:hover {
   background: var(--warning-bg) !important;
@@ -1242,7 +1242,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-press);
+  transition: border-color var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   text-align: center;
@@ -2850,7 +2850,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: opacity var(--dur-fast), transform var(--dur-press);
+  transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(-1px); }
 .btn-tpl:active { transform: translateY(0); opacity: 1; }
@@ -10292,7 +10292,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .ev-add-month:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
@@ -10314,7 +10314,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-left: var(--accent-w) solid var(--ev-accent, var(--primary));
   animation: ev-widget-item-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-wi, 0) * var(--dur-stagger));
-  transition: transform var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .ev-widget-item:hover  { transform: translateX(2px); }
 .ev-widget-item:active { transform: translateX(0); }
@@ -10400,7 +10400,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-faster);
+  transition: border-color var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   animation: sf-chip-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * var(--dur-stagger-xs));
   white-space: nowrap;
@@ -11535,7 +11535,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   text-align: left;
   cursor: pointer;
   position: relative;
-  transition: background var(--dur-fast), transform var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
   animation: notif-item-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ni, 0) * var(--dur-stagger-sub));
 }
@@ -11757,7 +11757,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-quick);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-quick) var(--ease-bounce);
   line-height: var(--lh-base);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -11862,7 +11862,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 10%, var(--surface));
   color: var(--amt-chip-color, var(--primary));
   border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
-  transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   animation: amt-chip-in var(--dur-gentle) var(--ease-bounce) both;
   white-space: nowrap;
 }
@@ -11932,7 +11932,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   animation: memo-chip-in var(--dur-gentle) var(--ease-bounce) both;
   max-width: 160px;
   overflow: hidden;
@@ -13189,7 +13189,7 @@ canvas.chart-clickable { cursor: pointer; }
   margin-left: var(--sp-1);
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity var(--dur-fast), transform var(--dur-fast);
+  transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 [data-theme="dark"] .rpt-month-row.is-clickable:hover {
   box-shadow: var(--shadow-row-selected);
