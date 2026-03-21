@@ -397,16 +397,20 @@
   --size-month-btn:   30px; /* 月ナビボタン幅（.month-nav-btn） */
   --size-scrollbar:    6px; /* スクロールバー幅・高さ */
   --size-modal-lg:   540px; /* 大モーダル最大幅（.modal-share / .ch-modal） */
-  /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26) ─ */
+  /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26/v17.30) ─ */
   --size-deco-3xs:    50px; /* 極小装飾サークル（pt-summary-card::after・ev-card::before等） */
+  --size-deco-xxs:    60px; /* 準極小装飾サークル（sim-savings-banner::after等） */
   --size-deco-2xs:    72px; /* 超小装飾サークル（ch-summary-card::before・yi-card::before等） */
-  --size-deco-xs:     80px; /* 小装飾サークル（pt-summary-card::before・wl-summary-card::before等） */
+  --size-deco-xs:     80px; /* 小装飾サークル（pt-summary-card::before・wl-summary-card::before・pm-sum-card::before等） */
   --size-deco-sm:     88px; /* 小装飾サークル（サマリーカード小・負債サマリー等のペア小円） */
   --size-deco:        90px; /* 標準装飾サークル（ウィジェット装飾・シミュレーション・イベントサマリー等） */
   --size-deco-md:    110px; /* 中装飾サークル（サブスクサマリー・健康スコア・ペースウィジェット等 最多使用） */
+  --size-deco-ml:    120px; /* 中大装飾サークル（summary-card::before・adv-widget::before・yr-widget::before等） */
   --size-deco-lg:    140px; /* 大装飾サークル（オンボーディング・予測カード・CIヘッダー等グラデーション） */
   --size-deco-xl:    160px; /* 特大装飾サークル（週次ウィジェット・CIヘッダー前面グラデーション） */
   --size-deco-2xl:   180px; /* 超大装飾サークル（オンボーディングヒーロー前面円） */
+  /* ── 家計スコア専用サイズトークン (v17.30) ─ */
+  --size-hs-gauge:   120px; /* 家計スコアSVGゲージ幅（hs-gauge-wrap・hs-gauge-svg） */
 }
 
 html {
@@ -1303,8 +1307,8 @@ select:focus:not(:focus-visible) {
   position: absolute;
   bottom: -30px;
   left: -20px;
-  width: 120px;
-  height: 120px;
+  width: var(--size-deco-ml);
+  height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
   background: var(--on-dark-dim);
   pointer-events: none;
@@ -6637,12 +6641,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-gauge-wrap {
   position: relative;
   flex-shrink: 0;
-  width: 120px;
+  width: var(--size-hs-gauge);
   overflow: hidden;
 }
 .hs-gauge-svg {
   display: block;
-  width: 120px;
+  width: var(--size-hs-gauge);
   height: auto;
   overflow: hidden;
 }
@@ -9729,7 +9733,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .sim-savings-banner::after {
   content: ''; position: absolute; bottom: -18px; left: 8px;
-  width: 60px; height: 60px;
+  width: var(--size-deco-xxs); height: var(--size-deco-xxs);
   background: radial-gradient(circle, color-mix(in srgb, var(--success) 14%, transparent) 0%, transparent 70%);
   border-radius: var(--radius-circle); pointer-events: none;
 }
@@ -10471,8 +10475,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: -30px;
   right: -30px;
-  width: 120px;
-  height: 120px;
+  width: var(--size-deco-ml);
+  height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%);
   pointer-events: none;
@@ -10774,7 +10778,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   top: -20px; right: -20px;
-  width: 120px; height: 120px;
+  width: var(--size-deco-ml); height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
   pointer-events: none;
@@ -11015,7 +11019,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: radial-gradient(circle, var(--on-dark-base) 0%, transparent 70%);
   pointer-events: none;
 }
-.ci-header-inner { position: relative; z-index: 1; padding-right: 36px; }
+.ci-header-inner { position: relative; z-index: 1; padding-right: var(--sp-9); }
 .ci-close {
   position: absolute;
   top: var(--sp-3); right: var(--sp-3);
@@ -13417,8 +13421,8 @@ canvas.chart-clickable { cursor: pointer; }
   position: absolute;
   top: -20px;
   right: -20px;
-  width: 80px;
-  height: 80px;
+  width: var(--size-deco-xs);
+  height: var(--size-deco-xs);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle,
     color-mix(in srgb, var(--pm-sum-color) 18%, transparent),
