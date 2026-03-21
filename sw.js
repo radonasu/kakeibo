@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.40'; // v17.40: :active統一3箇所（qa-type-btn/ev-add-month/ci-ok-btn）
+const CACHE_NAME = 'kakeibo-v17.41'; // v17.41: :active統一3箇所（tx-table-tr/tx-sort-badge/sf-chip-del）
 const ASSETS = [
   './index.html',
   './css/style.css',

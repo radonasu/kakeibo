@@ -1426,6 +1426,7 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-table tbody tr:hover {
   box-shadow: var(--shadow-row-selected);
 }
+.tx-table tbody tr:active { transform: translateY(0); box-shadow: none; }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
   border-top: 2px solid var(--border);
@@ -1606,6 +1607,7 @@ select:focus:not(:focus-visible) {
   transform: scale(1.05);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
 }
+.tx-sort-badge:active { transform: scale(1.0); box-shadow: none; }
 .tx-sort-badge svg {
   width: var(--size-sort-badge);
   height: var(--size-sort-badge);
@@ -10416,12 +10418,13 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-5xs);
   line-height: var(--lh-none);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press);
 }
 .sf-chip-del:hover {
   background: var(--danger-bg);
   color: var(--danger-text);
 }
+.sf-chip-del:active { transform: scale(0.88); }
 .sf-chip-del:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--focus-ring); }
 .adv-filter-actions {
   display: flex;
