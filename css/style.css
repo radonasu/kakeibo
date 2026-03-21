@@ -358,7 +358,7 @@
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
 
-  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22) ── */
+  /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22/v17.29) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
   --size-badge-md:   20px;  /* 中バッジ（kk-toast-icon/cal-ev-count/hm-ev-count/tx-count badge等） */
@@ -366,12 +366,16 @@
   --size-tx-cb:      17px;  /* 一括選択チェックボックス（--size-checkboxより1px大・取引行専用） */
   --size-hm-cell:    13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
   --size-hm-month:   20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-icon-3xs:   22px;  /* 最小アイコン要素（bottom-nav-icon svg・cal-date-num・dw-slider高さ） */
   --size-icon-2xs:   24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
+  --size-color-btn:  26px;  /* カラーピッカーボタン（sub-color-btn・pt-color-btn等） */
   --size-icon-xs:    28px;  /* 極小アイコン要素（collapse-btn・color-swatch・step-num・ch-color-btn・ev-card-icon-wrap等） */
   --size-icon-sm:    32px;  /* 小アイコン要素（アバター・modal-close・ウィジェットアイコン・btn-icon等） */
   --size-icon-sm-plus: 34px; /* やや大きめ小アイコン（絵文字ボタン・カレンダーイベントアイコン・月ナビボタン高等） */
   --size-icon-md:    36px;  /* 中アイコン要素（大アバター・絵文字ボタン・カードアイコン・カレンダーナビ等） */
   --size-icon-lg:    40px;  /* 大アイコン要素（wish-widget-icon・asset-type-icon等） */
+  --size-icon-xl:    52px;  /* 特大アイコン要素（goal-ring-wrap・FABモバイル等） */
+  --size-icon-2xl:   64px;  /* 超大アイコン要素（auth-logo-icon等） */
   --size-brand-icon: 38px;  /* サイドバーブランドロゴアイコン（icon-md:36pxとicon-lg:40pxの中間） */
   --size-touch:      44px;  /* 最小タッチターゲット（WCAG 2.5.5 / iOS HIG 44px推奨） */
   --size-touch-lg:   48px;  /* 大タッチターゲット（モーダルボタン・フォーム入力・カードアイコン） */
@@ -2994,8 +2998,8 @@ mark.tx-hl {
 }
 
 .auth-logo-icon {
-  width: 64px;
-  height: 64px;
+  width: var(--size-icon-2xl);
+  height: var(--size-icon-2xl);
   background: linear-gradient(135deg, var(--primary), var(--primary-mid));
   border-radius: var(--radius-toggle);
   display: flex;
@@ -3429,8 +3433,8 @@ body {
 /* v8.5: ボトムナビ SVGアイコンスタイル調整 */
 .bottom-nav-icon svg {
   display: block;
-  width: 22px;
-  height: 22px;
+  width: var(--size-icon-3xs);
+  height: var(--size-icon-3xs);
   stroke: currentColor;
   transition: stroke var(--dur-fast), transform var(--dur-base) var(--ease-bounce);
 }
@@ -3462,8 +3466,8 @@ body {
   #global-fab {
     bottom: 80px; /* ボトムナビの上 */
     right: 16px;
-    width: 52px;
-    height: 52px;
+    width: var(--size-icon-xl);
+    height: var(--size-icon-xl);
     font-size: var(--fs-3xl);
   }
 }
@@ -4819,8 +4823,8 @@ body {
 /* v5.32: SVGリングラップ（絵文字を円形プログレスリングで囲む） */
 .goal-ring-wrap {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: var(--size-icon-xl);
+  height: var(--size-icon-xl);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -5384,8 +5388,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-medium);
   color: var(--text-muted);
   line-height: var(--lh-none);
-  width: 22px;
-  height: 22px;
+  width: var(--size-icon-3xs);
+  height: var(--size-icon-3xs);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6129,7 +6133,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-emoji-btn:hover { background: var(--border); }
 .sub-emoji-btn.selected { border-color: var(--primary); background: var(--focus-ring); }
 .sub-color-btn {
-  width: 26px; height: 26px;
+  width: var(--size-color-btn); height: var(--size-color-btn);
   border-radius: var(--radius-circle);
   border: 3px solid transparent;
   cursor: pointer;
@@ -6543,7 +6547,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1);
 }
 .pt-color-btn {
-  width: 26px; height: 26px;
+  width: var(--size-color-btn); height: var(--size-color-btn);
   border: 2.5px solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
@@ -7531,7 +7535,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .dw-slider {
   position: relative;
   width: 40px;
-  height: 22px;
+  height: var(--size-icon-3xs);
   background: var(--border);
   border-radius: var(--radius-indicator);
   flex-shrink: 0;
