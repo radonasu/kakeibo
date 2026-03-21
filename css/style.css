@@ -196,6 +196,10 @@
   --dur-glide:   0.8s;                             /* グライド（幅トランジション・パルス遅め） */
   --dur-pulse-delay: 0.8s;
   --dur-stagger:     0.05s;   /* スタガー基本間隔 50ms（budget/adv/cal-ev/rc等） */
+  --dur-stagger-5xs: 0.008s;  /* スタガー最極微 8ms（hm-wiヒートマップ週列） */
+  --dur-stagger-4xs: 0.022s;  /* スタガー超極微 22ms（fv-segセグメントバー） */
+  --dur-stagger-3xs: 0.028s;  /* スタガー極微 28ms（ct-ri/fg-i/dd-i リスト行） */
+  --dur-stagger-sub: 0.035s;  /* スタガー準小 35ms（ni通知・adv-preset-chip等） */
   --dur-stagger-2xs: 0.025s;  /* スタガー最小 25ms（tx-sorting行・fv-ri step） */
   --dur-stagger-xs:  0.045s;  /* スタガー極小 45ms（sim-ri/sb-i/sfi/cc-i step） */
   --dur-stagger-sm:  0.04s;   /* スタガー小 40ms（ct-chip/fv-bar/md-cat等） */
@@ -2076,7 +2080,7 @@ select:focus:not(:focus-visible) {
   line-height: var(--lh-normal);
   transition: border-color var(--dur-faster), color var(--dur-faster), background var(--dur-faster), transform var(--dur-fast), box-shadow var(--dur-faster);
   animation: preset-chip-in var(--dur-slow) var(--ease-bounce) both;
-  animation-delay: calc(var(--pi) * 38ms);
+  animation-delay: calc(var(--pi) * var(--dur-stagger-sub));
 }
 .adv-preset-chip:hover {
   border-color: var(--primary);
@@ -8242,7 +8246,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* テーブル行アニメーション */
 .ct-table tbody tr {
   animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
-  animation-delay: calc(var(--ct-ri, 0) * 28ms);
+  animation-delay: calc(var(--ct-ri, 0) * var(--dur-stagger-3xs));
 }
 
 /* -- ダークモード -- */
@@ -8395,7 +8399,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .fv-cat-table tbody tr {
   border-left: var(--accent-w) solid var(--fv-cat-color, var(--border));
   animation: fv-cat-row-in var(--dur-appear) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ci, 0) * 30ms);
+  animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-3xs));
 }
 @keyframes fv-cat-row-in {
   from { opacity: 0; transform: translateX(-6px); }
@@ -8418,7 +8422,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--primary);
   width: calc(var(--fv-fi, 0) * 1%);
   animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ri, 0) * 22ms);
+  animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs));
   transform-origin: left;
 }
 .fv-seg-var {
@@ -8426,7 +8430,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--success);
   flex: 1;
   animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
-  animation-delay: calc(var(--fv-ri, 0) * 22ms + var(--dur-stagger-lg));
+  animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs) + var(--dur-stagger-lg));
   transform-origin: right;
 }
 @keyframes fv-seg-in {
@@ -9214,7 +9218,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .hm-col-wrap {
   display: contents;
   animation: hm-col-in var(--dur-medium) var(--ease-plain) both;
-  animation-delay: calc(var(--hm-wi, 0) * 8ms);
+  animation-delay: calc(var(--hm-wi, 0) * var(--dur-stagger-5xs));
 }
 .hm-cell {
   width: var(--size-hm-cell);
@@ -11449,7 +11453,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: relative;
   transition: background var(--dur-fast), transform var(--dur-fast);
   animation: notif-item-in var(--dur-slow) var(--ease-bounce) both;
-  animation-delay: calc(var(--ni, 0) * 35ms);
+  animation-delay: calc(var(--ni, 0) * var(--dur-stagger-sub));
 }
 /* 未読アイテムに薄い背景 */
 .notif-item:not(.notif-read) {
@@ -12215,7 +12219,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .tx-modal-anim .form-group,
 .tx-modal-anim .modal-details {
   animation: fg-in var(--dur-base) var(--ease-enter) both;
-  animation-delay: calc(var(--fg-i, 0) * 28ms);
+  animation-delay: calc(var(--fg-i, 0) * var(--dur-stagger-3xs));
 }
 .btn-continue {
   background: var(--surface-2);
@@ -12455,7 +12459,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-btn-sm);
   transition: background var(--dur-quick);
   animation: dd-row-in var(--dur-base) var(--ease-plain) both;
-  animation-delay: calc(var(--dd-i, 0) * 28ms);
+  animation-delay: calc(var(--dd-i, 0) * var(--dur-stagger-3xs));
 }
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); }
