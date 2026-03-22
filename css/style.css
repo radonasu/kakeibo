@@ -1519,7 +1519,7 @@ select:focus:not(:focus-visible) {
   content: '';
   position: absolute;
   top: 50%; left: 3px;
-  height: 2px;
+  height: var(--bw-select);
   background: var(--white);
   border-radius: var(--radius-hairline);
   transform: translateY(-50%);
@@ -1715,7 +1715,7 @@ select:focus:not(:focus-visible) {
 }
 /* バーセパレーター */
 .bulk-bar-sep {
-  width: 1px;
+  width: var(--bw-thin);
   height: var(--size-icon-sm);
   background: var(--border);
   flex-shrink: 0;
@@ -2315,7 +2315,7 @@ mark.tx-hl {
   font-variant-numeric: tabular-nums;
 }
 .smi-divider {
-  width: 1px;
+  width: var(--bw-thin);
   background: var(--border);
   align-self: stretch;
   flex-shrink: 0;
@@ -2802,7 +2802,7 @@ mark.tx-hl {
   height: 100%;
   background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 100%);
   border-radius: var(--radius-2xs);
-  min-width: 2px;
+  min-width: var(--bw-select);
   transform-origin: left center;
   animation: budget-fill-in var(--dur-fill) var(--ease-std) both;
 }
@@ -3365,7 +3365,7 @@ body {
   content: '';
   position: absolute;
   top: 0; left: 25%; right: 25%;
-  height: 2.5px;
+  height: var(--bw-thick);
   background: var(--primary);
   border-radius: 0 0 var(--radius-nano) var(--radius-nano);
 }
@@ -4986,7 +4986,7 @@ body {
 .goal-milestone {
   position: absolute;
   top: 0; bottom: 0;
-  width: 2px;
+  width: var(--bw-select);
   background: var(--surface);
   opacity: var(--opacity-faded);
   transform: translateX(-50%);
@@ -9602,7 +9602,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-3); overflow: hidden;
 }
 .debt-widget-cell { flex: 1; padding: var(--sp-2) var(--sp-3); text-align: center; }
-.debt-widget-divider { width: 1px; background: var(--border); align-self: stretch; }
+.debt-widget-divider { width: var(--bw-thin); background: var(--border); align-self: stretch; }
 .debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); }
 .debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; }
 .debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: var(--fw-normal); }
@@ -9715,7 +9715,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .sim-savings-label { color: var(--income-end); }
 .sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
 [data-theme="dark"] .sim-savings-value { color: var(--income-end); }
-.sim-savings-divider { width: 1px; height: 48px; background: var(--success-border); }
+.sim-savings-divider { width: var(--bw-thin); height: 48px; background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) 30%, transparent); }
 
 /* グラフ */
@@ -9735,7 +9735,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   .sim-result-grid { grid-template-columns: 0.8fr 1fr 1fr; }
   .sim-result-grid > div { padding: var(--sp-2) var(--sp-1-5); font-size: var(--fs-xs); }
   .sim-savings-banner { flex-direction: column; gap: var(--sp-2); }
-  .sim-savings-divider { width: 48px; height: 1px; }
+  .sim-savings-divider { width: 48px; height: var(--bw-thin); }
   .modal-lg { width: 100vw; margin: 0; border-radius: var(--radius-card) var(--radius-card) 0 0; align-self: flex-end; }
 }
 
@@ -9909,7 +9909,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-0-5);
 }
 .sb-banner-div {
-  width: 1px;
+  width: var(--bw-thin);
   height: var(--size-icon-sm);
   background: var(--on-dark-overlay);
   flex-shrink: 0;
@@ -12760,7 +12760,7 @@ canvas.chart-clickable { cursor: pointer; }
   gap: var(--sp-0-5);
 }
 .yi-half-sep {
-  width: 1px;
+  width: var(--bw-thin);
   background: var(--border);
   margin: 0 var(--sp-3);
   flex-shrink: 0;
