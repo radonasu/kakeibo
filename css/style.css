@@ -257,6 +257,11 @@
   --bw-select:   2px; /* 選択/UI要素境界線幅（チェックボックス・絵文字ボタン・プレビュー枠・破線エリア等） */
   --bw-thick:  2.5px; /* 太境界線幅（カラーボタン選択インジケーター・スライダードット等） */
   --bw-swatch:   3px; /* スウォッチ境界線幅（カラースウォッチ・ゴール・サブスクカラー選択） */
+  /* ── アウトラインオフセットトークン (v17.57) ─────────────── */
+  --outline-offset:           2px;  /* 標準フォーカスリング外向きオフセット（:focus-visible 汎用） */
+  --outline-offset-sm:        1px;  /* 小外向きオフセット（dd-tx-row 等のコンパクトフォーカス） */
+  --outline-offset-inner:    -2px;  /* 内向きオフセット（cal-cell 選択・ヒートマップ今日セル等） */
+  --outline-offset-inner-lg: -4px;  /* 大内向きオフセット（goal-color-btn 選択状態等） */
   --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
   --shadow-card-hover: 0 4px 12px rgba(0,0,0,.08);  /* カードホバー時の浮き上がりシャドウ */
   --shadow-sticky:    0 2px 8px rgba(0,0,0,.2);     /* スティッキーヘッダー */
@@ -534,7 +539,7 @@ input:-webkit-autofill:active {
 /* ── フォーカス表示（キーボードナビ用） ─────────────────── */
 :focus-visible {
   outline: var(--bw-select) solid var(--primary);
-  outline-offset: 2px;
+  outline-offset: var(--outline-offset);
 }
 button:focus:not(:focus-visible),
 input:focus:not(:focus-visible),
@@ -5182,7 +5187,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-color: var(--text);
   transform: scale(1.1);
   outline: var(--bw-select) solid var(--surface);
-  outline-offset: -4px;
+  outline-offset: var(--outline-offset-inner-lg);
 }
 
 /* 積立モーダル */
@@ -5462,7 +5467,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-cell.selected {
   background: var(--primary-light);
   outline: var(--bw-select) solid var(--primary);
-  outline-offset: -2px;
+  outline-offset: var(--outline-offset-inner);
 }
 
 .cal-date-num {
@@ -9349,7 +9354,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* 今日のセル */
 .hm-today {
   outline: var(--bw-select) solid var(--on-dark-opaque);
-  outline-offset: -2px;
+  outline-offset: var(--outline-offset-inner);
   border-radius: var(--radius-3xs);
   animation: hm-today-pulse var(--dur-pulse) var(--ease-in-out) infinite;
   position: relative;
@@ -12579,7 +12584,7 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-tx-row:hover { background: var(--surface-hover); }
 .dd-tx-row:focus-visible {
   outline: var(--bw-select) solid var(--focus-ring);
-  outline-offset: 1px;
+  outline-offset: var(--outline-offset-sm);
 }
 @keyframes dd-row-in {
   from { opacity: 0; transform: translateX(-6px); }
