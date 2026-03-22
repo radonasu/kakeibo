@@ -1587,6 +1587,7 @@ select:focus:not(:focus-visible) {
   color: var(--primary);
   background: var(--primary-light);
 }
+.tx-th-sort:active { color: var(--primary); background: var(--primary-light); filter: brightness(0.93); }
 .tx-th-sort:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .tx-th-sort.tx-th-active {
   color: var(--primary);
@@ -5566,8 +5567,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: center;
   font-size: var(--fs-sm);
+  transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
 .cal-panel-close:hover { background: var(--surface-hover); }
+.cal-panel-close:active { transform: scale(0.88); }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-day-panel-body {
@@ -7636,6 +7639,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .dw-item:hover {
   background: var(--surface-hover);
 }
+.dw-item:active { background: var(--surface-hover); filter: brightness(0.96); }
 .dw-item-label {
   flex: 1;
   display: flex;
@@ -11166,6 +11170,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-base);
 }
 .ci-close:hover { background: var(--on-dark-hover); }
+.ci-close:active { filter: brightness(0.8); }
 .ci-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
 .ci-month-badge {
   display: inline-block;
@@ -11542,6 +11547,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--primary);
   border-color: var(--primary);
 }
+.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); filter: brightness(0.93); }
 .notif-mark-read:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* パネルボディ */
@@ -12164,9 +12170,10 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-sm);
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); }
+.rc-close:active { transform: scale(0.88); }
 .rc-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-body {
@@ -12199,6 +12206,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 
 .rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 4%, var(--surface-1)); }
+.rc-item:active { transform: translateY(0); border-color: var(--border); box-shadow: none; filter: brightness(0.97); }
+.rc-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-item:has(.rc-check:checked) {
   border-color: color-mix(in srgb, var(--primary) 60%, transparent);

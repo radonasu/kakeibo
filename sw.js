@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.61'; // v17.61: ct-chip :active/:focus-visible追加・dd-tx-row :active追加・qa-toggle-btn transition/:active/:focus-visible追加
+const CACHE_NAME = 'kakeibo-v17.62'; // v17.62: :active補完7要素（notif-mark-read/rc-close/rc-item/cal-panel-close/ci-close/tx-th-sort/dw-item）
 const ASSETS = [
   './index.html',
   './css/style.css',
