@@ -250,9 +250,10 @@
   --radius-toggle:   18px;  /* トグルスイッチトラック */
   --radius-toggle-inner: 9px;  /* トグルスイッチつまみ */
   --radius-indicator: 11px; /* インジケータートラック（高さ22px要素の半径） */
-  /* ── ボーダー幅トークン (v17.52) ─────────────────────── */
+  /* ── ボーダー幅トークン (v17.53) ─────────────────────── */
   --bw-thin:     1px; /* 細境界線幅（区切り線・テーブル・サマリーカード・ウィジェット等） */
   --bw-base:   1.5px; /* 標準境界線幅（フォーム入力・カード・パネル等の基本ボーダー） */
+  --bw-select:   2px; /* 選択/UI要素境界線幅（チェックボックス・絵文字ボタン・プレビュー枠・破線エリア等） */
   --bw-thick:  2.5px; /* 太境界線幅（カラーボタン選択インジケーター・スライダードット等） */
   --bw-swatch:   3px; /* スウォッチ境界線幅（カラースウォッチ・ゴール・サブスクカラー選択） */
   --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
@@ -1482,7 +1483,7 @@ select:focus:not(:focus-visible) {
   appearance: none;
   -webkit-appearance: none;
   width: var(--size-tx-cb); height: var(--size-tx-cb);
-  border: 2px solid var(--border-strong);
+  border: var(--bw-select) solid var(--border-strong);
   border-radius: var(--radius-bar);
   background: var(--surface);
   cursor: pointer;
@@ -1505,7 +1506,7 @@ select:focus:not(:focus-visible) {
   position: absolute;
   top: 1px; left: 4px;
   width: 5px; height: 9px;
-  border: 2px solid var(--white);
+  border: var(--bw-select) solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
@@ -2567,7 +2568,7 @@ mark.tx-hl {
   gap: var(--sp-2);
   align-items: flex-start;
   background: var(--surface-2);
-  border: 2px dashed var(--border);
+  border: var(--bw-select) dashed var(--border);
   border-radius: var(--radius-md);
   padding: var(--sp-3);
 }
@@ -4410,7 +4411,7 @@ body {
   padding: var(--sp-12) var(--sp-6);
   background: var(--surface);
   border-radius: var(--radius);
-  border: 2px dashed var(--border);
+  border: var(--bw-select) dashed var(--border);
   margin-bottom: var(--sp-4);
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
@@ -5137,7 +5138,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-emoji-btn {
   width: var(--size-emoji-btn);
   height: var(--size-emoji-btn);
-  border: 2px solid var(--border);
+  border: var(--bw-select) solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   font-size: var(--fs-2xl);
@@ -6205,7 +6206,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .sub-emoji-btn {
   width: var(--size-icon-sm-plus); height: var(--size-icon-sm-plus);
-  border: 2px solid transparent;
+  border: var(--bw-select) solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   font-size: var(--fs-icon);
@@ -6620,7 +6621,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-emoji-btn {
   width: var(--size-icon-sm-plus); height: var(--size-icon-sm-plus);
-  border: 2px solid transparent;
+  border: var(--bw-select) solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   font-size: var(--fs-icon);
@@ -8016,7 +8017,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .ch-emoji-btn {
   width: var(--size-icon-md);
   height: var(--size-icon-md);
-  border: 2px solid transparent;
+  border: var(--bw-select) solid transparent;
   border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
   font-size: var(--fs-icon);
@@ -8039,7 +8040,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .ch-color-btn {
   width: var(--size-icon-xs);
   height: var(--size-icon-xs);
-  border: 2px solid transparent;
+  border: var(--bw-select) solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
   outline: none;
@@ -9919,7 +9920,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   appearance: none;
   -webkit-appearance: none;
   width: var(--size-checkbox); height: var(--size-checkbox);
-  border: 2px solid var(--border-strong);
+  border: var(--bw-select) solid var(--border-strong);
   border-radius: var(--radius-2xs);
   background: var(--surface);
   cursor: pointer;
@@ -9942,7 +9943,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: 1px; left: 4px;
   width: 4px; height: 8px;
-  border: 2px solid var(--white);
+  border: var(--bw-select) solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
 }
@@ -10365,7 +10366,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-icon-2xl);
   width: var(--size-touch); height: var(--size-touch);
   display: flex; align-items: center; justify-content: center;
-  border: 2px solid var(--border);
+  border: var(--bw-select) solid var(--border);
   border-radius: var(--radius-btn-sm);
   flex-shrink: 0;
 }
@@ -10378,7 +10379,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xl);
   width: var(--size-icon-md); height: var(--size-icon-md);
   border-radius: var(--radius-btn-sm);
-  border: 2px solid transparent;
+  border: var(--bw-select) solid transparent;
   background: var(--surface-hover);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
