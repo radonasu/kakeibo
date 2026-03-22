@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.63'; // v17.63: btn-continue洗練（border-color transition・:active・DM hover/active）＋debt-archive-summary :active＋opp-challenge-btn :activeバグ修正（hover filter/shadow未リセット）
+const CACHE_NAME = 'kakeibo-v17.64'; // v17.64: :active補完7要素（card-collapse-btn・btn-account-add・btn-sidebar-logout・sb-row・ev-emoji-chip・hm-cell・sf-save-btn）
 const ASSETS = [
   './index.html',
   './css/style.css',
