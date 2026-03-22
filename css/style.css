@@ -690,7 +690,7 @@ select:focus:not(:focus-visible) {
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item:hover .nav-icon { transform: scale(1.12); }
 .nav-item:active .nav-icon { transform: scale(1.0); }
-.nav-item:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
+.nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary-end);
@@ -836,7 +836,8 @@ select:focus:not(:focus-visible) {
   -webkit-tap-highlight-color: transparent;
 }
 #hamburger:hover { background: var(--on-dark-base); }
-#hamburger:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
+#hamburger:active { background: var(--on-dark-strong); filter: brightness(0.88); }
+#hamburger:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 #mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; }
 
@@ -2372,12 +2373,16 @@ mark.tx-hl {
   background: transparent;
   color: var(--text-muted);
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base);
+  transition: background var(--dur-base), color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-press);
   cursor: pointer;
 }
+.type-btn:hover { background: var(--surface-hover); color: var(--text); }
+.type-btn:active { transform: scale(0.97); filter: brightness(0.93); }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
+.type-btn.expense-btn:active { filter: brightness(0.88); transform: scale(0.97); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
+.type-btn.income-btn:active  { filter: brightness(0.88); transform: scale(0.97); }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -3401,6 +3406,8 @@ body {
 .bottom-nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .bottom-nav-item:not(.active):hover { color: var(--text); }
 .bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); }
+.bottom-nav-item:not(.active):active { color: var(--primary); }
+.bottom-nav-item:not(.active):active .bottom-nav-icon { background: var(--border); transform: scale(0.88); }
 
 .bottom-nav-item.active {
   color: var(--primary);
@@ -6269,9 +6276,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-icon);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color var(--dur-quick), background var(--dur-quick);
+  transition: border-color var(--dur-quick), background var(--dur-quick), transform var(--dur-press);
 }
 .sub-emoji-btn:hover { background: var(--border); }
+.sub-emoji-btn:active { background: var(--border); filter: brightness(0.9); transform: scale(0.88); }
 .sub-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-emoji-btn.selected { border-color: var(--primary); background: var(--focus-ring); }
 .sub-color-btn {
@@ -8086,9 +8094,10 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color var(--dur-fast), background var(--dur-fast);
+  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-press);
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); }
+.ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(0.9); transform: scale(0.88); }
 .ch-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light); }
 
