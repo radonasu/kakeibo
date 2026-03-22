@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.46'; // v17.46: focus-visible統一11箇所（hamburger/modal-close/tx-th-sort/adv-filter-toggle/cal-panel-close/cal-ev-nav/ci-close/rc-close/btn-notif-bell/install-banner-close/auth-offline-mode）
+const CACHE_NAME = 'kakeibo-v17.47'; // v17.47: モバイルボトムオフセット変数化16箇所（64/80/84/88pxをcalc(--size-mobile-bar+--sp-*)に変換・kk-toast/notif-panel位置も変数化）
 const ASSETS = [
   './index.html',
   './css/style.css',

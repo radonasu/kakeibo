@@ -3389,7 +3389,7 @@ body {
   #mobile-header { display: flex; }
 
   #main-wrapper { margin-left: 0; }
-  #main-content { padding: var(--sp-4); padding-bottom: 88px; }
+  #main-content { padding: var(--sp-4); padding-bottom: calc(var(--size-mobile-bar) + var(--sp-8)); }
 
   /* ボトムナビ表示 */
   #bottom-nav {
@@ -3399,10 +3399,10 @@ body {
   }
 
   /* ボトムナビがある時の固定要素位置調整 */
-  #pwa-install-banner { bottom: 64px; }
-  .pwa-ios-guide { bottom: 64px; }
-  .sync-toast { bottom: 80px !important; }
-  .update-toast { bottom: 80px; }
+  #pwa-install-banner { bottom: calc(var(--size-mobile-bar) + var(--sp-2)); }
+  .pwa-ios-guide { bottom: calc(var(--size-mobile-bar) + var(--sp-2)); }
+  .sync-toast { bottom: calc(var(--size-mobile-bar) + var(--sp-6)) !important; }
+  .update-toast { bottom: calc(var(--size-mobile-bar) + var(--sp-6)); }
 
   .summary-cards { grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
   .summary-cards .summary-card:nth-child(3) { grid-column: 1 / -1; }
@@ -3522,8 +3522,8 @@ body {
 
 @media (max-width: 768px) {
   #global-fab {
-    bottom: 80px; /* ボトムナビの上 */
-    right: 16px;
+    bottom: calc(var(--size-mobile-bar) + var(--sp-6)); /* ボトムナビの上 */
+    right: var(--sp-4);
     width: var(--size-icon-xl);
     height: var(--size-icon-xl);
     font-size: var(--fs-3xl);
@@ -4163,7 +4163,7 @@ body {
 /* ── トースト通知システム v5.26 ── */
 .kk-toast {
   position: fixed;
-  bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 8px);
+  bottom: calc(var(--size-mobile-bar) + var(--sp-3-5) + var(--sp-2) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%) translateY(14px);
   max-width: min(360px, calc(100vw - 32px));
@@ -4247,7 +4247,7 @@ body {
 .kk-toast-warning .kk-toast-progress { background: var(--warning); }
 
 @media (min-width: 769px) {
-  .kk-toast { bottom: 24px; }
+  .kk-toast { bottom: var(--sp-6); }
 }
 
 /* ── 資産管理ページ ───────────────────────────────────────── */
@@ -4641,7 +4641,7 @@ body {
 
   /* FABの下余白改善（ボトムナビ + セーフエリア） */
   #global-fab {
-    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(var(--size-mobile-bar) + var(--sp-8) + env(safe-area-inset-bottom, 0px));
   }
 
   /* 月次ナビゲーションボタン */
@@ -11440,8 +11440,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .notif-panel {
   position: fixed;
   top: 52px;
-  right: 12px;
-  width: min(360px, calc(100vw - 24px));
+  right: var(--sp-3);
+  width: min(360px, calc(100vw - var(--sp-6)));
   max-height: min(560px, calc(100dvh - 70px));
   background: var(--surface);
   border: 1px solid var(--border);
@@ -11738,9 +11738,9 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* モバイル調整 */
 @media (max-width: 600px) {
   .notif-panel {
-    top: 48px;
-    right: 8px;
-    left: 8px;
+    top: var(--sp-12);
+    right: var(--sp-2);
+    left: var(--sp-2);
     width: auto;
   }
 }
@@ -12404,7 +12404,7 @@ kbd {
 /* Gキーシーケンスヒント */
 .kb-g-hint {
   position: fixed;
-  bottom: 84px;
+  bottom: calc(var(--size-mobile-bar) + var(--sp-7));
   left: 50%;
   transform: translateX(-50%) translateY(10px) scale(0.96);
   display: flex;
@@ -12619,8 +12619,8 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .chart-clickable-hint {
   position: absolute;
-  top: 6px;
-  right: 8px;
+  top: var(--sp-1-5);
+  right: var(--sp-2);
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   background: var(--surface-hover);
