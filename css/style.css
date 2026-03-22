@@ -250,6 +250,10 @@
   --radius-toggle:   18px;  /* トグルスイッチトラック */
   --radius-toggle-inner: 9px;  /* トグルスイッチつまみ */
   --radius-indicator: 11px; /* インジケータートラック（高さ22px要素の半径） */
+  /* ── ボーダー幅トークン (v17.51) ─────────────────────── */
+  --bw-base:   1.5px; /* 標準境界線幅（フォーム入力・カード・パネル等の基本ボーダー） */
+  --bw-thick:  2.5px; /* 太境界線幅（カラーボタン選択インジケーター・スライダードット等） */
+  --bw-swatch:   3px; /* スウォッチ境界線幅（カラースウォッチ・ゴール・サブスクカラー選択） */
   --shadow-btn-base:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
   --shadow-card-hover: 0 4px 12px rgba(0,0,0,.08);  /* カードホバー時の浮き上がりシャドウ */
   --shadow-sticky:    0 2px 8px rgba(0,0,0,.2);     /* スティッキーヘッダー */
@@ -985,7 +989,7 @@ select:focus:not(:focus-visible) {
 .btn-danger {
   background: var(--danger-bg);
   color: var(--danger-text);
-  border: 1.5px solid var(--danger-border);
+  border: var(--bw-base) solid var(--danger-border);
 }
 .btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) 20%, transparent); }
 
@@ -1141,7 +1145,7 @@ select:focus:not(:focus-visible) {
 .form-group textarea {
   width: 100%;
   padding: var(--sp-2-5) var(--sp-4);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-base);
   color: var(--text);
@@ -1247,7 +1251,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   gap: var(--sp-1-25);
   padding: var(--sp-3) var(--sp-1);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text-muted);
@@ -1726,7 +1730,7 @@ select:focus:not(:focus-visible) {
 .bulk-sel {
   height: var(--size-icon-md);
   padding: 0 var(--sp-3);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   background: var(--surface);
   color: var(--text);
@@ -1972,7 +1976,7 @@ select:focus:not(:focus-visible) {
 .filter-bar select,
 .filter-bar .month-sel {
   padding: var(--sp-2) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
   background: var(--surface);
@@ -1987,7 +1991,7 @@ select:focus:not(:focus-visible) {
 
 .filter-search {
   padding: var(--sp-2) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
   flex: 1;
@@ -2059,7 +2063,7 @@ select:focus:not(:focus-visible) {
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   background: var(--surface);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-row-hover);
 }
@@ -2085,7 +2089,7 @@ select:focus:not(:focus-visible) {
 }
 .adv-filter-input {
   padding: var(--sp-1-75) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
   background: var(--surface);
@@ -2130,7 +2134,7 @@ select:focus:not(:focus-visible) {
 .adv-preset-chip {
   padding: var(--sp-0-75) var(--sp-2-5);
   border-radius: var(--radius-badge);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
   font-size: var(--fs-xs);
@@ -2236,7 +2240,7 @@ mark.tx-hl {
   justify-content: center;
   width: var(--size-month-btn);
   height: var(--size-icon-sm-plus);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text-muted);
@@ -2265,7 +2269,7 @@ mark.tx-hl {
 
 .month-sel {
   padding: var(--sp-2) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
   background: var(--surface);
@@ -2430,7 +2434,7 @@ mark.tx-hl {
   width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
   cursor: pointer;
-  border: 3px solid transparent;
+  border: var(--bw-swatch) solid transparent;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
 .color-swatch:hover   { transform: scale(1.2); }
@@ -2466,13 +2470,13 @@ mark.tx-hl {
 .export-range { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
 .export-range select {
   padding: var(--sp-1-75) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
 }
 
 /* ── 危険ゾーン ──────────────────────────────────────── */
-.danger-zone { border: 1.5px solid var(--danger-border); }
+.danger-zone { border: var(--bw-base) solid var(--danger-border); }
 
 /* ── クイックカテゴリ追加 ────────────────────────────── */
 .btn-inline-add {
@@ -2501,13 +2505,13 @@ mark.tx-hl {
   padding: var(--sp-3);
   background: var(--surface-2);
   border-radius: var(--radius-sm);
-  border: 1.5px dashed var(--border);
+  border: var(--bw-base) dashed var(--border);
 }
 .quick-cat-form input {
   flex: 1;
   min-width: 100px;
   padding: var(--sp-1-75) var(--sp-2-5);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
 }
@@ -2525,7 +2529,7 @@ mark.tx-hl {
 .btn-preset {
   padding: var(--sp-1) var(--sp-3);
   background: var(--surface-2);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -2588,7 +2592,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   background: var(--surface-2);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-2-25) var(--sp-3);
   font-size: var(--fs-xl);
@@ -2601,7 +2605,7 @@ mark.tx-hl {
 .scan-result {
   width: 100%;
   background: var(--success-bg);
-  border: 1.5px solid var(--success-border);
+  border: var(--bw-base) solid var(--success-border);
   border-radius: var(--radius-sm);
   padding: var(--sp-2-5) var(--sp-3-5);
   font-size: var(--fs-xs);
@@ -2827,7 +2831,7 @@ mark.tx-hl {
 .budget-input {
   width: var(--size-input-num);
   padding: var(--sp-1-25) var(--sp-2-25);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
   text-align: right;
@@ -2857,7 +2861,7 @@ mark.tx-hl {
 
 .btn-tpl {
   padding: var(--sp-1-25) var(--sp-3-5);
-  border: 1.5px solid;
+  border: var(--bw-base) solid;
   border-radius: var(--radius-xl);
   background: transparent;
   font-size: var(--fs-xs);
@@ -4100,7 +4104,7 @@ body {
   gap: var(--sp-1-25);
   background: color-mix(in srgb, var(--primary) 10%, transparent);
   color: var(--primary);
-  border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  border: var(--bw-base) solid color-mix(in srgb, var(--primary) 35%, transparent);
   border-radius: var(--radius-sm);
   padding: var(--sp-1-75) var(--sp-3-5);
   font-size: var(--fs-sm);
@@ -5163,7 +5167,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: var(--size-icon-sm);
   height: var(--size-icon-sm);
   border-radius: var(--radius-circle);
-  border: 3px solid transparent;
+  border: var(--bw-swatch) solid transparent;
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
   padding: 0;
@@ -6214,7 +6218,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-color-btn {
   width: var(--size-color-btn); height: var(--size-color-btn);
   border-radius: var(--radius-circle);
-  border: 3px solid transparent;
+  border: var(--bw-swatch) solid transparent;
   cursor: pointer;
   transition: transform var(--dur-quick) var(--ease-bounce), box-shadow var(--dur-quick) var(--ease-plain);
   outline: none;
@@ -6630,7 +6634,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .pt-color-btn {
   width: var(--size-color-btn); height: var(--size-color-btn);
-  border: 2.5px solid transparent;
+  border: var(--bw-thick) solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
@@ -7431,7 +7435,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   height: var(--size-dot-lg);
   border-radius: var(--radius-circle);
   background: var(--surface);
-  border: 2.5px solid var(--fc-color, var(--primary));
+  border: var(--bw-thick) solid var(--fc-color, var(--primary));
   box-shadow: 0 0 0 3px var(--on-dark-half);
   pointer-events: none;
   transition: left var(--dur-fill) var(--ease-enter);
@@ -8265,7 +8269,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-1-25);
   padding: var(--sp-1-25) var(--sp-3);
   border-radius: var(--radius-xl);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
   font-size: var(--fs-sm);
@@ -8774,7 +8778,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   --qa-accent: var(--primary);
   padding: 0;
   overflow: hidden;
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
@@ -8891,7 +8895,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .qa-type-btn {
   flex: 1;
   padding: var(--sp-2) var(--sp-3);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn);
   background: var(--surface-hover);
   color: var(--text-muted);
@@ -8933,7 +8937,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: center;
   flex: 0 0 auto;
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn);
   background: var(--bg);
   padding: 0 var(--sp-2) 0 var(--sp-3);
@@ -8971,7 +8975,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .qa-cat-select {
   flex: 1;
   padding: var(--sp-2) var(--sp-3);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn);
   background: var(--bg);
   color: var(--text);
@@ -8993,7 +8997,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .qa-memo-input {
   flex: 1;
   padding: var(--sp-2) var(--sp-3);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn);
   background: var(--bg);
   color: var(--text);
@@ -9077,7 +9081,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   min-height: var(--size-cal-cell-h);
   max-height: 240px;
   padding: var(--sp-2) var(--sp-3);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-left: var(--accent-w) solid transparent;
   border-radius: var(--radius);
   background: var(--bg);
@@ -10231,7 +10235,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   appearance: none;
   -webkit-appearance: none;
   width: var(--size-ev-cb); height: var(--size-ev-cb);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-3xs);
   cursor: pointer;
   position: relative;
@@ -10413,7 +10417,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-1-25);
   padding: var(--sp-1) var(--sp-2-5) var(--sp-1) var(--sp-3);
   border-radius: var(--radius-badge);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   background: var(--surface-hover);
   color: var(--text);
   font-size: var(--fs-sm);
@@ -11426,7 +11430,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   text-align: center;
   pointer-events: none;
   box-shadow: 0 1px 4px color-mix(in srgb, var(--expense) 50%, transparent);
-  border: 1.5px solid var(--sidebar-bg);
+  border: var(--bw-base) solid var(--sidebar-bg);
 }
 
 @keyframes notif-badge-pop {
@@ -11774,7 +11778,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
@@ -11882,7 +11886,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) 10%, var(--surface));
   color: var(--amt-chip-color, var(--primary));
-  border: 1.5px solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
+  border: var(--bw-base) solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   animation: amt-chip-in var(--dur-gentle) var(--ease-bounce) both;
   white-space: nowrap;
@@ -12143,7 +12147,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-3);
   border-radius: var(--radius-lg);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   background: var(--surface-1);
   cursor: pointer;
   transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast);
@@ -12330,7 +12334,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .btn-continue {
   background: var(--surface-2);
   color: var(--primary);
-  border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  border: var(--bw-base) solid color-mix(in srgb, var(--primary) 35%, transparent);
   box-shadow: var(--shadow-btn-base);
 }
 .btn-continue:hover {
@@ -12351,7 +12355,7 @@ kbd {
   height: var(--size-kbd);
   padding: 0 var(--sp-1-5);
   background: var(--surface-2);
-  border: 1.5px solid var(--border);
+  border: var(--bw-base) solid var(--border);
   border-bottom-width: var(--accent-w);
   border-radius: var(--radius-bar);
   font-size: var(--fs-xs);
@@ -12423,7 +12427,7 @@ kbd {
   align-items: center;
   gap: var(--sp-1-5);
   background: var(--surface);
-  border: 1.5px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  border: var(--bw-base) solid color-mix(in srgb, var(--primary) 35%, var(--border));
   border-radius: var(--radius-btn);
   padding: var(--sp-2) var(--sp-5);
   box-shadow: 0 4px 20px var(--black-14), 0 0 0 4px color-mix(in srgb, var(--primary) 8%, transparent);

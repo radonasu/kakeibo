@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.50'; // v17.50: パーセント列・ペースラベルサイズトークン5変数追加＋13箇所変換（size-pct-col-xs/sm/md/size-pct-col/size-pace-label・既存変数3種）
+const CACHE_NAME = 'kakeibo-v17.51'; // v17.51: ボーダー幅トークン3変数追加＋42箇所変換（bw-base/bw-thick/bw-swatch）
 const ASSETS = [
   './index.html',
   './css/style.css',
