@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.66'; // v17.66: :active補完5要素＋focus-ring変数化2箇所（hamburger/nav-item/sub-emoji-btn/ch-emoji-btn/bottom-nav-item:not(.active)/type-btn hover+active）
+const CACHE_NAME = 'kakeibo-v17.67'; // v17.67: focus-ring変数化4箇所＋:active補完2要素（install-banner-close/global-fab/ci-close/btn-notif-bell focus-visible 2px→var(--focus-ring-w)・cal-cell/nav-item :active追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

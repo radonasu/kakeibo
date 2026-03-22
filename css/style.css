@@ -689,6 +689,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item:hover .nav-icon { transform: scale(1.12); }
+.nav-item:active { background: var(--on-dark-strong); filter: brightness(0.85); }
 .nav-item:active .nav-icon { transform: scale(1.0); }
 .nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .nav-item.active {
@@ -3277,7 +3278,7 @@ body {
 }
 .install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(1.1); }
 .install-banner-close:active { transform: scale(0.88); }
-.install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
+.install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
 .pwa-ios-guide {
@@ -3545,7 +3546,7 @@ body {
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
 }
 #global-fab:active { transform: scale(0.93); }
-#global-fab:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent); }
+#global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent); }
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
 @keyframes fab-pulse {
@@ -5516,6 +5517,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 44%, var(--surface)); }
 
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
+.cal-cell:active:not(.cal-empty) { background: color-mix(in srgb, var(--primary) 10%, var(--surface-hover)); filter: brightness(0.94); }
 .cal-cell.selected {
   background: var(--primary-light);
   outline: var(--bw-select) solid var(--primary);
@@ -11212,7 +11214,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .ci-close:hover { background: var(--on-dark-hover); }
 .ci-close:active { filter: brightness(0.8); }
-.ci-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
+.ci-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ci-month-badge {
   display: inline-block;
   background: var(--on-dark-overlay);
@@ -11464,7 +11466,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .btn-notif-bell:active {
   transform: scale(0.92);
 }
-.btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
+.btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 /* 未読あり状態 */
 .btn-notif-bell.has-unread {
   color: var(--warning);
