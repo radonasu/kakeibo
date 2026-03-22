@@ -144,6 +144,7 @@
   --ls-spread:  0.08em;  /* 見出しラベル大文字等の広字間 */
 
   /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
+  --sp-0-25:  1px;   /* 最極微：ピル最小垂直パディング・1px gap */
   --sp-0-5:   2px;   /* 極微：ピクセル単位のgap・微小マージン */
   --sp-0-75:  3px;   /* 極微+：密集チップ間隔・微小マージン */
   --sp-1:     4px;   /* 極小：アイコン余白、バッジ */
@@ -1839,7 +1840,7 @@ select:focus:not(:focus-visible) {
 .tx-tag-chip {
   display: inline-flex;
   align-items: center;
-  padding: 1px var(--sp-2);
+  padding: var(--sp-0-25) var(--sp-2);
   border-radius: var(--radius-badge);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
@@ -2488,7 +2489,7 @@ mark.tx-hl {
   border: var(--bw-thin) solid var(--primary);
   color: var(--primary);
   border-radius: var(--radius-btn-sm);
-  padding: 1px var(--sp-2);
+  padding: var(--sp-0-25) var(--sp-2);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   cursor: pointer;
@@ -2813,7 +2814,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   border-radius: var(--radius-badge);
   background: var(--surface-hover);
   white-space: nowrap;
@@ -3838,7 +3839,7 @@ body {
   align-items: center;
   gap: var(--sp-0-75);
   margin-left: var(--sp-1-5);
-  padding: 1px var(--sp-1-75);
+  padding: var(--sp-0-25) var(--sp-1-75);
   border-radius: var(--radius-xl);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
@@ -4281,7 +4282,7 @@ body {
   background: var(--primary-light);
   color: var(--primary-dark);
   border-radius: var(--radius-btn);
-  padding: 1px var(--sp-2);
+  padding: var(--sp-0-25) var(--sp-2);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
 }
@@ -5414,7 +5415,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-fast) var(--ease-plain);
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: var(--sp-0-25);
   position: relative;
   overflow: hidden;
 }
@@ -5436,7 +5437,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
-  padding: 1px var(--sp-1-75);
+  padding: var(--sp-0-25) var(--sp-1-75);
   border-radius: var(--radius-badge);
   animation: cal-ws-pill-in var(--dur-gentle) var(--ease-plain) both;
   animation-delay: calc(var(--ws-i, 0) * var(--dur-stagger-md));
@@ -5632,7 +5633,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   .cal-sum-value    { font-size: var(--fs-base); }
   .cal-sum-label    { font-size: var(--fs-2xs); }
   .cal-week-summary { padding: var(--sp-0-5) var(--sp-2) var(--sp-0-75); gap: var(--sp-0-75); }
-  .cal-ws-pill      { font-size: var(--fs-4xs); padding: 1px var(--sp-1-25); }
+  .cal-ws-pill      { font-size: var(--fs-4xs); padding: var(--sp-0-25) var(--sp-1-25); }
 }
 
 /* --- 収支予定統合表示 (v5.92) --- */
@@ -6762,7 +6763,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 1px;
+  gap: var(--sp-0-25);
 }
 .hs-score-num {
   font-size: var(--fs-icon-3xl);
@@ -7495,7 +7496,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 /* 平均比較バッジ */
 .fc-avg-badge {
   display: inline-block;
-  padding: 1px var(--sp-1-25);
+  padding: var(--sp-0-25) var(--sp-1-25);
   border-radius: var(--radius-2xs);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
@@ -7896,7 +7897,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   display: inline-block;
   background: var(--surface-2);
   border-radius: var(--radius-2xs);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   font-size: var(--fs-2xs);
   margin-right: var(--sp-1);
 }
@@ -8195,7 +8196,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
   border-radius: var(--radius-sm);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   margin-left: var(--sp-1);
   vertical-align: middle;
 }
@@ -8674,7 +8675,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   display: inline-block;
   font-size: var(--fs-2xs);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   margin-top: var(--sp-1);
   font-weight: var(--fw-semi);
 }
@@ -8758,7 +8759,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   background: var(--danger-bg);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-1-25);
+  padding: var(--sp-0-25) var(--sp-1-25);
 }
 [data-theme="dark"] .wk-today-label {
   background: color-mix(in srgb, var(--expense) 15%, transparent);
@@ -10017,7 +10018,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--warning);
   border: var(--bw-thin) solid var(--warning-border);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-1-25);
+  padding: var(--sp-0-25) var(--sp-1-25);
   margin-left: var(--sp-1);
   vertical-align: middle;
 }
@@ -10200,7 +10201,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-card-meta { display: flex; gap: var(--sp-1); margin-top: var(--sp-0-5); flex-wrap: wrap; }
 .ev-type-badge {
   font-size: var(--fs-2xs); font-weight: var(--fw-semi);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   border-radius: var(--radius-badge);
 }
 .ev-type-badge.ev-income  { background: color-mix(in srgb, var(--income) 12%, transparent); color: var(--income); }
@@ -10950,7 +10951,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: inline-block;
   font-size: var(--fs-2xs);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-1-75);
+  padding: var(--sp-0-25) var(--sp-1-75);
   margin-top: var(--sp-1);
   font-weight: var(--fw-semi);
 }
@@ -12195,7 +12196,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .rc-item-info {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: var(--sp-0-25);
   min-width: 0;
 }
 
@@ -12224,7 +12225,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .rc-type-badge {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   border-radius: var(--radius-badge);
 }
 .rc-type-inc { background: var(--success-bg); color: var(--success); }
@@ -12313,7 +12314,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: var(--success);
   color: var(--white);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-2);
+  padding: var(--sp-0-25) var(--sp-2);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   min-width: var(--size-badge-md);
@@ -13648,7 +13649,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-2);
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
-  padding: 1px var(--sp-1-5);
+  padding: var(--sp-0-25) var(--sp-1-5);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
