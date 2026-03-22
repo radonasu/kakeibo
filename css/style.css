@@ -444,6 +444,12 @@
   --size-cat-chip-h:  60px;  /* カテゴリチップ最小高さ（.cat-chip：size-touch:44より高く2行テキスト想定） */
   --size-cal-cell-h:  72px;  /* カレンダーセル・テキストエリア最小高さ（.cal-cell・.nt-textarea） */
   --size-nt-deco:    130px;  /* ノートカード装飾グラデーションサークル（nt-card::before width/height） */
+  /* ── パーセント表示列・ラベル列サイズトークン (v17.50) ─ */
+  --size-pct-col-xs:  26px;  /* 最小パーセント数値列幅（ev-prog-pct・kbd min-width） */
+  --size-pct-col-sm:  28px;  /* 小パーセント数値列幅（goal-dash-pct・ev-month-label） */
+  --size-pct-col:     34px;  /* 標準パーセント数値列幅（goal-pct・kb-g-hint-top kbd min-width） */
+  --size-pct-col-md:  36px;  /* 中パーセント数値列幅（ch-progress-pct・ch-widget-pct） */
+  --size-pace-label:  66px;  /* ペースバーラベル列幅（pace-bar-label） */
 }
 
 html {
@@ -3874,7 +3880,7 @@ body {
   white-space: nowrap;
 }
 .recurring-day-input {
-  width: 64px;
+  width: var(--size-icon-2xl);
   padding: var(--sp-1-5) var(--sp-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-btn-sm);
@@ -4985,7 +4991,7 @@ body {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--goal-accent, var(--primary)); /* v5.32: goal colorで着色 */
-  min-width: 34px;
+  min-width: var(--size-pct-col);
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -5261,7 +5267,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-dash-pct {
   font-size: var(--fs-2xs);
   color: var(--goal-accent, var(--text-faint));
-  min-width: 28px;
+  min-width: var(--size-pct-col-sm);
   font-weight: var(--fw-semi);
 }
 .goal-dash-amount {
@@ -7626,8 +7632,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 16px;
-  height: 16px;
+  width: var(--size-checkbox);
+  height: var(--size-checkbox);
   border-radius: var(--radius-circle);
   background: var(--white);
   box-shadow: var(--shadow-toggle);
@@ -7920,7 +7926,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   color: var(--text-sub);
-  min-width: 36px;
+  min-width: var(--size-pct-col-md);
   text-align: right;
 }
 .ch-progress-pct.ch-pct-ok   { color: var(--income); }
@@ -8076,7 +8082,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   color: var(--text-sub);
-  min-width: 36px;
+  min-width: var(--size-pct-col-md);
   text-align: right;
 }
 .ch-widget-pct.ch-pct-ok   { color: var(--income); }
@@ -8732,7 +8738,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-4xs);
   color: var(--text-muted);
   white-space: nowrap;
-  min-height: 13px;
+  min-height: var(--size-hm-cell);
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
@@ -10126,7 +10132,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   color: var(--text);
-  min-width: 28px;
+  min-width: var(--size-pct-col-sm);
 }
 .ev-month-totals {
   display: flex;
@@ -10285,7 +10291,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
   color: var(--text-muted);
-  min-width: 26px;
+  min-width: var(--size-pct-col-xs);
   text-align: right;
   flex-shrink: 0;
 }
@@ -12341,7 +12347,7 @@ kbd {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 26px;
+  min-width: var(--size-pct-col-xs);
   height: var(--size-kbd);
   padding: 0 var(--sp-1-5);
   background: var(--surface-2);
@@ -12437,7 +12443,7 @@ kbd {
   gap: var(--sp-1-5);
 }
 .kb-g-hint-top kbd {
-  min-width: 34px;
+  min-width: var(--size-pct-col);
   height: var(--size-kbd-lg);
   font-size: var(--fs-md);
   background: color-mix(in srgb, var(--primary) 12%, var(--surface));
@@ -13307,7 +13313,7 @@ canvas.chart-clickable { cursor: pointer; }
   animation-delay: calc(var(--pbr-i, 0) * var(--dur-stagger-2xl));
 }
 .pace-bar-label {
-  width: 66px;
+  width: var(--size-pace-label);
   font-size: var(--fs-xs);
   color: var(--text-muted);
   flex-shrink: 0;
