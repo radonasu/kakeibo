@@ -532,7 +532,7 @@ input:-webkit-autofill:active {
 
 /* ── フォーカス表示（キーボードナビ用） ─────────────────── */
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: var(--bw-select) solid var(--primary);
   outline-offset: 2px;
 }
 button:focus:not(:focus-visible),
@@ -1419,7 +1419,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   color: var(--text-muted);
-  border-bottom: 2px solid var(--border);
+  border-bottom: var(--bw-select) solid var(--border);
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: var(--ls-wide);
@@ -1445,7 +1445,7 @@ select:focus:not(:focus-visible) {
 .tx-table tbody tr:active { transform: translateY(0); box-shadow: none; }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
-  border-top: 2px solid var(--border);
+  border-top: var(--bw-select) solid var(--border);
   border-bottom: none;
   background: var(--surface-2);
 }
@@ -1762,7 +1762,7 @@ select:focus:not(:focus-visible) {
 .tx-month-group-row td {
   padding: var(--sp-1-5) var(--sp-3-5);
   background: var(--surface-2);
-  border-top: 2px solid var(--border);
+  border-top: var(--bw-select) solid var(--border);
   border-bottom: var(--bw-thin) solid var(--border);
 }
 .tx-month-group-inner {
@@ -5180,7 +5180,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-color-btn.selected {
   border-color: var(--text);
   transform: scale(1.1);
-  outline: 2px solid var(--surface);
+  outline: var(--bw-select) solid var(--surface);
   outline-offset: -4px;
 }
 
@@ -5460,7 +5460,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
 .cal-cell.selected {
   background: var(--primary-light);
-  outline: 2px solid var(--primary);
+  outline: var(--bw-select) solid var(--primary);
   outline-offset: -2px;
 }
 
@@ -9347,7 +9347,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 /* 今日のセル */
 .hm-today {
-  outline: 2px solid var(--on-dark-opaque);
+  outline: var(--bw-select) solid var(--on-dark-opaque);
   outline-offset: -2px;
   border-radius: var(--radius-3xs);
   animation: hm-today-pulse var(--dur-pulse) var(--ease-in-out) infinite;
@@ -10250,8 +10250,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   left: 2px; top: 0px;
   width: 7px; height: 4px;
-  border-left: 2px solid var(--white);
-  border-bottom: 2px solid var(--white);
+  border-left: var(--bw-select) solid var(--white);
+  border-bottom: var(--bw-select) solid var(--white);
   transform: rotate(-45deg) scale(0);
   transform-origin: center;
   transition: transform var(--dur-fast) var(--ease-bounce);
@@ -12577,7 +12577,7 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); }
 .dd-tx-row:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: var(--bw-select) solid var(--focus-ring);
   outline-offset: 1px;
 }
 @keyframes dd-row-in {
