@@ -1001,6 +1001,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 50%, transparent); }
+.btn-primary:active { filter: brightness(0.88); }
 
 .btn-ghost {
   background: var(--surface-2);
@@ -1009,6 +1010,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-btn-base);
 }
 .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+.btn-ghost:active { background: var(--border); box-shadow: none; }
 
 .btn-danger {
   background: var(--danger-bg);
@@ -1016,6 +1018,7 @@ select:focus:not(:focus-visible) {
   border: var(--bw-base) solid var(--danger-border);
 }
 .btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) 20%, transparent); }
+.btn-danger:active { filter: brightness(0.88); box-shadow: none; }
 
 .btn-sm { padding: var(--sp-1-5) var(--sp-3); font-size: var(--fs-xs); border-radius: var(--radius-btn-sm); }
 
@@ -1031,6 +1034,7 @@ select:focus:not(:focus-visible) {
   transition: color var(--dur-fast), text-underline-offset var(--dur-fast);
 }
 .btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: 4px; }
+.btn-link:active { opacity: var(--opacity-faded); }
 
 .btn-icon {
   background: none;
@@ -4176,7 +4180,7 @@ body {
   border-color: var(--primary);
   transform: translateY(-1px);
 }
-.btn-share:active { transform: translateY(0); }
+.btn-share:active { transform: translateY(0); filter: brightness(0.9); }
 
 .modal-share { max-width: var(--size-modal-lg); width: calc(100% - 32px); }
 
