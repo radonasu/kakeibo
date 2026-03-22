@@ -2040,6 +2040,7 @@ select:focus:not(:focus-visible) {
 }
 .adv-filter-toggle svg { flex-shrink: 0; }
 .adv-filter-toggle:hover { border-color: var(--primary); color: var(--primary); }
+.adv-filter-toggle:active { filter: brightness(0.93); border-color: var(--primary); }
 .adv-filter-toggle:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-toggle.adv-filter-on {
   border-color: var(--primary);
@@ -2136,6 +2137,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-clear:hover {
   background: var(--danger-bg);
 }
+.adv-filter-clear:active { background: var(--danger-border); filter: brightness(0.92); }
 [data-theme="dark"] .adv-filter-inner {
   background: var(--surface);
   border-color: var(--border);
@@ -2519,6 +2521,7 @@ mark.tx-hl {
   transition: background var(--dur-fast);
 }
 .btn-inline-add:hover { background: var(--primary-light); }
+.btn-inline-add:active { background: color-mix(in srgb, var(--primary) 18%, transparent); filter: brightness(0.92); }
 
 .quick-cat-form {
   margin-top: var(--sp-2);
@@ -2609,6 +2612,7 @@ mark.tx-hl {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 .btn-receipt:hover    { opacity: var(--opacity-near); }
+.btn-receipt:active   { opacity: var(--opacity-soft); filter: brightness(0.88); }
 .btn-receipt:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 .btn-receipt-file {
@@ -2624,6 +2628,7 @@ mark.tx-hl {
   transition: background var(--dur-fast);
 }
 .btn-receipt-file:hover    { background: var(--surface-hover); }
+.btn-receipt-file:active   { background: var(--border); filter: brightness(0.95); }
 .btn-receipt-file.disabled { opacity: var(--opacity-ghost); pointer-events: none; }
 
 .scan-result {
@@ -2659,8 +2664,10 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   cursor: pointer;
+  transition: opacity var(--dur-fast);
 }
-.multi-receipt-list .btn-mr-all:hover { opacity: var(--opacity-near); }
+.multi-receipt-list .btn-mr-all:hover  { opacity: var(--opacity-near); }
+.multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(0.88); }
 .multi-receipt-item {
   display: flex;
   align-items: stretch;
@@ -2713,12 +2720,14 @@ mark.tx-hl {
   color: var(--text);
   border: var(--bw-thin) solid var(--border) !important;
 }
-.btn-mr-fill:hover { background: var(--surface-hover); }
+.btn-mr-fill:hover  { background: var(--surface-hover); }
+.btn-mr-fill:active { background: var(--border); filter: brightness(0.95); }
 .btn-mr-add {
   background: var(--income);
   color: var(--white);
 }
-.btn-mr-add:hover { opacity: var(--opacity-near); }
+.btn-mr-add:hover  { opacity: var(--opacity-near); }
+.btn-mr-add:active { filter: brightness(0.85); }
 .btn-mr-add:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 /* 複数レシート インライン編集フォーム */
@@ -3136,6 +3145,7 @@ mark.tx-hl {
   background: var(--surface-hover);
   color: var(--text);
 }
+.auth-tab:not(.active):active { background: var(--border); color: var(--text); }
 .auth-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .auth-tab.active {
   background: var(--white);
@@ -3185,7 +3195,8 @@ mark.tx-hl {
   border: none;
   text-decoration: underline;
 }
-.auth-offline-mode:hover { color: var(--text-muted); }
+.auth-offline-mode:hover  { color: var(--text-muted); }
+.auth-offline-mode:active { opacity: var(--opacity-mild); }
 .auth-offline-mode:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
 
 /* ── PWA インストールガイド ─────────────────────────────── */
@@ -3600,7 +3611,8 @@ body {
   gap: var(--sp-1-5);
   transition: color var(--dur-fast);
 }
-.modal-details summary:hover { color: var(--text); }
+.modal-details summary:hover  { color: var(--text); }
+.modal-details summary:active { opacity: var(--opacity-mild); }
 .modal-details summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .modal-details summary::before {
   content: '▶';
@@ -3633,7 +3645,8 @@ body {
   justify-content: center;
 }
 .btn-dark-toggle svg { display: block; }
-.btn-dark-toggle:hover { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
+.btn-dark-toggle:hover  { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
+.btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(0.88); }
 
 /* ============================================================
    ダークモード — CSS変数オーバーライド
@@ -4107,7 +4120,8 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast);
 }
-.empty-month-btn:hover { background: color-mix(in srgb, var(--primary) 20%, white); }
+.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) 20%, white); }
+.empty-month-btn:active { filter: brightness(0.87); transform: scale(0.97); }
 
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
@@ -5124,7 +5138,8 @@ body {
   transition: color var(--dur-fast);
 }
 .goal-achieved-summary::-webkit-details-marker { display: none; }
-.goal-achieved-summary:hover { color: var(--text); }
+.goal-achieved-summary:hover  { color: var(--text); }
+.goal-achieved-summary:active { opacity: var(--opacity-mild); }
 .goal-achieved-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .goal-achieved-summary::before {
   content: '▶';
@@ -5320,7 +5335,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 /* btn-success */
 .btn-success { background: var(--success); color: var(--white); border: none; }
-.btn-success:hover { background: var(--income-deep); }
+.btn-success:hover  { background: var(--income-deep); }
+.btn-success:active { filter: brightness(0.88); transform: translateY(1px); box-shadow: none; }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
@@ -5719,7 +5735,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-2xs);
   transition: background var(--dur-fast);
 }
-.cal-ev-nav:hover { background: color-mix(in srgb, var(--primary) 10%, transparent); }
+.cal-ev-nav:hover  { background: color-mix(in srgb, var(--primary) 10%, transparent); }
+.cal-ev-nav:active { background: color-mix(in srgb, var(--primary) 18%, transparent); filter: brightness(0.93); }
 .cal-ev-nav:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-events-list {
@@ -5739,7 +5756,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   animation-delay: calc(var(--cal-ev-i, 0) * var(--dur-stagger));
 }
 .cal-ev-item:last-child { border-bottom: none; }
-.cal-ev-item:hover { background: var(--surface-hover); }
+.cal-ev-item:hover  { background: var(--surface-hover); }
+.cal-ev-item:active { background: var(--surface-hover); filter: brightness(0.97); }
 .cal-ev-done {
   opacity: var(--opacity-inactive);
 }
@@ -5836,7 +5854,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   transition: background var(--dur-fast);
 }
-.insight-item:hover { background: color-mix(in srgb, var(--primary) 6%, var(--surface-hover)); }
+.insight-item:hover  { background: color-mix(in srgb, var(--primary) 6%, var(--surface-hover)); }
+.insight-item:active { background: color-mix(in srgb, var(--primary) 10%, var(--surface-hover)); filter: brightness(0.97); }
 
 /* タイプ別ボーダー色 */
 .insight-item.insight-info    { border-left-color: var(--primary); }
@@ -6230,7 +6249,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; gap: var(--sp-2);
   transition: color var(--dur-fast);
 }
-.sub-inactive-section summary:hover { color: var(--text); }
+.sub-inactive-section summary:hover  { color: var(--text); }
+.sub-inactive-section summary:active { opacity: var(--opacity-mild); }
 .sub-inactive-section summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); }
 .sub-inactive-section[open] summary::before { transform: rotate(90deg); }
@@ -7200,7 +7220,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   transition: color var(--dur-fast), border-color var(--dur-fast);
 }
-.wl-archive-summary:hover { color: var(--text); border-color: var(--border-strong); }
+.wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); }
+.wl-archive-summary:active { opacity: var(--opacity-mild); }
 .wl-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary::-webkit-details-marker { display: none; }
 .wl-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
@@ -7361,7 +7382,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   flex-shrink: 0;
   transition: background var(--dur-fast);
 }
-.memo-cat-hint-btn:hover { background: var(--primary-hover); }
+.memo-cat-hint-btn:hover  { background: var(--primary-hover); }
+.memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(0.9); }
 [data-theme="dark"] .memo-cat-hint {
   background: color-mix(in srgb, var(--primary) 8%, transparent);
   border-color: color-mix(in srgb, var(--primary) 25%, transparent);
@@ -8032,7 +8054,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   transition: color var(--dur-fast), border-color var(--dur-fast);
 }
-.ch-archive-summary:hover { color: var(--text); border-color: var(--border-strong); }
+.ch-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); }
+.ch-archive-summary:active { opacity: var(--opacity-mild); }
 .ch-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-archive-summary::-webkit-details-marker { display: none; }
 .ch-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
