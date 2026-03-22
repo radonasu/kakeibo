@@ -250,7 +250,8 @@
   --radius-toggle:   18px;  /* トグルスイッチトラック */
   --radius-toggle-inner: 9px;  /* トグルスイッチつまみ */
   --radius-indicator: 11px; /* インジケータートラック（高さ22px要素の半径） */
-  /* ── ボーダー幅トークン (v17.51) ─────────────────────── */
+  /* ── ボーダー幅トークン (v17.52) ─────────────────────── */
+  --bw-thin:     1px; /* 細境界線幅（区切り線・テーブル・サマリーカード・ウィジェット等） */
   --bw-base:   1.5px; /* 標準境界線幅（フォーム入力・カード・パネル等の基本ボーダー） */
   --bw-thick:  2.5px; /* 太境界線幅（カラーボタン選択インジケーター・スライダードット等） */
   --bw-swatch:   3px; /* スウォッチ境界線幅（カラースウォッチ・ゴール・サブスクカラー選択） */
@@ -564,7 +565,7 @@ select:focus:not(:focus-visible) {
 
 #sidebar-brand {
   padding: var(--sp-5) var(--sp-4) var(--sp-4);
-  border-bottom: 1px solid var(--on-dark-divider);
+  border-bottom: var(--bw-thin) solid var(--on-dark-divider);
 }
 
 .brand-row {
@@ -605,7 +606,7 @@ select:focus:not(:focus-visible) {
   flex: 1;
   background: var(--on-dark-bg);
   color: var(--sidebar-text-hi);
-  border: 1px solid var(--on-dark-border);
+  border: var(--bw-thin) solid var(--on-dark-border);
   border-radius: var(--radius-btn-sm);
   padding: var(--sp-1-5) var(--sp-2);
   font-size: var(--fs-xs);
@@ -621,7 +622,7 @@ select:focus:not(:focus-visible) {
 .btn-account-add {
   background: var(--on-dark-base);
   color: var(--sidebar-text-hi);
-  border: 1px solid var(--on-dark-border);
+  border: var(--bw-thin) solid var(--on-dark-border);
   border-radius: var(--radius-btn-sm);
   padding: var(--sp-1-5) var(--sp-2-5);
   font-size: var(--fs-base);
@@ -710,7 +711,7 @@ select:focus:not(:focus-visible) {
 /* サイドバー下部ユーザーエリア */
 .sidebar-footer {
   padding: var(--sp-3);
-  border-top: 1px solid var(--on-dark-divider);
+  border-top: var(--bw-thin) solid var(--on-dark-divider);
 }
 
 .sidebar-user-card {
@@ -720,7 +721,7 @@ select:focus:not(:focus-visible) {
   padding: var(--sp-2-5) var(--sp-3);
   background: var(--on-dark-dim);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--on-dark-bg);
+  border: var(--bw-thin) solid var(--on-dark-bg);
 }
 
 .sidebar-avatar {
@@ -846,7 +847,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow);
   padding: var(--sp-6);
   margin-bottom: var(--sp-4);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 
 .card-title {
@@ -981,7 +982,7 @@ select:focus:not(:focus-visible) {
 .btn-ghost {
   background: var(--surface-2);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   box-shadow: var(--shadow-btn-base);
 }
 .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
@@ -1104,7 +1105,7 @@ select:focus:not(:focus-visible) {
   gap: var(--sp-2);
   padding: var(--sp-2) var(--sp-5);
   background: var(--warning-bg);
-  border-bottom: 1px solid var(--warning-border);
+  border-bottom: var(--bw-thin) solid var(--warning-border);
   color: var(--warning);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -1424,7 +1425,7 @@ select:focus:not(:focus-visible) {
 }
 .tx-table td {
   padding: var(--sp-2-75) var(--sp-3-5);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   vertical-align: middle;
 }
 .tx-table tbody tr {
@@ -1536,7 +1537,7 @@ select:focus:not(:focus-visible) {
   transition: background var(--dur-faster);
 }
 .tx-table tbody tr.tx-selected td {
-  border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border)) !important;
+  border-bottom: var(--bw-thin) solid color-mix(in srgb, var(--primary) 18%, var(--border)) !important;
 }
 .tx-table tbody tr.tx-selected td:first-child {
   border-left: var(--accent-w) solid var(--primary) !important;
@@ -1609,7 +1610,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-medium);
   color: var(--primary);
   background: var(--primary-light);
-  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 22%, transparent);
   cursor: pointer;
   transition: background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
   white-space: nowrap;
@@ -1664,7 +1665,7 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
-  border-top: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  border-top: var(--bw-thin) solid color-mix(in srgb, var(--primary) 35%, var(--border));
   box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 60%, transparent),
               0 -8px 32px var(--black-14);
   padding: var(--sp-3) var(--sp-5);
@@ -1761,7 +1762,7 @@ select:focus:not(:focus-visible) {
   padding: var(--sp-1-5) var(--sp-3-5);
   background: var(--surface-2);
   border-top: 2px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 .tx-month-group-inner {
   display: flex;
@@ -1843,7 +1844,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   background: color-mix(in srgb, var(--tc, var(--primary)) 12%, transparent);
   color: var(--tc, var(--primary));
-  border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
   white-space: nowrap;
   line-height: var(--lh-loose);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
@@ -1879,7 +1880,7 @@ select:focus:not(:focus-visible) {
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }
@@ -1900,7 +1901,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   white-space: nowrap;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: var(--bw-thin) solid transparent;
   transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   flex-shrink: 0;
   user-select: none;
@@ -2209,7 +2210,7 @@ mark.tx-hl {
   font-weight: var(--fw-semi);
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
-  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 30%, transparent);
   animation: tx-hl-badge-in var(--dur-mid) var(--ease-bounce) both;
 }
 
@@ -2323,7 +2324,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   font-weight: var(--fw-medium);
-  border-left: 1px solid var(--border);
+  border-left: var(--bw-thin) solid var(--border);
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
@@ -2388,7 +2389,7 @@ mark.tx-hl {
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-5) var(--sp-6);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 .modal-header h2 { font-size: var(--fs-xl); font-weight: var(--fw-bold); line-height: var(--lh-snug); }
 .modal-close {
@@ -2416,7 +2417,7 @@ mark.tx-hl {
 
 .modal-footer {
   padding: var(--sp-4) var(--sp-6);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   display: flex;
   justify-content: flex-end;
   gap: var(--sp-2);
@@ -2463,7 +2464,7 @@ mark.tx-hl {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
   padding: var(--sp-5);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 .export-block h4 { font-size: var(--fs-sm); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
 .export-block .hint { margin-bottom: var(--sp-3); }
@@ -2483,7 +2484,7 @@ mark.tx-hl {
   display: inline-flex;
   align-items: center;
   background: none;
-  border: 1px solid var(--primary);
+  border: var(--bw-thin) solid var(--primary);
   color: var(--primary);
   border-radius: var(--radius-btn-sm);
   padding: 1px var(--sp-2);
@@ -2641,7 +2642,7 @@ mark.tx-hl {
   display: flex;
   align-items: stretch;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-2-5) var(--sp-3);
   gap: var(--sp-2);
@@ -2687,7 +2688,7 @@ mark.tx-hl {
 .btn-mr-fill {
   background: var(--surface-2);
   color: var(--text);
-  border: 1px solid var(--border) !important;
+  border: var(--bw-thin) solid var(--border) !important;
 }
 .btn-mr-fill:hover { background: var(--surface-hover); }
 .btn-mr-add {
@@ -2714,7 +2715,7 @@ mark.tx-hl {
   font-family: inherit;
   font-size: var(--fs-xs);
   padding: var(--sp-1-5) var(--sp-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
@@ -2753,7 +2754,7 @@ mark.tx-hl {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-4);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .budget-item:hover {
@@ -2906,7 +2907,7 @@ mark.tx-hl {
   gap: var(--sp-3);
   padding: var(--sp-4);
   background: linear-gradient(135deg, var(--success-bg), var(--income-light));
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
   border-radius: var(--radius-btn);
 }
 
@@ -2960,7 +2961,7 @@ mark.tx-hl {
   margin-top: var(--sp-4);
   padding: var(--sp-3) var(--sp-4);
   background: var(--success-bg);
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
 }
@@ -3001,7 +3002,7 @@ mark.tx-hl {
   transform: translateX(-50%) translateY(20px);
   background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   padding: var(--sp-2-5) var(--sp-5);
   border-radius: var(--radius-lg);
   font-size: var(--fs-sm);
@@ -3128,7 +3129,7 @@ mark.tx-hl {
 
 .auth-error {
   background: var(--danger-bg);
-  border: 1px solid var(--danger-border);
+  border: var(--bw-thin) solid var(--danger-border);
   border-radius: var(--radius-sm);
   padding: var(--sp-2-75) var(--sp-3-5);
   font-size: var(--fs-sm);
@@ -3140,7 +3141,7 @@ mark.tx-hl {
   text-align: center;
   margin-top: var(--sp-6);
   padding-top: var(--sp-5);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 .auth-hint {
@@ -3178,7 +3179,7 @@ mark.tx-hl {
   background: var(--surface-2);
   border-radius: var(--radius-sm);
   padding: var(--sp-3-5) var(--sp-4);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 
 .install-tab h4 {
@@ -3294,7 +3295,7 @@ body {
   transform: translateX(-50%) translateY(20px);
   background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   padding: var(--sp-3) var(--sp-5);
   border-radius: var(--radius-lg);
   display: flex;
@@ -3327,7 +3328,7 @@ body {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   z-index: var(--z-bottom-nav);
   padding-bottom: env(safe-area-inset-bottom);
   box-shadow: var(--shadow-up-sm);
@@ -3546,7 +3547,7 @@ body {
 
 /* モーダル詳細折りたたみ */
 .modal-details {
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   margin-top: var(--sp-1);
 }
@@ -3573,7 +3574,7 @@ body {
 .modal-details[open] summary::before { transform: rotate(90deg); }
 .modal-details .modal-details-body {
   padding: var(--sp-3) var(--sp-3) var(--sp-1);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 /* ============================================================
@@ -3867,7 +3868,7 @@ body {
 
 .recurring-day-group {
   background: var(--bg);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-2-5) var(--sp-3-5);
 }
@@ -3886,7 +3887,7 @@ body {
 .recurring-day-input {
   width: var(--size-icon-2xl);
   padding: var(--sp-1-5) var(--sp-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn-sm);
   background: var(--surface);
   color: var(--text);
@@ -3986,7 +3987,7 @@ body {
 .step-card {
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   padding: var(--sp-5) var(--sp-4);
   display: flex;
   flex-direction: column;
@@ -4183,7 +4184,7 @@ body {
   max-width: min(360px, calc(100vw - 32px));
   background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   padding: var(--sp-2-75) var(--sp-4) var(--sp-2-75) var(--sp-3);
   font-size: var(--fs-sm);
@@ -4339,8 +4340,8 @@ body {
   justify-content: space-between;
   gap: var(--sp-3);
   padding: var(--sp-3) 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   margin-bottom: 0;
 }
 .asset-balance {
@@ -4374,7 +4375,7 @@ body {
   align-items: center;
   gap: var(--sp-2);
   padding: var(--sp-1-5) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-sm);
 }
 .asset-entry-row:last-of-type { border-bottom: none; }
@@ -4442,7 +4443,7 @@ body {
   color: var(--warning-deep);
   white-space: nowrap;
   flex-shrink: 0;
-  border: 1px solid var(--warning-border);
+  border: var(--bw-thin) solid var(--warning-border);
 }
 [data-theme="dark"] .asset-currency-badge {
   background: color-mix(in srgb, var(--warning) 15%, transparent);
@@ -4693,7 +4694,7 @@ body {
 /* スケルトンカードコンテナ（シマーなし）*/
 .sk-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: var(--sp-6);
@@ -4758,7 +4759,7 @@ body {
 .yoy-summary-item {
   flex: 1;
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
   min-width: 0;
@@ -4860,7 +4861,7 @@ body {
 @media (max-width: 768px) {
   .section-tabs {
     top: var(--size-mobile-bar);
-    margin: 0 -16px;
+    margin: 0 calc(-1 * var(--sp-4));
     padding: 0 var(--sp-4);
     margin-bottom: var(--sp-4);
   }
@@ -4942,7 +4943,7 @@ body {
   font-weight: var(--fw-semi);
   background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-2);
   flex-shrink: 0;
@@ -5025,7 +5026,7 @@ body {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-1) var(--sp-3);
   margin-bottom: var(--sp-2);
@@ -5187,7 +5188,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   color: var(--text-muted);
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-4);
@@ -5347,7 +5348,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .cal-sum-item {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4);
   display: flex;
@@ -5375,7 +5376,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* カレンダーグリッド */
 .cal-grid-wrap {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
   animation: cal-fade-in var(--dur-mid) var(--ease-plain);
@@ -5384,7 +5385,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-dow-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   background: var(--surface-2);
 }
 
@@ -5406,8 +5407,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .cal-cell {
   min-height: var(--size-cal-cell-h);
   padding: var(--sp-1) var(--sp-2);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-right: var(--bw-thin) solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-plain);
   display: flex;
@@ -5498,7 +5499,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 日別詳細パネル */
 .cal-day-panel {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
 }
@@ -5511,7 +5512,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   background: var(--surface-2);
 }
 
@@ -5526,7 +5527,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   height: var(--size-icon-sm);
   border-radius: var(--radius-btn);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
@@ -5548,7 +5549,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 
 .cal-day-panel-footer {
   padding: var(--sp-3) var(--sp-4);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 .cal-panel-tx {
@@ -5559,7 +5560,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) var(--sp-3);
   background: var(--surface-2);
   border-radius: var(--radius-btn);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 
 .cal-panel-dot {
@@ -5636,7 +5637,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* --- 収支予定統合表示 (v5.92) --- */
 .cal-events-section {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
   animation: cal-fade-in var(--dur-mid) var(--ease-plain);
@@ -5646,7 +5647,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   background: var(--surface-2);
 }
 .cal-events-title {
@@ -5693,7 +5694,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   border-left: var(--accent-w) solid var(--cal-ev-color, var(--primary));
   transition: background var(--dur-fast);
   animation: cal-ev-item-in var(--dur-medium) var(--ease-bounce) both;
@@ -5746,14 +5747,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge);
 }
 .cal-ev-badge.done    { background: color-mix(in srgb, var(--success) 12%, transparent); color: var(--success); }
-.cal-ev-badge.pending { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
+.cal-ev-badge.pending { background: var(--surface-hover); color: var(--text-muted); border: var(--bw-thin) solid var(--border); }
 
 .cal-events-totals {
   display: flex;
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
   background: var(--surface-2);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   flex-wrap: wrap;
 }
 .cal-ev-total {
@@ -5910,7 +5911,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: baseline;
   gap: var(--sp-3);
   padding-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   margin-bottom: var(--sp-3);
 }
 .sub-widget-total-label {
@@ -6047,7 +6048,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: var(--sp-3);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
@@ -6175,7 +6176,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* 休止セクション */
 .sub-inactive-section {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-4);
@@ -6266,7 +6267,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3);
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 .csv-format-item {
   display: flex;
@@ -6302,7 +6303,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3);
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 
 /* 列マッピンググリッド */
@@ -6341,7 +6342,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .csv-preview-wrap {
   max-height: 180px;
   overflow-y: auto;
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
 }
 .csv-preview-table th, .csv-preview-table td {
@@ -6361,7 +6362,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   margin-top: var(--sp-4);
   padding-top: var(--sp-3);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 /* モバイル対応 */
@@ -6491,7 +6492,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: var(--sp-3);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
@@ -6721,7 +6722,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   gap: var(--sp-5);
   margin-bottom: var(--sp-4);
   padding-bottom: var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 /* ──── SVG Gauge ──── */
 .hs-gauge-wrap {
@@ -6870,7 +6871,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-trend-wrap {
   margin-top: var(--sp-4);
   padding-top: var(--sp-3);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 .hs-trend-header {
   display: flex;
@@ -6891,9 +6892,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-badge);
   letter-spacing: var(--ls-fine);
 }
-.hs-trend-up   { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
-.hs-trend-down { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
-.hs-trend-flat { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
+.hs-trend-up   { background: var(--success-bg);  color: var(--success);      border: var(--bw-thin) solid var(--success-border); }
+.hs-trend-down { background: var(--danger-bg);   color: var(--danger-text);  border: var(--bw-thin) solid var(--danger-border); }
+.hs-trend-flat { background: var(--surface-hover); color: var(--text-muted); border: var(--bw-thin) solid var(--border); }
 [data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--income-end); border-color: color-mix(in srgb, var(--success) 30%, transparent); }
 [data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) 18%, transparent); color: var(--expense-end); border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
 [data-theme="dark"] .hs-trend-flat { background: var(--on-dark-divider); color: var(--text-muted); }
@@ -7010,7 +7011,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .wl-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-left: var(--size-accent-bar) solid var(--wl-accent, var(--primary));
   border-radius: var(--radius-card);
   padding: var(--sp-4) var(--sp-5);
@@ -7105,17 +7106,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-pri-high {
   background: var(--danger-bg);
   color: var(--danger-text);
-  border: 1px solid var(--danger-border);
+  border: var(--bw-thin) solid var(--danger-border);
 }
 .wl-pri-medium {
   background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border);
+  border: var(--bw-thin) solid var(--warning-border);
 }
 .wl-pri-low {
   background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
 }
 
 /* 空状態 */
@@ -7152,7 +7153,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   padding: var(--sp-3) var(--sp-4);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   list-style: none;
   user-select: none;
@@ -7174,7 +7175,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .wl-archive-item {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-4);
   display: flex;
@@ -7196,7 +7197,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-3);
   margin-bottom: var(--sp-4);
   padding-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 .wish-widget-total-label {
   font-size: var(--fs-xs);
@@ -7288,7 +7289,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   padding: var(--sp-2) var(--sp-3);
   background: var(--surface-2, var(--surface));
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn-sm);
   margin-top: var(--sp-2);
   font-size: var(--fs-xs);
@@ -7390,16 +7391,16 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-label);
 }
-.fc-good    { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
-.fc-caution { background: var(--primary-light); color: var(--primary-dark); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); }
-.fc-alert   { background: var(--danger-bg);   color: var(--danger-text);   border: 1px solid var(--danger-border); }
+.fc-good    { background: var(--success-bg);  color: var(--success);      border: var(--bw-thin) solid var(--success-border); }
+.fc-caution { background: var(--primary-light); color: var(--primary-dark); border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 30%, transparent); }
+.fc-alert   { background: var(--danger-bg);   color: var(--danger-text);   border: var(--bw-thin) solid var(--danger-border); }
 
 /* 低信頼度バナー */
 .fc-low-conf {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-1-25) var(--sp-2-5);
   margin-bottom: var(--sp-3);
@@ -7500,8 +7501,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   vertical-align: middle;
   margin-left: var(--sp-0-5);
 }
-.fc-avg-up   { background: var(--danger-bg);   color: var(--danger-text);  border: 1px solid var(--danger-border); }
-.fc-avg-down { background: var(--success-bg);  color: var(--success);      border: 1px solid var(--success-border); }
+.fc-avg-up   { background: var(--danger-bg);   color: var(--danger-text);  border: var(--bw-thin) solid var(--danger-border); }
+.fc-avg-down { background: var(--success-bg);  color: var(--success);      border: var(--bw-thin) solid var(--success-border); }
 
 /* 3カラムグリッド */
 .fc-grid {
@@ -7511,7 +7512,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .fc-cell {
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
@@ -7692,12 +7693,12 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .asset-balance-delta.up {
   background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
 }
 .asset-balance-delta.down {
   background: var(--danger-bg);
   color: var(--danger-text);
-  border: 1px solid var(--danger-border);
+  border: var(--bw-thin) solid var(--danger-border);
 }
 [data-theme="dark"] .asset-balance-delta.up {
   background: color-mix(in srgb, var(--success) 15%, transparent);
@@ -7735,7 +7736,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .asset-sparkline-wrap {
   margin-top: var(--sp-2-5);
   padding-top: var(--sp-2);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 .asset-sparkline-label {
   font-size: var(--fs-2xs);
@@ -7844,7 +7845,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-4);
   border-radius: var(--radius);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-left: var(--size-accent-bar) solid var(--ch-accent, var(--primary));
   position: relative;
   overflow: hidden;
@@ -7965,7 +7966,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   color: var(--text-muted);
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px dashed var(--border);
+  border: var(--bw-thin) dashed var(--border);
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
@@ -7984,7 +7985,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-3) var(--sp-4);
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   list-style: none;
   user-select: none;
   display: flex;
@@ -8313,7 +8314,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   position: relative;
   overflow: hidden;
   background: var(--bg);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
 }
@@ -8339,7 +8340,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .ct-month-cell { font-weight: var(--fw-semi); color: var(--text); }
 .ct-cell-val   { font-variant-numeric: tabular-nums; }
-.ct-row-total  { font-weight: var(--fw-bold); color: var(--text); border-left: 1px solid var(--border); }
+.ct-row-total  { font-weight: var(--fw-bold); color: var(--text); border-left: var(--bw-thin) solid var(--border); }
 .ct-row-empty td { color: var(--text-muted); opacity: var(--opacity-ghost); }
 
 /* テーブル行アニメーション */
@@ -8385,12 +8386,12 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .cat-fixed-badge.is-fixed {
   background: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
-  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 30%, transparent);
 }
 .cat-fixed-badge.is-var {
   background: color-mix(in srgb, var(--success) 10%, transparent);
   color: var(--success);
-  border: 1px solid color-mix(in srgb, var(--success) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--success) 28%, transparent);
 }
 [data-theme="dark"] .cat-fixed-badge.is-fixed {
   background: color-mix(in srgb, var(--primary-end) 18%, transparent);
@@ -8611,7 +8612,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-4);
 }
 .wk-cell {
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
@@ -8865,7 +8866,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .qa-body {
   padding: 0 var(--sp-4) var(--sp-4);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   animation: qa-body-in var(--dur-appear) var(--ease-plain);
   position: relative;
   z-index: 1;
@@ -9165,7 +9166,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-2);
   line-height: var(--lh-base);
@@ -9198,7 +9199,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .hm-stat-card {
   flex: 1 1 110px;
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--sp-3);
   position: relative;
@@ -9550,17 +9551,17 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: var(--sp-0-75) var(--sp-2-5); border-radius: var(--radius-badge);
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   color: var(--text-muted);
   margin-top: var(--sp-2);
 }
 
 /* 履歴 */
-.debt-history { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--border); }
+.debt-history { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: var(--bw-thin) solid var(--border); }
 .debt-history-title { font-size: var(--fs-xs); font-weight: var(--fw-semi); color: var(--text-muted); margin-bottom: var(--sp-2); }
 .debt-entry-row {
   display: flex; align-items: center; gap: var(--sp-2);
-  padding: var(--sp-1) 0; border-bottom: 1px solid var(--border);
+  padding: var(--sp-1) 0; border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-xs);
 }
 .debt-entry-row:last-child { border-bottom: none; }
@@ -9660,7 +9661,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .sim-loan-stat {
   font-size: var(--fs-sm); color: var(--text-muted);
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface); border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge); padding: var(--sp-0-5) var(--sp-2-5);
 }
 .sim-loan-stat strong { color: var(--text); }
@@ -9671,7 +9672,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sim-preset-row { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 .sim-preset {
   font-size: var(--fs-sm); padding: var(--sp-1) var(--sp-3); border-radius: var(--radius-badge);
-  border: 1px solid var(--border); transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
+  border: var(--bw-thin) solid var(--border); transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
 }
 .sim-preset:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
@@ -9680,12 +9681,12 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* 結果グリッド */
 .sim-result-grid {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 0; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  gap: 0; border: var(--bw-thin) solid var(--border); border-radius: var(--radius-sm);
   overflow: hidden; margin: var(--sp-4) 0;
 }
 .sim-result-grid > div {
   padding: var(--sp-2-5) var(--sp-3); font-size: var(--fs-sm);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 .sim-result-grid > div:nth-child(-n+3) { /* header row */
   font-weight: var(--fw-bold); background: var(--surface-hover);
@@ -9702,7 +9703,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sim-savings-banner {
   display: flex; align-items: center; justify-content: center; gap: var(--sp-4);
   background: linear-gradient(135deg, var(--success-bg), var(--income-light));
-  border: 1px solid var(--success-border); border-radius: var(--radius-card);
+  border: var(--bw-thin) solid var(--success-border); border-radius: var(--radius-card);
   padding: var(--sp-4); margin-bottom: var(--sp-4);
 }
 [data-theme="dark"] .sim-savings-banner {
@@ -10003,9 +10004,9 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   white-space: nowrap;
 }
-.sb-diff-pill.sb-diff-up   { background: var(--danger-bg);     color: var(--danger-text);  border: 1px solid var(--danger-border); }
-.sb-diff-pill.sb-diff-down { background: var(--success-bg);    color: var(--success);      border: 1px solid var(--success-border); }
-.sb-diff-pill.sb-diff-same { background: var(--surface-hover); color: var(--text-muted);   border: 1px solid var(--border); }
+.sb-diff-pill.sb-diff-up   { background: var(--danger-bg);     color: var(--danger-text);  border: var(--bw-thin) solid var(--danger-border); }
+.sb-diff-pill.sb-diff-down { background: var(--success-bg);    color: var(--success);      border: var(--bw-thin) solid var(--success-border); }
+.sb-diff-pill.sb-diff-same { background: var(--surface-hover); color: var(--text-muted);   border: var(--bw-thin) solid var(--border); }
 
 /* データ不足バッジ */
 .sb-low-data {
@@ -10013,7 +10014,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xs);
   background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border);
+  border: var(--bw-thin) solid var(--warning-border);
   border-radius: var(--radius-badge);
   padding: 1px var(--sp-1-25);
   margin-left: var(--sp-1);
@@ -10115,7 +10116,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 .ev-month-col {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--sp-3);
   display: flex;
@@ -10153,7 +10154,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-2) 0;
   color: var(--text-muted);
   font-size: var(--fs-xs);
-  border: 1px dashed var(--border);
+  border: var(--bw-thin) dashed var(--border);
   border-radius: var(--radius-btn-sm);
 }
 
@@ -10311,7 +10312,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-bold);
   color: var(--text-muted);
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
@@ -10400,7 +10401,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   flex-wrap: wrap;
   padding: var(--sp-2) var(--sp-4);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   margin-bottom: var(--sp-2);
 }
@@ -10465,7 +10466,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   margin-top: var(--sp-2);
   padding-top: var(--sp-2);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 .sf-save-btn {
   display: inline-flex;
@@ -10497,7 +10498,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .tg-stat-card {
   background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) 6%, var(--surface)) 100%);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--sp-4);
   display: flex;
@@ -10763,7 +10764,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   margin-top: var(--sp-4);
   padding-top: var(--sp-3);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 /* ============================================================
@@ -10881,7 +10882,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   color: var(--text-muted);
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-2-5);
 }
@@ -10924,18 +10925,18 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* 収入セル */
 .yr-cell-income {
   background: var(--success-bg);
-  border: 1px solid var(--success-border);
+  border: var(--bw-thin) solid var(--success-border);
 }
 .yr-cell-income .yr-cell-value { color: var(--success); }
 /* 支出セル */
 .yr-cell-expense {
   background: var(--danger-bg);
-  border: 1px solid var(--danger-border);
+  border: var(--bw-thin) solid var(--danger-border);
 }
 .yr-cell-expense .yr-cell-value { color: var(--danger-text); }
 /* 貯蓄率セル */
 .yr-cell-savings {
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
 }
 .yr-cell-savings-success { background: var(--success-bg); border-color: var(--success-border); }
 .yr-cell-savings-success .yr-cell-value { color: var(--success); }
@@ -10952,8 +10953,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   margin-top: var(--sp-1);
   font-weight: var(--fw-semi);
 }
-.yr-prev-down { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
-.yr-prev-up   { background: var(--danger-bg);  color: var(--danger-text); border: 1px solid var(--danger-border); }
+.yr-prev-down { background: var(--success-bg); color: var(--success); border: var(--bw-thin) solid var(--success-border); }
+.yr-prev-up   { background: var(--danger-bg);  color: var(--danger-text); border: var(--bw-thin) solid var(--danger-border); }
 /* プログレスバー */
 .yr-progress-wrap {
   margin: var(--sp-3) 0 var(--sp-2);
@@ -10982,7 +10983,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-3) var(--sp-5);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   padding-top: var(--sp-3);
   margin-top: var(--sp-1);
 }
@@ -11055,7 +11056,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* フッター月平均をミニカード化（v6.5）*/
 .yr-avg {
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--sp-2) var(--sp-3);
 }
@@ -11235,8 +11236,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
 }
-.ci-budget-pill.ok   { background: var(--success-bg);  color: var(--success);     border: 1px solid var(--success-border); }
-.ci-budget-pill.over { background: var(--danger-bg);   color: var(--danger-text); border: 1px solid var(--danger-border); }
+.ci-budget-pill.ok   { background: var(--success-bg);  color: var(--success);     border: var(--bw-thin) solid var(--success-border); }
+.ci-budget-pill.over { background: var(--danger-bg);   color: var(--danger-text); border: var(--bw-thin) solid var(--danger-border); }
 /* スコアバッジ */
 .ci-score-row {
   display: flex;
@@ -11281,7 +11282,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
 }
 .ci-badge.achieved { background: var(--success-bg); color: var(--success); }
-.ci-badge.failed   { background: var(--surface-hover); color: var(--text-muted); border: 1px solid var(--border); }
+.ci-badge.failed   { background: var(--surface-hover); color: var(--text-muted); border: var(--bw-thin) solid var(--border); }
 /* 収支予定 */
 .ci-event-list { display: flex; flex-direction: column; gap: var(--sp-2); }
 .ci-event-item {
@@ -11458,7 +11459,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   width: min(360px, calc(100vw - var(--sp-6)));
   max-height: min(560px, calc(100dvh - 70px));
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   z-index: var(--z-notif-panel);
@@ -11480,7 +11481,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   background: var(--surface-2);
   flex-shrink: 0;
 }
@@ -11492,7 +11493,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .notif-mark-read {
   background: none;
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   color: var(--text-muted);
   font-size: var(--fs-xs);
   padding: var(--sp-0-75) var(--sp-2-5);
@@ -11519,7 +11520,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* パネルフッター */
 .notif-panel-footer {
   padding: var(--sp-2) var(--sp-4);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   background: var(--surface-2);
   font-size: var(--fs-2xs);
   color: var(--text-muted);
@@ -11543,7 +11544,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .notif-group-label.notif-type-info { color: var(--primary); }
 /* グループ間セパレーター */
 .notif-item + .notif-group-label {
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   margin-top: var(--sp-1);
   padding-top: var(--sp-3);
 }
@@ -11572,6 +11573,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: var(--surface-hover);
   transform: translateX(2px);
 }
+.notif-item:active { transform: translateX(0); }
 .notif-item:not(.notif-read):hover {
   background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
@@ -11951,7 +11953,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   align-items: center;
   padding: var(--sp-1) var(--sp-2-5);
   border-radius: var(--radius-badge);
-  border: 1px solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) 28%, transparent);
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) 10%, var(--surface));
   color: var(--memo-chip-color, var(--primary));
   font-size: var(--fs-xs);
@@ -12021,7 +12023,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   padding: var(--sp-1) var(--sp-2);
   border-radius: var(--radius-btn-sm);
   background: var(--warning-bg);
-  border: 1px solid var(--warning-border);
+  border: var(--bw-thin) solid var(--warning-border);
   animation: calc-preview-in var(--dur-faster) var(--ease-plain) both;
 }
 
@@ -12079,7 +12081,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--primary) 12%, var(--surface-1)),
     color-mix(in srgb, var(--primary) 5%, var(--surface-1)));
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 
 .rc-header-top {
@@ -12240,7 +12242,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   justify-content: flex-end;
   gap: var(--sp-3);
   padding: var(--sp-4) var(--sp-5);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
 }
 
 /* モーダルオープンアニメーション */
@@ -12296,7 +12298,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* ── 取引モーダル 連続入力バナー + フォーム入場アニメーション v7.8 ── */
 .tx-added-banner {
   background: var(--success-bg);
-  border-bottom: 1px solid var(--success-border);
+  border-bottom: var(--bw-thin) solid var(--success-border);
   padding: var(--sp-2-25) var(--sp-6);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
@@ -12393,14 +12395,14 @@ kbd {
   color: var(--text-muted);
   margin-bottom: var(--sp-2);
   padding-bottom: var(--sp-1);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 .kb-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-1-75) 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
+  border-bottom: var(--bw-thin) solid color-mix(in srgb, var(--border) 45%, transparent);
   gap: var(--sp-3);
 }
 .kb-row:last-child {
@@ -12502,7 +12504,7 @@ canvas.chart-clickable { cursor: pointer; }
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-3);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   padding-bottom: var(--sp-3);
   margin-bottom: var(--sp-3);
 }
@@ -12563,7 +12565,7 @@ canvas.chart-clickable { cursor: pointer; }
   align-items: center;
   gap: var(--sp-3);
   padding: var(--sp-2) var(--sp-2);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-sm);
   cursor: pointer;
   border-radius: var(--radius-btn-sm);
@@ -12617,7 +12619,7 @@ canvas.chart-clickable { cursor: pointer; }
   justify-content: flex-end;
   gap: var(--sp-2);
   padding-top: var(--sp-3);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   margin-top: var(--sp-3);
   flex-shrink: 0;
 }
@@ -12639,7 +12641,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-1-75);
   pointer-events: none;
@@ -12666,7 +12668,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 .yi-card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--sp-5);
   display: flex;
@@ -12936,7 +12938,7 @@ canvas.chart-clickable { cursor: pointer; }
   justify-content: center;
   width: var(--size-icon-sm);
   height: var(--size-icon-sm);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   color: var(--text-muted);
@@ -13000,7 +13002,7 @@ canvas.chart-clickable { cursor: pointer; }
   letter-spacing: var(--ls-caps);
   margin: var(--sp-3) 0 var(--sp-2);
   padding-bottom: var(--sp-1);
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--bw-thin) solid var(--border);
 }
 
 /* カテゴリ内訳 */
@@ -13135,35 +13137,35 @@ canvas.chart-clickable { cursor: pointer; }
 /* 収入: 緑系 */
 .md-cell-income {
   background: linear-gradient(135deg, color-mix(in srgb, var(--success) 16%, transparent), color-mix(in srgb, var(--success) 6%, transparent));
-  border: 1px solid color-mix(in srgb, var(--success) 22%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--success) 22%, transparent);
   color: var(--success);
 }
 .md-cell-income .md-cell-label { color: color-mix(in srgb, var(--success) 85%, var(--text-muted)); }
 /* 支出: 赤系 */
 .md-cell-expense {
   background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
-  border: 1px solid color-mix(in srgb, var(--danger-text) 20%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--danger-text) 20%, transparent);
   color: var(--danger-text);
 }
 .md-cell-expense .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
 /* 残高黒字: インディゴ系 */
 .md-cell-balance-pos {
   background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, transparent), color-mix(in srgb, var(--primary) 5%, transparent));
-  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 20%, transparent);
   color: var(--primary);
 }
 .md-cell-balance-pos .md-cell-label { color: color-mix(in srgb, var(--primary) 85%, var(--text-muted)); }
 /* 残高赤字: 赤系 */
 .md-cell-balance-neg {
   background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
-  border: 1px solid color-mix(in srgb, var(--danger-text) 20%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--danger-text) 20%, transparent);
   color: var(--danger-text);
 }
 .md-cell-balance-neg .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
 /* 件数: サーフェス系 */
 .md-cell-count {
   background: var(--surface-hover);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   color: var(--text);
 }
 .md-cell-count .md-cell-label { color: var(--text-muted); }
@@ -13250,7 +13252,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-weight: var(--fw-bold);
   padding: var(--sp-0-5) var(--sp-2);
   border-radius: var(--radius-badge);
-  border: 1px solid;
+  border: var(--bw-thin) solid;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -13399,7 +13401,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .pace-daily-highlight {
   background: color-mix(in srgb, var(--primary) 6%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) 18%, transparent);
 }
 .pace-daily-label {
   font-size: var(--fs-2xs);
@@ -13432,7 +13434,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-xs);
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
+  border: var(--bw-thin) solid transparent;
   line-height: var(--lh-snug);
 }
 .pace-msg.pace-good { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
@@ -13513,7 +13515,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--pm-sum-color) 10%, var(--surface)),
     color-mix(in srgb, var(--pm-sum-color) 4%, var(--surface)));
-  border: 1px solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
+  border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
 .pm-sum-card:nth-child(1) { animation-delay: 0ms; }
@@ -13580,7 +13582,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-card {
   position: relative;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--sp-4);
   display: flex;
@@ -13643,7 +13645,7 @@ canvas.chart-clickable { cursor: pointer; }
   font-size: var(--fs-2xs);
   color: var(--text-faint);
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
   padding: 1px var(--sp-1-5);
   white-space: nowrap;
@@ -13662,7 +13664,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
-  border-top: 1px solid var(--border);
+  border-top: var(--bw-thin) solid var(--border);
   padding-top: var(--sp-2);
 }
 .cat-stat-row {
@@ -13688,7 +13690,7 @@ canvas.chart-clickable { cursor: pointer; }
   text-align: right;
   font-size: var(--fs-xs);
   padding: var(--sp-0-75) var(--sp-1-75);
-  border: 1px solid var(--border);
+  border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
   color: var(--text);
