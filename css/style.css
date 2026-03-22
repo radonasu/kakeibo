@@ -2308,6 +2308,7 @@ mark.tx-hl {
   cursor: pointer;
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.month-sel:hover { border-color: var(--border-strong); }
 .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* サマリーミニ (v5.54 刷新) */
@@ -2880,7 +2881,7 @@ mark.tx-hl {
   text-align: right;
   background: var(--surface);
   color: var(--text);
-  transition: border-color var(--dur-fast);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .budget-input:hover { border-color: var(--border-strong); }
 .budget-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -3878,7 +3879,9 @@ body {
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
+  transition: color var(--dur-fast);
 }
+.notif-toggle-label:hover { color: var(--primary); }
 .notif-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
   height: var(--size-checkbox);
@@ -3919,7 +3922,9 @@ body {
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
+  transition: color var(--dur-fast);
 }
+.recurring-toggle-label:hover { color: var(--primary); }
 .recurring-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
   height: var(--size-checkbox);
@@ -3955,7 +3960,9 @@ body {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   text-align: center;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.recurring-day-input:hover { border-color: var(--border-strong); }
 .recurring-day-input:focus {
   outline: none;
   border-color: var(--primary);
@@ -9067,6 +9074,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
   min-width: 0;
 }
+.qa-cat-select:hover { border-color: var(--border-strong); }
 .qa-cat-select:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) 18%, transparent); }
 /* メモ行 */
 .qa-memo-row {
@@ -9088,6 +9096,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   min-width: 0;
 }
 .qa-memo-input::placeholder { color: var(--text-muted); }
+.qa-memo-input:hover { border-color: var(--border-strong); }
 .qa-memo-input:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) 18%, transparent); }
 /* 追加ボタン タイプカラー連動 */
 .qa-card .qa-submit-btn {
@@ -13804,6 +13813,7 @@ canvas.chart-clickable { cursor: pointer; }
   color: var(--text);
   transition: border-color var(--dur-base), box-shadow var(--dur-base);
 }
+.cat-budget-input:hover { border-color: var(--border-strong); }
 .cat-budget-input:focus {
   outline: none;
   border-color: var(--cat-clr, var(--primary));

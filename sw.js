@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.68'; // v17.68: ボタン系:activeフィードバック強化5種（btn-primary/ghost/danger/link/share）
+const CACHE_NAME = 'kakeibo-v17.69'; // v17.69: 入力フィールド・セレクト・トグルラベルのhover/transition一貫性改善7箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
