@@ -366,6 +366,7 @@
   --size-tx-cb:      17px;  /* 一括選択チェックボックス（--size-checkboxより1px大・取引行専用） */
   --size-hm-cell:    13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
   --size-hm-month:   20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-icon-4xs:   12px;  /* 極最小アイコン要素（rpt-row-chevron・tiny SVG chevron・size-dot-lg:12px同値だが別セマンティック） */
   --size-icon-3xs:   22px;  /* 最小アイコン要素（bottom-nav-icon svg・cal-date-num・dw-slider高さ） */
   --size-icon-2xs:   24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
   --size-color-btn:  26px;  /* カラーピッカーボタン（sub-color-btn・pt-color-btn等） */
@@ -403,7 +404,9 @@
   --size-month-btn:   30px; /* 月ナビボタン幅（.month-nav-btn） */
   --size-scrollbar:    6px; /* スクロールバー幅・高さ */
   --size-modal-lg:   540px; /* 大モーダル最大幅（.modal-share / .ch-modal） */
+  --size-modal-xl:   640px; /* 特大モーダル最大幅（.modal-lg：繰上返済シミュレーター等）*/
   --size-seg-bar:     52px; /* セグメントバー幅（fv-seg-bar通常幅） */
+  --size-mini-bar:    70px; /* インラインミニバー幅（.fv-mini-bar：固定変動費テーブル内カテゴリ別ミニプログレスバー） */
   /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26/v17.30/v17.32) ─ */
   --size-deco-4xs:    48px; /* 最極小装飾サークル（wl-summary-card::after：deco-3xs:50より微小） */
   --size-deco-3xs:    50px; /* 極小装飾サークル（pt-summary-card::after・ev-card::before等） */
@@ -8459,7 +8462,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* カテゴリ別ミニバー */
 .fv-mini-bar {
   display: inline-block;
-  width: 70px;
+  width: var(--size-mini-bar);
   height: var(--size-bar-sm);
   background: var(--border);
   border-radius: var(--radius-3xs);
@@ -9196,7 +9199,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .hm-stat-card::before {
   content: '';
   position: absolute;
-  width: 70px; height: 70px;
+  width: var(--size-deco-2xs); height: var(--size-deco-2xs);
   border-radius: var(--radius-circle);
   top: -20px; right: -20px;
   opacity: var(--opacity-deco-lg);
@@ -9625,7 +9628,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* ============================================================
    繰上返済シミュレーター（v5.86）
    ============================================================ */
-.modal-lg { max-width: 640px; width: 95vw; }
+.modal-lg { max-width: var(--size-modal-xl); width: 95vw; }
 
 .sim-modal-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
@@ -12500,8 +12503,8 @@ canvas.chart-clickable { cursor: pointer; }
   min-width: 0;
 }
 .dd-cat-dot {
-  width: 13px;
-  height: 13px;
+  width: var(--size-hm-cell);
+  height: var(--size-hm-cell);
   border-radius: var(--radius-circle);
   flex-shrink: 0;
   display: inline-block;
@@ -13199,8 +13202,8 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .rpt-row-chevron {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: var(--size-icon-4xs);
+  height: var(--size-icon-4xs);
   vertical-align: middle;
   margin-left: var(--sp-1);
   color: var(--text-muted);
