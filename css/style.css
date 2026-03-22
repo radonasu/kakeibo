@@ -235,6 +235,15 @@
   --ease-out-sine: cubic-bezier(.25, .46, .45, .94); /* スライド/ページ遷移向けサイン減速 */
   --ease-light-bounce: cubic-bezier(.34, 1.1, .64, 1); /* 弱めバウンス（cal-panel-in等：soft-bounce弱化版） */
 
+  /* ── backdrop-filter ブラー・彩度トークン (v17.59) ──────── */
+  --blur-sm:   8px;   /* 軽微ブラー（モーダルオーバーレイ・セクションタブ glassmorphism） */
+  --blur-md:  10px;   /* 中ブラー（PWA iOSガイド glassmorphism） */
+  --blur-lg:  12px;   /* 強めブラー（ボトムナビ glassmorphism） */
+  --blur-xl:  18px;   /* 最強ブラー（バルクアクションバー glassmorphism） */
+  --saturate-subtle: 1.1;  /* 微彩度強調（モーダルオーバーレイ・セクションタブ） */
+  --saturate-base:   1.2;  /* 標準彩度強調（ボトムナビ） */
+  --saturate-strong: 1.6;  /* 強彩度強調（バルクアクションバー） */
+
   /* ── コンポーネントトークン (v5.18) ──────────────────── */
   --radius-btn:      12px;  /* ボタン角丸（統一） */
   --radius-btn-sm:    8px;  /* 小ボタン角丸 */
@@ -1672,8 +1681,8 @@ select:focus:not(:focus-visible) {
   bottom: 0; left: 0; right: 0;
   z-index: var(--z-sidebar);
   background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(18px) saturate(1.6);
-  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(var(--blur-xl)) saturate(var(--saturate-strong));
+  -webkit-backdrop-filter: blur(var(--blur-xl)) saturate(var(--saturate-strong));
   border-top: var(--bw-thin) solid color-mix(in srgb, var(--primary) 35%, var(--border));
   box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 60%, transparent),
               0 -8px 32px var(--black-14);
@@ -2369,8 +2378,8 @@ mark.tx-hl {
   position: fixed;
   inset: 0;
   background: color-mix(in srgb, var(--sidebar-bg) 45%, transparent);
-  backdrop-filter: blur(8px) saturate(1.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3247,8 +3256,8 @@ body {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   background: color-mix(in srgb, var(--sidebar-bg) 95%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   color: var(--sidebar-text-hi);
   padding: var(--sp-5);
   padding-bottom: calc(var(--sp-5) + env(safe-area-inset-bottom));
@@ -3335,8 +3344,8 @@ body {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(var(--blur-lg)) saturate(var(--saturate-base));
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(var(--saturate-base));
   border-top: var(--bw-thin) solid var(--border);
   z-index: var(--z-bottom-nav);
   padding-bottom: env(safe-area-inset-bottom);
@@ -4179,7 +4188,7 @@ body {
 
 /* モバイル */
 @media (max-width: 640px) {
-  .modal-share { width: calc(100% - 24px); }
+  .modal-share { width: calc(100% - var(--sp-6)); }
   .share-modal-body { padding: var(--sp-2) var(--sp-3-5) var(--sp-5); gap: var(--sp-3); }
   .share-hint { display: none; }
 }
@@ -4190,7 +4199,7 @@ body {
   bottom: calc(var(--size-mobile-bar) + var(--sp-3-5) + var(--sp-2) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%) translateY(14px);
-  max-width: min(360px, calc(100vw - 32px));
+  max-width: min(360px, calc(100vw - var(--sp-8)));
   background: var(--surface);
   color: var(--text);
   border: var(--bw-thin) solid var(--border);
@@ -4803,8 +4812,8 @@ body {
   top: 0;
   z-index: var(--z-sticky-tabs);
   background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(8px) saturate(1.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   border-bottom: var(--accent-w) solid var(--border);
   display: flex;
   gap: 0;
