@@ -9629,6 +9629,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: color var(--dur-fast);
 }
 .debt-archive-summary:hover { color: var(--text); }
+.debt-archive-summary:active { opacity: var(--opacity-mild); }
 .debt-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .debt-archive-summary::-webkit-details-marker { display: none; }
 .debt-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
@@ -12383,13 +12384,26 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--primary);
   border: var(--bw-base) solid color-mix(in srgb, var(--primary) 35%, transparent);
   box-shadow: var(--shadow-btn-base);
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .btn-continue:hover {
   background: color-mix(in srgb, var(--primary) 8%, var(--surface-2));
   border-color: color-mix(in srgb, var(--primary) 55%, transparent);
 }
+.btn-continue:active {
+  background: var(--surface-2);
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  filter: brightness(0.95);
+}
 [data-theme="dark"] .btn-continue {
   background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
+}
+[data-theme="dark"] .btn-continue:hover {
+  background: color-mix(in srgb, var(--primary) 18%, var(--surface-2));
+}
+[data-theme="dark"] .btn-continue:active {
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
+  filter: brightness(0.92);
 }
 
 
@@ -12936,6 +12950,8 @@ canvas.chart-clickable { cursor: pointer; }
 
 .opp-challenge-btn:active {
   transform: scale(0.96);
+  filter: brightness(0.95);
+  box-shadow: none;
 }
 .opp-challenge-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
