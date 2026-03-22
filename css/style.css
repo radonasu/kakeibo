@@ -236,11 +236,11 @@
   --ease-light-bounce: cubic-bezier(.34, 1.1, .64, 1); /* 弱めバウンス（cal-panel-in等：soft-bounce弱化版） */
 
   /* ── backdrop-filter ブラー・彩度トークン (v17.59) ──────── */
-  --blur-sm:   8px;   /* 軽微ブラー（モーダルオーバーレイ・セクションタブ glassmorphism） */
-  --blur-md:  10px;   /* 中ブラー（PWA iOSガイド glassmorphism） */
+  --blur-sm:   8px;   /* 軽微ブラー（モーダルオーバーレイ・セクションタブ・トースト glassmorphism） */
+  --blur-md:  10px;   /* 中ブラー（PWA iOSガイド・PWAインストールバナー glassmorphism） */
   --blur-lg:  12px;   /* 強めブラー（ボトムナビ glassmorphism） */
   --blur-xl:  18px;   /* 最強ブラー（バルクアクションバー glassmorphism） */
-  --saturate-subtle: 1.1;  /* 微彩度強調（モーダルオーバーレイ・セクションタブ） */
+  --saturate-subtle: 1.1;  /* 微彩度強調（モーダルオーバーレイ・セクションタブ・トースト） */
   --saturate-base:   1.2;  /* 標準彩度強調（ボトムナビ） */
   --saturate-strong: 1.6;  /* 強彩度強調（バルクアクションバー） */
 
@@ -2422,9 +2422,10 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
-.modal-close:hover { background: var(--bg); color: var(--text); }
+.modal-close:hover { background: var(--bg); color: var(--text); transform: scale(1.1); }
+.modal-close:active { transform: scale(0.88); }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .modal-body {
@@ -3018,7 +3019,9 @@ mark.tx-hl {
   bottom: var(--sp-7);
   left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   color: var(--text);
   border: var(--bw-thin) solid var(--border);
   padding: var(--sp-2-5) var(--sp-5);
@@ -3222,7 +3225,9 @@ body {
 #pwa-install-banner {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: var(--sidebar-bg);
+  background: color-mix(in srgb, var(--sidebar-bg) 92%, transparent);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   color: var(--sidebar-text-hi);
   padding: var(--sp-3-5) var(--sp-4);
   padding-bottom: calc(var(--sp-3-5) + env(safe-area-inset-bottom));
@@ -3247,8 +3252,11 @@ body {
 .install-banner-close {
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-2xl); padding: var(--sp-1) var(--sp-2); cursor: pointer;
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
+  border-radius: var(--radius-btn-sm);
 }
-.install-banner-close:hover { color: var(--sidebar-text-hi); }
+.install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(1.1); }
+.install-banner-close:active { transform: scale(0.88); }
 .install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
@@ -3272,7 +3280,11 @@ body {
   position: absolute; top: 8px; right: 12px;
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-icon-lg); cursor: pointer;
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
+  border-radius: var(--radius-btn-sm);
 }
+.ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(1.1); }
+.ios-guide-close:active { transform: scale(0.88); }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
@@ -3311,7 +3323,9 @@ body {
   position: fixed;
   bottom: var(--sp-7); left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   color: var(--text);
   border: var(--bw-thin) solid var(--border);
   padding: var(--sp-3) var(--sp-5);
