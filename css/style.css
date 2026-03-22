@@ -8318,7 +8318,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transform: translateY(-2px);
   box-shadow: 0 3px 8px color-mix(in srgb, var(--ct-color, var(--primary)) 25%, transparent);
 }
-.ct-chip:active { transform: translateY(0); }
+.ct-chip:active { transform: translateY(0); box-shadow: none; border-color: var(--border); color: var(--text-muted); }
+.ct-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ct-chip.is-selected {
   border-color: var(--ct-color, var(--primary));
   background: color-mix(in srgb, var(--ct-color, var(--primary)) 12%, transparent);
@@ -8854,10 +8855,13 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   gap: var(--sp-2);
   position: relative;
   z-index: 1;
+  transition: background var(--dur-faster);
 }
 .qa-toggle-btn:hover {
   background: var(--surface-hover);
 }
+.qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(0.95); }
+.qa-toggle-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset; }
 .qa-toggle-left {
   flex: 1;
   display: flex;
@@ -12607,6 +12611,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); }
+.dd-tx-row:active { background: var(--surface-hover); filter: brightness(0.96); }
 .dd-tx-row:focus-visible {
   outline: var(--bw-select) solid var(--focus-ring);
   outline-offset: var(--outline-offset-sm);
