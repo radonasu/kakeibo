@@ -409,12 +409,18 @@
   --brightness-press-mid:    0.93; /* 中押下暗化（type-btn:active・非着色typeボタン押下） */
   --brightness-press-strong: 0.85; /* 強押下暗化（btn-account-add/btn-mr-add等のaddボタン系） */
 
-  /* ── トランスフォームリフトトークン (v17.83) ──────────────── */
+  /* ── トランスフォームリフトトークン (v17.83/v17.85) ────────── */
   --translate-lift-xs: -1px; /* 微小ホバーリフト（カード個別override・ボタン系・最多使用28箇所） */
   --translate-lift-sm: -2px; /* 小ホバーリフト（btn:hover/onboarding-cta/dow-stat/ct-chip等） */
   --translate-lift-md: -3px; /* 中ホバーリフト（card:hover基本/step-card/dash-sum-clickable等） */
   --translate-lift-lg: -5px; /* 大ホバーリフト（summary-card:hover・強調カード専用） */
   --translate-slide:    2px; /* 横スライド（widget-item:hover/notif-item/rpt-row-chevron等） */
+  --translate-press-down:    1px;  /* 押下時下方向フィードバック（section-tab:active/btn-success:active） */
+  --translate-popup-hide-xs: 10px; /* ポップアップ最小初期オフセット（kb-g-hint hidden state） */
+  --translate-popup-hide-sm: 14px; /* トースト小初期オフセット（kk-toast hidden state） */
+  --translate-popup-hide:    20px; /* トースト・モーダル標準初期オフセット（sync-toast/update-toast/modal hidden state） */
+  --translate-popup-hide-lg: 40px; /* モーダルモバイル大初期オフセット（modal @media ≤480px hidden state） */
+  --translate-notif-hide:    -8px; /* 通知パネル初期オフセット（上から降りてくる・notif-panel hidden state） */
 
   /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22/v17.29) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
@@ -3145,7 +3151,7 @@ mark.tx-hl {
   position: fixed;
   bottom: var(--sp-7);
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(var(--translate-popup-hide));
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
@@ -3451,7 +3457,7 @@ body {
 .update-toast {
   position: fixed;
   bottom: var(--sp-7); left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(var(--translate-popup-hide));
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
@@ -3871,7 +3877,7 @@ body {
 .modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-plain); }
 .modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
 .modal-overlay .modal {
-  transform: translateY(20px) scale(0.96);
+  transform: translateY(var(--translate-popup-hide)) scale(0.96);
   opacity: 0;
   transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
 }
@@ -3880,7 +3886,7 @@ body {
   opacity: 1;
 }
 @media (max-width: 480px) {
-  .modal-overlay .modal { transform: translateY(40px) scale(1); }
+  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(1); }
   .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(1); }
 }
 
@@ -4352,7 +4358,7 @@ body {
   position: fixed;
   bottom: calc(var(--size-mobile-bar) + var(--sp-3-5) + var(--sp-2) + env(safe-area-inset-bottom, 0px));
   left: 50%;
-  transform: translateX(-50%) translateY(14px);
+  transform: translateX(-50%) translateY(var(--translate-popup-hide-sm));
   max-width: min(360px, calc(100vw - var(--sp-8)));
   background: var(--surface);
   color: var(--text);
@@ -5015,7 +5021,7 @@ body {
   border-bottom-color: var(--border-strong);
 }
 .section-tab:hover .tab-icon { transform: scale(var(--scale-hover)); }
-.section-tab:active { transform: translateY(1px); }
+.section-tab:active { transform: translateY(var(--translate-press-down)); }
 .section-tab:active .tab-icon { transform: scale(1.0); }
 .section-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .section-tab.is-active {
@@ -5467,7 +5473,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* btn-success */
 .btn-success { background: var(--success); color: var(--white); border: none; }
 .btn-success:hover  { background: var(--income-deep); }
-.btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(1px); box-shadow: none; }
+.btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: none; }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
@@ -11681,7 +11687,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: translateY(-8px) scale(0.97);
+  transform: translateY(var(--translate-notif-hide)) scale(0.97);
   opacity: 0;
   transition: transform var(--dur-appear) var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
 }
@@ -12655,7 +12661,7 @@ kbd {
   position: fixed;
   bottom: calc(var(--size-mobile-bar) + var(--sp-7));
   left: 50%;
-  transform: translateX(-50%) translateY(10px) scale(0.96);
+  transform: translateX(-50%) translateY(var(--translate-popup-hide-xs)) scale(0.96);
   display: flex;
   flex-direction: column;
   align-items: center;

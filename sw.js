@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.84'; // v17.84: スケール4変数＋ブライトネス2変数追加（--scale-btn-active/hover-md/hover-sm/hover-chip・--brightness-hover-mid/press-mid）＋scale9箇所・brightness3箇所変数化
+const CACHE_NAME = 'kakeibo-v17.85'; // v17.85: ポップアップ初期オフセット変数化＋プレス押下変数化 — 6変数追加（--translate-press-down/popup-hide-xs/sm/lg/notif-hide）＋9箇所変数化（sync-toast/update-toast/modal/modal@mobile/kk-toast/kb-g-hint/notif-panel/section-tab:active/btn-success:active）
 const ASSETS = [
   './index.html',
   './css/style.css',
