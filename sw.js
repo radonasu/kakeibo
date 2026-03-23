@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.71'; // v17.71: md-cat-barグラデーション化・スクロールバーhover補完・ハードコード値変数化3箇所
+const CACHE_NAME = 'kakeibo-v17.72'; // v17.72: SVG stroke-width変数化10箇所・pt-emoji-btn不正CSS構文バグ修正
 const ASSETS = [
   './index.html',
   './css/style.css',

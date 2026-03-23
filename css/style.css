@@ -473,6 +473,13 @@
   --size-pct-col:     34px;  /* 標準パーセント数値列幅（goal-pct・kb-g-hint-top kbd min-width） */
   --size-pct-col-md:  36px;  /* 中パーセント数値列幅（ch-progress-pct・ch-widget-pct） */
   --size-pace-label:  66px;  /* ペースバーラベル列幅（pace-bar-label） */
+  /* ── SVG stroke-width トークン (v17.72) ─ */
+  --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
+  --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
+  --sw-gauge:       11;   /* 家計スコアゲージSVG stroke-width（hs-gauge-track/fill） */
+  --sw-spark:       2;    /* スパークライン実績線 stroke-width（fc-spark-actual） */
+  --sw-spark-dash:  1.5;  /* スパークライン予測線・ドット stroke-width（fc-spark-forecast/today-dot） */
+  --sw-spark-ref:   1;    /* スパークライン平均参照線 stroke-width（fc-spark-avg） */
 }
 
 html {
@@ -4984,11 +4991,11 @@ body {
 .goal-ring-bg {
   fill: none;
   stroke: var(--border);
-  stroke-width: 3.5;
+  stroke-width: var(--sw-goal-ring);
 }
 .goal-ring-fill {
   fill: none;
-  stroke-width: 3.5;
+  stroke-width: var(--sw-goal-ring);
   stroke-linecap: round;
   stroke-dasharray: 125.66;
   stroke-dashoffset: 125.66;
@@ -5292,11 +5299,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-dash-ring-bg {
   fill: none;
   stroke: var(--border);
-  stroke-width: 3;
+  stroke-width: var(--sw-goal-dash);
 }
 .goal-dash-ring-fill {
   fill: none;
-  stroke-width: 3;
+  stroke-width: var(--sw-goal-dash);
   stroke-linecap: round;
   stroke-dasharray: 81.68;
   stroke-dashoffset: 81.68;
@@ -6710,7 +6717,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   display: flex; align-items: center; justify-content: center;
 }
 .pt-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.pt-emoji-btn.is-active { border-color: var(--primary); background: var(--primary)1a; }
+.pt-emoji-btn.is-active { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); }
 .pt-color-grid {
   display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1);
 }
@@ -6821,12 +6828,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .hs-gauge-track {
   fill: none;
   stroke: var(--surface-hover);
-  stroke-width: 11;
+  stroke-width: var(--sw-gauge);
   stroke-linecap: round;
 }
 .hs-gauge-fill {
   fill: none;
-  stroke-width: 11;
+  stroke-width: var(--sw-gauge);
   stroke-linecap: round;
   stroke-dasharray: 163.36 163.36;
   animation: hs-gauge-in var(--dur-gauge) var(--ease-std) both;
@@ -7545,7 +7552,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .fc-spark-actual {
   fill: none;
   stroke: var(--fc-spark-color, var(--expense));
-  stroke-width: 2;
+  stroke-width: var(--sw-spark);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1;
@@ -7555,7 +7562,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .fc-spark-forecast {
   fill: none;
   stroke: var(--fc-spark-color, var(--expense));
-  stroke-width: 1.5;
+  stroke-width: var(--sw-spark-dash);
   stroke-dasharray: 4 3;
   stroke-linecap: round;
   opacity: var(--opacity-inactive);
@@ -7563,7 +7570,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .fc-spark-avg {
   stroke: var(--text-faint);
-  stroke-width: 1;
+  stroke-width: var(--sw-spark-ref);
   stroke-dasharray: 3 3;
   opacity: var(--opacity-secondary);
   vector-effect: non-scaling-stroke;
@@ -7571,7 +7578,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .fc-spark-today-dot {
   fill: var(--fc-spark-color, var(--expense));
   stroke: var(--surface);
-  stroke-width: 1.5;
+  stroke-width: var(--sw-spark-dash);
   vector-effect: non-scaling-stroke;
 }
 
