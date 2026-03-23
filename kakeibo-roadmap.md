@@ -409,6 +409,8 @@
 
 | 197 | v17.7 | デザイン | グラスモーフィズム強化＋:active状態補完＋ボトムナビiconトランジション改善：①【デザイン】`#bottom-nav`に`backdrop-filter: blur(12px) saturate(1.2)`＋`background: color-mix(in srgb, var(--surface) 88%, transparent)`を適用（モバイルのスクロール中コンテンツが下に透けるグラスモーフィズム・ライト/ダークモード自動追従）②【デザイン】`.section-tabs`に`backdrop-filter: blur(8px) saturate(1.1)`＋`background: color-mix(in srgb, var(--surface) 92%, transparent)`を適用（スティッキータブバーのグラスモーフィズム・コンテンツスクロール時の美しい透過効果）③【デザイン】`.bottom-nav-icon`の`transition`に`width/height var(--dur-base) var(--ease-bounce)`と`padding/border-radius var(--dur-base)`を追加（ナビアイテムのアクティブ時24px→32pxのサイズ変化が弾性アニメーションで滑らかに）④【デザイン】`:active`プレスフィードバック5要素補完：`.tx-tag-filter-chip:active`/`.tx-tag-filter-all:active`に`scale(0.92)`・`.section-tab:active`に`translateY(1px)`・`.ct-chip:active`に`translateY(0)`（ホバーのリフトを打ち消す）・`.date-quick-btn:active`に`scale(0.93)+box-shadow:none`を追加 |
 
+| 268 | v17.79 | デザイン | スペーシング変数体系完成＋残存ハードコード値6箇所変数化：①【変数追加】`:root`に`--sp-8-75: 35px`（特大中：sp-8=32とsp-9=36の中間補完・qa-cardデコ位置専用）と`--sp-15: 60px`（超最大：sp-12=48の次段階・ci-header/DOWミニバー専用）の2変数を追加しsp変数体系が28段階に完成②【変数化 6箇所】`.qa-card::before { top: -35px; right: -35px }`→`calc(-1 * var(--sp-8-75))`（クイック追加カードデコサークル・v17.78の変換範囲外だった唯一の残存負位置値）③`.ci-header::after { bottom: -60px }`→`calc(-1 * var(--sp-15))`（カスタム項目ヘッダーデコサークル下オフセット）④`.app-offline #mobile-header { margin-top: 30px }`→`var(--sp-7-5)`（オフライン時モバイルヘッダー押し下げマージン・sp-7-5と同値だが変数化漏れ）⑤`.field-msg.show { max-height: 40px }`→`var(--sp-10)`（フォームバリデーションメッセージ展開最大高さ）⑥`.dow-mini-bar-track { min-width: 60px }`→`var(--sp-15)`（曜日別ミニバー最小幅）⑦`.ci-savings-pct { min-width: 40px }`→`var(--sp-10)`（カスタム項目貯蓄率テキスト最小幅）。これによりCSS全域の非`:root`ハードコードpx値が完全に変数化され、スペーシングシステムが`--sp-0-25(1px)〜--sp-15(60px)`の28変数体系として完成 |
+
 ## 次スプリント候補（v5.44以降）
 
 ### 機能系

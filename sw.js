@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.78'; // v17.78: --sp-7-5(30px)変数追加・デコサークル負位置値42箇所変数化（-10〜-40px全域 calc(-1*var(--sp-X))変換）
+const CACHE_NAME = 'kakeibo-v17.79'; // v17.79: --sp-8-75(35px)・--sp-15(60px)変数追加＋残存ハードコード値6箇所変数化（qa-card/-60px/30px/40px×2/60px）
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -169,10 +169,12 @@
   --sp-7:    28px;   /* 大+：モーダルコンテンツ下マージン等 */
   --sp-7-5:  30px;   /* 大中：デコレーションサークル位置オフセット（sp-7=28とsp-8=32の中間補完） */
   --sp-8:    32px;   /* 特大：メインコンテンツ余白 */
+  --sp-8-75: 35px;   /* 特大中：qa-cardデコサークル位置オフセット（sp-8=32とsp-9=36の中間補完） */
   --sp-9:    36px;   /* 大特大：オンボーディング下・固定高さUI要素 */
   --sp-10:   40px;   /* 超大：セクション間 */
   --sp-11:   44px;   /* 超大+：タッチターゲット・オンボーディング上 */
   --sp-12:   48px;   /* 最大：空状態パディング */
+  --sp-15:   60px;   /* 超最大：ci-headerデコ位置・DOWミニバー最小幅（sp-12=48の次段階） */
 
   /* ── アニメーション/トランジション変数 (v11.5/v11.7/v11.9) ─── */
   --dur-fast:    0.15s;                            /* クイック（ホバー・色変化） */
@@ -1281,7 +1283,7 @@ select:focus:not(:focus-visible) {
   transition: max-height var(--dur-base) var(--ease-plain), opacity var(--dur-base) var(--ease-plain), margin-top var(--dur-base) var(--ease-plain);
 }
 .field-msg.show {
-  max-height: 40px;
+  max-height: var(--sp-10);
   opacity: 1;
 }
 .field-msg.error   { color: var(--danger-text); }
@@ -3415,7 +3417,7 @@ body {
 .offline-indicator.show { transform: translateY(0); }
 
 /* オフライン時にモバイルヘッダーを下げる */
-.app-offline #mobile-header { margin-top: 30px; }
+.app-offline #mobile-header { margin-top: var(--sp-7-5); }
 
 /* ── 更新トースト ── */
 .update-toast {
@@ -8383,7 +8385,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-2xs);
   margin-top: var(--sp-1-25);
   overflow: hidden;
-  min-width: 60px;
+  min-width: var(--sp-15);
 }
 .dow-mini-bar-fill {
   height: 100%;
@@ -8961,7 +8963,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .qa-card::before {
   content: '';
   position: absolute;
-  top: -35px; right: -35px;
+  top: calc(-1 * var(--sp-8-75)); right: calc(-1 * var(--sp-8-75));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 7%, transparent) 0%, transparent 70%);
@@ -11293,7 +11295,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ci-header::after {
   content: '';
   position: absolute;
-  bottom: -60px; left: calc(-1 * var(--sp-7-5));
+  bottom: calc(-1 * var(--sp-15)); left: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-lg); height: var(--size-deco-lg);
   background: radial-gradient(circle, var(--on-dark-base) 0%, transparent 70%);
   pointer-events: none;
@@ -11407,7 +11409,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   color: var(--success);
-  min-width: 40px;
+  min-width: var(--sp-10);
   text-align: right;
 }
 /* 予算達成 */
