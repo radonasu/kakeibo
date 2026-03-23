@@ -413,6 +413,8 @@
   --size-toggle-w:   40px;  /* トグルスイッチトラック幅（.dw-slider ON/OFFトグル専用） */
   --size-cb-tick-w:   5px;  /* チェックボックスチェックマーク幅（tx-cb用・5px） */
   --size-cb-tick-h:   9px;  /* チェックボックスチェックマーク高さ（tx-cb用・9px） */
+  --size-ev-cb-tick-w: 7px; /* イベントCBチェックマーク幅（ev-done-cb::after横L字・14pxCB対応） */
+  --size-ev-cb-tick-h: 4px; /* イベントCBチェックマーク高さ（ev-done-cb::after横L字高さ） */
   --accent-w:         3px;  /* アクセント幅（左/上ボーダー・アクセントライン・インジケーター共通幅） */
   /* ── プログレスバー・インジケータードットサイズ (v17.24) ─ */
   --size-bar-xs:      4px;  /* 極細バー（ウィジェット内ミニバー・DOWミニバー・イベント進捗バー） */
@@ -437,6 +439,9 @@
   --size-modal-xl:   640px; /* 特大モーダル最大幅（.modal-lg：繰上返済シミュレーター等）*/
   --size-seg-bar:     52px; /* セグメントバー幅（fv-seg-bar通常幅） */
   --size-mini-bar:    70px; /* インラインミニバー幅（.fv-mini-bar：固定変動費テーブル内カテゴリ別ミニプログレスバー） */
+  --size-md-cat-label: 72px; /* 月ドリルダウンカテゴリ名列幅（.md-cat-row col1・デスクトップ） */
+  --size-md-cat-amt:   76px; /* 月ドリルダウン金額列幅・カテゴリ予算入力幅共通（.md-cat-row col3・.cat-budget-input） */
+  --size-md-cat-sm:    60px; /* 月ドリルダウン列幅モバイル縮小（col1/col3 at max-width:480px） */
   /* ── 通知パネルサイズトークン ─ */
   --size-notif-panel-w: 360px; /* 通知パネル幅（デスクトップ） */
   --size-notif-panel-h: 560px; /* 通知パネル最大高さ（デスクトップ） */
@@ -1521,7 +1526,7 @@ select:focus:not(:focus-visible) {
 }
 @keyframes cb-dash-in {
   0%   { width: 0; opacity: 0; }
-  100% { width: 8px; opacity: 1; }
+  100% { width: var(--size-dot); opacity: 1; }
 }
 .tx-cb {
   appearance: none;
@@ -4863,7 +4868,7 @@ body {
 .sk-d5 { animation-delay: calc(5 * var(--dur-delay-sm)); }
 
 /* スケルトンボーン サイズバリアント (v17.74) */
-.sk-bone-title    { height: 34px; }                                                                /* ページタイトル骨格 */
+.sk-bone-title    { height: var(--size-icon-sm-plus); }                                            /* ページタイトル骨格 */
 .sk-bone-btn      { height: var(--size-icon-md); }                                                 /* ボタン骨格（幅はインライン） */
 .sk-bone-sum      { height: 108px; border-radius: var(--radius-card); }                           /* サマリーカード骨格 */
 .sk-bone-sec      { height: 20px; margin-bottom: var(--sp-4); border-radius: var(--radius-xs); }  /* セクションタイトル骨格（幅はインライン） */
@@ -10423,7 +10428,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   content: '';
   position: absolute;
   left: 2px; top: 0px;
-  width: 7px; height: 4px;
+  width: var(--size-ev-cb-tick-w); height: var(--size-ev-cb-tick-h);
   border-left: var(--bw-select) solid var(--white);
   border-bottom: var(--bw-select) solid var(--white);
   transform: rotate(-45deg) scale(0);
@@ -13215,7 +13220,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cat-row {
   display: grid;
-  grid-template-columns: 72px 1fr 76px 34px;
+  grid-template-columns: var(--size-md-cat-label) 1fr var(--size-md-cat-amt) var(--size-icon-sm-plus);
   align-items: center;
   gap: var(--sp-2);
   font-size: var(--fs-xs);
@@ -13392,7 +13397,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 @media (max-width: 480px) {
-  .md-cat-row { grid-template-columns: 60px 1fr 60px 28px; }
+  .md-cat-row { grid-template-columns: var(--size-md-cat-sm) 1fr var(--size-md-cat-sm) var(--size-icon-xs); }
   .md-cells { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -13951,7 +13956,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* モバイル */
 @media (max-width: 600px) {
   .cat-card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-2); }
-  .cat-budget-input { width: 76px; }
+  .cat-budget-input { width: var(--size-md-cat-amt); }
 }
 
 /* ─── モバイル補完: 入力モーダル内サジェスト・電卓 (v9.9) ─── */
