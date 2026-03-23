@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.81)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -389,6 +389,13 @@
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
   --opacity-pulse:     0.4;   /* パルスアニメーション最低輝度（adv-dot-pulse・kb-dots-pulse 50%フレーム） */
 
+  /* ── インタラクション・スケールトークン (v17.81) ──────────── */
+  --scale-icon-hover:  1.12; /* アイコンボタンホバーリフト（edit/delete/dup/FAB/nav-icon等） */
+  --scale-icon-active: 0.88; /* アイコンボタン押下縮小（:active タップフィードバック） */
+  --scale-hover:       1.1;  /* 汎用要素ホバーリフト（modal-close/color-swatch/tab-icon等） */
+  --scale-chip-active: 0.92; /* チップ・ベル押下縮小（tx-tag-filter/card-collapse/notif-bell等） */
+  --scale-press:       0.95; /* ボタン押下縮小（btn-preset/goal-emoji/qa-submit/hist-chip等） */
+
   /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22/v17.29) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
@@ -715,7 +722,7 @@ select:focus:not(:focus-visible) {
 }
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
-.nav-item:hover .nav-icon { transform: scale(1.12); }
+.nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
 .nav-item:active { background: var(--on-dark-strong); filter: brightness(0.85); }
 .nav-item:active .nav-icon { transform: scale(1.0); }
 .nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
@@ -955,7 +962,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface-hover);
   color: var(--text);
 }
-.card-collapse-btn:active { transform: scale(0.92); background: var(--surface-hover); }
+.card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); }
 .card-collapse-btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
@@ -1079,7 +1086,7 @@ select:focus:not(:focus-visible) {
   box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(1.06); }
-.btn-icon:active { transform: scale(0.88); }
+.btn-icon:active { transform: scale(var(--scale-icon-active)); }
 
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
 .edit-tx {
@@ -1089,11 +1096,11 @@ select:focus:not(:focus-visible) {
 .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) 10%, var(--bg)) !important;
   color: var(--primary);
-  transform: scale(1.12);
+  transform: scale(var(--scale-icon-hover));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) 20%, transparent);
   opacity: 1;
 }
-.edit-tx:active { transform: scale(0.88); }
+.edit-tx:active { transform: scale(var(--scale-icon-active)); }
 [data-theme="dark"] .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) 15%, var(--surface)) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) 25%, transparent);
@@ -1107,11 +1114,11 @@ select:focus:not(:focus-visible) {
 .delete-tx:hover {
   background: var(--danger-bg) !important;
   color: var(--danger-text);
-  transform: scale(1.12);
+  transform: scale(var(--scale-icon-hover));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) 20%, transparent);
   opacity: 1;
 }
-.delete-tx:active { transform: scale(0.88); }
+.delete-tx:active { transform: scale(var(--scale-icon-active)); }
 [data-theme="dark"] .delete-tx:hover {
   background: var(--danger-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) 25%, transparent);
@@ -1124,11 +1131,11 @@ select:focus:not(:focus-visible) {
 }
 .dup-tx:hover {
   background: var(--warning-bg) !important;
-  transform: scale(1.12);
+  transform: scale(var(--scale-icon-hover));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) 25%, transparent);
   opacity: 1;
 }
-.dup-tx:active { transform: scale(0.88); }
+.dup-tx:active { transform: scale(var(--scale-icon-active)); }
 [data-theme="dark"] .dup-tx:hover {
   background: var(--warning-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) 30%, transparent);
@@ -1991,8 +1998,8 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
   transform: scale(1.03);
 }
-.tx-tag-filter-chip:active { transform: scale(0.92); }
-.tx-tag-filter-all:active  { transform: scale(0.92); }
+.tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); }
+.tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); }
 .tx-tag-filter-chip:focus-visible,
 .tx-tag-filter-all:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 [data-theme="dark"] .tx-tag-chip {
@@ -2468,8 +2475,8 @@ mark.tx-hl {
   flex-shrink: 0;
   transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
-.modal-close:hover { background: var(--bg); color: var(--text); transform: scale(1.1); }
-.modal-close:active { transform: scale(0.88); }
+.modal-close:hover { background: var(--bg); color: var(--text); transform: scale(var(--scale-hover)); }
+.modal-close:active { transform: scale(var(--scale-icon-active)); }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .modal-body {
@@ -2503,7 +2510,7 @@ mark.tx-hl {
 }
 .color-swatch:hover   { transform: scale(1.2); }
 .color-swatch:active  { transform: scale(1.0); }
-.color-swatch.selected { border-color: var(--text); transform: scale(1.1); }
+.color-swatch.selected { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
 /* ── セクションラベル ────────────────────────────────── */
 .section-label.expense { color: var(--expense); }
@@ -2608,7 +2615,7 @@ mark.tx-hl {
   border-color: var(--primary);
   color: var(--primary);
 }
-.btn-preset:active { transform: scale(0.95); }
+.btn-preset:active { transform: scale(var(--scale-press)); }
 .btn-preset:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* アカウント管理 */
@@ -3357,8 +3364,8 @@ body {
   transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
   border-radius: var(--radius-btn-sm);
 }
-.install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(1.1); }
-.install-banner-close:active { transform: scale(0.88); }
+.install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
+.install-banner-close:active { transform: scale(var(--scale-icon-active)); }
 .install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
@@ -3385,8 +3392,8 @@ body {
   transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
   border-radius: var(--radius-btn-sm);
 }
-.ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(1.1); }
-.ios-guide-close:active { transform: scale(0.88); }
+.ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
+.ios-guide-close:active { transform: scale(var(--scale-icon-active)); }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
@@ -3489,7 +3496,7 @@ body {
 .bottom-nav-item:not(.active):hover { color: var(--text); }
 .bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); }
 .bottom-nav-item:not(.active):active { color: var(--primary); }
-.bottom-nav-item:not(.active):active .bottom-nav-icon { background: var(--border); transform: scale(0.88); }
+.bottom-nav-item:not(.active):active .bottom-nav-icon { background: var(--border); transform: scale(var(--scale-icon-active)); }
 
 .bottom-nav-item.active {
   color: var(--primary);
@@ -3519,7 +3526,7 @@ body {
 .bottom-nav-item.active .bottom-nav-icon {
   background: var(--primary-light);
   color: var(--primary);
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
   padding: var(--sp-1);
   width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-sm);
@@ -3623,7 +3630,7 @@ body {
 }
 #global-fab svg { color: var(--white); stroke: var(--white); }
 #global-fab:hover {
-  transform: scale(1.12);
+  transform: scale(var(--scale-icon-hover));
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
 }
 #global-fab:active { transform: scale(0.93); }
@@ -4987,7 +4994,7 @@ body {
   background: var(--surface-2);
   border-bottom-color: var(--border-strong);
 }
-.section-tab:hover .tab-icon { transform: scale(1.1); }
+.section-tab:hover .tab-icon { transform: scale(var(--scale-hover)); }
 .section-tab:active { transform: translateY(1px); }
 .section-tab:active .tab-icon { transform: scale(1.0); }
 .section-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -5303,8 +5310,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   justify-content: center;
   padding: 0;
 }
-.goal-emoji-btn:hover  { border-color: var(--primary); transform: scale(1.1); }
-.goal-emoji-btn:active { transform: scale(0.95); }
+.goal-emoji-btn:hover  { border-color: var(--primary); transform: scale(var(--scale-hover)); }
+.goal-emoji-btn:active { transform: scale(var(--scale-press)); }
 .goal-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-emoji-btn.selected {
   border-color: var(--primary);
@@ -5333,7 +5340,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-color-btn.selected {
   border-color: var(--text);
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
   outline: var(--bw-select) solid var(--surface);
   outline-offset: var(--outline-offset-inner-lg);
 }
@@ -5696,7 +5703,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
 .cal-panel-close:hover { background: var(--surface-hover); }
-.cal-panel-close:active { transform: scale(0.88); }
+.cal-panel-close:active { transform: scale(var(--scale-icon-active)); }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-day-panel-body {
@@ -6379,7 +6386,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: border-color var(--dur-quick), background var(--dur-quick), transform var(--dur-press);
 }
 .sub-emoji-btn:hover { background: var(--border); }
-.sub-emoji-btn:active { background: var(--border); filter: brightness(0.9); transform: scale(0.88); }
+.sub-emoji-btn:active { background: var(--border); filter: brightness(0.9); transform: scale(var(--scale-icon-active)); }
 .sub-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-emoji-btn.selected { border-color: var(--primary); background: var(--focus-ring); }
 .sub-color-btn {
@@ -6396,7 +6403,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-color-btn.selected {
   border-color: var(--surface);
   box-shadow: 0 0 0 var(--focus-ring-w) currentColor, 0 0 0 5px var(--border);
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
 }
 
 /* モバイル対応 */
@@ -6806,7 +6813,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
-.pt-color-btn:hover  { transform: scale(1.1); }
+.pt-color-btn:hover  { transform: scale(var(--scale-hover)); }
 .pt-color-btn:active { transform: scale(1.0); }
 .pt-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(1.18); }
@@ -8199,7 +8206,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-press);
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); }
-.ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(0.9); transform: scale(0.88); }
+.ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(0.9); transform: scale(var(--scale-icon-active)); }
 .ch-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light); }
 
@@ -8221,7 +8228,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .ch-color-btn:hover  { transform: scale(1.15); }
 .ch-color-btn:active { transform: scale(1.0); }
 .ch-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.ch-color-btn.active { border-color: var(--text); transform: scale(1.1); }
+.ch-color-btn.active { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
 /* -- ダッシュボードウィジェット -- */
 .ch-widget-list {
@@ -9201,7 +9208,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .qa-card .qa-submit-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
-.qa-card .qa-submit-btn:active { transform: scale(0.95); filter: brightness(0.95); }
+.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(0.95); }
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(1); }
@@ -9943,7 +9950,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   position: relative; overflow: hidden;
   transition: background-color var(--dur-base) var(--ease-bounce), border-color var(--dur-base) var(--ease-bounce), color var(--dur-base) var(--ease-bounce), box-shadow var(--dur-base) var(--ease-bounce), transform var(--dur-base) var(--ease-bounce);
 }
-.sim-preset:active { transform: scale(0.88); }
+.sim-preset:active { transform: scale(var(--scale-icon-active)); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) 22%, transparent);
@@ -10503,7 +10510,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .ev-add-month:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
-  transform: scale(1.12);
+  transform: scale(var(--scale-icon-hover));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 .ev-add-month:active { transform: scale(1.0); box-shadow: none; }
@@ -10643,7 +10650,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: var(--danger-bg);
   color: var(--danger-text);
 }
-.sf-chip-del:active { transform: scale(0.88); }
+.sf-chip-del:active { transform: scale(var(--scale-icon-active)); }
 .sf-chip-del:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-actions {
   display: flex;
@@ -11568,7 +11575,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   color: var(--white);
 }
 .btn-notif-bell:active {
-  transform: scale(0.92);
+  transform: scale(var(--scale-chip-active));
 }
 .btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 /* 未読あり状態 */
@@ -12095,7 +12102,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transform: translateY(-1px);
 }
 
-.amt-hist-chip:active { transform: scale(0.95); }
+.amt-hist-chip:active { transform: scale(var(--scale-press)); }
 
 @keyframes amt-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(5px); }
@@ -12168,7 +12175,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transform: translateY(-1px);
 }
 
-.memo-hist-chip:active { transform: scale(0.95); }
+.memo-hist-chip:active { transform: scale(var(--scale-press)); }
 
 @keyframes memo-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(5px); }
@@ -12320,7 +12327,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); }
-.rc-close:active { transform: scale(0.88); }
+.rc-close:active { transform: scale(var(--scale-icon-active)); }
 .rc-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-body {
@@ -13159,9 +13166,9 @@ canvas.chart-clickable { cursor: pointer; }
   color: var(--primary);
   background: var(--primary-light, color-mix(in srgb, var(--primary) 8%, transparent));
   border-color: var(--primary);
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
 }
-.md-nav-btn:active:not(:disabled) { transform: scale(0.92); }
+.md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); }
 .md-nav-btn:focus-visible:not(:disabled) { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .md-nav-btn:disabled { cursor: default; }
 .md-month-info {
