@@ -4757,7 +4757,7 @@ function renderCategories() {
   return `
 <div class="page-header">
   <h1 class="page-title">カテゴリ管理</h1>
-  <div style="display:flex;gap:8px">
+  <div class="page-header-right">
     <button class="btn btn-ghost" id="open-smart-budget">📊 スマート提案</button>
     <button class="btn btn-primary" id="open-add-cat">＋ カテゴリ追加</button>
   </div>
@@ -5301,12 +5301,12 @@ function renderSettings() {
       <span class="supabase-admin-notice-label">✓ Supabase接続設定済み</span>
       <span class="supabase-admin-notice-sub">（管理者によって設定されています）</span>
     </div>` : `
-    <details style="margin-top:18px" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
-      <summary style="cursor:pointer;font-size:var(--fs-sm);color:var(--primary);font-weight:600;user-select:none;list-style:none;display:flex;align-items:center;gap:6px">
+    <details class="stp-config-details" ${(!cfg.url || !cfg.anonKey) ? 'open' : ''}>
+      <summary class="stp-config-summary">
         <span>⚙️ Supabase接続設定</span>
         ${(cfg.url && cfg.anonKey) ? '<span class="supabase-status-pill ok">設定済み</span>' : '<span class="supabase-status-pill ng">未設定</span>'}
       </summary>
-      <div style="margin-top:14px">
+      <div class="stp-detail-body">
         <div class="form-group">
           <label>Supabase Project URL</label>
           <input type="url" id="set-supabase-url" value="${esc2(cfg.url||'')}" placeholder="https://xxxx.supabase.co">
@@ -5322,9 +5322,9 @@ function renderSettings() {
       </div>
     </details>`}
 
-    <details style="margin-top:14px">
-      <summary style="cursor:pointer;color:var(--text-muted);font-size:12px;user-select:none;list-style:none">▶ Supabase初期設定手順（クリックで展開）</summary>
-      <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+    <details class="stp-help-details">
+      <summary class="stp-help-summary">Supabase初期設定手順（クリックで展開）</summary>
+      <ol class="stp-help-list">
         <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料プロジェクトを作成</li>
         <li>SQL Editorで以下を実行してテーブルを作成：</li>
       </ol>
@@ -5337,7 +5337,7 @@ ALTER TABLE household_data ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "own_data" ON household_data
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);</pre>
-      <ol start="3" style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:2.0;margin-top:8px">
+      <ol start="3" class="stp-help-list">
         <li>Settings → API から Project URL と anon key をコピーして上の入力欄に貼り付け</li>
         <li>「設定を保存」→「ログイン / 新規登録」でアカウント作成</li>
       </ol>

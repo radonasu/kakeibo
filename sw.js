@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.72'; // v17.72: SVG stroke-width変数化10箇所・pt-emoji-btn不正CSS構文バグ修正
+const CACHE_NAME = 'kakeibo-v17.73'; // v17.73: 設定ページdetails/summaryCSS整備・#debt-sim-extraホバー追加・カテゴリページinline style削除
 const ASSETS = [
   './index.html',
   './css/style.css',
