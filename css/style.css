@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.81)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.82)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -396,6 +396,13 @@
   --scale-chip-active: 0.92; /* チップ・ベル押下縮小（tx-tag-filter/card-collapse/notif-bell等） */
   --scale-press:       0.95; /* ボタン押下縮小（btn-preset/goal-emoji/qa-submit/hist-chip等） */
 
+  /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
+  --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
+  --brightness-hover:        1.12; /* ボタンホバー輝（qa-submit-btn等・高輝度hover） */
+  --brightness-press-soft:   0.95; /* 軽押下暗化（btn-continue/opp-challenge-btn等） */
+  --brightness-press:        0.88; /* 標準ボタン押下暗化（btn-primary/danger/success/type等・最多使用） */
+  --brightness-press-strong: 0.85; /* 強押下暗化（btn-account-add/btn-mr-add等のaddボタン系） */
+
   /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22/v17.29) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
   --size-badge:      18px;  /* 標準バッジ（nav-badge/yi-grade-badge/rc-check/tx-banner badge等） */
@@ -683,7 +690,7 @@ select:focus:not(:focus-visible) {
   transition: background var(--dur-fast);
 }
 .btn-account-add:hover { background: var(--on-dark-strong); }
-.btn-account-add:active { filter: brightness(0.85); }
+.btn-account-add:active { filter: brightness(var(--brightness-press-strong)); }
 
 #sidebar-nav {
   flex: 1;
@@ -723,7 +730,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); }
 .nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
-.nav-item:active { background: var(--on-dark-strong); filter: brightness(0.85); }
+.nav-item:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press-strong)); }
 .nav-item:active .nav-icon { transform: scale(1.0); }
 .nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .nav-item.active {
@@ -871,7 +878,7 @@ select:focus:not(:focus-visible) {
   -webkit-tap-highlight-color: transparent;
 }
 #hamburger:hover { background: var(--on-dark-base); }
-#hamburger:active { background: var(--on-dark-strong); filter: brightness(0.88); }
+#hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); }
 #hamburger:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 #mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; }
@@ -1035,7 +1042,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 50%, transparent); }
-.btn-primary:active { filter: brightness(0.88); }
+.btn-primary:active { filter: brightness(var(--brightness-press)); }
 
 .btn-ghost {
   background: var(--surface-2);
@@ -1052,7 +1059,7 @@ select:focus:not(:focus-visible) {
   border: var(--bw-base) solid var(--danger-border);
 }
 .btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) 20%, transparent); }
-.btn-danger:active { filter: brightness(0.88); box-shadow: none; }
+.btn-danger:active { filter: brightness(var(--brightness-press)); box-shadow: none; }
 
 .btn-sm { padding: var(--sp-1-5) var(--sp-3); font-size: var(--fs-xs); border-radius: var(--radius-btn-sm); }
 
@@ -2420,9 +2427,9 @@ mark.tx-hl {
 .type-btn:active { transform: scale(0.97); filter: brightness(0.93); }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.expense-btn:active { filter: brightness(0.88); transform: scale(0.97); }
+.type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(0.97); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.income-btn:active  { filter: brightness(0.88); transform: scale(0.97); }
+.type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(0.97); }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -2657,7 +2664,7 @@ mark.tx-hl {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 .btn-receipt:hover    { opacity: var(--opacity-near); }
-.btn-receipt:active   { opacity: var(--opacity-soft); filter: brightness(0.88); }
+.btn-receipt:active   { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); }
 .btn-receipt:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 .btn-receipt-file {
@@ -2673,7 +2680,7 @@ mark.tx-hl {
   transition: background var(--dur-fast);
 }
 .btn-receipt-file:hover    { background: var(--surface-hover); }
-.btn-receipt-file:active   { background: var(--border); filter: brightness(0.95); }
+.btn-receipt-file:active   { background: var(--border); filter: brightness(var(--brightness-press-soft)); }
 .btn-receipt-file.disabled { opacity: var(--opacity-ghost); pointer-events: none; }
 
 .scan-result {
@@ -2712,7 +2719,7 @@ mark.tx-hl {
   transition: opacity var(--dur-fast);
 }
 .multi-receipt-list .btn-mr-all:hover  { opacity: var(--opacity-near); }
-.multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(0.88); }
+.multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); }
 .multi-receipt-item {
   display: flex;
   align-items: stretch;
@@ -2766,13 +2773,13 @@ mark.tx-hl {
   border: var(--bw-thin) solid var(--border) !important;
 }
 .btn-mr-fill:hover  { background: var(--surface-hover); }
-.btn-mr-fill:active { background: var(--border); filter: brightness(0.95); }
+.btn-mr-fill:active { background: var(--border); filter: brightness(var(--brightness-press-soft)); }
 .btn-mr-add {
   background: var(--income);
   color: var(--white);
 }
 .btn-mr-add:hover  { opacity: var(--opacity-near); }
-.btn-mr-add:active { filter: brightness(0.85); }
+.btn-mr-add:active { filter: brightness(var(--brightness-press-strong)); }
 .btn-mr-add:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 /* 複数レシート インライン編集フォーム */
@@ -3742,7 +3749,7 @@ body {
 }
 .btn-dark-toggle svg { display: block; }
 .btn-dark-toggle:hover  { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
-.btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(0.88); }
+.btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); }
 
 /* ============================================================
    ダークモード — CSS変数オーバーライド
@@ -3843,7 +3850,7 @@ body {
 .summary-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-summary-hover);
-  filter: brightness(1.07);
+  filter: brightness(var(--brightness-hover-sm));
 }
 .summary-card:active { transform: translateY(0); box-shadow: none; filter: none; }
 
@@ -5447,7 +5454,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 /* btn-success */
 .btn-success { background: var(--success); color: var(--white); border: none; }
 .btn-success:hover  { background: var(--income-deep); }
-.btn-success:active { filter: brightness(0.88); transform: translateY(1px); box-shadow: none; }
+.btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(1px); box-shadow: none; }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
@@ -9009,7 +9016,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .qa-toggle-btn:hover {
   background: var(--surface-hover);
 }
-.qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(0.95); }
+.qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); }
 .qa-toggle-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset; }
 .qa-toggle-left {
   flex: 1;
@@ -9207,8 +9214,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-color: var(--qa-accent);
   transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
-.qa-card .qa-submit-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
-.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(0.95); }
+.qa-card .qa-submit-btn:hover { filter: brightness(var(--brightness-hover)); transform: translateY(-1px); }
+.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(1); }
@@ -10576,7 +10583,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transition: border-color var(--dur-fast), background var(--dur-fast);
 }
 .ev-emoji-chip:hover  { background: color-mix(in srgb, var(--primary) 10%, transparent); }
-.ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) 15%, transparent); filter: brightness(0.95); }
+.ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) 15%, transparent); filter: brightness(var(--brightness-press-soft)); }
 .ev-emoji-chip.selected { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
 
 /* --- アニメーション --- */
@@ -10671,7 +10678,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sf-save-btn:hover {
   background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
-.sf-save-btn:active { background: color-mix(in srgb, var(--primary) 14%, transparent); filter: brightness(0.95); }
+.sf-save-btn:active { background: color-mix(in srgb, var(--primary) 14%, transparent); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(0.8) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
@@ -12546,7 +12553,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .btn-continue:active {
   background: var(--surface-2);
   border-color: color-mix(in srgb, var(--primary) 35%, transparent);
-  filter: brightness(0.95);
+  filter: brightness(var(--brightness-press-soft));
 }
 [data-theme="dark"] .btn-continue {
   background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
@@ -13104,7 +13111,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 .opp-challenge-btn:active {
   transform: scale(0.96);
-  filter: brightness(0.95);
+  filter: brightness(var(--brightness-press-soft));
   box-shadow: none;
 }
 .opp-challenge-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -13190,7 +13197,7 @@ canvas.chart-clickable { cursor: pointer; }
 .dash-sum-clickable:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover-sm);
-  filter: brightness(1.07);
+  filter: brightness(var(--brightness-hover-sm));
 }
 .dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: none; }
 .dash-sum-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
