@@ -143,6 +143,9 @@
   --ls-micro:  -0.01em;  /* 金額テーブル数値微細詰め */
   --ls-num:    -0.02em;  /* カード数値詰め（tabular-nums大表示） */
   --ls-spread:  0.08em;  /* 見出しラベル大文字等の広字間 */
+  /* テキスト下線オフセット */
+  --tuo-sm: 2px;   /* リンク標準下線オフセット（btn-link基本） */
+  --tuo-md: 4px;   /* リンクホバー下線オフセット（btn-link:hover） */
 
   /* ── スペーシングスケール（4pxベース / 8pxグリッド）v5.16 ── */
   --sp-0-25:  1px;   /* 最極微：ピル最小垂直パディング・1px gap */
@@ -434,6 +437,10 @@
   --size-modal-xl:   640px; /* 特大モーダル最大幅（.modal-lg：繰上返済シミュレーター等）*/
   --size-seg-bar:     52px; /* セグメントバー幅（fv-seg-bar通常幅） */
   --size-mini-bar:    70px; /* インラインミニバー幅（.fv-mini-bar：固定変動費テーブル内カテゴリ別ミニプログレスバー） */
+  /* ── 通知パネルサイズトークン ─ */
+  --size-notif-panel-w: 360px; /* 通知パネル幅（デスクトップ） */
+  --size-notif-panel-h: 560px; /* 通知パネル最大高さ（デスクトップ） */
+  --size-notif-top:      52px; /* 通知パネルtop offset（ヘッダー高56px − sp-1 4px） */
   /* ── デコレーションサークル・グラデーションブロブサイズ (v17.26/v17.30/v17.32) ─ */
   --size-deco-4xs:    48px; /* 最極小装飾サークル（wl-summary-card::after：deco-3xs:50より微小） */
   --size-deco-3xs:    50px; /* 極小装飾サークル（pt-summary-card::after・ev-card::before等） */
@@ -1041,10 +1048,10 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   padding: 0;
   box-shadow: none;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--tuo-sm);
   transition: color var(--dur-fast), text-underline-offset var(--dur-fast);
 }
-.btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: 4px; }
+.btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: var(--tuo-md); }
 .btn-link:active { opacity: var(--opacity-faded); }
 
 .btn-icon {
@@ -7903,7 +7910,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .asset-sparkline svg {
   display: block;
   width: 100%;
-  height: 40px;
+  height: var(--size-icon-lg);
   overflow: visible;
 }
 
@@ -8710,7 +8717,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 @media (max-width: 600px) {
   .fv-stat-grid { grid-template-columns: repeat(2, 1fr); }
   .fv-stat-value { font-size: var(--fs-lg); }
-  .fv-mini-bar { width: 40px; }
+  .fv-mini-bar { width: var(--size-icon-lg); }
   .fv-seg-bar { width: var(--size-icon-md); }
 }
 
@@ -11626,10 +11633,10 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* 通知パネル本体 */
 .notif-panel {
   position: fixed;
-  top: 52px;
+  top: var(--size-notif-top);
   right: var(--sp-3);
-  width: min(360px, calc(100vw - var(--sp-6)));
-  max-height: min(560px, calc(100dvh - 70px));
+  width: min(var(--size-notif-panel-w), calc(100vw - var(--sp-6)));
+  max-height: min(var(--size-notif-panel-h), calc(100dvh - 70px));
   background: var(--surface);
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
