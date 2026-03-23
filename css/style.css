@@ -5361,6 +5361,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
 [data-theme="dark"] .goal-emoji-btn.selected { background: color-mix(in srgb, var(--primary) 25%, transparent); }
 [data-theme="dark"] .goal-deposit-current { background: var(--surface-2); }
+[data-theme="dark"] .goal-progress-bar-fill { background: linear-gradient(90deg, var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) 75%, transparent) 100%); }
+[data-theme="dark"] .goal-dash-bar-fill { background: linear-gradient(90deg, var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) 70%, transparent) 100%); }
 
 @media (max-width: 768px) {
   .goal-card-footer { gap: var(--sp-2); }
@@ -6977,6 +6979,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--income-end); border-color: color-mix(in srgb, var(--success) 30%, transparent); }
 [data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) 18%, transparent); color: var(--expense-end); border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
 [data-theme="dark"] .hs-trend-flat { background: var(--on-dark-divider); color: var(--text-muted); }
+[data-theme="dark"] .hs-bar-fill { background: linear-gradient(90deg, var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) 68%, transparent) 100%); }
 .hs-spark-svg {
   display: block;
   width: 100%;
@@ -7663,6 +7666,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .fc-alert   { background: color-mix(in srgb, var(--expense) 15%, transparent);  border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
 [data-theme="dark"] .fc-avg-up   { background: color-mix(in srgb, var(--expense) 15%, transparent);  border-color: color-mix(in srgb, var(--expense) 30%, transparent); }
 [data-theme="dark"] .fc-avg-down { background: color-mix(in srgb, var(--success) 15%, transparent);  border-color: color-mix(in srgb, var(--success) 30%, transparent); }
+[data-theme="dark"] .fc-progress-fill { background: linear-gradient(90deg, var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) 70%, transparent) 100%); }
 
 /* ============================================================
    v5.59 ダッシュボードウィジェット カスタマイズ
@@ -8313,6 +8317,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .dow-pct-mid  { background: var(--warning-border); color: var(--warning); }
 [data-theme="dark"] .dow-pct-low  { background: var(--income-deep); color: var(--income-end); }
 [data-theme="dark"] .dow-mini-bar-track { background: var(--on-dark-dim); }
+[data-theme="dark"] .dow-mini-bar-fill { background: linear-gradient(90deg, var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) 70%, transparent) 100%); }
 
 /* -- モバイル対応 -- */
 @media (max-width: 560px) {
@@ -13858,6 +13863,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-color: var(--border);
   color: var(--text);
 }
+[data-theme="dark"] .cat-budget-bar-fill { background: linear-gradient(90deg, var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) 72%, transparent) 100%); }
 /* モバイル */
 @media (max-width: 600px) {
   .cat-card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-2); }

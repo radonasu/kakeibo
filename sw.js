@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.69'; // v17.69: 入力フィールド・セレクト・トグルラベルのhover/transition一貫性改善7箇所
+const CACHE_NAME = 'kakeibo-v17.70'; // v17.70: ダークモードグラデーションバー修正6箇所（white→transparent）
 const ASSETS = [
   './index.html',
   './css/style.css',
