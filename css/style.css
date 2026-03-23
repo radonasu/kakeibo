@@ -407,6 +407,9 @@
   --size-grade-badge: 46px; /* グレードバッジ円（hs-grade-badge：size-touch:44とsize-touch-lg:48の中間） */
   --size-touch-lg:   48px;  /* 大タッチターゲット（モーダルボタン・フォーム入力・カードアイコン） */
   --size-mobile-bar: 56px;  /* モバイルバー標準高さ（ヘッダー・ボトムナビ・FAB・sticky-top-offset） */
+  --size-toggle-w:   40px;  /* トグルスイッチトラック幅（.dw-slider ON/OFFトグル専用） */
+  --size-cb-tick-w:   5px;  /* チェックボックスチェックマーク幅（tx-cb用・5px） */
+  --size-cb-tick-h:   9px;  /* チェックボックスチェックマーク高さ（tx-cb用・9px） */
   --accent-w:         3px;  /* アクセント幅（左/上ボーダー・アクセントライン・インジケーター共通幅） */
   /* ── プログレスバー・インジケータードットサイズ (v17.24) ─ */
   --size-bar-xs:      4px;  /* 極細バー（ウィジェット内ミニバー・DOWミニバー・イベント進捗バー） */
@@ -1538,8 +1541,8 @@ select:focus:not(:focus-visible) {
 .tx-cb:checked::after {
   content: '';
   position: absolute;
-  top: 1px; left: 4px;
-  width: 5px; height: 9px;
+  top: var(--sp-0-25); left: var(--sp-1);
+  width: var(--size-cb-tick-w); height: var(--size-cb-tick-h);
   border: var(--bw-select) solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
@@ -1552,7 +1555,7 @@ select:focus:not(:focus-visible) {
 .tx-cb:indeterminate::after {
   content: '';
   position: absolute;
-  top: 50%; left: 3px;
+  top: 50%; left: var(--sp-0-75);
   height: var(--bw-select);
   background: var(--white);
   border-radius: var(--radius-hairline);
@@ -1668,7 +1671,7 @@ select:focus:not(:focus-visible) {
 .tx-sort-badge-x {
   font-size: var(--fs-2xs);
   opacity: var(--opacity-secondary);
-  margin-left: 1px;
+  margin-left: var(--sp-0-25);
 }
 [data-theme="dark"] .tx-th-sort:hover {
   background: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -3360,7 +3363,7 @@ body {
 .pwa-ios-guide.show { transform: translateY(0); }
 
 .ios-guide-close {
-  position: absolute; top: 8px; right: 12px;
+  position: absolute; top: var(--sp-2); right: var(--sp-3);
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-icon-lg); cursor: pointer;
   transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
@@ -3634,7 +3637,7 @@ body {
 .bottom-nav-item { position: relative; }
 .bottom-nav-badge {
   position: absolute;
-  top: 4px;
+  top: var(--sp-1);
   right: calc(50% - 18px);
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
@@ -4627,7 +4630,7 @@ body {
   font-size: var(--fs-3xs);
   color: var(--text-muted);
   font-weight: var(--fw-normal);
-  margin-top: 1px;
+  margin-top: var(--sp-0-25);
 }
 .fx-input-wrap {
   display: flex;
@@ -5961,7 +5964,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-size: var(--fs-2xl);
   line-height: var(--lh-none);
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: var(--sp-0-25);
 }
 
 .insight-body {
@@ -6903,7 +6906,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 }
 .hs-gauge-text {
   position: absolute;
-  bottom: 2px;
+  bottom: var(--sp-0-5);
   left: 0; right: 0;
   display: flex;
   align-items: baseline;
@@ -7777,7 +7780,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 }
 .dw-slider {
   position: relative;
-  width: 40px;
+  width: var(--size-toggle-w);
   height: var(--size-icon-3xs);
   background: var(--border);
   border-radius: var(--radius-indicator);
@@ -7787,8 +7790,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .dw-slider::after {
   content: '';
   position: absolute;
-  top: 3px;
-  left: 3px;
+  top: var(--sp-0-75);
+  left: var(--sp-0-75);
   width: var(--size-checkbox);
   height: var(--size-checkbox);
   border-radius: var(--radius-circle);
@@ -7800,7 +7803,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
   background: var(--primary);
 }
 .dw-item input:checked ~ .dw-slider::after {
-  transform: translateX(18px);
+  transform: translateX(calc(var(--size-toggle-w) - var(--size-checkbox) - 2 * var(--sp-0-75)));
 }
 
 /* ダークモード */
@@ -9987,7 +9990,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle); pointer-events: none;
 }
 .sim-savings-banner::after {
-  content: ''; position: absolute; bottom: -18px; left: 8px;
+  content: ''; position: absolute; bottom: -18px; left: var(--sp-2);
   width: var(--size-deco-xxs); height: var(--size-deco-xxs);
   background: radial-gradient(circle, color-mix(in srgb, var(--success) 14%, transparent) 0%, transparent 70%);
   border-radius: var(--radius-circle); pointer-events: none;
@@ -10104,8 +10107,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .sb-check:checked::after {
   content: '';
   position: absolute;
-  top: 1px; left: 4px;
-  width: 4px; height: 8px;
+  top: var(--sp-0-25); left: var(--sp-1);
+  width: var(--sp-1); height: var(--sp-2);
   border: var(--bw-select) solid var(--white);
   border-top: none; border-left: none;
   animation: cb-check-in var(--dur-base) var(--ease-bounce) both;
@@ -11081,7 +11084,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .yr-unit {
   font-size: var(--fs-sm);
   font-weight: var(--fw-normal);
-  margin-left: 1px;
+  margin-left: var(--sp-0-25);
 }
 .yr-cell-sub {
   font-size: var(--fs-2xs);
@@ -11205,7 +11208,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .yr-spark-wrap::before {
   content: '月別支出';
   position: absolute;
-  top: 4px; left: 6px;
+  top: var(--sp-1); left: var(--sp-1-5);
   font-size: var(--fs-4xs);
   color: var(--text-muted);
   opacity: var(--opacity-watermark);
@@ -11586,8 +11589,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* ベルバッジ */
 .notif-bell-badge {
   position: absolute;
-  top: 3px;
-  right: 2px;
+  top: var(--sp-0-75);
+  right: var(--sp-0-5);
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
   padding: 0 var(--sp-1);
@@ -11778,7 +11781,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle);
   flex-shrink: 0;
   background: var(--surface-hover);
-  margin-top: 1px;
+  margin-top: var(--sp-0-25);
 }
 /* タイプ別アイコン背景 */
 .notif-item.notif-type-danger  .notif-item-icon { background: color-mix(in srgb, var(--expense) 12%, transparent); }
@@ -13327,7 +13330,7 @@ canvas.chart-clickable { cursor: pointer; }
 .md-cell-value small {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
-  margin-left: 1px;
+  margin-left: var(--sp-0-25);
   opacity: var(--opacity-soft);
 }
 /* 収入: 緑系 */
