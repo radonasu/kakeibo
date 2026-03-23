@@ -167,6 +167,7 @@
   --sp-5-5:  22px;   /* 中大+：ヒートマップDOW列頭余白 */
   --sp-6:    24px;   /* 大：メインカードパディング */
   --sp-7:    28px;   /* 大+：モーダルコンテンツ下マージン等 */
+  --sp-7-5:  30px;   /* 大中：デコレーションサークル位置オフセット（sp-7=28とsp-8=32の中間補完） */
   --sp-8:    32px;   /* 特大：メインコンテンツ余白 */
   --sp-9:    36px;   /* 大特大：オンボーディング下・固定高さUI要素 */
   --sp-10:   40px;   /* 超大：セクション間 */
@@ -1391,8 +1392,8 @@ select:focus:not(:focus-visible) {
 .summary-card::after {
   content: '';
   position: absolute;
-  top: -20px;
-  right: -20px;
+  top: calc(-1 * var(--sp-5));
+  right: calc(-1 * var(--sp-5));
   width: var(--size-deco-s-md);
   height: var(--size-deco-s-md);
   border-radius: var(--radius-circle);
@@ -1401,8 +1402,8 @@ select:focus:not(:focus-visible) {
 .summary-card::before {
   content: '';
   position: absolute;
-  bottom: -30px;
-  left: -20px;
+  bottom: calc(-1 * var(--sp-7-5));
+  left: calc(-1 * var(--sp-5));
   width: var(--size-deco-ml);
   height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
@@ -4059,7 +4060,7 @@ body {
 .onboarding-hero::before {
   content: '';
   position: absolute;
-  top: -40px; right: -40px;
+  top: calc(-1 * var(--sp-10)); right: calc(-1 * var(--sp-10));
   width: var(--size-deco-2xl); height: var(--size-deco-2xl);
   border-radius: var(--radius-circle);
   background: var(--on-dark-dim);
@@ -4068,7 +4069,7 @@ body {
 .onboarding-hero::after {
   content: '';
   position: absolute;
-  bottom: -30px; left: -30px;
+  bottom: calc(-1 * var(--sp-7-5)); left: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-lg); height: var(--size-deco-lg);
   border-radius: var(--radius-circle);
   background: var(--on-dark-subtle);
@@ -6148,7 +6149,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-summary-card::after {
   content: '';
   position: absolute;
-  top: -20px; right: -20px;
+  top: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
   width: var(--size-deco-sm); height: var(--size-deco-sm);
   border-radius: var(--radius-circle);
   background: var(--on-dark-base);
@@ -6157,7 +6158,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-summary-card::before {
   content: '';
   position: absolute;
-  bottom: -28px; left: -18px;
+  bottom: calc(-1 * var(--sp-7)); left: calc(-1 * var(--sp-4-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: var(--on-dark-divider);
@@ -6617,7 +6618,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   width: var(--size-deco-xs); height: var(--size-deco-xs);
   border-radius: var(--radius-circle);
   background: var(--on-dark-bg);
-  bottom: -20px; right: -20px;
+  bottom: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
 }
 .pt-summary-card::after {
   content: '';
@@ -6870,7 +6871,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .health-score-card::after {
   content: '';
   position: absolute;
-  top: -28px; right: -28px;
+  top: calc(-1 * var(--sp-7)); right: calc(-1 * var(--sp-7));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: var(--hs-grade-color, var(--primary));
@@ -7965,8 +7966,8 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .ch-summary-card::before {
   content: "";
   position: absolute;
-  top: -18px;
-  right: -18px;
+  top: calc(-1 * var(--sp-4-5));
+  right: calc(-1 * var(--sp-4-5));
   width: var(--size-deco-2xs);
   height: var(--size-deco-2xs);
   border-radius: var(--radius-circle);
@@ -8601,7 +8602,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .fv-stat-card::after {
   content: '';
   position: absolute;
-  bottom: -22px; right: -22px;
+  bottom: calc(-1 * var(--sp-5-5)); right: calc(-1 * var(--sp-5-5));
   width: var(--size-deco); height: var(--size-deco);
   border-radius: var(--radius-circle);
   background: var(--on-dark-base);
@@ -9239,8 +9240,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .nt-card::before {
   content: '';
   position: absolute;
-  top: -24px;
-  right: -24px;
+  top: calc(-1 * var(--sp-6));
+  right: calc(-1 * var(--sp-6));
   width: var(--size-nt-deco);
   height: var(--size-nt-deco);
   border-radius: var(--radius-circle);
@@ -9388,7 +9389,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   position: absolute;
   width: var(--size-deco-2xs); height: var(--size-deco-2xs);
   border-radius: var(--radius-circle);
-  top: -20px; right: -20px;
+  top: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
   opacity: var(--opacity-deco-lg);
   pointer-events: none;
 }
@@ -9599,7 +9600,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-summary-monthly::after {
   content: '';
   position: absolute;
-  top: -20px; right: -20px;
+  top: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
   width: var(--size-deco-sm); height: var(--size-deco-sm);
   border-radius: var(--radius-circle);
   background: var(--on-dark-base);
@@ -9609,7 +9610,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-summary-monthly::before {
   content: '';
   position: absolute;
-  bottom: -28px; left: -18px;
+  bottom: calc(-1 * var(--sp-7)); left: calc(-1 * var(--sp-4-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: var(--on-dark-divider);
@@ -9645,7 +9646,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-card::before {
   content: '';
   position: absolute;
-  top: -28px; right: -28px;
+  top: calc(-1 * var(--sp-7)); right: calc(-1 * var(--sp-7));
   width: var(--size-deco-s-md); height: var(--size-deco-s-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--debt-accent, var(--primary)) 15%, transparent) 0%, transparent 70%);
@@ -9996,7 +9997,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   animation: sim-banner-in var(--dur-enter) var(--ease-spring) 0.12s both;
 }
 .sim-savings-banner::before {
-  content: ''; position: absolute; top: -24px; right: -24px;
+  content: ''; position: absolute; top: calc(-1 * var(--sp-6)); right: calc(-1 * var(--sp-6));
   width: var(--size-deco); height: var(--size-deco);
   background: radial-gradient(circle, color-mix(in srgb, var(--success) 22%, transparent) 0%, transparent 70%);
   border-radius: var(--radius-circle); pointer-events: none;
@@ -10257,7 +10258,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-sum-card::before {
   content: '';
   position: absolute;
-  top: -20px; right: -20px;
+  top: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
   width: var(--size-deco); height: var(--size-deco);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, var(--on-dark-deco) 0%, transparent 70%);
@@ -10266,7 +10267,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-sum-card::after {
   content: '';
   position: absolute;
-  bottom: -30px; left: -20px;
+  bottom: calc(-1 * var(--sp-7-5)); left: calc(-1 * var(--sp-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, var(--on-dark-bg) 0%, transparent 70%);
@@ -10353,7 +10354,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-card::before {
   content: '';
   position: absolute;
-  top: -12px; right: -12px;
+  top: calc(-1 * var(--sp-3)); right: calc(-1 * var(--sp-3));
   width: var(--size-deco-3xs); height: var(--size-deco-3xs);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--ev-accent,var(--primary)) 15%, transparent) 0%, transparent 70%);
@@ -10751,8 +10752,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .adv-widget-card::before {
   content: '';
   position: absolute;
-  top: -30px;
-  right: -30px;
+  top: calc(-1 * var(--sp-7-5));
+  right: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-ml);
   height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
@@ -10762,8 +10763,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .adv-widget-card::after {
   content: '';
   position: absolute;
-  bottom: -40px;
-  left: -20px;
+  bottom: calc(-1 * var(--sp-10));
+  left: calc(-1 * var(--sp-5));
   width: var(--size-deco); height: var(--size-deco);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 6%, transparent), transparent 70%);
@@ -11055,7 +11056,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .yr-widget-card::before {
   content: '';
   position: absolute;
-  top: -20px; right: -20px;
+  top: calc(-1 * var(--sp-5)); right: calc(-1 * var(--sp-5));
   width: var(--size-deco-ml); height: var(--size-deco-ml);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
@@ -11204,7 +11205,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .yr-widget-card::after {
   content: '';
   position: absolute;
-  bottom: -30px; left: -30px;
+  bottom: calc(-1 * var(--sp-7-5)); left: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--success) 7%, transparent), transparent 70%);
@@ -11284,7 +11285,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ci-header::before {
   content: '';
   position: absolute;
-  top: -40px; right: -40px;
+  top: calc(-1 * var(--sp-10)); right: calc(-1 * var(--sp-10));
   width: var(--size-deco-xl); height: var(--size-deco-xl);
   background: radial-gradient(circle, var(--on-dark-strong) 0%, transparent 70%);
   pointer-events: none;
@@ -11292,7 +11293,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ci-header::after {
   content: '';
   position: absolute;
-  bottom: -60px; left: -30px;
+  bottom: -60px; left: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-lg); height: var(--size-deco-lg);
   background: radial-gradient(circle, var(--on-dark-base) 0%, transparent 70%);
   pointer-events: none;
@@ -12891,8 +12892,8 @@ canvas.chart-clickable { cursor: pointer; }
 .yi-card::before {
   content: '';
   position: absolute;
-  top: -16px;
-  right: -16px;
+  top: calc(-1 * var(--sp-4));
+  right: calc(-1 * var(--sp-4));
   width: var(--size-deco-2xs);
   height: var(--size-deco-2xs);
   background: radial-gradient(circle, var(--on-dark-divider) 0%, transparent 70%);
@@ -13315,8 +13316,8 @@ canvas.chart-clickable { cursor: pointer; }
 .md-cell::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  right: -10px;
+  bottom: calc(-1 * var(--sp-2-5));
+  right: calc(-1 * var(--sp-2-5));
   width: var(--size-emoji-btn);
   height: var(--size-emoji-btn);
   border-radius: var(--radius-circle);
@@ -13505,7 +13506,7 @@ canvas.chart-clickable { cursor: pointer; }
 .pace-widget-card::before {
   content: '';
   position: absolute;
-  top: -30px; right: -30px;
+  top: calc(-1 * var(--sp-7-5)); right: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, var(--pace-deco-color, color-mix(in srgb, var(--primary) 15%, transparent)) 0%, transparent 70%);
@@ -13735,8 +13736,8 @@ canvas.chart-clickable { cursor: pointer; }
 .pm-sum-card::before {
   content: '';
   position: absolute;
-  top: -20px;
-  right: -20px;
+  top: calc(-1 * var(--sp-5));
+  right: calc(-1 * var(--sp-5));
   width: var(--size-deco-xs);
   height: var(--size-deco-xs);
   border-radius: var(--radius-circle);
