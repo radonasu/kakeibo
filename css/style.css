@@ -387,6 +387,7 @@
   --opacity-deco-md:   0.15;  /* 装飾サークル中（ch-sum gradient card 白デコ等） */
   --opacity-deco-lg:   0.18;  /* 装飾サークル大（wl/hm gradient card 白デコ等） */
   --opacity-deco-xl:   0.22;  /* 装飾トラック（pace-bar-ghost 等の薄着色レール） */
+  --opacity-pulse:     0.4;   /* パルスアニメーション最低輝度（adv-dot-pulse・kb-dots-pulse 50%フレーム） */
 
   /* ── コンポーネント固有サイズトークン (v17.3/v17.12/v17.13/v17.14/v17.20/v17.21/v17.22/v17.29) ── */
   --size-badge-sm:   16px;  /* 小バッジ・カウントピル（adv-filter-count/bottom-nav-badge/notif-badge） */
@@ -7130,8 +7131,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   background: var(--white);
   pointer-events: none;
 }
-.wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: -24px; right: -20px; }
-.wl-summary-card::after  { width: var(--size-deco-4xs); height: var(--size-deco-4xs); bottom: -16px; left: 8px; }
+.wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: calc(-1 * var(--sp-6)); right: calc(-1 * var(--sp-5)); }
+.wl-summary-card::after  { width: var(--size-deco-4xs); height: var(--size-deco-4xs); bottom: calc(-1 * var(--sp-4)); left: var(--sp-2); }
 /* グラデーション 3種 */
 .wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
 .wl-sum-budget { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
@@ -8324,8 +8325,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: var(--on-dark-border);
   pointer-events: none;
 }
-.dow-stat-card::before { width: var(--size-icon-2xl); height: var(--size-icon-2xl); bottom: -18px; right: -10px; }
-.dow-stat-card::after  { width: var(--size-icon-md);  height: var(--size-icon-md);  top: -12px; right: var(--sp-7); }
+.dow-stat-card::before { width: var(--size-icon-2xl); height: var(--size-icon-2xl); bottom: calc(-1 * var(--sp-4-5)); right: calc(-1 * var(--sp-2-5)); }
+.dow-stat-card::after  { width: var(--size-icon-md);  height: var(--size-icon-md);  top: calc(-1 * var(--sp-3)); right: var(--sp-7); }
 
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
@@ -10005,7 +10006,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-circle); pointer-events: none;
 }
 .sim-savings-banner::after {
-  content: ''; position: absolute; bottom: -18px; left: var(--sp-2);
+  content: ''; position: absolute; bottom: calc(-1 * var(--sp-4-5)); left: var(--sp-2);
   width: var(--size-deco-xxs); height: var(--size-deco-xxs);
   background: radial-gradient(circle, color-mix(in srgb, var(--success) 14%, transparent) 0%, transparent 70%);
   border-radius: var(--radius-circle); pointer-events: none;
@@ -10430,7 +10431,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .ev-done-cb::after {
   content: '';
   position: absolute;
-  left: 2px; top: 0px;
+  left: var(--sp-0-5); top: 0;
   width: var(--size-ev-cb-tick-w); height: var(--size-ev-cb-tick-h);
   border-left: var(--bw-select) solid var(--white);
   border-bottom: var(--bw-select) solid var(--white);
@@ -10812,7 +10813,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 /* 月バッジ */
 @keyframes adv-dot-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
+  50%       { opacity: var(--opacity-pulse); transform: scale(0.7); }
 }
 .adv-month-badge {
   display: inline-flex;
@@ -11771,7 +11772,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .notif-item::after {
   content: '';
   position: absolute;
-  left: 0; top: 6px; bottom: 6px;
+  left: 0; top: var(--sp-1-5); bottom: var(--sp-1-5);
   width: var(--accent-w);
   border-radius: 0 var(--radius-nano) var(--radius-nano) 0;
   background: transparent;
@@ -12673,7 +12674,7 @@ kbd {
 }
 @keyframes kb-dots-pulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50%       { opacity: var(--opacity-pulse); }
 }
 @keyframes kb-help-modal-in {
   from { opacity: 0; transform: scale(0.94) translateY(10px); }
