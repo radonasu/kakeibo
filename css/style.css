@@ -122,8 +122,9 @@
   --lh-loose:   1.5;   /* 緩め：タグチップ・フィルターチップ・説明テキスト */
   --lh-normal:  1.6;   /* 標準：一般本文 */
   --lh-ample:   1.65;  /* やや広め：メモエリア等の入力フィールド */
-  --lh-relaxed: 1.75;  /* 広め：読みやすいブロックテキスト */
-  --lh-none:    1;     /* フラット：アイコン・絵文字・数値バッジ等の行間抑制 */
+  --lh-relaxed:  1.75;  /* 広め：読みやすいブロックテキスト */
+  --lh-spacious: 2;     /* 超広め：設定ヘルプリスト・余裕ある説明テキスト */
+  --lh-none:     1;     /* フラット：アイコン・絵文字・数値バッジ等の行間抑制 */
 
   /* 字間（pxスケール） */
   --ls-display: -1.5px;   /* 超大数値・スコア表示 */
@@ -3089,7 +3090,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   padding-left: var(--sp-4-5);
-  line-height: 2;
+  line-height: var(--lh-spacious);
   margin-top: var(--sp-2);
 }
 
@@ -4850,6 +4851,15 @@ body {
 .sk-d3 { animation-delay: calc(3 * var(--dur-delay-sm)); }
 .sk-d4 { animation-delay: calc(4 * var(--dur-delay-sm)); }
 .sk-d5 { animation-delay: calc(5 * var(--dur-delay-sm)); }
+
+/* スケルトンボーン サイズバリアント (v17.74) */
+.sk-bone-title    { height: 34px; }                                                                /* ページタイトル骨格 */
+.sk-bone-btn      { height: var(--size-icon-md); }                                                 /* ボタン骨格（幅はインライン） */
+.sk-bone-sum      { height: 108px; border-radius: var(--radius-card); }                           /* サマリーカード骨格 */
+.sk-bone-sec      { height: 20px; margin-bottom: var(--sp-4); border-radius: var(--radius-xs); }  /* セクションタイトル骨格（幅はインライン） */
+.sk-bone-chart    { width: 100%; height: 200px; border-radius: var(--radius-btn-sm); }            /* グラフ骨格 */
+.sk-bone-row      { width: 100%; height: var(--sp-11); border-radius: var(--radius-btn-sm); margin-bottom: var(--sp-2); } /* リスト行骨格 */
+.sk-bone-row-last { width: 100%; height: var(--sp-11); border-radius: var(--radius-btn-sm); }     /* リスト行骨格（最終行・下余白なし） */
 
 /* スケルトンレスポンシブ */
 @media (max-width: 768px) {

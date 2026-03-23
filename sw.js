@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.73'; // v17.73: 設定ページdetails/summaryCSS整備・#debt-sim-extraホバー追加・カテゴリページinline style削除
+const CACHE_NAME = 'kakeibo-v17.74'; // v17.74: --lh-spacious変数追加・stp-help-list行間変数化・スケルトンinline style削除（sk-bone-*バリアントクラス新設）
 const ASSETS = [
   './index.html',
   './css/style.css',
