@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.70'; // v17.70: ダークモードグラデーションバー修正6箇所（white→transparent）
+const CACHE_NAME = 'kakeibo-v17.71'; // v17.71: md-cat-barグラデーション化・スクロールバーhover補完・ハードコード値変数化3箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

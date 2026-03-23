@@ -11984,7 +11984,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .amt-hist-chip {
   display: inline-flex;
   align-items: center;
-  padding: var(--sp-1) 11px;
+  padding: var(--sp-1) var(--sp-2-75);
   border-radius: var(--radius-badge);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
@@ -12749,6 +12749,7 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-list::-webkit-scrollbar { width: var(--size-scrollbar-sm); }
 .dd-list::-webkit-scrollbar-track { background: transparent; }
 .dd-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-badge); }
+.dd-list::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
 
 /* グラフ hover ヒント（クリック可能を示す） */
 .chart-clickable-wrap {
@@ -13114,6 +13115,7 @@ canvas.chart-clickable { cursor: pointer; }
 .md-scroll-body::-webkit-scrollbar { width: var(--size-scrollbar-sm); }
 .md-scroll-body::-webkit-scrollbar-track { background: transparent; }
 .md-scroll-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-badge); }
+.md-scroll-body::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
 
 /* セクション見出し */
 .md-section-title {
@@ -13168,7 +13170,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cat-bar {
   height: 100%;
-  background: var(--md-cat-color, var(--primary));
+  background: linear-gradient(90deg, var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) 70%, white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
@@ -13192,7 +13194,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* 収入カテゴリ内訳 緑系 (v8.9) */
 .md-cat-bar-income {
-  background: var(--success);
+  background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
 }
 .md-cat-amount-income {
   color: var(--success);
@@ -13200,6 +13202,11 @@ canvas.chart-clickable { cursor: pointer; }
 .md-income-title {
   color: var(--success);
   border-bottom-color: color-mix(in srgb, var(--success) 25%, transparent);
+}
+
+/* ダークモード: md-cat-bar グラデーション終端をtransparentに変換 */
+[data-theme="dark"] .md-cat-bar {
+  background: linear-gradient(90deg, var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) 70%, transparent) 100%);
 }
 
 /* md-list の取引行は dd-tx-row を流用 */
@@ -13779,7 +13786,7 @@ canvas.chart-clickable { cursor: pointer; }
   display: flex;
   gap: var(--sp-1);
   flex-shrink: 0;
-  margin-top: -2px;
+  margin-top: calc(-1 * var(--sp-0-5));
 }
 /* stats */
 .cat-card-stats {
