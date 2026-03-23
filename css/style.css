@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.82)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.84)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -395,12 +395,18 @@
   --scale-hover:       1.1;  /* 汎用要素ホバーリフト（modal-close/color-swatch/tab-icon等） */
   --scale-chip-active: 0.92; /* チップ・ベル押下縮小（tx-tag-filter/card-collapse/notif-bell等） */
   --scale-press:       0.95; /* ボタン押下縮小（btn-preset/goal-emoji/qa-submit/hist-chip等） */
+  --scale-btn-active:  0.97; /* ボタン押下縮小（.btn:active/.type-btn:active/.empty-month-btn:active等） */
+  --scale-hover-md:    1.05; /* 中選択ホバー拡大（nav-active icon/sort-badge hover/filter-chip active） */
+  --scale-hover-sm:    1.03; /* 小ホバー拡大（filter-chip hover:not(.active)） */
+  --scale-hover-chip:  1.06; /* タグチップホバー拡大（tx-tag-chip:hover） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
   --brightness-hover:        1.12; /* ボタンホバー輝（qa-submit-btn等・高輝度hover） */
+  --brightness-hover-mid:    1.1;  /* 中輝度ホバー（opp-challenge-btn:hover等） */
   --brightness-press-soft:   0.95; /* 軽押下暗化（btn-continue/opp-challenge-btn等） */
   --brightness-press:        0.88; /* 標準ボタン押下暗化（btn-primary/danger/success/type等・最多使用） */
+  --brightness-press-mid:    0.93; /* 中押下暗化（type-btn:active・非着色typeボタン押下） */
   --brightness-press-strong: 0.85; /* 強押下暗化（btn-account-add/btn-mr-add等のaddボタン系） */
 
   /* ── トランスフォームリフトトークン (v17.83) ──────────────── */
@@ -773,7 +779,7 @@ select:focus:not(:focus-visible) {
   color: var(--primary-end);
   border-radius: var(--radius-btn-sm);
   padding: var(--sp-0-5);
-  transform: scale(1.05);
+  transform: scale(var(--scale-hover-md));
 }
 
 /* サイドバー下部ユーザーエリア */
@@ -1039,7 +1045,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-btn-base);
 }
 .btn:hover { transform: translateY(var(--translate-lift-sm)); }
-.btn:active { transform: scale(.97) translateY(0); }
+.btn:active { transform: scale(var(--scale-btn-active)) translateY(0); }
 .btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), var(--shadow-btn-base); }
 .btn:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; transform: none; }
 
@@ -1696,7 +1702,7 @@ select:focus:not(:focus-visible) {
 }
 .tx-sort-badge:hover {
   background: color-mix(in srgb, var(--primary) 14%, transparent);
-  transform: scale(1.05);
+  transform: scale(var(--scale-hover-md));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) 12%, transparent);
 }
 .tx-sort-badge:active { transform: scale(1.0); box-shadow: none; }
@@ -1928,7 +1934,7 @@ select:focus:not(:focus-visible) {
 }
 .tx-tag-chip:hover {
   background: color-mix(in srgb, var(--tc, var(--primary)) 20%, transparent);
-  transform: scale(1.06);
+  transform: scale(var(--scale-hover-chip));
 }
 .tx-tag-chip:active { transform: scale(1.0); }
 .tx-tag-label-hint {
@@ -2005,12 +2011,12 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 22%, transparent);
   border-color: color-mix(in srgb, var(--tc, var(--primary)) 48%, transparent);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) 14%, transparent);
-  transform: scale(1.05);
+  transform: scale(var(--scale-hover-md));
   font-weight: var(--fw-bold);
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) 18%, transparent);
-  transform: scale(1.03);
+  transform: scale(var(--scale-hover-sm));
 }
 .tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); }
 .tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); }
@@ -2431,12 +2437,12 @@ mark.tx-hl {
   cursor: pointer;
 }
 .type-btn:hover { background: var(--surface-hover); color: var(--text); }
-.type-btn:active { transform: scale(0.97); filter: brightness(0.93); }
+.type-btn:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press-mid)); }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(0.97); }
+.type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(0.97); }
+.type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -4237,7 +4243,7 @@ body {
   transition: background var(--dur-fast);
 }
 .empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) 20%, white); }
-.empty-month-btn:active { filter: brightness(0.87); transform: scale(0.97); }
+.empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
@@ -12570,7 +12576,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 [data-theme="dark"] .btn-continue:active {
   background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
-  filter: brightness(0.92);
+  filter: brightness(var(--brightness-press-mid));
 }
 
 
@@ -13111,7 +13117,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 .opp-challenge-btn:hover {
-  filter: brightness(1.1);
+  filter: brightness(var(--brightness-hover-mid));
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 4px 12px color-mix(in srgb, var(--opp-accent, var(--primary)) 40%, transparent);
 }
