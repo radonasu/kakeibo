@@ -556,6 +556,7 @@
   --size-sk-chart:   200px;  /* スケルトングラフ高さ（.sk-bone-chart） */
   --size-shimmer:   1600px;  /* スケルトンシマー背景幅（sk-bone標準：background-size用） */
   --size-shimmer-half: 800px; /* スケルトンシマー半幅（adv-sk-line/sk-shimmerキーフレーム位置オフセット） */
+  --size-adv-shimmer-offset: 400px; /* advシマーキーフレーム位置オフセット（@keyframes adv-shimmer：size-shimmer-half:800の半値） */
   /* ── コンポーネント固有サイズトークン追加 (v17.35) ─ */
   --size-accent-bar:   4px;  /* カード左アクセントカラーバー幅（sub-card-color-bar・pt-card-color-bar等・accent-w:3pxより1px太い） */
   --size-accent-bar-pulse: 5px; /* インサイトアラートパルスキーフレームのピーク幅（@keyframes insight-alert-pulse 50%・accent-bar:4pxより1px太い最大値） */
@@ -596,6 +597,9 @@
   --size-grid-insight: 175px;  /* 年次インサイトグリッド列最小幅（.yi-grid minmax基準） */
   --size-grid-cat:     190px;  /* カテゴリカードグリッド列最小幅（.cat-card-grid minmax基準） */
   --size-grid-cat-sm:  160px;  /* カテゴリカードグリッド列最小幅モバイル縮小（.cat-card-grid @media≤600px） */
+  /* ── パーセント・比率トークン (v17.97) ── */
+  --size-modal-pct:    92%;    /* モーダルラップ幅パーセント（.ci-wrap / .kb-help-wrap） */
+  --size-nav-indicator: 25%;   /* ボトムナビアクティブインジケーター内側オフセット（.bottom-nav-item.active::before left/right） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -3602,7 +3606,7 @@ body {
 .bottom-nav-item.active::before {
   content: '';
   position: absolute;
-  top: 0; left: 25%; right: 25%;
+  top: 0; left: var(--size-nav-indicator); right: var(--size-nav-indicator);
   height: var(--bw-thick);
   background: var(--primary);
   border-radius: 0 0 var(--radius-nano) var(--radius-nano);
@@ -10943,8 +10947,8 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 /* スケルトンローディング */
 @keyframes adv-shimmer {
-  0%   { background-position: -400px 0; }
-  100% { background-position:  400px 0; }
+  0%   { background-position: calc(-1 * var(--size-adv-shimmer-offset)) 0; }
+  100% { background-position: var(--size-adv-shimmer-offset) 0; }
 }
 .adv-loading {
   display: flex;
@@ -11369,7 +11373,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
    ================================================================ */
 .ci-wrap {
   max-width: var(--size-modal);
-  width: 92%;
+  width: var(--size-modal-pct);
   max-height: var(--size-vh-modal);
   overflow-y: auto;
   padding: 0;
@@ -12683,7 +12687,7 @@ kbd {
 }
 .kb-help-wrap {
   max-width: var(--size-kb-popup);
-  width: 92%;
+  width: var(--size-modal-pct);
 }
 .kb-help-body {
   padding: var(--sp-4) var(--sp-5) var(--sp-5);
