@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.94'; // v17.94: brightnessフィルタートークン4変数追加（mist:0.97/haze:0.96/mild:0.94/mod:0.92）＋全16箇所のハードコードbrightness値を変数化（press-mid×4/press-lt×3/press-mist×4/press-haze×2/press-mild×1/press-mod×2）
+const CACHE_NAME = 'kakeibo-v17.95'; // v17.95: シマー/スケルトンサイズトークン6変数追加＋8箇所変数化（shimmer/shimmer-half/sk-sec/sk-sum/sk-chart/hm-stat-min）
 const ASSETS = [
   './index.html',
   './css/style.css',

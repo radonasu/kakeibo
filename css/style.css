@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.94)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.95)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -453,6 +453,7 @@
   --size-tx-cb:      17px;  /* 一括選択チェックボックス（--size-checkboxより1px大・取引行専用） */
   --size-hm-cell:    13px;  /* ヒートマップグリッドセル（行高・列幅・セルサイズ・DOW行間） */
   --size-hm-month:   20px;  /* ヒートマップ月ラベル行（高さ・行間） */
+  --size-hm-stat-min: 110px; /* ヒートマップ統計カードflex最小幅（.hm-stat-card） */
   --size-icon-4xs:   12px;  /* 極最小アイコン要素（rpt-row-chevron・tiny SVG chevron・size-dot-lg:12px同値だが別セマンティック） */
   --size-icon-3xs:   22px;  /* 最小アイコン要素（bottom-nav-icon svg・cal-date-num・dw-slider高さ） */
   --size-icon-2xs:   24px;  /* 超小アイコン要素（nav-icon・bottom-nav-icon・ev-add-month等） */
@@ -550,6 +551,11 @@
   --size-scrollbar-sm: 5px;  /* 細スクロールバー幅（dd-list・md-scroll-body等の狭いスクロール領域） */
   --size-input-num:  110px;  /* 数値入力フィールド幅（予算・詳細フィルター・QA金額入力等） */
   --size-sk-line:     14px;  /* スケルトンローディング行高（.adv-sk-line） */
+  --size-sk-sec:      20px;  /* スケルトンセクションタイトル高さ（.sk-bone-sec） */
+  --size-sk-sum:     108px;  /* スケルトンサマリーカード高さ（.sk-bone-sum） */
+  --size-sk-chart:   200px;  /* スケルトングラフ高さ（.sk-bone-chart） */
+  --size-shimmer:   1600px;  /* スケルトンシマー背景幅（sk-bone標準：background-size用） */
+  --size-shimmer-half: 800px; /* スケルトンシマー半幅（adv-sk-line/sk-shimmerキーフレーム位置オフセット） */
   /* ── コンポーネント固有サイズトークン追加 (v17.35) ─ */
   --size-accent-bar:   4px;  /* カード左アクセントカラーバー幅（sub-card-color-bar・pt-card-color-bar等・accent-w:3pxより1px太い） */
   --size-accent-bar-pulse: 5px; /* インサイトアラートパルスキーフレームのピーク幅（@keyframes insight-alert-pulse 50%・accent-bar:4pxより1px太い最大値） */
@@ -4909,8 +4915,8 @@ body {
 
 /* ── スケルトンローディング (v5.24) ──────────────────── */
 @keyframes sk-shimmer {
-  0%   { background-position: -800px 0; }
-  100% { background-position:  800px 0; }
+  0%   { background-position: calc(-1 * var(--size-shimmer-half)) 0; }
+  100% { background-position: var(--size-shimmer-half) 0; }
 }
 
 /* ベーススケルトン骨格 */
@@ -4921,7 +4927,7 @@ body {
     var(--bg) 40%,
     var(--border) 80%
   );
-  background-size: 1600px 100%;
+  background-size: var(--size-shimmer) 100%;
   animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
@@ -4965,9 +4971,9 @@ body {
 /* スケルトンボーン サイズバリアント (v17.74) */
 .sk-bone-title    { height: var(--size-icon-sm-plus); }                                            /* ページタイトル骨格 */
 .sk-bone-btn      { height: var(--size-icon-md); }                                                 /* ボタン骨格（幅はインライン） */
-.sk-bone-sum      { height: 108px; border-radius: var(--radius-card); }                           /* サマリーカード骨格 */
-.sk-bone-sec      { height: 20px; margin-bottom: var(--sp-4); border-radius: var(--radius-xs); }  /* セクションタイトル骨格（幅はインライン） */
-.sk-bone-chart    { width: 100%; height: 200px; border-radius: var(--radius-btn-sm); }            /* グラフ骨格 */
+.sk-bone-sum      { height: var(--size-sk-sum); border-radius: var(--radius-card); }              /* サマリーカード骨格 */
+.sk-bone-sec      { height: var(--size-sk-sec); margin-bottom: var(--sp-4); border-radius: var(--radius-xs); } /* セクションタイトル骨格（幅はインライン） */
+.sk-bone-chart    { width: 100%; height: var(--size-sk-chart); border-radius: var(--radius-btn-sm); } /* グラフ骨格 */
 .sk-bone-row      { width: 100%; height: var(--sp-11); border-radius: var(--radius-btn-sm); margin-bottom: var(--sp-2); } /* リスト行骨格 */
 .sk-bone-row-last { width: 100%; height: var(--sp-11); border-radius: var(--radius-btn-sm); }     /* リスト行骨格（最終行・下余白なし） */
 
@@ -4987,7 +4993,7 @@ body {
     var(--border) 40%,
     var(--surface) 80%
   );
-  background-size: 1600px 100%;
+  background-size: var(--size-shimmer) 100%;
   animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
 }
 
@@ -9468,7 +9474,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   margin-bottom: var(--sp-4);
 }
 .hm-stat-card {
-  flex: 1 1 110px;
+  flex: 1 1 var(--size-hm-stat-min);
   background: var(--surface-hover);
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
@@ -10948,7 +10954,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
     var(--border) 50%,
     var(--surface-hover) 75%
   );
-  background-size: 800px 100%;
+  background-size: var(--size-shimmer-half) 100%;
   animation: adv-shimmer var(--dur-rest) infinite linear;
 }
 
