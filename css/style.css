@@ -616,6 +616,15 @@
   --enter-y-lg:   12px; /* 中入場下オフセット（@keyframes from translateY(12px) 9箇所） */
   --enter-y-xl:   14px; /* 大入場下オフセット（@keyframes from translateY(14px) 5箇所） */
   --enter-x-sm:   -6px; /* 横入場左オフセット（@keyframes from translateX(-6px) 9箇所） */
+  /* ── アニメーション入場拡張オフセットトークン (v18.0) ── */
+  --enter-y-2xl:      16px; /* 大入場下オフセット拡張（@keyframes from translateY(16px) 2箇所） */
+  --enter-y-3xl:      20px; /* 特大入場下オフセット（@keyframes from translateY(20px) 2箇所） */
+  --enter-y-4xl:      28px; /* 最大入場下オフセット（@keyframes from translateY(28px) 1箇所） */
+  --enter-y-neg-xs:   -4px; /* 上方向最小入場オフセット（@keyframes from translateY(-4px) 2箇所） */
+  --enter-y-neg-sm:   -6px; /* 上方向小入場オフセット（@keyframes from translateY(-6px) 2箇所） */
+  --enter-y-neg-md:   -7px; /* 上方向中入場オフセット（@keyframes from translateY(-7px) 1箇所） */
+  --enter-y-neg-base: -8px; /* 上方向基本入場オフセット（@keyframes from translateY(-8px) 4箇所） */
+  --enter-x-md:       -8px; /* 横入場左中オフセット（@keyframes from translateX(-8px) 2箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -1291,7 +1300,7 @@ select:focus:not(:focus-visible) {
 }
 .dup-modal-banner svg { flex-shrink: 0; opacity: var(--opacity-near); }
 @keyframes dup-banner-in {
-  0%   { opacity: 0; transform: translateY(-8px); }
+  0%   { opacity: 0; transform: translateY(var(--enter-y-neg-base)); }
   100% { opacity: 1; transform: translateY(0); }
 }
 [data-theme="dark"] .dup-modal-banner {
@@ -4307,7 +4316,7 @@ body {
 }
 @keyframes empty-icon-float {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+  50%       { transform: translateY(var(--enter-y-neg-base)); }
 }
 
 /* ── 今月データなし（既存データあり） ───────────────────── */
@@ -7571,7 +7580,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
    メモ → カテゴリ自動提案ヒント (v5.53)
    ============================================================ */
 @keyframes memo-hint-in {
-  from { opacity: 0; transform: translateY(-4px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .memo-cat-hint {
@@ -7962,7 +7971,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場スタッガードアニメーション */
 @keyframes asset-card-in {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-2xl)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .asset-card {
@@ -8543,7 +8552,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 
 @keyframes ct-row-in {
-  from { opacity: 0; transform: translateX(-8px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-md)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -9173,12 +9182,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   z-index: var(--z-raise);
 }
 @keyframes qa-body-in {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* フィールドスタッガードアニメーション */
 @keyframes qa-field-in {
-  from { opacity: 0; transform: translateY(-7px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-md)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .qa-inner {
@@ -10052,8 +10061,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-modal-in var(--dur-modal) var(--ease-overshoot) both;
 }
 @keyframes sim-modal-in {
-  from { opacity: 0; transform: translateY(28px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0)   scale(1); }
+  from { opacity: 0; transform: translateY(var(--enter-y-4xl)) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)                  scale(1); }
 }
 
 /* ローン情報バー — 左アクセントボーダー */
@@ -10174,7 +10183,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sb-modal-in var(--dur-modal) var(--ease-bounce) both;
 }
 @keyframes sb-modal-in {
-  from { opacity: 0; transform: scale(0.94) translateY(20px); }
+  from { opacity: 0; transform: scale(0.94) translateY(var(--enter-y-3xl)); }
   to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 
@@ -10190,8 +10199,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: var(--dur-delay-sm);
 }
 @keyframes sb-banner-in {
-  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)                       scale(1); }
 }
 .sb-banner-cell {
   text-align: center;
@@ -11155,7 +11164,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes txEmptyBounce {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+  50%       { transform: translateY(var(--enter-y-neg-base)); }
 }
 .tx-empty-msg {
   font-size: var(--fs-sm);
@@ -11397,8 +11406,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: ci-modal-in var(--dur-modal) var(--ease-bounce) both;
 }
 @keyframes ci-modal-in {
-  from { opacity: 0; transform: scale(0.88) translateY(20px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-3xl)); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 .ci-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
@@ -12340,7 +12349,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes calc-preview-in {
-  from { opacity: 0; transform: translateY(-4px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -12566,8 +12575,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes rc-wrap-in {
-  from { opacity: 0; transform: scale(.9) translateY(16px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from { opacity: 0; transform: scale(.9) translateY(var(--enter-y-2xl)); }
+  to   { opacity: 1; transform: scale(1)  translateY(0); }
 }
 
 /* ダークモード */
@@ -12634,7 +12643,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: center;
 }
 @keyframes tx-banner-in {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes fg-in {
@@ -13355,7 +13364,7 @@ canvas.chart-clickable { cursor: pointer; }
   animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm));
 }
 @keyframes md-cat-in {
-  from { opacity: 0; transform: translateX(-8px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-md)); }
   to   { opacity: 1; transform: none; }
 }
 .md-cat-name {
