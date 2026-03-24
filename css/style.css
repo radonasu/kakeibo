@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.88)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.89)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -404,6 +404,11 @@
   --scale-hover-md:    1.05; /* 中選択ホバー拡大（nav-active icon/sort-badge hover/filter-chip active） */
   --scale-hover-sm:    1.03; /* 小ホバー拡大（filter-chip hover:not(.active)） */
   --scale-hover-chip:  1.06; /* タグチップホバー拡大（tx-tag-chip:hover） */
+  --scale-hover-lg:    1.2;  /* 大ホバー拡大（color-swatch:hover・section-tab active icon・2箇所） */
+  --scale-color-hover: 1.15; /* カラーボタンホバー拡大（goal/sub/ch-color-btn:hover・3箇所） */
+  --scale-press-md:    0.93; /* 中ボタン押下縮小（#global-fab:active・date-quick-btn:active・2箇所） */
+  --scale-hm-hover:    1.6;  /* ヒートマップセルホバー拡大（.hm-cell:hover専用・1箇所） */
+  --scale-hm-active:   1.3;  /* ヒートマップセルプレス縮小（.hm-cell:active専用・1箇所） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -2565,7 +2570,7 @@ mark.tx-hl {
   border: var(--bw-swatch) solid transparent;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
-.color-swatch:hover   { transform: scale(1.2); }
+.color-swatch:hover   { transform: scale(var(--scale-hover-lg)); }
 .color-swatch:active  { transform: scale(1.0); }
 .color-swatch.selected { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
@@ -3690,7 +3695,7 @@ body {
   transform: scale(var(--scale-icon-hover));
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
 }
-#global-fab:active { transform: scale(0.93); }
+#global-fab:active { transform: scale(var(--scale-press-md)); }
 #global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent); }
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
@@ -5066,7 +5071,7 @@ body {
   transition: transform var(--dur-base) var(--ease-bounce);
 }
 .section-tab.is-active .tab-icon {
-  transform: scale(1.2);
+  transform: scale(var(--scale-hover-lg));
 }
 [data-theme="dark"] .section-tab.is-active {
   background: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -5373,7 +5378,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .goal-emoji-btn.selected {
   border-color: var(--primary);
   background: var(--primary-light);
-  transform: scale(1.05);
+  transform: scale(var(--scale-hover-md));
 }
 
 /* カラーピッカー */
@@ -5392,7 +5397,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
   padding: 0;
 }
-.goal-color-btn:hover  { transform: scale(1.15); }
+.goal-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
 .goal-color-btn:active { transform: scale(1.0); }
 .goal-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-color-btn.selected {
@@ -6454,7 +6459,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-quick) var(--ease-bounce), box-shadow var(--dur-quick) var(--ease-plain);
   outline: none;
 }
-.sub-color-btn:hover  { transform: scale(1.15); }
+.sub-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
 .sub-color-btn:active { transform: scale(1.0); }
 .sub-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-color-btn.selected {
@@ -8282,7 +8287,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   outline: none;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
 }
-.ch-color-btn:hover  { transform: scale(1.15); }
+.ch-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
 .ch-color-btn:active { transform: scale(1.0); }
 .ch-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-color-btn.active { border-color: var(--text); transform: scale(var(--scale-hover)); }
@@ -9574,11 +9579,11 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
-  transform: scale(1.6);
+  transform: scale(var(--scale-hm-hover));
   z-index: var(--z-raise);
   position: relative;
 }
-.hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(1.3); z-index: var(--z-raise); position: relative; }
+.hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(var(--scale-hm-active)); z-index: var(--z-raise); position: relative; }
 /* レベル別ホバーグロー */
 .hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 50%, transparent); }
 .hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 60%, transparent); }
@@ -12050,7 +12055,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) 12%, transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.date-quick-btn:active { transform: scale(0.93); box-shadow: none; }
+.date-quick-btn:active { transform: scale(var(--scale-press-md)); box-shadow: none; }
 
 .date-quick-btn.active {
   border-color: var(--primary);
