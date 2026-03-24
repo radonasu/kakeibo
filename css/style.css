@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.7)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.8)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -432,6 +432,7 @@
   --rotate-bell-4:        -8deg;  /* ベルリング第4揺れ（@keyframes notif-bell-ring 50% 1箇所） */
   --rotate-bell-5:         5deg;  /* ベルリング第5揺れ（@keyframes notif-bell-ring 62% 1箇所） */
   --rotate-bell-6:        -3deg;  /* ベルリング第6揺れ（@keyframes notif-bell-ring 75% 1箇所） */
+  --rotate-rest:           0deg;  /* 回転リセット（@keyframes終端・静的回転全域 3箇所：hs-badge-in to/notif-bell-ring 0%100%/rc-icon-spin to） */
   --scale-anim-badge-in:  0.4;   /* バッジ入場初期スケール（@keyframes hs-badge-in from・notif-badge-pop 0% 2箇所） */
   --scale-anim-nav-badge: 0.5;   /* ナビバッジ入場スケール（@keyframes nav-badge-pop 0% 1箇所） */
   --scale-anim-ev-cb:     0.7;   /* イベントCBポップ開始スケール（@keyframes ev-cb-pop 0% 1箇所） */
@@ -7134,7 +7135,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 @keyframes hs-badge-in {
   from { transform: scale(var(--scale-anim-badge-in)) rotate(var(--rotate-badge-in)); opacity: 0; }
-  to   { transform: scale(var(--scale-rest)) rotate(0deg); opacity: 1; }
+  to   { transform: scale(var(--scale-rest)) rotate(var(--rotate-rest)); opacity: 1; }
 }
 .hs-grade-s { background: var(--primary-light);  color: var(--primary-dark); }
 .hs-grade-a { background: var(--success-bg);     color: var(--income-deep); }
@@ -11757,7 +11758,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* ベルシェイクアニメーション */
 @keyframes notif-bell-ring {
-  0%, 100% { transform: rotate(0deg); }
+  0%, 100% { transform: rotate(var(--rotate-rest)); }
   12%  { transform: rotate(var(--rotate-bell-1)); }
   25%  { transform: rotate(var(--rotate-bell-2)); }
   37%  { transform: rotate(var(--rotate-bell-3)); }
@@ -12464,7 +12465,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes rc-icon-spin {
   from { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-anim-pop-init)); opacity: 0; }
-  to   { transform: rotate(0) scale(var(--scale-rest)); opacity: 1; }
+  to   { transform: rotate(var(--rotate-rest)) scale(var(--scale-rest)); opacity: 1; }
 }
 
 .rc-title {

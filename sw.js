@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v18.7'; // v18.7: scale(1)全54箇所→var(--scale-rest)変数化＋ページ遷移スケールトークン追加＋デッドコード除去
+const CACHE_NAME = 'kakeibo-v18.8'; // v18.8: --rotate-rest:0deg追加＋rotate(0deg)/rotate(0)全3箇所変数化（hs-badge-in to/notif-bell-ring 0%100%/rc-icon-spin to）
 const ASSETS = [
   './index.html',
   './css/style.css',
