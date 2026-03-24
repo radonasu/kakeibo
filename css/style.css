@@ -684,16 +684,30 @@
   --sw-spark-dash:  1.5;  /* スパークライン予測線・ドット stroke-width（fc-spark-forecast/today-dot） */
   --sw-spark-ref:   1;    /* スパークライン平均参照線 stroke-width（fc-spark-avg） */
   /* ── color-mix()ティント強度トークン (v18.9) ──────────────── */
-  --mix-faint:  8%;   /* 極薄ティント（プリセットチップbg・薄アクティブ等 15箇所） */
-  --mix-2xs:   10%;   /* 超薄ティント（hover/active状態・フォーカスリング薄版 34箇所） */
-  --mix-xs:    12%;   /* 薄ティント（チップ/カード選択bg・フォーカスリング 43箇所：最多使用） */
-  --mix-sm:    15%;   /* 軽ティント（入力bg・ナビ背景・タグタブ等 28箇所） */
-  --mix-base:  18%;   /* 標準ティント（セパレーターボーダー・タグ背景・インジケーター 29箇所） */
-  --mix-md:    20%;   /* 中ティント（中hover・フィルターチップ選択等 19箇所） */
-  --mix-soft:  22%;   /* やや中ティント（バッジボーダー・ダーク--info-bg等 14箇所） */
-  --mix-mid:   25%;   /* 中強ティント（フォーカスリング・選択状態ボーダー 20箇所） */
-  --mix-lg:    30%;   /* 強ティント（強hover・アクティブセパレーター・diff.up 29箇所） */
-  --mix-xl:    35%;   /* 特強ティント（ボタンシャドウ・フォーカスタブ等 13箇所） */
+  --mix-faint:     8%;   /* 極薄ティント（プリセットチップbg・薄アクティブ等 15箇所） */
+  --mix-2xs:      10%;   /* 超薄ティント（hover/active状態・フォーカスリング薄版 34箇所） */
+  --mix-xs:       12%;   /* 薄ティント（チップ/カード選択bg・フォーカスリング 43箇所：最多使用） */
+  --mix-sm:       15%;   /* 軽ティント（入力bg・ナビ背景・タグタブ等 28箇所） */
+  --mix-base:     18%;   /* 標準ティント（セパレーターボーダー・タグ背景・インジケーター 29箇所） */
+  --mix-md:       20%;   /* 中ティント（中hover・フィルターチップ選択等 19箇所） */
+  --mix-soft:     22%;   /* やや中ティント（バッジボーダー・ダーク--info-bg等 14箇所） */
+  --mix-mid:      25%;   /* 中強ティント（フォーカスリング・選択状態ボーダー 20箇所） */
+  --mix-lg:       30%;   /* 強ティント（強hover・アクティブセパレーター・diff.up 29箇所） */
+  --mix-xl:       35%;   /* 特強ティント（ボタンシャドウ・フォーカスタブ等 13箇所） */
+  /* ── color-mix()高強度・特殊用途ティントトークン (v19.0) ──── */
+  --mix-nano:      5%;   /* 超極薄bg（hint/badge-tip等 7箇所） */
+  --mix-micro:     6%;   /* 極薄bg（insight/adv/notif bg等 12箇所） */
+  --mix-2xl:      40%;   /* 強border/shadow（ダークborder・shadow-glow等 8箇所） */
+  --mix-3xl:      45%;   /* FABシャドウ・強調shadow等 9箇所 */
+  --mix-4xl:      50%;   /* 中強shadow・navbar等 9箇所 */
+  --mix-5xl:      55%;   /* 強hover shadow・bar bg等 5箇所 */
+  --mix-6xl:      60%;   /* 強border・accent border等 5箇所 */
+  --mix-deep:     70%;   /* バーグラデーション終端色（最多使用 11箇所） */
+  --mix-rich:     75%;   /* 強グラデーション終端・サイドテキスト等 4箇所 */
+  --mix-label:    85%;   /* ラベル色強調（md-cell-label等 4箇所） */
+  --mix-glass:    88%;   /* フロストガラス背景（navbar/modal等 5箇所） */
+  --mix-glass-lg: 92%;   /* サイドバーガラス（2箇所） */
+  --mix-glass-xl: 95%;   /* 濃ガラス（1箇所） */
 }
 
 html {
@@ -817,7 +831,7 @@ select:focus:not(:focus-visible) {
 .brand-icon {
   width: var(--size-brand-icon);
   height: var(--size-brand-icon);
-  background: linear-gradient(135deg, var(--primary), var(--primary-end), var(--pink));
+  background: linear-gradient(var(--grad-diagonal), var(--primary), var(--primary-end), var(--pink));
   border-radius: var(--radius-btn);
   display: flex;
   align-items: center;
@@ -969,7 +983,7 @@ select:focus:not(:focus-visible) {
   width: var(--size-icon-sm);
   height: var(--size-icon-sm);
   border-radius: var(--radius-circle);
-  background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+  background: linear-gradient(var(--grad-diagonal), var(--primary), var(--primary-mid));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1221,7 +1235,7 @@ select:focus:not(:focus-visible) {
   color: var(--white);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
 }
-.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 50%, transparent); }
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent); }
 .btn-primary:active { filter: brightness(var(--brightness-press)); }
 
 .btn-ghost {
@@ -1608,10 +1622,10 @@ select:focus:not(:focus-visible) {
   pointer-events: none;
 }
 
-.summary-card.income  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); }
-.summary-card.expense { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); }
-.summary-card.balance.positive { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); }
-.summary-card.balance.negative { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); }
+.summary-card.income  { background: linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%); }
+.summary-card.expense { background: linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%); }
+.summary-card.balance.positive { background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%); }
+.summary-card.balance.negative { background: linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%); }
 
 .summary-label {
   font-size: var(--fs-xs);
@@ -1641,7 +1655,7 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-badge);
 }
 .diff.up   { background: color-mix(in srgb, var(--white) var(--mix-lg), transparent); }
-.diff.down { background: color-mix(in srgb, var(--white) 13%, transparent); opacity: var(--opacity-faded); }
+.diff.down { background: color-mix(in srgb, var(--white) var(--mix-xs), transparent); opacity: var(--opacity-faded); }
 
 /* ── チャートエリア ───────────────────────────────────── */
 .charts-row {
@@ -1781,7 +1795,7 @@ select:focus:not(:focus-visible) {
 
 /* 選択行ハイライト (v5.56) */
 .tx-table tbody tr.tx-selected {
-  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
   transition: background var(--dur-faster);
 }
 .tx-table tbody tr.tx-selected td {
@@ -1792,7 +1806,7 @@ select:focus:not(:focus-visible) {
   padding-left: var(--sp-2-75) !important;
 }
 [data-theme="dark"] .tx-table tbody tr.tx-selected {
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
 /* ── 取引ソートヘッダー (v5.79 ビジュアル洗練) ─────────────── */
@@ -1821,7 +1835,7 @@ select:focus:not(:focus-visible) {
 .tx-th-sort:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .tx-th-sort.tx-th-active {
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), transparent);
   border-bottom: var(--accent-w) solid var(--primary) !important;
 }
 .tx-sort-icon {
@@ -1868,7 +1882,7 @@ select:focus:not(:focus-visible) {
   animation: tx-sort-badge-in var(--dur-base) var(--ease-plain) both;
 }
 .tx-sort-badge:hover {
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
   transform: scale(var(--scale-hover-md));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
@@ -1890,11 +1904,11 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .tx-sort-badge {
-  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
   border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
 [data-theme="dark"] .tx-sort-badge:hover {
-  background: color-mix(in srgb, var(--primary) 24%, transparent);
+  background: color-mix(in srgb, var(--primary) 2var(--mix-nano), transparent);
 }
 
 /* 一括操作バー (v5.56 グラスモーフィズム) */
@@ -1911,11 +1925,11 @@ select:focus:not(:focus-visible) {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   z-index: var(--z-sidebar);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
   backdrop-filter: blur(var(--blur-xl)) saturate(var(--saturate-strong));
   -webkit-backdrop-filter: blur(var(--blur-xl)) saturate(var(--saturate-strong));
   border-top: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-xl), var(--border));
-  box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 60%, transparent),
+  box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) var(--mix-6xl), transparent),
               0 -8px 32px var(--black-14);
   padding: var(--sp-3) var(--sp-5);
   display: flex;
@@ -1925,9 +1939,9 @@ select:focus:not(:focus-visible) {
   animation: bulk-slide-up var(--dur-gentle) var(--ease-overshoot) both;
 }
 [data-theme="dark"] .bulk-bar {
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  border-top-color: color-mix(in srgb, var(--primary) 40%, var(--border));
-  box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) 50%, transparent),
+  background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
+  border-top-color: color-mix(in srgb, var(--primary) var(--mix-2xl), var(--border));
+  box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--primary) var(--mix-4xl), transparent),
               0 -8px 32px var(--black-30);
 }
 /* バー情報エリア */
@@ -2093,7 +2107,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent);
   color: var(--tc, var(--primary));
-  border: var(--bw-thin) solid color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
   white-space: nowrap;
   line-height: var(--lh-loose);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
@@ -2176,8 +2190,8 @@ select:focus:not(:focus-visible) {
 }
 .tx-tag-filter-chip.active {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-soft), transparent);
-  border-color: color-mix(in srgb, var(--tc, var(--primary)) 48%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) 14%, transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-4xl), transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
   transform: scale(var(--scale-hover-md));
   font-weight: var(--fw-bold);
 }
@@ -2203,15 +2217,15 @@ select:focus:not(:focus-visible) {
 }
 [data-theme="dark"] .tx-tag-filter-all.active {
   background: color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
-  border-color: color-mix(in srgb, var(--primary) 42%, transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
 }
 [data-theme="dark"] .tx-tag-filter-chip {
-  background: color-mix(in srgb, var(--tc, var(--primary)) 16%, transparent);
+  background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
   border-color: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
 }
 [data-theme="dark"] .tx-tag-filter-chip.active {
-  background: color-mix(in srgb, var(--tc, var(--primary)) 28%, transparent);
-  border-color: color-mix(in srgb, var(--tc, var(--primary)) 52%, transparent);
+  background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
+  border-color: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-4xl), transparent);
 }
 
 /* ── フィルターバー ───────────────────────────────────── */
@@ -2408,7 +2422,7 @@ select:focus:not(:focus-visible) {
 .adv-preset-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-preset-chip.active {
   border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
   color: var(--primary);
   font-weight: var(--fw-bold);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
@@ -2444,7 +2458,7 @@ mark.tx-hl {
   animation: tx-hl-in var(--dur-mid) var(--ease-plain) both;
 }
 [data-theme="dark"] mark.tx-hl {
-  background: color-mix(in srgb, var(--primary) 28%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
 
 /* ── v5.95: フィルター適用中バッジ ── */
@@ -2615,7 +2629,7 @@ mark.tx-hl {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: color-mix(in srgb, var(--sidebar-bg) 45%, transparent);
+  background: color-mix(in srgb, var(--sidebar-bg) var(--mix-3xl), transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   display: flex;
@@ -2831,7 +2845,7 @@ mark.tx-hl {
 }
 
 .btn-receipt {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(var(--grad-diagonal), var(--primary), var(--primary-dark));
   color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
@@ -3063,14 +3077,14 @@ mark.tx-hl {
 
 .budget-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--primary) 0%, var(--primary-end) 100%);
   border-radius: var(--radius-2xs);
   min-width: var(--bw-select);
   transform-origin: left center;
   animation: budget-fill-in var(--dur-fill) var(--ease-std) both;
 }
-.budget-fill.warn { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
-.budget-fill.over { background: linear-gradient(90deg, var(--expense) 0%, var(--expense-end) 100%); }
+.budget-fill.warn { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
+.budget-fill.over { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); }
 
 .budget-pct-badge {
   font-size: var(--fs-xs);
@@ -3170,7 +3184,7 @@ mark.tx-hl {
   align-items: center;
   gap: var(--sp-3);
   padding: var(--sp-4);
-  background: linear-gradient(135deg, var(--success-bg), var(--income-light));
+  background: linear-gradient(var(--grad-diagonal), var(--success-bg), var(--income-light));
   border: var(--bw-thin) solid var(--success-border);
   border-radius: var(--radius-btn);
 }
@@ -3179,7 +3193,7 @@ mark.tx-hl {
   width: var(--size-icon-md);
   height: var(--size-icon-md);
   border-radius: var(--radius-circle);
-  background: linear-gradient(135deg, var(--income), var(--income-end));
+  background: linear-gradient(var(--grad-diagonal), var(--income), var(--income-end));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3313,7 +3327,7 @@ mark.tx-hl {
   bottom: var(--sp-7);
   left: 50%;
   transform: translateX(-50%) translateY(var(--translate-popup-hide));
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   color: var(--text);
@@ -3351,7 +3365,7 @@ mark.tx-hl {
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, var(--primary-deepest) 0%, var(--primary-deep) 40%, var(--primary-darker) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary-deepest) 0%, var(--primary-deep) 40%, var(--primary-darker) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3378,14 +3392,14 @@ mark.tx-hl {
 .auth-logo-icon {
   width: var(--size-icon-2xl);
   height: var(--size-icon-2xl);
-  background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+  background: linear-gradient(var(--grad-diagonal), var(--primary), var(--primary-mid));
   border-radius: var(--radius-toggle);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--fs-4xl);
   margin: 0 auto var(--sp-3-5);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 40%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
 }
 
 .auth-title {
@@ -3521,7 +3535,7 @@ body {
 #pwa-install-banner {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: color-mix(in srgb, var(--sidebar-bg) 92%, transparent);
+  background: color-mix(in srgb, var(--sidebar-bg) var(--mix-glass-lg), transparent);
   backdrop-filter: blur(var(--blur-md));
   -webkit-backdrop-filter: blur(var(--blur-md));
   color: var(--sidebar-text-hi);
@@ -3559,7 +3573,7 @@ body {
 .pwa-ios-guide {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: color-mix(in srgb, var(--sidebar-bg) 95%, transparent);
+  background: color-mix(in srgb, var(--sidebar-bg) var(--mix-glass-xl), transparent);
   backdrop-filter: blur(var(--blur-md));
   -webkit-backdrop-filter: blur(var(--blur-md));
   color: var(--sidebar-text-hi);
@@ -3619,7 +3633,7 @@ body {
   position: fixed;
   bottom: var(--sp-7); left: 50%;
   transform: translateX(-50%) translateY(var(--translate-popup-hide));
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   color: var(--text);
@@ -3653,7 +3667,7 @@ body {
   display: none;
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
   backdrop-filter: blur(var(--blur-lg)) saturate(var(--saturate-base));
   -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(var(--saturate-base));
   border-top: var(--bw-thin) solid var(--border);
@@ -3800,13 +3814,13 @@ body {
   width: var(--size-mobile-bar);
   height: var(--size-mobile-bar);
   border-radius: var(--radius-circle);
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(var(--grad-diagonal), var(--primary), var(--primary-dark));
   color: var(--white);
   font-size: var(--fs-icon-2xl);
   font-weight: var(--fw-light);
   line-height: var(--lh-none);
   border: none;
-  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12);
   z-index: var(--z-fab);
   cursor: pointer;
   transition: transform var(--dur-base) var(--ease-bounce), box-shadow var(--dur-base);
@@ -3818,16 +3832,16 @@ body {
 #global-fab svg { color: var(--white); stroke: var(--white); }
 #global-fab:hover {
   transform: scale(var(--scale-icon-hover));
-  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) 55%, transparent), 0 3px 8px var(--black-14);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent), 0 3px 8px var(--black-14);
 }
 #global-fab:active { transform: scale(var(--scale-press-md)); }
-#global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent); }
+#global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent); }
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
 @keyframes fab-pulse {
-  0%   { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 color-mix(in srgb, var(--primary) 38%, transparent); }
-  60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 12px transparent; }
-  100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent), 0 2px 6px var(--black-12), 0 0 0 0 transparent; }
+  0%   { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12), 0 0 0 0 color-mix(in srgb, var(--primary) var(--mix-2xl), transparent); }
+  60%  { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12), 0 0 0 12px transparent; }
+  100% { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12), 0 0 0 0 transparent; }
 }
 #global-fab.fab-pulsing { animation: fab-pulse var(--dur-fab-pulse) var(--ease-out) infinite; }
 #global-fab.fab-pulsing:hover,
@@ -3920,7 +3934,7 @@ body {
   cursor: pointer;
   line-height: var(--lh-none);
   transition: background var(--dur-fast), color var(--dur-fast);
-  color: color-mix(in srgb, var(--sidebar-text-hi) 75%, transparent);
+  color: color-mix(in srgb, var(--sidebar-text-hi) var(--mix-rich), transparent);
   flex-shrink: 0;
   margin-left: auto;
   display: flex;
@@ -3975,7 +3989,7 @@ body {
   --info:           #60a5fa;  /* blue-400 */
   --info-bg:        color-mix(in srgb, var(--info) var(--mix-soft), transparent);
   --info-text:      #93c5fd;  /* blue-300 */
-  --info-border:    color-mix(in srgb, var(--info) 32%, transparent);
+  --info-border:    color-mix(in srgb, var(--info) var(--mix-xl), transparent);
   --warning-deep:   var(--warning);  /* ダークモードではwarning変数（#fbbf24）に追従 */
 }
 
@@ -3989,7 +4003,7 @@ body {
   box-shadow: var(--shadow-tab-dark);
 }
 [data-theme="dark"] .sync-user-card {
-  background: linear-gradient(135deg, var(--success-bg) 0%, var(--success-border) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--success-bg) 0%, var(--success-border) 100%);
   border-color: var(--success);
 }
 /* .scan-result, .auth-error → セマンティックトークンで自動対応 */
@@ -4238,7 +4252,7 @@ body {
 
 /* ── ウェルカムヒーロー ──────────────────────────────────── */
 .onboarding-hero {
-  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
   padding: var(--sp-11) var(--sp-8) var(--sp-9);
   color: var(--white);
@@ -4410,7 +4424,7 @@ body {
 [data-theme="dark"] .step-num { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); color: var(--primary-end); }
 [data-theme="dark"] .step-card:hover { border-color: var(--primary-end); }
 [data-theme="dark"] .empty-month-btn { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); color: var(--primary-end); }
-[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) 28%, transparent); }
+[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
 
 /* レスポンシブ */
 @media (max-width: 640px) {
@@ -5134,7 +5148,7 @@ body {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky-tabs);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface) var(--mix-glass-lg), transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   border-bottom: var(--accent-w) solid var(--border);
@@ -5318,7 +5332,7 @@ body {
   background: linear-gradient(
     var(--grad-horizontal),
     var(--goal-accent, var(--primary)) 0%,
-    color-mix(in srgb, var(--goal-accent, var(--primary)) 75%, white) 100%
+    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-rich), white) 100%
   );
 }
 
@@ -5606,9 +5620,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: width var(--dur-glide) var(--ease-out-expo);
   /* v5.32: CSS変数グラデーション */
   background: linear-gradient(
-    90deg,
+    var(--grad-horizontal),
     var(--goal-accent, var(--primary)) 0%,
-    color-mix(in srgb, var(--goal-accent, var(--primary)) 70%, white) 100%
+    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), white) 100%
   );
 }
 .goal-dash-pct {
@@ -5633,8 +5647,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
 [data-theme="dark"] .goal-emoji-btn.selected { background: color-mix(in srgb, var(--primary) var(--mix-mid), transparent); }
 [data-theme="dark"] .goal-deposit-current { background: var(--surface-2); }
-[data-theme="dark"] .goal-progress-bar-fill { background: linear-gradient(90deg, var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) 75%, transparent) 100%); }
-[data-theme="dark"] .goal-dash-bar-fill { background: linear-gradient(90deg, var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) 70%, transparent) 100%); }
+[data-theme="dark"] .goal-progress-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-rich), transparent) 100%); }
+[data-theme="dark"] .goal-dash-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--goal-accent, var(--primary)) 0%, color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), transparent) 100%); }
 
 @media (max-width: 768px) {
   .goal-card-footer { gap: var(--sp-2); }
@@ -5796,10 +5810,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-ws-pill.empty { color: var(--text-muted); font-size: var(--fs-2xs); }
 
 /* 支出ヒートマップ */
-.cal-cell.heat-1 { background: color-mix(in srgb, var(--expense)  8%, var(--surface)); }
+.cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) var(--mix-faint), var(--surface)); }
 .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) var(--mix-base), var(--surface)); }
 .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-lg), var(--surface)); }
-.cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 44%, var(--surface)); }
+.cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 4var(--mix-nano), var(--surface)); }
 
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
 .cal-cell:active:not(.cal-empty) { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); }
@@ -5965,7 +5979,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) var(--mix-xs), var(--surface)); }
 [data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); }
 [data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-xl), var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 50%, var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-4xl), var(--surface)); }
 [data-theme="dark"] .cal-cell.selected {
   background: color-mix(in srgb, var(--primary) var(--mix-mid), var(--surface));
 }
@@ -6148,7 +6162,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: var(--surface-hover);
   transition: background var(--dur-fast);
 }
-.insight-item:hover  { background: color-mix(in srgb, var(--primary) 6%, var(--surface-hover)); }
+.insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); }
 .insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mist)); }
 
 /* タイプ別ボーダー色 */
@@ -6158,7 +6172,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .insight-item.insight-warning { border-left-color: var(--warning); }
 
 /* タイプ別背景色（薄） */
-.insight-item.insight-info    { background: color-mix(in srgb, var(--primary) 6%, var(--surface)); }
+.insight-item.insight-info    { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface)); }
 .insight-item.insight-alert   { background: var(--danger-bg); }
 .insight-item.insight-success { background: var(--success-bg); }
 .insight-item.insight-warning { background: var(--warning-bg); }
@@ -6355,8 +6369,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   pointer-events: none;
 }
 /* グラデーション (v5.44) */
-.sub-summary-card.sub-monthly { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
-.sub-summary-card.sub-yearly  { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
+.sub-summary-card.sub-monthly { background: linear-gradient(var(--grad-diagonal), var(--primary-dark) 0%, var(--primary-end) 100%); }
+.sub-summary-card.sub-yearly  { background: linear-gradient(var(--grad-diagonal), var(--teal) 0%, var(--teal-end) 100%); }
 .sub-summary-card.sub-monthly .sub-summary-label,
 .sub-summary-card.sub-monthly .sub-summary-sub,
 .sub-summary-card.sub-yearly  .sub-summary-label,
@@ -6601,8 +6615,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .sub-card { border-color: var(--border); }
 [data-theme="dark"] .sub-widget-item.sub-urgent { background: color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 [data-theme="dark"] .sub-widget-item.sub-soon   { background: color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
-[data-theme="dark"] .sub-card.sub-urgent { border-color: color-mix(in srgb, var(--expense) 40%, transparent); }
-[data-theme="dark"] .sub-card.sub-soon   { border-color: color-mix(in srgb, var(--warning) 40%, transparent); }
+[data-theme="dark"] .sub-card.sub-urgent { border-color: color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); }
+[data-theme="dark"] .sub-card.sub-soon   { border-color: color-mix(in srgb, var(--warning) var(--mix-2xl), transparent); }
 
 /* ============================================================
    CSV インポートモーダル (v5.45)
@@ -6769,11 +6783,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   overflow: hidden;
 }
 .pt-total {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
   border-color: transparent;
 }
 .pt-expiring {
-  background: linear-gradient(135deg, var(--warning) 0%, var(--orange) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--warning) 0%, var(--orange) 100%);
   border-color: transparent;
 }
 .pt-summary-label {
@@ -7195,7 +7209,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .hs-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) 68%, white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-deep), white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: hs-fill-in var(--dur-fill) var(--ease-std) both;
@@ -7251,7 +7265,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .hs-trend-up   { background: color-mix(in srgb, var(--success) var(--mix-base), transparent); color: var(--income-end); border-color: color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
 [data-theme="dark"] .hs-trend-down { background: color-mix(in srgb, var(--expense) var(--mix-base), transparent); color: var(--expense-end); border-color: color-mix(in srgb, var(--expense) var(--mix-lg), transparent); }
 [data-theme="dark"] .hs-trend-flat { background: var(--on-dark-divider); color: var(--text-muted); }
-[data-theme="dark"] .hs-bar-fill { background: linear-gradient(90deg, var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) 68%, transparent) 100%); }
+[data-theme="dark"] .hs-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-deep), transparent) 100%); }
 .hs-spark-svg {
   display: block;
   width: 100%;
@@ -7321,9 +7335,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: calc(-1 * var(--sp-6)); right: calc(-1 * var(--sp-5)); }
 .wl-summary-card::after  { width: var(--size-deco-4xs); height: var(--size-deco-4xs); bottom: calc(-1 * var(--sp-4)); left: var(--sp-2); }
 /* グラデーション 3種 */
-.wl-sum-count  { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%); }
-.wl-sum-budget { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); }
-.wl-sum-done   { background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%); }
+.wl-sum-count  { background: linear-gradient(var(--grad-diagonal), var(--primary-dark) 0%, var(--primary-end) 100%); }
+.wl-sum-budget { background: linear-gradient(var(--grad-diagonal), var(--teal) 0%, var(--teal-end) 100%); }
+.wl-sum-done   { background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income-end) 100%); }
 /* グラデーションカード内のテキストを白に */
 .wl-sum-count .wl-summary-label,
 .wl-sum-budget .wl-summary-label,
@@ -7385,7 +7399,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* 高優先度カードのパルス */
 @keyframes wl-urgent-glow {
   0%, 100% { border-left-color: var(--wl-accent, var(--expense)); box-shadow: 0 0 0 0 transparent; }
-  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) 70%, var(--white)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 }
 .wl-card.wl-high {
   animation: wl-card-in var(--dur-medium) var(--ease-std) both,
@@ -7615,7 +7629,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .wish-widget-item.wl-high { background: color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 
 /* ダークモード */
-[data-theme="dark"] .wl-card.wl-high { border-left-color: color-mix(in srgb, var(--expense) 70%, transparent); }
+[data-theme="dark"] .wl-card.wl-high { border-left-color: color-mix(in srgb, var(--expense) var(--mix-deep), transparent); }
 
 /* モバイル */
 @media (max-width: 520px) {
@@ -7708,7 +7722,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* alertパルスグロー */
 @keyframes fc-alert-glow {
   0%, 100% { box-shadow: 0 0 0 0 transparent; border-left-color: var(--danger-text); }
-  50%       { box-shadow: -3px 0 10px -2px color-mix(in srgb, var(--expense) 40%, transparent); border-left-color: color-mix(in srgb, var(--expense) 50%, transparent); }
+  50%       { box-shadow: -3px 0 10px -2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); border-left-color: color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
 }
 /* スパークライン描画アニメーション */
 @keyframes fc-spark-draw {
@@ -7780,7 +7794,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .fc-progress-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  background: linear-gradient(90deg, var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) 70%, white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), white) 100%);
   transition: width var(--dur-fill) var(--ease-enter);
 }
 /* TODAYマーカー */
@@ -7938,7 +7952,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .fc-alert   { background: color-mix(in srgb, var(--expense) var(--mix-sm), transparent);  border-color: color-mix(in srgb, var(--expense) var(--mix-lg), transparent); }
 [data-theme="dark"] .fc-avg-up   { background: color-mix(in srgb, var(--expense) var(--mix-sm), transparent);  border-color: color-mix(in srgb, var(--expense) var(--mix-lg), transparent); }
 [data-theme="dark"] .fc-avg-down { background: color-mix(in srgb, var(--success) var(--mix-sm), transparent);  border-color: color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
-[data-theme="dark"] .fc-progress-fill { background: linear-gradient(90deg, var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) 70%, transparent) 100%); }
+[data-theme="dark"] .fc-progress-fill { background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), transparent) 100%); }
 
 /* ============================================================
    v5.59 ダッシュボードウィジェット カスタマイズ
@@ -8084,10 +8098,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* 純資産サマリーカード専用グラデーション */
 .summary-card.net-worth-card.positive {
-  background: linear-gradient(135deg, var(--income-deep) 0%, var(--income) 60%, var(--income-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income) 60%, var(--income-end) 100%);
 }
 .summary-card.net-worth-card.negative {
-  background: linear-gradient(135deg, var(--expense-deep) 0%, var(--expense) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--expense-deep) 0%, var(--expense) 100%);
 }
 
 /* ミニスパークライン */
@@ -8163,11 +8177,11 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-circle);
   opacity: var(--opacity-deco-md);
 }
-.ch-sum-active    { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color:var(--white); }
+.ch-sum-active    { background: linear-gradient(var(--grad-diagonal), var(--primary-dark) 0%, var(--primary) 100%); color:var(--white); }
 .ch-sum-active::before { background:var(--white); }
-.ch-sum-achieved  { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); color:var(--white); }
+.ch-sum-achieved  { background: linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%); color:var(--white); }
 .ch-sum-achieved::before { background:var(--white); }
-.ch-sum-total     { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-end) 100%); color:var(--white); }
+.ch-sum-total     { background: linear-gradient(var(--grad-diagonal), var(--teal) 0%, var(--teal-end) 100%); color:var(--white); }
 .ch-sum-total::before { background:var(--white); }
 .ch-summary-label { font-size: var(--fs-xs); opacity: var(--opacity-near); margin-bottom: var(--sp-1); }
 .ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-none); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
@@ -8276,9 +8290,9 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-2xs);
   transition: width var(--dur-fill) var(--ease-std);
 }
-.ch-bar-ok   { background: linear-gradient(90deg, var(--income), var(--income-end)); }
-.ch-bar-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
-.ch-bar-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
+.ch-bar-ok   { background: linear-gradient(var(--grad-horizontal), var(--income), var(--income-end)); }
+.ch-bar-warn { background: linear-gradient(var(--grad-horizontal), var(--warning), var(--warning-end)); }
+.ch-bar-over { background: linear-gradient(var(--grad-horizontal), var(--expense), var(--expense-end)); }
 
 .ch-progress-label {
   font-size: var(--fs-xs);
@@ -8517,12 +8531,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* 最多支出: 赤系グラデーション */
 .dow-stat-max {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--expense) 75%, black) 0%, var(--expense) 100%);
+  background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--expense) var(--mix-rich), black) 0%, var(--expense) 100%);
   color: var(--white);
 }
 /* 最少支出: 緑系グラデーション */
 .dow-stat-min {
-  background: linear-gradient(135deg, var(--income-deep) 0%, var(--income-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income-end) 100%);
   color: var(--white);
 }
 
@@ -8578,7 +8592,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dow-mini-bar-fill {
   height: 100%;
   border-radius: var(--radius-2xs);
-  background: linear-gradient(90deg, var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) 70%, white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-deep), white) 100%);
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
@@ -8589,7 +8603,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .dow-pct-mid  { background: var(--warning-border); color: var(--warning); }
 [data-theme="dark"] .dow-pct-low  { background: var(--income-deep); color: var(--income-end); }
 [data-theme="dark"] .dow-mini-bar-track { background: var(--on-dark-dim); }
-[data-theme="dark"] .dow-mini-bar-fill { background: linear-gradient(90deg, var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) 70%, transparent) 100%); }
+[data-theme="dark"] .dow-mini-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-deep), transparent) 100%); }
 
 /* -- モバイル対応 -- */
 @media (max-width: 560px) {
@@ -8753,7 +8767,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .cat-fixed-badge.is-var {
   background: color-mix(in srgb, var(--success) var(--mix-2xs), transparent);
   color: var(--success);
-  border: var(--bw-thin) solid color-mix(in srgb, var(--success) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--success) var(--mix-lg), transparent);
 }
 [data-theme="dark"] .cat-fixed-badge.is-fixed {
   background: color-mix(in srgb, var(--primary-end) var(--mix-base), transparent);
@@ -8763,7 +8777,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .cat-fixed-badge.is-var {
   background: color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
   color: var(--income-end);
-  border-color: color-mix(in srgb, var(--income-end) 32%, transparent);
+  border-color: color-mix(in srgb, var(--income-end) var(--mix-xl), transparent);
 }
 
 /* サマリーカードグリッド (v5.71 グラデーション刷新) */
@@ -8785,9 +8799,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .fv-stat-card:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-hover-md); }
 .fv-stat-card:active { transform: translateY(0); box-shadow: none; }
-.fv-stat-fixed { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
-.fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--income-end)); }
-.fv-stat-rate  { background: linear-gradient(135deg, var(--warning-deep), var(--warning)); }
+.fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-dark), var(--primary)); }
+.fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--income-end)); }
+.fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-deep), var(--warning)); }
 /* デコレーションサークル */
 .fv-stat-card::after {
   content: '';
@@ -8799,9 +8813,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   pointer-events: none;
 }
 /* ダークモード */
-[data-theme="dark"] .fv-stat-fixed { background: linear-gradient(135deg, var(--primary-light), var(--primary)); }
-[data-theme="dark"] .fv-stat-var   { background: linear-gradient(135deg, var(--income-deep), var(--success)); }
-[data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, var(--warning-border), var(--warning)); }
+[data-theme="dark"] .fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-light), var(--primary)); }
+[data-theme="dark"] .fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--success)); }
+[data-theme="dark"] .fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-border), var(--warning)); }
 /* 入場アニメーション */
 @keyframes fv-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(0.94); }
@@ -8928,7 +8942,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* 今日バーグロー */
 @keyframes wk-today-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--expense) 40%, transparent); }
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); }
   50%       { box-shadow: 0 0 0 var(--size-pulse-ring) transparent; }
 }
 /* セル入場アニメーション */
@@ -9154,7 +9168,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   top: calc(-1 * var(--sp-8-75)); right: calc(-1 * var(--sp-8-75));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 7%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) var(--mix-faint), transparent) 0%, transparent 70%);
   pointer-events: none;
   transition: background var(--dur-mid);
   z-index: var(--z-base);
@@ -9163,10 +9177,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-card[data-qa-type="expense"] { --qa-accent: var(--danger-text); }
 .qa-card[data-qa-type="income"]  { --qa-accent: var(--income); }
 .qa-card[data-qa-type="expense"]::before {
-  background: radial-gradient(circle, color-mix(in srgb, var(--expense) 7%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--expense) var(--mix-faint), transparent) 0%, transparent 70%);
 }
 .qa-card[data-qa-type="income"]::before {
-  background: radial-gradient(circle, color-mix(in srgb, var(--success) 7%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--success) var(--mix-faint), transparent) 0%, transparent 70%);
 }
 .qa-card:focus-within {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring, color-mix(in srgb, var(--primary) var(--mix-base), transparent));
@@ -9553,8 +9567,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-today-pulse {
-  0%, 100% { box-shadow: 0 0 0 2px var(--on-dark-opaque), 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) 50%, transparent); }
-  50%       { box-shadow: 0 0 0 2px var(--on-dark-soft), 0 0 8px 2px color-mix(in srgb, var(--expense) 40%, transparent); }
+  0%, 100% { box-shadow: 0 0 0 2px var(--on-dark-opaque), 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
+  50%       { box-shadow: 0 0 0 2px var(--on-dark-soft), 0 0 8px 2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); }
 }
 
 .hm-summary-row {
@@ -9585,30 +9599,30 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* カード別グラデーション */
 .hm-stat-card:nth-child(1) {
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary-light) 0%, var(--surface) 100%);
   border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
 .hm-stat-card:nth-child(1)::before { background: var(--primary); }
 .hm-stat-card:nth-child(2) {
-  background: linear-gradient(135deg, var(--danger-bg) 0%, var(--surface) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--danger-bg) 0%, var(--surface) 100%);
   border-color: var(--danger-border);
 }
 .hm-stat-card:nth-child(2)::before { background: var(--danger-text); }
 .hm-stat-card:nth-child(3) {
-  background: linear-gradient(135deg, var(--warning-bg) 0%, var(--surface) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--warning-bg) 0%, var(--surface) 100%);
   border-color: color-mix(in srgb, var(--warning) var(--mix-lg), transparent);
 }
 .hm-stat-card:nth-child(3)::before { background: var(--warning); }
 .hm-stat-card:nth-child(4) {
-  background: linear-gradient(135deg, var(--success-bg) 0%, var(--surface) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--success-bg) 0%, var(--surface) 100%);
   border-color: var(--success-border);
 }
 .hm-stat-card:nth-child(4)::before { background: var(--success); }
 
-[data-theme="dark"] .hm-stat-card:nth-child(1) { background: linear-gradient(135deg, color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) 0%, var(--surface) 100%); }
-[data-theme="dark"] .hm-stat-card:nth-child(2) { background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
-[data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(135deg, color-mix(in srgb, var(--warning) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
-[data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(135deg, color-mix(in srgb, var(--success) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(1) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(2) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--danger-text) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--warning) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--success) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
 
 .hm-stat-label {
   font-size: var(--fs-xs);
@@ -9703,10 +9717,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(var(--scale-hm-active)); z-index: var(--z-raise); position: relative; }
 /* レベル別ホバーグロー */
-.hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 50%, transparent); }
-.hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 60%, transparent); }
-.hm-lv3:hover:not(.hm-legend-cell) { box-shadow: 0 2px 10px color-mix(in srgb, var(--expense) 70%, transparent); }
-.hm-lv4:hover:not(.hm-legend-cell) { box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) 80%, transparent); }
+.hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
+.hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-6xl), transparent); }
+.hm-lv3:hover:not(.hm-legend-cell) { box-shadow: 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-deep), transparent); }
+.hm-lv4:hover:not(.hm-legend-cell) { box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) var(--mix-label), transparent); }
 .hm-out {
   background: transparent !important;
   cursor: default;
@@ -9724,13 +9738,13 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 支出量ヒートマップ色（--expense連動, v10.6） */
 .hm-lv0 { background: var(--border); }
 .hm-lv1 { background: color-mix(in srgb, var(--expense) var(--mix-soft), white); }
-.hm-lv2 { background: color-mix(in srgb, var(--expense) 55%, white); }
+.hm-lv2 { background: color-mix(in srgb, var(--expense) var(--mix-5xl), white); }
 .hm-lv3 { background: var(--expense); }
-.hm-lv4 { background: color-mix(in srgb, var(--expense) 80%, black); }
+.hm-lv4 { background: color-mix(in srgb, var(--expense) var(--mix-label), black); }
 
 [data-theme="dark"] .hm-lv0 { background: var(--border); }
 [data-theme="dark"] .hm-lv1 { background: color-mix(in srgb, var(--expense) var(--mix-lg), black); }
-[data-theme="dark"] .hm-lv2 { background: color-mix(in srgb, var(--expense) 55%, black); }
+[data-theme="dark"] .hm-lv2 { background: color-mix(in srgb, var(--expense) var(--mix-5xl), black); }
 [data-theme="dark"] .hm-lv3 { background: var(--expense); }
 [data-theme="dark"] .hm-lv4 { background: var(--expense-end); }
 [data-theme="dark"] .hm-today {
@@ -9768,8 +9782,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
    ============================================================ */
 
 /* サマリーカード */
-.debt-summary-total  { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%); color: var(--white); }
-.debt-summary-monthly { background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%); color: var(--white); }
+.debt-summary-total  { background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%); color: var(--white); }
+.debt-summary-monthly { background: linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%); color: var(--white); }
 .debt-summary-total .summary-label,
 .debt-summary-monthly .summary-label { color: var(--on-dark-hint); }
 .debt-summary-sub { font-size: var(--fs-xs); margin-top: var(--sp-1); opacity: var(--opacity-near); }
@@ -9909,9 +9923,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
-.debt-bar-great { background: linear-gradient(90deg, var(--income) 0%, var(--income-end) 100%); }
-.debt-bar-mid   { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
-.debt-bar-low   { background: linear-gradient(90deg, var(--expense) 0%, var(--expense-end) 100%); }
+.debt-bar-great { background: linear-gradient(var(--grad-horizontal), var(--income) 0%, var(--income-end) 100%); }
+.debt-bar-mid   { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
+.debt-bar-low   { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); }
 
 /* 完済予定 ピルスタイル (v5.85) */
 .debt-end-pill {
@@ -10011,7 +10025,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .modal-lg { max-width: var(--size-modal-xl); width: var(--size-vw-modal); }
 
 .sim-modal-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
   color: var(--white);
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
@@ -10071,7 +10085,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* 節約バナー */
 .sim-savings-banner {
   display: flex; align-items: center; justify-content: center; gap: var(--sp-4);
-  background: linear-gradient(135deg, var(--success-bg), var(--income-light));
+  background: linear-gradient(var(--grad-diagonal), var(--success-bg), var(--income-light));
   border: var(--bw-thin) solid var(--success-border); border-radius: var(--radius-card);
   padding: var(--sp-4); margin-bottom: var(--sp-4);
 }
@@ -10175,7 +10189,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* 改善値セル — 薄い緑背景ハイライト */
 .sim-val-better {
-  background: color-mix(in srgb, var(--success) 6%, transparent);
+  background: color-mix(in srgb, var(--success) var(--mix-micro), transparent);
 }
 [data-theme="dark"] .sim-val-better {
   background: color-mix(in srgb, var(--success) var(--mix-xs), transparent);
@@ -10195,7 +10209,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sim-savings-banner::after {
   content: ''; position: absolute; bottom: calc(-1 * var(--sp-4-5)); left: var(--sp-2);
   width: var(--size-deco-xxs); height: var(--size-deco-xxs);
-  background: radial-gradient(circle, color-mix(in srgb, var(--success) 14%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--success) var(--mix-sm), transparent) 0%, transparent 70%);
   border-radius: var(--radius-circle); pointer-events: none;
 }
 @keyframes sim-banner-in {
@@ -10246,7 +10260,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sb-banner {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
   border-radius: var(--radius-card);
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-3);
@@ -10346,11 +10360,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--sb-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-md));
 }
 .sb-row:hover {
-  background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) 6%, transparent);
+  background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent);
 }
 .sb-row:active { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-2xs), transparent); filter: brightness(var(--brightness-press-mist)); }
 .sb-row:has(.sb-check:checked) {
-  background: color-mix(in srgb, var(--primary) 5%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
 }
 @keyframes sb-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(0.99); }
@@ -10464,9 +10478,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   pointer-events: none;
 }
 /* サマリーカード種別グラデーション */
-.ev-sum-this { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%); border-top: none; }
-.ev-sum-next { background: linear-gradient(135deg, var(--income) 0%, var(--income-end) 100%); border-top: none; }
-.ev-sum-year { background: linear-gradient(135deg, var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
+.ev-sum-this { background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-mid) 100%); border-top: none; }
+.ev-sum-next { background: linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%); border-top: none; }
+.ev-sum-year { background: linear-gradient(var(--grad-diagonal), var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
@@ -10654,15 +10668,15 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   height: 100%;
   width: calc(var(--ev-prog, 0) * 1%);
   border-radius: var(--radius-badge);
-  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--primary) 0%, var(--primary-end) 100%);
   transform-origin: left;
   transform: scaleX(0);
   animation: ev-prog-grow var(--dur-swing) var(--ease-soft-bounce) both;
   animation-delay: calc(var(--ev-mi, 0) * 35ms + var(--dur-delay-md));
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
-.ev-month-progress.ev-pm-done .ev-prog-fill { background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%); }
-.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: linear-gradient(90deg, var(--warning) 0%, var(--warning-end) 100%); }
+.ev-month-progress.ev-pm-done .ev-prog-fill { background: linear-gradient(var(--grad-horizontal), var(--success) 0%, var(--income-end) 100%); }
+.ev-month-progress.ev-pm-mid  .ev-prog-fill { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
 .ev-prog-pct {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
@@ -10851,7 +10865,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sf-save-btn:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
 }
-.sf-save-btn:active { background: color-mix(in srgb, var(--primary) 14%, transparent); filter: brightness(var(--brightness-press-soft)); }
+.sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
   to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
@@ -10871,7 +10885,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   .tg-stat-row .tg-stat-card:last-child { grid-column: 1 / -1; }
 }
 .tg-stat-card {
-  background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) 6%, var(--surface)) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--surface) 0%, color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface)) 100%);
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--sp-4);
@@ -10916,7 +10930,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: translateX(0); }
 }
 [data-theme="dark"] .tg-stat-card {
-  background: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface)) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--surface) 0%, color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface)) 100%);
 }
 
 /* ============================================================
@@ -10935,7 +10949,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: linear-gradient(
     var(--grad-diagonal),
     var(--surface) 0%,
-    color-mix(in srgb, var(--primary) 5%, var(--surface)) 100%
+    color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface)) 100%
   );
   animation: adv-card-in var(--dur-long) var(--ease-soft-bounce) both;
 }
@@ -10957,7 +10971,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   left: calc(-1 * var(--sp-5));
   width: var(--size-deco); height: var(--size-deco);
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 6%, transparent), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) var(--mix-micro), transparent), transparent 70%);
   pointer-events: none;
 }
 .adv-widget-desc {
@@ -10989,7 +11003,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* ウィジェットボタン */
 @keyframes adv-btn-glow {
   0%, 100% { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-mid), transparent); }
-  50%       { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 45%, transparent); }
+  50%       { box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent); }
 }
 .adv-widget-btn {
   width: 100%;
@@ -11085,17 +11099,17 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-2-5) var(--sp-3-5);
   border-radius: var(--radius-sm);
   border-left: var(--accent-w) solid var(--primary);
-  background: color-mix(in srgb, var(--primary) 4%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
   animation: adv-section-in var(--dur-medium) var(--ease-soft-bounce) calc(var(--adv-si, 0) * var(--dur-stagger-2xl)) both;
 }
 .adv-section:nth-child(2) {
   border-left-color: var(--success);
-  background: color-mix(in srgb, var(--success) 5%, transparent);
+  background: color-mix(in srgb, var(--success) var(--mix-nano), transparent);
 }
 .adv-section:nth-child(2) h3 { color: var(--success); }
 .adv-section:nth-child(3) {
   border-left-color: var(--warning);
-  background: color-mix(in srgb, var(--warning) 5%, transparent);
+  background: color-mix(in srgb, var(--warning) var(--mix-nano), transparent);
 }
 .adv-section:nth-child(3) h3 { color: var(--warning); }
 .adv-section h3 {
@@ -11348,7 +11362,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .yr-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--primary-end)));
+  background: linear-gradient(var(--grad-horizontal), var(--primary), color-mix(in srgb, var(--primary) var(--mix-deep), var(--primary-end)));
   border-radius: var(--radius-badge);
   width: 0;
 }
@@ -11398,7 +11412,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   bottom: calc(-1 * var(--sp-7-5)); left: calc(-1 * var(--sp-7-5));
   width: var(--size-deco-md); height: var(--size-deco-md);
   border-radius: var(--radius-circle);
-  background: radial-gradient(circle, color-mix(in srgb, var(--success) 7%, transparent), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--success) var(--mix-faint), transparent), transparent 70%);
   pointer-events: none;
 }
 /* 月別支出スパークライン（v6.5）*/
@@ -11465,7 +11479,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0); }
 }
 .ci-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
   padding: var(--sp-6) var(--sp-5) var(--sp-4);
   position: relative;
   color: var(--white);
@@ -11590,7 +11604,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-savings-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--success) 0%, var(--income-end) 100%);
   transition: width var(--dur-swell) var(--ease-bounce) var(--dur-slow);
 }
 .ci-savings-pct {
@@ -11680,7 +11694,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   border-radius: var(--radius-btn);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
   color: var(--white);
   border: none;
   cursor: pointer;
@@ -11720,7 +11734,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   margin-left: auto;
   flex-shrink: 0;
   letter-spacing: var(--ls-normal);
-  box-shadow: 0 1px 4px color-mix(in srgb, var(--danger-text) 45%, transparent);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--danger-text) var(--mix-3xl), transparent);
 }
 
 @keyframes nav-badge-pop {
@@ -11805,7 +11819,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--size-badge-sm);
   text-align: center;
   pointer-events: none;
-  box-shadow: 0 1px 4px color-mix(in srgb, var(--expense) 50%, transparent);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent);
   border: var(--bw-base) solid var(--sidebar-bg);
 }
 
@@ -11943,7 +11957,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* 未読アイテムに薄い背景 */
 .notif-item:not(.notif-read) {
-  background: color-mix(in srgb, var(--primary) 4%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
 }
 .notif-item:hover {
   background: var(--surface-hover);
@@ -12085,7 +12099,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-color: var(--primary-end);
 }
 [data-theme="dark"] .notif-item:not(.notif-read) {
-  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), transparent);
 }
 [data-theme="dark"] .notif-item:hover {
   background: var(--on-dark-dim);
@@ -12104,10 +12118,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 [data-theme="dark"] .notif-item-icon {
   background: var(--on-dark-dim);
 }
-[data-theme="dark"] .notif-item.notif-type-danger  .notif-item-icon { background: color-mix(in srgb, var(--expense) 14%, transparent); }
-[data-theme="dark"] .notif-item.notif-type-warning .notif-item-icon { background: color-mix(in srgb, var(--warning) 14%, transparent); }
-[data-theme="dark"] .notif-item.notif-type-success .notif-item-icon { background: color-mix(in srgb, var(--success) 14%, transparent); }
-[data-theme="dark"] .notif-item.notif-type-info    .notif-item-icon { background: color-mix(in srgb, var(--primary) 14%, transparent); }
+[data-theme="dark"] .notif-item.notif-type-danger  .notif-item-icon { background: color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+[data-theme="dark"] .notif-item.notif-type-warning .notif-item-icon { background: color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+[data-theme="dark"] .notif-item.notif-type-success .notif-item-icon { background: color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+[data-theme="dark"] .notif-item.notif-type-info    .notif-item-icon { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 [data-theme="dark"] .notif-item-title {
   color: var(--text);
 }
@@ -12169,7 +12183,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .date-quick-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), transparent);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
@@ -12185,7 +12199,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* 今日ボタンは非アクティブ時も少し強調 */
 .date-quick-btn.date-quick-today:not(.active) {
-  border-color: color-mix(in srgb, var(--primary) 60%, transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-6xl), transparent);
   color: var(--primary);
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
   font-weight: var(--fw-semi);
@@ -12228,9 +12242,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 [data-theme="dark"] .date-quick-btn.date-quick-today:not(.active) {
-  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-5xl), transparent);
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
 [data-theme="dark"] .date-quick-btn.date-quick-today:not(.active):hover {
@@ -12264,7 +12278,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-2xs), var(--surface));
   color: var(--amt-chip-color, var(--primary));
-  border: var(--bw-base) solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) 28%, transparent);
+  border: var(--bw-base) solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-lg), transparent);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
   animation: amt-chip-in var(--dur-gentle) var(--ease-bounce) both;
   white-space: nowrap;
@@ -12329,7 +12343,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   align-items: center;
   padding: var(--sp-1) var(--sp-2-5);
   border-radius: var(--radius-badge);
-  border: var(--bw-thin) solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) 28%, transparent);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--memo-chip-color, var(--primary)) var(--mix-lg), transparent);
   background: color-mix(in srgb, var(--memo-chip-color, var(--primary)) var(--mix-2xs), var(--surface));
   color: var(--memo-chip-color, var(--primary));
   font-size: var(--fs-xs);
@@ -12456,7 +12470,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-5) var(--sp-5) var(--sp-4);
   background: linear-gradient(var(--grad-diagonal),
     color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-1)),
-    color-mix(in srgb, var(--primary) 5%, var(--surface-1)));
+    color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)));
   border-bottom: var(--bw-thin) solid var(--border);
 }
 
@@ -12539,13 +12553,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 4%, var(--surface-1)); }
+.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); }
 .rc-item:active { transform: translateY(0); border-color: var(--border); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .rc-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-item:has(.rc-check:checked) {
-  border-color: color-mix(in srgb, var(--primary) 60%, transparent);
-  background: color-mix(in srgb, var(--primary) 6%, var(--surface-1));
+  border-color: color-mix(in srgb, var(--primary) var(--mix-6xl), transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-1));
 }
 
 .rc-check {
@@ -12721,7 +12735,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .btn-continue:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), var(--surface-2));
-  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-5xl), transparent);
 }
 .btn-continue:active {
   background: var(--surface-2);
@@ -12794,7 +12808,7 @@ kbd {
   align-items: center;
   justify-content: space-between;
   padding: var(--sp-1-75) 0;
-  border-bottom: var(--bw-thin) solid color-mix(in srgb, var(--border) 45%, transparent);
+  border-bottom: var(--bw-thin) solid color-mix(in srgb, var(--border) var(--mix-3xl), transparent);
   gap: var(--sp-3);
 }
 .kb-row:last-child {
@@ -12912,7 +12926,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-circle);
   flex-shrink: 0;
   display: inline-block;
-  box-shadow: 0 0 0 var(--bw-select) color-mix(in srgb, currentColor 20%, transparent);
+  box-shadow: 0 0 0 var(--bw-select) color-mix(in srgb, currentColor var(--mix-md), transparent);
 }
 
 /* サマリー行 */
@@ -13205,7 +13219,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radius-btn);
   border-left: var(--accent-w) solid var(--opp-accent, var(--primary));
-  background: color-mix(in srgb, var(--opp-accent, var(--primary)) 5%, var(--surface));
+  background: color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-nano), var(--surface));
   animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
@@ -13279,7 +13293,7 @@ canvas.chart-clickable { cursor: pointer; }
 .opp-challenge-btn:hover {
   filter: brightness(var(--brightness-hover-mid));
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--opp-accent, var(--primary)) 40%, transparent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-2xl), transparent);
 }
 
 .opp-challenge-btn:active {
@@ -13443,7 +13457,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cat-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) 70%, white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-deep), white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
@@ -13467,7 +13481,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* 収入カテゴリ内訳 緑系 (v8.9) */
 .md-cat-bar-income {
-  background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--success) 0%, var(--income-end) 100%);
 }
 .md-cat-amount-income {
   color: var(--success);
@@ -13479,7 +13493,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ダークモード: md-cat-bar グラデーション終端をtransparentに変換 */
 [data-theme="dark"] .md-cat-bar {
-  background: linear-gradient(90deg, var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) 70%, transparent) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-deep), transparent) 100%);
 }
 
 /* md-list の取引行は dd-tx-row を流用 */
@@ -13538,32 +13552,32 @@ canvas.chart-clickable { cursor: pointer; }
 }
 /* 収入: 緑系 */
 .md-cell-income {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--success) 16%, transparent), color-mix(in srgb, var(--success) 6%, transparent));
+  background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--success) var(--mix-base), transparent), color-mix(in srgb, var(--success) var(--mix-micro), transparent));
   border: var(--bw-thin) solid color-mix(in srgb, var(--success) var(--mix-soft), transparent);
   color: var(--success);
 }
-.md-cell-income .md-cell-label { color: color-mix(in srgb, var(--success) 85%, var(--text-muted)); }
+.md-cell-income .md-cell-label { color: color-mix(in srgb, var(--success) var(--mix-label), var(--text-muted)); }
 /* 支出: 赤系 */
 .md-cell-expense {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
+  background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), color-mix(in srgb, var(--danger-text) var(--mix-nano), transparent));
   border: var(--bw-thin) solid color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
   color: var(--danger-text);
 }
-.md-cell-expense .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
+.md-cell-expense .md-cell-label { color: color-mix(in srgb, var(--danger-text) var(--mix-label), var(--text-muted)); }
 /* 残高黒字: インディゴ系 */
 .md-cell-balance-pos {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, transparent), color-mix(in srgb, var(--primary) 5%, transparent));
+  background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--primary) var(--mix-sm), transparent), color-mix(in srgb, var(--primary) var(--mix-nano), transparent));
   border: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   color: var(--primary);
 }
-.md-cell-balance-pos .md-cell-label { color: color-mix(in srgb, var(--primary) 85%, var(--text-muted)); }
+.md-cell-balance-pos .md-cell-label { color: color-mix(in srgb, var(--primary) var(--mix-label), var(--text-muted)); }
 /* 残高赤字: 赤系 */
 .md-cell-balance-neg {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--danger-text) 14%, transparent), color-mix(in srgb, var(--danger-text) 5%, transparent));
+  background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), color-mix(in srgb, var(--danger-text) var(--mix-nano), transparent));
   border: var(--bw-thin) solid color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
   color: var(--danger-text);
 }
-.md-cell-balance-neg .md-cell-label { color: color-mix(in srgb, var(--danger-text) 85%, var(--text-muted)); }
+.md-cell-balance-neg .md-cell-label { color: color-mix(in srgb, var(--danger-text) var(--mix-label), var(--text-muted)); }
 /* 件数: サーフェス系 */
 .md-cell-count {
   background: var(--surface-hover);
@@ -13660,17 +13674,17 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-savings-badge.good {
   background: color-mix(in srgb, var(--success) var(--mix-xs), transparent);
-  border-color: color-mix(in srgb, var(--success) 28%, transparent);
+  border-color: color-mix(in srgb, var(--success) var(--mix-lg), transparent);
   color: var(--success);
 }
 .md-savings-badge.warn {
   background: var(--warning-bg);
-  border-color: color-mix(in srgb, var(--warning) 28%, transparent);
+  border-color: color-mix(in srgb, var(--warning) var(--mix-lg), transparent);
   color: var(--warning);
 }
 .md-savings-badge.bad {
   background: var(--danger-bg);
-  border-color: color-mix(in srgb, var(--danger-text) 28%, transparent);
+  border-color: color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent);
   color: var(--danger-text);
 }
 
@@ -13752,10 +13766,10 @@ canvas.chart-clickable { cursor: pointer; }
   animation-delay: calc(var(--pbr-i, 0) * var(--dur-stagger-2xl) + var(--dur-stagger-lg));
   position: relative;
 }
-.pace-bar-days { background: linear-gradient(90deg, var(--primary), var(--primary-end)); }
-.pace-bar-expense.pace-good { background: linear-gradient(90deg, var(--success), var(--income-end)); }
-.pace-bar-expense.pace-warn { background: linear-gradient(90deg, var(--warning), var(--warning-end)); }
-.pace-bar-expense.pace-over { background: linear-gradient(90deg, var(--expense), var(--expense-end)); }
+.pace-bar-days { background: linear-gradient(var(--grad-horizontal), var(--primary), var(--primary-end)); }
+.pace-bar-expense.pace-good { background: linear-gradient(var(--grad-horizontal), var(--success), var(--income-end)); }
+.pace-bar-expense.pace-warn { background: linear-gradient(var(--grad-horizontal), var(--warning), var(--warning-end)); }
+.pace-bar-expense.pace-over { background: linear-gradient(var(--grad-horizontal), var(--expense), var(--expense-end)); }
 .pace-bar-value {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -13802,7 +13816,7 @@ canvas.chart-clickable { cursor: pointer; }
   text-align: center;
 }
 .pace-daily-highlight {
-  background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface));
   border: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
 .pace-daily-label {
@@ -13916,7 +13930,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-4);
   background: linear-gradient(var(--grad-diagonal),
     color-mix(in srgb, var(--pm-sum-color) var(--mix-2xs), var(--surface)),
-    color-mix(in srgb, var(--pm-sum-color) 4%, var(--surface)));
+    color-mix(in srgb, var(--pm-sum-color) var(--mix-nano), var(--surface)));
   border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) var(--mix-soft), var(--border));
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
@@ -14016,7 +14030,7 @@ canvas.chart-clickable { cursor: pointer; }
   width: var(--size-icon-md);
   height: var(--size-icon-md);
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--cat-clr, var(--primary)) 14%, transparent);
+  background: color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14112,7 +14126,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-budget-bar-fill {
   height: 100%;
   width: var(--cat-bar-pct, 0%);
-  background: linear-gradient(90deg, var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) 72%, white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), white) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
@@ -14142,7 +14156,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-color: var(--border);
   color: var(--text);
 }
-[data-theme="dark"] .cat-budget-bar-fill { background: linear-gradient(90deg, var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) 72%, transparent) 100%); }
+[data-theme="dark"] .cat-budget-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), transparent) 100%); }
 /* モバイル */
 @media (max-width: 600px) {
   .cat-card-grid { grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-cat-sm), 1fr)); gap: var(--sp-2); }
