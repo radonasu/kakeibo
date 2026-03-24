@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.3)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.4)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -441,6 +441,12 @@
   --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82%フレーム 1箇所） */
   --scale-anim-cell-in:   0.97;  /* セル入場スケール（@keyframes fc-cell-in/wk-cell-in/dot-item-in/opp-card-in等 6箇所） */
   --scale-anim-ripple:    4;     /* リップル最大拡張スケール（@keyframes ripple-anim to 1箇所） */
+  /* ── バウンスポップ中間スケールトークン (v18.4) ──────────────────── */
+  --scale-anim-pop-squeeze-xs: 0.91; /* ポップ軽圧縮スケール（@keyframes qa-btn-pop 35% 1箇所） */
+  --scale-anim-pop-expand-xs:  1.07; /* ポップ軽伸張スケール（@keyframes qa-btn-pop 65% 1箇所） */
+  --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 40% 1箇所） */
+  --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 70% 1箇所） */
+  --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 70% 1箇所） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -657,6 +663,9 @@
   --enter-x-pos-xs:    4px; /* 正方向X入場オフセット小（@keyframes tx-sort-badge-in from translateX(4px) 1箇所） */
   --bounce-y-sm:       3px; /* バウンスY振幅小（@keyframes tx-icon-bounce-asc/desc ±3px 各1箇所） */
   --bounce-y-xs:       1px; /* バウンスY微振幅（@keyframes tx-icon-bounce-asc/desc ±1px オーバーシュート 各1箇所） */
+  /* ── アニメーション入場超小オフセットトークン (v18.4) ── */
+  --enter-y-2xs: 4px; /* 準最小入場下オフセット（@keyframes sf-chip-in from translateY(4px) 1箇所） */
+  --enter-y-3xs: 3px; /* 超最小入場下オフセット（@keyframes tag-chip-in from translateY(3px) 1箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -2044,7 +2053,7 @@ select:focus:not(:focus-visible) {
 
 /* ── 取引タグチップ (v5.62 マルチカラー洗練) ─────────── */
 @keyframes tag-chip-in {
-  from { opacity: 0; transform: scale(var(--scale-anim-tag-in)) translateY(3px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-tag-in)) translateY(var(--enter-y-3xs)); }
   to   { opacity: 1; transform: scale(1)    translateY(0);   }
 }
 
@@ -9369,8 +9378,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(1); }
-  35%  { transform: scale(0.91); }
-  65%  { transform: scale(1.07); }
+  35%  { transform: scale(var(--scale-anim-pop-squeeze-xs)); }
+  65%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
   100% { transform: scale(1); }
 }
 .qa-card .qa-submit-btn.qa-sent {
@@ -10830,7 +10839,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .sf-save-btn:active { background: color-mix(in srgb, var(--primary) 14%, transparent); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
-  from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(4px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -12170,8 +12179,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes date-quick-pop {
   0%   { transform: scale(1); }
-  40%  { transform: scale(0.88); }
-  70%  { transform: scale(1.12); }
+  40%  { transform: scale(var(--scale-anim-pop-squeeze)); }
+  70%  { transform: scale(var(--scale-anim-pop-expand)); }
   100% { transform: scale(1); }
 }
 
@@ -12268,8 +12277,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes amt-chip-pop {
   0%   { transform: scale(1); }
-  40%  { transform: scale(1.18); }
-  70%  { transform: scale(0.93); }
+  40%  { transform: scale(var(--scale-selected-sm)); }
+  70%  { transform: scale(var(--scale-anim-pop-squeeze-sm)); }
   100% { transform: scale(1); }
 }
 
@@ -12341,8 +12350,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes memo-chip-pop {
   0%   { transform: scale(1); }
-  40%  { transform: scale(1.2); }
-  70%  { transform: scale(0.92); }
+  40%  { transform: scale(var(--scale-hover-lg)); }
+  70%  { transform: scale(var(--scale-chip-active)); }
   100% { transform: scale(1); }
 }
 
