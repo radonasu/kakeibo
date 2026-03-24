@@ -600,6 +600,14 @@
   /* ── パーセント・比率トークン (v17.97) ── */
   --size-modal-pct:    92%;    /* モーダルラップ幅パーセント（.ci-wrap / .kb-help-wrap） */
   --size-nav-indicator: 25%;   /* ボトムナビアクティブインジケーター内側オフセット（.bottom-nav-item.active::before left/right） */
+  --size-wk-bar:       70%;    /* 週次バーグラフ列幅（.wk-bar-wrap::after / .wk-bar-fill） */
+  --size-nav-dot:      60%;    /* サイドナビアクティブインジケーター高さ（.nav-item.active::before） */
+  /* ── 回転角度トークン (v17.98) ── */
+  --rotate-chevron:     90deg;  /* details展開時シェブロン（details[open] summary::before 7箇所） */
+  --rotate-chevron-neg: -90deg; /* 収納シェブロン・SVGリング（card-collapse/goal-ring 3箇所） */
+  --rotate-flip:        180deg; /* 180度反転（.qa-chevron-open） */
+  --grad-diagonal:      135deg; /* 斜めグラデーション方向（linear-gradient対角線 4箇所） */
+  --grad-horizontal:    90deg;  /* 横グラデーション方向（linear-gradient水平・sk-bone等 4箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -843,7 +851,7 @@ select:focus:not(:focus-visible) {
   transition: height var(--dur-appear) var(--ease-spring);
 }
 .nav-item.active::before {
-  height: 60%;
+  height: var(--size-nav-dot);
 }
 
 .nav-icon {
@@ -1072,7 +1080,7 @@ select:focus:not(:focus-visible) {
   pointer-events: none;
 }
 .card-collapse-btn[aria-expanded="false"] svg {
-  transform: rotate(-90deg);
+  transform: rotate(var(--rotate-chevron-neg));
 }
 .card-collapse-body {
   overflow: hidden;
@@ -3208,7 +3216,7 @@ mark.tx-hl {
   transition: transform var(--dur-base);
   flex-shrink: 0;
 }
-.stp-help-details[open] .stp-help-summary::before { transform: rotate(90deg); }
+.stp-help-details[open] .stp-help-summary::before { transform: rotate(var(--rotate-chevron)); }
 .stp-help-summary:hover  { color: var(--text); }
 .stp-help-summary:active { opacity: var(--opacity-mild); }
 .stp-help-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
@@ -3815,7 +3823,7 @@ body {
   font-size: var(--fs-4xs);
   transition: transform var(--dur-base);
 }
-.modal-details[open] summary::before { transform: rotate(90deg); }
+.modal-details[open] summary::before { transform: rotate(var(--rotate-chevron)); }
 .modal-details .modal-details-body {
   padding: var(--sp-3) var(--sp-3) var(--sp-1);
   border-top: var(--bw-thin) solid var(--border);
@@ -4932,7 +4940,7 @@ body {
 /* ベーススケルトン骨格 */
 .sk-bone {
   background: linear-gradient(
-    90deg,
+    var(--grad-horizontal),
     var(--border) 0%,
     var(--bg) 40%,
     var(--border) 80%
@@ -4998,7 +5006,7 @@ body {
 /* ── ダークモード対応 ─────────────────────────────────── */
 [data-theme="dark"] .sk-bone {
   background: linear-gradient(
-    90deg,
+    var(--grad-horizontal),
     var(--surface) 0%,
     var(--border) 40%,
     var(--surface) 80%
@@ -5171,7 +5179,7 @@ body {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  transform: rotate(-90deg);
+  transform: rotate(var(--rotate-chevron-neg));
 }
 .goal-ring-bg {
   fill: none;
@@ -5236,7 +5244,7 @@ body {
   transition: width var(--dur-glide) var(--ease-out-expo);
   /* v5.32: CSS変数でグラデーション */
   background: linear-gradient(
-    90deg,
+    var(--grad-horizontal),
     var(--goal-accent, var(--primary)) 0%,
     color-mix(in srgb, var(--goal-accent, var(--primary)) 75%, white) 100%
   );
@@ -5358,7 +5366,7 @@ body {
   transition: transform var(--dur-base) var(--ease-plain);
   display: inline-block;
 }
-details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
+details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-chevron)); }
 
 .goal-achieved-list {
   display: flex;
@@ -5479,7 +5487,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  transform: rotate(-90deg);
+  transform: rotate(var(--rotate-chevron-neg));
 }
 .goal-dash-ring-bg {
   fill: none;
@@ -6467,7 +6475,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .sub-inactive-section summary:active { opacity: var(--opacity-mild); }
 .sub-inactive-section summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); }
-.sub-inactive-section[open] summary::before { transform: rotate(90deg); }
+.sub-inactive-section[open] summary::before { transform: rotate(var(--rotate-chevron)); }
 .sub-inactive-section .sub-cards-list { margin-top: var(--sp-3); margin-bottom: 0; }
 
 /* モーダル内部 */
@@ -7441,7 +7449,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
 .wl-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary::-webkit-details-marker { display: none; }
 .wl-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
-details[open] .wl-archive-summary::before { transform: rotate(90deg); }
+details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevron)); }
 .wl-archive-list {
   margin-top: var(--sp-3);
   display: flex;
@@ -8276,7 +8284,7 @@ details[open] .wl-archive-summary::before { transform: rotate(90deg); }
 .ch-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-archive-summary::-webkit-details-marker { display: none; }
 .ch-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
-details[open] .ch-archive-summary::before { transform: rotate(90deg); }
+details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevron)); }
 .ch-archive-list {
   display: flex;
   flex-direction: column;
@@ -8993,7 +9001,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
+  width: var(--size-wk-bar);
   height: 100%;
   background: var(--black-05);
   border-radius: var(--radius-bar);
@@ -9002,7 +9010,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 [data-theme="dark"] .wk-bar-wrap::after { background: var(--on-dark-dim); }
 
 .wk-bar-fill {
-  width: 70%;
+  width: var(--size-wk-bar);
   min-width: var(--size-bar);
   background: var(--primary);
   border-radius: var(--radius-bar) var(--radius-bar) var(--radius-nano) var(--radius-nano);
@@ -9147,7 +9155,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   color: var(--qa-accent);
 }
 .qa-chevron-open {
-  transform: rotate(180deg);
+  transform: rotate(var(--rotate-flip));
 }
 .qa-body {
   padding: 0 var(--sp-4) var(--sp-4);
@@ -9881,7 +9889,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 .debt-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .debt-archive-summary::-webkit-details-marker { display: none; }
 .debt-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
-details[open] .debt-archive-summary::before { transform: rotate(90deg); }
+details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-chevron)); }
 
 /* ダッシュボードウィジェット */
 .debt-widget-summary {
@@ -10853,7 +10861,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   overflow: hidden;
   border-top: var(--accent-w) solid var(--primary);
   background: linear-gradient(
-    135deg,
+    var(--grad-diagonal),
     var(--surface) 0%,
     color-mix(in srgb, var(--primary) 5%, var(--surface)) 100%
   );
@@ -10959,7 +10967,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   height: var(--size-sk-line);
   border-radius: var(--radius-sm);
   background: linear-gradient(
-    90deg,
+    var(--grad-horizontal),
     var(--surface-hover) 25%,
     var(--border) 50%,
     var(--surface-hover) 75%
@@ -12374,7 +12382,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 .rc-header {
   position: relative;
   padding: var(--sp-5) var(--sp-5) var(--sp-4);
-  background: linear-gradient(135deg,
+  background: linear-gradient(var(--grad-diagonal),
     color-mix(in srgb, var(--primary) 12%, var(--surface-1)),
     color-mix(in srgb, var(--primary) 5%, var(--surface-1)));
   border-bottom: var(--bw-thin) solid var(--border);
@@ -12556,7 +12564,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 
 /* ダークモード */
 [data-theme="dark"] .rc-header {
-  background: linear-gradient(135deg,
+  background: linear-gradient(var(--grad-diagonal),
     color-mix(in srgb, var(--primary) 18%, var(--surface-2)),
     color-mix(in srgb, var(--primary) 8%, var(--surface-2)));
 }
@@ -13834,7 +13842,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   border-radius: var(--radius-card);
   padding: var(--sp-4);
-  background: linear-gradient(135deg,
+  background: linear-gradient(var(--grad-diagonal),
     color-mix(in srgb, var(--pm-sum-color) 10%, var(--surface)),
     color-mix(in srgb, var(--pm-sum-color) 4%, var(--surface)));
   border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
