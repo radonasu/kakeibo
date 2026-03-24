@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v18.0'; // v18.0: アニメーション入場拡張オフセットトークン8変数追加＋16箇所変数化（enter-y-2xl/3xl/4xl/neg-xs/neg-sm/neg-md/neg-base/enter-x-md）
+const CACHE_NAME = 'kakeibo-v18.1'; // v18.1: アニメーションscaleトークン5変数追加＋20箇所変数化（scale-anim-init/bounce-sm/bounce-lg/pop-init/pop-peak + scale-hover/scale-color-hover既存再利用）
 const ASSETS = [
   './index.html',
   './css/style.css',

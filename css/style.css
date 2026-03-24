@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.95)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.1)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -416,6 +416,12 @@
   --scale-panel-init:  0.97; /* パネル初期非表示スケール（.notif-panel hidden state・btn-active:0.97と同値だが別セマンティック） */
   --scale-press-lt:    0.96; /* ライト押下縮小（.opp-challenge-btn:active・btn-active:0.97とscale-press:0.95の中間） */
   --scale-card-active: 0.98; /* カード微弱押下縮小（.step-card:active専用・btn-active:0.97より軽い超軽量縮小） */
+  /* ── アニメーションscaleトークン (v18.1) ──────────────────── */
+  --scale-anim-init:      0.8;  /* アニメーション初期スケール（入場from state：tx-icon-bounce/tx-hl-badge-in/adv-in/sf-chip-in 4箇所） */
+  --scale-anim-bounce-sm: 0.82; /* バウンス収縮スケール（dup-pop 28%圧縮・sim-preset-pop from 2箇所） */
+  --scale-anim-bounce-lg: 1.22; /* バウンス伸張スケール（dup-pop 62%膨張・sim-val-pop from 2箇所） */
+  --scale-anim-pop-init:  0.6;  /* ポップ初期スケール（bulk-count-pop/nt-saved-pop 0%フレーム 2箇所） */
+  --scale-anim-pop-peak:  1.25; /* ポップピークスケール（cb-check-in 60%・nav-badge-pop 60% 2箇所） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -1268,8 +1274,8 @@ select:focus:not(:focus-visible) {
 
 @keyframes dup-pop {
   0%   { transform: scale(1); }
-  28%  { transform: scale(0.82); }
-  62%  { transform: scale(1.22); }
+  28%  { transform: scale(var(--scale-anim-bounce-sm)); }
+  62%  { transform: scale(var(--scale-anim-bounce-lg)); }
   82%  { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
@@ -1657,7 +1663,7 @@ select:focus:not(:focus-visible) {
 /* カスタムチェックボックス (v5.56) */
 @keyframes cb-check-in {
   0%   { transform: rotate(45deg) scale(0); opacity: 0; }
-  60%  { transform: rotate(45deg) scale(1.25); }
+  60%  { transform: rotate(45deg) scale(var(--scale-anim-pop-peak)); }
   100% { transform: rotate(45deg) scale(1);  opacity: 1; }
 }
 @keyframes cb-dash-in {
@@ -1735,13 +1741,13 @@ select:focus:not(:focus-visible) {
 
 /* ── 取引ソートヘッダー (v5.79 ビジュアル洗練) ─────────────── */
 @keyframes tx-icon-bounce-asc {
-  0%   { transform: translateY(3px) scale(.8); opacity: 0; }
-  60%  { transform: translateY(-1px) scale(1.1); opacity: 1; }
+  0%   { transform: translateY(3px) scale(var(--scale-anim-init)); opacity: 0; }
+  60%  { transform: translateY(-1px) scale(var(--scale-hover)); opacity: 1; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 @keyframes tx-icon-bounce-desc {
-  0%   { transform: translateY(-3px) scale(.8); opacity: 0; }
-  60%  { transform: translateY(1px) scale(1.1); opacity: 1; }
+  0%   { transform: translateY(-3px) scale(var(--scale-anim-init)); opacity: 0; }
+  60%  { transform: translateY(1px) scale(var(--scale-hover)); opacity: 1; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 .tx-th-sort {
@@ -1841,8 +1847,8 @@ select:focus:not(:focus-visible) {
   to   { transform: translateY(0);    opacity: 1; }
 }
 @keyframes bulk-count-pop {
-  0%   { transform: scale(0.6); opacity: 0; }
-  70%  { transform: scale(1.15); }
+  0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
+  70%  { transform: scale(var(--scale-color-hover)); }
   100% { transform: scale(1);    opacity: 1; }
 }
 .bulk-bar {
@@ -2387,7 +2393,7 @@ mark.tx-hl {
 
 /* ── v5.95: フィルター適用中バッジ ── */
 @keyframes tx-hl-badge-in {
-  from { opacity: 0; transform: scale(0.8); }
+  from { opacity: 0; transform: scale(var(--scale-anim-init)); }
   to   { opacity: 1; transform: scale(1); }
 }
 .smi-filter-badge {
@@ -4054,8 +4060,8 @@ body {
 /* ── ボトムナビ アクティブアイコン バウンス ── */
 @keyframes nav-icon-pop {
   0%   { transform: scale(1); }
-  45%  { transform: scale(1.15); }
-  100% { transform: scale(1.1); }
+  45%  { transform: scale(var(--scale-color-hover)); }
+  100% { transform: scale(var(--scale-hover)); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-icon-pop var(--dur-slow) var(--ease-bounce) both;
@@ -8547,7 +8553,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
    ============================================================ */
 
 @keyframes ct-chip-in {
-  from { opacity: 0; transform: scale(0.82) translateY(var(--enter-y-xs)); }
+  from { opacity: 0; transform: scale(var(--scale-anim-bounce-sm)) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -9361,8 +9367,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes nt-saved-pop {
-  0%   { transform: scale(0.6); opacity: 0; }
-  60%  { transform: scale(1.15); }
+  0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
+  60%  { transform: scale(var(--scale-color-hover)); }
   100% { transform: scale(1); opacity: 1; }
 }
 
@@ -10082,7 +10088,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-preset-pop var(--dur-slow) var(--ease-bounce) both;
 }
 @keyframes sim-preset-pop {
-  from { transform: scale(0.82); }
+  from { transform: scale(var(--scale-anim-bounce-sm)); }
   to   { transform: scale(1); }
 }
 
@@ -10154,7 +10160,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-val-pop var(--dur-lift) var(--ease-bounce);
 }
 @keyframes sim-val-pop {
-  from { transform: scale(1.22); }
+  from { transform: scale(var(--scale-anim-bounce-lg)); }
   to   { transform: scale(1); }
 }
 
@@ -10798,7 +10804,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .sf-save-btn:active { background: color-mix(in srgb, var(--primary) 14%, transparent); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
-  from { opacity: 0; transform: scale(0.8) translateY(4px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -11670,7 +11676,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes nav-badge-pop {
   0%   { transform: scale(0.5); opacity: 0; }
-  60%  { transform: scale(1.25); opacity: 1; }
+  60%  { transform: scale(var(--scale-anim-pop-peak)); opacity: 1; }
   100% { transform: scale(1); }
 }
 
@@ -11972,7 +11978,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* 空状態 */
 @keyframes notif-empty-in {
-  0%   { opacity: 0; transform: scale(0.8) translateY(var(--enter-y-base)); }
+  0%   { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-base)); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 .notif-empty {
