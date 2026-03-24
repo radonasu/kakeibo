@@ -302,6 +302,11 @@
   --shadow-hover-sm:  0 6px 20px rgba(0,0,0,.1);    /* ホバー小シャドウ */
 
   /* ── z-indexレイヤーシステム (v13.0) ──────────────── */
+  /* ローカルスタッキングコンテキスト内レイヤー (v17.87) */
+  --z-base:    0;    /* ベース装飾レイヤー（グロー・背景オーバーレイ等の背面）*/
+  --z-raise:   1;    /* ローカル前面（コンテンツ・アイコン・ホバー浮き上がり） */
+  --z-above:   2;    /* ローカル最前面（today印・閉じるボタン等の最上位）      */
+  /* グローバルレイヤー */
   --z-sticky-tabs:    90;   /* セクションタブ (sticky) */
   --z-mobile-header: 100;   /* モバイルヘッダー (sticky) */
   --z-fab:           130;   /* グローバルFABボタン */
@@ -1539,7 +1544,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-row-hover);
   transform: translateY(var(--translate-lift-xs));
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raise);
 }
 [data-theme="dark"] .tx-table tbody tr:hover {
   box-shadow: var(--shadow-row-selected);
@@ -5129,7 +5134,7 @@ body {
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 
-.goal-emoji { font-size: var(--fs-icon-lg); line-height: var(--lh-none); position: relative; z-index: 1; }
+.goal-emoji { font-size: var(--fs-icon-lg); line-height: var(--lh-none); position: relative; z-index: var(--z-raise); }
 
 .goal-name {
   font-size: var(--fs-lg);
@@ -5436,7 +5441,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   stroke-dashoffset: 81.68;
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
-.goal-dash-emoji { font-size: var(--fs-icon); line-height: var(--lh-none); position: relative; z-index: 1; }
+.goal-dash-emoji { font-size: var(--fs-icon); line-height: var(--lh-none); position: relative; z-index: var(--z-raise); }
 
 .goal-dash-info  { flex: 1; min-width: 0; }
 
@@ -7203,13 +7208,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(90deg); }
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-cap);
   margin-bottom: var(--sp-2);
-  position: relative; z-index: 1;
+  position: relative; z-index: var(--z-raise);
 }
 .wl-summary-value {
   font-size: var(--fs-xl);
   font-weight: var(--fw-bold);
   color: var(--primary);
-  position: relative; z-index: 1;
+  position: relative; z-index: var(--z-raise);
 }
 .wl-summary-unit {
   font-size: var(--fs-sm);
@@ -8388,8 +8393,8 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   color: var(--white);
 }
 
-.dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: 1; }
-.dow-stat-info { display: flex; flex-direction: column; gap: var(--sp-0-75); position: relative; z-index: 1; }
+.dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: var(--z-raise); }
+.dow-stat-info { display: flex; flex-direction: column; gap: var(--sp-0-75); position: relative; z-index: var(--z-raise); }
 .dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
 .dow-stat-amount {
@@ -8950,7 +8955,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-bar) var(--radius-bar) var(--radius-nano) var(--radius-nano);
   min-height: 3px;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raise);
 }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
@@ -9019,7 +9024,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) 7%, transparent) 0%, transparent 70%);
   pointer-events: none;
   transition: background var(--dur-mid);
-  z-index: 0;
+  z-index: var(--z-base);
 }
 /* タイプ別アクセントカラー連動 */
 .qa-card[data-qa-type="expense"] { --qa-accent: var(--danger-text); }
@@ -9045,7 +9050,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   text-align: left;
   gap: var(--sp-2);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raise);
   transition: background var(--dur-faster);
 }
 .qa-toggle-btn:hover {
@@ -9096,7 +9101,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-top: var(--bw-thin) solid var(--border);
   animation: qa-body-in var(--dur-appear) var(--ease-plain);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raise);
 }
 @keyframes qa-body-in {
   from { opacity: 0; transform: translateY(-6px); }
@@ -9560,10 +9565,10 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
   transform: scale(1.6);
-  z-index: 1;
+  z-index: var(--z-raise);
   position: relative;
 }
-.hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(1.3); z-index: 1; position: relative; }
+.hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(1.3); z-index: var(--z-raise); position: relative; }
 /* レベル別ホバーグロー */
 .hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 50%, transparent); }
 .hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) 60%, transparent); }
@@ -9581,7 +9586,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
   border-radius: var(--radius-3xs);
   animation: hm-today-pulse var(--dur-pulse) var(--ease-in-out) infinite;
   position: relative;
-  z-index: 2;
+  z-index: var(--z-above);
 }
 /* 支出量ヒートマップ色（--expense連動, v10.6） */
 .hm-lv0 { background: var(--border); }
@@ -11350,11 +11355,11 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   background: radial-gradient(circle, var(--on-dark-base) 0%, transparent 70%);
   pointer-events: none;
 }
-.ci-header-inner { position: relative; z-index: 1; padding-right: var(--sp-9); }
+.ci-header-inner { position: relative; z-index: var(--z-raise); padding-right: var(--sp-9); }
 .ci-close {
   position: absolute;
   top: var(--sp-3); right: var(--sp-3);
-  z-index: 2;
+  z-index: var(--z-above);
   background: var(--on-dark-press);
   border: none;
   color: var(--white);
