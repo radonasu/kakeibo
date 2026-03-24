@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.1)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.2)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -422,6 +422,21 @@
   --scale-anim-bounce-lg: 1.22; /* バウンス伸張スケール（dup-pop 62%膨張・sim-val-pop from 2箇所） */
   --scale-anim-pop-init:  0.6;  /* ポップ初期スケール（bulk-count-pop/nt-saved-pop 0%フレーム 2箇所） */
   --scale-anim-pop-peak:  1.25; /* ポップピークスケール（cb-check-in 60%・nav-badge-pop 60% 2箇所） */
+  /* ── アニメーション回転・スケール補完トークン (v18.2) ─────── */
+  --rotate-check:         45deg;  /* チェックボックスL字マーク固定回転角（@keyframes cb-check-in 0%/60%/100% 3箇所） */
+  --rotate-badge-in:     -15deg;  /* バッジ入場傾き（@keyframes hs-badge-in from 1箇所） */
+  --rotate-cb-mark:      -45deg;  /* CBマーク回転角（.ev-done-cb::after hidden/checked + @keyframes rc-icon-spin from 3箇所） */
+  --rotate-bell-1:        18deg;  /* ベルリング第1揺れ（@keyframes notif-bell-ring 12% 1箇所） */
+  --rotate-bell-2:       -16deg;  /* ベルリング第2揺れ（@keyframes notif-bell-ring 25% 1箇所） */
+  --rotate-bell-3:        12deg;  /* ベルリング第3揺れ（@keyframes notif-bell-ring 37% 1箇所） */
+  --rotate-bell-4:        -8deg;  /* ベルリング第4揺れ（@keyframes notif-bell-ring 50% 1箇所） */
+  --rotate-bell-5:         5deg;  /* ベルリング第5揺れ（@keyframes notif-bell-ring 62% 1箇所） */
+  --rotate-bell-6:        -3deg;  /* ベルリング第6揺れ（@keyframes notif-bell-ring 75% 1箇所） */
+  --scale-anim-badge-in:  0.4;   /* バッジ入場初期スケール（@keyframes hs-badge-in from・notif-badge-pop 0% 2箇所） */
+  --scale-anim-nav-badge: 0.5;   /* ナビバッジ入場スケール（@keyframes nav-badge-pop 0% 1箇所） */
+  --scale-anim-ev-cb:     0.7;   /* イベントCBポップ開始スケール（@keyframes ev-cb-pop 0% 1箇所） */
+  --scale-anim-tag-in:    0.75;  /* タグチップ入場スケール（@keyframes tag-chip-in from 1箇所） */
+  --scale-anim-sort-in:   0.85;  /* ソートバッジ入場スケール（@keyframes tx-sort-badge-in from 1箇所） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -1662,9 +1677,9 @@ select:focus:not(:focus-visible) {
 
 /* カスタムチェックボックス (v5.56) */
 @keyframes cb-check-in {
-  0%   { transform: rotate(45deg) scale(0); opacity: 0; }
-  60%  { transform: rotate(45deg) scale(var(--scale-anim-pop-peak)); }
-  100% { transform: rotate(45deg) scale(1);  opacity: 1; }
+  0%   { transform: rotate(var(--rotate-check)) scale(0); opacity: 0; }
+  60%  { transform: rotate(var(--rotate-check)) scale(var(--scale-anim-pop-peak)); }
+  100% { transform: rotate(var(--rotate-check)) scale(1);  opacity: 1; }
 }
 @keyframes cb-dash-in {
   0%   { width: 0; opacity: 0; }
@@ -1790,7 +1805,7 @@ select:focus:not(:focus-visible) {
 }
 /* ソートリセットピル */
 @keyframes tx-sort-badge-in {
-  from { opacity: 0; transform: scale(.85) translateX(4px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-sort-in)) translateX(4px); }
   to   { opacity: 1; transform: scale(1) translateX(0); }
 }
 .tx-sort-badge {
@@ -2018,7 +2033,7 @@ select:focus:not(:focus-visible) {
 
 /* ── 取引タグチップ (v5.62 マルチカラー洗練) ─────────── */
 @keyframes tag-chip-in {
-  from { opacity: 0; transform: scale(0.75) translateY(3px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-tag-in)) translateY(3px); }
   to   { opacity: 1; transform: scale(1)    translateY(0);   }
 }
 
@@ -7096,7 +7111,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation-delay: var(--dur-arc);
 }
 @keyframes hs-badge-in {
-  from { transform: scale(0.4) rotate(-15deg); opacity: 0; }
+  from { transform: scale(var(--scale-anim-badge-in)) rotate(var(--rotate-badge-in)); opacity: 0; }
   to   { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 .hs-grade-s { background: var(--primary-light);  color: var(--primary-dark); }
@@ -10573,7 +10588,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   width: var(--size-ev-cb-tick-w); height: var(--size-ev-cb-tick-h);
   border-left: var(--bw-select) solid var(--white);
   border-bottom: var(--bw-select) solid var(--white);
-  transform: rotate(-45deg) scale(0);
+  transform: rotate(var(--rotate-cb-mark)) scale(0);
   transform-origin: center;
   transition: transform var(--dur-fast) var(--ease-bounce);
 }
@@ -10582,9 +10597,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-color: var(--primary);
   animation: ev-cb-pop var(--dur-base) var(--ease-bounce);
 }
-.ev-done-cb:checked::after { transform: rotate(-45deg) scale(1); }
+.ev-done-cb:checked::after { transform: rotate(var(--rotate-cb-mark)) scale(1); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
-@keyframes ev-cb-pop { 0% { transform: scale(.7); } 100% { transform: scale(1); } }
+@keyframes ev-cb-pop { 0% { transform: scale(var(--scale-anim-ev-cb)); } 100% { transform: scale(1); } }
 .ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
 /* --- 月別達成プログレスバー（v5.91）--- */
@@ -11675,7 +11690,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes nav-badge-pop {
-  0%   { transform: scale(0.5); opacity: 0; }
+  0%   { transform: scale(var(--scale-anim-nav-badge)); opacity: 0; }
   60%  { transform: scale(var(--scale-anim-pop-peak)); opacity: 1; }
   100% { transform: scale(1); }
 }
@@ -11721,12 +11736,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* ベルシェイクアニメーション */
 @keyframes notif-bell-ring {
   0%, 100% { transform: rotate(0deg); }
-  12%  { transform: rotate(18deg); }
-  25%  { transform: rotate(-16deg); }
-  37%  { transform: rotate(12deg); }
-  50%  { transform: rotate(-8deg); }
-  62%  { transform: rotate(5deg); }
-  75%  { transform: rotate(-3deg); }
+  12%  { transform: rotate(var(--rotate-bell-1)); }
+  25%  { transform: rotate(var(--rotate-bell-2)); }
+  37%  { transform: rotate(var(--rotate-bell-3)); }
+  50%  { transform: rotate(var(--rotate-bell-4)); }
+  62%  { transform: rotate(var(--rotate-bell-5)); }
+  75%  { transform: rotate(var(--rotate-bell-6)); }
 }
 .btn-notif-bell.has-unread svg {
   display: inline-block;
@@ -11761,7 +11776,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes notif-badge-pop {
-  0%   { transform: scale(0.4); opacity: 0; }
+  0%   { transform: scale(var(--scale-anim-badge-in)); opacity: 0; }
   65%  { transform: scale(1.3); opacity: 1; }
   100% { transform: scale(1); }
 }
@@ -12426,7 +12441,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes rc-icon-spin {
-  from { transform: rotate(-45deg) scale(.6); opacity: 0; }
+  from { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-anim-pop-init)); opacity: 0; }
   to   { transform: rotate(0) scale(1); opacity: 1; }
 }
 

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v18.1'; // v18.1: アニメーションscaleトークン5変数追加＋20箇所変数化（scale-anim-init/bounce-sm/bounce-lg/pop-init/pop-peak + scale-hover/scale-color-hover既存再利用）
+const CACHE_NAME = 'kakeibo-v18.2'; // v18.2: アニメーション回転・スケール補完トークン14変数追加＋21箇所変数化（rotate-check/badge-in/cb-mark/bell-1〜6 + scale-anim-badge-in/nav-badge/ev-cb/tag-in/sort-in + scale-anim-pop-init既存再利用）
 const ASSETS = [
   './index.html',
   './css/style.css',
