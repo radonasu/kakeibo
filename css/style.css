@@ -608,6 +608,14 @@
   --rotate-flip:        180deg; /* 180度反転（.qa-chevron-open） */
   --grad-diagonal:      135deg; /* 斜めグラデーション方向（linear-gradient対角線 4箇所） */
   --grad-horizontal:    90deg;  /* 横グラデーション方向（linear-gradient水平・sk-bone等 4箇所） */
+  /* ── アニメーション入場オフセットトークン (v17.99) ── */
+  --enter-y-xs:   5px;  /* 最小入場下オフセット（@keyframes from translateY(5px) 6箇所） */
+  --enter-y-sm:   6px;  /* 小入場下オフセット（@keyframes from translateY(6px) 6箇所） */
+  --enter-y-md:   8px;  /* 中小入場下オフセット（@keyframes from translateY(8px) 10箇所） */
+  --enter-y-base: 10px; /* 基本入場下オフセット（@keyframes from translateY(10px) 15箇所・最頻出） */
+  --enter-y-lg:   12px; /* 中入場下オフセット（@keyframes from translateY(12px) 9箇所） */
+  --enter-y-xl:   14px; /* 大入場下オフセット（@keyframes from translateY(14px) 5箇所） */
+  --enter-x-sm:   -6px; /* 横入場左オフセット（@keyframes from translateX(-6px) 9箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -2339,7 +2347,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-2xs);
 }
 @keyframes preset-chip-in {
-  from { opacity: 0; transform: scale(0.78) translateY(5px); }
+  from { opacity: 0; transform: scale(0.78) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 [data-theme="dark"] .adv-preset-chip {
@@ -2388,7 +2396,7 @@ mark.tx-hl {
 
 /* ── v5.95: 詳細フィルターパネル グループ入場アニメーション ── */
 @keyframes adv-grp-in {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: none; }
 }
 .adv-filter-panel.open .adv-filter-group {
@@ -3512,7 +3520,7 @@ body {
 }
 @keyframes pwa-bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+  50% { transform: translateY(var(--enter-y-md)); }
 }
 
 /* ── オフラインインジケーター ── */
@@ -3938,7 +3946,7 @@ body {
 
 /* ── ページ遷移フェードイン ── */
 @keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .page-enter { animation: page-fade-in var(--dur-appear) var(--ease-std) both; }
@@ -3988,11 +3996,11 @@ body {
 
 /* ── テーブル行ストッガード ── */
 @keyframes row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes tx-sort-row-in {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-plain) both; }
@@ -4294,7 +4302,7 @@ body {
 
 /* ── 空状態 共通アニメーション (v17.9) ──────────────────── */
 @keyframes empty-state-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes empty-icon-float {
@@ -5572,11 +5580,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ── カレンダービュー (v5.39) ──────────────────────────────── */
 @keyframes cal-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes cal-panel-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes cal-ws-pill-in {
@@ -6046,7 +6054,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-ev-total.exp { background: color-mix(in srgb, var(--expense) 10%, transparent); color: var(--expense); }
 
 @keyframes cal-ev-item-in {
-  0%   { opacity: 0; transform: translateX(-6px); }
+  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   100% { opacity: 1; transform: translateX(0); }
 }
 
@@ -6127,7 +6135,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* インサイトアイテム入場アニメーション */
 @keyframes insight-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes insight-alert-pulse {
@@ -6170,7 +6178,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ── アニメーション (v5.44) ── */
 @keyframes sub-card-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes sub-bar-fill {
@@ -6670,7 +6678,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 @keyframes stp-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -6757,7 +6765,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ポイントカード */
 @keyframes pt-card-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes pt-bar-fill {
@@ -7307,7 +7315,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
 .wl-card:active { transform: translateY(0); box-shadow: none; }
 @keyframes wl-card-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* 高優先度カードのパルス */
@@ -7625,12 +7633,12 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場アニメーション */
 @keyframes fc-card-in {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* セル入場アニメーション */
 @keyframes fc-cell-in {
-  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 /* alertパルスグロー */
@@ -8119,7 +8127,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* -- カードアニメーション -- */
 @keyframes ch-card-in {
-  from { opacity:0; transform: translateY(12px); }
+  from { opacity:0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity:1; transform: translateY(0); }
 }
 
@@ -8402,7 +8410,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
    曜日別支出パターン分析 ビジュアル洗練 (v5.67)
    ============================================================ */
 @keyframes dow-card-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(0.96); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes dow-bar-fill {
@@ -8530,7 +8538,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
    ============================================================ */
 
 @keyframes ct-chip-in {
-  from { opacity: 0; transform: scale(0.82) translateY(5px); }
+  from { opacity: 0; transform: scale(0.82) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -8732,7 +8740,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .fv-stat-rate  { background: linear-gradient(135deg, var(--warning-border), var(--warning)); }
 /* 入場アニメーション */
 @keyframes fv-card-in {
-  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(0.94); }
   to   { opacity: 1; transform: none; }
 }
 .fv-stat-icon  { font-size: var(--fs-icon); margin-bottom: var(--sp-1); }
@@ -8793,7 +8801,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-3xs));
 }
 @keyframes fv-cat-row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -8851,7 +8859,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場アニメーション */
 @keyframes wk-card-in {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* 今日バーグロー */
@@ -8861,12 +8869,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* セル入場アニメーション */
 @keyframes wk-cell-in {
-  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.96); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 /* バーカラム入場アニメーション */
 @keyframes wk-col-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.88); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.88); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -9340,7 +9348,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* ── 月次ノートカード (v5.76 → v5.77洗練) ───────────────── */
 @keyframes nt-card-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes nt-saved-pop {
@@ -9473,11 +9481,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* ── 年間支出ヒートマップ (v5.83) ──────────────────────────── */
 @keyframes hm-stat-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.96); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-col-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-today-pulse {
@@ -9711,7 +9719,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--ds-i, 0) * var(--dur-stagger-xl));
 }
 @keyframes debt-sum-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.97); }
   to   { opacity: 1; transform: none; }
 }
 .debt-summary-total::after,
@@ -9757,7 +9765,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
 .debt-card:active { transform: translateY(0); box-shadow: none; }
 @keyframes debt-card-in {
-  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(0.97); }
   to   { opacity: 1; transform: none; }
 }
 /* カード右上デコレーションサークル (v5.85) */
@@ -10074,7 +10082,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-grid-in var(--dur-medium) var(--ease-plain) both;
 }
 @keyframes sim-grid-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -10127,7 +10135,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-circle); pointer-events: none;
 }
 @keyframes sim-banner-in {
-  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  from { opacity: 0; transform: scale(0.92) translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 
@@ -10146,7 +10154,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-chart-in var(--dur-snap) var(--ease-plain) var(--dur-stagger-2xl) both;
 }
 @keyframes sim-chart-in {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -10281,7 +10289,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--primary) 5%, transparent);
 }
 @keyframes sb-row-in {
-  from { opacity: 0; transform: translateX(-6px) scale(0.99); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(0.99); }
   to   { opacity: 1; transform: translateX(0)    scale(1); }
 }
 
@@ -10641,7 +10649,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-widget-item:hover  { transform: translateX(var(--translate-slide)); }
 .ev-widget-item:active { transform: translateX(0); }
 @keyframes ev-widget-item-in {
-  0%   { opacity: 0; transform: translateX(-6px); }
+  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   100% { opacity: 1; transform: translateX(0); }
 }
 .ev-widget-icon {
@@ -10689,7 +10697,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* --- アニメーション --- */
 @keyframes ev-card-in {
-  0%   { opacity: 0; transform: translateY(8px) scale(.97); }
+  0%   { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -10836,11 +10844,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
 }
 @keyframes tg-stat-in {
-  from { opacity: 0; transform: scale(0.88) translateY(6px); }
+  from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 @keyframes tg-row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: translateX(0); }
 }
 [data-theme="dark"] .tg-stat-card {
@@ -10853,7 +10861,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ウィジェットカード */
 @keyframes adv-card-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: none; }
 }
 .adv-widget-card {
@@ -10907,7 +10915,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* モーダル */
 @keyframes adv-modal-in {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  from { opacity: 0; transform: scale(0.95) translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: none; }
 }
 #advice-modal .modal {
@@ -11158,11 +11166,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ── 年次累計サマリーウィジェット (v6.4) ────────────────── */
 @keyframes yr-card-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes yr-cell-in {
-  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .yr-widget-card {
@@ -11352,7 +11360,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: yr-spark-in var(--dur-spark) var(--ease-plain) var(--dur-slow) both;
 }
 @keyframes yr-spark-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* フッター月平均をミニカード化（v6.5）*/
@@ -11478,7 +11486,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-xl)); }
 .ci-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-xl)); }
 @keyframes ci-cell-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.92); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.92); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .ci-cell-label {
@@ -11955,7 +11963,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* 空状態 */
 @keyframes notif-empty-in {
-  0%   { opacity: 0; transform: scale(0.8) translateY(10px); }
+  0%   { opacity: 0; transform: scale(0.8) translateY(var(--enter-y-base)); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 .notif-empty {
@@ -12213,7 +12221,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .amt-hist-chip:active { transform: scale(var(--scale-press)); }
 
 @keyframes amt-chip-in {
-  from { opacity: 0; transform: scale(0.75) translateY(5px); }
+  from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 
@@ -12286,7 +12294,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .memo-hist-chip:active { transform: scale(var(--scale-press)); }
 
 @keyframes memo-chip-in {
-  from { opacity: 0; transform: scale(0.75) translateY(5px); }
+  from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -12574,7 +12582,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ページ遷移アニメーション強化 (v7.7) */
 @keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(8px) scale(.995); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.995); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .page-enter { animation: page-fade-in var(--dur-appear) var(--ease-std) both; }
@@ -12630,7 +12638,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 @keyframes fg-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: none; }
 }
 .tx-modal-anim .type-toggle,
@@ -12792,7 +12800,7 @@ kbd {
   50%       { opacity: var(--opacity-pulse); }
 }
 @keyframes kb-help-modal-in {
-  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  from { opacity: 0; transform: scale(0.94) translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: none; }
 }
 #kb-help-modal.modal-is-open .modal-wrap {
@@ -12815,7 +12823,7 @@ canvas.chart-clickable { cursor: pointer; }
   animation: dd-box-in var(--dur-pop) var(--ease-bounce) both;
 }
 @keyframes dd-box-in {
-  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  from { opacity: 0; transform: scale(0.94) translateY(var(--enter-y-lg)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -12901,7 +12909,7 @@ canvas.chart-clickable { cursor: pointer; }
   outline-offset: var(--outline-offset-sm);
 }
 @keyframes dd-row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -12984,7 +12992,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 @keyframes yi-card-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.95); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(0.95); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -13443,7 +13451,7 @@ canvas.chart-clickable { cursor: pointer; }
   opacity: var(--opacity-deco);
 }
 @keyframes md-cell-in {
-  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(0.96); }
   to   { opacity: 1; transform: none; }
 }
 .md-cell-label {
@@ -13611,11 +13619,11 @@ canvas.chart-clickable { cursor: pointer; }
   to   { transform: scaleX(1); }
 }
 @keyframes pace-row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes pace-daily-in {
-  from { opacity: 0; transform: translateY(6px) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(.97); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -13814,7 +13822,7 @@ canvas.chart-clickable { cursor: pointer; }
   margin: calc(-1 * var(--sp-2)) 0 var(--sp-3);
 }
 @keyframes pm-trend-in {
-  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(.98); }
   to   { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .pm-trend-card { background: var(--surface); }
@@ -13826,7 +13834,7 @@ canvas.chart-clickable { cursor: pointer; }
   animation-delay: calc(var(--pm-ri, 0) * var(--dur-stagger) + var(--dur-stagger));
 }
 @keyframes pm-row-in {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -13889,7 +13897,7 @@ canvas.chart-clickable { cursor: pointer; }
   text-overflow: ellipsis;
 }
 @keyframes pm-sum-in {
-  from { opacity: 0; transform: translateY(8px) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
   to   { opacity: 1; transform: none; }
 }
 @media (max-width: 600px) {
@@ -14055,7 +14063,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-budget-pct.warn { color: var(--warning); font-weight: var(--fw-medium); }
 .cat-budget-pct.over { color: var(--expense); font-weight: var(--fw-semi); }
 @keyframes cat-cg-in {
-  from { opacity: 0; transform: translateY(8px) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes cat-bar-in {
