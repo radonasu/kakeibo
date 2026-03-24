@@ -484,6 +484,7 @@
   --size-dot-lg:     12px;  /* 大ドット（fc-progress-todayアクティブ日マーカー等） */
   --size-ev-cb:      14px;  /* イベントチェックボックス（ev-done-cb：size-checkbox:16とsize-hm-cell:13の中間） */
   --size-chip-del:   15px;  /* チップ削除ボタン円（sf-chip-del：size-badge-sm:16pxより微小な削除ボタン専用） */
+  --size-select-icon: 16px; /* セレクトカスタム矢印SVGアイコンbackground-size（.form-group select背景画像） */
   /* ── レイアウト・コンポーネント最大幅トークン (v17.25) ─ */
   --size-main-max:  1120px; /* メインコンテンツ最大幅 */
   --size-modal:      480px; /* 標準モーダル最大幅（.modal / .ci-wrap / .rc-wrap） */
@@ -512,6 +513,7 @@
   --size-vw-modal:    95vw;   /* モーダル幅モバイル最大（.modal-lg） */
   /* ── バー最小高さトークン (v17.88) ── */
   --size-bar-min:      3px;   /* バー最小高さ（.wk-bar-fill 週間バー最低表示高さ） */
+  --size-pulse-ring:   6px;   /* パルスアニメーションbox-shadow拡散半径（@keyframes wk-today-pulse 50%フレーム） */
   /* ── コンポーネント最大高さトークン (v17.92) ── */
   --size-mh-expand:    2000px; /* カード折りたたみ展開最大高さ（.card-collapse-body open：CSS高さトランジション用大値） */
   --size-mh-cal-panel:  280px; /* カレンダー日別パネル本文最大高さ（.cal-day-panel-body） */
@@ -1330,7 +1332,7 @@ select:focus:not(:focus-visible) {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2364748b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--sp-3) center;
-  background-size: 16px 16px;
+  background-size: var(--size-select-icon) var(--size-select-icon);
   padding-right: var(--sp-8);
 }
 [data-theme="dark"] .form-group select {
@@ -3739,7 +3741,7 @@ body {
 .bottom-nav-badge {
   position: absolute;
   top: var(--sp-1);
-  right: calc(50% - 18px);
+  right: calc(50% - var(--size-badge));
   min-width: var(--size-badge-sm);
   height: var(--size-badge-sm);
   padding: 0 var(--sp-1);
@@ -8827,7 +8829,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* 今日バーグロー */
 @keyframes wk-today-pulse {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--expense) 40%, transparent); }
-  50%       { box-shadow: 0 0 0 6px transparent; }
+  50%       { box-shadow: 0 0 0 var(--size-pulse-ring) transparent; }
 }
 /* セル入場アニメーション */
 @keyframes wk-cell-in {
@@ -9544,7 +9546,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 }
 .hm-dow-col {
   display: grid;
-  grid-template-rows: repeat(7, 13px);
+  grid-template-rows: repeat(7, var(--size-hm-cell));
   gap: var(--sp-0-75);
   padding-top: var(--sp-5-5);
   flex-shrink: 0;
@@ -11677,7 +11679,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
 }
 .btn-notif-bell.has-unread svg {
   display: inline-block;
-  transform-origin: 50% 4px;
+  transform-origin: 50% var(--sp-1);
   transition: color var(--dur-faster);
 }
 .btn-notif-bell.notif-bell-ringing svg {
