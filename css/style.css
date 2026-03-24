@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.2)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.3)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -646,6 +646,10 @@
   --enter-y-neg-md:   -7px; /* 上方向中入場オフセット（@keyframes from translateY(-7px) 1箇所） */
   --enter-y-neg-base: -8px; /* 上方向基本入場オフセット（@keyframes from translateY(-8px) 4箇所） */
   --enter-x-md:       -8px; /* 横入場左中オフセット（@keyframes from translateX(-8px) 2箇所） */
+  --enter-x-base:    -10px; /* 横入場左基本オフセット（@keyframes from translateX(-10px) 2箇所） */
+  --enter-x-lg:      -12px; /* 横入場左中大オフセット（@keyframes from translateX(-12px) 1箇所） */
+  --enter-x-xl:      -14px; /* 横入場左大オフセット（@keyframes from translateX(-14px) 1箇所） */
+  --enter-x-2xl:     -16px; /* 横入場左特大オフセット（@keyframes from translateX(-16px) 2箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -11043,7 +11047,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* アドバイスセクション スタッガードアニメーション */
 @keyframes adv-section-in {
-  from { opacity: 0; transform: translateX(-10px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-base)); }
   to   { opacity: 1; transform: none; }
 }
 .adv-section {
@@ -11936,7 +11940,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item.notif-type-info::after    { background: var(--primary); }
 
 @keyframes notif-item-in {
-  0%   { opacity: 0; transform: translateX(10px); }
+  0%   { opacity: 0; transform: translateX(calc(-1 * var(--enter-x-base))); }
   100% { opacity: 1; transform: translateX(0); }
 }
 
@@ -12501,7 +12505,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes rc-item-in {
-  from { opacity: 0; transform: translateX(-12px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-lg)); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
@@ -13142,8 +13146,8 @@ canvas.chart-clickable { cursor: pointer; }
    節約機会スキャン ウィジェット (v8.4)
    ============================================================ */
 @keyframes opp-card-in {
-  from { opacity: 0; transform: translateX(-14px) scale(0.97); }
-  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+  from { opacity: 0; transform: translateX(var(--enter-x-xl)) scale(0.97); }
+  to   { opacity: 1; transform: translateX(0)               scale(1);    }
 }
 
 .opp-widget-card { padding: 0; }
@@ -13598,11 +13602,11 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* 月切替スライドアニメーション */
 @keyframes md-slide-from-left {
-  from { opacity: 0; transform: translateX(-16px); }
+  from { opacity: 0; transform: translateX(var(--enter-x-2xl)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes md-slide-from-right {
-  from { opacity: 0; transform: translateX(16px); }
+  from { opacity: 0; transform: translateX(calc(-1 * var(--enter-x-2xl))); }
   to   { opacity: 1; transform: none; }
 }
 .md-modal-box.md-slide-prev .md-scroll-body {
