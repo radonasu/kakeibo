@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.89'; // v17.89: スケールトークン5変数追加＋10箇所変数化 — scale-hover-lg(1.2)/scale-color-hover(1.15)/scale-press-md(0.93)/scale-hm-hover(1.6)/scale-hm-active(1.3)（color-swatch:hover/section-tab active icon/goal・sub・ch color-btn:hover/goal-emoji-btn.selected/fab:active/date-quick-btn:active/hm-cell:hover・active）
+const CACHE_NAME = 'kakeibo-v17.90'; // v17.90: スケールポップアップ/パネル/ナビ/選択4変数追加＋6箇所変数化 — scale-press-nav(0.9)/scale-selected-sm(1.18)/scale-popup-init(0.96)/scale-panel-init(0.97)（btn-icon:hover/month-nav-btn:active/pt-color-btn.is-active/modal hidden/notif-panel hidden/kb-g-hint hidden）
 const ASSETS = [
   './index.html',
   './css/style.css',
