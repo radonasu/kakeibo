@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.90)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v17.91)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -413,6 +413,8 @@
   --scale-selected-sm: 1.18; /* カラーボタン選択拡大（.pt-color-btn.is-active・color-hover:1.15とhover-lg:1.2の中間） */
   --scale-popup-init:  0.96; /* ポップアップ/モーダル初期非表示スケール（.modal/.kb-g-hint hidden state・2箇所） */
   --scale-panel-init:  0.97; /* パネル初期非表示スケール（.notif-panel hidden state・btn-active:0.97と同値だが別セマンティック） */
+  --scale-press-lt:    0.96; /* ライト押下縮小（.opp-challenge-btn:active・btn-active:0.97とscale-press:0.95の中間） */
+  --scale-card-active: 0.98; /* カード微弱押下縮小（.step-card:active専用・btn-active:0.97より軽い超軽量縮小） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -422,6 +424,8 @@
   --brightness-press:        0.88; /* 標準ボタン押下暗化（btn-primary/danger/success/type等・最多使用） */
   --brightness-press-mid:    0.93; /* 中押下暗化（type-btn:active・非着色typeボタン押下） */
   --brightness-press-strong: 0.85; /* 強押下暗化（btn-account-add/btn-mr-add等のaddボタン系） */
+  --brightness-press-lt:     0.9;  /* ライト押下暗化（.btn-share:active・press-mid:0.93とpress:0.88の中間値） */
+  --brightness-press-deep:   0.8;  /* 最強押下暗化（.ci-close:active・暗背景ボタン専用・press-strong:0.85より強い最暗値） */
 
   /* ── トランスフォームリフトトークン (v17.83/v17.85) ────────── */
   --translate-lift-xs: -1px; /* 微小ホバーリフト（カード個別override・ボタン系・最多使用28箇所） */
@@ -554,6 +558,7 @@
   --size-bulk-info:      110px;  /* バルクバー情報列最小幅（.bulk-bar-info） */
   --size-search-min:     120px;  /* フィルター検索入力最小幅（.filter-search） */
   --size-input-sm:       100px;  /* 小型入力最小幅・金額列最大幅（.quick-cat-form input / .mr-edit-row .mr-amount） */
+  --size-input-budget:    90px;  /* カテゴリ予算インライン入力幅（.cat-budget-input・size-input-sm:100pxより狭い） */
   --size-fx-label:        96px;  /* 為替通貨ラベル最小幅（.fx-currency-label） */
   --size-label-min:       52px;  /* ラベル列最小幅（.ci-savings-label） */
   --size-date-col:        42px;  /* 日付列最小幅（.dd-tx-date） */
@@ -4192,7 +4197,7 @@ body {
   transform: translateY(var(--translate-lift-sm));
   box-shadow: var(--shadow-cta-hover);
 }
-.onboarding-cta:active { transform: scale(.97); }
+.onboarding-cta:active { transform: scale(var(--scale-btn-active)); }
 
 /* ── ステップカード ──────────────────────────────────────── */
 .onboarding-steps {
@@ -4218,7 +4223,7 @@ body {
   box-shadow: var(--shadow-md);
   border-color: var(--primary);
 }
-.step-card:active { transform: scale(.98); }
+.step-card:active { transform: scale(var(--scale-card-active)); }
 .step-num {
   width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
@@ -4336,7 +4341,7 @@ body {
   border-color: var(--primary);
   transform: translateY(var(--translate-lift-xs));
 }
-.btn-share:active { transform: translateY(0); filter: brightness(0.9); }
+.btn-share:active { transform: translateY(0); filter: brightness(var(--brightness-press-lt)); }
 
 .modal-share { max-width: var(--size-modal-lg); width: calc(100% - 32px); }
 
@@ -11390,7 +11395,7 @@ details[open] .debt-archive-summary::before { transform: rotate(90deg); }
   transition: background var(--dur-base);
 }
 .ci-close:hover { background: var(--on-dark-hover); }
-.ci-close:active { filter: brightness(0.8); }
+.ci-close:active { filter: brightness(var(--brightness-press-deep)); }
 .ci-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ci-month-badge {
   display: inline-block;
@@ -12798,7 +12803,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-circle);
   flex-shrink: 0;
   display: inline-block;
-  box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 20%, transparent);
+  box-shadow: 0 0 0 var(--bw-select) color-mix(in srgb, currentColor 20%, transparent);
 }
 
 /* サマリー行 */
@@ -13169,7 +13174,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 .opp-challenge-btn:active {
-  transform: scale(0.96);
+  transform: scale(var(--scale-press-lt));
   filter: brightness(var(--brightness-press-soft));
   box-shadow: none;
 }
@@ -13806,7 +13811,7 @@ canvas.chart-clickable { cursor: pointer; }
   border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) 22%, var(--border));
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
-.pm-sum-card:nth-child(1) { animation-delay: 0ms; }
+.pm-sum-card:nth-child(1) { animation-delay: 0; }
 .pm-sum-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
 .pm-sum-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 .pm-sum-card::before {
@@ -13974,7 +13979,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .cat-stat-val.over { color: var(--expense) !important; }
 .cat-budget-input {
-  width: 90px;
+  width: var(--size-input-budget);
   text-align: right;
   font-size: var(--fs-xs);
   padding: var(--sp-0-75) var(--sp-1-75);
