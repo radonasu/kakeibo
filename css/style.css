@@ -437,6 +437,10 @@
   --scale-anim-ev-cb:     0.7;   /* イベントCBポップ開始スケール（@keyframes ev-cb-pop 0% 1箇所） */
   --scale-anim-tag-in:    0.75;  /* タグチップ入場スケール（@keyframes tag-chip-in from 1箇所） */
   --scale-anim-sort-in:   0.85;  /* ソートバッジ入場スケール（@keyframes tx-sort-badge-in from 1箇所） */
+  --scale-anim-chip-in:   0.78;  /* チップ入場初期スケール（@keyframes preset-chip-in from 1箇所） */
+  --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82%フレーム 1箇所） */
+  --scale-anim-cell-in:   0.97;  /* セル入場スケール（@keyframes fc-cell-in/wk-cell-in/dot-item-in/opp-card-in等 6箇所） */
+  --scale-anim-ripple:    4;     /* リップル最大拡張スケール（@keyframes ripple-anim to 1箇所） */
 
   /* ── ブライトネスフィルタートークン (v17.82) ──────────────── */
   --brightness-hover-sm:     1.07; /* カードホバー微輝（summary-card/dash-sum-clickable等） */
@@ -650,6 +654,9 @@
   --enter-x-lg:      -12px; /* 横入場左中大オフセット（@keyframes from translateX(-12px) 1箇所） */
   --enter-x-xl:      -14px; /* 横入場左大オフセット（@keyframes from translateX(-14px) 1箇所） */
   --enter-x-2xl:     -16px; /* 横入場左特大オフセット（@keyframes from translateX(-16px) 2箇所） */
+  --enter-x-pos-xs:    4px; /* 正方向X入場オフセット小（@keyframes tx-sort-badge-in from translateX(4px) 1箇所） */
+  --bounce-y-sm:       3px; /* バウンスY振幅小（@keyframes tx-icon-bounce-asc/desc ±3px 各1箇所） */
+  --bounce-y-xs:       1px; /* バウンスY微振幅（@keyframes tx-icon-bounce-asc/desc ±1px オーバーシュート 各1箇所） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -1295,7 +1302,7 @@ select:focus:not(:focus-visible) {
   0%   { transform: scale(1); }
   28%  { transform: scale(var(--scale-anim-bounce-sm)); }
   62%  { transform: scale(var(--scale-anim-bounce-lg)); }
-  82%  { transform: scale(0.95); }
+  82%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(1); }
 }
 .dup-popping { animation: dup-pop var(--dur-snap) var(--ease-bounce); }
@@ -1760,13 +1767,13 @@ select:focus:not(:focus-visible) {
 
 /* ── 取引ソートヘッダー (v5.79 ビジュアル洗練) ─────────────── */
 @keyframes tx-icon-bounce-asc {
-  0%   { transform: translateY(3px) scale(var(--scale-anim-init)); opacity: 0; }
-  60%  { transform: translateY(-1px) scale(var(--scale-hover)); opacity: 1; }
+  0%   { transform: translateY(var(--bounce-y-sm)) scale(var(--scale-anim-init)); opacity: 0; }
+  60%  { transform: translateY(calc(-1 * var(--bounce-y-xs))) scale(var(--scale-hover)); opacity: 1; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 @keyframes tx-icon-bounce-desc {
-  0%   { transform: translateY(-3px) scale(var(--scale-anim-init)); opacity: 0; }
-  60%  { transform: translateY(1px) scale(var(--scale-hover)); opacity: 1; }
+  0%   { transform: translateY(calc(-1 * var(--bounce-y-sm))) scale(var(--scale-anim-init)); opacity: 0; }
+  60%  { transform: translateY(var(--bounce-y-xs)) scale(var(--scale-hover)); opacity: 1; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 .tx-th-sort {
@@ -1809,7 +1816,7 @@ select:focus:not(:focus-visible) {
 }
 /* ソートリセットピル */
 @keyframes tx-sort-badge-in {
-  from { opacity: 0; transform: scale(var(--scale-anim-sort-in)) translateX(4px); }
+  from { opacity: 0; transform: scale(var(--scale-anim-sort-in)) translateX(var(--enter-x-pos-xs)); }
   to   { opacity: 1; transform: scale(1) translateX(0); }
 }
 .tx-sort-badge {
@@ -2381,7 +2388,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-2xs);
 }
 @keyframes preset-chip-in {
-  from { opacity: 0; transform: scale(0.78) translateY(var(--enter-y-xs)); }
+  from { opacity: 0; transform: scale(var(--scale-anim-chip-in)) translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 [data-theme="dark"] .adv-preset-chip {
@@ -4072,7 +4079,7 @@ body {
   pointer-events: none;
 }
 @keyframes ripple-anim {
-  to { transform: scale(4); opacity: 0; }
+  to { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
 }
 [data-theme="dark"] .ripple-wave { background: var(--on-dark-ripple); }
 
@@ -7672,7 +7679,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* セル入場アニメーション */
 @keyframes fc-cell-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 /* alertパルスグロー */
@@ -9753,7 +9760,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--ds-i, 0) * var(--dur-stagger-xl));
 }
 @keyframes debt-sum-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .debt-summary-total::after,
@@ -9799,7 +9806,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
 .debt-card:active { transform: translateY(0); box-shadow: none; }
 @keyframes debt-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 /* カード右上デコレーションサークル (v5.85) */
@@ -10224,7 +10231,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: var(--dur-delay-sm);
 }
 @keyframes sb-banner-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: translateY(0)                       scale(1); }
 }
 .sb-banner-cell {
@@ -11204,7 +11211,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes yr-cell-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .yr-widget-card {
@@ -13146,7 +13153,7 @@ canvas.chart-clickable { cursor: pointer; }
    節約機会スキャン ウィジェット (v8.4)
    ============================================================ */
 @keyframes opp-card-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-xl)) scale(0.97); }
+  from { opacity: 0; transform: translateX(var(--enter-x-xl)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: translateX(0)               scale(1);    }
 }
 
