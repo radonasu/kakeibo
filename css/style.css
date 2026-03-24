@@ -590,6 +590,12 @@
   --size-csv-modal:      680px;  /* CSV取り込みモーダル最大幅（.csv-imp-modal） */
   --size-onboard-text:   400px;  /* オンボーディングテキスト最大幅（.onboarding-step p） */
   --size-banner-content: 600px;  /* PWAバナーコンテンツ最大幅（.install-banner-content） */
+  /* ── グリッド列最小幅トークン (v17.96) ── */
+  --size-grid-stat:    140px;  /* 統計カードグリッド列最小幅（.ct-stat-row / .fv-stat-grid minmax基準） */
+  --size-grid-budget:  240px;  /* 予算管理グリッド列最小幅（.budget-grid minmax基準） */
+  --size-grid-insight: 175px;  /* 年次インサイトグリッド列最小幅（.yi-grid minmax基準） */
+  --size-grid-cat:     190px;  /* カテゴリカードグリッド列最小幅（.cat-card-grid minmax基準） */
+  --size-grid-cat-sm:  160px;  /* カテゴリカードグリッド列最小幅モバイル縮小（.cat-card-grid @media≤600px） */
   /* ── SVG stroke-width トークン (v17.72) ─ */
   --sw-goal-ring:   3.5;  /* ゴール詳細リングSVG stroke-width（goal-ring-bg/fill） */
   --sw-goal-dash:   3;    /* ゴールダッシュリングSVG stroke-width（goal-dash-ring-bg/fill） */
@@ -2912,7 +2918,7 @@ mark.tx-hl {
 /* ── 予算管理 ─────────────────────────────────────────────── */
 .budget-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-budget), 1fr));
   gap: var(--sp-4);
   margin-top: var(--sp-1);
 }
@@ -8578,7 +8584,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* サマリーカード */
 .ct-stat-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--size-grid-stat), 1fr));
   gap: var(--sp-3);
   margin: var(--sp-3) 0 var(--sp-4);
 }
@@ -8679,7 +8685,7 @@ details[open] .ch-archive-summary::before { transform: rotate(90deg); }
 /* サマリーカードグリッド (v5.71 グラデーション刷新) */
 .fv-stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--size-grid-stat), 1fr));
   gap: var(--sp-3);
   margin-bottom: var(--sp-2);
 }
@@ -12961,7 +12967,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 .yi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-insight), 1fr));
   gap: var(--sp-4);
 }
 
@@ -13888,7 +13894,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .cat-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-cat), 1fr));
   gap: var(--sp-3);
 }
 .cat-card {
@@ -14056,7 +14062,7 @@ canvas.chart-clickable { cursor: pointer; }
 [data-theme="dark"] .cat-budget-bar-fill { background: linear-gradient(90deg, var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) 72%, transparent) 100%); }
 /* モバイル */
 @media (max-width: 600px) {
-  .cat-card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-2); }
+  .cat-card-grid { grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-cat-sm), 1fr)); gap: var(--sp-2); }
   .cat-budget-input { width: var(--size-md-cat-amt); }
 }
 

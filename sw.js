@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v17.95'; // v17.95: シマー/スケルトンサイズトークン6変数追加＋8箇所変数化（shimmer/shimmer-half/sk-sec/sk-sum/sk-chart/hm-stat-min）
+const CACHE_NAME = 'kakeibo-v17.96'; // v17.96: グリッド列最小幅トークン5変数追加＋6箇所変数化（grid-stat/grid-budget/grid-insight/grid-cat/grid-cat-sm）
 const ASSETS = [
   './index.html',
   './css/style.css',
