@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.14)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.15)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -872,7 +872,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   cursor: pointer;
   min-width: 0;
-  transition: background var(--dur-fast);
+  transition: background var(--dur-fast), border-color var(--dur-fast);
 }
 .account-select:focus { outline: none; border-color: var(--primary); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
@@ -2795,6 +2795,7 @@ mark.tx-hl {
   border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .quick-cat-form input:hover { border-color: var(--border-strong); }
 .quick-cat-form input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -10269,6 +10270,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 /* 追加返済入力フォーカスグロー */
+#debt-sim-extra { transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
 #debt-sim-extra:hover { border-color: var(--border-strong); }
 #debt-sim-extra:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
