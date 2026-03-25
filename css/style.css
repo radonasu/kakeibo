@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.20)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.22)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1853,12 +1853,16 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
   opacity: var(--opacity-soft);
   flex-shrink: 0;
+  transition: opacity var(--dur-fast);
 }
 .tx-sort-icon svg {
   width: var(--size-sort-icon);
   height: var(--size-sort-icon);
 }
 .tx-th-active .tx-sort-icon {
+  opacity: 1;
+}
+.tx-th-sort:hover .tx-sort-icon {
   opacity: 1;
 }
 .tx-sort-icon.tx-asc svg  { animation: tx-icon-bounce-asc  var(--dur-mid) var(--ease-bounce) both; }
