@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.15)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.16)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2375,7 +2375,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
 .adv-filter-clear {
   align-self: flex-end;
@@ -9432,7 +9432,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-btn);
   background: var(--qa-accent);
   border-color: var(--qa-accent);
-  transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-press) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
 }
 .qa-card .qa-submit-btn:hover { filter: brightness(var(--brightness-hover)); transform: translateY(var(--translate-lift-xs)); }
 .qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
@@ -13321,7 +13321,7 @@ canvas.chart-clickable { cursor: pointer; }
   white-space: nowrap;
   transition: transform var(--dur-fast) var(--ease-bounce),
               box-shadow var(--dur-fast) var(--ease-plain),
-              filter var(--dur-fast) var(--ease-plain);
+              filter var(--dur-press) var(--ease-plain);
 }
 
 .opp-challenge-btn:hover {

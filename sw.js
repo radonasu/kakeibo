@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.15'; // v19.15: フォーム入力transition欠如バグ修正 — ①.quick-cat-form inputにtransition追加（border-color/box-shadow瞬時スナップ修正）②#debt-sim-extraにtransition追加（border-color/box-shadow瞬時スナップ修正）③.account-selectのtransitionにborder-color追加（:focus時のborder-color瞬時スナップ修正）
+const CACHE_NAME = 'kakeibo-v19.16'; // v19.16: filterトランジションとフォーカスリング修正 — ①.qa-card .qa-submit-btnのfilter transitionをdur-fast→dur-press（:active時のbrightness復帰が瞬時スナップしていたバグ修正）②.opp-challenge-btnのfilter transitionをdur-fast→dur-press（同様のバグ修正）③.adv-filter-input:focusのfocus-ringをハードコードcolor-mix→var(--focus-ring)（ダークモードで本来22%のring幅が14%になっていたバグ修正）
 const ASSETS = [
   './index.html',
   './css/style.css',
