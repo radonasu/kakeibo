@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.13'; // v19.13: border-color transition完全化 — ①.btn基底transitionにborder-color var(--dur-fast)追加（.btn-ghost:hover・.btn-danger:hoverのborder-color変化が瞬時スナップしていた問題を修正）②.tx-tag-filter-all/.tx-tag-filter-chipのtransitionにborder-color var(--dur-fast)追加（.active付与時のborder-color変化が瞬時スナップしていた問題を修正）
+const CACHE_NAME = 'kakeibo-v19.14'; // v19.14: transition完全化 — ①.ev-add-monthのtransitionにborder-color追加（:hover時のborder-color: var(--primary)変化が瞬時スナップしていたバグを修正）②.btn-continueのtransitionにfilter var(--dur-press)追加（:active時のfilter: brightness()復帰が瞬時スナップしていたバグを修正）
 const ASSETS = [
   './index.html',
   './css/style.css',
