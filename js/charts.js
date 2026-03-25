@@ -311,7 +311,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
     return `${y.slice(2)}/${mo}`;
   });
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface } = getThemeColors();
   const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
@@ -337,7 +337,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
         pointRadius: 4,
         pointHoverRadius: 7,
         pointBackgroundColor: lineColor,
-        pointBorderColor: '#ffffff',
+        pointBorderColor: surface,
         pointBorderWidth: 2,
         pointHoverBorderWidth: 3,
       }],
@@ -952,7 +952,7 @@ function renderNetWorthChart(canvasId) {
     return `${y.slice(2)}/${mo}`;
   });
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface } = getThemeColors();
   const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
@@ -971,7 +971,7 @@ function renderNetWorthChart(canvasId) {
         pointRadius: 4,
         pointHoverRadius: 7,
         pointBackgroundColor: lineColor,
-        pointBorderColor: '#ffffff',
+        pointBorderColor: surface,
         pointBorderWidth: 2,
         pointHoverBorderWidth: 3,
       }],
@@ -1017,7 +1017,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
   if (!canvas) return;
 
   const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface } = getThemeColors();
   const ctx2d = canvas.getContext('2d');
 
   const datasets = (selectedCats || []).map(cat => {
@@ -1036,7 +1036,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
       pointRadius: 4,
       pointHoverRadius: 8,
       pointBackgroundColor: cat.color,
-      pointBorderColor: '#fff',
+      pointBorderColor: surface,
       pointBorderWidth: 2,
       pointHoverBorderWidth: 2,
       fill: true,

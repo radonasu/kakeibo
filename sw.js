@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.1'; // v19.1: SVG stroke-dasharray円周・ダッシュパターントークン5変数追加＋8箇所変数化
+const CACHE_NAME = 'kakeibo-v19.2'; // v19.2: グラフ折れ線ポイントボーダーカラーのダークモード対応（pointBorderColor #fff→surface CSS変数化 3箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
