@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.22'; // v19.22: ソートアイコンhoverフィードバック改善 — .tx-sort-iconにtransition:opacity追加(.tx-th-sort:hover .tx-sort-icon{opacity:1}でホバー時にソートアイコンをfull opacity表示)
+const CACHE_NAME = 'kakeibo-v19.23'; // v19.23: ボトムナビアイコン・FABのhover/active transition速度統一 — .bottom-nav-icon(background/color/transform)とbottom-nav-icon svg(transform)とglobal-fab(transform/box-shadow)のtransitionをdur-base(200ms)→dur-fast(150ms)に統一
 const ASSETS = [
   './index.html',
   './css/style.css',
