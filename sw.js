@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.0'; // v19.0: color-mix()高強度ティントトークン13変数追加＋137箇所変数化・グラデーション方向トークン89箇所変数化
+const CACHE_NAME = 'kakeibo-v19.1'; // v19.1: SVG stroke-dasharray円周・ダッシュパターントークン5変数追加＋8箇所変数化
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v18.9)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.1)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -683,6 +683,12 @@
   --sw-spark:       2;    /* スパークライン実績線 stroke-width（fc-spark-actual） */
   --sw-spark-dash:  1.5;  /* スパークライン予測線・ドット stroke-width（fc-spark-forecast/today-dot） */
   --sw-spark-ref:   1;    /* スパークライン平均参照線 stroke-width（fc-spark-avg） */
+  /* ── SVG stroke-dasharray 円周・ダッシュパターントークン (v19.1) ── */
+  --sda-goal-ring:  125.66;  /* 目標リング円周（2π×20）: stroke-dasharray/offset 2箇所 */
+  --sda-goal-dash:   81.68;  /* 目標ダッシュリング円周（2π×13）: stroke-dasharray/offset 2箇所 */
+  --sda-gauge:      163.36;  /* 家計スコアゲージ円周（2π×26）: stroke-dasharray/offset/@keyframes 2箇所 */
+  --sda-spark-dash: 4 3;     /* スパーク予測線ダッシュパターン（fc-spark-forecast 1箇所） */
+  --sda-spark-ref:  3 3;     /* スパーク参照線ダッシュパターン（fc-spark-avg 1箇所） */
   /* ── color-mix()ティント強度トークン (v18.9) ──────────────── */
   --mix-faint:     8%;   /* 極薄ティント（プリセットチップbg・薄アクティブ等 15箇所） */
   --mix-2xs:      10%;   /* 超薄ティント（hover/active状態・フォーカスリング薄版 34箇所） */
@@ -5276,8 +5282,8 @@ body {
   fill: none;
   stroke-width: var(--sw-goal-ring);
   stroke-linecap: round;
-  stroke-dasharray: 125.66;
-  stroke-dashoffset: 125.66;
+  stroke-dasharray: var(--sda-goal-ring);
+  stroke-dashoffset: var(--sda-goal-ring);
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 
@@ -5584,8 +5590,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   fill: none;
   stroke-width: var(--sw-goal-dash);
   stroke-linecap: round;
-  stroke-dasharray: 81.68;
-  stroke-dashoffset: 81.68;
+  stroke-dasharray: var(--sda-goal-dash);
+  stroke-dashoffset: var(--sda-goal-dash);
   transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo);
 }
 .goal-dash-emoji { font-size: var(--fs-icon); line-height: var(--lh-none); position: relative; z-index: var(--z-raise); }
@@ -7114,12 +7120,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   fill: none;
   stroke-width: var(--sw-gauge);
   stroke-linecap: round;
-  stroke-dasharray: 163.36 163.36;
+  stroke-dasharray: var(--sda-gauge) var(--sda-gauge);
   animation: hs-gauge-in var(--dur-gauge) var(--ease-std) both;
   animation-delay: var(--dur-delay-sm);
 }
 @keyframes hs-gauge-in {
-  from { stroke-dashoffset: 163.36; }
+  from { stroke-dashoffset: var(--sda-gauge); }
 }
 .hs-gauge-text {
   position: absolute;
@@ -7842,7 +7848,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   fill: none;
   stroke: var(--fc-spark-color, var(--expense));
   stroke-width: var(--sw-spark-dash);
-  stroke-dasharray: 4 3;
+  stroke-dasharray: var(--sda-spark-dash);
   stroke-linecap: round;
   opacity: var(--opacity-inactive);
   vector-effect: non-scaling-stroke;
@@ -7850,7 +7856,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .fc-spark-avg {
   stroke: var(--text-faint);
   stroke-width: var(--sw-spark-ref);
-  stroke-dasharray: 3 3;
+  stroke-dasharray: var(--sda-spark-ref);
   opacity: var(--opacity-secondary);
   vector-effect: non-scaling-stroke;
 }
