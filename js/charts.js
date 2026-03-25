@@ -1,8 +1,11 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v8.0
+// charts.js - グラフ描画 (Chart.js) v8.1
 // ============================================================
 
 const chartInstances = {};
+
+// 日本語フォントスタック（canvas context.font / Chart.js defaults 共用）
+const CHART_FONT_FAMILY = "'Hiragino Kaku Gothic ProN','Hiragino Sans','BIZ UDGothic','Meiryo','Yu Gothic UI',sans-serif";
 
 // CSS変数からテーマカラーを取得
 function getCSSVar(name) {
@@ -79,14 +82,14 @@ const centerTextPlugin = {
       : formatMoney(total);
 
     // ラベル
-    ctx.font = '500 11px var(--font, system-ui)';
+    ctx.font = '500 11px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('合計', cx, cy - 12);
 
     // 金額
-    ctx.font = '700 15px var(--font, system-ui)';
+    ctx.font = '700 15px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = getCSSVar('--text') || '#0f172a';
     ctx.fillText(formatted, cx, cy + 6);
 
@@ -98,6 +101,9 @@ const centerTextPlugin = {
 if (!Chart.registry.plugins.get('centerText')) {
   Chart.register(centerTextPlugin);
 }
+
+// Chart.js グローバルフォント設定（日本語フォントスタック）
+Chart.defaults.font.family = CHART_FONT_FAMILY;
 
 // ─── グラデーション生成ヘルパー ──────────────────────────────
 function makeGradient(ctx, canvas, color, alpha1 = 0.25, alpha2 = 0.02) {
@@ -138,7 +144,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
     const { text } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px system-ui';
+    c.font = '13px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
@@ -594,7 +600,7 @@ function renderPaymentMethodChart(canvasId, transactions) {
     const { text } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px system-ui';
+    c.font = '13px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
@@ -670,7 +676,7 @@ function renderPaymentTrendChart(canvasId, year) {
     const { text } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px system-ui';
+    c.font = '13px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
@@ -1327,7 +1333,7 @@ function renderTagChart(canvasId, transactions) {
     const { text } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px system-ui';
+    c.font = '13px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;

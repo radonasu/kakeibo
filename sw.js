@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.4'; // v19.4: ダークモードシャドウ完全化（shadow-sticky/up-md/cta/cta-hover/badge/toggle/row-selected/auth 8変数ダーク上書き追加）
+const CACHE_NAME = 'kakeibo-v19.5'; // v19.5: Chart.js 日本語フォントスタック統一（CHART_FONT_FAMILY定数・defaults.font.family設定・canvas ctx.font 6箇所修正）
 const ASSETS = [
   './index.html',
   './css/style.css',
