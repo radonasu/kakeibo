@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.18'; // v19.18: ホバーtransition速度統一 — nav-icon/type-btn/auth-tab/btn-share/ci-closeの5要素でdur-base(200ms)→dur-fast(150ms)に統一し、ボタン・アイコン系ホバーのレスポンシブ感を向上
+const CACHE_NAME = 'kakeibo-v19.19'; // v19.19: フォーム入力transition速度統一 — nt-textarea/cat-budget-inputのborder-color/box-shadow transitionをdur-base(200ms)→dur-fast(150ms)に統一し、form-group入力系と一致
 const ASSETS = [
   './index.html',
   './css/style.css',
