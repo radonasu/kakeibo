@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.7)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.10)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -887,7 +887,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   flex-shrink: 0;
-  transition: background var(--dur-fast);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast);
 }
 .btn-account-add:hover { background: var(--on-dark-strong); }
 .btn-account-add:active { filter: brightness(var(--brightness-press-strong)); }
@@ -918,7 +918,7 @@ select:focus:not(:focus-visible) {
   color: var(--sidebar-text-muted);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   border: none;
@@ -1077,6 +1077,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   -webkit-tap-highlight-color: transparent;
+  transition: background var(--dur-fast), box-shadow var(--dur-fast);
 }
 #hamburger:hover { background: var(--on-dark-base); }
 #hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); }
@@ -3598,11 +3599,12 @@ body {
   position: absolute; top: var(--sp-2); right: var(--sp-3);
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-icon-lg); cursor: pointer;
-  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
   border-radius: var(--radius-btn-sm);
 }
 .ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
 .ios-guide-close:active { transform: scale(var(--scale-icon-active)); }
+.ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); }
@@ -3941,7 +3943,7 @@ body {
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
   line-height: var(--lh-none);
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast);
   color: color-mix(in srgb, var(--sidebar-text-hi) var(--mix-rich), transparent);
   flex-shrink: 0;
   margin-left: auto;
@@ -9226,7 +9228,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   gap: var(--sp-2);
   position: relative;
   z-index: var(--z-raise);
-  transition: background var(--dur-faster);
+  transition: background var(--dur-faster), box-shadow var(--dur-faster);
 }
 .qa-toggle-btn:hover {
   background: var(--surface-hover);
@@ -11789,7 +11791,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-faster), color var(--dur-faster);
+  transition: background var(--dur-faster), color var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-press) var(--ease-bounce);
   flex-shrink: 0;
 }
 .btn-notif-bell:hover {
@@ -13381,7 +13383,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-hover);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce);
+  transition: color var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
   flex-shrink: 0;
 }
 .md-nav-btn:hover:not(:disabled) {

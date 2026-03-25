@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.9'; // v19.9: focus-visible box-shadow transition完全化追加13要素（card-collapse-btn/install-banner-close/auth-offline-mode/modal-details-summary/bottom-nav-item/goal-color-btn/pt-color-btn/ch-color-btn/sf-chip-del/notif-mark-read/ci-close/rc-close/rc-item）
+const CACHE_NAME = 'kakeibo-v19.10'; // v19.10: focus-visible box-shadow transition完全化追加8要素（#hamburger/btn-account-add/nav-item/btn-dark-toggle/ios-guide-close/qa-toggle-btn/btn-notif-bell/md-nav-btn）＋ios-guide-close focus-visible追加
 const ASSETS = [
   './index.html',
   './css/style.css',
