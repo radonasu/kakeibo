@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.20'; // v19.20: hover/focusトランジション速度統一2箇所 — chart-clickable-hint opacity(dur-base→dur-fast) / #tx-amount.calc-mode border-color・background(dur-base→dur-fast)＋box-shadow追加
+const CACHE_NAME = 'kakeibo-v19.21'; // v19.21: カードhoverトランジション速度統一5要素 — .wl-card/.ch-card/.asset-card box-shadow/transform(dur-base→dur-fast) / .ev-card box-shadow/transform(dur-base→dur-fast,opacity=dur-base維持) / .cat-card box-shadow(dur-faster→dur-fast+ease-plain追加)
 const ASSETS = [
   './index.html',
   './css/style.css',
