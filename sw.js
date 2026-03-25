@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.12'; // v19.12: opacity/filter transition完全化 — :activeでopacity変化するが未定義だった9要素（btn-sidebar-logout/btn-link/auth-offline-mode/modal-details summary/goal-achieved-summary/sub-inactive-section summary/wl-archive-summary/ch-archive-summary/debt-archive-summary）にopacity var(--dur-fast)追加 + v19.11で漏れたbtn-receipt/btn-receipt-fileのfilter var(--dur-press)追加
+const CACHE_NAME = 'kakeibo-v19.13'; // v19.13: border-color transition完全化 — ①.btn基底transitionにborder-color var(--dur-fast)追加（.btn-ghost:hover・.btn-danger:hoverのborder-color変化が瞬時スナップしていた問題を修正）②.tx-tag-filter-all/.tx-tag-filter-chipのtransitionにborder-color var(--dur-fast)追加（.active付与時のborder-color変化が瞬時スナップしていた問題を修正）
 const ASSETS = [
   './index.html',
   './css/style.css',
