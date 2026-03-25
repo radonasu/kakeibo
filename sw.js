@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.6'; // v19.6: バグ修正2件+デザイン改善（cal-cell.heat-4/tx-sort-badge dark hover 無効CSS修正・pm-sum-cardホバー追加）
+const CACHE_NAME = 'kakeibo-v19.7'; // v19.7: マイクロインタラクション＋アクセシビリティ改善（month-nav-btn box-shadow transition追加・btn-dark-toggle/btn-account-add focus-visible追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

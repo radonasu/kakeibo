@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.5)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.7)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -891,6 +891,7 @@ select:focus:not(:focus-visible) {
 }
 .btn-account-add:hover { background: var(--on-dark-strong); }
 .btn-account-add:active { filter: brightness(var(--brightness-press-strong)); }
+.btn-account-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 #sidebar-nav {
   flex: 1;
@@ -2521,7 +2522,7 @@ mark.tx-hl {
   line-height: var(--lh-none);
   cursor: pointer;
   padding: 0;
-  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press);
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
   flex-shrink: 0;
 }
 .month-nav-btn:hover:not(:disabled) {
@@ -3950,6 +3951,7 @@ body {
 .btn-dark-toggle svg { display: block; }
 .btn-dark-toggle:hover  { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
 .btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); }
+.btn-dark-toggle:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ============================================================
    ダークモード — CSS変数オーバーライド
