@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.11'; // v19.11: filter transition完全化 — :active filter:brightness()を持つ全31要素のtransitionにfilter var(--dur-press)を追加（btn/nav-item/hamburger/tx-th-sort/type-btn/cal-cell/cal-ev-item/insight-item/sb-row/dd-tx-row/rc-item等）、リリース時のbrightness復帰をスムーズ化
+const CACHE_NAME = 'kakeibo-v19.12'; // v19.12: opacity/filter transition完全化 — :activeでopacity変化するが未定義だった9要素（btn-sidebar-logout/btn-link/auth-offline-mode/modal-details summary/goal-achieved-summary/sub-inactive-section summary/wl-archive-summary/ch-archive-summary/debt-archive-summary）にopacity var(--dur-fast)追加 + v19.11で漏れたbtn-receipt/btn-receipt-fileのfilter var(--dur-press)追加
 const ASSETS = [
   './index.html',
   './css/style.css',
