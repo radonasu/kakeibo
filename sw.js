@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.17'; // v19.17: ダークモードフォーカスリング視認性改善＋color-mix white変数化 — ①cat-budget-input:focusダークモードでbox-shadowをmix-xs(12%)→mix-soft(22%)に強化②qa-cat-select/qa-memo-input:focusダークモードオーバーライド追加（mix-base 18%→mix-soft 22%）③color-mix()第2引数のhardcoded white(10箇所)→var(--white)変数化（goal-ring×2/hs-bar/fc-bar/dow-row/hm-lv1+lv2/md-cat/cat-bar/empty-month-btn）
+const CACHE_NAME = 'kakeibo-v19.18'; // v19.18: ホバーtransition速度統一 — nav-icon/type-btn/auth-tab/btn-share/ci-closeの5要素でdur-base(200ms)→dur-fast(150ms)に統一し、ボタン・アイコン系ホバーのレスポンシブ感を向上
 const ASSETS = [
   './index.html',
   './css/style.css',
