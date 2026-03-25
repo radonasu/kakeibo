@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.10'; // v19.10: focus-visible box-shadow transition完全化追加8要素（#hamburger/btn-account-add/nav-item/btn-dark-toggle/ios-guide-close/qa-toggle-btn/btn-notif-bell/md-nav-btn）＋ios-guide-close focus-visible追加
+const CACHE_NAME = 'kakeibo-v19.11'; // v19.11: filter transition完全化 — :active filter:brightness()を持つ全31要素のtransitionにfilter var(--dur-press)を追加（btn/nav-item/hamburger/tx-th-sort/type-btn/cal-cell/cal-ev-item/insight-item/sb-row/dd-tx-row/rc-item等）、リリース時のbrightness復帰をスムーズ化
 const ASSETS = [
   './index.html',
   './css/style.css',

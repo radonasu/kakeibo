@@ -472,3 +472,5 @@
 ### デザイン/UI系
 - タイポグラフィ統一：フォントサイズ階層・行間・余白のリズム
 - ダッシュボードの空状態デザイン：初回ユーザー向けオンボーディング表示（✅ 既実装）
+
+| 308 | v19.11 | マイクロインタラクション | filter transition 完全化 — `:active`で`filter: brightness()`を使用しているが`transition`に`filter`が未定義のため、ボタン/要素から指を離した瞬間にbrightness復帰が瞬時スナップしていた問題を全31要素で一括修正。①`.btn`（btn-primary/btn-danger/btn-success/adv-filter-clear等全btn派生に波及）②`.btn-account-add`③`.nav-item`④`#hamburger`⑤`.tx-th-sort`⑥`.adv-filter-toggle`⑦`.type-btn`⑧`.btn-inline-add`⑨`.multi-receipt-list .btn-mr-all`⑩`.btn-mr-fill`（transition新規追加）⑪`.btn-mr-add`（transition新規追加）⑫`.btn-dark-toggle`⑬`.empty-month-btn`（filter＋transform両方追加）⑭`.btn-share`⑮`.cal-cell`⑯`.cal-ev-nav`⑰`.cal-ev-item`⑱`.insight-item`⑲`.sub-emoji-btn`⑳`.pt-emoji-btn`㉑`.memo-cat-hint-btn`㉒`.dw-item`㉓`.ch-emoji-btn`㉔`.qa-toggle-btn`㉕`.sb-row`㉖`.ev-emoji-chip`㉗`.sf-save-btn`㉘`.ci-close`㉙`.notif-mark-read`㉚`.rc-item`㉛`.dd-tx-row`に`filter var(--dur-press)`を追加。これによりタップ解放時のbrightness復帰がすべてのインタラクティブ要素で0.1sのスムーズなフェードバックとなり、タップフィードバックのポリッシュが完成 |
