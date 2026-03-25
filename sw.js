@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.23'; // v19.23: ボトムナビアイコン・FABのhover/active transition速度統一 — .bottom-nav-icon(background/color/transform)とbottom-nav-icon svg(transform)とglobal-fab(transform/box-shadow)のtransitionをdur-base(200ms)→dur-fast(150ms)に統一
+const CACHE_NAME = 'kakeibo-v19.24'; // v19.24: .dow-stat-card と .sim-preset(2nd block) のhover transition dur-base(200ms)→dur-fast(150ms)修正
 const ASSETS = [
   './index.html',
   './css/style.css',
