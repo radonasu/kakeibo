@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.3'; // v19.3: ダークモード特殊シャドウ強化（shadow-btn-base/card-hover/row-hover/summary-hover/hover-md/hover-sm/up-sm 7変数ダーク上書き）＋チャートツールチップfooterスタイル追加
+const CACHE_NAME = 'kakeibo-v19.4'; // v19.4: ダークモードシャドウ完全化（shadow-sticky/up-md/cta/cta-hover/badge/toggle/row-selected/auth 8変数ダーク上書き追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
