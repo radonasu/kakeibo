@@ -1163,7 +1163,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid), box-shadow var(--dur-fast);
   margin-left: var(--sp-2);
 }
 .card-collapse-btn:hover {
@@ -3496,6 +3496,7 @@ mark.tx-hl {
   background: none;
   border: none;
   text-decoration: underline;
+  transition: color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .auth-offline-mode:hover  { color: var(--text-muted); }
 .auth-offline-mode:active { opacity: var(--opacity-mild); }
@@ -3569,7 +3570,7 @@ body {
 .install-banner-close {
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-2xl); padding: var(--sp-1) var(--sp-2); cursor: pointer;
-  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
   border-radius: var(--radius-btn-sm);
 }
 .install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
@@ -3696,7 +3697,7 @@ body {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast), box-shadow var(--dur-fast);
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
@@ -3913,7 +3914,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .modal-details summary:hover  { color: var(--text); }
 .modal-details summary:active { opacity: var(--opacity-mild); }
@@ -5551,7 +5552,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-circle);
   border: var(--bw-swatch) solid transparent;
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
   padding: 0;
 }
 .goal-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
@@ -7032,7 +7033,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border: var(--bw-thick) solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .pt-color-btn:hover  { transform: scale(var(--scale-hover)); }
 .pt-color-btn:active { transform: scale(var(--scale-rest)); }
@@ -8444,7 +8445,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-circle);
   cursor: pointer;
   outline: none;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .ch-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
 .ch-color-btn:active { transform: scale(var(--scale-rest)); }
@@ -10865,7 +10866,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-5xs);
   line-height: var(--lh-none);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
 }
 .sf-chip-del:hover {
   background: var(--danger-bg);
@@ -11542,7 +11543,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   font-size: var(--fs-base);
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--dur-base);
+  transition: background var(--dur-base), box-shadow var(--dur-base);
 }
 .ci-close:hover { background: var(--on-dark-hover); }
 .ci-close:active { filter: brightness(var(--brightness-press-deep)); }
@@ -11915,7 +11916,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-0-75) var(--sp-2-5);
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .notif-mark-read:hover {
   background: var(--primary-light);
@@ -12545,7 +12546,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-sm);
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); }
 .rc-close:active { transform: scale(var(--scale-icon-active)); }
@@ -12570,7 +12571,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border: var(--bw-base) solid var(--border);
   background: var(--surface-1);
   cursor: pointer;
-  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast);
+  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
   animation: rc-item-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--rc-i, 0) * var(--dur-stagger));
 }
