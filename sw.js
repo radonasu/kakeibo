@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.19'; // v19.19: フォーム入力transition速度統一 — nt-textarea/cat-budget-inputのborder-color/box-shadow transitionをdur-base(200ms)→dur-fast(150ms)に統一し、form-group入力系と一致
+const CACHE_NAME = 'kakeibo-v19.20'; // v19.20: hover/focusトランジション速度統一2箇所 — chart-clickable-hint opacity(dur-base→dur-fast) / #tx-amount.calc-mode border-color・background(dur-base→dur-fast)＋box-shadow追加
 const ASSETS = [
   './index.html',
   './css/style.css',
