@@ -4447,7 +4447,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast), filter var(--dur-press), transform var(--dur-press) var(--ease-bounce);
 }
-.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), white); }
+.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); }
 .empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 
 /* ダークモード */
@@ -5363,7 +5363,7 @@ body {
   background: linear-gradient(
     var(--grad-horizontal),
     var(--goal-accent, var(--primary)) 0%,
-    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-rich), white) 100%
+    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-rich), var(--white)) 100%
   );
 }
 
@@ -5653,7 +5653,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: linear-gradient(
     var(--grad-horizontal),
     var(--goal-accent, var(--primary)) 0%,
-    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), white) 100%
+    color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), var(--white)) 100%
   );
 }
 .goal-dash-pct {
@@ -7242,7 +7242,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .hs-bar-fill {
   height: 100%;
-  background: linear-gradient(var(--grad-horizontal), var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-deep), white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: hs-fill-in var(--dur-fill) var(--ease-std) both;
@@ -7827,7 +7827,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .fc-progress-fill {
   height: 100%;
   border-radius: var(--radius-badge);
-  background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   transition: width var(--dur-fill) var(--ease-enter);
 }
 /* TODAYマーカー */
@@ -8625,7 +8625,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dow-mini-bar-fill {
   height: 100%;
   border-radius: var(--radius-2xs);
-  background: linear-gradient(var(--grad-horizontal), var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-deep), white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
@@ -9422,6 +9422,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-memo-input::placeholder { color: var(--text-muted); }
 .qa-memo-input:hover { border-color: var(--border-strong); }
 .qa-memo-input:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent); }
+[data-theme="dark"] .qa-cat-select:focus { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent); }
+[data-theme="dark"] .qa-memo-input:focus  { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent); }
 /* 追加ボタン タイプカラー連動 */
 .qa-card .qa-submit-btn {
   flex-shrink: 0;
@@ -9770,8 +9772,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* 支出量ヒートマップ色（--expense連動, v10.6） */
 .hm-lv0 { background: var(--border); }
-.hm-lv1 { background: color-mix(in srgb, var(--expense) var(--mix-soft), white); }
-.hm-lv2 { background: color-mix(in srgb, var(--expense) var(--mix-5xl), white); }
+.hm-lv1 { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--white)); }
+.hm-lv2 { background: color-mix(in srgb, var(--expense) var(--mix-5xl), var(--white)); }
 .hm-lv3 { background: var(--expense); }
 .hm-lv4 { background: color-mix(in srgb, var(--expense) var(--mix-label), black); }
 
@@ -13491,7 +13493,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 .md-cat-bar {
   height: 100%;
-  background: linear-gradient(var(--grad-horizontal), var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-deep), white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
@@ -14167,7 +14169,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-budget-bar-fill {
   height: 100%;
   width: var(--cat-bar-pct, 0%);
-  background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), white) 100%);
+  background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
@@ -14196,6 +14198,9 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-2);
   border-color: var(--border);
   color: var(--text);
+}
+[data-theme="dark"] .cat-budget-input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-soft), transparent);
 }
 [data-theme="dark"] .cat-budget-bar-fill { background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), transparent) 100%); }
 /* モバイル */

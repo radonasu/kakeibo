@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.16'; // v19.16: filterトランジションとフォーカスリング修正 — ①.qa-card .qa-submit-btnのfilter transitionをdur-fast→dur-press（:active時のbrightness復帰が瞬時スナップしていたバグ修正）②.opp-challenge-btnのfilter transitionをdur-fast→dur-press（同様のバグ修正）③.adv-filter-input:focusのfocus-ringをハードコードcolor-mix→var(--focus-ring)（ダークモードで本来22%のring幅が14%になっていたバグ修正）
+const CACHE_NAME = 'kakeibo-v19.17'; // v19.17: ダークモードフォーカスリング視認性改善＋color-mix white変数化 — ①cat-budget-input:focusダークモードでbox-shadowをmix-xs(12%)→mix-soft(22%)に強化②qa-cat-select/qa-memo-input:focusダークモードオーバーライド追加（mix-base 18%→mix-soft 22%）③color-mix()第2引数のhardcoded white(10箇所)→var(--white)変数化（goal-ring×2/hs-bar/fc-bar/dow-row/hm-lv1+lv2/md-cat/cat-bar/empty-month-btn）
 const ASSETS = [
   './index.html',
   './css/style.css',
