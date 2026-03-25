@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.5'; // v19.5: Chart.js 日本語フォントスタック統一（CHART_FONT_FAMILY定数・defaults.font.family設定・canvas ctx.font 6箇所修正）
+const CACHE_NAME = 'kakeibo-v19.6'; // v19.6: バグ修正2件+デザイン改善（cal-cell.heat-4/tx-sort-badge dark hover 無効CSS修正・pm-sum-cardホバー追加）
 const ASSETS = [
   './index.html',
   './css/style.css',

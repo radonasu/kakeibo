@@ -1914,7 +1914,7 @@ select:focus:not(:focus-visible) {
   border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
 [data-theme="dark"] .tx-sort-badge:hover {
-  background: color-mix(in srgb, var(--primary) 2var(--mix-nano), transparent);
+  background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
 
 /* 一括操作バー (v5.56 グラスモーフィズム) */
@@ -5836,7 +5836,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) var(--mix-faint), var(--surface)); }
 .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) var(--mix-base), var(--surface)); }
 .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-lg), var(--surface)); }
-.cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) 4var(--mix-nano), var(--surface)); }
+.cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-2xl), var(--surface)); }
 
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
 .cal-cell:active:not(.cal-empty) { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); }
@@ -13956,7 +13956,14 @@ canvas.chart-clickable { cursor: pointer; }
     color-mix(in srgb, var(--pm-sum-color) var(--mix-nano), var(--surface)));
   border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) var(--mix-soft), var(--border));
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast);
 }
+.pm-sum-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(var(--translate-lift-xs));
+  border-color: color-mix(in srgb, var(--pm-sum-color) var(--mix-mid), var(--border));
+}
+.pm-sum-card:active { transform: translateY(0); box-shadow: none; }
 .pm-sum-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
 .pm-sum-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 .pm-sum-card::before {
