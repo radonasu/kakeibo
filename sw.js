@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.7'; // v19.7: マイクロインタラクション＋アクセシビリティ改善（month-nav-btn box-shadow transition追加・btn-dark-toggle/btn-account-add focus-visible追加）
+const CACHE_NAME = 'kakeibo-v19.8'; // v19.8: focus-visible box-shadow transition完全化（18要素）＋pt-emoji-btn hover/active追加
 const ASSETS = [
   './index.html',
   './css/style.css',
