@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.39'; // v19.39: サイドバーナビアクティブアイコンアニメーション + padding transition追加
+const CACHE_NAME = 'kakeibo-v19.40'; // v19.40: セクションタブ アクティブアイコン バウンスアニメーション追加（ボトムナビ・サイドバーと統一）
 const ASSETS = [
   './index.html',
   './css/style.css',

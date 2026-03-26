@@ -4197,6 +4197,12 @@ body {
 .nav-item.active .nav-icon {
   animation: nav-sidebar-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
+/* ── セクションタブ アクティブアイコン バウンス (v19.40) ── */
+@keyframes section-tab-icon-pop {
+  0%   { transform: scale(var(--scale-rest)); }
+  45%  { transform: scale(var(--scale-anim-badge-peak)); }
+  100% { transform: scale(var(--scale-hover-lg)); }
+}
 
 /* ── 予算アラート通知UI ── */
 .notif-row {
@@ -5272,6 +5278,7 @@ body {
 }
 .section-tab.is-active .tab-icon {
   transform: scale(var(--scale-hover-lg));
+  animation: section-tab-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
 [data-theme="dark"] .section-tab.is-active {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
