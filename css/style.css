@@ -4074,7 +4074,7 @@ body {
   box-shadow: var(--shadow-summary-hover);
   filter: brightness(var(--brightness-hover-sm));
 }
-.summary-card:active { transform: translateY(0); box-shadow: none; filter: none; }
+.summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* ── モーダルアニメーション ── */
 .modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-plain); }
@@ -4373,7 +4373,7 @@ body {
   flex-direction: column;
   gap: var(--sp-2);
   cursor: pointer;
-  transition: box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), border-color var(--dur-faster) var(--ease-plain);
+  transition: box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), border-color var(--dur-faster) var(--ease-plain), filter var(--dur-press);
   box-shadow: var(--shadow-sm);
 }
 .step-card:hover {
@@ -4381,7 +4381,7 @@ body {
   box-shadow: var(--shadow-md);
   border-color: var(--primary);
 }
-.step-card:active { transform: scale(var(--scale-card-active)); }
+.step-card:active { transform: scale(var(--scale-card-active)); filter: brightness(var(--brightness-press-soft)); }
 .step-num {
   width: var(--size-icon-xs); height: var(--size-icon-xs);
   border-radius: var(--radius-circle);
@@ -11991,7 +11991,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: left;
   cursor: pointer;
   position: relative;
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   animation: notif-item-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ni, 0) * var(--dur-stagger-sub));
 }
@@ -12003,7 +12003,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   transform: translateX(var(--translate-slide));
 }
-.notif-item:active { transform: translateX(0); }
+.notif-item:active { transform: translateX(0); filter: brightness(var(--brightness-press-soft)); }
 .notif-item:not(.notif-read):hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
 }
@@ -13126,13 +13126,13 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   animation: yi-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--yi-si, 0) * var(--dur-stagger-lg));
-  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
+  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), filter var(--dur-press);
 }
 .yi-card:hover {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: var(--shadow-card-hover);
 }
-.yi-card:active { transform: translateY(0); box-shadow: none; }
+.yi-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .yi-card::before {
   content: '';
   position: absolute;
@@ -13426,7 +13426,7 @@ canvas.chart-clickable { cursor: pointer; }
   box-shadow: var(--shadow-hover-sm);
   filter: brightness(var(--brightness-hover-sm));
 }
-.dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: none; }
+.dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .dash-sum-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* スクロール可能な本文エリア */
@@ -13974,14 +13974,14 @@ canvas.chart-clickable { cursor: pointer; }
     color-mix(in srgb, var(--pm-sum-color) var(--mix-nano), var(--surface)));
   border: var(--bw-thin) solid color-mix(in srgb, var(--pm-sum-color) var(--mix-soft), var(--border));
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast), filter var(--dur-press);
 }
 .pm-sum-card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--pm-sum-color) var(--mix-mid), var(--border));
 }
-.pm-sum-card:active { transform: translateY(0); box-shadow: none; }
+.pm-sum-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pm-sum-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
 .pm-sum-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 .pm-sum-card::before {
@@ -14054,14 +14054,14 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   animation: cat-cg-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs));
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast), filter var(--dur-press);
 }
 .cat-card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(var(--translate-lift-xs));
   border-color: var(--border-strong);
 }
-.cat-card:active { transform: translateY(0); box-shadow: none; }
+.cat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .cat-card-accent {
   position: absolute;
   top: 0; left: 0; right: 0;

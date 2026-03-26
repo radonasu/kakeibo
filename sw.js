@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.28'; // v19.28: カード系アクティブ押下フィルター追加（9カード+レポート行）
+const CACHE_NAME = 'kakeibo-v19.29'; // v19.29: active filter press feedback補完（summary-card/dash-sum-clickable/cat-card/yi-card/pm-sum-card/step-card/notif-item 7箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
