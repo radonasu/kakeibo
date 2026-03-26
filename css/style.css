@@ -2537,6 +2537,7 @@ mark.tx-hl {
   color: var(--primary);
   background: var(--primary-light);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
+  transform: scale(var(--scale-hover-chip));
 }
 .month-nav-btn:active:not(:disabled) {
   transform: scale(var(--scale-press-nav));
@@ -3717,7 +3718,7 @@ body {
 }
 .bottom-nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .bottom-nav-item:not(.active):hover { color: var(--text); }
-.bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); }
+.bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); transform: scale(var(--scale-hover-chip)); }
 .bottom-nav-item:not(.active):active { color: var(--primary); }
 .bottom-nav-item:not(.active):active .bottom-nav-icon { background: var(--border); transform: scale(var(--scale-icon-active)); }
 
@@ -12827,11 +12828,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .btn-continue:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), var(--surface-2));
   border-color: color-mix(in srgb, var(--primary) var(--mix-5xl), transparent);
+  transform: translateY(var(--translate-lift-xs));
 }
 .btn-continue:active {
   background: var(--surface-2);
   border-color: color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-press-soft));
+  transform: translateY(0);
 }
 [data-theme="dark"] .btn-continue {
   background: color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2));
