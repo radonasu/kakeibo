@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.45)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.46)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -9368,6 +9368,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-color: var(--primary);
   color: var(--primary);
   transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .qa-type-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
@@ -11981,6 +11982,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); filter: brightness(var(--brightness-press-mid)); }
 .notif-mark-read:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -12642,7 +12644,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); }
+.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-sm); }
 .rc-item:active { transform: translateY(0); border-color: var(--border); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .rc-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
