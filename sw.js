@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.40'; // v19.40: セクションタブ アクティブアイコン バウンスアニメーション追加（ボトムナビ・サイドバーと統一）
+const CACHE_NAME = 'kakeibo-v19.41'; // v19.41: close/collapseボタン ホバースケール統一（card-collapse-btn・ci-close・cal-panel-close）
 const ASSETS = [
   './index.html',
   './css/style.css',

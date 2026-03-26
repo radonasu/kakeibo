@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.39)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.41)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1165,12 +1165,13 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   margin-left: var(--sp-2);
 }
 .card-collapse-btn:hover {
   background: var(--surface-hover);
   color: var(--text);
+  transform: scale(var(--scale-hover-chip));
 }
 .card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); }
 .card-collapse-btn:focus-visible {
@@ -5971,7 +5972,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.cal-panel-close:hover { background: var(--surface-hover); }
+.cal-panel-close:hover { background: var(--surface-hover); color: var(--text); transform: scale(var(--scale-hover)); }
 .cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -11595,10 +11596,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   font-size: var(--fs-base);
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press);
 }
-.ci-close:hover { background: var(--on-dark-hover); }
-.ci-close:active { filter: brightness(var(--brightness-press-deep)); }
+.ci-close:hover { background: var(--on-dark-hover); transform: scale(var(--scale-hover)); }
+.ci-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-deep)); }
 .ci-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ci-month-badge {
   display: inline-block;
