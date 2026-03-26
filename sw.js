@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.30'; // v19.30: filter press feedback補完 — cat-chip/adv-preset-chip/section-tab/month-nav-btn/btn-preset（5要素）
+const CACHE_NAME = 'kakeibo-v19.31'; // v19.31: filter press feedback補完 — ウィジェット行5要素+グラデーションカード2枚+budget-item+hm-cell（9要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
