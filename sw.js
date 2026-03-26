@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.37'; // v19.37: filter押下フィードバック補完 — summary/details系8種+ボタン系4種（計12要素）
+const CACHE_NAME = 'kakeibo-v19.38'; // v19.38: ボトムナビアクティブインジケーター入場アニメーション + アイコンtransition改善
 const ASSETS = [
   './index.html',
   './css/style.css',

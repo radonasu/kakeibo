@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.37)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.38)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3729,6 +3729,8 @@ body {
   height: var(--bw-thick);
   background: var(--primary);
   border-radius: 0 0 var(--radius-nano) var(--radius-nano);
+  transform-origin: center;
+  animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both;
 }
 
 .bottom-nav-icon {
@@ -3737,9 +3739,9 @@ body {
   margin-bottom: var(--sp-0-5);
   border-radius: var(--radius-btn);
   padding: var(--sp-0-5);
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast),
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce),
               width var(--dur-base) var(--ease-bounce), height var(--dur-base) var(--ease-bounce),
-              padding var(--dur-base), border-radius var(--dur-base);
+              padding var(--dur-base) var(--ease-bounce), border-radius var(--dur-base) var(--ease-bounce);
 }
 .bottom-nav-icon svg { display: block; }
 .bottom-nav-item.active .bottom-nav-icon {
@@ -4173,6 +4175,10 @@ body {
 [data-theme="dark"] .bottom-nav-item .ripple-wave { background: var(--on-dark-ripple); }
 
 /* ── ボトムナビ アクティブアイコン バウンス ── */
+@keyframes nav-ind-slide-in {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
 @keyframes nav-icon-pop {
   0%   { transform: scale(var(--scale-rest)); }
   45%  { transform: scale(var(--scale-color-hover)); }
