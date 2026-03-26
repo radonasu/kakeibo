@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.41)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.42)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2779,10 +2779,10 @@ mark.tx-hl {
   cursor: pointer;
   margin-left: var(--sp-2);
   vertical-align: middle;
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-inline-add:hover { background: var(--primary-light); }
-.btn-inline-add:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); filter: brightness(var(--brightness-press-mod)); }
+.btn-inline-add:hover { background: var(--primary-light); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.btn-inline-add:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-mod)); }
 
 .quick-cat-form {
   margin-top: var(--sp-2);
@@ -2824,15 +2824,17 @@ mark.tx-hl {
   font-weight: var(--fw-semi);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   white-space: nowrap;
 }
 .btn-preset:hover {
   background: var(--primary-light);
   border-color: var(--primary);
   color: var(--primary);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.btn-preset:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
+.btn-preset:active { transform: scale(var(--scale-press)) translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .btn-preset:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* アカウント管理 */
@@ -10941,12 +10943,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   gap: var(--sp-1);
   color: var(--primary);
   font-size: var(--fs-sm);
-  transition: background var(--dur-faster), filter var(--dur-press);
+  transition: background var(--dur-faster), transform var(--dur-faster) var(--ease-bounce), filter var(--dur-press);
 }
 .sf-save-btn:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
+  transform: translateY(var(--translate-lift-xs));
 }
-.sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
+.sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: translateY(0); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
   to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }

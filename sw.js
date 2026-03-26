@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.41'; // v19.41: close/collapseボタン ホバースケール統一（card-collapse-btn・ci-close・cal-panel-close）
+const CACHE_NAME = 'kakeibo-v19.42'; // v19.42: btn-preset・btn-inline-add・sf-save-btn ホバーリフト+shadow追加（transition ease-bounce統一）
 const ASSETS = [
   './index.html',
   './css/style.css',
