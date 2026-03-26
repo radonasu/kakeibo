@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.42'; // v19.42: btn-preset・btn-inline-add・sf-save-btn ホバーリフト+shadow追加（transition ease-bounce統一）
+const CACHE_NAME = 'kakeibo-v19.43'; // v19.43: rc-close・sf-chip-del・emoji-btn×3・tx-tag-filter-all ホバースケール補完
 const ASSETS = [
   './index.html',
   './css/style.css',
