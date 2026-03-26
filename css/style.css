@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.34)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.35)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4358,13 +4358,13 @@ body {
   border: none;
   cursor: pointer;
   box-shadow: var(--shadow-cta);
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .onboarding-cta:hover {
   transform: translateY(var(--translate-lift-sm));
   box-shadow: var(--shadow-cta-hover);
 }
-.onboarding-cta:active { transform: scale(var(--scale-btn-active)); }
+.onboarding-cta:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press)); }
 
 /* ── ステップカード ──────────────────────────────────────── */
 .onboarding-steps {
@@ -10190,9 +10190,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* プリセットボタン強化 */
 .sim-preset {
   position: relative; overflow: hidden;
-  transition: background-color var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-bounce), color var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-bounce), transform var(--dur-fast) var(--ease-bounce);
+  transition: background-color var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-bounce), color var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-bounce), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
-.sim-preset:active { transform: scale(var(--scale-icon-active)); }
+.sim-preset:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
@@ -13402,7 +13402,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: var(--surface-hover);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   flex-shrink: 0;
 }
 .md-nav-btn:hover:not(:disabled) {
@@ -13411,7 +13411,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-color: var(--primary);
   transform: scale(var(--scale-hover));
 }
-.md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); }
+.md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); }
 .md-nav-btn:focus-visible:not(:disabled) { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .md-nav-btn:disabled { cursor: default; }
 .md-month-info {
@@ -13428,7 +13428,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ダッシュボードサマリーカード クリック可能 (v8.9) */
 .dash-sum-clickable {
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .dash-sum-clickable:hover {
   transform: translateY(var(--translate-lift-md));
