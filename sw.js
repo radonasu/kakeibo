@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.38'; // v19.38: ボトムナビアクティブインジケーター入場アニメーション + アイコンtransition改善
+const CACHE_NAME = 'kakeibo-v19.39'; // v19.39: サイドバーナビアクティブアイコンアニメーション + padding transition追加
 const ASSETS = [
   './index.html',
   './css/style.css',

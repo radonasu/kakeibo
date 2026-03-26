@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.38)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.39)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -959,7 +959,8 @@ select:focus:not(:focus-visible) {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease-bounce),
+              padding var(--dur-base) var(--ease-bounce);
 }
 .nav-icon svg { display: block; }
 .nav-item.active .nav-icon {
@@ -4186,6 +4187,15 @@ body {
 }
 .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-icon-pop var(--dur-slow) var(--ease-bounce) both;
+}
+/* ── サイドバーナビ アクティブアイコン バウンス (v19.39) ── */
+@keyframes nav-sidebar-icon-pop {
+  0%   { transform: scale(var(--scale-rest)); }
+  45%  { transform: scale(var(--scale-hover)); }
+  100% { transform: scale(var(--scale-hover-md)); }
+}
+.nav-item.active .nav-icon {
+  animation: nav-sidebar-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
 
 /* ── 予算アラート通知UI ── */
