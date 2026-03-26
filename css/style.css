@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.42)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.44)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3168,8 +3168,8 @@ mark.tx-hl {
   cursor: pointer;
   transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(var(--translate-lift-xs)); }
-.btn-tpl:active { transform: translateY(0); opacity: 1; filter: brightness(var(--brightness-press-soft)); }
+.btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 8px color-mix(in srgb, currentColor var(--mix-sm), transparent); }
+.btn-tpl:active { transform: translateY(0); opacity: 1; box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .btn-tpl:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── クラウド同期 ─────────────────────────────────────── */
@@ -9481,10 +9481,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-btn);
   background: var(--qa-accent);
   border-color: var(--qa-accent);
-  transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-press) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-mid) var(--ease-plain), border-color var(--dur-mid) var(--ease-plain), filter var(--dur-press) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
 }
-.qa-card .qa-submit-btn:hover { filter: brightness(var(--brightness-hover)); transform: translateY(var(--translate-lift-xs)); }
-.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
+.qa-card .qa-submit-btn:hover { filter: brightness(var(--brightness-hover)); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--qa-accent) var(--mix-xl), transparent); }
+.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(var(--scale-rest)); }
@@ -12145,6 +12145,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-none);
   margin-bottom: var(--sp-2);
   filter: drop-shadow(0 2px 8px var(--black-08));
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite;
+  animation-delay: var(--dur-delay-md);
 }
 .notif-empty-sub {
   font-size: var(--fs-xs);
