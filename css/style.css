@@ -4493,7 +4493,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast), filter var(--dur-press), transform var(--dur-press) var(--ease-bounce);
 }
-.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); }
+.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: scale(var(--scale-hover)); }
 .empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 
 /* ダークモード */
@@ -5718,7 +5718,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* btn-success */
 .btn-success { background: var(--success); color: var(--white); border: none; }
-.btn-success:hover  { background: var(--income-deep); }
+.btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent); }
 .btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: none; }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
@@ -12387,7 +12387,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.amt-hist-chip:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
+.amt-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes amt-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
@@ -12460,7 +12460,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.memo-hist-chip:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
+.memo-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes memo-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
