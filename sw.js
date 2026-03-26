@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.24'; // v19.24: .dow-stat-card と .sim-preset(2nd block) のhover transition dur-base(200ms)→dur-fast(150ms)修正
+const CACHE_NAME = 'kakeibo-v19.25'; // v19.25: 3箇所transition/focusリングバグ修正
 const ASSETS = [
   './index.html',
   './css/style.css',

@@ -874,7 +874,7 @@ select:focus:not(:focus-visible) {
   min-width: 0;
   transition: background var(--dur-fast), border-color var(--dur-fast);
 }
-.account-select:focus { outline: none; border-color: var(--primary); }
+.account-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
 .account-select:hover { background: var(--on-dark-base); }
 
@@ -5235,7 +5235,7 @@ body {
 }
 .section-tab .tab-icon {
   font-size: var(--fs-sm);
-  transition: transform var(--dur-base) var(--ease-bounce);
+  transition: transform var(--dur-fast) var(--ease-bounce);
 }
 .section-tab.is-active .tab-icon {
   transform: scale(var(--scale-hover-lg));
@@ -9196,7 +9196,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
-  transition: box-shadow var(--dur-base), border-top-color var(--dur-mid);
+  transition: box-shadow var(--dur-fast), border-top-color var(--dur-mid);
 }
 /* デコレーションサークル（右上） */
 .qa-card::before {
