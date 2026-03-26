@@ -23,10 +23,12 @@ function getThemeColors() {
 
 // 共通ツールチップ設定
 function commonTooltip(callbacks) {
+  const { isDark } = getThemeColors();
   return {
-    backgroundColor: 'rgba(15,23,42,0.92)',
+    // ダークモード: #0f172a背景ではツールチップが埋没するため中間色に切替 (v19.34)
+    backgroundColor: isDark ? 'rgba(51,65,85,0.97)' : 'rgba(15,23,42,0.92)',
     titleColor:      '#f8fafc',
-    bodyColor:       '#cbd5e1',
+    bodyColor:       isDark ? '#e2e8f0' : '#cbd5e1',
     footerColor:     '#94a3b8',
     borderColor:     getCSSVar('--primary') + '80',
     borderWidth:     1,

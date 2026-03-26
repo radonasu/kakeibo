@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.33)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.34)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4155,6 +4155,14 @@ body {
   to { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
 }
 [data-theme="dark"] .ripple-wave { background: var(--on-dark-ripple); }
+/* ライトモード用リップル — 白・淡色背景では白リップルが不可視のため可視色に切替 (v19.34) */
+.btn-ghost .ripple-wave,
+.btn-danger .ripple-wave  { background: var(--black-05); }
+.bottom-nav-item .ripple-wave { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* ダークモード復元（上記ルールの詳細度が .ripple-wave dark override より高いため明示的に上書き） */
+[data-theme="dark"] .btn-ghost .ripple-wave,
+[data-theme="dark"] .btn-danger .ripple-wave,
+[data-theme="dark"] .bottom-nav-item .ripple-wave { background: var(--on-dark-ripple); }
 
 /* ── ボトムナビ アクティブアイコン バウンス ── */
 @keyframes nav-icon-pop {
