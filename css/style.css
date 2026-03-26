@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.32)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.33)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1164,14 +1164,14 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-mid), box-shadow var(--dur-fast), filter var(--dur-press);
   margin-left: var(--sp-2);
 }
 .card-collapse-btn:hover {
   background: var(--surface-hover);
   color: var(--text);
 }
-.card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); }
+.card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); }
 .card-collapse-btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
@@ -1699,7 +1699,7 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
 }
 .tx-table tbody tr {
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .tx-table tbody tr:hover {
   background: var(--surface-2);
@@ -1711,7 +1711,7 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-table tbody tr:hover {
   box-shadow: var(--shadow-row-selected);
 }
-.tx-table tbody tr:active { transform: translateY(0); box-shadow: none; }
+.tx-table tbody tr:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
   border-top: var(--bw-select) solid var(--border);
@@ -1887,7 +1887,7 @@ select:focus:not(:focus-visible) {
   background: var(--primary-light);
   border: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
   cursor: pointer;
-  transition: background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
@@ -1898,7 +1898,7 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-md));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
-.tx-sort-badge:active { transform: scale(var(--scale-rest)); box-shadow: none; }
+.tx-sort-badge:active { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .tx-sort-badge svg {
   width: var(--size-sort-badge);
   height: var(--size-sort-badge);
@@ -2122,14 +2122,14 @@ select:focus:not(:focus-visible) {
   border: var(--bw-thin) solid color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
   white-space: nowrap;
   line-height: var(--lh-loose);
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   animation: tag-chip-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-tag-chip:hover {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent);
   transform: scale(var(--scale-hover-chip));
 }
-.tx-tag-chip:active { transform: scale(var(--scale-rest)); }
+.tx-tag-chip:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .tx-tag-label-hint {
   font-size: var(--fs-xs);
   font-weight: var(--fw-normal);
@@ -2177,7 +2177,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   cursor: pointer;
   border: var(--bw-thin) solid transparent;
-  transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   flex-shrink: 0;
   user-select: none;
   line-height: var(--lh-loose);
@@ -2211,8 +2211,8 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
   transform: scale(var(--scale-hover-sm));
 }
-.tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); }
-.tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); }
+.tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); }
+.tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); }
 .tx-tag-filter-chip:focus-visible,
 .tx-tag-filter-all:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 [data-theme="dark"] .tx-tag-chip {
@@ -3579,11 +3579,11 @@ body {
 .install-banner-close {
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-2xl); padding: var(--sp-1) var(--sp-2); cursor: pointer;
-  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   border-radius: var(--radius-btn-sm);
 }
 .install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
-.install-banner-close:active { transform: scale(var(--scale-icon-active)); }
+.install-banner-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
@@ -3607,11 +3607,11 @@ body {
   position: absolute; top: var(--sp-2); right: var(--sp-3);
   background: none; border: none; color: var(--sidebar-text-muted);
   font-size: var(--fs-icon-lg); cursor: pointer;
-  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   border-radius: var(--radius-btn-sm);
 }
 .ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
-.ios-guide-close:active { transform: scale(var(--scale-icon-active)); }
+.ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
@@ -5930,10 +5930,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   align-items: center;
   justify-content: center;
   font-size: var(--fs-sm);
-  transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .cal-panel-close:hover { background: var(--surface-hover); }
-.cal-panel-close:active { transform: scale(var(--scale-icon-active)); }
+.cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-day-panel-body {
@@ -10741,14 +10741,14 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border: var(--bw-thin) solid var(--border);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .ev-add-month:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   transform: scale(var(--scale-icon-hover));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
-.ev-add-month:active { transform: scale(var(--scale-rest)); box-shadow: none; }
+.ev-add-month:active { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* --- ダッシュボードウィジェット（v5.91）--- */
 .ev-widget-card { padding: var(--sp-4); }
@@ -10850,7 +10850,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: border-color var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   animation: sf-chip-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--sfi, 0) * var(--dur-stagger-xs));
   white-space: nowrap;
@@ -10865,7 +10865,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
 }
-.sf-chip:active { transform: translateY(0); box-shadow: none; }
+.sf-chip:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sf-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sf-chip-del {
   display: inline-flex;
@@ -10879,13 +10879,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-5xs);
   line-height: var(--lh-none);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .sf-chip-del:hover {
   background: var(--danger-bg);
   color: var(--danger-text);
 }
-.sf-chip-del:active { transform: scale(var(--scale-icon-active)); }
+.sf-chip-del:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .sf-chip-del:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-actions {
   display: flex;
@@ -11739,13 +11739,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--white);
   border: none;
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .ci-ok-btn:hover {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
 }
-.ci-ok-btn:active { transform: translateY(0); box-shadow: none; }
+.ci-ok-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press)); }
 /* ダークモード */
 [data-theme="dark"] .ci-savings-bar-wrap { background: var(--on-dark-bg); }
 [data-theme="dark"] .ci-score-row       { background: var(--on-dark-dim); }
@@ -12215,7 +12215,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   line-height: var(--lh-base);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -12228,7 +12228,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.date-quick-btn:active { transform: scale(var(--scale-press-md)); box-shadow: none; }
+.date-quick-btn:active { transform: scale(var(--scale-press-md)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .date-quick-btn.active {
   border-color: var(--primary);
@@ -12320,7 +12320,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-2xs), var(--surface));
   color: var(--amt-chip-color, var(--primary));
   border: var(--bw-base) solid color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-lg), transparent);
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: amt-chip-in var(--dur-gentle) var(--ease-bounce) both;
   white-space: nowrap;
 }
@@ -12337,7 +12337,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.amt-hist-chip:active { transform: scale(var(--scale-press)); }
+.amt-hist-chip:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes amt-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
@@ -12390,7 +12390,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-xs);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: memo-chip-in var(--dur-gentle) var(--ease-bounce) both;
   max-width: var(--size-chip-hist);
   overflow: hidden;
@@ -12410,7 +12410,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.memo-hist-chip:active { transform: scale(var(--scale-press)); }
+.memo-hist-chip:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes memo-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
@@ -12559,10 +12559,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: var(--fs-sm);
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); }
-.rc-close:active { transform: scale(var(--scale-icon-active)); }
+.rc-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .rc-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-body {
