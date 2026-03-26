@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.25'; // v19.25: 3箇所transition/focusリングバグ修正
+const CACHE_NAME = 'kakeibo-v19.26'; // v19.26: transition speed統一4箇所（dur-quick→dur-fast）
 const ASSETS = [
   './index.html',
   './css/style.css',
