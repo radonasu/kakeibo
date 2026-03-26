@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.35)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.36)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3162,10 +3162,10 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(var(--translate-lift-xs)); }
-.btn-tpl:active { transform: translateY(0); opacity: 1; }
+.btn-tpl:active { transform: translateY(0); opacity: 1; filter: brightness(var(--brightness-press-soft)); }
 .btn-tpl:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── クラウド同期 ─────────────────────────────────────── */
@@ -4155,13 +4155,21 @@ body {
   to { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
 }
 [data-theme="dark"] .ripple-wave { background: var(--on-dark-ripple); }
-/* ライトモード用リップル — 白・淡色背景では白リップルが不可視のため可視色に切替 (v19.34) */
+/* ライトモード用リップル — 白・淡色背景では白リップルが不可視のため可視色に切替 (v19.34/v19.36) */
 .btn-ghost .ripple-wave,
-.btn-danger .ripple-wave  { background: var(--black-05); }
+.btn-danger .ripple-wave,
+.btn-share .ripple-wave,
+.btn-continue .ripple-wave,
+.btn-receipt-file .ripple-wave,
+.btn-mr-fill .ripple-wave  { background: var(--black-05); }
 .bottom-nav-item .ripple-wave { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 /* ダークモード復元（上記ルールの詳細度が .ripple-wave dark override より高いため明示的に上書き） */
 [data-theme="dark"] .btn-ghost .ripple-wave,
 [data-theme="dark"] .btn-danger .ripple-wave,
+[data-theme="dark"] .btn-share .ripple-wave,
+[data-theme="dark"] .btn-continue .ripple-wave,
+[data-theme="dark"] .btn-receipt-file .ripple-wave,
+[data-theme="dark"] .btn-mr-fill .ripple-wave,
 [data-theme="dark"] .bottom-nav-item .ripple-wave { background: var(--on-dark-ripple); }
 
 /* ── ボトムナビ アクティブアイコン バウンス ── */
