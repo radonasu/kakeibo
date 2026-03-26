@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.30)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.32)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1291,16 +1291,16 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   opacity: var(--opacity-dim);
-  transition: opacity var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), color var(--dur-fast);
+  transition: opacity var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), color var(--dur-fast), filter var(--dur-press);
   box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); }
-.btn-icon:active { transform: scale(var(--scale-icon-active)); }
+.btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
 .edit-tx {
   color: var(--text-muted);
-  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), filter var(--dur-press);
 }
 .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--bg)) !important;
@@ -1309,7 +1309,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   opacity: 1;
 }
-.edit-tx:active { transform: scale(var(--scale-icon-active)); }
+.edit-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 [data-theme="dark"] .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
@@ -1318,7 +1318,7 @@ select:focus:not(:focus-visible) {
 /* ── 削除ボタン ホバー洗練 (v17.1) ─────────────────── */
 .delete-tx {
   color: var(--text-muted);
-  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), filter var(--dur-press);
 }
 .delete-tx:hover {
   background: var(--danger-bg) !important;
@@ -1327,7 +1327,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
   opacity: 1;
 }
-.delete-tx:active { transform: scale(var(--scale-icon-active)); }
+.delete-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 [data-theme="dark"] .delete-tx:hover {
   background: var(--danger-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent);
@@ -1336,7 +1336,7 @@ select:focus:not(:focus-visible) {
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
   color: var(--warning);
-  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain);
+  transition: opacity var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-plain), filter var(--dur-press);
 }
 .dup-tx:hover {
   background: var(--warning-bg) !important;
@@ -1344,7 +1344,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-mid), transparent);
   opacity: 1;
 }
-.dup-tx:active { transform: scale(var(--scale-icon-active)); }
+.dup-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 [data-theme="dark"] .dup-tx:hover {
   background: var(--warning-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent);
@@ -2687,10 +2687,10 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .modal-close:hover { background: var(--bg); color: var(--text); transform: scale(var(--scale-hover)); }
-.modal-close:active { transform: scale(var(--scale-icon-active)); }
+.modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .modal-body {
@@ -3841,7 +3841,7 @@ body {
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12);
   z-index: var(--z-fab);
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
@@ -3852,7 +3852,7 @@ body {
   transform: scale(var(--scale-icon-hover));
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent), 0 3px 8px var(--black-14);
 }
-#global-fab:active { transform: scale(var(--scale-press-md)); }
+#global-fab:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press)); }
 #global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent); }
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
@@ -5534,14 +5534,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: var(--surface-2);
   font-size: var(--fs-2xl);
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
 }
 .goal-emoji-btn:hover  { border-color: var(--primary); transform: scale(var(--scale-hover)); }
-.goal-emoji-btn:active { transform: scale(var(--scale-press)); }
+.goal-emoji-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); }
 .goal-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-emoji-btn.selected {
   border-color: var(--primary);
@@ -5562,11 +5562,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-circle);
   border: var(--bw-swatch) solid transparent;
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   padding: 0;
 }
 .goal-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
-.goal-color-btn:active { transform: scale(var(--scale-rest)); }
+.goal-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .goal-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-color-btn.selected {
   border-color: var(--text);
@@ -6624,11 +6624,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-circle);
   border: var(--bw-swatch) solid transparent;
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   outline: none;
 }
 .sub-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
-.sub-color-btn:active { transform: scale(var(--scale-rest)); }
+.sub-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .sub-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-color-btn.selected {
   border-color: var(--surface);
@@ -7043,10 +7043,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border: var(--bw-thick) solid transparent;
   border-radius: var(--radius-circle);
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .pt-color-btn:hover  { transform: scale(var(--scale-hover)); }
-.pt-color-btn:active { transform: scale(var(--scale-rest)); }
+.pt-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .pt-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(var(--scale-selected-sm)); }
 
@@ -8455,10 +8455,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-circle);
   cursor: pointer;
   outline: none;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .ch-color-btn:hover  { transform: scale(var(--scale-color-hover)); }
-.ch-color-btn:active { transform: scale(var(--scale-rest)); }
+.ch-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .ch-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-color-btn.active { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
@@ -8688,7 +8688,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text-muted);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain);
+  transition: border-color var(--dur-faster) var(--ease-plain), background var(--dur-faster) var(--ease-plain), color var(--dur-faster) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   user-select: none;
   animation: ct-chip-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ct-i, 0) * var(--dur-stagger-sm));
@@ -8699,7 +8699,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform: translateY(var(--translate-lift-sm));
   box-shadow: 0 3px 8px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-mid), transparent);
 }
-.ct-chip:active { transform: translateY(0); box-shadow: none; border-color: var(--border); color: var(--text-muted); }
+.ct-chip:active { transform: translateY(0); box-shadow: none; border-color: var(--border); color: var(--text-muted); filter: brightness(var(--brightness-press-soft)); }
 .ct-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ct-chip.is-selected {
   border-color: var(--ct-color, var(--primary));
@@ -9320,14 +9320,14 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: background-color var(--dur-faster) var(--ease-std), border-color var(--dur-faster) var(--ease-std), color var(--dur-faster) var(--ease-std), box-shadow var(--dur-faster) var(--ease-std), transform var(--dur-faster) var(--ease-std);
+  transition: background-color var(--dur-faster) var(--ease-std), border-color var(--dur-faster) var(--ease-std), color var(--dur-faster) var(--ease-std), box-shadow var(--dur-faster) var(--ease-std), transform var(--dur-faster) var(--ease-std), filter var(--dur-press);
 }
 .qa-type-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
   transform: translateY(var(--translate-lift-xs));
 }
-.qa-type-btn:active { transform: translateY(0); box-shadow: none; }
+.qa-type-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
   background: var(--danger-bg);
   border-color: var(--danger-text);
