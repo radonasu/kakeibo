@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.36)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.37)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1026,10 +1026,10 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color var(--dur-fast), opacity var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), filter var(--dur-press);
 }
 .btn-sidebar-logout:hover { color: var(--expense); }
-.btn-sidebar-logout:active { opacity: var(--opacity-mild); }
+.btn-sidebar-logout:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 
 .sidebar-offline-badge {
   font-size: var(--fs-xs);
@@ -1274,10 +1274,10 @@ select:focus:not(:focus-visible) {
   padding: 0;
   box-shadow: none;
   text-underline-offset: var(--tuo-sm);
-  transition: color var(--dur-fast), text-underline-offset var(--dur-fast), opacity var(--dur-fast);
+  transition: color var(--dur-fast), text-underline-offset var(--dur-fast), opacity var(--dur-fast), filter var(--dur-press);
 }
 .btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: var(--tuo-md); }
-.btn-link:active { opacity: var(--opacity-faded); }
+.btn-link:active { opacity: var(--opacity-faded); filter: brightness(var(--brightness-press-soft)); }
 
 .btn-icon {
   background: none;
@@ -3299,11 +3299,11 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .stp-config-summary::-webkit-details-marker { display: none; }
 .stp-config-summary:hover  { color: var(--primary-hover); }
-.stp-config-summary:active { opacity: var(--opacity-mild); }
+.stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .stp-config-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-detail-body { margin-top: var(--sp-3-5); }
 .stp-help-details { margin-top: var(--sp-3-5); }
@@ -3316,7 +3316,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .stp-help-summary::-webkit-details-marker { display: none; }
 .stp-help-summary::before {
@@ -3327,7 +3327,7 @@ mark.tx-hl {
 }
 .stp-help-details[open] .stp-help-summary::before { transform: rotate(var(--rotate-chevron)); }
 .stp-help-summary:hover  { color: var(--text); }
-.stp-help-summary:active { opacity: var(--opacity-mild); }
+.stp-help-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .stp-help-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-help-list {
   font-size: var(--fs-xs);
@@ -3450,13 +3450,13 @@ mark.tx-hl {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
-  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .auth-tab:not(.active):hover {
   background: var(--surface-hover);
   color: var(--text);
 }
-.auth-tab:not(.active):active { background: var(--border); color: var(--text); }
+.auth-tab:not(.active):active { background: var(--border); color: var(--text); filter: brightness(var(--brightness-press-soft)); }
 .auth-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .auth-tab.active {
   background: var(--white);
@@ -3505,10 +3505,10 @@ mark.tx-hl {
   background: none;
   border: none;
   text-decoration: underline;
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .auth-offline-mode:hover  { color: var(--text-muted); }
-.auth-offline-mode:active { opacity: var(--opacity-mild); }
+.auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .auth-offline-mode:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
 
 /* ── PWA インストールガイド ─────────────────────────────── */
@@ -3924,10 +3924,10 @@ body {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .modal-details summary:hover  { color: var(--text); }
-.modal-details summary:active { opacity: var(--opacity-mild); }
+.modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .modal-details summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .modal-details summary::before {
   content: '▶';
@@ -5492,11 +5492,11 @@ body {
   align-items: center;
   gap: var(--sp-2);
   user-select: none;
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .goal-achieved-summary::-webkit-details-marker { display: none; }
 .goal-achieved-summary:hover  { color: var(--text); }
-.goal-achieved-summary:active { opacity: var(--opacity-mild); }
+.goal-achieved-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .goal-achieved-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .goal-achieved-summary::before {
   content: '▶';
@@ -6607,10 +6607,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   list-style: none;
   user-select: none;
   display: flex; align-items: center; gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .sub-inactive-section summary:hover  { color: var(--text); }
-.sub-inactive-section summary:active { opacity: var(--opacity-mild); }
+.sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .sub-inactive-section summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); }
 .sub-inactive-section[open] summary::before { transform: rotate(var(--rotate-chevron)); }
@@ -7582,10 +7582,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); }
-.wl-archive-summary:active { opacity: var(--opacity-mild); }
+.wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .wl-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary::-webkit-details-marker { display: none; }
 .wl-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
@@ -8417,10 +8417,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .ch-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); }
-.ch-archive-summary:active { opacity: var(--opacity-mild); }
+.ch-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .ch-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-archive-summary::-webkit-details-marker { display: none; }
 .ch-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }
@@ -10024,10 +10024,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text-muted); padding: var(--sp-2) 0;
   list-style: none; user-select: none;
   display: flex; align-items: center; gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .debt-archive-summary:hover { color: var(--text); }
-.debt-archive-summary:active { opacity: var(--opacity-mild); }
+.debt-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
 .debt-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .debt-archive-summary::-webkit-details-marker { display: none; }
 .debt-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }

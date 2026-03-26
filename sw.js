@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.36'; // v19.36: ライトモードリップル残4箇所修正（btn-share/continue/receipt-file/mr-fill）+ btn-tplフィルターactive追加
+const CACHE_NAME = 'kakeibo-v19.37'; // v19.37: filter押下フィードバック補完 — summary/details系8種+ボタン系4種（計12要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
