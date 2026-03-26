@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.26)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.28)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4672,13 +4672,13 @@ body {
 
 .asset-card {
   margin-bottom: var(--sp-3);
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .asset-card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(var(--translate-lift-xs));
 }
-.asset-card:active { transform: translateY(0); box-shadow: none; }
+.asset-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .asset-card-header {
   display: flex;
@@ -5265,10 +5265,10 @@ body {
 .goal-card {
   padding: var(--sp-6);
   border-left: var(--size-accent-bar) solid var(--goal-accent, var(--primary));
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.goal-card:active { transform: translateY(0); box-shadow: none; }
+.goal-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .goal-card-header {
   display: flex;
@@ -6453,12 +6453,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in var(--dur-medium) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
 .sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.sub-card:active { transform: translateY(0); box-shadow: none; }
+.sub-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sub-card-color-bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
@@ -6899,12 +6899,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + 5px) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.pt-card:active { transform: translateY(0); box-shadow: none; }
+.pt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
@@ -7425,10 +7425,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   gap: var(--sp-4);
   animation: wl-card-in var(--dur-medium) var(--ease-std) both;
   animation-delay: calc(var(--wl-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.wl-card:active { transform: translateY(0); box-shadow: none; }
+.wl-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: translateY(0); }
@@ -8260,13 +8260,13 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   overflow: hidden;
   animation: ch-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .ch-card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(var(--translate-lift-xs));
 }
-.ch-card:active { transform: translateY(0); box-shadow: none; }
+.ch-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ch-card.ch-card-done { opacity: var(--opacity-faded); }
 
 .ch-card-icon {
@@ -9877,10 +9877,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--dc-i, 0) * var(--dur-stagger-lg));
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.debt-card:active { transform: translateY(0); box-shadow: none; }
+.debt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -10591,10 +10591,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
-  transition: opacity var(--dur-base), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: opacity var(--dur-base), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.ev-card:active { transform: translateY(0); box-shadow: none; }
+.ev-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ev-card::before {
   content: '';
   position: absolute;
@@ -13262,10 +13262,10 @@ canvas.chart-clickable { cursor: pointer; }
   background: color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-nano), var(--surface));
   animation: opp-card-in var(--dur-pop) var(--ease-bounce) both;
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
-  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
-.opp-card:active { transform: translateY(0); box-shadow: none; }
+.opp-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .opp-card-left { flex-shrink: 0; }
 
@@ -13649,7 +13649,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */
 .rpt-month-row.is-clickable {
   cursor: pointer;
-  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .rpt-month-row.is-clickable:hover {
   background: var(--surface-hover);
@@ -13663,6 +13663,7 @@ canvas.chart-clickable { cursor: pointer; }
 .rpt-month-row.is-clickable:active {
   transform: translateY(0);
   box-shadow: none;
+  filter: brightness(var(--brightness-press-haze));
 }
 .rpt-month-row.is-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .rpt-month-label {

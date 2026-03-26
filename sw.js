@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.27'; // v19.27: transition speed統一2箇所（.ev-done-cb/.date-quick-btn transform dur-quick→dur-fast）
+const CACHE_NAME = 'kakeibo-v19.28'; // v19.28: カード系アクティブ押下フィルター追加（9カード+レポート行）
 const ASSETS = [
   './index.html',
   './css/style.css',
