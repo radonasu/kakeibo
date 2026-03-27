@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.51'; // v19.51: カラーピッカー・絵文字ピッカーボタンホバーbox-shadow追加（goal/sub/ch-color-btn・goal/sub/ch-emoji-btn・pt-color-btn 7箇所）
+const CACHE_NAME = 'kakeibo-v19.52'; // v19.52: btn-primary/onboarding-cta activeボックスシャドウリセット・pt-emoji-btnホバーbox-shadow追加（3要素4箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
