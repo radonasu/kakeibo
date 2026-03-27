@@ -1299,6 +1299,7 @@ select:focus:not(:focus-visible) {
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.btn-icon:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
 .edit-tx {
@@ -2834,6 +2835,7 @@ mark.tx-hl {
 }
 .btn-inline-add:hover { background: var(--primary-light); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .btn-inline-add:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-mod)); }
+.btn-inline-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .quick-cat-form {
   margin-top: var(--sp-2);
@@ -11917,10 +11919,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--on-dark-border);
   color: var(--white);
   transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 .btn-notif-bell:active {
   transform: scale(var(--scale-chip-active));
   filter: brightness(var(--brightness-press-soft));
+  box-shadow: none;
 }
 .btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 /* 未読あり状態 */
