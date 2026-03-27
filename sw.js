@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.62'; // v19.62: summary系8要素hoverbox-shadowリング統一（stp-config/stp-help/auth-offline-mode/modal-details/goal-achieved/sub-inactive/wl-archive/btn-dark-toggle）
+const CACHE_NAME = 'kakeibo-v19.63'; // v19.63: 8要素hoverbox-shadowリング統一（btn-account-add/nav-item/hamburger/tx-th-sort/type-btn/cal-ev-nav/ch-archive-summary/debt-archive-summary）
 const ASSETS = [
   './index.html',
   './css/style.css',
