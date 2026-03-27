@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.54)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.55)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1316,6 +1316,7 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
 }
+[data-theme="dark"] .edit-tx:active { box-shadow: none; }
 
 /* ── 削除ボタン ホバー洗練 (v17.1) ─────────────────── */
 .delete-tx {
@@ -1334,6 +1335,7 @@ select:focus:not(:focus-visible) {
   background: var(--danger-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent);
 }
+[data-theme="dark"] .delete-tx:active { box-shadow: none; }
 
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
@@ -1351,6 +1353,7 @@ select:focus:not(:focus-visible) {
   background: var(--warning-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent);
 }
+[data-theme="dark"] .dup-tx:active { box-shadow: none; }
 
 @keyframes dup-pop {
   0%   { transform: scale(var(--scale-rest)); }
@@ -1546,7 +1549,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-sm);
 }
 
-.cat-chip:active { transform: translateY(0); filter: brightness(var(--brightness-press-soft)); }
+.cat-chip:active { transform: translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .cat-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cat-chip.selected {
@@ -11991,7 +11994,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-color: var(--primary);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); filter: brightness(var(--brightness-press-mid)); }
+.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
 .notif-mark-read:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* パネルボディ */

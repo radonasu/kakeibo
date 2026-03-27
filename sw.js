@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.54'; // v19.54: edit/delete/dup-tx・global-fab・step-card・hm-cell active box-shadow:none追加（6箇所）
+const CACHE_NAME = 'kakeibo-v19.55'; // v19.55: cat-chip・notif-mark-read active box-shadow:none追加・dark mode edit/delete/dup-tx active box-shadow:none追加（5箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
