@@ -2195,8 +2195,9 @@ select:focus:not(:focus-visible) {
   color: var(--primary);
   border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
   font-weight: var(--fw-bold);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
-.tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); }
+.tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-2xs), transparent);
   color: var(--tc, var(--primary));
@@ -2212,6 +2213,7 @@ select:focus:not(:focus-visible) {
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
   transform: scale(var(--scale-hover-sm));
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
 .tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); }
 .tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); }
@@ -4534,15 +4536,16 @@ body {
   padding: var(--sp-1-75) var(--sp-3-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
-  transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   white-space: nowrap;
 }
 .btn-share:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
   border-color: var(--primary);
   transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
-.btn-share:active { transform: translateY(0); filter: brightness(var(--brightness-press-lt)); }
+.btn-share:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-lt)); }
 
 .modal-share { max-width: var(--size-modal-lg); width: calc(100% - 32px); }
 
@@ -10732,7 +10735,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: ev-cb-pop var(--dur-base) var(--ease-bounce);
 }
 .ev-done-cb:checked::after { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-rest)); }
-.ev-done-cb:hover:not(:checked) { border-color: var(--primary); }
+.ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); }
 @keyframes ev-cb-pop { 0% { transform: scale(var(--scale-anim-ev-cb)); } 100% { transform: scale(var(--scale-rest)); } }
 .ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
