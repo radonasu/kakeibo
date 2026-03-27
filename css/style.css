@@ -1950,6 +1950,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 .tx-sort-badge:active { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.tx-sort-badge:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .tx-sort-badge svg {
   width: var(--size-sort-badge);
   height: var(--size-sort-badge);
@@ -4454,6 +4455,7 @@ body {
   box-shadow: var(--shadow-cta-hover);
 }
 .onboarding-cta:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press)); box-shadow: none; }
+.onboarding-cta:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end), var(--shadow-cta); }
 
 /* ── ステップカード ──────────────────────────────────────── */
 .onboarding-steps {
@@ -10915,10 +10917,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color var(--dur-fast), background var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .ev-emoji-chip:hover  { background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
+.ev-emoji-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ev-emoji-chip.selected { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 
 /* --- アニメーション --- */

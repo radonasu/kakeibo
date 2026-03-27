@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.67'; // v19.67: adv-filter-clearホバーdanger-border維持+dangerリング追加・filter-searchホバーbox-shadow追加
+const CACHE_NAME = 'kakeibo-v19.68'; // v19.68: focus-visible補完（onboarding-cta/tx-sort-badge/ev-emoji-chip）
 const ASSETS = [
   './index.html',
   './css/style.css',
