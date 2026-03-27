@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.60)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.62)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3356,8 +3356,8 @@ mark.tx-hl {
   transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .stp-config-summary::-webkit-details-marker { display: none; }
-.stp-config-summary:hover  { color: var(--primary-hover); }
-.stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.stp-config-summary:hover  { color: var(--primary-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .stp-config-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-detail-body { margin-top: var(--sp-3-5); }
 .stp-help-details { margin-top: var(--sp-3-5); }
@@ -3380,8 +3380,8 @@ mark.tx-hl {
   flex-shrink: 0;
 }
 .stp-help-details[open] .stp-help-summary::before { transform: rotate(var(--rotate-chevron)); }
-.stp-help-summary:hover  { color: var(--text); }
-.stp-help-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.stp-help-summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.stp-help-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .stp-help-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-help-list {
   font-size: var(--fs-xs);
@@ -3562,8 +3562,8 @@ mark.tx-hl {
   text-decoration: underline;
   transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.auth-offline-mode:hover  { color: var(--text-muted); }
-.auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.auth-offline-mode:hover  { color: var(--text-muted); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
+.auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .auth-offline-mode:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
 
 /* ── PWA インストールガイド ─────────────────────────────── */
@@ -3983,8 +3983,8 @@ body {
   gap: var(--sp-1-5);
   transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.modal-details summary:hover  { color: var(--text); }
-.modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.modal-details summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
+.modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .modal-details summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .modal-details summary::before {
   content: '▶';
@@ -4017,8 +4017,8 @@ body {
   justify-content: center;
 }
 .btn-dark-toggle svg { display: block; }
-.btn-dark-toggle:hover  { background: var(--on-dark-border); color: var(--sidebar-text-hi); }
-.btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); }
+.btn-dark-toggle:hover  { background: var(--on-dark-border); color: var(--sidebar-text-hi); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.btn-dark-toggle:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: none; }
 .btn-dark-toggle:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ============================================================
@@ -5574,8 +5574,8 @@ body {
   transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .goal-achieved-summary::-webkit-details-marker { display: none; }
-.goal-achieved-summary:hover  { color: var(--text); }
-.goal-achieved-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.goal-achieved-summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
+.goal-achieved-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .goal-achieved-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .goal-achieved-summary::before {
   content: '▶';
@@ -6688,8 +6688,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex; align-items: center; gap: var(--sp-2);
   transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.sub-inactive-section summary:hover  { color: var(--text); }
-.sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.sub-inactive-section summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
+.sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .sub-inactive-section summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); }
 .sub-inactive-section[open] summary::before { transform: rotate(var(--rotate-chevron)); }
@@ -7663,8 +7663,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   gap: var(--sp-2);
   transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); }
-.wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .wl-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary::-webkit-details-marker { display: none; }
 .wl-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); transition: transform var(--dur-base); flex-shrink: 0; }

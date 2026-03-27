@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.61'; // v19.61: cat-card:hoverボーダーカラーをカテゴリ色に変更＋edit-cat/delete-catホバーカラー追加
+const CACHE_NAME = 'kakeibo-v19.62'; // v19.62: summary系8要素hoverbox-shadowリング統一（stp-config/stp-help/auth-offline-mode/modal-details/goal-achieved/sub-inactive/wl-archive/btn-dark-toggle）
 const ASSETS = [
   './index.html',
   './css/style.css',
