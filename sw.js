@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.57'; // v19.57: tx-tag-filter-chip/all:active box-shadow:none追加・CSSヘッダーバージョン修正（v19.55→v19.57）
+const CACHE_NAME = 'kakeibo-v19.58'; // v19.58: qa-amount-wrap:hover追加・ev-done-cb transition/hover/active強化・color-swatch:activeフィルター追加
 const ASSETS = [
   './index.html',
   './css/style.css',

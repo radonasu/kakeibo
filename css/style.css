@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.57)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.58)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2771,10 +2771,10 @@ mark.tx-hl {
   border-radius: var(--radius-circle);
   cursor: pointer;
   border: var(--bw-swatch) solid transparent;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .color-swatch:hover   { transform: scale(var(--scale-hover-lg)); }
-.color-swatch:active  { transform: scale(var(--scale-rest)); }
+.color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
 .color-swatch.selected { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
 /* ── セクションラベル ────────────────────────────────── */
@@ -9455,6 +9455,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: 0 var(--sp-2) 0 var(--sp-3);
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.qa-amount-wrap:hover { border-color: var(--border-strong); }
 .qa-amount-wrap:focus-within {
   border-color: var(--qa-accent);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
@@ -10764,7 +10765,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   position: relative;
   flex-shrink: 0;
   background: var(--surface);
-  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast);
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .ev-done-cb::after {
   content: '';
@@ -10783,7 +10784,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: ev-cb-pop var(--dur-base) var(--ease-bounce);
 }
 .ev-done-cb:checked::after { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-rest)); }
-.ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); }
+.ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.ev-done-cb:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 @keyframes ev-cb-pop { 0% { transform: scale(var(--scale-anim-ev-cb)); } 100% { transform: scale(var(--scale-rest)); } }
 .ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
