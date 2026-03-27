@@ -872,11 +872,11 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   cursor: pointer;
   min-width: 0;
-  transition: background var(--dur-fast), border-color var(--dur-fast);
+  transition: background var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .account-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
-.account-select:hover { background: var(--on-dark-base); }
+.account-select:hover { background: var(--on-dark-base); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 .btn-account-add {
   background: var(--on-dark-base);
@@ -1027,10 +1027,11 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color var(--dur-fast), opacity var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-sidebar-logout:hover { color: var(--expense); }
-.btn-sidebar-logout:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); }
+.btn-sidebar-logout:hover { color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
+.btn-sidebar-logout:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.btn-sidebar-logout:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 .sidebar-offline-badge {
   font-size: var(--fs-xs);
@@ -2947,10 +2948,11 @@ mark.tx-hl {
   padding: var(--sp-2-25) var(--sp-3);
   font-size: var(--fs-xl);
   cursor: pointer;
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-receipt-file:hover    { background: var(--surface-hover); }
-.btn-receipt-file:active   { background: var(--border); filter: brightness(var(--brightness-press-soft)); }
+.btn-receipt-file:hover    { background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.btn-receipt-file:active   { background: var(--border); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.btn-receipt-file:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-receipt-file.disabled { opacity: var(--opacity-ghost); pointer-events: none; }
 
 .scan-result {
@@ -2986,10 +2988,11 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: opacity var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.multi-receipt-list .btn-mr-all:hover  { opacity: var(--opacity-near); }
-.multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); }
+.multi-receipt-list .btn-mr-all:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); box-shadow: none; }
+.multi-receipt-list .btn-mr-all:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .multi-receipt-item {
   display: flex;
   align-items: stretch;
@@ -3041,17 +3044,19 @@ mark.tx-hl {
   background: var(--surface-2);
   color: var(--text);
   border: var(--bw-thin) solid var(--border) !important;
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-mr-fill:hover  { background: var(--surface-hover); }
-.btn-mr-fill:active { background: var(--border); filter: brightness(var(--brightness-press-soft)); }
+.btn-mr-fill:hover  { background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.btn-mr-fill:active { background: var(--border); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.btn-mr-fill:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-mr-add {
   background: var(--income);
   color: var(--white);
-  transition: opacity var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.btn-mr-add:hover  { opacity: var(--opacity-near); }
-.btn-mr-add:active { filter: brightness(var(--brightness-press-strong)); }
+.btn-mr-add:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-md), transparent); }
+.btn-mr-add:active { filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
+.btn-mr-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-mr-add:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
 
 /* 複数レシート インライン編集フォーム */
@@ -4375,7 +4380,7 @@ body {
   text-align: center;
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
-.recurring-day-input:hover { border-color: var(--border-strong); }
+.recurring-day-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .recurring-day-input:focus {
   outline: none;
   border-color: var(--primary);

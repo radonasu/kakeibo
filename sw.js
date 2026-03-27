@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.70'; // v19.70: 入力フィールドhover box-shadow統一6要素（cat-budget-input追加）
+const CACHE_NAME = 'kakeibo-v19.71'; // v19.71: 6要素hover box-shadow+focus-visible統一（recurring-day-input/account-select/btn-sidebar-logout/btn-receipt-file/btn-mr-fill/btn-mr-add/btn-mr-all）
 const ASSETS = [
   './index.html',
   './css/style.css',
