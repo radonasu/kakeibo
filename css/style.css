@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.62)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.67)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2331,7 +2331,7 @@ select:focus:not(:focus-visible) {
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .filter-search::placeholder { color: var(--text-faint); opacity: 1; }
-.filter-search:hover { border-color: var(--border-strong); }
+.filter-search:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .filter-search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── v5.94: 詳細フィルタートグルボタン ── */
@@ -2442,8 +2442,10 @@ select:focus:not(:focus-visible) {
 }
 .adv-filter-clear:hover {
   background: var(--danger-bg);
+  border-color: var(--danger-border);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
 }
-.adv-filter-clear:active { background: var(--danger-border); filter: brightness(var(--brightness-press-mod)); }
+.adv-filter-clear:active { background: var(--danger-border); filter: brightness(var(--brightness-press-mod)); box-shadow: none; }
 [data-theme="dark"] .adv-filter-inner {
   background: var(--surface);
   border-color: var(--border);
