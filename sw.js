@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.52'; // v19.52: btn-primary/onboarding-cta activeボックスシャドウリセット・pt-emoji-btnホバーbox-shadow追加（3要素4箇所）
+const CACHE_NAME = 'kakeibo-v19.53'; // v19.53: ci-ok-btn hoverフィルター・ev-emoji-chip hoverボーダー・md-nav-btn hoverシャドウ追加（3箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
