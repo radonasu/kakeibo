@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.49'; // v19.49: ev-done-cbホバースケール・tx-tag-filter-all active box-shadow・タグフィルターchip/allホバーbox-shadow・btn-shareホバーbox-shadow追加
+const CACHE_NAME = 'kakeibo-v19.50'; // v19.50: sim-presetホバーbox-shadow・btn-continueホバーbox-shadow・btn-notif-bellアクティブfilter追加
 const ASSETS = [
   './index.html',
   './css/style.css',

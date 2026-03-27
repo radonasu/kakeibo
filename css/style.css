@@ -10147,6 +10147,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sim-preset:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
 /* 結果グリッド */
@@ -10232,7 +10233,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   position: relative; overflow: hidden;
   transition: background-color var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-bounce), color var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-bounce), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
-.sim-preset:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.sim-preset:active { transform: scale(var(--scale-icon-active)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
@@ -11852,7 +11853,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-faster), color var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-press) var(--ease-bounce);
+  transition: background var(--dur-faster), color var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press);
   flex-shrink: 0;
 }
 .btn-notif-bell:hover {
@@ -11862,6 +11863,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .btn-notif-bell:active {
   transform: scale(var(--scale-chip-active));
+  filter: brightness(var(--brightness-press-soft));
 }
 .btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 /* 未読あり状態 */
@@ -12832,12 +12834,14 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--primary) var(--mix-faint), var(--surface-2));
   border-color: color-mix(in srgb, var(--primary) var(--mix-5xl), transparent);
   transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .btn-continue:active {
   background: var(--surface-2);
   border-color: color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-press-soft));
   transform: translateY(0);
+  box-shadow: none;
 }
 [data-theme="dark"] .btn-continue {
   background: color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2));
