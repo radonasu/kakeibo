@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.59)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.60)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1297,8 +1297,8 @@ select:focus:not(:focus-visible) {
   transition: opacity var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), color var(--dur-fast), filter var(--dur-press);
   box-shadow: none;
 }
-.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); }
-.btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
 .edit-tx {
@@ -3637,8 +3637,8 @@ body {
   transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   border-radius: var(--radius-btn-sm);
 }
-.install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
-.install-banner-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.install-banner-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
@@ -3665,8 +3665,8 @@ body {
   transition: color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   border-radius: var(--radius-btn-sm);
 }
-.ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); }
-.ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); }
@@ -6027,8 +6027,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.cal-panel-close:hover { background: var(--surface-hover); color: var(--text); transform: scale(var(--scale-hover)); }
-.cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.cal-panel-close:hover { background: var(--surface-hover); color: var(--text); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-day-panel-body {
@@ -10985,8 +10985,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--danger-bg);
   color: var(--danger-text);
   transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
 }
-.sf-chip-del:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); }
+.sf-chip-del:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .sf-chip-del:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-actions {
   display: flex;
@@ -11002,11 +11003,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   gap: var(--sp-1);
   color: var(--primary);
   font-size: var(--fs-sm);
-  transition: background var(--dur-faster), transform var(--dur-faster) var(--ease-bounce), filter var(--dur-press);
+  transition: background var(--dur-faster), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster), filter var(--dur-press);
 }
 .sf-save-btn:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
   transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: translateY(0); filter: brightness(var(--brightness-press-soft)); }
 @keyframes sf-chip-in {
