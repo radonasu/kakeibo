@@ -14175,7 +14175,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(var(--translate-lift-xs));
-  border-color: var(--border-strong);
+  border-color: color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-mid), var(--border));
 }
 .cat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .cat-card-accent {
@@ -14238,6 +14238,33 @@ canvas.chart-clickable { cursor: pointer; }
   flex-shrink: 0;
   margin-top: calc(-1 * var(--sp-0-5));
 }
+/* カテゴリカード 編集/削除ボタン ホバー色 (v19.61) */
+.edit-cat:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--bg)) !important;
+  color: var(--primary);
+  transform: scale(var(--scale-icon-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  opacity: 1;
+}
+.edit-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.delete-cat:hover {
+  background: var(--danger-bg) !important;
+  color: var(--danger-text);
+  transform: scale(var(--scale-icon-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+  opacity: 1;
+}
+.delete-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+[data-theme="dark"] .edit-cat:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
+}
+[data-theme="dark"] .edit-cat:active { box-shadow: none; }
+[data-theme="dark"] .delete-cat:hover {
+  background: var(--danger-bg) !important;
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent);
+}
+[data-theme="dark"] .delete-cat:active { box-shadow: none; }
 /* stats */
 .cat-card-stats {
   display: flex;

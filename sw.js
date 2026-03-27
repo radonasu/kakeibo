@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.60'; // v19.60: btn-icon/cal-panel-close/install-banner-close/ios-guide-close/sf-save-btn/sf-chip-delホバーbox-shadowリング統一
+const CACHE_NAME = 'kakeibo-v19.61'; // v19.61: cat-card:hoverボーダーカラーをカテゴリ色に変更＋edit-cat/delete-catホバーカラー追加
 const ASSETS = [
   './index.html',
   './css/style.css',
