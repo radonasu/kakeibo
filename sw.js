@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.56'; // v19.56: input[type="month"]をform-group入力スタイル群に追加（base/hover/mobile-touch）・.amount-input-wrap/.amount-prefixのCSS新設（ev-form金額プレフィックス入力）・JSバージョンタグ修正（19.52→19.56）
+const CACHE_NAME = 'kakeibo-v19.57'; // v19.57: tx-tag-filter-chip/all:active box-shadow:none追加・CSSヘッダーバージョン修正（v19.55→v19.57）
 const ASSETS = [
   './index.html',
   './css/style.css',
