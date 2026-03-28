@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.73'; // v19.73: form-group外独立input/selectのhover/focus統一（export-range/mr-edit-row/csv-map-select）
+const CACHE_NAME = 'kakeibo-v19.74'; // v19.74: debt-sim-extra/ev-emoji-chip hover box-shadow追加
 const ASSETS = [
   './index.html',
   './css/style.css',
