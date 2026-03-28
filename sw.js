@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.72'; // v19.72: クイック追加・月次ノートhover box-shadow追加（qa-amount-wrap/qa-cat-select/qa-memo-input/nt-textarea）
+const CACHE_NAME = 'kakeibo-v19.73'; // v19.73: form-group外独立input/selectのhover/focus統一（export-range/mr-edit-row/csv-map-select）
 const ASSETS = [
   './index.html',
   './css/style.css',

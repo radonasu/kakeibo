@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.67)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.73)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2818,7 +2818,12 @@ mark.tx-hl {
   border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.export-range select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.export-range select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── 危険ゾーン ──────────────────────────────────────── */
 .danger-zone { border: var(--bw-base) solid var(--danger-border); }
@@ -3081,7 +3086,12 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   min-width: 0;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.mr-edit-row input:hover,
+.mr-edit-row select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.mr-edit-row input:focus,
+.mr-edit-row select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .mr-edit-row .mr-store  { flex: 2; }
 .mr-edit-row .mr-amount { flex: 1; max-width: var(--size-input-sm); }
 .mr-edit-row .mr-date   { flex: 1; }
@@ -6841,7 +6851,16 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .csv-map-select {
   flex: 1;
   min-width: 0;
+  padding: var(--sp-1-75) var(--sp-2-5);
+  border: var(--bw-base) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+.csv-map-select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.csv-map-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .req { color: var(--danger-text); margin-left: var(--sp-0-5); }
 
 /* プレビュー */
