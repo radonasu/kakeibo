@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.78)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.82)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2783,11 +2783,12 @@ mark.tx-hl {
   border-radius: var(--radius-circle);
   cursor: pointer;
   border: var(--bw-swatch) solid transparent;
-  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), filter var(--dur-press);
+  transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .color-swatch:hover   { transform: scale(var(--scale-hover-lg)); }
-.color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
+.color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .color-swatch.selected { border-color: var(--text); transform: scale(var(--scale-hover)); }
+.color-swatch:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── セクションラベル ────────────────────────────────── */
 .section-label.expense { color: var(--expense); }
