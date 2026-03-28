@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.86'; // v19.86: filter-search/bulk-sel hover box-shadow段階化（mix-xs=12%に統一）
+const CACHE_NAME = 'kakeibo-v19.87'; // v19.87: tx-cb/sb-check hover scale + active状態追加（ev-done-cbとの3チェックボックス統一）
 const ASSETS = [
   './index.html',
   './css/style.css',

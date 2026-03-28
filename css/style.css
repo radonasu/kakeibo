@@ -1812,13 +1812,15 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast), filter var(--dur-press);
   vertical-align: middle;
 }
 .tx-cb:hover:not(:checked):not(:indeterminate) {
   border-color: var(--primary);
+  transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
+.tx-cb:active:not(:checked):not(:indeterminate) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .tx-cb:checked {
   background: var(--primary);
   border-color: var(--primary);
@@ -10495,13 +10497,15 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast), filter var(--dur-press);
   vertical-align: middle;
 }
 .sb-check:hover:not(:checked) {
   border-color: var(--primary);
+  transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
+.sb-check:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .sb-check:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sb-check:checked {
   background: var(--primary);
