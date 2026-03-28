@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.89)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.90)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1945,7 +1945,7 @@ select:focus:not(:focus-visible) {
   background: var(--primary-light);
   border: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
   cursor: pointer;
-  transition: background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
@@ -2592,7 +2592,7 @@ mark.tx-hl {
   line-height: var(--lh-none);
   cursor: pointer;
   padding: 0;
-  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
   flex-shrink: 0;
 }
 .month-nav-btn:hover:not(:disabled) {
@@ -2693,7 +2693,7 @@ mark.tx-hl {
   background: transparent;
   color: var(--text-muted);
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-press), filter var(--dur-press);
+  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press);
   cursor: pointer;
 }
 .type-btn:hover { background: var(--surface-hover); color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -5341,7 +5341,7 @@ body {
   border-bottom: var(--accent-w) solid transparent;
   margin-bottom: calc(-1 * var(--accent-w));
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster), transform var(--dur-press), box-shadow var(--dur-faster), filter var(--dur-press);
+  transition: color var(--dur-faster), border-color var(--dur-faster), background var(--dur-faster), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-faster), filter var(--dur-press);
   white-space: nowrap;
   line-height: var(--lh-none);
 }
@@ -6741,7 +6741,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-icon);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .sub-emoji-btn:hover { background: var(--border); transform: scale(var(--scale-hover-chip)); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .sub-emoji-btn:active { background: var(--border); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: none; }
@@ -8574,7 +8574,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); transform: scale(var(--scale-hover-chip)); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: none; }
@@ -9460,7 +9460,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   cursor: pointer;
-  transition: background-color var(--dur-faster) var(--ease-std), border-color var(--dur-faster) var(--ease-std), color var(--dur-faster) var(--ease-std), box-shadow var(--dur-faster) var(--ease-std), transform var(--dur-faster) var(--ease-std), filter var(--dur-press);
+  transition: background var(--dur-faster), border-color var(--dur-faster), color var(--dur-faster), box-shadow var(--dur-faster), transform var(--dur-faster) var(--ease-bounce), filter var(--dur-press);
 }
 .qa-type-btn:hover {
   border-color: var(--primary);
@@ -11032,7 +11032,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-5xs);
   line-height: var(--lh-none);
   flex-shrink: 0;
-  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast), filter var(--dur-press);
 }
 .sf-chip-del:hover {
   background: var(--danger-bg);
