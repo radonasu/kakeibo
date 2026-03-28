@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.73)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.77)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2320,7 +2320,7 @@ select:focus:not(:focus-visible) {
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .filter-bar select:hover,
-.filter-bar .month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.filter-bar .month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .filter-bar select:focus,
 .filter-bar .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -2618,7 +2618,7 @@ mark.tx-hl {
   cursor: pointer;
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
-.month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* サマリーミニ (v5.54 刷新) */
@@ -11050,6 +11050,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: translateY(0); filter: brightness(var(--brightness-press-soft)); }
+.sf-save-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
   to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
@@ -11890,6 +11891,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   filter: brightness(var(--brightness-hover-sm));
 }
 .ci-ok-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press)); }
+.ci-ok-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 /* ダークモード */
 [data-theme="dark"] .ci-savings-bar-wrap { background: var(--on-dark-bg); }
 [data-theme="dark"] .ci-score-row       { background: var(--on-dark-dim); }
