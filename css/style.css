@@ -7859,10 +7859,11 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
 }
-.memo-cat-hint-btn:hover  { background: var(--primary-hover); }
-.memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(var(--brightness-press-lt)); }
+.memo-cat-hint-btn:hover  { background: var(--primary-hover); box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xl), transparent); }
+.memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(var(--brightness-press-lt)); box-shadow: none; }
+.memo-cat-hint-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 [data-theme="dark"] .memo-cat-hint {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
   border-color: color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
@@ -9893,6 +9894,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .hm-cell:active:not(.hm-out):not(.hm-legend-cell) { transform: scale(var(--scale-hm-active)); z-index: var(--z-raise); position: relative; filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 /* レベル別ホバーグロー */
+.hm-lv0:hover:not(.hm-legend-cell) { box-shadow: 0 1px 6px color-mix(in srgb, var(--text) var(--mix-xs), transparent); }
 .hm-lv1:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
 .hm-lv2:hover:not(.hm-legend-cell) { box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-6xl), transparent); }
 .hm-lv3:hover:not(.hm-legend-cell) { box-shadow: 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-deep), transparent); }
