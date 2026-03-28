@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.75'; // v19.75: tx-tag-chip hover box-shadow+focus-visible追加
+const CACHE_NAME = 'kakeibo-v19.76'; // v19.76: ci-close/rc-close hover box-shadow+active reset追加
 const ASSETS = [
   './index.html',
   './css/style.css',
