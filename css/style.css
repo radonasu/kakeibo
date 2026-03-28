@@ -1282,6 +1282,7 @@ select:focus:not(:focus-visible) {
 }
 .btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: var(--tuo-md); }
 .btn-link:active { opacity: var(--opacity-faded); filter: brightness(var(--brightness-press-soft)); }
+.btn-link:focus-visible { outline: none; color: var(--primary-hover); text-decoration: underline; text-underline-offset: var(--tuo-md); border-radius: var(--radius-2xs); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .btn-icon {
   background: none;
@@ -4568,10 +4569,11 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: background var(--dur-fast), filter var(--dur-press), transform var(--dur-press) var(--ease-bounce);
+  transition: background var(--dur-fast), filter var(--dur-press), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast);
 }
-.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: scale(var(--scale-hover)); }
-.empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
+.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: scale(var(--scale-hover)); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+.empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); box-shadow: none; }
+.empty-month-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
