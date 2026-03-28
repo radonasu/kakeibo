@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.95)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.96)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -2803,7 +2803,7 @@ mark.tx-hl {
   align-items: center;
   gap: var(--sp-2);
 }
-.year-label { font-size: var(--fs-xl); font-weight: var(--fw-bold); min-width: 60px; text-align: center; }
+.year-label { font-size: var(--fs-xl); font-weight: var(--fw-bold); min-width: 60px; text-align: center; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-snug); }
 
 /* ── エクスポートグリッド ────────────────────────────── */
 .export-grid {
@@ -6650,6 +6650,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-weight: var(--fw-bold);
   color: var(--text);
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-snug);
   white-space: nowrap;
 }
 .sub-cycle-unit {
@@ -6660,6 +6661,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .sub-monthly-equiv {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 .sub-card-actions {
   display: flex;
@@ -9229,6 +9231,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: var(--sp-0-25) var(--sp-1-5);
   margin-top: var(--sp-1);
   font-weight: var(--fw-semi);
+  font-variant-numeric: tabular-nums;
 }
 .wk-diff-up   { background: var(--danger-bg);   color: var(--danger-text); }
 .wk-diff-down { background: var(--success-bg); color: var(--income-deep); }
@@ -10721,7 +10724,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   flex: 1;
   flex-wrap: wrap;
 }
-.ev-mtot { font-size: var(--fs-2xs); font-weight: var(--fw-semi); }
+.ev-mtot { font-size: var(--fs-2xs); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
 .ev-income  { color: var(--income); }
 .ev-expense { color: var(--expense); }
 .ev-month-body { display: flex; flex-direction: column; gap: var(--sp-2); min-height: 32px; }
@@ -13692,6 +13695,7 @@ canvas.chart-clickable { cursor: pointer; }
   text-align: right;
   color: var(--text-muted);
   font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
 }
 
 /* 収入カテゴリ内訳 緑系 (v8.9) */

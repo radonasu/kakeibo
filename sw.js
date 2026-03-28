@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.95'; // v19.95: CSS変数一貫性・タイポグラフィ改善（filter-bar touch padding 11px→var(--sp-2-75)、cat-budget-pct/yi-diff-up/yi-diff-down に tabular-nums 追加）
+const CACHE_NAME = 'kakeibo-v19.96'; // v19.96: タイポグラフィ改善・tabular-nums完備（ev-mtot/wk-diff/year-label/md-cat-pct/sub-monthly-equiv に tabular-nums 追加、sub-card-amount に letter-spacing 追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
