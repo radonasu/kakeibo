@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.85'; // v19.85: tx-cb focus-visible追加（カスタムチェックボックスキーボードフォーカス視覚化）
+const CACHE_NAME = 'kakeibo-v19.86'; // v19.86: filter-search/bulk-sel hover box-shadow段階化（mix-xs=12%に統一）
 const ASSETS = [
   './index.html',
   './css/style.css',
