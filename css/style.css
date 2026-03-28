@@ -872,7 +872,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-semi);
   cursor: pointer;
   min-width: 0;
-  transition: background var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .account-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 .account-select option { background: var(--sidebar-surface); color: var(--sidebar-text-hi); }
@@ -887,7 +887,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   flex-shrink: 0;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-account-add:hover { background: var(--on-dark-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 .btn-account-add:active { filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
@@ -918,7 +918,7 @@ select:focus:not(:focus-visible) {
   color: var(--sidebar-text-muted);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   border: none;
@@ -1027,7 +1027,7 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-xs);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-sidebar-logout:hover { color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
 .btn-sidebar-logout:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -1079,7 +1079,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   -webkit-tap-highlight-color: transparent;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 #hamburger:hover { background: var(--on-dark-base); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 #hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: none; }
@@ -1278,7 +1278,7 @@ select:focus:not(:focus-visible) {
   padding: 0;
   box-shadow: none;
   text-underline-offset: var(--tuo-sm);
-  transition: color var(--dur-fast), text-underline-offset var(--dur-fast), opacity var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), text-underline-offset var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-link:hover { text-decoration: underline; color: var(--primary-hover); text-underline-offset: var(--tuo-md); }
 .btn-link:active { opacity: var(--opacity-faded); filter: brightness(var(--brightness-press-soft)); }
@@ -1296,7 +1296,7 @@ select:focus:not(:focus-visible) {
   justify-content: center;
   border-radius: var(--radius-btn-sm);
   opacity: var(--opacity-dim);
-  transition: opacity var(--dur-fast), background var(--dur-fast), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast), color var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   box-shadow: none;
 }
 .btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -1411,7 +1411,7 @@ select:focus:not(:focus-visible) {
   margin-bottom: var(--sp-1-5);
   text-transform: uppercase;
   letter-spacing: var(--ls-wide);
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast) var(--ease-plain);
 }
 .form-group:focus-within > label { color: var(--primary); }
 .form-group input[type="text"],
@@ -1431,7 +1431,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-base);
   color: var(--text);
   background: var(--surface);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
   appearance: auto;
 }
 .form-group input[type="text"]:hover,
@@ -1487,7 +1487,7 @@ select:focus:not(:focus-visible) {
   border-radius: var(--radius-sm);
   background: var(--surface);
   overflow: hidden;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .amount-input-wrap:hover {
   border-color: var(--border-strong);
@@ -1504,7 +1504,7 @@ select:focus:not(:focus-visible) {
   color: var(--text-muted);
   flex-shrink: 0;
   user-select: none;
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast) var(--ease-plain);
 }
 .amount-input-wrap:focus-within .amount-prefix {
   color: var(--primary);
@@ -1861,7 +1861,7 @@ select:focus:not(:focus-visible) {
 /* 選択行ハイライト (v5.56) */
 .tx-table tbody tr.tx-selected {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
-  transition: background var(--dur-faster);
+  transition: background var(--dur-faster) var(--ease-plain);
 }
 .tx-table tbody tr.tx-selected td {
   border-bottom: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-base), var(--border)) !important;
@@ -1889,7 +1889,7 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
-  transition: color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   position: relative;
 }
 .tx-th-sort:hover {
@@ -1911,7 +1911,7 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
   opacity: var(--opacity-soft);
   flex-shrink: 0;
-  transition: opacity var(--dur-fast);
+  transition: opacity var(--dur-fast) var(--ease-plain);
 }
 .tx-sort-icon svg {
   width: var(--size-sort-icon);
@@ -2071,7 +2071,7 @@ select:focus:not(:focus-visible) {
   color: var(--text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .bulk-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .bulk-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -2321,7 +2321,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .filter-bar select:hover,
 .filter-bar .month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -2338,7 +2338,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   caret-color: var(--primary);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .filter-search::placeholder { color: var(--text-faint); opacity: 1; }
 .filter-search:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -2352,7 +2352,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   position: relative;
   border-color: var(--border);
-  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .adv-filter-toggle svg { flex-shrink: 0; }
 .adv-filter-toggle:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -2435,7 +2435,7 @@ select:focus:not(:focus-visible) {
   background: var(--surface);
   color: var(--text);
   width: var(--size-filter-text);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .adv-filter-input[type="number"] { width: var(--size-input-num); }
 .adv-filter-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -2620,7 +2620,7 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .month-sel:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .month-sel:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -2827,7 +2827,7 @@ mark.tx-hl {
   font-size: var(--fs-sm);
   background: var(--surface);
   color: var(--text);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .export-range select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .export-range select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -2873,7 +2873,7 @@ mark.tx-hl {
   border: var(--bw-base) solid var(--border);
   border-radius: var(--radius-btn-sm);
   font-size: var(--fs-sm);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .quick-cat-form input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .quick-cat-form input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -2942,7 +2942,7 @@ mark.tx-hl {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: opacity var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   white-space: nowrap;
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
 }
@@ -2960,7 +2960,7 @@ mark.tx-hl {
   padding: var(--sp-2-25) var(--sp-3);
   font-size: var(--fs-xl);
   cursor: pointer;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-receipt-file:hover    { background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-receipt-file:active   { background: var(--border); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -3000,7 +3000,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   cursor: pointer;
-  transition: opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .multi-receipt-list .btn-mr-all:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .multi-receipt-list .btn-mr-all:active { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); box-shadow: none; }
@@ -3013,7 +3013,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: var(--sp-2-5) var(--sp-3);
   gap: var(--sp-2);
-  transition: opacity var(--dur-base);
+  transition: opacity var(--dur-base) var(--ease-plain);
 }
 .multi-receipt-item.added {
   opacity: var(--opacity-mid);
@@ -3056,7 +3056,7 @@ mark.tx-hl {
   background: var(--surface-2);
   color: var(--text);
   border: var(--bw-thin) solid var(--border) !important;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-mr-fill:hover  { background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-mr-fill:active { background: var(--border); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -3064,7 +3064,7 @@ mark.tx-hl {
 .btn-mr-add {
   background: var(--income);
   color: var(--white);
-  transition: opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .btn-mr-add:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-md), transparent); }
 .btn-mr-add:active { filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
@@ -3093,7 +3093,7 @@ mark.tx-hl {
   background: var(--surface);
   color: var(--text);
   min-width: 0;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .mr-edit-row input:hover,
 .mr-edit-row select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -3216,7 +3216,7 @@ mark.tx-hl {
   text-align: right;
   background: var(--surface);
   color: var(--text);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .budget-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .budget-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -3260,7 +3260,7 @@ mark.tx-hl {
   border-radius: var(--radius-circle);
   background: var(--text-faint);
   flex-shrink: 0;
-  transition: background var(--dur-slow);
+  transition: background var(--dur-slow) var(--ease-plain);
 }
 
 .sync-status-row {
@@ -3383,7 +3383,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .stp-config-summary::-webkit-details-marker { display: none; }
 .stp-config-summary:hover  { color: var(--primary-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -3400,7 +3400,7 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .stp-help-summary::-webkit-details-marker { display: none; }
 .stp-help-summary::before {
@@ -3458,7 +3458,7 @@ mark.tx-hl {
   margin-left: auto;
   margin-right: var(--sp-2-5);
   flex-shrink: 0;
-  transition: background var(--dur-slow);
+  transition: background var(--dur-slow) var(--ease-plain);
 }
 
 /* ── 認証スクリーン ─────────────────────────────────────── */
@@ -3534,7 +3534,7 @@ mark.tx-hl {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
-  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .auth-tab:not(.active):hover {
   background: var(--surface-hover);
@@ -3590,7 +3590,7 @@ mark.tx-hl {
   background: none;
   border: none;
   text-decoration: underline;
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .auth-offline-mode:hover  { color: var(--text-muted); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
 .auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -3792,7 +3792,7 @@ body {
   font-size: var(--fs-2xs);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
@@ -4011,7 +4011,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .modal-details summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -4038,7 +4038,7 @@ body {
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
   line-height: var(--lh-none);
-  transition: background var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   color: color-mix(in srgb, var(--sidebar-text-hi) var(--mix-rich), transparent);
   flex-shrink: 0;
   margin-left: auto;
@@ -4314,7 +4314,7 @@ body {
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast) var(--ease-plain);
 }
 .notif-toggle-label:hover { color: var(--primary); }
 .notif-toggle-label input[type="checkbox"] {
@@ -4357,7 +4357,7 @@ body {
   font-size: var(--fs-base);
   cursor: pointer;
   user-select: none;
-  transition: color var(--dur-fast);
+  transition: color var(--dur-fast) var(--ease-plain);
 }
 .recurring-toggle-label:hover { color: var(--primary); }
 .recurring-toggle-label input[type="checkbox"] {
@@ -4395,7 +4395,7 @@ body {
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   text-align: center;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .recurring-day-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .recurring-day-input:focus {
@@ -5604,7 +5604,7 @@ body {
   align-items: center;
   gap: var(--sp-2);
   user-select: none;
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .goal-achieved-summary::-webkit-details-marker { display: none; }
 .goal-achieved-summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
@@ -6205,7 +6205,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   cursor: pointer;
   padding: var(--sp-0-5) var(--sp-1);
   border-radius: var(--radius-2xs);
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .cal-ev-nav:hover  { background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .cal-ev-nav:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
@@ -6223,7 +6223,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-3) var(--sp-4);
   border-bottom: var(--bw-thin) solid var(--border);
   border-left: var(--accent-w) solid var(--cal-ev-color, var(--primary));
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: cal-ev-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cal-ev-i, 0) * var(--dur-stagger));
 }
@@ -6324,7 +6324,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-md);
   border-left: var(--accent-w) solid transparent;
   background: var(--surface-hover);
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); }
 .insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mist)); }
@@ -6719,7 +6719,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   list-style: none;
   user-select: none;
   display: flex; align-items: center; gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .sub-inactive-section summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -6865,7 +6865,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: var(--surface);
   color: var(--text);
   font-size: var(--fs-sm);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .csv-map-select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .csv-map-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -7448,10 +7448,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   overflow: visible;
 }
 .hs-spark-line {
-  transition: stroke var(--dur-long);
+  transition: stroke var(--dur-long) var(--ease-plain);
 }
 .hs-spark-dot {
-  transition: r var(--dur-base), fill var(--dur-base);
+  transition: r var(--dur-base) var(--ease-plain), fill var(--dur-base) var(--ease-plain);
 }
 .hs-spark-dot-last {
   filter: drop-shadow(0 0 3px var(--hs-grade-color, var(--primary)));
@@ -7703,7 +7703,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -7865,7 +7865,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .memo-cat-hint-btn:hover  { background: var(--primary-hover); box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xl), transparent); }
 .memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(var(--brightness-press-lt)); box-shadow: none; }
@@ -8145,7 +8145,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: var(--sp-2-5) var(--sp-3);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   position: relative;
 }
 .dw-item:hover {
@@ -8179,7 +8179,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--border);
   border-radius: var(--radius-indicator);
   flex-shrink: 0;
-  transition: background var(--dur-base);
+  transition: background var(--dur-base) var(--ease-plain);
 }
 .dw-slider::after {
   content: '';
@@ -8540,7 +8540,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .ch-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -9336,7 +9336,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
-  transition: box-shadow var(--dur-fast), border-top-color var(--dur-mid);
+  transition: box-shadow var(--dur-fast) var(--ease-plain), border-top-color var(--dur-mid) var(--ease-plain);
 }
 /* デコレーションサークル（右上） */
 .qa-card::before {
@@ -9347,7 +9347,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-circle);
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) var(--mix-faint), transparent) 0%, transparent 70%);
   pointer-events: none;
-  transition: background var(--dur-mid);
+  transition: background var(--dur-mid) var(--ease-plain);
   z-index: var(--z-base);
 }
 /* タイプ別アクセントカラー連動 */
@@ -9375,7 +9375,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   gap: var(--sp-2);
   position: relative;
   z-index: var(--z-raise);
-  transition: background var(--dur-faster), box-shadow var(--dur-faster), filter var(--dur-press);
+  transition: background var(--dur-faster) var(--ease-plain), box-shadow var(--dur-faster) var(--ease-plain), filter var(--dur-press);
 }
 .qa-toggle-btn:hover {
   background: var(--surface-hover);
@@ -9394,7 +9394,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-weight: var(--fw-bold);
   color: var(--text);
   margin: 0;
-  transition: color var(--dur-mid);
+  transition: color var(--dur-mid) var(--ease-plain);
 }
 /* タイトルをタイプカラーに連動 */
 .qa-card[data-qa-type="expense"] .qa-card-title,
@@ -9501,7 +9501,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-btn);
   background: var(--bg);
   padding: 0 var(--sp-2) 0 var(--sp-3);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .qa-amount-wrap:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .qa-amount-wrap:focus-within {
@@ -9520,7 +9520,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--qa-accent);
   margin-right: var(--sp-0-5);
   flex-shrink: 0;
-  transition: color var(--dur-mid);
+  transition: color var(--dur-mid) var(--ease-plain);
 }
 .qa-amount-input {
   width: var(--size-input-num);
@@ -9543,7 +9543,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   cursor: pointer;
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
   min-width: 0;
 }
 .qa-cat-select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -9564,7 +9564,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--bg);
   color: var(--text);
   font-size: var(--fs-sm);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
   min-width: 0;
 }
 .qa-memo-input::placeholder { color: var(--text-muted); }
@@ -9657,7 +9657,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   resize: none;
   overflow-y: auto;
   box-sizing: border-box;
-  transition: border-color var(--dur-fast), border-left-color var(--dur-mid), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), border-left-color var(--dur-mid) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .nt-textarea::placeholder {
   color: var(--text-muted);
@@ -9704,7 +9704,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .nt-char-count {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  transition: color var(--dur-slow);
+  transition: color var(--dur-slow) var(--ease-plain);
 }
 .nt-char-count.nt-cnt-warn   { color: var(--warning); }
 .nt-char-count.nt-cnt-danger { color: var(--danger-text); font-weight: var(--fw-semi); }
@@ -9713,7 +9713,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity var(--dur-slow);
+  transition: opacity var(--dur-slow) var(--ease-std);
 }
 .nt-status.nt-saved {
   color: var(--success);
@@ -10153,7 +10153,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text-muted); padding: var(--sp-2) 0;
   list-style: none; user-select: none;
   display: flex; align-items: center; gap: var(--sp-2);
-  transition: color var(--dur-fast), opacity var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: color var(--dur-fast) var(--ease-plain), opacity var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .debt-archive-summary:hover { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .debt-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -10194,7 +10194,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .debt-widget-bar-bg { flex: 1; height: var(--size-bar-xs); background: var(--border); border-radius: var(--radius-badge); overflow: hidden; }
 .debt-widget-bar-fill {
   height: 100%; background: var(--debt-accent, var(--primary));
-  border-radius: var(--radius-badge); transition: width var(--dur-fill);
+  border-radius: var(--radius-badge); transition: width var(--dur-fill) var(--ease-std);
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
 .debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; font-variant-numeric: tabular-nums; }
@@ -10424,7 +10424,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 /* 追加返済入力フォーカスグロー */
-#debt-sim-extra { transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
+#debt-sim-extra { transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain); }
 #debt-sim-extra:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 #debt-sim-extra:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
@@ -10546,7 +10546,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* テーブル行: カテゴリカラー左ボーダー */
 .sb-row {
   border-left: var(--accent-w) solid var(--sb-cat-color, var(--border));
-  transition: background var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: sb-row-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--sb-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-md));
 }
@@ -10742,7 +10742,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   overflow: hidden;
   animation: ev-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
-  transition: opacity var(--dur-base), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
+  transition: opacity var(--dur-base) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
 .ev-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -10960,7 +10960,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: border-color var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .ev-emoji-chip:hover  { background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
@@ -11999,7 +11999,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .btn-notif-bell.has-unread svg {
   display: inline-block;
   transform-origin: 50% var(--sp-1);
-  transition: color var(--dur-faster);
+  transition: color var(--dur-faster) var(--ease-plain);
 }
 .btn-notif-bell.notif-bell-ringing svg {
   animation: notif-bell-ring var(--dur-fill) var(--ease-in-out) both;
@@ -12093,7 +12093,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-0-75) var(--sp-2-5);
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
-  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), box-shadow var(--dur-fast), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), color var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
 }
 .notif-mark-read:hover {
   background: var(--primary-light);
@@ -12608,7 +12608,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 #tx-amount.calc-mode {
   border-color: var(--warning);
   background: var(--warning-bg);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain), background var(--dur-fast) var(--ease-plain);
 }
 
 [data-theme="dark"] #tx-amount.calc-mode {
@@ -13268,7 +13268,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-0-5) var(--sp-1-75);
   pointer-events: none;
   opacity: 0;
-  transition: opacity var(--dur-fast);
+  transition: opacity var(--dur-fast) var(--ease-plain);
 }
 .chart-clickable-wrap:hover .chart-clickable-hint { opacity: 1; }
 
@@ -14360,7 +14360,7 @@ canvas.chart-clickable { cursor: pointer; }
   border-radius: var(--radius-btn-sm);
   background: var(--surface-2);
   color: var(--text);
-  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  transition: border-color var(--dur-fast) var(--ease-plain), box-shadow var(--dur-fast) var(--ease-plain);
 }
 .cat-budget-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent); }
 .cat-budget-input:focus {

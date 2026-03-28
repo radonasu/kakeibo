@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.92'; // v19.92: sync-toast/update-toast/nav-ripple/nt-progress-fill transition ease-std追加（4要素のopacity・transform・width easing統一）
+const CACHE_NAME = 'kakeibo-v19.93'; // v19.93: 全transition非transform propertyのeasing欠落を完全解消（全CSS transition定義にease-plain/ease-std統一）
 const ASSETS = [
   './index.html',
   './css/style.css',
