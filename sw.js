@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.94'; // v19.94: 全transiton filter/background/color/box-shadow/border-color/stroke propertyのease-plain追加（v19.93で漏れた122行・237箇所を完全解消）
+const CACHE_NAME = 'kakeibo-v19.95'; // v19.95: CSS変数一貫性・タイポグラフィ改善（filter-bar touch padding 11px→var(--sp-2-75)、cat-budget-pct/yi-diff-up/yi-diff-down に tabular-nums 追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
