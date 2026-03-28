@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.93'; // v19.93: 全transition非transform propertyのeasing欠落を完全解消（全CSS transition定義にease-plain/ease-std統一）
+const CACHE_NAME = 'kakeibo-v19.94'; // v19.94: 全transiton filter/background/color/box-shadow/border-color/stroke propertyのease-plain追加（v19.93で漏れた122行・237箇所を完全解消）
 const ASSETS = [
   './index.html',
   './css/style.css',
