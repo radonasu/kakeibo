@@ -2177,14 +2177,16 @@ select:focus:not(:focus-visible) {
   border: var(--bw-thin) solid color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
   white-space: nowrap;
   line-height: var(--lh-loose);
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: tag-chip-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-tag-chip:hover {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent);
   transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
-.tx-tag-chip:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); }
+.tx-tag-chip:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.tx-tag-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .tx-tag-label-hint {
   font-size: var(--fs-xs);
   font-weight: var(--fw-normal);
