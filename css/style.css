@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.77)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v19.78)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -9461,6 +9461,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .qa-type-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.qa-type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
   background: var(--danger-bg);
   border-color: var(--danger-text);
@@ -12143,7 +12144,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: left;
   cursor: pointer;
   position: relative;
-  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press);
+  transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press);
   animation: notif-item-in var(--dur-slow) var(--ease-bounce) both;
   animation-delay: calc(var(--ni, 0) * var(--dur-stagger-sub));
 }
@@ -12154,8 +12155,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item:hover {
   background: var(--surface-hover);
   transform: translateX(var(--translate-slide));
+  box-shadow: var(--shadow-row-hover);
 }
-.notif-item:active { transform: translateX(0); filter: brightness(var(--brightness-press-soft)); }
+.notif-item:active { transform: translateX(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.notif-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .notif-item:not(.notif-read):hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
 }
