@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.90'; // v19.90: tx-sort-badge/month-nav-btn/type-btn/section-tab/sub-emoji-btn/ch-emoji-btn/sf-chip-del/qa-type-btn transition ease-bounce追加（8要素のtransform easing統一）
+const CACHE_NAME = 'kakeibo-v19.91'; // v19.91: stp-help/modal-details/sub-inactive/wl-archive/ch-archive/debt-archive summary::before transition ease-plain追加（6要素の▶回転アニメーションeasing統一）
 const ASSETS = [
   './index.html',
   './css/style.css',
