@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.84'; // v19.84: sub/pt/ch/debt/ev-widget-item hover box-shadow追加（5要素）
+const CACHE_NAME = 'kakeibo-v19.85'; // v19.85: tx-cb focus-visible追加（カスタムチェックボックスキーボードフォーカス視覚化）
 const ASSETS = [
   './index.html',
   './css/style.css',
