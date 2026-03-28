@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v19.87'; // v19.87: tx-cb/sb-check hover scale + active状態追加（ev-done-cbとの3チェックボックス統一）
+const CACHE_NAME = 'kakeibo-v19.88'; // v19.88: sim-preset/pt-emoji-btn transition完備（background-color→background・filter dur-press追加・transform ease-bounce追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
