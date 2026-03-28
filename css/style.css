@@ -10497,6 +10497,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-color: var(--primary);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
+.sb-check:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sb-check:checked {
   background: var(--primary);
   border-color: var(--primary);
@@ -10829,6 +10830,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-done-cb:checked::after { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-rest)); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ev-done-cb:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.ev-done-cb:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 @keyframes ev-cb-pop { 0% { transform: scale(var(--scale-anim-ev-cb)); } 100% { transform: scale(var(--scale-rest)); } }
 .ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
@@ -13567,7 +13569,7 @@ canvas.chart-clickable { cursor: pointer; }
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
-.md-nav-btn:focus-visible:not(:disabled) { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.md-nav-btn:focus-visible:not(:disabled) { outline: none; color: var(--primary); background: var(--primary-light, color-mix(in srgb, var(--primary) var(--mix-faint), transparent)); border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .md-nav-btn:disabled { cursor: default; }
 .md-month-info {
   display: flex;
@@ -13591,7 +13593,7 @@ canvas.chart-clickable { cursor: pointer; }
   filter: brightness(var(--brightness-hover-sm));
 }
 .dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
-.dash-sum-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.dash-sum-clickable:focus-visible { outline: none; transform: translateY(var(--translate-lift-md)); box-shadow: var(--shadow-hover-sm), 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* スクロール可能な本文エリア */
 .md-scroll-body {
@@ -13830,6 +13832,7 @@ canvas.chart-clickable { cursor: pointer; }
   filter: brightness(var(--brightness-press-haze));
 }
 .rpt-month-row.is-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.rpt-month-row.is-clickable:focus-visible .rpt-row-chevron { opacity: 1; transform: translateX(var(--translate-slide)); }
 .rpt-month-label {
   font-variant-numeric: tabular-nums;
 }
