@@ -3794,7 +3794,7 @@ body {
 .ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
-.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-snug); }
+.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-normal); letter-spacing: var(--ls-fine); }
 .ios-guide-arrow {
   font-size: var(--fs-icon-xl); color: var(--primary);
@@ -5923,6 +5923,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--text-muted);
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-micro);
 }
 
 /* btn-success */
@@ -6174,6 +6175,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 
 .cal-panel-close {
@@ -7533,6 +7536,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .hs-item-max {
   font-size: var(--fs-xs);
@@ -7970,6 +7975,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text);
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-micro);
 }
 /* ウィジェット高優先度ハイライト */
 .wish-widget-item.wl-high {
@@ -8555,6 +8561,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-weight: var(--fw-semi);
   color: var(--text-sub);
   margin: var(--sp-4) 0 var(--sp-2);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 
 /* -- カードリスト -- */
@@ -8829,6 +8837,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   min-width: var(--size-pct-col-md);
   text-align: right;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-micro);
 }
 .ch-widget-pct.ch-pct-ok   { color: var(--income); }
 .ch-widget-pct.ch-pct-over { color: var(--expense); }
@@ -8908,7 +8917,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 .dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: var(--z-raise); }
 .dow-stat-info { display: flex; flex-direction: column; gap: var(--sp-0-75); position: relative; z-index: var(--z-raise); }
-.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; }
+.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; letter-spacing: var(--ls-snug); line-height: var(--lh-tight); }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); }
 .dow-stat-amount {
   font-size: var(--fs-2xl);
@@ -9592,6 +9601,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text);
   margin: 0;
   transition: color var(--dur-mid) var(--ease-plain);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 /* タイトルをタイプカラーに連動 */
 .qa-card[data-qa-type="expense"] .qa-card-title,
@@ -10431,7 +10442,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .sim-loan-name {
   font-size: var(--fs-base); font-weight: var(--fw-bold); color: var(--text);
-  margin-right: var(--sp-1);
+  margin-right: var(--sp-1); letter-spacing: var(--ls-fine);
 }
 .sim-loan-stat {
   font-size: var(--fs-sm); color: var(--text-muted);
@@ -10886,8 +10897,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); }
 .ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); }
-.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
-.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); }
+.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); }
 .ev-sum-card .ev-sum-none  { color: var(--on-dark-faint); font-size: var(--fs-xs); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
@@ -10924,6 +10935,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   color: var(--text);
   min-width: var(--size-pct-col-sm);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .ev-month-totals {
   display: flex;
@@ -10980,6 +10993,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-semi);
   color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: var(--ls-fine);
 }
 .ev-name-done { text-decoration: line-through; color: var(--text-muted); }
 .ev-card-meta { display: flex; gap: var(--sp-1); margin-top: var(--sp-0-5); flex-wrap: wrap; }
@@ -10998,6 +11012,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   flex-shrink: 0;
   margin-left: auto;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-micro);
 }
 .ev-card-memo {
   font-size: var(--fs-xs);
@@ -11144,11 +11159,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   flex-shrink: 0;
 }
 .ev-widget-info { flex: 1; min-width: 0; }
-.ev-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev-widget-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: var(--ls-fine); }
 .ev-widget-meta { display: flex; gap: var(--sp-1-5); margin-top: var(--sp-0-5); }
 .ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: var(--fw-semi); }
 .ev-widget-cat   { font-size: var(--fs-xs); color: var(--text-muted); }
-.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); }
 
 /* --- 絵文字グリッド（モーダル内）--- */
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
@@ -11488,6 +11503,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   margin: var(--sp-3-5) 0 var(--sp-1-5);
   color: var(--primary);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .adv-text ul {
   margin: var(--sp-1) 0 var(--sp-2-5) var(--sp-4-5);
@@ -11813,6 +11830,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--danger-text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .yr-avg-income { color: var(--success); }
 .yr-topcat {
@@ -11964,6 +11983,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   color: var(--white);
   margin: 0 0 var(--sp-1);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
 }
 .ci-sub {
   font-size: var(--fs-sm);
@@ -12046,6 +12067,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   min-width: var(--sp-10);
   text-align: right;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-micro);
 }
 /* 予算達成 */
 .ci-budget-row { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
@@ -12961,6 +12983,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   color: var(--text-primary);
   margin: 0 0 var(--sp-0-5);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
 }
 
 .rc-sub {
@@ -13062,6 +13086,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: var(--ls-fine);
 }
 
 .rc-item-meta {
@@ -13337,6 +13362,8 @@ kbd {
   font-weight: var(--fw-bold);
   color: var(--primary);
   animation: kb-dots-pulse var(--dur-glide) var(--ease-plain) infinite;
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
 }
 .kb-g-hint-sub {
   font-size: var(--fs-xs);
@@ -14568,6 +14595,7 @@ canvas.chart-clickable { cursor: pointer; }
   text-overflow: ellipsis;
   line-height: var(--lh-tight);
   margin-bottom: var(--sp-1);
+  letter-spacing: var(--ls-fine);
 }
 .cat-card-meta {
   display: flex;

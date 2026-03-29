@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.17'; // v20.17: タイポグラフィ改善・fc/yi/opp/pm/cat/md/pace系letter-spacing完備（fc-low-conf/fc-progress-label/fc-avg-badge/fc-cell-label/fc-cell-hint/yi-card-unit/yi-card-sub/yi-grade-badge/yi-diff-up-down/yi-half-label/yi-half-val/opp-header-badge/opp-title/opp-desc/opp-saving/opp-saving-strong/opp-challenge-btn/pm-trend-hint/pm-sum-label/pm-sum-sub/cat-month-label/cat-yayoi-tag/cat-stat-lbl/md-savings-badge/pace-bar-label/pace-bar-value 計26要素）
+const CACHE_NAME = 'kakeibo-v20.18'; // v20.18: タイポグラフィ改善・xl/lg見出し/base/イベント/その他sm系letter-spacing+line-height完備（dow-stat-day/ci-title/rc-title/kb-g-dots/ios-guide-title/cal-day-panel-title/ch-section-title/qa-card-title/sim-loan-name/adv-text-h3/cat-card-name/ev-sum-inc/ev-sum-exp/ev-month-label/ev-card-name/ev-card-amount/ev-widget-name/ev-widget-amount/goal-dash-amount/hs-item-score/wish-widget-price/ch-widget-pct/yr-avg-val/ci-savings-pct/rc-item-name 計25要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
