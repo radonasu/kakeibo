@@ -1086,7 +1086,7 @@ select:focus:not(:focus-visible) {
 #hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: none; }
 #hamburger:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
-#mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; }
+#mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; letter-spacing: var(--ls-snug); line-height: var(--lh-tight); }
 
 #main-content {
   flex: 1;
@@ -1123,6 +1123,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-bold);
   color: var(--text);
   line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
   margin-bottom: var(--sp-4);
   text-wrap: balance;
 }
@@ -4848,6 +4849,7 @@ body {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-snug);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5787,6 +5789,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   margin-bottom: var(--sp-1);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6212,6 +6215,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   display: flex;
   align-items: center;
   gap: var(--sp-2);
@@ -6277,6 +6282,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6516,6 +6522,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .sub-widget-next {
@@ -6645,6 +6652,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .sub-card-meta {
@@ -7115,6 +7123,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .pt-card-meta {
@@ -7266,6 +7275,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .pt-widget-info { flex: 1; min-width: 0; }
 .pt-widget-name {
   font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .pt-widget-exp  { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; }
@@ -7649,6 +7659,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-md);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-snug);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7840,6 +7851,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8489,6 +8501,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-base);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -8685,7 +8698,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   flex-shrink: 0;
 }
 .ch-widget-body  { flex: 1; min-width: 0; }
-.ch-widget-name  { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-1); }
+.ch-widget-name  { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-fine); margin-bottom: var(--sp-1); }
 .ch-widget-progress {
   display: flex;
   align-items: center;
@@ -10130,7 +10143,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-xs); font-weight: var(--fw-semi);
   padding: var(--sp-0-5) var(--sp-2); border-radius: var(--radius-badge);
 }
-.debt-name { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); }
+.debt-name { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); }
 .debt-card-actions { display: flex; gap: var(--sp-1); }
 
 /* 残高行 */
