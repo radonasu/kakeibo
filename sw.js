@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.08'; // v20.08: タイポグラフィ改善・カードアイテム名/ウィジェット名letter-spacing完備（mobile-title/card-title/asset-name/goal-dash-name/sub-card-name/sub-widget-name/pt-card-name/pt-widget-name/wl-card-name/wish-widget-name/ch-card-name/ch-widget-name/debt-name/cal-ev-name/cal-events-title 計15要素）
+const CACHE_NAME = 'kakeibo-v20.09'; // v20.09: タイポグラフィ改善・数値/金額要素letter-spacing完備（budget-nums/goal-pct/goal-saved/goal-target/goal-monthly-target/cal-amount/cal-panel-amt/cal-ev-amount/cal-ev-total/sub-widget-amount/sub-monthly-equiv/pt-card-yen/wl-archive-price/ct-cell-val/fv-fixed-val/fv-var-val/fv-cat-amt 計17要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
