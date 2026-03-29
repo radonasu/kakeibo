@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.06)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.07)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4312,6 +4312,8 @@ body {
   gap: var(--sp-1-5);
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   padding: var(--sp-1) var(--sp-2-5);
   border-radius: var(--radius-badge);
 }
@@ -4574,6 +4576,8 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .empty-month-btn {
   margin-top: var(--sp-1);
@@ -4946,6 +4950,8 @@ body {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
   margin-bottom: var(--sp-2);
 }
 .empty-asset-sub {
@@ -5659,6 +5665,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
 }
 .empty-goal-sub {
   font-size: var(--fs-sm);
@@ -10201,7 +10209,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
-.empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); margin-bottom: var(--sp-2); }
+.empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); margin-bottom: var(--sp-2); }
 .empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
 
 /* アーカイブ */
@@ -12176,6 +12184,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border: var(--bw-thin) solid var(--border);
   color: var(--text-muted);
   font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   padding: var(--sp-0-75) var(--sp-2-5);
   border-radius: var(--radius-btn-sm);
   cursor: pointer;
@@ -12209,6 +12220,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: center;
   flex-shrink: 0;
   letter-spacing: var(--ls-snug);
+  line-height: var(--lh-tight);
 }
 
 /* グループラベル */
@@ -12311,6 +12323,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -12318,6 +12332,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item-body {
   font-size: var(--fs-xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -12347,6 +12363,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-8) var(--sp-4);
   color: var(--text-muted);
   font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   text-align: center;
   animation: notif-empty-in var(--dur-modal) var(--ease-overshoot) both;
 }
@@ -12362,6 +12379,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-xs);
   color: var(--text-muted);
   opacity: var(--opacity-faded);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 
 /* ダークモード */
@@ -13302,6 +13321,8 @@ canvas.chart-clickable { cursor: pointer; }
 .dd-tx-date {
   color: var(--text-muted);
   font-size: var(--fs-xs);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   white-space: nowrap;
   min-width: var(--size-date-col);
 }
@@ -13311,12 +13332,15 @@ canvas.chart-clickable { cursor: pointer; }
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--text);
+  letter-spacing: var(--ls-fine);
 }
 .dd-tx-amount {
   font-weight: var(--fw-semi);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   font-size: var(--fs-sm);
+  letter-spacing: var(--ls-micro);
+  line-height: var(--lh-tight);
 }
 .dd-tx-amount.expense { color: var(--danger-text); }
 .dd-tx-amount.income  { color: var(--success); }
@@ -13326,6 +13350,8 @@ canvas.chart-clickable { cursor: pointer; }
   color: var(--text-muted);
   padding: var(--sp-8) var(--sp-4);
   font-size: var(--fs-sm);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-snug);
 }
 
 /* フッター */
