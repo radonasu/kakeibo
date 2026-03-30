@@ -10486,12 +10486,20 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: hm-col-in var(--dur-medium) var(--ease-plain) both;
   animation-delay: calc(var(--hm-wi, 0) * var(--dur-stagger-5xs));
 }
+@keyframes hm-cell-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
 .hm-cell {
   width: var(--size-hm-cell);
   height: var(--size-hm-cell);
   border-radius: var(--radius-3xs);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
+}
+.hm-cell:not(.hm-out):not(.hm-legend-cell) {
+  animation: hm-cell-in var(--dur-medium) var(--ease-bounce) both;
+  animation-delay: calc(var(--hm-wi, 0) * 0.01s);
 }
 .hm-cell:hover:not(.hm-out):not(.hm-legend-cell) {
   transform: scale(var(--scale-hm-hover));
@@ -14646,6 +14654,27 @@ canvas.chart-clickable { cursor: pointer; }
   .md-cat-row { grid-template-columns: var(--size-md-cat-sm) 1fr var(--size-md-cat-sm) var(--size-icon-xs); }
   .md-cells { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ─── レポート月別表 入場アニメーション (v20.42) ──────────────── */
+@keyframes rpt-row-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.rpt-month-row {
+  animation: rpt-row-in var(--dur-gentle) var(--ease-bounce) both;
+}
+.rpt-month-row:nth-child(1)  { animation-delay: calc(0  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(2)  { animation-delay: calc(1  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(3)  { animation-delay: calc(2  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(4)  { animation-delay: calc(3  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(5)  { animation-delay: calc(4  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(6)  { animation-delay: calc(5  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(7)  { animation-delay: calc(6  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(8)  { animation-delay: calc(7  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(9)  { animation-delay: calc(8  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(10) { animation-delay: calc(9  * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-3xs)); }
+.rpt-month-row:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-3xs)); }
 
 /* ─── レポート月別表 インタラクティブ行 (v8.7) ──────────────── */
 .rpt-month-row.is-clickable {
