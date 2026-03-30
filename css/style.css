@@ -3243,6 +3243,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-4);
   border: var(--bw-thin) solid var(--border);
+  animation: budget-item-in var(--dur-medium) var(--ease-bounce) both;
   transition: background var(--dur-fast) var(--ease-plain), border-color var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
 }
 .budget-item:hover {
@@ -4342,6 +4343,20 @@ body {
   .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)); }
   .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(var(--scale-rest)); }
 }
+
+/* ── 予算アイテム入場アニメーション ── */
+@keyframes budget-item-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.budget-item:nth-child(1) { animation-delay: calc(1 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(2) { animation-delay: calc(2 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(3) { animation-delay: calc(3 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(4) { animation-delay: calc(4 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(5) { animation-delay: calc(5 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(6) { animation-delay: calc(6 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(7) { animation-delay: calc(7 * var(--dur-stagger-sm)); }
+.budget-item:nth-child(8) { animation-delay: calc(8 * var(--dur-stagger-sm)); }
 
 /* ── 予算バー フィルアニメーション ── */
 @keyframes budget-fill-in {
@@ -8773,7 +8788,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   overflow: hidden;
   padding: var(--sp-4);
   border-radius: var(--radius);
+  animation: ch-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
+.ch-sum-achieved { animation-delay: var(--dur-stagger-xl); }
+.ch-sum-total    { animation-delay: calc(2 * var(--dur-stagger-xl)); }
 .ch-summary-card::before {
   content: "";
   position: absolute;
@@ -8813,6 +8831,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 
 /* -- カードアニメーション -- */
+@keyframes ch-sum-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
 @keyframes ch-card-in {
   from { opacity:0; transform: translateY(var(--enter-y-lg)); }
   to   { opacity:1; transform: translateY(0); }
