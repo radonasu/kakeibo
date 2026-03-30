@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.20)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.21)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4574,6 +4574,7 @@ body {
 .onboarding-subtitle {
   font-size: var(--fs-base);
   opacity: var(--opacity-soft);
+  letter-spacing: var(--ls-fine);
   line-height: var(--lh-normal);
   margin-bottom: var(--sp-7);
   max-width: var(--size-onboard-text);
@@ -4644,11 +4645,13 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
   line-height: var(--lh-snug);
 }
 .step-desc {
   font-size: var(--fs-xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
   line-height: var(--lh-normal);
 }
 .step-action {
@@ -5728,6 +5731,8 @@ body {
 .goal-achieved-date {
   font-size: var(--fs-xs);
   color: var(--success);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   margin-top: var(--sp-2);
 }
 
@@ -5738,6 +5743,8 @@ body {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   cursor: pointer;
   padding: var(--sp-2) 0;
   list-style: none;
@@ -5851,6 +5858,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .goal-deposit-current {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   background: var(--surface-2);
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-sm);
@@ -5940,6 +5949,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   min-width: var(--size-pct-col-sm);
   font-weight: var(--fw-semi);
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 .goal-dash-amount {
   font-size: var(--fs-sm);
@@ -6111,6 +6122,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   align-items: center;
   font-size: var(--fs-2xs);
   font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
   padding: var(--sp-0-25) var(--sp-1-75);
   border-radius: var(--radius-badge);
   animation: cal-ws-pill-in var(--dur-gentle) var(--ease-plain) both;
@@ -6265,11 +6278,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 
 .cal-panel-memo {
   font-size: var(--fs-xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -6278,6 +6295,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-panel-mem {
   font-size: var(--fs-2xs);
   color: var(--text-faint);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 
 .cal-panel-amt {
@@ -6294,6 +6313,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   text-align: center;
   color: var(--text-muted);
   font-size: var(--fs-sm);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-snug);
   padding: var(--sp-5) 0;
 }
 
@@ -6356,6 +6377,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--primary);
   font-size: var(--fs-3xs);
   font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 .cal-ev-nav {
   font-size: var(--fs-xs);
@@ -6406,6 +6429,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-weight: var(--fw-semi);
   color: var(--text);
   letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6657,6 +6681,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .sub-widget-next {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 .sub-widget-amount {
   font-size: var(--fs-sm);
@@ -6670,6 +6696,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-2xs);
   color: var(--text-muted);
   font-weight: var(--fw-normal);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 
 /* ── サブスクページ ── */
@@ -6734,8 +6762,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .sub-summary-sub {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
-  margin-top: var(--sp-1);
+  letter-spacing: var(--ls-label);
   line-height: var(--lh-tight);
+  margin-top: var(--sp-1);
 }
 
 /* カード一覧 */
@@ -6791,19 +6820,25 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .sub-cycle-tag {
   font-size: var(--fs-2xs);
+  font-weight: var(--fw-semi);
+  color: var(--text-muted);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
   padding: var(--sp-0-5) var(--sp-1-75);
   border-radius: var(--radius-badge);
   background: var(--surface-hover);
-  color: var(--text-muted);
-  font-weight: var(--fw-semi);
 }
 .sub-next-billing {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 .sub-paused-badge {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
   background: var(--surface-hover);
   padding: var(--sp-0-5) var(--sp-1-75);
   border-radius: var(--radius-badge);
@@ -6811,6 +6846,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .sub-card-memo {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
   margin-top: var(--sp-0-5);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
@@ -6834,6 +6871,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-3xs);
   color: var(--text-muted);
   font-weight: var(--fw-normal);
+  letter-spacing: var(--ls-label);
+  line-height: var(--lh-tight);
 }
 .sub-monthly-equiv {
   font-size: var(--fs-2xs);
