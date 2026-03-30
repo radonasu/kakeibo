@@ -12565,6 +12565,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-2) var(--sp-3);
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
+  animation: ci-ch-in var(--dur-medium) var(--ease-bounce) calc(var(--ci-ch, 0) * var(--dur-stagger-md)) both;
+}
+@keyframes ci-ch-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .ci-challenge-name { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
 .ci-badge {
@@ -12590,6 +12595,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
   border-left: var(--accent-w) solid var(--ci-ev-accent, var(--primary));
+  animation: ci-ev-in var(--dur-medium) var(--ease-bounce) calc(var(--ci-ev-i, 0) * var(--dur-stagger-md)) both;
+}
+@keyframes ci-ev-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .ci-event-icon  { font-size: var(--fs-icon); flex-shrink: 0; }
 .ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-main); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }

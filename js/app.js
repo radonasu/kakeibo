@@ -11419,10 +11419,10 @@ function openCheckinModal(prevYM) {
   // 先月のチャレンジ
   const prevChallenges = (appData.challenges || []).filter(ch => ch.period === prevYM);
   if (prevChallenges.length > 0) {
-    const items = prevChallenges.slice(0, 3).map(ch => {
+    const items = prevChallenges.slice(0, 3).map((ch, idx) => {
       const prog     = calcChallengeProgress(ch);
       const achieved = ch.type === 'budget' ? prog.actual <= prog.target : prog.actual >= prog.target;
-      return `<div class="ci-challenge-item">
+      return `<div class="ci-challenge-item" style="--ci-ch:${idx}">
         <span aria-hidden="true">${ch.emoji || '🏆'}</span>
         <span class="ci-challenge-name">${esc2(ch.name)}</span>
         <span class="ci-badge ${achieved ? 'achieved' : 'failed'}">${achieved ? '✓ 達成' : '未達'}</span>
@@ -11435,11 +11435,11 @@ function openCheckinModal(prevYM) {
   const curYM = currentYearMonth();
   const upcoming = (appData.events || []).filter(e => e.month === curYM && !e.done);
   if (upcoming.length > 0) {
-    const items = upcoming.slice(0, 4).map(ev => {
+    const items = upcoming.slice(0, 4).map((ev, idx) => {
       const typeColor = ev.type === 'income' ? 'var(--income)' : 'var(--expense)';
       const accent    = ev.color || typeColor;
       const amtStr    = ev.plannedAmount ? formatMoney(ev.plannedAmount) : '';
-      return `<div class="ci-event-item" style="--ci-ev-accent:${accent}">
+      return `<div class="ci-event-item" style="--ci-ev-accent:${accent};--ci-ev-i:${idx}">
         <span class="ci-event-icon" aria-hidden="true">${ev.emoji || '📌'}</span>
         <span class="ci-event-name">${esc2(ev.name)}</span>
         ${amtStr ? `<span class="ci-event-amount">${amtStr}</span>` : ''}
