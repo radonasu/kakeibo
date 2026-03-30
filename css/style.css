@@ -6006,7 +6006,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  animation: gd-item-in var(--dur-medium) var(--ease-bounce) both;
 }
+.goal-dash-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
+.goal-dash-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-md)); }
 
 /* v5.32: ダッシュボード用ミニリング */
 .goal-dash-ring-wrap {
@@ -6068,7 +6071,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .goal-dash-bar-fill {
   height: 100%;
   border-radius: var(--radius-badge);
+  transform-origin: left;
   transition: width var(--dur-glide) var(--ease-out-expo);
+  animation: gd-bar-in var(--dur-fill) var(--ease-std) both;
   /* v5.32: CSS変数グラデーション */
   background: linear-gradient(
     var(--grad-horizontal),
@@ -6076,6 +6081,9 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
     color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), var(--white)) 100%
   );
 }
+.goal-dash-item:nth-child(1) .goal-dash-bar-fill { animation-delay: var(--dur-delay-xl); }
+.goal-dash-item:nth-child(2) .goal-dash-bar-fill { animation-delay: calc(var(--dur-stagger-md) + var(--dur-delay-xl)); }
+.goal-dash-item:nth-child(3) .goal-dash-bar-fill { animation-delay: calc(2 * var(--dur-stagger-md) + var(--dur-delay-xl)); }
 .goal-dash-pct {
   font-size: var(--fs-2xs);
   color: var(--goal-accent, var(--text-faint));
@@ -6111,6 +6119,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   .goal-card-footer { gap: var(--sp-2); }
   .goal-card-footer .btn { flex: 1; justify-content: center; font-size: var(--fs-xs); }
   .goal-deadline { flex-direction: column; align-items: flex-start; gap: var(--sp-0-5); }
+}
+
+@keyframes gd-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes gd-bar-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 /* ── カレンダービュー (v5.39) ──────────────────────────────── */
