@@ -5605,10 +5605,16 @@ body {
    ============================================================ */
 
 /* v5.32: goal-card カラーアクセント — --goal-accent をカード style で設定 */
+@keyframes goal-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
 .goal-card {
   padding: var(--sp-6);
   border-left: var(--size-accent-bar) solid var(--goal-accent, var(--primary));
   transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-plain);
+  animation: goal-card-in var(--dur-lift) var(--ease-bounce) both;
+  animation-delay: calc(var(--goal-i, 0) * var(--dur-stagger-lg));
 }
 .goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
 .goal-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -7709,6 +7715,16 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 /* ──── Factor bars ──── */
 .hs-items { display: flex; flex-direction: column; gap: var(--sp-3); }
+@keyframes hs-item-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+.hs-item {
+  animation: hs-item-in var(--dur-lift) var(--ease-bounce) both;
+}
+.hs-d1 { animation-delay: var(--dur-stagger-xl); }
+.hs-d2 { animation-delay: calc(2 * var(--dur-stagger-xl)); }
+.hs-d3 { animation-delay: calc(3 * var(--dur-stagger-xl)); }
 .hs-item-header {
   display: flex;
   justify-content: space-between;

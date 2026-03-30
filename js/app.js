@@ -7333,7 +7333,7 @@ function renderGoals() {
     </svg>`;
   }
 
-  function goalCard(g, isDone) {
+  function goalCard(g, isDone, goalIdx = 0) {
     const target    = Number(g.targetAmount) || 0;
     const saved     = Number(g.savedAmount)  || 0;
     const pct       = target > 0 ? Math.min(Math.round(saved / target * 100), 100) : 0;
@@ -7342,7 +7342,7 @@ function renderGoals() {
     const emoji     = g.emoji || '🎯';
     const accentStyle = isDone
       ? `style="--goal-accent:var(--success)"`
-      : `style="--goal-accent:${color}"`;
+      : `style="--goal-accent:${color};--goal-i:${goalIdx}"`;
 
     // マイルストーンマーカー（25/50/75%）
     const milestones = `<div class="goal-milestone" style="left:25%"></div><div class="goal-milestone" style="left:50%"></div><div class="goal-milestone" style="left:75%"></div>`;
@@ -7420,7 +7420,7 @@ function renderGoals() {
 </div>`;
   }
 
-  const activeCards   = active.map(g => goalCard(g, false)).join('');
+  const activeCards   = active.map((g, i) => goalCard(g, false, i)).join('');
   const achievedCards = achieved.length > 0 ? `
 <details class="goal-achieved-section">
   <summary class="goal-achieved-summary">🏆 達成済み（${achieved.length}件）</summary>
