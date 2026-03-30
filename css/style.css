@@ -8466,7 +8466,13 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   border-radius: var(--radius-badge);
   background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
+  transform-origin: left center;
+  animation: fc-fill-in var(--dur-fill) var(--ease-std) both;
   transition: width var(--dur-fill) var(--ease-enter);
+}
+@keyframes fc-fill-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 /* TODAYマーカー */
 .fc-progress-today {
@@ -8480,7 +8486,12 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: var(--bw-thick) solid var(--fc-color, var(--primary));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--on-dark-half);
   pointer-events: none;
+  animation: fc-today-in var(--dur-pop) var(--ease-bounce) var(--dur-fill) both;
   transition: left var(--dur-fill) var(--ease-enter);
+}
+@keyframes fc-today-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 .fc-progress-label {
   font-size: var(--fs-xs);
@@ -8497,6 +8508,11 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: var(--size-spark-lg);
   margin-bottom: var(--sp-3);
   overflow: visible;
+  animation: fc-spark-in var(--dur-spark) var(--ease-plain) var(--dur-delay-lg) both;
+}
+@keyframes fc-spark-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .fc-spark-area {
   fill: url(#fc-spark-grad);
