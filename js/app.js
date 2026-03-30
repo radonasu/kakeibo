@@ -4274,7 +4274,7 @@ ${(() => {
     const barW   = maxTotal > 0 ? Math.round(dowTotals[i] / maxTotal * 100) : 0;
     const isMax  = maxDow && i === maxDow.i;
     const pctCls = pct >= 20 ? 'dow-pct-high' : pct >= 10 ? 'dow-pct-mid' : 'dow-pct-low';
-    const row = `<tr class="dow-table-row${isMax ? ' dow-row-max' : ''}" style="--dow-row-color:${DOW_COLORS_HEX[i]}">
+    const row = `<tr class="dow-table-row${isMax ? ' dow-row-max' : ''}" style="--dow-row-color:${DOW_COLORS_HEX[i]};--dow-ri:${barDelay}">
       <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]};font-weight:700">${label}曜日</span></td>
       <td class="text-muted">${dowCounts[i]}件 / ${dowDateSets[i].size}日</td>
       <td class="expense">
@@ -10022,7 +10022,7 @@ function renderWishlist() {
 <details class="wl-archive-wrap">
   <summary class="wl-archive-summary">✅ 購入済み（${done.length}件）</summary>
   <div class="wl-archive-list">
-    ${done.map(w => `<div class="wl-archive-item">
+    ${done.map((w, wi) => `<div class="wl-archive-item" style="--wa-i:${wi}">
       <span class="wl-archive-emoji">${w.emoji || '🛍️'}</span>
       <span class="wl-archive-name">${esc2(w.name)}</span>
       <span class="wl-archive-date">${w.purchasedDate || ''}</span>
@@ -10517,8 +10517,8 @@ function renderDebts() {
       endHint = `<span class="debt-end-pill">📅 残り約 ${months} ヶ月</span>`;
     }
 
-    const histRows = entries.slice(0, 3).map(en => `
-      <div class="debt-entry-row">
+    const histRows = entries.slice(0, 3).map((en, di) => `
+      <div class="debt-entry-row" style="--de-i:${di}">
         <span class="debt-entry-date">${formatDate(en.date)}</span>
         <span class="debt-entry-note">${esc2(en.note || '—')}</span>
         <span class="debt-entry-balance">${formatMoney(en.balance)}</span>

@@ -8180,6 +8180,12 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   align-items: center;
   gap: var(--sp-3);
   opacity: var(--opacity-dim);
+  animation: wl-arc-item-in var(--dur-gentle) var(--ease-bounce) both;
+  animation-delay: calc(var(--wa-i, 0) * var(--dur-stagger-md));
+}
+@keyframes wl-arc-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: var(--opacity-dim); transform: none; }
 }
 .wl-archive-emoji { font-size: var(--fs-icon); flex-shrink: 0; }
 .wl-archive-name  { flex: 1; font-size: var(--fs-sm); color: var(--text-muted); text-decoration: line-through; letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
@@ -9283,7 +9289,15 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dow-pct-low  { background: var(--success-bg); color: var(--income-deep); }
 
 /* ─ テーブル行の曜日カラー左ボーダー ─ */
-.dow-table-row { border-left: var(--accent-w) solid var(--dow-row-color, var(--border)); }
+.dow-table-row {
+  border-left: var(--accent-w) solid var(--dow-row-color, var(--border));
+  animation: dow-row-in var(--dur-appear) var(--ease-plain) both;
+  animation-delay: calc(var(--dow-ri, 0) * var(--dur-stagger-3xs));
+}
+@keyframes dow-row-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
+}
 .dow-table-row.dow-row-max td:last-child { font-weight: var(--fw-bold); }
 
 /* ミニバーグラフ (合計支出セル内) */
@@ -10705,6 +10719,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: var(--sp-1) 0; border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-xs);
   letter-spacing: var(--ls-fine); line-height: var(--lh-tight);
+  animation: debt-entry-in var(--dur-appear) var(--ease-plain) both;
+  animation-delay: calc(var(--de-i, 0) * var(--dur-stagger-3xs));
+}
+@keyframes debt-entry-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .debt-entry-row:last-child { border-bottom: none; }
 .debt-entry-date   { color: var(--text-muted); min-width: 72px; }
