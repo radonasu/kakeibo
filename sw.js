@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.27'; // v20.27: データビジュアライゼーション改善・チャートグリッドライン不透明度一貫性修正（renderDayOfWeekChart/renderCategoryTrendChart/renderFixedVariableTrend）・折れ線グラフinteraction mode追加（renderBalanceLineChart/renderNetWorthChart/renderFixedVariableTrend）・未使用変数削除・空状態テキストtext-wrap:balance追加（empty-month-msg/empty-asset-msg/empty-goal-msg/empty-debt-msg/wl-empty p/ch-empty p/sub-empty p/tx-empty-msg/pt-empty p/onboarding-subtitle/step-desc 計11要素）
+const CACHE_NAME = 'kakeibo-v20.28'; // v20.28: タイポグラフィ改善・数値表示/ラベル文字間隔一貫性（yr-cell-sub/yr-progress-label/yr-avg-val/yr-topcat-amt/ch-summary-label/md-cat-name/md-cat-amount/wk-unit/wk-bar-amount/hm-dow-col span/kk-toast/ev-card-amount）letter-spacing・line-height・font-variant-numeric追加
 const ASSETS = [
   './index.html',
   './css/style.css',
