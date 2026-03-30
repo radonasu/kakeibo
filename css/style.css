@@ -6778,6 +6778,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-btn);
   background: var(--surface-hover);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
+  animation: sw-item-in var(--dur-medium) var(--ease-bounce) both;
+  animation-delay: calc(var(--sw-i, 0) * var(--dur-stagger-md));
+}
+@keyframes sw-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .sub-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .sub-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
@@ -8195,6 +8201,12 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  animation: ww-item-in var(--dur-medium) var(--ease-bounce) both;
+  animation-delay: calc(var(--ww-i, 0) * var(--dur-stagger-md));
+}
+@keyframes ww-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .wish-widget-icon {
   font-size: var(--fs-icon-lg);
@@ -9087,6 +9099,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   align-items: center;
   gap: var(--sp-3);
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
+  animation: cw-item-in var(--dur-medium) var(--ease-bounce) both;
+  animation-delay: calc(var(--cw-i, 0) * var(--dur-stagger-md));
+}
+@keyframes cw-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .ch-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }

@@ -1311,10 +1311,10 @@ function renderDashboard() {
     <div class="sub-widget-total-amount js-countup" data-value="${subTotal}">${formatMoney(subTotal)}</div>
   </div>
   <div class="sub-widget-list">
-    ${upcomingSubs.map(s => {
+    ${upcomingSubs.map((s, idx) => {
       const days = subDaysUntilBilling(s);
       const urgentCls = days <= 3 ? 'sub-urgent' : days <= 7 ? 'sub-soon' : '';
-      return `<div class="sub-widget-item ${urgentCls}">
+      return `<div class="sub-widget-item ${urgentCls}" style="--sw-i:${idx}">
         <div class="sub-widget-icon" style="background:color-mix(in srgb,${s.color||'var(--primary)'} 13%,transparent);color:${s.color||'var(--primary)'}">${s.emoji || '📱'}</div>
         <div class="sub-widget-info">
           <div class="sub-widget-name">${esc2(s.name)}</div>
@@ -1384,11 +1384,11 @@ function renderDashboard() {
     <div class="wish-widget-total-amount js-countup" data-value="${wishTotal}">${formatMoney(wishTotal)}</div>
   </div>
   <div class="wish-widget-list">
-    ${wishItems.slice(0, 3).map(w => {
+    ${wishItems.slice(0, 3).map((w, idx) => {
       const priLabel = { high: '高', medium: '中', low: '低' }[w.priority] || '中';
       const priCls   = { high: 'wl-pri-high', medium: 'wl-pri-medium', low: 'wl-pri-low' }[w.priority] || 'wl-pri-medium';
       const highCls  = w.priority === 'high' ? ' wl-high' : '';
-      return `<div class="wish-widget-item${highCls}">
+      return `<div class="wish-widget-item${highCls}" style="--ww-i:${idx}">
         <div class="wish-widget-icon">${w.emoji || '🛍️'}</div>
         <div class="wish-widget-info">
           <div class="wish-widget-name">${esc2(w.name)}</div>
@@ -1549,12 +1549,12 @@ function renderDashboard() {
     return makeCollapsibleCard('challenges',
       `<h3 class="card-title">🏆 節約チャレンジ</h3><button class="btn-link" onclick="navigate('challenges')">すべて見る →</button>`,
       `<div class="ch-widget-list">
-    ${activeChallenges.slice(0, 3).map(ch => {
+    ${activeChallenges.slice(0, 3).map((ch, idx) => {
       const prog = calcChallengeProgress(ch);
       const pct = prog.pct;
       const isOver = ch.type === 'budget' && prog.actual > prog.target;
       const barCls = isOver ? 'ch-bar-over' : prog.isOnTrack ? 'ch-bar-ok' : 'ch-bar-warn';
-      return `<div class="ch-widget-item" style="--ch-accent:${ch.color || 'var(--primary)'}">
+      return `<div class="ch-widget-item" style="--ch-accent:${ch.color || 'var(--primary)'};--cw-i:${idx}">
         <div class="ch-widget-icon">${ch.emoji || '🏆'}</div>
         <div class="ch-widget-body">
           <div class="ch-widget-name">${esc2(ch.name)}</div>
