@@ -5096,6 +5096,10 @@ body {
   line-height: var(--lh-tight);
   margin-bottom: var(--sp-1-5);
 }
+@keyframes asset-row-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 .asset-entry-row {
   display: flex;
   align-items: center;
@@ -5103,7 +5107,11 @@ body {
   padding: var(--sp-1-5) 0;
   border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-sm);
+  animation: asset-row-in var(--dur-medium) var(--ease-bounce) both;
 }
+.asset-entry-row:nth-child(1) { animation-delay: var(--dur-long); }
+.asset-entry-row:nth-child(2) { animation-delay: calc(var(--dur-long) + var(--dur-stagger-md)); }
+.asset-entry-row:nth-child(3) { animation-delay: calc(var(--dur-long) + 2 * var(--dur-stagger-md)); }
 .asset-entry-row:last-of-type { border-bottom: none; }
 .asset-entry-date {
   color: var(--text-muted);
@@ -8700,6 +8708,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 
 /* 残高変動デルタバッジ */
+@keyframes asset-delta-in {
+  from { opacity: 0; transform: scale(0.65) translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+}
 .asset-balance-delta {
   display: inline-flex;
   align-items: center;
@@ -8713,6 +8725,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--ls-label);
+  animation: asset-delta-in var(--dur-pop) var(--ease-bounce) var(--dur-lift) both;
 }
 .asset-balance-delta.up {
   background: var(--success-bg);
@@ -8757,10 +8770,15 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 
 /* ミニスパークライン */
+@keyframes asset-spark-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .asset-sparkline-wrap {
   margin-top: var(--sp-2-5);
   padding-top: var(--sp-2);
   border-top: var(--bw-thin) solid var(--border);
+  animation: asset-spark-in var(--dur-medium) var(--ease-plain) var(--dur-delay-lg) both;
 }
 .asset-sparkline-label {
   font-size: var(--fs-2xs);
