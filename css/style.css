@@ -7271,6 +7271,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-btn);
   position: relative;
   overflow: hidden;
+  animation: pt-sum-in var(--dur-lift) var(--ease-bounce) both;
 }
 .pt-total {
   background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
@@ -7279,6 +7280,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .pt-expiring {
   background: linear-gradient(var(--grad-diagonal), var(--warning) 0%, var(--orange) 100%);
   border-color: transparent;
+  animation-delay: var(--dur-stagger-xl);
+}
+@keyframes pt-sum-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 .pt-summary-label {
   font-size: var(--fs-xs);
@@ -7544,6 +7550,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-sm);
   background: var(--surface-hover);
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
+  animation: pt-wi-in var(--dur-gentle) var(--ease-bounce) both;
+}
+.pt-widget-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
+.pt-widget-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-md)); }
+@keyframes pt-wi-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .pt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .pt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
@@ -7848,6 +7861,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   position: relative;
   overflow: hidden;
   border: none;
+  animation: wl-sum-in var(--dur-lift) var(--ease-bounce) both;
+}
+@keyframes wl-sum-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 /* デコレーションサークル */
 .wl-summary-card::before,
@@ -7861,10 +7879,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .wl-summary-card::before { width: var(--size-deco-xs); height: var(--size-deco-xs); top: calc(-1 * var(--sp-6)); right: calc(-1 * var(--sp-5)); }
 .wl-summary-card::after  { width: var(--size-deco-4xs); height: var(--size-deco-4xs); bottom: calc(-1 * var(--sp-4)); left: var(--sp-2); }
-/* グラデーション 3種 */
+/* グラデーション 3種（stagger付き入場） */
 .wl-sum-count  { background: linear-gradient(var(--grad-diagonal), var(--primary-dark) 0%, var(--primary-end) 100%); }
-.wl-sum-budget { background: linear-gradient(var(--grad-diagonal), var(--teal) 0%, var(--teal-end) 100%); }
-.wl-sum-done   { background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income-end) 100%); }
+.wl-sum-budget { background: linear-gradient(var(--grad-diagonal), var(--teal) 0%, var(--teal-end) 100%); animation-delay: var(--dur-stagger-mid); }
+.wl-sum-done   { background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income-end) 100%); animation-delay: calc(2 * var(--dur-stagger-mid)); }
 /* グラデーションカード内のテキストを白に */
 .wl-sum-count .wl-summary-label,
 .wl-sum-budget .wl-summary-label,

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.30'; // v20.30: データビジュアライゼーション改善③・残り2チャートinteraction mode追加（renderCategoryBarChart/renderDayOfWeekChart）・yoy-summary-item入場アニメーション追加
+const CACHE_NAME = 'kakeibo-v20.31'; // v20.31: マイクロインタラクション改善・pt-summary-card/wl-summary-card入場アニメーション追加・pt-widget-itemリスト入場アニメーション追加
 const ASSETS = [
   './index.html',
   './css/style.css',
