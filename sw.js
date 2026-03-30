@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.23'; // v20.23: タイポグラフィ改善・モーダル/フォーム/入力系/認証/ナビゲーション系letter-spacing+line-height完備（dup-modal-banner/form-group-textarea/form-group-placeholder/amount-prefix/amount-input/filter-bar-month-sel/month-sel/export-range-select/btn-preset/badge-active/mr-edit-row-select/budget-nums/budget-pct-badge/budget-input/btn-tpl/sync-user-avatar/stp-help-summary/sync-toast/auth-subtitle/auth-submit/auth-error/auth-hint/auth-offline-mode/bottom-nav-item 計24要素）
+const CACHE_NAME = 'kakeibo-v20.24'; // v20.24: タイポグラフィ改善・全ページのletter-spacing持ち要素へのline-height完備（asset-type-badge/asset-name/asset-currency-badge/asset-fx-rate/goal系14要素/cal系6要素/sub系5要素/pt系5要素/hs系2要素/wl系3要素/fc系6要素/ch系4要素/dow-stat-unit/ct-cell-val/cat-fixed-badge/fv系3要素/wk系2要素/qa-amount-input/hm-stat-unit/debt系8要素/sim-loan-name/ev系5要素/cc-badge/yr系2要素/ci-savings-pct/rc系2要素/dd-tx-memo/yi系7要素/opp系5要素/md-savings-badge/pace系9要素/pm系3要素/cat系3要素 計108要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
