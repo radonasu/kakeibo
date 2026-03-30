@@ -12523,6 +12523,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  animation: ci-row-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 3 * var(--dur-stagger-xl)) both;
+}
+@keyframes ci-row-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .ci-savings-label {
   font-size: var(--fs-xs);
@@ -12556,7 +12561,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-tighter);
 }
 /* 予算達成 */
-.ci-budget-row { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.ci-budget-row { display: flex; gap: var(--sp-2); flex-wrap: wrap; animation: ci-row-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 4 * var(--dur-stagger-xl)) both; }
 .ci-budget-pill {
   display: inline-flex;
   align-items: center;
@@ -12578,6 +12583,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4);
+  animation: ci-row-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 5 * var(--dur-stagger-xl)) both;
 }
 .ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
 .ci-score-badge {
