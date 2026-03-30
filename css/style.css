@@ -4681,7 +4681,14 @@ body {
   cursor: pointer;
   transition: box-shadow var(--dur-faster) var(--ease-plain), transform var(--dur-faster) var(--ease-bounce), border-color var(--dur-faster) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
   box-shadow: var(--shadow-sm);
+  animation: step-card-in var(--dur-lift) var(--ease-bounce) both;
 }
+@keyframes step-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.onboarding-steps .step-card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+.onboarding-steps .step-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-xl)); }
 .step-card:hover {
   transform: translateY(var(--translate-lift-md));
   box-shadow: var(--shadow-md);
@@ -10701,6 +10708,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-2); border-radius: var(--radius-btn-sm);
   background: var(--surface-hover);
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
+  animation: dw-item-in var(--dur-medium) var(--ease-bounce) both;
+  animation-delay: calc(var(--dw-i, 0) * var(--dur-stagger-md));
+}
+@keyframes dw-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
 }
 .debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .debt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }

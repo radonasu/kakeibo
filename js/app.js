@@ -1593,13 +1593,13 @@ function renderDashboard() {
     </div>
   </div>
   <div class="debt-widget-list">
-    ${activeDebts.slice(0, 3).map(d => {
+    ${activeDebts.slice(0, 3).map((d, idx) => {
       const typeInfo = DEBT_TYPES[d.type] || DEBT_TYPES.other;
       const e = getDebtCurrentBalance(d);
       const cur = e ? Number(e.balance) : Number(d.principal);
       const prin = Number(d.principal) || 1;
       const paidPct = Math.min(Math.round((1 - cur / prin) * 100), 100);
-      return `<div class="debt-widget-item" style="--debt-accent:${typeInfo.color}">
+      return `<div class="debt-widget-item" style="--debt-accent:${typeInfo.color};--dw-i:${idx}">
         <div class="debt-widget-icon" style="background:${typeInfo.color}22;color:${typeInfo.color}">${d.emoji || typeInfo.icon}</div>
         <div class="debt-widget-info">
           <div class="debt-widget-name">${esc2(d.name)}</div>
