@@ -261,6 +261,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       onClick: clickable ? (event, elements) => {
         if (elements.length > 0) {
           onMonthClick(months[elements[0].index]);
@@ -293,7 +294,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
         },
         y: {
           beginAtZero: true,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font:     { size: 10 },
             color:    textColor,
@@ -369,7 +370,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
           border: { color: gridColor },
         },
         y: {
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font:     { size: 10 },
             color:    textColor,
@@ -447,7 +448,7 @@ function renderCategoryBarChart(canvasId, transactions, type) {
       scales: {
         x: {
           beginAtZero: true,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font:     { size: 10 },
             color:    textColor,
@@ -520,6 +521,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           position: 'top',
@@ -538,7 +540,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
       scales: {
         x: {
           beginAtZero: true,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font: { size: 10 },
             color: textColor,
@@ -705,6 +707,7 @@ function renderPaymentTrendChart(canvasId, year) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           position: 'top',
@@ -734,7 +737,7 @@ function renderPaymentTrendChart(canvasId, year) {
         y: {
           stacked: true,
           beginAtZero: true,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font: { size: 10 },
             color: textColor,
@@ -814,6 +817,7 @@ function renderYoYChart(canvasId, year) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           position: 'top',
@@ -837,7 +841,7 @@ function renderYoYChart(canvasId, year) {
         },
         y: {
           beginAtZero: true,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font:     { size: 10 },
             color:    textColor,
@@ -1007,7 +1011,7 @@ function renderNetWorthChart(canvasId) {
         },
         y: {
           beginAtZero: false,
-          grid:  { color: gridColor + '60', drawBorder: false },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font:     { size: 10 },
             color:    textColor,

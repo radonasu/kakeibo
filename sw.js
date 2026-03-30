@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.28'; // v20.28: タイポグラフィ改善・数値表示/ラベル文字間隔一貫性（yr-cell-sub/yr-progress-label/yr-avg-val/yr-topcat-amt/ch-summary-label/md-cat-name/md-cat-amount/wk-unit/wk-bar-amount/hm-dow-col span/kk-toast/ev-card-amount）letter-spacing・line-height・font-variant-numeric追加
+const CACHE_NAME = 'kakeibo-v20.29'; // v20.29: データビジュアライゼーション改善②・棒グラフ/水平グラフinteraction mode追加（4チャート）・deprecated grid.drawBorder削除（7箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
