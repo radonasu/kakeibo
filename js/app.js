@@ -1080,7 +1080,7 @@ function renderCategoryCompareWidget(ym) {
   const increased = diffs.filter(d => d.pct > 0).sort((a, b) => b.pct - a.pct).slice(0, 3);
   const decreased = diffs.filter(d => d.pct < 0).sort((a, b) => a.pct - b.pct).slice(0, 3);
   if (increased.length === 0 && decreased.length === 0) return '';
-  const row = ({ cat, pct, curr }) => `<div class="cc-item">
+  const row = ({ cat, pct, curr }, idx) => `<div class="cc-item" style="--cci:${idx}">
   <span class="cc-dot" style="background:${cat.color}"></span>
   <span class="cc-name">${esc2(cat.name)}</span>
   <span class="cc-amount">${formatMoney(curr)}</span>
