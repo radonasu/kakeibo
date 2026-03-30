@@ -439,6 +439,7 @@ function renderCategoryBarChart(canvasId, transactions, type) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: commonTooltip({
@@ -914,6 +915,7 @@ function renderDayOfWeekChart(canvasId, transactions) {
       responsive: true,
       maintainAspectRatio: false,
       animation: { ...commonAnimation, duration: 800 },
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: commonTooltip({
