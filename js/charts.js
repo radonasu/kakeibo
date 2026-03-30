@@ -357,6 +357,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: commonTooltip(tooltipCallbacks),
@@ -923,7 +924,7 @@ function renderDayOfWeekChart(canvasId, transactions) {
           border: { display: false },
         },
         y: {
-          grid: { color: grid },
+          grid: { color: grid + '60' },
           ticks: {
             color: text,
             font: { size: 11 },
@@ -991,6 +992,7 @@ function renderNetWorthChart(canvasId) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: commonTooltip({
@@ -1114,7 +1116,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
         },
         y: {
           beginAtZero: true,
-          grid:  { color: gridColor },
+          grid:  { color: gridColor + '60' },
           ticks: {
             font: { size: 10 },
             color: textColor,
@@ -1187,7 +1189,7 @@ function renderFixedVariableTrend(canvasId, year) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
-  const { text, grid, surface, isDark } = getThemeColors();
+  const { text, grid } = getThemeColors();
   const primaryClr = getCSSVar('--primary');
   const successClr = getCSSVar('--success');
   const warningClr = getCSSVar('--warning');
@@ -1254,6 +1256,7 @@ function renderFixedVariableTrend(canvasId, year) {
       responsive: true,
       maintainAspectRatio: false,
       animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           position: 'bottom',
@@ -1276,7 +1279,7 @@ function renderFixedVariableTrend(canvasId, year) {
         y: {
           beginAtZero: true,
           stacked: true,
-          grid: { color: grid },
+          grid: { color: grid + '60' },
           ticks: {
             font: { size: 10 }, color: text,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),

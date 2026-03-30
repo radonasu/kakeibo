@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.21)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.27)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4624,6 +4624,7 @@ body {
   max-width: var(--size-onboard-text);
   margin-left: auto;
   margin-right: auto;
+  text-wrap: balance;
 }
 .onboarding-cta {
   display: inline-flex;
@@ -4697,6 +4698,7 @@ body {
   color: var(--text-muted);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-normal);
+  text-wrap: balance;
 }
 .step-action {
   font-size: var(--fs-xs);
@@ -4734,6 +4736,7 @@ body {
   color: var(--text-muted);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tight);
+  text-wrap: balance;
 }
 .empty-month-btn {
   margin-top: var(--sp-1);
@@ -5118,6 +5121,7 @@ body {
   letter-spacing: var(--ls-snug);
   line-height: var(--lh-tight);
   margin-bottom: var(--sp-2);
+  text-wrap: balance;
 }
 .empty-asset-sub {
   font-size: var(--fs-sm);
@@ -5865,6 +5869,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--text);
   letter-spacing: var(--ls-snug);
   line-height: var(--lh-tight);
+  text-wrap: balance;
 }
 .empty-goal-sub {
   font-size: var(--fs-sm);
@@ -7006,7 +7011,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .sub-empty-icon { font-size: var(--fs-icon-4xl); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
-.sub-empty p { font-size: var(--fs-sm); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
+.sub-empty p { font-size: var(--fs-sm); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); text-wrap: balance; }
 
 /* 休止セクション */
 .sub-inactive-section {
@@ -7477,7 +7482,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .pt-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
-.pt-empty p { margin-bottom: var(--sp-4); letter-spacing: var(--ls-fine); line-height: var(--lh-relaxed); }
+.pt-empty p { margin-bottom: var(--sp-4); letter-spacing: var(--ls-fine); line-height: var(--lh-relaxed); text-wrap: balance; }
 
 /* 絵文字・カラーグリッド（サブスクと同デザイン） */
 .pt-emoji-grid {
@@ -8037,6 +8042,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   margin-bottom: var(--sp-2);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-snug);
+  text-wrap: balance;
 }
 .wl-empty-sub {
   font-size: var(--fs-sm);
@@ -8919,7 +8925,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
-.ch-empty p    { margin: 0 0 var(--sp-1); font-size: var(--fs-base); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
+.ch-empty p    { margin: 0 0 var(--sp-1); font-size: var(--fs-base); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); text-wrap: balance; }
 .ch-empty-sub  { font-size: var(--fs-sm); color: var(--text-faint); line-height: var(--lh-relaxed); letter-spacing: var(--ls-fine); }
 
 /* -- 過去チャレンジアーカイブ -- */
@@ -10594,7 +10600,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: empty-state-in var(--dur-modal) var(--ease-out) both;
 }
 .empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
-.empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); margin-bottom: var(--sp-2); }
+.empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); margin-bottom: var(--sp-2); text-wrap: balance; }
 .empty-debt-sub  { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); letter-spacing: var(--ls-fine); }
 
 /* アーカイブ */
@@ -11931,6 +11937,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   margin: 0 0 var(--sp-4);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-normal);
+  text-wrap: balance;
 }
 
 /* ── 年次累計サマリーウィジェット (v6.4) ────────────────── */
