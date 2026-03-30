@@ -1699,6 +1699,13 @@ select:focus:not(:focus-visible) {
   overflow: hidden;
   box-shadow: var(--shadow-md);
   border: none;
+  animation: sum-card-in var(--dur-lift) var(--ease-bounce) both;
+}
+.summary-cards .summary-card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+.summary-cards .summary-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-xl)); }
+@keyframes sum-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 .summary-card::after {
   content: '';
@@ -1757,6 +1764,11 @@ select:focus:not(:focus-visible) {
   background: var(--on-dark-ripple);
   padding: var(--sp-0-5) var(--sp-2);
   border-radius: var(--radius-badge);
+  animation: diff-badge-in var(--dur-pop) var(--ease-bounce) var(--dur-long) both;
+}
+@keyframes diff-badge-in {
+  from { opacity: 0; transform: scale(0.65) translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: none; }
 }
 .diff.up   { background: color-mix(in srgb, var(--white) var(--mix-lg), transparent); }
 .diff.down { background: color-mix(in srgb, var(--white) var(--mix-xs), transparent); opacity: var(--opacity-faded); }
