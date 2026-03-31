@@ -16080,6 +16080,17 @@ canvas.chart-clickable { cursor: pointer; }
   animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: レポートページ タグ別チャートカード stagger入場 (v20.64)
+   ── #sec-tags .charts-row 2枚カード stagger入場
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── タグ別チャートカード stagger入場（rpt-chart-in流用・2枚） ── */
+#sec-tags .charts-row .card {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+#sec-tags .charts-row .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
