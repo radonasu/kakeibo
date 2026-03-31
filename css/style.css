@@ -6656,6 +6656,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* ============================================================
    家計インサイトウィジェット (v5.40)
    ============================================================ */
+@keyframes insight-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+}
+.insight-card { animation: insight-card-in var(--dur-long) var(--ease-enter) both; }
+
 .insight-list {
   display: flex;
   flex-direction: column;
@@ -9175,6 +9181,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-color-btn.active { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
 /* -- ダッシュボードウィジェット -- */
+@keyframes ch-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+}
+.ch-widget-card { animation: ch-wc-in var(--dur-long) var(--ease-enter) both; }
+
 .ch-widget-list {
   display: flex;
   flex-direction: column;
@@ -10830,6 +10842,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-chevron)); }
 
 /* ダッシュボードウィジェット */
+@keyframes debt-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+}
+.debt-widget-card { animation: debt-wc-in var(--dur-long) var(--ease-enter) both; }
+
 .debt-widget-summary {
   display: flex; align-items: center; gap: 0;
   background: var(--surface-hover); border-radius: var(--radius-btn-sm);
@@ -12093,6 +12111,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* ============================================================
    カテゴリ別前月比ウィジェット (v6.3)
    ============================================================ */
+@keyframes cc-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+}
+.cc-widget-card { animation: cc-wc-in var(--dur-long) var(--ease-enter) both; }
+
 .cc-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -14302,7 +14326,11 @@ canvas.chart-clickable { cursor: pointer; }
   to   { opacity: 1; transform: translateX(0)               scale(var(--scale-rest));    }
 }
 
-.opp-widget-card { padding: 0; }
+@keyframes opp-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+}
+.opp-widget-card { padding: 0; animation: opp-wc-in var(--dur-long) var(--ease-enter) both; }
 
 .opp-header-badge {
   font-size: var(--fs-xs);
