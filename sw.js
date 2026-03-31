@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.58'; // v20.58: マイクロインタラクション改善・取引ページフィルターエリア（フィルターバー子要素/タグフィルターチップ/詳細フィルターパネル展開時）stagger入場アニメーション一括追加
+const CACHE_NAME = 'kakeibo-v20.59'; // v20.59: マイクロインタラクション改善・モーダルダイアログ stagger入場アニメーション一括追加（cat-modal/debt-modal/debt-entry-modal/pt-modal）
 const ASSETS = [
   './index.html',
   './css/style.css',
