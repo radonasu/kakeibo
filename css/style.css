@@ -9448,6 +9448,14 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
+  animation: ct-stat-in var(--dur-lift) var(--ease-bounce) both;
+}
+.ct-stat-card:nth-child(1) { animation-delay: 0s; }
+.ct-stat-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
+.ct-stat-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
+@keyframes ct-stat-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
 }
 .ct-stat-card::before {
   content: '';
@@ -11354,6 +11362,23 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
+  animation: ev-month-col-in var(--dur-lift) var(--ease-bounce) both;
+}
+.ev-month-col:nth-child(1)  { animation-delay: calc(0  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(2)  { animation-delay: calc(1  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(3)  { animation-delay: calc(2  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(4)  { animation-delay: calc(3  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(5)  { animation-delay: calc(4  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(6)  { animation-delay: calc(5  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(7)  { animation-delay: calc(6  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(8)  { animation-delay: calc(7  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(9)  { animation-delay: calc(8  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(10) { animation-delay: calc(9  * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-xs)); }
+.ev-month-col:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-xs)); }
+@keyframes ev-month-col-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
 }
 .ev-month-current {
   border-color: var(--primary);
@@ -11655,6 +11680,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-card);
   margin-bottom: var(--sp-2);
+  animation: sf-row-in var(--dur-medium) var(--ease-bounce) both;
+}
+@keyframes sf-row-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .sf-row-label {
   display: flex;
@@ -13959,6 +13989,13 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-3);
   flex-wrap: wrap;
+}
+#dd-modal.modal-is-open .dd-summary {
+  animation: dd-summary-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both;
+}
+@keyframes dd-summary-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .dd-summary-item {
   display: flex;
