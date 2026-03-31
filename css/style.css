@@ -3043,6 +3043,20 @@ mark.tx-hl {
 .btn-preset:active { transform: scale(var(--scale-press)) translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .btn-preset:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
+/* 取引モーダル内金額プリセット入場アニメーション */
+@keyframes btn-preset-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-2xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+#tx-modal.modal-is-open .amount-presets .btn-preset {
+  animation: btn-preset-in var(--dur-base) var(--ease-bounce) both;
+}
+#tx-modal.modal-is-open .amount-presets .btn-preset:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .amount-presets .btn-preset:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .amount-presets .btn-preset:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .amount-presets .btn-preset:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .amount-presets .btn-preset:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-4xs)); }
+
 /* アカウント管理 */
 .badge-active {
   display: inline-block;
@@ -13352,6 +13366,25 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 .date-quick-btn.date-quick-pop {
+  animation: date-quick-pop var(--dur-medium) var(--ease-bounce);
+}
+
+/* 取引モーダル内日付クイックボタン入場アニメーション */
+@keyframes date-btn-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-2xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+#tx-modal.modal-is-open .date-quick-btn:nth-child(1) {
+  animation: date-btn-in var(--dur-base) var(--ease-bounce) calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)) both;
+}
+#tx-modal.modal-is-open .date-quick-btn:nth-child(2) {
+  animation: date-btn-in var(--dur-base) var(--ease-bounce) calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)) both;
+}
+#tx-modal.modal-is-open .date-quick-btn:nth-child(3) {
+  animation: date-btn-in var(--dur-base) var(--ease-bounce) calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)) both;
+}
+/* ポップアニメーション優先（入場スタガー規則より後方で同等詳細度→カスケード順で上書き） */
+#tx-modal.modal-is-open .date-quick-btn.date-quick-pop {
   animation: date-quick-pop var(--dur-medium) var(--ease-bounce);
 }
 
