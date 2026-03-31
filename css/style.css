@@ -16063,6 +16063,23 @@ canvas.chart-clickable { cursor: pointer; }
 }
 #sec-monthly-charts .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: レポートページ 支払方法/カテゴリ チャートカード stagger入場 (v20.63)
+   ── #sec-payment .charts-row 2枚カード stagger入場
+   ── #sec-category .card 1枚カード入場
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 支払方法チャートカード stagger入場（rpt-chart-in流用・2枚） ── */
+#sec-payment .charts-row .card {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+#sec-payment .charts-row .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+
+/* ── カテゴリ詳細チャートカード入場（rpt-chart-in流用・1枚） ── */
+#sec-category .card {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
