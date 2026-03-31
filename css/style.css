@@ -7330,6 +7330,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateY(var(--enter-y-base)); }
   to   { opacity: 1; transform: none; }
 }
+.settings-panel.is-active > .card {
+  animation: stp-card-in var(--dur-medium) var(--ease-bounce) both;
+}
+.settings-panel.is-active > .card:nth-child(1) { animation-delay: var(--dur-delay-xs); }
+.settings-panel.is-active > .card:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-mid)); }
+.settings-panel.is-active > .card:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-mid)); }
+.settings-panel.is-active > .card:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-mid)); }
+@keyframes stp-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* #settings-tabs は .section-tabs を流用 — モバイルオフセット上書き */
 @media (max-width: 768px) {
