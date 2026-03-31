@@ -16102,6 +16102,31 @@ canvas.chart-clickable { cursor: pointer; }
 }
 #sec-fixed .charts-row .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: レポートページ 残存セクションカード入場 (v20.66)
+   ── #sec-monthly-table / #sec-dow / #sec-cat-trend / #sec-heatmap
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 月別表カード入場（rpt-chart-in流用・1枚） ── */
+#sec-monthly-table {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+
+/* ── 曜日別カード入場（rpt-chart-in流用・1枚） ── */
+#sec-dow {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+
+/* ── カテゴリ推移カード入場（rpt-chart-in流用・1枚） ── */
+#sec-cat-trend {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+
+/* ── ヒートマップカード入場（rpt-chart-in流用・1枚） ── */
+#sec-heatmap {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
