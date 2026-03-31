@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.29)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.61)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1240,6 +1240,14 @@ select:focus:not(:focus-visible) {
   letter-spacing: var(--ls-tight);
   text-wrap: balance;
 }
+
+/* ── ページヘッダー子要素入場アニメーション (v20.61) ── */
+@keyframes ph-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+.page-title        { animation: ph-in var(--dur-gentle) var(--ease-enter) both; }
+.page-header-right { animation: ph-in var(--dur-gentle) var(--ease-enter) var(--dur-stagger-xl) both; }
 
 /* ── ボタン ──────────────────────────────────────────── */
 .btn {
@@ -5764,6 +5772,25 @@ body {
     margin-bottom: var(--sp-4);
   }
 }
+
+/* ── セクションタブ stagger入場アニメーション (v20.61) ── */
+@keyframes st-item-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.section-tab { animation: st-item-in var(--dur-base) var(--ease-bounce) both; }
+.section-tab:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-3xs)); }
+.section-tab:nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-3xs)); }
 
 /* ============================================================
    貯蓄目標（v5.31 + v5.32: カラーアイデンティティ強化）
