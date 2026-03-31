@@ -1683,6 +1683,35 @@ select:focus:not(:focus-visible) {
   .cat-chip-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* ── カテゴリチップ入場アニメーション (v20.51) ─────────── */
+@keyframes cat-chip-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-2xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+#tx-modal.modal-is-open .cat-chip {
+  animation: cat-chip-in var(--dur-base) var(--ease-bounce) both;
+}
+#tx-modal.modal-is-open .cat-chip:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(13) { animation-delay: calc(var(--dur-delay-xs) + 12 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(14) { animation-delay: calc(var(--dur-delay-xs) + 13 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(15) { animation-delay: calc(var(--dur-delay-xs) + 14 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(16) { animation-delay: calc(var(--dur-delay-xs) + 15 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(17) { animation-delay: calc(var(--dur-delay-xs) + 16 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(18) { animation-delay: calc(var(--dur-delay-xs) + 17 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(19) { animation-delay: calc(var(--dur-delay-xs) + 18 * var(--dur-stagger-4xs)); }
+#tx-modal.modal-is-open .cat-chip:nth-child(20) { animation-delay: calc(var(--dur-delay-xs) + 19 * var(--dur-stagger-4xs)); }
+
 /* ── サマリーカード (グラデーション) ──────────────────── */
 .summary-cards {
   display: grid;
