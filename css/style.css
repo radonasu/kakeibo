@@ -15670,6 +15670,179 @@ canvas.chart-clickable { cursor: pointer; }
   }
 }
 
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: 残余モーダル入場アニメーション (v20.55)
+   ── goal-modal / tpl-modal / ch-modal / asset-modal /
+      asset-entry-modal / wl-modal / goal-deposit-modal / mem-modal
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── goal-modal 開放時：フォームグループ stagger入場 ── */
+#goal-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#goal-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(6) { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-3xs)); }
+#goal-modal.modal-is-open .form-group:nth-child(7) { animation-delay: calc(var(--dur-delay-xs) + 6 * var(--dur-stagger-3xs)); }
+
+/* ── goal-modal 開放時：絵文字ボタン stagger入場 ── */
+#goal-modal.modal-is-open .goal-emoji-btn {
+  animation: ev-emoji-chip-in var(--dur-base) var(--ease-bounce) both;
+}
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-emoji-btn:nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-4xs)); }
+
+/* ── goal-modal 開放時：カラーボタン stagger入場 ── */
+#goal-modal.modal-is-open .goal-color-btn {
+  animation: ev-swatch-in var(--dur-base) var(--ease-bounce) both;
+}
+#goal-modal.modal-is-open .goal-color-btn:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(6) { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(7) { animation-delay: calc(var(--dur-delay-xs) + 6 * var(--dur-stagger-4xs)); }
+#goal-modal.modal-is-open .goal-color-btn:nth-child(8) { animation-delay: calc(var(--dur-delay-xs) + 7 * var(--dur-stagger-4xs)); }
+
+/* ── goal-deposit-modal 開放時：modal-body 子要素 stagger入場 ── */
+#goal-deposit-modal.modal-is-open .modal-body > * {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#goal-deposit-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: var(--dur-delay-xs); }
+#goal-deposit-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-3xs)); }
+
+/* ── tpl-modal 開放時：フォームグループ stagger入場 ── */
+#tpl-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#tpl-modal.modal-is-open #tpl-recurring-day-group { animation: none; }
+#tpl-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(6) { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(7) { animation-delay: calc(var(--dur-delay-xs) + 6 * var(--dur-stagger-3xs)); }
+#tpl-modal.modal-is-open .form-group:nth-child(8) { animation-delay: calc(var(--dur-delay-xs) + 7 * var(--dur-stagger-3xs)); }
+
+/* ── ch-modal-overlay 開放時：直接子要素 stagger入場 ── */
+#ch-modal-overlay.modal-is-open .ch-modal > * {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#ch-modal-overlay.modal-is-open .ch-modal > input[type="hidden"] { animation: none; }
+#ch-modal-overlay.modal-is-open #ch-target-noSpend-wrap            { animation: none; }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 6 * var(--dur-stagger-3xs)); }
+#ch-modal-overlay.modal-is-open .ch-modal > *:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 7 * var(--dur-stagger-3xs)); }
+
+/* ── ch-modal-overlay 開放時：絵文字ボタン stagger入場 ── */
+#ch-modal-overlay.modal-is-open .ch-emoji-btn {
+  animation: ev-emoji-chip-in var(--dur-base) var(--ease-bounce) both;
+}
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(13) { animation-delay: calc(var(--dur-delay-xs) + 12 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(14) { animation-delay: calc(var(--dur-delay-xs) + 13 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(15) { animation-delay: calc(var(--dur-delay-xs) + 14 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(16) { animation-delay: calc(var(--dur-delay-xs) + 15 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(17) { animation-delay: calc(var(--dur-delay-xs) + 16 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-emoji-btn:nth-child(18) { animation-delay: calc(var(--dur-delay-xs) + 17 * var(--dur-stagger-4xs)); }
+
+/* ── ch-modal-overlay 開放時：カラーボタン stagger入場 ── */
+#ch-modal-overlay.modal-is-open .ch-color-btn {
+  animation: ev-swatch-in var(--dur-base) var(--ease-bounce) both;
+}
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-4xs)); }
+#ch-modal-overlay.modal-is-open .ch-color-btn:nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-4xs)); }
+
+/* ── asset-modal 開放時：フォームグループ stagger入場 ── */
+#asset-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#asset-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#asset-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#asset-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+
+/* ── asset-entry-modal 開放時：フォームグループ stagger入場 ── */
+#asset-entry-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#asset-entry-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#asset-entry-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#asset-entry-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+
+/* ── wl-modal 開放時：フォームグループ stagger入場 ── */
+#wl-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#wl-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#wl-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+#wl-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+#wl-modal.modal-is-open .form-group:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
+#wl-modal.modal-is-open .form-group:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-3xs)); }
+#wl-modal.modal-is-open .form-group:nth-child(6) { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-3xs)); }
+
+/* ── mem-modal 開放時：フォームグループ stagger入場 ── */
+#mem-modal.modal-is-open .form-group {
+  animation: fg-in var(--dur-base) var(--ease-enter) both;
+}
+#mem-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+#mem-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+
+/* ── mem-modal 開放時：カラースウォッチ stagger入場 ── */
+#mem-modal.modal-is-open .color-swatch {
+  animation: ev-swatch-in var(--dur-base) var(--ease-bounce) both;
+}
+#mem-modal.modal-is-open .color-swatch:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-4xs)); }
+#mem-modal.modal-is-open .color-swatch:nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-4xs)); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
