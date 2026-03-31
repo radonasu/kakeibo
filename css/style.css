@@ -8754,6 +8754,34 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--on-dark-high);
 }
 
+/* dw-item入場アニメーション（v20.49） */
+@keyframes dw-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+.settings-panel.is-active .dw-item {
+  animation: dw-item-in var(--dur-base) var(--ease-bounce) both;
+}
+.settings-panel.is-active .dw-item:nth-child(1)  { animation-delay: calc(0  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(2)  { animation-delay: calc(1  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(3)  { animation-delay: calc(2  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(4)  { animation-delay: calc(3  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(5)  { animation-delay: calc(4  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(6)  { animation-delay: calc(5  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(7)  { animation-delay: calc(6  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(8)  { animation-delay: calc(7  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(9)  { animation-delay: calc(8  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(10) { animation-delay: calc(9  * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(13) { animation-delay: calc(12 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(14) { animation-delay: calc(13 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(15) { animation-delay: calc(14 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(16) { animation-delay: calc(15 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(17) { animation-delay: calc(16 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(18) { animation-delay: calc(17 * var(--dur-stagger-4xs)); }
+.settings-panel.is-active .dw-item:nth-child(19) { animation-delay: calc(18 * var(--dur-stagger-4xs)); }
+
 /* ══════════════════════════════════════════════════════════
    資産管理ページ ビジュアル洗練 (v5.60)
    ══════════════════════════════════════════════════════════ */
@@ -13984,6 +14012,18 @@ kbd {
 #kb-help-modal.modal-is-open .modal-wrap {
   animation: kb-help-modal-in var(--dur-pop) var(--ease-bounce) both;
 }
+
+/* kb-group入場アニメーション（v20.49） */
+@keyframes kb-group-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-md)); }
+  to   { opacity: 1; transform: none; }
+}
+#kb-help-modal.modal-is-open .kb-group {
+  animation: kb-group-in var(--dur-medium) var(--ease-bounce) both;
+}
+#kb-help-modal.modal-is-open .kb-group:nth-child(1) { animation-delay: var(--dur-delay-xs); }
+#kb-help-modal.modal-is-open .kb-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-xl)); }
+#kb-help-modal.modal-is-open .kb-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-xl)); }
 
 /* ============================================================
    グラフ ドリルダウンモーダル (v8.0)
