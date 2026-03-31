@@ -6781,7 +6781,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 /* ── ダッシュボードウィジェット ── */
-.sub-widget-card { }
+@keyframes sub-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.sub-widget-card { animation: sub-wc-in var(--dur-long) var(--ease-enter) both; }
 
 .sub-widget-header {
   display: flex;
@@ -7599,7 +7603,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(var(--scale-selected-sm)); }
 
 /* ダッシュボードウィジェット */
-.pt-widget-card { }
+@keyframes pt-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.pt-widget-card { animation: pt-wc-in var(--dur-long) var(--ease-enter) both; }
 .pt-widget-header {
   display: flex; align-items: baseline; gap: var(--sp-2);
   margin-bottom: var(--sp-3);
@@ -11613,7 +11621,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-add-month:active { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* --- ダッシュボードウィジェット（v5.91）--- */
-.ev-widget-card { padding: var(--sp-4); }
+@keyframes ev-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.ev-widget-card { padding: var(--sp-4); animation: ev-wc-in var(--dur-long) var(--ease-enter) both; }
 .ev-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); }
 .ev-widget-item {
   display: flex;
@@ -14853,7 +14865,11 @@ canvas.chart-clickable { cursor: pointer; }
 }
 
 /* カード装飾 (v9.2) */
-.pace-widget-card { position: relative; overflow: hidden; }
+@keyframes pace-wc-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.pace-widget-card { position: relative; overflow: hidden; animation: pace-wc-in var(--dur-long) var(--ease-enter) both; }
 .pace-widget-card::before {
   content: '';
   position: absolute;
