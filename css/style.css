@@ -7656,9 +7656,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 /* ─── 家計スコアカード (v5.50 design) ──────────────────────── */
+@keyframes hs-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
 .health-score-card {
   position: relative;
   overflow: hidden;
+  animation: hs-card-in var(--dur-long) var(--ease-enter) both;
 }
 .health-score-card::before {
   content: '';
@@ -8211,7 +8216,11 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .wl-archive-del   { flex-shrink: 0; }
 
 /* ダッシュボードウィジェット */
-.wish-widget-card {}
+@keyframes wish-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.wish-widget-card { animation: wish-card-in var(--dur-long) var(--ease-enter) both; }
 .wish-widget-header {
   display: flex;
   align-items: baseline;
@@ -9929,6 +9938,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* ============================================================
    クイック収支入力ウィジェット (v5.74) — ビジュアル洗練 (v5.75)
    ============================================================ */
+@keyframes qa-card-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
 .qa-card {
   --qa-accent: var(--primary);
   padding: 0;
@@ -9937,6 +9950,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
+  animation: qa-card-in var(--dur-long) var(--ease-enter) both;
   transition: box-shadow var(--dur-fast) var(--ease-plain), border-top-color var(--dur-mid) var(--ease-plain);
 }
 /* デコレーションサークル（右上） */
