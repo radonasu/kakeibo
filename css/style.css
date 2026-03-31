@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.61)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.62)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -16047,6 +16047,21 @@ canvas.chart-clickable { cursor: pointer; }
 #sec-member .tx-table tbody tr:nth-child(6) { animation-delay: calc(5 * var(--dur-stagger-sm)); }
 #sec-member .tx-table tbody tr:nth-child(7) { animation-delay: calc(6 * var(--dur-stagger-sm)); }
 #sec-member .tx-table tbody tr:nth-child(8) { animation-delay: calc(7 * var(--dur-stagger-sm)); }
+
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: レポートページ 月別チャートカード stagger入場 (v20.62)
+   ── #sec-monthly-charts 2枚チャートカード stagger入場
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 月別チャートカード stagger入場（rpt-chart-in新規・2枚） ── */
+@keyframes rpt-chart-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+#sec-monthly-charts .card {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+#sec-monthly-charts .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
