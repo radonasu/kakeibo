@@ -2804,6 +2804,18 @@ mark.tx-hl {
   line-height: var(--lh-tight);
 }
 
+/* ── サマリーミニ 入場アニメーション（v20.56） ── */
+@keyframes smi-item-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.smi-item {
+  animation: smi-item-in var(--dur-medium) var(--ease-bounce) both;
+}
+.summary-mini > .smi-item:nth-child(1) { animation-delay: 0s; }
+.summary-mini > .smi-item:nth-child(3) { animation-delay: var(--dur-stagger-mid); }
+.summary-mini > .smi-item:nth-child(5) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
+
 /* ── タイプトグル（モーダル） ────────────────────────── */
 .type-toggle {
   display: flex;
@@ -3429,6 +3441,19 @@ mark.tx-hl {
 .btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 8px color-mix(in srgb, currentColor var(--mix-sm), transparent); }
 .btn-tpl:active { transform: translateY(0); opacity: 1; box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .btn-tpl:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+
+/* ── テンプレートバー ボタン stagger入場アニメーション（v20.56） ── */
+.template-list .btn-tpl {
+  animation: btn-preset-in var(--dur-base) var(--ease-bounce) both;
+}
+.template-list .btn-tpl:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(5) { animation-delay: calc(var(--dur-delay-xs) + 4 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(6) { animation-delay: calc(var(--dur-delay-xs) + 5 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(7) { animation-delay: calc(var(--dur-delay-xs) + 6 * var(--dur-stagger-3xs)); }
+.template-list .btn-tpl:nth-child(8) { animation-delay: calc(var(--dur-delay-xs) + 7 * var(--dur-stagger-3xs)); }
 
 /* ── クラウド同期 ─────────────────────────────────────── */
 .sync-dot {
