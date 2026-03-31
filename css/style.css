@@ -16091,6 +16091,17 @@ canvas.chart-clickable { cursor: pointer; }
 }
 #sec-tags .charts-row .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 
+/* ══════════════════════════════════════════════════════════════
+   マイクロインタラクション改善: レポートページ 固変分析チャートカード stagger入場 (v20.65)
+   ── #sec-fixed .charts-row 2枚×2行カード stagger入場
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 固変分析チャートカード stagger入場（rpt-chart-in流用・2枚×2行） ── */
+#sec-fixed .charts-row .card {
+  animation: rpt-chart-in var(--dur-lift) var(--ease-bounce) both;
+}
+#sec-fixed .charts-row .card:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
