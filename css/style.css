@@ -13065,6 +13065,19 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .ci-ok-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press)); }
 .ci-ok-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
+/* ── チェックインモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
+@keyframes ci-hdr-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes ci-foot-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+#checkin-modal.modal-is-open .ci-month-badge { animation: ci-hdr-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both; }
+#checkin-modal.modal-is-open .ci-title       { animation: ci-hdr-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-xs) + var(--dur-stagger-xl)) both; }
+#checkin-modal.modal-is-open .ci-sub         { animation: ci-hdr-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-xl)) both; }
+#checkin-modal.modal-is-open .ci-footer      { animation: ci-foot-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 6 * var(--dur-stagger-xl)) both; }
 /* ダークモード */
 [data-theme="dark"] .ci-savings-bar-wrap { background: var(--on-dark-bg); }
 [data-theme="dark"] .ci-score-row       { background: var(--on-dark-dim); }
@@ -14509,6 +14522,19 @@ canvas.chart-clickable { cursor: pointer; }
   margin-top: var(--sp-3);
   flex-shrink: 0;
 }
+/* ── ドリルダウン/月ドリルダウンモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
+@keyframes dd-hdr-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes dd-foot-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: none; }
+}
+#dd-modal.modal-is-open .dd-modal-header { animation: dd-hdr-in var(--dur-medium) var(--ease-bounce) both; }
+#dd-modal.modal-is-open .dd-modal-footer { animation: dd-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both; }
+#md-modal.modal-is-open .dd-modal-header { animation: dd-hdr-in var(--dur-medium) var(--ease-bounce) both; }
+#md-modal.modal-is-open .dd-modal-footer { animation: dd-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both; }
 
 /* dd-list スクロールバー */
 .dd-list { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }

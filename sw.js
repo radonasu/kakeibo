@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.69'; // v20.69: マイクロインタラクション改善・カレンダーページcal-sum-item/cal-panel-tx入場アニメーション追加・rc-modal header/footer入場アニメーション追加
+const CACHE_NAME = 'kakeibo-v20.70'; // v20.70: マイクロインタラクション改善・チェックインモーダルヘッダー(ci-month-badge/ci-title/ci-sub)/フッター入場アニメーション追加・ドリルダウン/月ドリルダウンモーダルヘッダー/フッター入場アニメーション追加
 const ASSETS = [
   './index.html',
   './css/style.css',
