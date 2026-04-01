@@ -7856,13 +7856,13 @@ function renderDayPanel(dateStr) {
   if (txs.length === 0) {
     body.innerHTML = '<div class="cal-panel-empty">この日の取引はありません</div>';
   } else {
-    body.innerHTML = txs.map(t => {
+    body.innerHTML = txs.map((t, i) => {
       const cat = getCategoryById(t.categoryId);
       const mem = getMemberById(t.memberId);
       const isIncome = t.type === 'income';
       const dotColor = (cat && cat.color) ? cat.color : (isIncome ? 'var(--income)' : 'var(--expense)');
       return `
-        <div class="cal-panel-tx">
+        <div class="cal-panel-tx" style="--cal-tx-i:${i}">
           <div class="cal-panel-dot" style="background:${dotColor}"></div>
           <div class="cal-panel-tx-info">
             <span class="cal-panel-cat">${cat ? esc2(cat.name) : '—'}</span>

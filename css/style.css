@@ -6338,6 +6338,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   flex-direction: column;
   align-items: center;
   gap: var(--sp-0-5);
+  animation: cal-sum-in var(--dur-lift) var(--ease-bounce) both;
+}
+.cal-summary-row .cal-sum-item:nth-child(1) { animation-delay: 0ms; }
+.cal-summary-row .cal-sum-item:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
+.cal-summary-row .cal-sum-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-xl)); }
+@keyframes cal-sum-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 
 .cal-sum-label {
@@ -6558,6 +6566,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: var(--surface-2);
   border-radius: var(--radius-btn);
   border: var(--bw-thin) solid var(--border);
+  animation: cal-tx-in var(--dur-base) var(--ease-bounce) both;
+  animation-delay: calc(var(--cal-tx-i, 0) * var(--dur-stagger-3xs));
+}
+@keyframes cal-tx-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-2xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 
 .cal-panel-dot {
@@ -14051,10 +14065,26 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .rc-modal-open .rc-wrap {
   animation: rc-wrap-in var(--dur-lift) var(--ease-bounce) both;
 }
-
 @keyframes rc-wrap-in {
   from { opacity: 0; transform: scale(.9) translateY(var(--enter-y-2xl)); }
   to   { opacity: 1; transform: scale(var(--scale-rest))  translateY(0); }
+}
+.rc-modal-open .rc-title {
+  animation: rc-text-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both;
+}
+.rc-modal-open .rc-sub {
+  animation: rc-text-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-xs) + var(--dur-stagger-3xs)) both;
+}
+@keyframes rc-text-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  to   { opacity: 1; transform: none; }
+}
+.rc-modal-open .rc-footer {
+  animation: rc-footer-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-xs) + var(--dur-stagger-xs)) both;
+}
+@keyframes rc-footer-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-2xs)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ダークモード */

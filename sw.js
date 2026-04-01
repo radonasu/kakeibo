@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.68'; // v20.68: マイクロインタラクション改善・sub-summary-card/advice-modal/smart-budget-modal/debt-sim-modal 入場アニメーション追加
+const CACHE_NAME = 'kakeibo-v20.69'; // v20.69: マイクロインタラクション改善・カレンダーページcal-sum-item/cal-panel-tx入場アニメーション追加・rc-modal header/footer入場アニメーション追加
 const ASSETS = [
   './index.html',
   './css/style.css',
