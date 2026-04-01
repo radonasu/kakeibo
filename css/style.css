@@ -3496,7 +3496,7 @@ mark.tx-hl {
 
 /* ── ダッシュボード dash-grid ウィジェット stagger入場アニメーション（v20.57） ── */
 @keyframes dash-widget-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .dash-grid > * {
@@ -7553,7 +7553,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .settings-panel.is-active > .card:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-mid)); }
 .settings-panel.is-active > .card:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-mid)); }
 @keyframes stp-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -8628,8 +8628,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場アニメーション */
 @keyframes fc-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 /* セル入場アニメーション */
 @keyframes fc-cell-in {
@@ -9014,8 +9014,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場スタッガードアニメーション */
 @keyframes asset-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-2xl)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-2xl)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 .asset-card {
   animation: asset-card-in var(--dur-lift) var(--ease-enter) both;
@@ -9512,7 +9512,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
    曜日別支出パターン分析 ビジュアル洗練 (v5.67)
    ============================================================ */
 @keyframes dow-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes dow-bar-fill {
@@ -12527,8 +12527,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ── 年次累計サマリーウィジェット (v6.4) ────────────────── */
 @keyframes yr-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes yr-cell-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
