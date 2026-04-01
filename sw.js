@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.73'; // v20.73: マイクロインタラクション改善・ease-std完全廃絶（18箇所）・バーフィル/ゲージ/幅トランジションease-std→ease-out・wl-card-inease-std→ease-bounce・tg-row-inease-std→ease-enter・PWAバナー/カード折りたたみchevron/QAchevron/ナビリップルease改善
+const CACHE_NAME = 'kakeibo-v20.74'; // v20.74: マイクロインタラクション改善・sub-card-in/wl-card-in/ch-card-inにscale追加・sub-cardのease-out→ease-bounce統一
 const ASSETS = [
   './index.html',
   './css/style.css',
