@@ -16245,6 +16245,49 @@ canvas.chart-clickable { cursor: pointer; }
 #debt-sim-modal.modal-is-open .modal-body > *:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-3xs)); }
 #debt-sim-modal.modal-is-open .modal-body > *:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs)); }
 
+/* ══════════════════════════════════════════════════════════════
+   標準フォームモーダル .modal-header / .modal-footer 入場アニメーション（v20.71）
+   ── ci-hdr-in（上方向微小スライドフェード）を16モーダルの.modal-headerに適用 ──
+   ── ci-foot-in（下方向微小スライドフェード）を13モーダルの.modal-footerに適用 ──
+   ══════════════════════════════════════════════════════════════ */
+
+/* .modal-header 入場アニメーション（delay:0 / dur-medium / ease-bounce / both） */
+#tx-modal.modal-is-open .modal-header,
+#ev-modal.modal-is-open .modal-header,
+#cat-modal.modal-is-open .modal-header,
+#smart-budget-modal.modal-is-open .modal-header,
+#tpl-modal.modal-is-open .modal-header,
+#mem-modal.modal-is-open .modal-header,
+#asset-modal.modal-is-open .modal-header,
+#asset-entry-modal.modal-is-open .modal-header,
+#goal-modal.modal-is-open .modal-header,
+#goal-deposit-modal.modal-is-open .modal-header,
+#sub-modal.modal-is-open .modal-header,
+#pt-modal.modal-is-open .modal-header,
+#debt-modal.modal-is-open .modal-header,
+#debt-entry-modal.modal-is-open .modal-header,
+#wl-modal.modal-is-open .modal-header,
+#advice-modal.modal-is-open .modal-header {
+  animation: ci-hdr-in var(--dur-medium) var(--ease-bounce) both;
+}
+
+/* .modal-footer 入場アニメーション（delay:dur-delay-sm=100ms / dur-medium / ease-bounce / both） */
+#tx-modal.modal-is-open .modal-footer,
+#ev-modal.modal-is-open .modal-footer,
+#cat-modal.modal-is-open .modal-footer,
+#smart-budget-modal.modal-is-open .modal-footer,
+#tpl-modal.modal-is-open .modal-footer,
+#mem-modal.modal-is-open .modal-footer,
+#asset-modal.modal-is-open .modal-footer,
+#asset-entry-modal.modal-is-open .modal-footer,
+#goal-modal.modal-is-open .modal-footer,
+#goal-deposit-modal.modal-is-open .modal-footer,
+#wl-modal.modal-is-open .modal-footer,
+#debt-modal.modal-is-open .modal-footer,
+#debt-entry-modal.modal-is-open .modal-footer {
+  animation: ci-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-sm) both;
+}
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
