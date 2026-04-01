@@ -819,7 +819,7 @@ select:focus:not(:focus-visible) {
   top: 0; left: 0;
   height: 100vh;
   z-index: var(--z-sidebar);
-  transition: transform var(--dur-mid) var(--ease-std);
+  transition: transform var(--dur-mid) var(--ease-enter);
 }
 
 #sidebar-brand {
@@ -1208,8 +1208,8 @@ select:focus:not(:focus-visible) {
 }
 .card-collapse-body {
   overflow: hidden;
-  transition: max-height var(--dur-pop) var(--ease-std),
-              opacity   var(--dur-gentle) var(--ease-std);
+  transition: max-height var(--dur-pop) var(--ease-out),
+              opacity   var(--dur-gentle) var(--ease-out);
   max-height: var(--size-mh-expand);
   opacity: 1;
 }
@@ -3723,7 +3723,7 @@ mark.tx-hl {
   line-height: var(--lh-tight);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-slow) var(--ease-std), transform var(--dur-slow) var(--ease-std);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-enter);
   z-index: var(--z-toast);
   white-space: nowrap;
   box-shadow: var(--shadow-md);
@@ -4051,7 +4051,7 @@ body {
   line-height: var(--lh-tight);
   z-index: var(--z-toast);
   opacity: 0;
-  transition: opacity var(--dur-slow) var(--ease-std), transform var(--dur-slow) var(--ease-std);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-enter);
   box-shadow: var(--shadow-md);
   white-space: nowrap;
 }
@@ -5040,7 +5040,7 @@ body {
   line-height: var(--lh-tight);
   box-shadow: var(--shadow-md);
   opacity: 0;
-  transition: opacity var(--dur-slow) var(--ease-std), transform var(--dur-slow) var(--ease-std);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-enter);
   z-index: var(--z-toast);
   white-space: nowrap;
   pointer-events: none;
@@ -14115,7 +14115,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-page-in)); }
   to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
 }
-.page-enter { animation: page-fade-in var(--dur-appear) var(--ease-std) both; }
+.page-enter { animation: page-fade-in var(--dur-appear) var(--ease-enter) both; }
 
 /* ナビボタン リップルエフェクト */
 .nav-item, .bottom-nav-item {
