@@ -1200,7 +1200,7 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
 .card-collapse-btn svg {
-  transition: transform var(--dur-mid) var(--ease-std);
+  transition: transform var(--dur-mid) var(--ease-out);
   pointer-events: none;
 }
 .card-collapse-btn[aria-expanded="false"] svg {
@@ -2537,7 +2537,7 @@ select:focus:not(:focus-visible) {
 .adv-filter-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-gentle) var(--ease-std);
+  transition: grid-template-rows var(--dur-gentle) var(--ease-out);
   overflow: hidden;
   margin-bottom: var(--sp-2);
 }
@@ -3402,7 +3402,7 @@ mark.tx-hl {
   border-radius: var(--radius-2xs);
   min-width: var(--bw-select);
   transform-origin: left center;
-  animation: budget-fill-in var(--dur-fill) var(--ease-std) both;
+  animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
 }
 .budget-fill.warn { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
 .budget-fill.over { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); }
@@ -3942,7 +3942,7 @@ body {
   padding-bottom: calc(var(--sp-3-5) + env(safe-area-inset-bottom));
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
-  transition: transform var(--dur-slow) var(--ease-std);
+  transition: transform var(--dur-slow) var(--ease-enter);
   box-shadow: var(--shadow-up-md);
 }
 #pwa-install-banner.show { transform: translateY(0); }
@@ -6223,7 +6223,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-badge);
   transform-origin: left;
   transition: width var(--dur-glide) var(--ease-out-expo);
-  animation: gd-bar-in var(--dur-fill) var(--ease-std) both;
+  animation: gd-bar-in var(--dur-fill) var(--ease-out) both;
   /* v5.32: CSS変数グラデーション */
   background: linear-gradient(
     var(--grad-horizontal),
@@ -7956,7 +7956,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   stroke-width: var(--sw-gauge);
   stroke-linecap: round;
   stroke-dasharray: var(--sda-gauge) var(--sda-gauge);
-  animation: hs-gauge-in var(--dur-gauge) var(--ease-std) both;
+  animation: hs-gauge-in var(--dur-gauge) var(--ease-out) both;
   animation-delay: var(--dur-delay-sm);
 }
 @keyframes hs-gauge-in {
@@ -8072,7 +8072,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   background: linear-gradient(var(--grad-horizontal), var(--hs-bar-color, var(--primary)) 0%, color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: hs-fill-in var(--dur-fill) var(--ease-std) both;
+  animation: hs-fill-in var(--dur-fill) var(--ease-out) both;
 }
 @keyframes hs-fill-in {
   from { transform: scaleX(0); }
@@ -8263,7 +8263,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  animation: wl-card-in var(--dur-medium) var(--ease-std) both;
+  animation: wl-card-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--wl-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-plain);
 }
@@ -8279,7 +8279,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 }
 .wl-card.wl-high {
-  animation: wl-card-in var(--dur-medium) var(--ease-std) both,
+  animation: wl-card-in var(--dur-medium) var(--ease-bounce) both,
              wl-urgent-glow var(--dur-pulse) var(--ease-in-out) calc(var(--wl-i, 0) * var(--dur-stagger-lg) + var(--dur-long)) infinite;
 }
 .wl-card-icon {
@@ -8716,7 +8716,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-badge);
   background: linear-gradient(var(--grad-horizontal), var(--fc-color, var(--primary)) 0%, color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   transform-origin: left center;
-  animation: fc-fill-in var(--dur-fill) var(--ease-std) both;
+  animation: fc-fill-in var(--dur-fill) var(--ease-out) both;
   transition: width var(--dur-fill) var(--ease-enter);
 }
 @keyframes fc-fill-in {
@@ -9289,7 +9289,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-bar-fill {
   height: 100%;
   border-radius: var(--radius-2xs);
-  transition: width var(--dur-fill) var(--ease-std);
+  transition: width var(--dur-fill) var(--ease-out);
 }
 .ch-bar-ok   { background: linear-gradient(var(--grad-horizontal), var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(var(--grad-horizontal), var(--warning), var(--warning-end)); }
@@ -9630,7 +9630,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-2xs);
   background: linear-gradient(var(--grad-horizontal), var(--dow-row-color, var(--primary)) 0%, color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   width: var(--dow-bar-w, 0%);
-  animation: dow-bar-fill var(--dur-fill) var(--ease-std) both;
+  animation: dow-bar-fill var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
 }
 
@@ -10302,7 +10302,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-chevron {
   font-size: var(--fs-icon);
   color: var(--text-muted);
-  transition: transform var(--dur-appear) var(--ease-std), color var(--dur-mid) var(--ease-plain);
+  transition: transform var(--dur-appear) var(--ease-out), color var(--dur-mid) var(--ease-plain);
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -10589,7 +10589,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   border-radius: var(--radius-badge);
   background: var(--primary);
-  transition: width var(--dur-slow) var(--ease-std), background-color var(--dur-slow) var(--ease-std);
+  transition: width var(--dur-slow) var(--ease-out), background-color var(--dur-slow) var(--ease-plain);
 }
 .nt-progress-fill.nt-prog-warn   { background: var(--warning); }
 .nt-progress-fill.nt-prog-danger { background: var(--danger-text); }
@@ -10614,7 +10614,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text-muted);
   letter-spacing: var(--ls-label);
   opacity: 0;
-  transition: opacity var(--dur-slow) var(--ease-std);
+  transition: opacity var(--dur-slow) var(--ease-out);
 }
 .nt-status.nt-saved {
   color: var(--success);
@@ -11139,7 +11139,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .debt-widget-bar-bg { flex: 1; height: var(--size-bar-xs); background: var(--border); border-radius: var(--radius-badge); overflow: hidden; }
 .debt-widget-bar-fill {
   height: 100%; background: var(--debt-accent, var(--primary));
-  border-radius: var(--radius-badge); transition: width var(--dur-fill) var(--ease-std);
+  border-radius: var(--radius-badge); transition: width var(--dur-fill) var(--ease-out);
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; letter-spacing: var(--ls-label); line-height: var(--lh-tight); }
 .debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
@@ -12179,7 +12179,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-tight);
 }
 .tg-table tbody tr {
-  animation: tg-row-in var(--dur-gentle) var(--ease-std) both;
+  animation: tg-row-in var(--dur-gentle) var(--ease-enter) both;
   animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
 }
 @keyframes tg-stat-in {
@@ -14130,7 +14130,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: radial-gradient(circle, color-mix(in srgb, var(--primary) var(--mix-md), transparent) 0%, transparent 70%);
   opacity: 0;
   transform: scale(0);
-  transition: opacity var(--dur-long) var(--ease-std), transform var(--dur-long) var(--ease-std);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
   pointer-events: none;
 }
 
@@ -14997,7 +14997,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: linear-gradient(var(--grad-horizontal), var(--md-cat-color, var(--primary)) 0%, color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: md-bar-fill var(--dur-swing) var(--ease-std) both;
+  animation: md-bar-fill var(--dur-swing) var(--ease-out) both;
   animation-delay: calc(var(--md-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
 }
 @keyframes md-bar-fill {
@@ -15769,7 +15769,7 @@ canvas.chart-clickable { cursor: pointer; }
   background: linear-gradient(var(--grad-horizontal), var(--cat-bar-clr, var(--primary)) 0%, color-mix(in srgb, var(--cat-bar-clr, var(--primary)) var(--mix-deep), var(--white)) 100%);
   border-radius: var(--radius-badge);
   transform-origin: left;
-  animation: cat-bar-in var(--dur-fill) var(--ease-std) both;
+  animation: cat-bar-in var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-sm));
 }
 .cat-budget-pct {
