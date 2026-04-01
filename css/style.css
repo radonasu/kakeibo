@@ -4489,8 +4489,8 @@ body {
 
 /* ── 予算アイテム入場アニメーション ── */
 @keyframes budget-item-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 .budget-item:nth-child(1) { animation-delay: calc(1 * var(--dur-stagger-sm)); }
 .budget-item:nth-child(2) { animation-delay: calc(2 * var(--dur-stagger-sm)); }
@@ -6895,8 +6895,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* インサイトアイテム入場アニメーション */
 @keyframes insight-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes insight-alert-pulse {
   0%, 100% { border-left-width: var(--accent-w); }
@@ -7651,7 +7651,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ポイントカード */
 @keyframes pt-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes pt-bar-fill {
@@ -7866,7 +7866,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .pt-widget-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
 .pt-widget-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-md)); }
 @keyframes pt-wi-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .pt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
@@ -8026,7 +8026,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* ──── Factor bars ──── */
 .hs-items { display: flex; flex-direction: column; gap: var(--sp-3); }
 @keyframes hs-item-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .hs-item {
@@ -9985,8 +9985,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* カード入場アニメーション */
 @keyframes wk-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 /* 今日バーグロー */
 @keyframes wk-today-pulse {
@@ -10507,8 +10507,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* ── 月次ノートカード (v5.76 → v5.77洗練) ───────────────── */
 @keyframes nt-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes nt-saved-pop {
   0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
@@ -10649,7 +10649,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-col-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes hm-today-pulse {
@@ -11295,8 +11295,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-grid-in var(--dur-medium) var(--ease-plain) both;
 }
 @keyframes sim-grid-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ヘッダー列 — カラー背景バッジ */
@@ -11367,8 +11367,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-chart-in var(--dur-snap) var(--ease-plain) var(--dur-stagger-2xl) both;
 }
 @keyframes sim-chart-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xl)); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 追加返済入力フォーカスグロー */
@@ -12200,7 +12200,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ウィジェットカード */
 @keyframes adv-card-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .adv-widget-card {
