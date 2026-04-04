@@ -1940,7 +1940,7 @@ select:focus:not(:focus-visible) {
   background: var(--white);
   border-radius: var(--radius-hairline);
   transform: translateY(-50%);
-  animation: cb-dash-in var(--dur-faster) var(--ease-plain) both;
+  animation: cb-dash-in var(--dur-faster) var(--ease-out) both;
 }
 .tx-cb:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 [data-theme="dark"] .tx-cb {
@@ -2043,7 +2043,7 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   align-self: center;
   flex-shrink: 0;
-  animation: tx-sort-badge-in var(--dur-base) var(--ease-plain) both;
+  animation: tx-sort-badge-in var(--dur-base) var(--ease-bounce) both;
 }
 .tx-sort-badge:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
@@ -2692,7 +2692,7 @@ mark.tx-hl {
   padding: 0 var(--sp-0-5);
   font-weight: var(--fw-bold);
   font-style: normal;
-  animation: tx-hl-in var(--dur-mid) var(--ease-plain) both;
+  animation: tx-hl-in var(--dur-mid) var(--ease-out) both;
 }
 [data-theme="dark"] mark.tx-hl {
   background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
@@ -4555,7 +4555,7 @@ body {
   border-radius: var(--radius-circle);
   background: var(--on-dark-drop);
   transform: scale(0);
-  animation: ripple-anim var(--dur-spark) var(--ease-plain);
+  animation: ripple-anim var(--dur-spark) var(--ease-out);
   pointer-events: none;
 }
 @keyframes ripple-anim {
@@ -6373,7 +6373,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in var(--dur-mid) var(--ease-plain);
+  animation: cal-fade-in var(--dur-mid) var(--ease-bounce);
 }
 
 .cal-dow-row {
@@ -6435,7 +6435,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   line-height: var(--lh-tight);
   padding: var(--sp-0-25) var(--sp-1-75);
   border-radius: var(--radius-badge);
-  animation: cal-ws-pill-in var(--dur-gentle) var(--ease-plain) both;
+  animation: cal-ws-pill-in var(--dur-gentle) var(--ease-enter) both;
   animation-delay: calc(var(--ws-i, 0) * var(--dur-stagger-md));
 }
 .cal-ws-pill.inc {
@@ -6661,7 +6661,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-btn);
   overflow: hidden;
-  animation: cal-fade-in var(--dur-mid) var(--ease-plain);
+  animation: cal-fade-in var(--dur-mid) var(--ease-bounce);
 }
 .cal-events-header {
   display: flex;
@@ -8577,7 +8577,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-btn-sm);
   margin-top: var(--sp-2);
   font-size: var(--fs-xs);
-  animation: memo-hint-in var(--dur-base) var(--ease-plain);
+  animation: memo-hint-in var(--dur-base) var(--ease-bounce);
 }
 .memo-cat-hint-icon {
   font-size: var(--fs-xl);
@@ -8757,7 +8757,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: var(--size-spark-lg);
   margin-bottom: var(--sp-3);
   overflow: visible;
-  animation: fc-spark-in var(--dur-spark) var(--ease-plain) var(--dur-delay-lg) both;
+  animation: fc-spark-in var(--dur-spark) var(--ease-bounce) var(--dur-delay-lg) both;
 }
 @keyframes fc-spark-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
@@ -9094,7 +9094,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   margin-top: var(--sp-2-5);
   padding-top: var(--sp-2);
   border-top: var(--bw-thin) solid var(--border);
-  animation: asset-spark-in var(--dur-medium) var(--ease-plain) var(--dur-delay-lg) both;
+  animation: asset-spark-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-lg) both;
 }
 .asset-sparkline-label {
   font-size: var(--fs-2xs);
@@ -9910,7 +9910,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   border-radius: var(--radius-3xs);
   transform-origin: left center;
-  animation: fv-bar-fill var(--dur-fill) var(--ease-plain) both;
+  animation: fv-bar-fill var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-sm));
 }
 @keyframes fv-bar-fill {
@@ -9946,7 +9946,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   background: var(--primary);
   width: calc(var(--fv-fi, 0) * 1%);
-  animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
+  animation: fv-seg-in var(--dur-spin) var(--ease-out) both;
   animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs));
   transform-origin: left;
 }
@@ -9954,7 +9954,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   background: var(--success);
   flex: 1;
-  animation: fv-seg-in var(--dur-spin) var(--ease-plain) both;
+  animation: fv-seg-in var(--dur-spin) var(--ease-out) both;
   animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs) + var(--dur-stagger-lg));
   transform-origin: right;
 }
@@ -10317,7 +10317,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-body {
   padding: 0 var(--sp-4) var(--sp-4);
   border-top: var(--bw-thin) solid var(--border);
-  animation: qa-body-in var(--dur-appear) var(--ease-plain);
+  animation: qa-body-in var(--dur-appear) var(--ease-out);
   position: relative;
   z-index: var(--z-raise);
 }
@@ -11025,7 +11025,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .debt-bar-fill {
   height: 100%; border-radius: var(--radius-badge);
   transform-origin: left center;
-  animation: debt-bar-fill-in var(--dur-fill) var(--ease-plain) both;
+  animation: debt-bar-fill-in var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--dbi, 0) * var(--dur-stagger-sm) + var(--dur-delay-xl));
 }
 @keyframes debt-bar-fill-in {
@@ -11315,7 +11315,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* セル スタッガードフェードイン */
 .sim-result-grid > div {
-  animation: sim-cell-in var(--dur-gentle) var(--ease-plain) calc(var(--sim-ri,0) * var(--dur-stagger-xs)) both;
+  animation: sim-cell-in var(--dur-gentle) var(--ease-out) calc(var(--sim-ri,0) * var(--dur-stagger-xs)) both;
 }
 @keyframes sim-cell-in {
   from { opacity: 0; }
@@ -12755,7 +12755,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   width: 100%;
   height: var(--size-spark-h);
   display: block;
-  animation: yr-spark-in var(--dur-spark) var(--ease-plain) var(--dur-slow) both;
+  animation: yr-spark-in var(--dur-spark) var(--ease-bounce) var(--dur-slow) both;
 }
 @keyframes yr-spark-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
@@ -13830,7 +13830,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-btn-sm);
   background: var(--warning-bg);
   border: var(--bw-thin) solid var(--warning-border);
-  animation: calc-preview-in var(--dur-faster) var(--ease-plain) both;
+  animation: calc-preview-in var(--dur-faster) var(--ease-bounce) both;
 }
 
 @keyframes calc-preview-in {
@@ -14151,7 +14151,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  animation: tx-banner-in var(--dur-appear) var(--ease-plain) both;
+  animation: tx-banner-in var(--dur-appear) var(--ease-bounce) both;
 }
 .tx-added-count-badge {
   background: var(--success);
