@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.80'; // v20.80: デザイン改善・show/hide・overlay・reveal系transition opacityのease-plain→ease-out一括改善（9箇所）
+const CACHE_NAME = 'kakeibo-v20.81'; // v20.81: デザイン改善・インタラクティブ要素transition ease-plain→ease-out一括改善（17箇所：サイドバー/ボタン/フォーム系）
 const ASSETS = [
   './index.html',
   './css/style.css',
