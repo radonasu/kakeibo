@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.62)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.78)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4524,7 +4524,7 @@ body {
   from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
   to   { opacity: 1; transform: none; }
 }
-.tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-plain) both; }
+.tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-enter) both; }
 .tx-table tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-sm); }
 .tx-table tbody tr:nth-child(3)  { animation-delay: calc(2 * var(--dur-stagger-sm)); }
 .tx-table tbody tr:nth-child(4)  { animation-delay: calc(3 * var(--dur-stagger-sm)); }
@@ -4535,7 +4535,7 @@ body {
 .tx-table tbody tr:nth-child(9)  { animation-delay: calc(8 * var(--dur-stagger-sm)); }
 .tx-table tbody tr:nth-child(10) { animation-delay: calc(9 * var(--dur-stagger-sm)); }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
-.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-plain) both; }
+.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-enter) both; }
 .tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-2xs); }
 .tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: calc(2 * var(--dur-stagger-2xs)); }
 .tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: calc(3 * var(--dur-stagger-2xs)); }
@@ -6904,7 +6904,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 .insight-item {
-  animation: insight-in var(--dur-medium) var(--ease-plain) both;
+  animation: insight-in var(--dur-medium) var(--ease-bounce) both;
 }
 .insight-item:nth-child(1) { animation-delay: var(--dur-delay-xs); }
 .insight-item:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-lg)); }
@@ -6912,7 +6912,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .insight-item:nth-child(4) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-lg)); }
 
 .insight-item.insight-alert {
-  animation: insight-in var(--dur-medium) var(--ease-plain) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
+  animation: insight-in var(--dur-medium) var(--ease-bounce) both, insight-alert-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
 .insight-item.insight-alert:nth-child(1) { animation-delay: var(--dur-delay-xs), var(--dur-pulse-delay); }
 .insight-item.insight-alert:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-lg)), var(--dur-pulse-delay); }
@@ -9607,7 +9607,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* ─ テーブル行の曜日カラー左ボーダー ─ */
 .dow-table-row {
   border-left: var(--accent-w) solid var(--dow-row-color, var(--border));
-  animation: dow-row-in var(--dur-appear) var(--ease-plain) both;
+  animation: dow-row-in var(--dur-appear) var(--ease-enter) both;
   animation-delay: calc(var(--dow-ri, 0) * var(--dur-stagger-3xs));
 }
 @keyframes dow-row-in {
@@ -9767,7 +9767,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* テーブル行アニメーション */
 .ct-table tbody tr {
-  animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
+  animation: ct-row-in var(--dur-appear) var(--ease-enter) both;
   animation-delay: calc(var(--ct-ri, 0) * var(--dur-stagger-3xs));
 }
 
@@ -9923,7 +9923,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* カテゴリ別テーブル行: 左ボーダー + 入場アニメーション (v5.71) */
 .fv-cat-table tbody tr {
   border-left: var(--accent-w) solid var(--fv-cat-color, var(--border));
-  animation: fv-cat-row-in var(--dur-appear) var(--ease-plain) both;
+  animation: fv-cat-row-in var(--dur-appear) var(--ease-enter) both;
   animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-3xs));
 }
 @keyframes fv-cat-row-in {
@@ -9967,7 +9967,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* 月別テーブル行アニメーション */
 .fv-month-table tbody tr {
-  animation: ct-row-in var(--dur-appear) var(--ease-plain) both;
+  animation: ct-row-in var(--dur-appear) var(--ease-enter) both;
   animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-2xs));
 }
 
@@ -10795,7 +10795,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 週列スタッガードフェードイン */
 .hm-col-wrap {
   display: contents;
-  animation: hm-col-in var(--dur-medium) var(--ease-plain) both;
+  animation: hm-col-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--hm-wi, 0) * var(--dur-stagger-5xs));
 }
 @keyframes hm-cell-in {
@@ -11056,7 +11056,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: var(--sp-1) 0; border-bottom: var(--bw-thin) solid var(--border);
   font-size: var(--fs-xs);
   letter-spacing: var(--ls-fine); line-height: var(--lh-tight);
-  animation: debt-entry-in var(--dur-appear) var(--ease-plain) both;
+  animation: debt-entry-in var(--dur-appear) var(--ease-enter) both;
   animation-delay: calc(var(--de-i, 0) * var(--dur-stagger-3xs));
 }
 @keyframes debt-entry-in {
@@ -11292,7 +11292,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* 結果グリッドラッパー — フェードイン */
 .sim-result-grid-wrap {
-  animation: sim-grid-in var(--dur-medium) var(--ease-plain) both;
+  animation: sim-grid-in var(--dur-medium) var(--ease-bounce) both;
 }
 @keyframes sim-grid-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
@@ -11364,7 +11364,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* チャートラッパー入場 */
 .sim-chart-wrap {
-  animation: sim-chart-in var(--dur-snap) var(--ease-plain) var(--dur-stagger-2xl) both;
+  animation: sim-chart-in var(--dur-snap) var(--ease-bounce) var(--dur-stagger-2xl) both;
 }
 @keyframes sim-chart-in {
   from { opacity: 0; transform: translateY(var(--enter-y-xl)) scale(var(--scale-anim-cell-in)); }
@@ -14460,7 +14460,7 @@ canvas.chart-clickable { cursor: pointer; }
   cursor: pointer;
   border-radius: var(--radius-btn-sm);
   transition: background var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-plain), filter var(--dur-press) var(--ease-plain);
-  animation: dd-row-in var(--dur-base) var(--ease-plain) both;
+  animation: dd-row-in var(--dur-base) var(--ease-enter) both;
   animation-delay: calc(var(--dd-i, 0) * var(--dur-stagger-3xs));
 }
 .dd-tx-row:last-child { border-bottom: none; }
