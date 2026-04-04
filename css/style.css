@@ -1426,7 +1426,7 @@ select:focus:not(:focus-visible) {
 .dup-modal-banner svg { flex-shrink: 0; opacity: var(--opacity-near); }
 @keyframes dup-banner-in {
   0%   { opacity: 0; transform: translateY(var(--enter-y-neg-base)); }
-  100% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .dup-modal-banner {
   background: var(--warning-bg);
@@ -1970,12 +1970,12 @@ select:focus:not(:focus-visible) {
 @keyframes tx-icon-bounce-asc {
   0%   { transform: translateY(var(--bounce-y-sm)) scale(var(--scale-anim-init)); opacity: 0; }
   60%  { transform: translateY(calc(-1 * var(--bounce-y-xs))) scale(var(--scale-hover)); opacity: 1; }
-  100% { transform: translateY(0) scale(var(--scale-rest)); opacity: 1; }
+  100% { transform: none; opacity: 1; }
 }
 @keyframes tx-icon-bounce-desc {
   0%   { transform: translateY(calc(-1 * var(--bounce-y-sm))) scale(var(--scale-anim-init)); opacity: 0; }
   60%  { transform: translateY(var(--bounce-y-xs)) scale(var(--scale-hover)); opacity: 1; }
-  100% { transform: translateY(0) scale(var(--scale-rest)); opacity: 1; }
+  100% { transform: none; opacity: 1; }
 }
 .tx-th-sort {
   cursor: pointer;
@@ -2023,7 +2023,7 @@ select:focus:not(:focus-visible) {
 /* ソートリセットピル */
 @keyframes tx-sort-badge-in {
   from { opacity: 0; transform: scale(var(--scale-anim-sort-in)) translateX(var(--enter-x-pos-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 .tx-sort-badge {
   display: inline-flex;
@@ -2081,12 +2081,12 @@ select:focus:not(:focus-visible) {
 /* 一括操作バー (v5.56 グラスモーフィズム) */
 @keyframes bulk-slide-up {
   from { transform: translateY(110%); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  to   { transform: none;    opacity: 1; }
 }
 @keyframes bulk-count-pop {
   0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
   70%  { transform: scale(var(--scale-color-hover)); }
-  100% { transform: scale(var(--scale-rest));    opacity: 1; }
+  100% { transform: none;    opacity: 1; }
 }
 .bulk-bar {
   position: fixed;
@@ -2272,7 +2272,7 @@ select:focus:not(:focus-visible) {
 /* ── 取引タグチップ (v5.62 マルチカラー洗練) ─────────── */
 @keyframes tag-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-tag-in)) translateY(var(--enter-y-3xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0);   }
+  to   { opacity: 1; transform: none; }
 }
 
 .tx-tag-chips {
@@ -2482,7 +2482,7 @@ select:focus:not(:focus-visible) {
 /* フィルターバー子要素 入場アニメーション（v20.58） */
 @keyframes fb-item-in {
   from { opacity: 0; transform: translateY(var(--enter-y-xs)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .card.filter-bar > * { animation: fb-item-in var(--dur-base) var(--ease-bounce) both; }
 .card.filter-bar > *:nth-child(1) { animation-delay: var(--dur-delay-xs); }
@@ -2670,7 +2670,7 @@ select:focus:not(:focus-visible) {
 }
 @keyframes preset-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-chip-in)) translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .adv-preset-chip {
   background: var(--bg);
@@ -2701,7 +2701,7 @@ mark.tx-hl {
 /* ── v5.95: フィルター適用中バッジ ── */
 @keyframes tx-hl-badge-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .smi-filter-badge {
   display: inline-flex;
@@ -4518,11 +4518,11 @@ body {
 /* ── テーブル行ストッガード ── */
 @keyframes row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes tx-sort-row-in {
   from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-plain) both; }
 .tx-table tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-sm); }
@@ -4877,7 +4877,7 @@ body {
 /* ── 空状態 共通アニメーション (v17.9) ──────────────────── */
 @keyframes empty-state-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes empty-icon-float {
   0%, 100% { transform: translateY(0); }
@@ -5229,7 +5229,7 @@ body {
 }
 @keyframes asset-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 .asset-entry-row {
   display: flex;
@@ -6283,15 +6283,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* ── カレンダービュー (v5.39) ──────────────────────────────── */
 @keyframes cal-fade-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes cal-panel-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes cal-ws-pill-in {
   from { opacity: 0; transform: translateX(calc(var(--ws-i, 0) * 4px + 6px)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 .cal-page {
@@ -6807,7 +6807,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 @keyframes cal-ev-item-in {
   0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  100% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: none; }
 }
 
 @media (max-width: 768px) {
@@ -6822,7 +6822,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
    ============================================================ */
 @keyframes insight-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .insight-card { animation: insight-card-in var(--dur-long) var(--ease-enter) both; }
 
@@ -8565,7 +8565,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
    ============================================================ */
 @keyframes memo-hint-in {
   from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .memo-cat-hint {
   display: flex;
@@ -8634,7 +8634,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* セル入場アニメーション */
 @keyframes fc-cell-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 /* alertパルスグロー */
 @keyframes fc-alert-glow {
@@ -9026,7 +9026,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 残高変動デルタバッジ */
 @keyframes asset-delta-in {
   from { opacity: 0; transform: scale(0.65) translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .asset-balance-delta {
   display: inline-flex;
@@ -9088,7 +9088,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* ミニスパークライン */
 @keyframes asset-spark-in {
   from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .asset-sparkline-wrap {
   margin-top: var(--sp-2-5);
@@ -9437,7 +9437,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* -- ダッシュボードウィジェット -- */
 @keyframes ch-wc-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .ch-widget-card { animation: ch-wc-in var(--dur-long) var(--ease-enter) both; }
 
@@ -9738,7 +9738,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ct-stat-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 @keyframes ct-stat-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .ct-stat-card::before {
   content: '';
@@ -9996,12 +9996,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* セル入場アニメーション */
 @keyframes wk-cell-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 /* バーカラム入場アニメーション */
 @keyframes wk-col-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.88); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* カード本体 */
@@ -10323,12 +10323,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 @keyframes qa-body-in {
   from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 /* フィールドスタッガードアニメーション */
 @keyframes qa-field-in {
   from { opacity: 0; transform: translateY(var(--enter-y-neg-md)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .qa-inner {
   display: flex;
@@ -10513,7 +10513,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 @keyframes nt-saved-pop {
   0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
   60%  { transform: scale(var(--scale-color-hover)); }
-  100% { transform: scale(var(--scale-rest)); opacity: 1; }
+  100% { transform: none; opacity: 1; }
 }
 
 .nt-card {
@@ -10800,7 +10800,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 @keyframes hm-cell-in {
   from { opacity: 0; transform: scale(0.6); }
-  to   { opacity: 1; transform: scale(1); }
+  to   { opacity: 1; transform: none; }
 }
 .hm-cell {
   width: var(--size-hm-cell);
@@ -11098,7 +11098,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* ダッシュボードウィジェット */
 @keyframes debt-wc-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .debt-widget-card { animation: debt-wc-in var(--dur-long) var(--ease-enter) both; }
 
@@ -11266,7 +11266,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sim-modal-in {
   from { opacity: 0; transform: translateY(var(--enter-y-4xl)) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0)                  scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ローン情報バー — 左アクセントボーダー */
@@ -11349,7 +11349,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sim-banner-in {
   from { opacity: 0; transform: scale(0.92) translateY(var(--enter-y-base)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 節約値 — 更新時バウンス */
@@ -11389,7 +11389,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sb-modal-in {
   from { opacity: 0; transform: scale(0.94) translateY(var(--enter-y-3xl)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* サマリーバナー */
@@ -11405,7 +11405,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sb-banner-in {
   from { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0)                       scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .sb-banner-cell {
   text-align: center;
@@ -11509,7 +11509,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sb-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(0.99); }
-  to   { opacity: 1; transform: translateX(0)    scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 提案予算: カテゴリカラー連動 */
@@ -11672,7 +11672,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-month-col:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-xs)); }
 @keyframes ev-month-col-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .ev-month-current {
   border-color: var(--primary);
@@ -11915,7 +11915,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ev-widget-item-in {
   0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  100% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: none; }
 }
 .ev-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm);
@@ -11964,7 +11964,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* --- アニメーション --- */
 @keyframes ev-card-in {
   0%   { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
-  100% { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  100% { opacity: 1; transform: none; }
 }
 
 /* ── ev-modal 開放時：フォームグループ stagger入場 (v20.53) ── */
@@ -12041,7 +12041,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sf-row-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .sf-row-label {
   display: flex;
@@ -12125,7 +12125,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sf-save-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -12184,11 +12184,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes tg-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .tg-stat-card {
   background: linear-gradient(var(--grad-diagonal), var(--surface) 0%, color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface)) 100%);
@@ -12426,7 +12426,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
    ============================================================ */
 @keyframes cc-wc-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .cc-widget-card { animation: cc-wc-in var(--dur-long) var(--ease-enter) both; }
 
@@ -12491,7 +12491,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 [data-theme="dark"] .cc-badge.cc-down { background: color-mix(in srgb, var(--success) var(--mix-md), transparent); }
 @keyframes cc-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 @media (max-width: 480px) {
   .cc-cols { grid-template-columns: 1fr; }
@@ -12532,11 +12532,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes yr-cell-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes yr-prev-badge-in {
   from { opacity: 0; transform: scale(0.65) translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes yr-footer-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
@@ -12759,7 +12759,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes yr-spark-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 /* フッター月平均をミニカード化（v6.5）*/
 .yr-avg {
@@ -12796,7 +12796,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes ci-modal-in {
   from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-3xl)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .ci-header {
   background: linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
@@ -12890,7 +12890,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-xl)); }
 @keyframes ci-cell-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.92); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .ci-cell-label {
   font-size: var(--fs-2xs);
@@ -13113,7 +13113,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes nav-badge-pop {
   0%   { transform: scale(var(--scale-anim-nav-badge)); opacity: 0; }
   60%  { transform: scale(var(--scale-anim-pop-peak)); opacity: 1; }
-  100% { transform: scale(var(--scale-rest)); }
+  100% { transform: none; }
 }
 
 .nav-badge-pop {
@@ -13204,7 +13204,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes notif-badge-pop {
   0%   { transform: scale(var(--scale-anim-badge-in)); opacity: 0; }
   65%  { transform: scale(var(--scale-anim-badge-peak)); opacity: 1; }
-  100% { transform: scale(var(--scale-rest)); }
+  100% { transform: none; }
 }
 .notif-badge-pop {
   animation: notif-badge-pop var(--dur-medium) var(--ease-bounce) both;
@@ -13372,7 +13372,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes notif-item-in {
   0%   { opacity: 0; transform: translateX(calc(-1 * var(--enter-x-base))); }
-  100% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: none; }
 }
 
 .notif-item-icon {
@@ -13433,7 +13433,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* 空状態 */
 @keyframes notif-empty-in {
   0%   { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-base)); }
-  100% { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  100% { opacity: 1; transform: none; }
 }
 .notif-empty {
   display: flex;
@@ -13716,7 +13716,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes amt-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))    translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes amt-chip-pop {
@@ -13789,7 +13789,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes memo-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest)) translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes memo-chip-pop {
@@ -13835,7 +13835,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes calc-preview-in {
   from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 .calc-arrow {
@@ -13978,7 +13978,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes rc-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-lg)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 .rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-sm); }
@@ -14080,7 +14080,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes rc-wrap-in {
   from { opacity: 0; transform: scale(.9) translateY(var(--enter-y-2xl)); }
-  to   { opacity: 1; transform: scale(var(--scale-rest))  translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .rc-modal-open .rc-title {
   animation: rc-text-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both;
@@ -14113,7 +14113,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* ページ遷移アニメーション強化 (v7.7) */
 @keyframes page-fade-in {
   from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-page-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .page-enter { animation: page-fade-in var(--dur-appear) var(--ease-enter) both; }
 
@@ -14418,7 +14418,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 @keyframes dd-summary-in {
   from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 .dd-summary-item {
   display: flex;
@@ -14709,12 +14709,12 @@ canvas.chart-clickable { cursor: pointer; }
    ============================================================ */
 @keyframes opp-card-in {
   from { opacity: 0; transform: translateX(var(--enter-x-xl)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateX(0)               scale(var(--scale-rest));    }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes opp-wc-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
-  to   { opacity: 1; transform: translateY(0) scale(var(--scale-rest)); }
+  to   { opacity: 1; transform: none; }
 }
 .opp-widget-card { padding: 0; animation: opp-wc-in var(--dur-long) var(--ease-enter) both; }
 
@@ -15157,7 +15157,7 @@ canvas.chart-clickable { cursor: pointer; }
 /* ─── レポート月別表 入場アニメーション (v20.42) ──────────────── */
 @keyframes rpt-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
-  to   { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: none; }
 }
 .rpt-month-row {
   animation: rpt-row-in var(--dur-gentle) var(--ease-bounce) both;
