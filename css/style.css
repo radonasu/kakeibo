@@ -440,7 +440,7 @@
   --scale-anim-sort-in:   0.85;  /* ソートバッジ入場スケール（@keyframes tx-sort-badge-in from 1箇所） */
   --scale-anim-chip-in:   0.78;  /* チップ入場初期スケール（@keyframes preset-chip-in from 1箇所） */
   --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82%フレーム 1箇所） */
-  --scale-anim-cell-in:   0.97;  /* セル入場スケール（@keyframes fc-cell-in/wk-cell-in/dot-item-in/opp-card-in等 6箇所） */
+  --scale-anim-cell-in:   0.97;  /* セル入場スケール（translateY/X入場 @keyframes全般・opp-card-in/sum-card-in/insight-in/cal-ev-item-in/sw-item-in等 多数） */
   --scale-anim-ripple:    4;     /* リップル最大拡張スケール（@keyframes ripple-anim to 1箇所） */
   /* ── バウンスポップ中間スケールトークン (v18.4) ──────────────────── */
   --scale-anim-pop-squeeze-xs: 0.91; /* ポップ軽圧縮スケール（@keyframes qa-btn-pop 35% 1箇所） */
@@ -6806,7 +6806,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-ev-total.exp { background: color-mix(in srgb, var(--expense) var(--mix-2xs), transparent); color: var(--expense); }
 
 @keyframes cal-ev-item-in {
-  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
 }
 
@@ -6993,7 +6993,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation-delay: calc(var(--sw-i, 0) * var(--dur-stagger-md));
 }
 @keyframes sw-item-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .sub-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
@@ -8980,13 +8980,13 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--on-dark-high);
 }
 
-/* dw-item入場アニメーション（v20.49） */
-@keyframes dw-item-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+/* dw-item入場アニメーション（v20.49 / v20.84: dw-panel-item-inにリネーム・重複@keyframes解消） */
+@keyframes dw-panel-item-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .settings-panel.is-active .dw-item {
-  animation: dw-item-in var(--dur-base) var(--ease-bounce) both;
+  animation: dw-panel-item-in var(--dur-base) var(--ease-bounce) both;
 }
 .settings-panel.is-active .dw-item:nth-child(1)  { animation-delay: calc(0  * var(--dur-stagger-4xs)); }
 .settings-panel.is-active .dw-item:nth-child(2)  { animation-delay: calc(1  * var(--dur-stagger-4xs)); }
@@ -9455,7 +9455,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--cw-i, 0) * var(--dur-stagger-md));
 }
 @keyframes cw-item-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
@@ -11123,7 +11123,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--dw-i, 0) * var(--dur-stagger-md));
 }
 @keyframes dw-item-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
@@ -11914,7 +11914,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .ev-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ev-widget-item-in {
-  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)); }
+  0%   { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
 }
 .ev-widget-icon {
@@ -13371,7 +13371,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item.notif-type-info::after    { background: var(--primary); }
 
 @keyframes notif-item-in {
-  0%   { opacity: 0; transform: translateX(calc(-1 * var(--enter-x-base))); }
+  0%   { opacity: 0; transform: translateX(calc(-1 * var(--enter-x-base))) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
 }
 
