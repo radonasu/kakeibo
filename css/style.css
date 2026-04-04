@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.78)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.80)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1594,7 +1594,7 @@ select:focus:not(:focus-visible) {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height var(--dur-base) var(--ease-plain), opacity var(--dur-base) var(--ease-plain), margin-top var(--dur-base) var(--ease-plain);
+  transition: max-height var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out), margin-top var(--dur-base) var(--ease-out);
 }
 .field-msg.show {
   max-height: var(--sp-10);
@@ -2003,7 +2003,7 @@ select:focus:not(:focus-visible) {
   vertical-align: middle;
   opacity: var(--opacity-soft);
   flex-shrink: 0;
-  transition: opacity var(--dur-fast) var(--ease-plain);
+  transition: opacity var(--dur-fast) var(--ease-out);
 }
 .tx-sort-icon svg {
   width: var(--size-sort-icon);
@@ -3219,7 +3219,7 @@ mark.tx-hl {
   border-radius: var(--radius-sm);
   padding: var(--sp-2-5) var(--sp-3);
   gap: var(--sp-2);
-  transition: opacity var(--dur-base) var(--ease-plain);
+  transition: opacity var(--dur-base) var(--ease-out);
 }
 .multi-receipt-item.added {
   opacity: var(--opacity-mid);
@@ -4471,12 +4471,12 @@ body {
 .summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* ── モーダルアニメーション ── */
-.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-plain); }
+.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-out); }
 .modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
 .modal-overlay .modal {
   transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init));
   opacity: 0;
-  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
+  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out);
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(var(--scale-rest));
@@ -5454,7 +5454,7 @@ body {
   z-index: var(--z-sidebar-overlay);
   background: var(--scrim);
   opacity: 0;
-  transition: opacity var(--dur-mid) var(--ease-plain);
+  transition: opacity var(--dur-mid) var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
 #sidebar-overlay.active {
@@ -13235,7 +13235,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   overflow: hidden;
   transform: translateY(var(--translate-notif-hide)) scale(var(--scale-panel-init));
   opacity: 0;
-  transition: transform var(--dur-appear) var(--ease-bounce), opacity var(--dur-faster) var(--ease-plain);
+  transition: transform var(--dur-appear) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out);
 }
 .notif-panel.notif-panel-open {
   transform: translateY(0) scale(var(--scale-rest));
@@ -14298,7 +14298,7 @@ kbd {
   box-shadow: 0 4px 20px var(--black-14), 0 0 0 4px color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-faster) var(--ease-plain), transform var(--dur-appear) var(--ease-bounce);
+  transition: opacity var(--dur-faster) var(--ease-out), transform var(--dur-appear) var(--ease-bounce);
   z-index: var(--z-kbd-hint);
   max-width: calc(100vw - var(--sp-8));
 }
@@ -14559,7 +14559,7 @@ canvas.chart-clickable { cursor: pointer; }
   padding: var(--sp-0-5) var(--sp-1-75);
   pointer-events: none;
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease-plain);
+  transition: opacity var(--dur-fast) var(--ease-out);
   letter-spacing: var(--ls-label);
   line-height: var(--lh-tight);
 }
@@ -15207,7 +15207,7 @@ canvas.chart-clickable { cursor: pointer; }
   margin-left: var(--sp-1);
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease-plain), transform var(--dur-fast) var(--ease-bounce);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce);
 }
 [data-theme="dark"] .rpt-month-row.is-clickable:hover {
   box-shadow: var(--shadow-row-selected);
