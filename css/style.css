@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.80)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.83)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4459,9 +4459,9 @@ body {
    ============================================================ */
 
 /* ── カードホバーリフト ── */
-.card { transition: box-shadow var(--dur-appear) var(--ease-bounce), transform var(--dur-appear) var(--ease-bounce), border-color var(--dur-appear) var(--ease-out); }
+.card { transition: box-shadow var(--dur-appear) var(--ease-bounce), transform var(--dur-appear) var(--ease-bounce), border-color var(--dur-appear) var(--ease-out), filter var(--dur-press) var(--ease-out); }
 .card:hover { box-shadow: var(--shadow-md); transform: translateY(var(--translate-lift-md)); border-color: var(--border-strong); }
-.card:active { transform: translateY(0); box-shadow: var(--shadow-sm); border-color: var(--border); }
+.card:active { transform: translateY(0); box-shadow: var(--shadow-sm); border-color: var(--border); filter: brightness(var(--brightness-press-soft)); }
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); }
 .summary-card:hover {
   transform: translateY(var(--translate-lift-lg));
@@ -4876,7 +4876,7 @@ body {
 
 /* ── 空状態 共通アニメーション (v17.9) ──────────────────── */
 @keyframes empty-state-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-lg)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes empty-icon-float {
@@ -4892,7 +4892,7 @@ body {
   gap: var(--sp-2-5);
   padding: var(--sp-10) var(--sp-5);
   color: var(--text-muted);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .empty-month-icon { font-size: var(--fs-icon-3xl); line-height: var(--lh-none); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-month-msg {
@@ -5280,7 +5280,7 @@ body {
   border-radius: var(--radius);
   border: var(--bw-select) dashed var(--border);
   margin-bottom: var(--sp-4);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .empty-asset-icon {
   font-size: var(--fs-icon-6xl);
@@ -6062,7 +6062,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-12) var(--sp-4);
   text-align: center;
   gap: var(--sp-3);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .empty-goal-icon { font-size: var(--fs-icon-7xl); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-goal-msg {
@@ -7257,7 +7257,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex; flex-direction: column; align-items: center;
   gap: var(--sp-3); padding: var(--sp-10) var(--sp-4);
   color: var(--text-muted); text-align: center;
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .sub-empty-icon { font-size: var(--fs-icon-4xl); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .sub-empty p { font-size: var(--fs-sm); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); text-wrap: balance; }
@@ -7796,7 +7796,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   text-align: center;
   padding: var(--sp-8) var(--sp-4);
   color: var(--text-muted);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .pt-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .pt-empty p { margin-bottom: var(--sp-4); letter-spacing: var(--ls-fine); line-height: var(--lh-relaxed); text-wrap: balance; }
@@ -8376,7 +8376,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   text-align: center;
   padding: var(--sp-12) var(--sp-5);
   color: var(--text-muted);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .wl-empty-icon {
   font-size: var(--fs-icon-6xl);
@@ -9347,7 +9347,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--surface);
   border-radius: var(--radius);
   border: var(--bw-thin) dashed var(--border);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .ch-empty-icon { font-size: var(--fs-icon-4xl); display: block; margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .ch-empty p    { margin: 0 0 var(--sp-1); font-size: var(--fs-base); letter-spacing: var(--ls-fine); line-height: var(--lh-tight); text-wrap: balance; }
@@ -11072,7 +11072,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 空状態 */
 .empty-debt-state {
   text-align: center; padding: var(--sp-12) var(--sp-4);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .empty-debt-icon { font-size: var(--fs-icon-6xl); margin-bottom: var(--sp-3); animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite; animation-delay: var(--dur-delay-md); }
 .empty-debt-msg  { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); margin-bottom: var(--sp-2); text-wrap: balance; }
@@ -12504,7 +12504,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: center;
   padding: var(--sp-10) var(--sp-4);
   color: var(--text-muted);
-  animation: empty-state-in var(--dur-modal) var(--ease-out) both;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
 }
 .tx-empty-icon {
   font-size: var(--fs-icon-5xl);
