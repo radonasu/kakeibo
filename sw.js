@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.06'; // v21.06: タイポグラフィ改善・4要素にfont-variant-numeric:tabular-nums追加（.bottom-nav-badge/.step-num/.cal-ws-pill/.tx-added-count-badge）
+const CACHE_NAME = 'kakeibo-v21.07'; // v21.07: タイポグラフィ改善・5要素にfont-variant-numeric:tabular-nums追加（.asset-foreign-hint/.ct-stat-sub/.hm-stat-sub/.yi-card-sub/.pm-sum-sub）
 const ASSETS = [
   './index.html',
   './css/style.css',
