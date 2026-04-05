@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.84'; // v20.84: デザイン改善・translateX入場アニメーション7種にscale追加・重複@keyframes dw-item-in修正
+const CACHE_NAME = 'kakeibo-v20.85'; // v20.85: デザイン改善・translateY入場アニメーション10種にscale追加（sf-row-in/ci-row-in/dd-summary-in/kb-group-in/yr-footer-in/yr-spark-in/ci-foot-in/dd-foot-in/rc-footer-in/adv-grp-in）
 const ASSETS = [
   './index.html',
   './css/style.css',
