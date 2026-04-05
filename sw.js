@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.91'; // v20.91: デザイン改善・週次バーグラフ（.wk-bar-fill）縦成長アニメーション追加（wk-bar-grow scaleY 0→1・transform-origin:bottom・dur-fill・ease-out・wk-iスタガー）・今日バーのpulseアニメーション開始タイミングをgrow完了後に後退
+const CACHE_NAME = 'kakeibo-v20.92'; // v20.92: バグ修正・入場アニメーション6種にfill-mode both追加（dup-banner-in/cal-fade-in×2/cal-panel-in/memo-hint-in/qa-body-in）
 const ASSETS = [
   './index.html',
   './css/style.css',
