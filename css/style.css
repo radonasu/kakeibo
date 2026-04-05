@@ -7888,7 +7888,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .pt-widget-exp  { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: var(--sp-0-25); letter-spacing: var(--ls-label); line-height: var(--lh-tight); }
 .pt-widget-balance {
-  font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text); flex-shrink: 0; letter-spacing: var(--ls-fine); font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text); flex-shrink: 0; letter-spacing: var(--ls-fine); line-height: var(--lh-tight); font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 520px) {
@@ -11246,7 +11246,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 [data-theme="dark"] .sim-savings-label { color: var(--income-end); }
 .sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tight); }
 [data-theme="dark"] .sim-savings-value { color: var(--income-end); }
-.sim-savings-divider { width: var(--bw-thin); height: 48px; background: var(--success-border); }
+.sim-savings-divider { width: var(--bw-thin); height: var(--sp-12); background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
 
 /* グラフ */
@@ -11268,7 +11268,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   .sim-result-grid { grid-template-columns: 0.8fr 1fr 1fr; }
   .sim-result-grid > div { padding: var(--sp-2) var(--sp-1-5); font-size: var(--fs-xs); }
   .sim-savings-banner { flex-direction: column; gap: var(--sp-2); }
-  .sim-savings-divider { width: 48px; height: var(--bw-thin); }
+  .sim-savings-divider { width: var(--sp-12); height: var(--bw-thin); }
   .modal-lg { width: 100vw; margin: 0; border-radius: var(--radius-card) var(--radius-card) 0 0; align-self: flex-end; }
 }
 
@@ -15393,6 +15393,7 @@ canvas.chart-clickable { cursor: pointer; }
   color: var(--text-faint);
   letter-spacing: var(--ls-label);
   line-height: var(--lh-tight);
+  animation: pace-row-in var(--dur-appear) var(--ease-bounce) calc(2 * var(--dur-stagger-2xl)) both;
 }
 .pace-diff-val {
   font-weight: var(--fw-bold);
@@ -15459,6 +15460,7 @@ canvas.chart-clickable { cursor: pointer; }
   border: var(--bw-thin) solid transparent;
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-fine);
+  animation: pace-daily-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xl) both;
 }
 .pace-msg.pace-good { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
 .pace-msg.pace-warn { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }

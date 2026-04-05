@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.93'; // v20.93: タイポグラフィ改善・tabular-nums数値表示6要素にline-height追加（asset-entry-balance/asset-balance-delta/ch-widget-pct/dow-pct-badge/sb-diff-pill/ev-prog-pct）
+const CACHE_NAME = 'kakeibo-v20.94'; // v20.94: マイクロインタラクション改善+タイポグラフィ修正+バグ修正（pace-diff-row/pace-msg入場アニメ追加・pt-widget-balance lh-tight追加・sim-savings-divider 48px→sp-12変数化2箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
