@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.83)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.86)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -1243,11 +1243,11 @@ select:focus:not(:focus-visible) {
 
 /* ── ページヘッダー子要素入場アニメーション (v20.61) ── */
 @keyframes ph-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.page-title        { animation: ph-in var(--dur-gentle) var(--ease-enter) both; }
-.page-header-right { animation: ph-in var(--dur-gentle) var(--ease-enter) var(--dur-stagger-xl) both; }
+.page-title        { animation: ph-in var(--dur-gentle) var(--ease-bounce) both; }
+.page-header-right { animation: ph-in var(--dur-gentle) var(--ease-bounce) var(--dur-stagger-xl) both; }
 
 /* ── ボタン ──────────────────────────────────────────── */
 .btn {
@@ -1425,7 +1425,7 @@ select:focus:not(:focus-visible) {
 }
 .dup-modal-banner svg { flex-shrink: 0; opacity: var(--opacity-near); }
 @keyframes dup-banner-in {
-  0%   { opacity: 0; transform: translateY(var(--enter-y-neg-base)); }
+  0%   { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .dup-modal-banner {
@@ -2570,9 +2570,9 @@ select:focus:not(:focus-visible) {
   line-height: var(--lh-tight);
 }
 /* 詳細フィルターパネル展開時 内部要素 入場アニメーション（v20.58） */
-.adv-filter-panel.open .adv-filter-inner > *:nth-child(1) { animation: fg-in var(--dur-base) var(--ease-enter) both; animation-delay: var(--dur-delay-xs); }
-.adv-filter-panel.open .adv-filter-inner > *:nth-child(2) { animation: fg-in var(--dur-base) var(--ease-enter) both; animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-mid)); }
-.adv-filter-panel.open .adv-filter-inner > *:nth-child(3) { animation: fg-in var(--dur-base) var(--ease-enter) both; animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-mid)); }
+.adv-filter-panel.open .adv-filter-inner > *:nth-child(1) { animation: fg-in var(--dur-base) var(--ease-bounce) both; animation-delay: var(--dur-delay-xs); }
+.adv-filter-panel.open .adv-filter-inner > *:nth-child(2) { animation: fg-in var(--dur-base) var(--ease-bounce) both; animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-mid)); }
+.adv-filter-panel.open .adv-filter-inner > *:nth-child(3) { animation: fg-in var(--dur-base) var(--ease-bounce) both; animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-mid)); }
 .adv-filter-row {
   display: flex;
   align-items: center;
@@ -3500,7 +3500,7 @@ mark.tx-hl {
   to   { opacity: 1; transform: none; }
 }
 .dash-grid > * {
-  animation: dash-widget-in var(--dur-medium) var(--ease-enter) both;
+  animation: dash-widget-in var(--dur-medium) var(--ease-bounce) both;
 }
 .dash-grid > *:nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-sm)); }
 .dash-grid > *:nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-sm)); }
@@ -4521,7 +4521,7 @@ body {
   to   { opacity: 1; transform: none; }
 }
 @keyframes tx-sort-row-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .tx-table tbody tr { animation: row-in var(--dur-faster) var(--ease-enter) both; }
@@ -4535,7 +4535,7 @@ body {
 .tx-table tbody tr:nth-child(9)  { animation-delay: calc(8 * var(--dur-stagger-sm)); }
 .tx-table tbody tr:nth-child(10) { animation-delay: calc(9 * var(--dur-stagger-sm)); }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
-.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-enter) both; }
+.tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-bounce) both; }
 .tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-2xs); }
 .tx-table.tx-sorting tbody tr:nth-child(3)  { animation-delay: calc(2 * var(--dur-stagger-2xs)); }
 .tx-table.tx-sorting tbody tr:nth-child(4)  { animation-delay: calc(3 * var(--dur-stagger-2xs)); }
@@ -6282,11 +6282,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ── カレンダービュー (v5.39) ──────────────────────────────── */
 @keyframes cal-fade-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes cal-panel-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes cal-ws-pill-in {
@@ -7346,7 +7346,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* ── sub-modal 開放時：フォーム行 stagger入場 (v20.54) ── */
 #sub-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #sub-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #sub-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -7538,11 +7538,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .settings-panel.is-active {
   display: block;
-  animation: stp-in var(--dur-appear) var(--ease-out-sine) both;
+  animation: stp-in var(--dur-appear) var(--ease-bounce) both;
 }
 
 @keyframes stp-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .settings-panel.is-active > .card {
@@ -8564,7 +8564,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
    メモ → カテゴリ自動提案ヒント (v5.53)
    ============================================================ */
 @keyframes memo-hint-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .memo-cat-hint {
@@ -8760,7 +8760,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: fc-spark-in var(--dur-spark) var(--ease-bounce) var(--dur-delay-lg) both;
 }
 @keyframes fc-spark-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .fc-spark-area {
@@ -9087,7 +9087,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 /* ミニスパークライン */
 @keyframes asset-spark-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .asset-sparkline-wrap {
@@ -10317,17 +10317,17 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-body {
   padding: 0 var(--sp-4) var(--sp-4);
   border-top: var(--bw-thin) solid var(--border);
-  animation: qa-body-in var(--dur-appear) var(--ease-out);
+  animation: qa-body-in var(--dur-appear) var(--ease-bounce);
   position: relative;
   z-index: var(--z-raise);
 }
 @keyframes qa-body-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 /* フィールドスタッガードアニメーション */
 @keyframes qa-field-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-md)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .qa-inner {
@@ -10340,7 +10340,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .qa-type-row {
   display: flex;
   gap: var(--sp-2);
-  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: var(--dur-delay-xs);
 }
 .qa-type-btn {
@@ -10383,7 +10383,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: var(--dur-delay-sm);
 }
 .qa-amount-wrap {
@@ -10451,7 +10451,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   gap: var(--sp-2);
   align-items: stretch;
-  animation: qa-field-in var(--dur-gentle) var(--ease-enter) both;
+  animation: qa-field-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--dur-delay-xs) + 2 * var(--dur-stagger-lg));
 }
 .qa-memo-input {
@@ -11969,7 +11969,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* ── ev-modal 開放時：フォームグループ stagger入場 (v20.53) ── */
 #ev-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #ev-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #ev-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -12543,7 +12543,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 .yr-widget-card {
-  animation: yr-card-in var(--dur-long) var(--ease-out-sine) both;
+  animation: yr-card-in var(--dur-long) var(--ease-bounce) both;
   position: relative;
   overflow: hidden;
   border-top: var(--accent-w) solid var(--primary);
@@ -13067,7 +13067,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-ok-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 /* ── チェックインモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
 @keyframes ci-hdr-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes ci-foot-in {
@@ -13834,7 +13834,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 @keyframes calc-preview-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -14164,18 +14164,18 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-align: center;
 }
 @keyframes tx-banner-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes fg-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 .tx-modal-anim .type-toggle,
 .tx-modal-anim .receipt-scan-area,
 .tx-modal-anim .form-group,
 .tx-modal-anim .modal-details {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
   animation-delay: calc(var(--fg-i, 0) * var(--dur-stagger-3xs));
 }
 .btn-continue {
@@ -14524,7 +14524,7 @@ canvas.chart-clickable { cursor: pointer; }
 }
 /* ── ドリルダウン/月ドリルダウンモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
 @keyframes dd-hdr-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)); }
+  from { opacity: 0; transform: translateY(var(--enter-y-neg-xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes dd-foot-in {
@@ -15841,7 +15841,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── goal-modal 開放時：フォームグループ stagger入場 ── */
 #goal-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #goal-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #goal-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -15883,14 +15883,14 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── goal-deposit-modal 開放時：modal-body 子要素 stagger入場 ── */
 #goal-deposit-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #goal-deposit-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: var(--dur-delay-xs); }
 #goal-deposit-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + var(--dur-stagger-3xs)); }
 
 /* ── tpl-modal 開放時：フォームグループ stagger入場 ── */
 #tpl-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #tpl-modal.modal-is-open #tpl-recurring-day-group { animation: none; }
 #tpl-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
@@ -15904,7 +15904,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── ch-modal-overlay 開放時：直接子要素 stagger入場 ── */
 #ch-modal-overlay.modal-is-open .ch-modal > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #ch-modal-overlay.modal-is-open .ch-modal > input[type="hidden"] { animation: none; }
 #ch-modal-overlay.modal-is-open #ch-target-noSpend-wrap            { animation: none; }
@@ -15959,7 +15959,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── asset-modal 開放時：フォームグループ stagger入場 ── */
 #asset-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #asset-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #asset-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -15967,7 +15967,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── asset-entry-modal 開放時：フォームグループ stagger入場 ── */
 #asset-entry-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #asset-entry-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #asset-entry-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -15975,7 +15975,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── wl-modal 開放時：フォームグループ stagger入場 ── */
 #wl-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #wl-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #wl-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -15986,7 +15986,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── mem-modal 開放時：フォームグループ stagger入場 ── */
 #mem-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #mem-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #mem-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16008,7 +16008,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── cat-modal 開放時：フォームグループ stagger入場 ── */
 #cat-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #cat-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #cat-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16038,7 +16038,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── debt-modal 開放時：フォームグループ stagger入場（hidden入力が child1のため child2〜9） ── */
 #debt-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #debt-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #debt-modal.modal-is-open .form-group:nth-child(3) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16051,7 +16051,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── debt-entry-modal 開放時：フォームグループ stagger入場 ── */
 #debt-entry-modal.modal-is-open .form-group {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #debt-entry-modal.modal-is-open .form-group:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #debt-entry-modal.modal-is-open .form-group:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16059,7 +16059,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── pt-modal 開放時：モーダルボディ子要素 stagger入場（form-group + form-row-2混在） ── */
 #pt-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #pt-modal.modal-is-open .modal-actions { animation: none; }
 #pt-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
@@ -16221,7 +16221,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── アドバイスモーダル: modal-body 直接子要素 stagger入場 ── */
 #advice-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #advice-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #advice-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16229,7 +16229,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── スマート予算モーダル: modal-body 直接子要素 stagger入場 ── */
 #smart-budget-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #smart-budget-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #smart-budget-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
@@ -16238,7 +16238,7 @@ canvas.chart-clickable { cursor: pointer; }
 
 /* ── 負債シミュレーションモーダル: modal-body 直接子要素 stagger入場 ── */
 #debt-sim-modal.modal-is-open .modal-body > * {
-  animation: fg-in var(--dur-base) var(--ease-enter) both;
+  animation: fg-in var(--dur-base) var(--ease-bounce) both;
 }
 #debt-sim-modal.modal-is-open .modal-body > *:nth-child(1) { animation-delay: calc(var(--dur-delay-xs) + 0 * var(--dur-stagger-3xs)); }
 #debt-sim-modal.modal-is-open .modal-body > *:nth-child(2) { animation-delay: calc(var(--dur-delay-xs) + 1 * var(--dur-stagger-3xs)); }
