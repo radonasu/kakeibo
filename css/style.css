@@ -10003,6 +10003,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.88); }
   to   { opacity: 1; transform: none; }
 }
+/* バーフィル 縦成長アニメーション */
+@keyframes wk-bar-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
 
 /* カード本体 */
 .wk-widget-card {
@@ -10160,16 +10165,22 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   min-height: var(--size-bar-min);
   position: relative;
   z-index: var(--z-raise);
+  transform-origin: bottom;
+  animation: wk-bar-grow var(--dur-fill) var(--ease-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
 }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
+  animation:
+    wk-bar-grow var(--dur-fill) var(--ease-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both,
+    wk-today-pulse var(--dur-pulse) var(--ease-in-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill) + var(--dur-pulse-delay)) infinite;
 }
 .wk-weekend     .wk-bar-fill { background: var(--primary); }
 .wk-bar-today.wk-weekend .wk-bar-fill {
   background: var(--danger-text);
-  animation: wk-today-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
+  animation:
+    wk-bar-grow var(--dur-fill) var(--ease-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both,
+    wk-today-pulse var(--dur-pulse) var(--ease-in-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill) + var(--dur-pulse-delay)) infinite;
 }
 
 .wk-bar-amount {
