@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.92'; // v20.92: バグ修正・入場アニメーション6種にfill-mode both追加（dup-banner-in/cal-fade-in×2/cal-panel-in/memo-hint-in/qa-body-in）
+const CACHE_NAME = 'kakeibo-v20.93'; // v20.93: タイポグラフィ改善・tabular-nums数値表示6要素にline-height追加（asset-entry-balance/asset-balance-delta/ch-widget-pct/dow-pct-badge/sb-diff-pill/ev-prog-pct）
 const ASSETS = [
   './index.html',
   './css/style.css',
