@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.87)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v20.88)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -11315,11 +11315,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* セル スタッガードフェードイン */
 .sim-result-grid > div {
-  animation: sim-cell-in var(--dur-gentle) var(--ease-out) calc(var(--sim-ri,0) * var(--dur-stagger-xs)) both;
+  animation: sim-cell-in var(--dur-gentle) var(--ease-bounce) calc(var(--sim-ri,0) * var(--dur-stagger-xs)) both;
 }
 @keyframes sim-cell-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 改善値セル — 薄い緑背景ハイライト */
@@ -11508,7 +11508,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
 }
 @keyframes sb-row-in {
-  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(0.99); }
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -11963,7 +11963,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 /* --- アニメーション --- */
 @keyframes ev-card-in {
-  0%   { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
+  0%   { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
 }
 
@@ -12260,7 +12260,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 #advice-modal .modal {
-  animation: adv-modal-in var(--dur-lift) var(--ease-bounce);
+  animation: adv-modal-in var(--dur-lift) var(--ease-bounce) both;
 }
 
 /* ウィジェットボタン */
@@ -14323,7 +14323,7 @@ kbd {
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--primary);
-  animation: kb-dots-pulse var(--dur-glide) var(--ease-plain) infinite;
+  animation: kb-dots-pulse var(--dur-glide) var(--ease-in-out) infinite;
   letter-spacing: var(--ls-snug);
   line-height: var(--lh-tight);
 }
@@ -15274,7 +15274,7 @@ canvas.chart-clickable { cursor: pointer; }
   to   { opacity: 1; transform: none; }
 }
 @keyframes pace-daily-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -15493,7 +15493,7 @@ canvas.chart-clickable { cursor: pointer; }
   line-height: var(--lh-tight);
 }
 @keyframes pm-trend-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(.98); }
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 [data-theme="dark"] .pm-trend-card { background: var(--surface); }
@@ -15579,7 +15579,7 @@ canvas.chart-clickable { cursor: pointer; }
   line-height: var(--lh-tight);
 }
 @keyframes pm-sum-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @media (max-width: 600px) {
@@ -15783,7 +15783,7 @@ canvas.chart-clickable { cursor: pointer; }
 .cat-budget-pct.warn { color: var(--warning); font-weight: var(--fw-medium); }
 .cat-budget-pct.over { color: var(--expense); font-weight: var(--fw-semi); }
 @keyframes cat-cg-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(.97); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes cat-bar-in {
