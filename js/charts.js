@@ -1,5 +1,5 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v8.1
+// charts.js - グラフ描画 (Chart.js) v8.2
 // ============================================================
 
 const chartInstances = {};
@@ -700,7 +700,7 @@ function renderPaymentTrendChart(canvasId, year) {
         backgroundColor: (PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted')) + 'cc',
         borderColor:      PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted'),
         borderWidth: 0,
-        borderRadius: 4,
+        borderRadius: 6,
         borderSkipped: false,
       })),
     },
@@ -778,7 +778,7 @@ function renderYoYChart(canvasId, year) {
           label: `${year}年 支出`,
           data: thisExp,
           backgroundColor: expClr + 'bf',
-          borderRadius: 5,
+          borderRadius: 6,
           borderSkipped: false,
           hoverBackgroundColor: expClr + 'f2',
           order: 1,
@@ -789,7 +789,7 @@ function renderYoYChart(canvasId, year) {
           backgroundColor: expClr + '38',
           borderColor: expClr + '73',
           borderWidth: 1,
-          borderRadius: 5,
+          borderRadius: 6,
           borderSkipped: false,
           order: 2,
         },
@@ -797,7 +797,7 @@ function renderYoYChart(canvasId, year) {
           label: `${year}年 収入`,
           data: thisInc,
           backgroundColor: incClr + 'bf',
-          borderRadius: 5,
+          borderRadius: 6,
           borderSkipped: false,
           hoverBackgroundColor: incClr + 'f2',
           order: 3,
@@ -808,7 +808,7 @@ function renderYoYChart(canvasId, year) {
           backgroundColor: incClr + '38',
           borderColor: incClr + '73',
           borderWidth: 1,
-          borderRadius: 5,
+          borderRadius: 6,
           borderSkipped: false,
           order: 4,
         },
@@ -1231,7 +1231,7 @@ function renderFixedVariableTrend(canvasId, year) {
           label: '固定費',
           data: fixedData,
           backgroundColor: primaryClr + 'cc',
-          borderRadius: 5,
+          borderRadius: 6,
           order: 2,
         },
         {
@@ -1239,7 +1239,7 @@ function renderFixedVariableTrend(canvasId, year) {
           label: '変動費',
           data: varData,
           backgroundColor: successClr + 'b8',
-          borderRadius: 5,
+          borderRadius: 6,
           order: 2,
         },
         {
