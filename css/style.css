@@ -5400,6 +5400,8 @@ body {
   flex: 1;
   text-align: right;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .fx-unit {
   font-size: var(--fs-sm);
@@ -11228,7 +11230,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sim-result-col-head { text-align: center; }
 .sim-col-base { color: var(--primary); }
 .sim-col-accel { color: var(--success); }
-.sim-result-val { text-align: center; font-weight: var(--fw-semi); color: var(--text); font-variant-numeric: tabular-nums; }
+.sim-result-val { text-align: center; font-weight: var(--fw-semi); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tight); }
 .sim-val-better { color: var(--success); }
 
 /* 節約バナー */
@@ -15216,6 +15218,8 @@ canvas.chart-clickable { cursor: pointer; }
 .rpt-month-row.is-clickable:focus-visible .rpt-row-chevron { opacity: 1; transform: translateX(var(--translate-slide)); }
 .rpt-month-label {
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-tight);
 }
 .rpt-row-chevron {
   display: inline-block;
@@ -16287,7 +16291,8 @@ canvas.chart-clickable { cursor: pointer; }
 #debt-modal.modal-is-open .modal-header,
 #debt-entry-modal.modal-is-open .modal-header,
 #wl-modal.modal-is-open .modal-header,
-#advice-modal.modal-is-open .modal-header {
+#advice-modal.modal-is-open .modal-header,
+#debt-sim-modal.modal-is-open .modal-header {
   animation: ci-hdr-in var(--dur-medium) var(--ease-bounce) both;
 }
 
@@ -16304,7 +16309,8 @@ canvas.chart-clickable { cursor: pointer; }
 #goal-deposit-modal.modal-is-open .modal-footer,
 #wl-modal.modal-is-open .modal-footer,
 #debt-modal.modal-is-open .modal-footer,
-#debt-entry-modal.modal-is-open .modal-footer {
+#debt-entry-modal.modal-is-open .modal-footer,
+#debt-sim-modal.modal-is-open .modal-footer {
   animation: ci-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-sm) both;
 }
 
