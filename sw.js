@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.95'; // v20.95: タイポグラフィ改善+マイクロインタラクション改善（.sim-result-val/.rpt-month-label/.fx-rate-input にls-fine+lh-tight追加・#debt-sim-modal modal-header/footer入場アニメーション追加）
+const CACHE_NAME = 'kakeibo-v20.96'; // v20.96: タイポグラフィ改善（.fv-rate-badge/.sb-low-data/.pace-pct/.pace-diff-val にletter-spacing+line-height追加）
 const ASSETS = [
   './index.html',
   './css/style.css',
