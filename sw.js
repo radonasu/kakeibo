@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v20.88'; // v20.88: デザイン改善・ハードコードscale値CSS変数化（sb-row-in/ev-card-in/pace-daily-in/pm-trend-in/pm-sum-in/cat-cg-in）・sim-cell-inにtranslateY+scale+ease-bounce追加・adv-modal-in fill-mode追加・kb-dots-pulse ease改善
+const CACHE_NAME = 'kakeibo-v20.89'; // v20.89: デザイン改善・ウィジェットカード入場アニメーション animation宣言 ease-enter→ease-bounce統一（19種）＋wk-cell-in scale変数化
 const ASSETS = [
   './index.html',
   './css/style.css',

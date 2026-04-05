@@ -6824,7 +6824,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.insight-card { animation: insight-card-in var(--dur-long) var(--ease-enter) both; }
+.insight-card { animation: insight-card-in var(--dur-long) var(--ease-bounce) both; }
 
 .insight-list {
   display: flex;
@@ -6955,7 +6955,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.sub-widget-card { animation: sub-wc-in var(--dur-long) var(--ease-enter) both; }
+.sub-widget-card { animation: sub-wc-in var(--dur-long) var(--ease-bounce) both; }
 
 .sub-widget-header {
   display: flex;
@@ -7839,7 +7839,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.pt-widget-card { animation: pt-wc-in var(--dur-long) var(--ease-enter) both; }
+.pt-widget-card { animation: pt-wc-in var(--dur-long) var(--ease-bounce) both; }
 .pt-widget-header {
   display: flex; align-items: baseline; gap: var(--sp-2);
   margin-bottom: var(--sp-3);
@@ -7903,7 +7903,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .health-score-card {
   position: relative;
   overflow: hidden;
-  animation: hs-card-in var(--dur-long) var(--ease-enter) both;
+  animation: hs-card-in var(--dur-long) var(--ease-bounce) both;
 }
 .health-score-card::before {
   content: '';
@@ -8460,7 +8460,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.wish-widget-card { animation: wish-card-in var(--dur-long) var(--ease-enter) both; }
+.wish-widget-card { animation: wish-card-in var(--dur-long) var(--ease-bounce) both; }
 .wish-widget-header {
   display: flex;
   align-items: baseline;
@@ -8651,7 +8651,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--fc-color, var(--primary));
   position: relative;
   overflow: hidden;
-  animation: fc-card-in var(--dur-long) var(--ease-enter) both;
+  animation: fc-card-in var(--dur-long) var(--ease-bounce) both;
 }
 .forecast-card::before {
   content: '';
@@ -8664,7 +8664,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* alert状態: 左ボーダーパルス */
 .forecast-card.fc-status-alert {
   border-left: var(--accent-w) solid var(--danger-text);
-  animation: fc-card-in var(--dur-long) var(--ease-enter) both,
+  animation: fc-card-in var(--dur-long) var(--ease-bounce) both,
              fc-alert-glow var(--dur-pulse) var(--ease-in-out) var(--dur-pulse-delay) infinite;
 }
 
@@ -8826,7 +8826,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
-  animation: fc-cell-in var(--dur-medium) var(--ease-enter) both;
+  animation: fc-cell-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--dur-delay-lg) + var(--fc-i, 0) * var(--dur-stagger-xl));
 }
 .fc-cell-balance {
@@ -9018,7 +9018,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   to   { opacity: 1; transform: none; }
 }
 .asset-card {
-  animation: asset-card-in var(--dur-lift) var(--ease-enter) both;
+  animation: asset-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--ac-i, 0) * var(--dur-stagger-lg));
   border-left: var(--size-accent-bar) solid var(--asset-accent, var(--border));
 }
@@ -9439,7 +9439,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.ch-widget-card { animation: ch-wc-in var(--dur-long) var(--ease-enter) both; }
+.ch-widget-card { animation: ch-wc-in var(--dur-long) var(--ease-bounce) both; }
 
 .ch-widget-list {
   display: flex;
@@ -9995,7 +9995,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* セル入場アニメーション */
 @keyframes wk-cell-in {
-  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.96); }
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
 /* バーカラム入場アニメーション */
@@ -10009,7 +10009,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--primary);
   position: relative;
   overflow: hidden;
-  animation: wk-card-in var(--dur-long) var(--ease-enter) both;
+  animation: wk-card-in var(--dur-long) var(--ease-bounce) both;
 }
 .wk-widget-card::before {
   content: '';
@@ -10042,7 +10042,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-sm);
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
-  animation: wk-cell-in var(--dur-medium) var(--ease-enter) both;
+  animation: wk-cell-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: var(--dur-delay-md);
 }
 .wk-summary-row .wk-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-md) + var(--dur-stagger-xl)); }
@@ -10224,7 +10224,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-top: var(--accent-w) solid var(--qa-accent);
   background: var(--surface);
   position: relative;
-  animation: qa-card-in var(--dur-long) var(--ease-enter) both;
+  animation: qa-card-in var(--dur-long) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), border-top-color var(--dur-mid) var(--ease-out);
 }
 /* デコレーションサークル（右上） */
@@ -10520,7 +10520,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   position: relative;
   overflow: hidden;
   border-top: var(--accent-w) solid var(--primary);
-  animation: nt-card-in var(--dur-long) var(--ease-enter) both;
+  animation: nt-card-in var(--dur-long) var(--ease-bounce) both;
 }
 .nt-card::before {
   content: '';
@@ -11100,7 +11100,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.debt-widget-card { animation: debt-wc-in var(--dur-long) var(--ease-enter) both; }
+.debt-widget-card { animation: debt-wc-in var(--dur-long) var(--ease-bounce) both; }
 
 .debt-widget-summary {
   display: flex; align-items: center; gap: 0;
@@ -11897,7 +11897,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.ev-widget-card { padding: var(--sp-4); animation: ev-wc-in var(--dur-long) var(--ease-enter) both; }
+.ev-widget-card { padding: var(--sp-4); animation: ev-wc-in var(--dur-long) var(--ease-bounce) both; }
 .ev-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); }
 .ev-widget-item {
   display: flex;
@@ -12428,7 +12428,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.cc-widget-card { animation: cc-wc-in var(--dur-long) var(--ease-enter) both; }
+.cc-widget-card { animation: cc-wc-in var(--dur-long) var(--ease-bounce) both; }
 
 .cc-cols {
   display: grid;
@@ -14716,7 +14716,7 @@ canvas.chart-clickable { cursor: pointer; }
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.opp-widget-card { padding: 0; animation: opp-wc-in var(--dur-long) var(--ease-enter) both; }
+.opp-widget-card { padding: 0; animation: opp-wc-in var(--dur-long) var(--ease-bounce) both; }
 
 .opp-header-badge {
   font-size: var(--fs-xs);
@@ -15283,7 +15283,7 @@ canvas.chart-clickable { cursor: pointer; }
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.pace-widget-card { position: relative; overflow: hidden; animation: pace-wc-in var(--dur-long) var(--ease-enter) both; }
+.pace-widget-card { position: relative; overflow: hidden; animation: pace-wc-in var(--dur-long) var(--ease-bounce) both; }
 .pace-widget-card::before {
   content: '';
   position: absolute;
