@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.24'; // v21.24: モバイルUX改善・スクロール領域7箇所にoverscroll-behavior:contain追加（auth-card/cal-day-panel-body/csv-preview-wrap/ci-wrap/rc-body/dd-list/md-scroll-body）
+const CACHE_NAME = 'kakeibo-v21.25'; // v21.25: モバイルUX改善・スクロール領域6箇所にoverscroll-behavior:contain追加（sidebar-nav/tx-tag-filter-row/bulk-bar/section-tabs/nt-textarea/hm-outer-wrap）
 const ASSETS = [
   './index.html',
   './css/style.css',
