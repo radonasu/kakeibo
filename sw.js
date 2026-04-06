@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.19'; // v21.19: タイポグラフィ改善・19要素のline-heightをlh-tight→lh-tighterに修正（大見出し/数値表示系: page-title/summary-amount/auth-title/onboarding-title/mobile-title/year-label/template-bar-label/ios-guide-title/dow-stat-day/fv-stat-value/pt-widget-total-amount/sub-widget-total-amount/wl-summary-value/wish-widget-total-amount/ct-stat-value/yoy-summary-value/hm-stat-value/debt-balance/sim-savings-value）
+const CACHE_NAME = 'kakeibo-v21.20'; // v21.20: タイポグラフィ改善・23要素のline-heightをlh-tight→lh-tighterに修正（フォームUI/ボタン/バッジ/トースト系: sidebar-avatar/btn-sidebar-logout/btn/amount-prefix/amount-input-wrap-input/bulk-count/bulk-sel/tx-month-group-label/tx-month-group-summary/filter-bar-select/filter-search/month-sel/type-btn/btn-receipt/multi-receipt-store/budget-input/sync-user-avatar/sync-toast/update-toast/notif-badge/kk-toast/asset-entry-balance/asset-balance-jpy）
 const ASSETS = [
   './index.html',
   './css/style.css',
