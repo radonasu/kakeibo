@@ -6874,10 +6874,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-md);
   border-left: var(--accent-w) solid transparent;
   background: var(--surface-hover);
-  transition: background var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); }
-.insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mist)); }
+.insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 
 /* タイプ別ボーダー色 */
 .insight-item.insight-info    { border-left-color: var(--primary); }
@@ -6907,7 +6907,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text-primary);
-  line-height: var(--lh-short);
+  line-height: var(--lh-snug);
   letter-spacing: var(--ls-fine);
   margin-bottom: var(--sp-0-5);
 }
@@ -10696,7 +10696,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: var(--bw-thin) solid var(--border);
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-2);
-  line-height: var(--lh-base);
+  line-height: var(--lh-tighter);
 }
 .nt-saved-at::before {
   content: '🕐';
@@ -13647,7 +13647,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--text-muted);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
-  line-height: var(--lh-base);
+  line-height: var(--lh-tighter);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
