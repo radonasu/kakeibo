@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.22'; // v21.21: タイポグラフィ改善・27要素のline-heightをlh-tight→lh-tighterに修正（tabular-nums/white-space:nowrap単行確定系: tx-table-amount/fx-rate-input/fx-unit/cal-ev-name/sub-widget-name/sub-card-name/sub-card-amount/pt-card-name/pt-card-balance/pt-widget-name/pt-widget-balance/wl-card-name/wl-card-price/wish-widget-name/fc-cell-amount/ch-widget-pct/wk-cell-value/debt-widget-cell-value/debt-widget-name/sim-loan-stat/sim-loan-stat-strong/sim-result-col-head/sim-result-val/ev-sum-inc/ev-sum-exp/ev-widget-name/ci-event-amount）
+const CACHE_NAME = 'kakeibo-v21.23'; // v21.23: タイポグラフィ改善・46要素のline-heightをlh-tight→lh-tighterに修正（brand-name/btn-account-add/nav-item/btn-link/adv-filter-sep/adv-filter-input/export-block-h4/export-range-select/budget-item-hdr/sync-user-email-text/stp-config-summary/auth-tab/auth-submit/install-banner-strong/goal-remaining/goal-achieved-summary/goal-deposit-current/cal-day-panel-title/cal-panel-cat/cal-events-title/sub-inactive-summary/hs-item-label/hs-item-score/wl-archive-summary/wl-archive-name/ch-section-title/ch-archive-summary/ch-widget-name/dow-label-cell/ct-chip/qa-card-title/qa-yen/debt-name/debt-archive-summary/sim-loan-name/sim-chart-title/empty-state-sm/ev-month-label/ci-score-label/ci-challenge-name/ci-event-name/calc-arrow/calc-err/rc-title/kb-g-dots/opp-title）
 const ASSETS = [
   './index.html',
   './css/style.css',
