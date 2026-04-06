@@ -1501,7 +1501,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-sm);
   font-weight: var(--fw-normal);
   letter-spacing: var(--ls-fine);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-tighter);
   opacity: 1;
 }
 /* ── セレクトボックス カスタム矢印 (v17.6) ──────────────── */
@@ -1821,7 +1821,7 @@ select:focus:not(:focus-visible) {
 .chart-card .chart-wrap { position: relative; }
 
 /* ── テーブル ────────────────────────────────────────── */
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
 
 .tx-table {
   width: 100%;
@@ -2953,6 +2953,7 @@ mark.tx-hl {
 .modal-body {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--sp-6);
 }
 
@@ -3656,6 +3657,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Courier New', monospace;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   margin-top: var(--sp-2-5);
   white-space: pre;
   line-height: var(--lh-relaxed);
@@ -13330,7 +13332,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-semi);
   color: var(--text);
   letter-spacing: var(--ls-snug);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-tighter);
 }
 .notif-mark-read {
   background: none;
