@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.11'; // v21.11: タイポグラフィ改善・12要素のline-heightをlh-tight→lh-tighterに修正（sidebar/tx/filter/budget系）
+const CACHE_NAME = 'kakeibo-v21.12'; // v21.12: タイポグラフィ改善・22要素のline-heightをlh-tight→lh-tighterに修正（summary/tx/form/smi/btn/sub系）
 const ASSETS = [
   './index.html',
   './css/style.css',
