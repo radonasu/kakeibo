@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.20'; // v21.20: タイポグラフィ改善・23要素のline-heightをlh-tight→lh-tighterに修正（フォームUI/ボタン/バッジ/トースト系: sidebar-avatar/btn-sidebar-logout/btn/amount-prefix/amount-input-wrap-input/bulk-count/bulk-sel/tx-month-group-label/tx-month-group-summary/filter-bar-select/filter-search/month-sel/type-btn/btn-receipt/multi-receipt-store/budget-input/sync-user-avatar/sync-toast/update-toast/notif-badge/kk-toast/asset-entry-balance/asset-balance-jpy）
+const CACHE_NAME = 'kakeibo-v21.21'; // v21.21: タイポグラフィ改善・27要素のline-heightをlh-tight→lh-tighterに修正（tabular-nums/white-space:nowrap単行確定系: tx-table-amount/fx-rate-input/fx-unit/cal-ev-name/sub-widget-name/sub-card-name/sub-card-amount/pt-card-name/pt-card-balance/pt-widget-name/pt-widget-balance/wl-card-name/wl-card-price/wish-widget-name/fc-cell-amount/ch-widget-pct/wk-cell-value/debt-widget-cell-value/debt-widget-name/sim-loan-stat/sim-loan-stat-strong/sim-result-col-head/sim-result-val/ev-sum-inc/ev-sum-exp/ev-widget-name/ci-event-amount）
 const ASSETS = [
   './index.html',
   './css/style.css',
