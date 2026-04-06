@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.26'; // v21.26: モバイルUX改善・overscroll-behavior:contain 3箇所追加（modal-body/table-wrap/sql-block）・タイポグラフィ：::placeholder・.notif-panel-title lh-tight→lh-tighter
+const CACHE_NAME = 'kakeibo-v21.27'; // v21.27: タイポグラフィ改善・lh-tightコンポーネント残留ゼロ達成（空状態/情報テキスト9要素をlh-snug/lh-relaxedに統一）
 const ASSETS = [
   './index.html',
   './css/style.css',
