@@ -116,7 +116,7 @@
   /* 行間 */
   --lh-tighter: 1.1;   /* 最密：見出し内アイコン・バッジ等 */
   --lh-tight:   1.2;   /* 密：見出し・コンパクトテキスト */
-  --lh-short:   1.3;   /* 短行間：カレンダー極小テキスト・コンパクト本文 */
+  --lh-short:   1.3;   /* 短行間：コンパクト本文（lh-tighterとlh-baseの中間値） */
   --lh-base:    1.4;   /* 基本行間：インサイト本文・テキストエリア等 */
   --lh-snug:    1.45;  /* やや詰め：カード本文・リスト項目 */
   --lh-loose:   1.5;   /* 緩め：タグチップ・フィルターチップ・説明テキスト */
@@ -478,7 +478,7 @@
   --translate-lift-sm: -2px; /* 小ホバーリフト（btn:hover/onboarding-cta/dow-stat/ct-chip等） */
   --translate-lift-md: -3px; /* 中ホバーリフト（card:hover基本/step-card/dash-sum-clickable等） */
   --translate-lift-lg: -5px; /* 大ホバーリフト（summary-card:hover・強調カード専用） */
-  --translate-slide:    2px; /* 横スライド（widget-item:hover/notif-item/rpt-row-chevron等） */
+  --translate-slide:    2px; /* 横スライド（widget-item:hover/notif-item/dw-item等） */
   --translate-press-down:    1px;  /* 押下時下方向フィードバック（section-tab:active/btn-success:active） */
   --translate-popup-hide-xs: 10px; /* ポップアップ最小初期オフセット（kb-g-hint hidden state） */
   --translate-popup-hide-sm: 14px; /* トースト小初期オフセット（kk-toast hidden state） */
@@ -6518,7 +6518,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-amount {
   font-size: var(--fs-3xs);
   font-weight: var(--fw-semi);
-  line-height: var(--lh-short);
+  line-height: var(--lh-tighter);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8955,14 +8955,15 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   padding: var(--sp-2-5) var(--sp-3);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
   position: relative;
 }
 .dw-item:hover {
   background: var(--surface-hover);
+  transform: translateX(var(--translate-slide));
   box-shadow: var(--shadow-row-hover);
 }
-.dw-item:active { background: var(--surface-hover); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.dw-item:active { background: var(--surface-hover); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .dw-item-label {
   flex: 1;
   display: flex;
