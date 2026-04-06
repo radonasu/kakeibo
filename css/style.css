@@ -8529,9 +8529,12 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
   animation: ww-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ww-i, 0) * var(--dur-stagger-md));
 }
+.wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.wish-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ww-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
