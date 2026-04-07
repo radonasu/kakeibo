@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.48'; // v21.48: タイポグラフィ改善・ls+lh未設定16要素補完（フォームselect/input・チップ・ボタン・リスト行・アイコンclose等）
+const CACHE_NAME = 'kakeibo-v21.49'; // v21.49: タイポグラフィ改善・ls+lh未設定9要素補完（▶/✓疑似要素7種+ct-hint+adv-preset-chip.active::after）
 const ASSETS = [
   './index.html',
   './css/style.css',
