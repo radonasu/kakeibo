@@ -1834,6 +1834,7 @@ select:focus:not(:focus-visible) {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--fs-sm);
+  letter-spacing: var(--ls-fine);
 }
 .tx-table th {
   padding: var(--sp-2-5) var(--sp-3-5);
@@ -1851,6 +1852,7 @@ select:focus:not(:focus-visible) {
   padding: var(--sp-2-75) var(--sp-3-5);
   border-bottom: var(--bw-thin) solid var(--border);
   vertical-align: middle;
+  line-height: var(--lh-tighter);
 }
 .tx-table tbody tr {
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
@@ -11678,7 +11680,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+.sb-select-all-wrap:hover { color: var(--primary); }
 
 /* テーブルヘッダー */
 .sb-col-suggest {
@@ -11997,7 +12001,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+.ev-done-label:hover { color: var(--text); }
 /* カスタムチェックボックス（v5.91）*/
 .ev-done-cb {
   appearance: none;
