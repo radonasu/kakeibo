@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.42'; // v21.42: タイポグラフィ改善・ls+lh未設定8要素補完（brand-icon/hamburger/btn-icon/modal-close/cal-nav-btn/cal-panel-close/cal-ev-icon/goal-emoji-btn）
+const CACHE_NAME = 'kakeibo-v21.43'; // v21.43: タイポグラフィ改善・ls+lh未設定10要素補完（cat-chip-icon/bulk-count-before/tx-hl/quick-cat-input/btn-receipt-file/sql-block/budget-cat-name/install-banner-close/btn-dark-toggle/section-tab-icon）
 const ASSETS = [
   './index.html',
   './css/style.css',
