@@ -129,9 +129,9 @@
 
   /* 字間（pxスケール） */
   --ls-display: -1.5px;   /* 超大数値・スコア表示 */
-  --ls-tighter: -1px;     /* 大見出し・サマリー金額 */
-  --ls-tight:  -0.5px;
-  --ls-snug:   -0.2px;
+  --ls-tighter: -1px;     /* 大見出し・サマリー金額（fs-4xl+fw-black） */
+  --ls-tight:  -0.5px;   /* 中見出し・太字数値（fs-lg/xl+fw-bold/black） */
+  --ls-snug:   -0.2px;   /* 中テキスト微細詰め（fs-md/sm+fw-bold） */
   --ls-normal:  0px;
   --ls-wide:    0.4px;
   --ls-wider:   0.8px;
@@ -851,7 +851,7 @@ select:focus:not(:focus-visible) {
   font-size: var(--fs-lg);
   font-weight: var(--fw-black);
   color: var(--sidebar-text-hi);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
 }
 
@@ -1104,7 +1104,7 @@ select:focus:not(:focus-visible) {
 #hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: none; }
 #hamburger:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
-#mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
+#mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); }
 
 #main-content {
   flex: 1;
@@ -1141,7 +1141,7 @@ select:focus:not(:focus-visible) {
   font-weight: var(--fw-bold);
   color: var(--text);
   line-height: var(--lh-tight);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   margin-bottom: var(--sp-4);
   text-wrap: balance;
 }
@@ -2830,7 +2830,7 @@ mark.tx-hl {
   font-weight: var(--fw-black);
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 .smi-divider {
   width: var(--bw-thin);
@@ -2931,7 +2931,7 @@ mark.tx-hl {
   padding: var(--sp-5) var(--sp-6);
   border-bottom: var(--bw-thin) solid var(--border);
 }
-.modal-header h2 { font-size: var(--fs-xl); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-tight); }
+.modal-header h2 { font-size: var(--fs-xl); font-weight: var(--fw-bold); letter-spacing: var(--ls-tight); line-height: var(--lh-tight); }
 .modal-close {
   background: none;
   border: none;
@@ -2995,7 +2995,7 @@ mark.tx-hl {
   align-items: center;
   gap: var(--sp-2);
 }
-.year-label { font-size: var(--fs-xl); font-weight: var(--fw-bold); min-width: 60px; text-align: center; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
+.year-label { font-size: var(--fs-xl); font-weight: var(--fw-bold); min-width: 60px; text-align: center; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); }
 
 /* ── エクスポートグリッド ────────────────────────────── */
 .export-grid {
@@ -3469,7 +3469,7 @@ mark.tx-hl {
   flex-wrap: wrap;
 }
 
-.template-bar-label { font-size: var(--fs-xl); letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); flex-shrink: 0; }
+.template-bar-label { font-size: var(--fs-xl); letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); flex-shrink: 0; }
 
 .template-list {
   display: flex;
@@ -3856,7 +3856,7 @@ mark.tx-hl {
   width: 100%;
   padding: var(--sp-3-5);
   font-size: var(--fs-lg);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
   border-radius: var(--radius-btn);
   margin-top: var(--sp-1-5);
@@ -4012,7 +4012,7 @@ body {
 .ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); }
-.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
+.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-relaxed); letter-spacing: var(--ls-fine); }
 .ios-guide-arrow {
   font-size: var(--fs-icon-xl); color: var(--primary);
@@ -5213,7 +5213,7 @@ body {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
   white-space: nowrap;
   overflow: hidden;
@@ -5334,7 +5334,7 @@ body {
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-relaxed);
   margin-bottom: var(--sp-2);
   text-wrap: balance;
@@ -5913,7 +5913,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
 }
 
@@ -6116,7 +6116,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-lg);
   font-weight: var(--fw-semi);
   color: var(--text);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-relaxed);
   text-wrap: balance;
 }
@@ -7256,7 +7256,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--text);
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   white-space: nowrap;
 }
 .sub-cycle-unit {
@@ -7813,7 +7813,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--pt-accent, var(--text));
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 .pt-unit {
   font-size: var(--fs-xs);
@@ -8396,7 +8396,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   color: var(--wl-accent, var(--text));
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 .wl-card-actions {
   display: flex;
@@ -9637,7 +9637,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 
 .dow-stat-icon { font-size: var(--fs-4xl); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: var(--z-raise); }
 .dow-stat-info { display: flex; flex-direction: column; gap: var(--sp-0-75); position: relative; z-index: var(--z-raise); }
-.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
+.dow-stat-day  { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white) !important; letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); }
 .dow-stat-label { font-size: var(--fs-xs); color: var(--on-dark-title); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .dow-stat-amount {
   font-size: var(--fs-2xl);
@@ -9824,7 +9824,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-snug); }
+.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-tight); }
 .ct-stat-sub   { font-size: var(--fs-xs); letter-spacing: var(--ls-fine); color: var(--text-muted); margin-top: var(--sp-0-75); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; }
 
 /* テーブル */
@@ -10172,7 +10172,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   color: var(--text);
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 .wk-cell-value.wk-today-exp { color: var(--danger-text); }
 .wk-cell-value.wk-nospend   { color: var(--success); }
@@ -12970,7 +12970,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   color: var(--white);
   margin: 0 0 var(--sp-1);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tight);
 }
 .ci-sub {
@@ -13099,7 +13099,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--primary);
   line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 /* セクションタイトル */
 .ci-section-title {
@@ -13416,7 +13416,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--text-muted);
   text-align: center;
   flex-shrink: 0;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
 }
 
@@ -14039,7 +14039,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-weight: var(--fw-bold);
   color: var(--text-primary);
   margin: 0 0 var(--sp-0-5);
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
 }
 
@@ -14445,7 +14445,7 @@ kbd {
   font-weight: var(--fw-bold);
   color: var(--primary);
   animation: kb-dots-pulse var(--dur-glide) var(--ease-in-out) infinite;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
   line-height: var(--lh-tighter);
 }
 .kb-g-hint-sub {
@@ -15700,7 +15700,7 @@ canvas.chart-clickable { cursor: pointer; }
   overflow: hidden;
   text-overflow: ellipsis;
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--ls-snug);
+  letter-spacing: var(--ls-tight);
 }
 .pm-sum-sub {
   font-size: var(--fs-xs);

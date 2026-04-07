@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.37'; // v21.37: タイポグラフィ改善・14要素のls-fine/lh-tighter/lh-normal追加（notif-toggle-label/recurring-toggle-label/recurring-day-suffix/dw-item-label/onboarding-cta/empty-month-btn/btn-share/share-hint/install-tab h4/csv-format-item/csv-map-label/csv-preview-label/asset-entry-row/qa-type-btn/ci-ok-btn）
+const CACHE_NAME = 'kakeibo-v21.38'; // v21.38: タイポグラフィ改善・ls-snug→ls-tight（fs-lg/xl大見出し・太字数値21要素）+ls-snug→ls-fine（fs-2xs notif-panel-footer）
 const ASSETS = [
   './index.html',
   './css/style.css',
