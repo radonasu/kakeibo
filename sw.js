@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.46'; // v21.46: タイポグラフィ改善・アイコン系ls+lh未設定24要素補完（lh-none設定済み9種のls-normal追加+新規15種のls-normal+lh-none追加）
+const CACHE_NAME = 'kakeibo-v21.47'; // v21.47: タイポグラフィ改善・大文字ラベルletter-spacing変数統一（ls-wide→ls-caps 4要素+ls-wider→ls-spread 4要素・全uppercase text-transformにem基準変数を適用）
 const ASSETS = [
   './index.html',
   './css/style.css',
