@@ -1701,14 +1701,14 @@ ${eventsSection ? `<div>${eventsSection}</div>` : ''}
 ${showWidget('chart') ? `<div class="dash-full"><div class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ</h3>
-    <div class="chart-wrap chart-clickable-wrap" style="height:220px">
+    <div class="chart-wrap chart-clickable-wrap chart-h-sm">
       <canvas id="donut-expense"></canvas>
       <span class="chart-clickable-hint">タップで詳細</span>
     </div>
   </div>
   <div class="card chart-card">
     <h3 class="card-title">月別収支（12ヶ月）</h3>
-    <div class="chart-wrap chart-clickable-wrap" style="height:220px">
+    <div class="chart-wrap chart-clickable-wrap chart-h-sm">
       <canvas id="monthly-bar"></canvas>
       <span class="chart-clickable-hint">タップで詳細</span>
     </div>
@@ -3868,7 +3868,7 @@ function renderTagSection(year, yearTxs) {
   <div class="charts-row" style="margin-top:var(--sp-4)">
     <div class="card chart-card">
       <h3 class="card-title">🔖 タグ別支出</h3>
-      <div class="chart-wrap" style="height:260px">
+      <div class="chart-wrap chart-h-lg">
         <canvas id="report-tag-donut"></canvas>
       </div>
     </div>
@@ -3993,14 +3993,14 @@ function renderReports() {
 <div id="sec-monthly-charts" class="charts-row">
   <div class="card chart-card">
     <h3 class="card-title">月別収支</h3>
-    <div class="chart-wrap chart-clickable-wrap" style="height:240px">
+    <div class="chart-wrap chart-clickable-wrap chart-h-md">
       <canvas id="report-bar"></canvas>
       <span class="chart-clickable-hint">ポイントで詳細</span>
     </div>
   </div>
   <div class="card chart-card">
     <h3 class="card-title">支出カテゴリ（年間）</h3>
-    <div class="chart-wrap chart-clickable-wrap" style="height:240px">
+    <div class="chart-wrap chart-clickable-wrap chart-h-md">
       <canvas id="report-donut"></canvas>
       <span class="chart-clickable-hint">タップで詳細</span>
     </div>
@@ -4031,7 +4031,7 @@ function renderReports() {
 <div id="sec-category" class="charts-row">
   <div class="card">
     <h3 class="card-title">支出カテゴリ詳細</h3>
-    <div class="chart-wrap" style="height:300px">
+    <div class="chart-wrap chart-h-xl">
       <canvas id="report-cat-expense"></canvas>
     </div>
   </div>
@@ -4041,7 +4041,7 @@ function renderReports() {
   <div class="charts-row">
     <div class="card chart-card">
       <h3 class="card-title">💳 支払方法別支出</h3>
-      <div class="chart-wrap" style="height:260px">
+      <div class="chart-wrap chart-h-lg">
         <canvas id="report-payment-donut"></canvas>
       </div>
     </div>
@@ -4126,7 +4126,7 @@ function renderReports() {
   <div class="card pm-trend-card">
     <h3 class="card-title">📈 支払方法別 月次推移（${year}年）</h3>
     <p class="pm-trend-hint">毎月の支払方法ごとの支出を積み上げで表示します</p>
-    <div class="chart-wrap" style="height:240px">
+    <div class="chart-wrap chart-h-md">
       <canvas id="report-payment-trend"></canvas>
     </div>
   </div>
@@ -4467,13 +4467,13 @@ ${(() => {
   <div class="charts-row" style="margin-top:var(--sp-4)">
     <div class="card chart-card" style="min-width:0">
       <h3 class="card-title">支出の内訳</h3>
-      <div class="chart-wrap" style="height:240px">
+      <div class="chart-wrap chart-h-md">
         <canvas id="report-fv-donut"></canvas>
       </div>
     </div>
     <div class="card chart-card" style="min-width:0">
       <h3 class="card-title">月次 固定費率推移</h3>
-      <div class="chart-wrap" style="height:240px">
+      <div class="chart-wrap chart-h-md">
         <canvas id="report-fv-trend"></canvas>
       </div>
     </div>
@@ -7115,7 +7115,7 @@ function renderAssets() {
 ${assets.length > 0 ? `
 <div class="card chart-card">
   <h3 class="card-title">純資産推移（12ヶ月）</h3>
-  <div class="chart-wrap" style="height:220px">
+  <div class="chart-wrap chart-h-sm">
     <canvas id="net-worth-chart"></canvas>
   </div>
 </div>` : ''}
