@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.63'; // v21.63: バグフィックス・ハードコードpxマージン14箇所CSS変数化（margin/padding/gap の8px/10px/12px/14px/16px → var(--sp-*)）・btnラベル冗長インラインstyle削除
+const CACHE_NAME = 'kakeibo-v21.64'; // v21.64: バグフィックス・ハードコードインラインstyle除去4箇所CSS化（dup-modal-icon/yi-card-value-cat/sb-th-check/#debt-emoji）
 const ASSETS = [
   './index.html',
   './css/style.css',

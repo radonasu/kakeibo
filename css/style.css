@@ -1428,6 +1428,7 @@ select:focus:not(:focus-visible) {
   animation: dup-banner-in var(--dur-slow) var(--ease-bounce) both;
 }
 .dup-modal-banner svg { flex-shrink: 0; opacity: var(--opacity-near); }
+.dup-modal-icon { vertical-align: calc(-1 * var(--sp-0-75)); margin-right: var(--sp-1-5); color: var(--warning); }
 @keyframes dup-banner-in {
   0%   { opacity: 0; transform: translateY(var(--enter-y-neg-base)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
@@ -11743,6 +11744,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
 }
+/* チェックボックス列thの固定幅（size-icon-md=36px） */
+.sb-th-check { width: var(--size-icon-md); }
 
 /* テーブル行: カテゴリカラー左ボーダー */
 .sb-row {
@@ -14962,6 +14965,8 @@ canvas.chart-clickable { cursor: pointer; }
   letter-spacing: var(--ls-num);
   font-variant-numeric: tabular-nums;
 }
+/* カテゴリ名表示用（数値以外）: fs-lgで収まり重視・カテゴリカラー連動 */
+.yi-card-value-cat { font-size: var(--fs-lg); color: var(--yi-cat-color); }
 .yi-card-unit {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
@@ -16386,6 +16391,9 @@ canvas.chart-clickable { cursor: pointer; }
 #cat-modal.modal-is-open .color-swatch:nth-child(13) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs) + 12 * var(--dur-stagger-4xs)); }
 #cat-modal.modal-is-open .color-swatch:nth-child(14) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs) + 13 * var(--dur-stagger-4xs)); }
 #cat-modal.modal-is-open .color-swatch:nth-child(15) { animation-delay: calc(var(--dur-delay-xs) + 3 * var(--dur-stagger-3xs) + 14 * var(--dur-stagger-4xs)); }
+
+/* 絵文字入力フィールド幅（size-deco-xs=80px） */
+#debt-emoji { width: var(--size-deco-xs); }
 
 /* ── debt-modal 開放時：フォームグループ stagger入場（hidden入力が child1のため child2〜9） ── */
 #debt-modal.modal-is-open .form-group {

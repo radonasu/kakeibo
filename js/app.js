@@ -2811,7 +2811,7 @@ function renderTxModal() {
 <div id="tx-modal" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
-      <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:var(--sp-1-5);color:var(--warning)"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
+      <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="dup-modal-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
       <button class="modal-close" id="modal-close">✕</button>
     </div>${dupBanner}
     <div id="tx-added-banner" class="tx-added-banner" style="display:none">
@@ -3648,7 +3648,7 @@ function renderInsightsSection(year, allTxs, months12) {
     ${topCat ? `<div class="yi-card" style="--yi-si:6;--yi-cat-color:${topCat[1].color}">
       <div class="yi-card-icon" aria-hidden="true">🏷️</div>
       <div class="yi-card-label">最大支出カテゴリ</div>
-      <div class="yi-card-value" style="font-size:var(--fs-lg);color:var(--yi-cat-color)">${esc2(topCat[0])}</div>
+      <div class="yi-card-value yi-card-value-cat">${esc2(topCat[0])}</div>
       <div class="yi-card-sub yi-sub-muted">${formatMoney(topCat[1].amount)}（${yearExpense > 0 ? Math.round(topCat[1].amount/yearExpense*100) : 0}%）</div>
     </div>` : ''}
 
@@ -4862,7 +4862,7 @@ function renderCategories() {
           <table class="tx-table">
             <thead>
               <tr>
-                <th style="width:36px"></th>
+                <th class="sb-th-check"></th>
                 <th>カテゴリ</th>
                 <th class="text-right">実績平均/月</th>
                 <th class="text-right">現在の予算</th>
@@ -10625,7 +10625,7 @@ ${archivedSection}
       </div>
       <div class="form-group">
         <label class="form-label">絵文字（任意）</label>
-        <input type="text" id="debt-emoji" class="form-input" placeholder="🏠" maxlength="2" style="width:80px">
+        <input type="text" id="debt-emoji" class="form-input" placeholder="🏠" maxlength="2">
       </div>
       <div class="form-group">
         <label class="form-label">借入元本（円）</label>
