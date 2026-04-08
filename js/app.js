@@ -5259,7 +5259,7 @@ function renderSettings() {
     <h3 class="card-title">☁️ クラウドアカウント</h3>
     <div class="sync-status-row">
       <span id="sync-status-dot" class="sync-dot"></span>
-      <span id="sync-status-text" style="font-size:13px;color:var(--text-muted)">未接続</span>
+      <span id="sync-status-text">未接続</span>
     </div>
 
     ${(typeof isLoggedIn === 'function' && isLoggedIn()) ? (() => {
@@ -5424,7 +5424,7 @@ CREATE POLICY "own_data" ON household_data
         <tbody>
           ${getAllAccounts().map(a => `<tr>
             <td>${esc2(a.name)}${a.id === currentAccountId ? ' <span class="badge-active">使用中</span>' : ''}</td>
-            <td style="font-size:11px;color:var(--text-muted)">${(()=>{
+            <td class="acc-tx-count">${(()=>{
               try{const d=JSON.parse(localStorage.getItem(getStorageKey(a.id))||'{}');return (d.transactions||[]).length+'件';}catch{return '—';}
             })()}</td>
             <td class="actions">
@@ -5454,7 +5454,7 @@ CREATE POLICY "own_data" ON household_data
     <div class="install-guide-tabs">
       <div class="install-tab">
         <h4>🤖 Android（Chrome）</h4>
-        <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
+        <ol>
           <li>Chromeでこのページを開く</li>
           <li>右上の「⋮」メニューをタップ</li>
           <li>「ホーム画面に追加」を選択</li>
@@ -5463,7 +5463,7 @@ CREATE POLICY "own_data" ON household_data
       </div>
       <div class="install-tab">
         <h4>🍎 iPhone / iPad（Safari）</h4>
-        <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.9;margin:8px 0 0">
+        <ol>
           <li>Safariでこのページを開く（必須）</li>
           <li>画面下部の共有ボタン（□↑）をタップ</li>
           <li>「ホーム画面に追加」を選択</li>
@@ -5471,7 +5471,7 @@ CREATE POLICY "own_data" ON household_data
         </ol>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--text-muted);margin-top:10px">💡 インストール後はオフラインでも使用できます。データはこのデバイスに保存されます。</p>
+    <p class="hint" style="margin-top:var(--sp-2-5)">💡 インストール後はオフラインでも使用できます。データはこのデバイスに保存されます。</p>
   </div>
 
   <div class="card danger-zone">
@@ -5645,7 +5645,7 @@ function bindSettings() {
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
                          window.navigator.standalone === true;
     if (isStandalone) {
-      pwaArea.innerHTML = '<p style="font-size:13px;color:var(--income)">✅ すでにアプリとしてインストール済みです</p>';
+      pwaArea.innerHTML = '<p class="pwa-result-msg">✅ すでにアプリとしてインストール済みです</p>';
     } else if (window.pwaInstallEvent) {
       pwaArea.innerHTML = '<button class="btn btn-primary" id="btn-pwa-install">📲 ホーム画面に追加（ワンタップ）</button>';
       on('btn-pwa-install', 'click', async () => {
@@ -5653,7 +5653,7 @@ function bindSettings() {
         const { outcome } = await window.pwaInstallEvent.userChoice;
         if (outcome === 'accepted') {
           window.pwaInstallEvent = null;
-          pwaArea.innerHTML = '<p style="font-size:13px;color:var(--income)">✅ インストールしました！</p>';
+          pwaArea.innerHTML = '<p class="pwa-result-msg">✅ インストールしました！</p>';
         }
       });
     }
