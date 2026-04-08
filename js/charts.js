@@ -1,5 +1,5 @@
 // ============================================================
-// charts.js - グラフ描画 (Chart.js) v8.2
+// charts.js - グラフ描画 (Chart.js) v8.3
 // ============================================================
 
 const chartInstances = {};
@@ -12,18 +12,29 @@ function getCSSVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// ダークモード対応カラーセット
+// CSS変数からpx値を整数で取得（チャートフォントサイズ用）
+function getCSSVarInt(name) {
+  return parseInt(getCSSVar(name)) || 0;
+}
+
+// ダークモード対応カラーセット＋フォントサイズ
 function getThemeColors() {
   const text   = getCSSVar('--text-muted')  || '#64748b';
   const grid   = getCSSVar('--border')      || '#e2e8f0';
   const surface = getCSSVar('--surface')    || '#ffffff';
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  return { text, grid, surface, isDark };
+  // チャートフォントサイズ（デザインシステムCSS変数より取得）
+  const fs2xs  = getCSSVarInt('--fs-2xs') || 10;   /* 極小ラベル・tick */
+  const fs3xs  = getCSSVarInt('--fs-3xs') || 11;   /* 超極小：凡例・ラベル */
+  const fsXs   = getCSSVarInt('--fs-xs')  || 12;   /* 極小：一部凡例・ツールチップ */
+  const fsSm   = getCSSVarInt('--fs-sm')  || 13;   /* 小：強調tick・canvas直描画 */
+  const fsMd   = getCSSVarInt('--fs-md')  || 15;   /* 中基本：donut中央金額 */
+  return { text, grid, surface, isDark, fs2xs, fs3xs, fsXs, fsSm, fsMd };
 }
 
 // 共通ツールチップ設定
 function commonTooltip(callbacks) {
-  const { isDark } = getThemeColors();
+  const { isDark, fsXs, fs2xs } = getThemeColors();
   return {
     // ダークモード: #0f172a背景ではツールチップが埋没するため中間色に切替 (v19.34)
     backgroundColor: isDark ? 'rgba(51,65,85,0.97)' : 'rgba(15,23,42,0.92)',
@@ -34,9 +45,9 @@ function commonTooltip(callbacks) {
     borderWidth:     1,
     padding:         { x: 12, y: 8 },
     cornerRadius:    8,
-    titleFont:       { size: 12, weight: '600' },
-    bodyFont:        { size: 12 },
-    footerFont:      { size: 10, weight: '400' },
+    titleFont:       { size: fsXs, weight: '600' },
+    bodyFont:        { size: fsXs },
+    footerFont:      { size: fs2xs, weight: '400' },
     footerMarginTop: 6,
     displayColors:   true,
     boxWidth:        10,
@@ -78,20 +89,20 @@ const centerTextPlugin = {
     const ctx = chart.ctx;
     ctx.save();
 
-    const { text: textColor } = getThemeColors();
+    const { text: textColor, fs3xs, fsMd } = getThemeColors();
     const formatted = total >= 10000
       ? '¥' + (total / 10000).toFixed(1) + '万'
       : formatMoney(total);
 
     // ラベル
-    ctx.font = '500 11px ' + CHART_FONT_FAMILY;
+    ctx.font = '500 ' + fs3xs + 'px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('合計', cx, cy - 12);
 
     // 金額
-    ctx.font = '700 15px ' + CHART_FONT_FAMILY;
+    ctx.font = '700 ' + fsMd + 'px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = getCSSVar('--text') || '#0f172a';
     ctx.fillText(formatted, cx, cy + 6);
 
@@ -143,16 +154,16 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
 
   if (data.length === 0) {
     const c = canvas.getContext('2d');
-    const { text } = getThemeColors();
+    const { text, fsSm } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px ' + CHART_FONT_FAMILY;
+    c.font = fsSm + 'px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
   }
 
-  const { text: textColor, surface } = getThemeColors();
+  const { text: textColor, surface, fs3xs, fsXs } = getThemeColors();
 
   // ドリルダウンクリック対応 (v8.0)
   if (onCategoryClick) {
@@ -189,7 +200,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
         legend: {
           position: 'bottom',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             padding: 12,
             boxWidth: 10,
@@ -225,7 +236,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
     return `${y.slice(2)}/${mo}`;
   });
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
   const incomeClr  = getCSSVar('--income');
   const expenseClr = getCSSVar('--expense');
   const clickable  = typeof onMonthClick === 'function';
@@ -274,7 +285,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
         legend: {
           position: 'top',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
@@ -289,14 +300,14 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
       scales: {
         x: {
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor },
+          ticks: { font: { size: fs2xs }, color: textColor },
           border: { color: gridColor },
         },
         y: {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font:     { size: 10 },
+            font:     { size: fs2xs },
             color:    textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
@@ -323,7 +334,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
     return `${y.slice(2)}/${mo}`;
   });
 
-  const { text: textColor, grid: gridColor, surface } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface, fs2xs, fs3xs, fsXs } = getThemeColors();
   const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
@@ -366,13 +377,13 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
       scales: {
         x: {
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor },
+          ticks: { font: { size: fs2xs }, color: textColor },
           border: { color: gridColor },
         },
         y: {
           grid:  { color: gridColor + '60' },
           ticks: {
-            font:     { size: 10 },
+            font:     { size: fs2xs },
             color:    textColor,
             callback: v => '¥' + v.toLocaleString('ja-JP'),
           },
@@ -420,7 +431,7 @@ function renderCategoryBarChart(canvasId, transactions, type) {
   }
   canvas.style.display = '';
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -451,14 +462,14 @@ function renderCategoryBarChart(canvasId, transactions, type) {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font:     { size: 10 },
+            font:     { size: fs2xs },
             color:    textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
           border: { display: false },
         },
         y: {
-          ticks:  { font: { size: 11 }, color: textColor },
+          ticks:  { font: { size: fs3xs }, color: textColor },
           grid:   { display: false },
           border: { color: gridColor },
         },
@@ -490,7 +501,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
 
   const labels = members.map(m => m.name);
   const colors = members.map(m => m.color || getCSSVar('--text-muted'));
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -527,7 +538,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
         legend: {
           position: 'top',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
@@ -543,14 +554,14 @@ function renderMemberExpenseChart(canvasId, transactions) {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font: { size: 10 },
+            font: { size: fs2xs },
             color: textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
           border: { display: false },
         },
         y: {
-          ticks:  { font: { size: 12 }, color: textColor },
+          ticks:  { font: { size: fsXs }, color: textColor },
           grid:   { display: false },
           border: { color: gridColor },
         },
@@ -603,16 +614,16 @@ function renderPaymentMethodChart(canvasId, transactions) {
 
   if (data.length === 0) {
     const c = canvas.getContext('2d');
-    const { text } = getThemeColors();
+    const { text, fsSm } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px ' + CHART_FONT_FAMILY;
+    c.font = fsSm + 'px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
   }
 
-  const { text: textColor, surface } = getThemeColors();
+  const { text: textColor, surface, fs3xs, fsXs } = getThemeColors();
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'doughnut',
     data: {
@@ -635,7 +646,7 @@ function renderPaymentMethodChart(canvasId, transactions) {
         legend: {
           position: 'bottom',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             padding: 12,
             boxWidth: 10,
@@ -679,16 +690,16 @@ function renderPaymentTrendChart(canvasId, year) {
   const activeKeys = pmKeys.filter(pm => pmData[pm].some(v => v > 0));
   if (activeKeys.length === 0) {
     const c = canvas.getContext('2d');
-    const { text } = getThemeColors();
+    const { text, fsSm } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px ' + CHART_FONT_FAMILY;
+    c.font = fsSm + 'px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
   }
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -713,7 +724,7 @@ function renderPaymentTrendChart(canvasId, year) {
         legend: {
           position: 'top',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
@@ -732,7 +743,7 @@ function renderPaymentTrendChart(canvasId, year) {
         x: {
           stacked: true,
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor },
+          ticks: { font: { size: fs2xs }, color: textColor },
           border: { color: gridColor },
         },
         y: {
@@ -740,7 +751,7 @@ function renderPaymentTrendChart(canvasId, year) {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font: { size: 10 },
+            font: { size: fs2xs },
             color: textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
@@ -765,7 +776,7 @@ function renderYoYChart(canvasId, year) {
   const thisInc  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${year}-${String(i+1).padStart(2,'0')}`), 'income'));
   const prevInc  = labels.map((_, i) => calcTotal(getTransactionsByMonth(`${prevYear}-${String(i+1).padStart(2,'0')}`), 'income'));
 
-  const { text: textColor, grid: gridColor } = getThemeColors();
+  const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
   const expClr = getCSSVar('--expense');
   const incClr = getCSSVar('--income');
 
@@ -823,7 +834,7 @@ function renderYoYChart(canvasId, year) {
         legend: {
           position: 'top',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
@@ -837,14 +848,14 @@ function renderYoYChart(canvasId, year) {
       scales: {
         x: {
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor, maxRotation: 0 },
+          ticks: { font: { size: fs2xs }, color: textColor, maxRotation: 0 },
           border: { color: gridColor },
         },
         y: {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font:     { size: 10 },
+            font:     { size: fs2xs },
             color:    textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
@@ -890,7 +901,7 @@ function renderDayOfWeekChart(canvasId, transactions) {
     return days > 0 ? Math.round(total / days) : 0;
   });
 
-  const { text, grid } = getThemeColors();
+  const { text, grid, fs2xs, fs3xs, fsSm } = getThemeColors();
 
   // 最大値インデックスを取得してバーをハイライト
   const maxAvg = Math.max(...dowAvgs);
@@ -926,14 +937,14 @@ function renderDayOfWeekChart(canvasId, transactions) {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: text, font: { size: 13, weight: '700' } },
+          ticks: { color: text, font: { size: fsSm, weight: '700' } },
           border: { display: false },
         },
         y: {
           grid: { color: grid + '60' },
           ticks: {
             color: text,
-            font: { size: 11 },
+            font: { size: fs3xs },
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
           border: { display: false },
@@ -970,7 +981,7 @@ function renderNetWorthChart(canvasId) {
     return `${y.slice(2)}/${mo}`;
   });
 
-  const { text: textColor, grid: gridColor, surface } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface, fs2xs, fs3xs, fsXs } = getThemeColors();
   const lineColor = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
@@ -1008,14 +1019,14 @@ function renderNetWorthChart(canvasId) {
       scales: {
         x: {
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor },
+          ticks: { font: { size: fs2xs }, color: textColor },
           border: { color: gridColor },
         },
         y: {
           beginAtZero: false,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font:     { size: 10 },
+            font:     { size: fs2xs },
             color:    textColor,
             callback: v => {
               if (Math.abs(v) >= 10000) return '¥' + (v / 10000).toFixed(0) + '万';
@@ -1036,7 +1047,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
   if (!canvas) return;
 
   const labels = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  const { text: textColor, grid: gridColor, surface } = getThemeColors();
+  const { text: textColor, grid: gridColor, surface, fs2xs, fs3xs, fsXs } = getThemeColors();
   const ctx2d = canvas.getContext('2d');
 
   const datasets = (selectedCats || []).map(cat => {
@@ -1098,7 +1109,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
         legend: {
           position: 'top',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
@@ -1117,14 +1128,14 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
       scales: {
         x: {
           grid:  { display: false },
-          ticks: { font: { size: 10 }, color: textColor, maxRotation: 0 },
+          ticks: { font: { size: fs2xs }, color: textColor, maxRotation: 0 },
           border: { color: gridColor },
         },
         y: {
           beginAtZero: true,
           grid:  { color: gridColor + '60' },
           ticks: {
-            font: { size: 10 },
+            font: { size: fs2xs },
             color: textColor,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
@@ -1141,7 +1152,7 @@ function renderFixedVariableDonut(canvasId, allTxs) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
-  const { text, surface } = getThemeColors();
+  const { text, surface, fsXs } = getThemeColors();
   const fixedIds = new Set(appData.categories.filter(c => c.isFixed).map(c => c.id));
   const expTxs   = (allTxs || []).filter(t => t.type === 'expense');
   const fixedAmt = expTxs.filter(t => fixedIds.has(t.categoryId)).reduce((s, t) => s + (Number(t.amount) || 0), 0);
@@ -1174,7 +1185,7 @@ function renderFixedVariableDonut(canvasId, allTxs) {
       plugins: {
         legend: {
           position: 'bottom',
-          labels: { color: text, font: { size: 12 }, padding: 12, usePointStyle: true },
+          labels: { color: text, font: { size: fsXs }, padding: 12, usePointStyle: true },
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -1195,7 +1206,7 @@ function renderFixedVariableTrend(canvasId, year) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
-  const { text, grid } = getThemeColors();
+  const { text, grid, fs2xs, fs3xs, fsSm } = getThemeColors();
   const primaryClr = getCSSVar('--primary');
   const successClr = getCSSVar('--success');
   const warningClr = getCSSVar('--warning');
@@ -1266,7 +1277,7 @@ function renderFixedVariableTrend(canvasId, year) {
       plugins: {
         legend: {
           position: 'bottom',
-          labels: { color: text, font: { size: 11 }, padding: 10, usePointStyle: true },
+          labels: { color: text, font: { size: fs3xs }, padding: 10, usePointStyle: true },
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -1278,7 +1289,7 @@ function renderFixedVariableTrend(canvasId, year) {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { font: { size: 10 }, color: text, maxRotation: 0 },
+          ticks: { font: { size: fs2xs }, color: text, maxRotation: 0 },
           border: { color: grid },
           stacked: true,
         },
@@ -1287,7 +1298,7 @@ function renderFixedVariableTrend(canvasId, year) {
           stacked: true,
           grid: { color: grid + '60' },
           ticks: {
-            font: { size: 10 }, color: text,
+            font: { size: fs2xs }, color: text,
             callback: v => v >= 10000 ? '¥' + (v / 10000).toFixed(0) + '万' : '¥' + v.toLocaleString('ja-JP'),
           },
           border: { color: grid, dash: [3, 3] },
@@ -1297,7 +1308,7 @@ function renderFixedVariableTrend(canvasId, year) {
           beginAtZero: true,
           max: 100,
           grid: { drawOnChartArea: false },
-          ticks: { font: { size: 10 }, color: warningClr, callback: v => v + '%' },
+          ticks: { font: { size: fs2xs }, color: warningClr, callback: v => v + '%' },
           border: { color: grid },
         },
       },
@@ -1341,10 +1352,10 @@ function renderTagChart(canvasId, transactions) {
 
   if (data.length === 0) {
     const c = canvas.getContext('2d');
-    const { text } = getThemeColors();
+    const { text, fsSm } = getThemeColors();
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = text;
-    c.font = '13px ' + CHART_FONT_FAMILY;
+    c.font = fsSm + 'px ' + CHART_FONT_FAMILY;
     c.textAlign = 'center';
     c.fillText('データがありません', canvas.width / 2, canvas.height / 2);
     return;
@@ -1359,7 +1370,7 @@ function renderTagChart(canvasId, transactions) {
   }
 
   const colors = labels.map(tagColor);
-  const { text: textColor, surface } = getThemeColors();
+  const { text: textColor, surface, fs3xs, fsXs } = getThemeColors();
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'doughnut',
@@ -1383,7 +1394,7 @@ function renderTagChart(canvasId, transactions) {
         legend: {
           position: 'bottom',
           labels: {
-            font: { size: 11 },
+            font: { size: fs3xs },
             color: textColor,
             padding: 12,
             boxWidth: 10,
