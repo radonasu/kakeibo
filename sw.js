@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.68'; // v21.68: バグフィックス・インラインstyle除去17箇所CSS化（margin/gap CSS変数→IDベース・クラスベース・:has()文脈ルールに統一）
+const CACHE_NAME = 'kakeibo-v21.69'; // v21.69: バグフィックス・adv-sk-line幅6箇所インラインstyle→nth-child CSS化・asset-breakdown-item tabular-nums追加
 const ASSETS = [
   './index.html',
   './css/style.css',

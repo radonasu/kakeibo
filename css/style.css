@@ -11209,7 +11209,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex; align-items: center; gap: var(--sp-2);
   font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); margin-top: var(--sp-1);
 }
-.asset-breakdown-item { font-weight: var(--fw-semi); }
+.asset-breakdown-item { font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
 .asset-total  { color: var(--income); }
 .debt-total   { color: var(--expense); }
 .asset-breakdown-sep { color: var(--text-muted); }
@@ -12641,6 +12641,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background-size: var(--size-shimmer-half) 100%;
   animation: adv-shimmer var(--dur-rest) infinite linear;
 }
+/* スケルトン行幅（各行をランダムに見せる）*/
+.adv-loading .adv-sk-line:nth-child(1) { width: 90%; }
+.adv-loading .adv-sk-line:nth-child(2) { width: 78%; }
+.adv-loading .adv-sk-line:nth-child(3) { width: 94%; }
+.adv-loading .adv-sk-line:nth-child(4) { width: 68%; }
+.adv-loading .adv-sk-line:nth-child(5) { width: 85%; }
+.adv-loading .adv-sk-line:nth-child(6) { width: 55%; }
 
 /* アドバイステキスト */
 .adv-text {

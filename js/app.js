@@ -6709,12 +6709,12 @@ function openAdviceModal(month) {
 
   // ローディング
   bodyEl.innerHTML = `<div class="adv-loading">
-    <div class="adv-sk-line" style="width:90%"></div>
-    <div class="adv-sk-line" style="width:78%"></div>
-    <div class="adv-sk-line" style="width:94%"></div>
-    <div class="adv-sk-line" style="width:68%"></div>
-    <div class="adv-sk-line" style="width:85%"></div>
-    <div class="adv-sk-line" style="width:55%"></div>
+    <div class="adv-sk-line"></div>
+    <div class="adv-sk-line"></div>
+    <div class="adv-sk-line"></div>
+    <div class="adv-sk-line"></div>
+    <div class="adv-sk-line"></div>
+    <div class="adv-sk-line"></div>
   </div>`;
   if (copyBtn)  copyBtn.style.display  = 'none';
   if (regenBtn) regenBtn.style.display = 'none';
