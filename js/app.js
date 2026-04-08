@@ -3872,7 +3872,7 @@ function renderTagSection(year, yearTxs) {
         <canvas id="report-tag-donut"></canvas>
       </div>
     </div>
-    <div class="card" style="flex:1;min-width:0">
+    <div class="card" style="min-width:0">
       <h3 class="card-title">🔖 タグ別集計（${year}年）</h3>
       <div class="table-wrap">
         <table class="tx-table tg-table">
@@ -4029,7 +4029,7 @@ function renderReports() {
 </div>
 
 <div id="sec-category" class="charts-row">
-  <div class="card" style="flex:1">
+  <div class="card">
     <h3 class="card-title">支出カテゴリ詳細</h3>
     <div class="chart-wrap" style="height:300px">
       <canvas id="report-cat-expense"></canvas>
@@ -4045,7 +4045,7 @@ function renderReports() {
         <canvas id="report-payment-donut"></canvas>
       </div>
     </div>
-    <div class="card" style="flex:1;min-width:0">
+    <div class="card" style="min-width:0">
       <h3 class="card-title">💳 支払方法別集計（${year}年）</h3>
       <div class="table-wrap">
         <table class="tx-table">
@@ -4275,7 +4275,7 @@ ${(() => {
     const isMax  = maxDow && i === maxDow.i;
     const pctCls = pct >= 20 ? 'dow-pct-high' : pct >= 10 ? 'dow-pct-mid' : 'dow-pct-low';
     const row = `<tr class="dow-table-row${isMax ? ' dow-row-max' : ''}" style="--dow-row-color:${DOW_COLORS_HEX[i]};--dow-ri:${barDelay}">
-      <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]};font-weight:700">${label}曜日</span></td>
+      <td><span class="dow-label-cell" style="color:${DOW_COLORS_HEX[i]}">${label}曜日</span></td>
       <td class="text-muted">${dowCounts[i]}件 / ${dowDateSets[i].size}日</td>
       <td class="expense">
         ${formatMoney(dowTotals[i])}<span class="dow-pct-badge ${pctCls}">${pct}%</span>
@@ -4357,7 +4357,7 @@ ${(() => {
   const statCardsHtml = selCats.length > 0 ? `<div class="ct-stat-row">
     <div class="ct-stat-card" style="--ct-stat-color:${statAccent}">
       <div class="ct-stat-label">選択カテゴリ</div>
-      <div class="ct-stat-value">${selCats.length}<span style="font-size:var(--fs-sm);font-weight:400;color:var(--text-muted)"> / ${expCats.length}件</span></div>
+      <div class="ct-stat-value">${selCats.length}<span class="ct-stat-value-sub"> / ${expCats.length}件</span></div>
     </div>
     <div class="ct-stat-card" style="--ct-stat-color:${statAccent}">
       <div class="ct-stat-label">年間合計</div>
@@ -4465,13 +4465,13 @@ ${(() => {
   </div>
 
   <div class="charts-row" style="margin-top:var(--sp-4)">
-    <div class="card chart-card" style="flex:1;min-width:0">
+    <div class="card chart-card" style="min-width:0">
       <h3 class="card-title">支出の内訳</h3>
       <div class="chart-wrap" style="height:240px">
         <canvas id="report-fv-donut"></canvas>
       </div>
     </div>
-    <div class="card chart-card" style="flex:1;min-width:0">
+    <div class="card chart-card" style="min-width:0">
       <h3 class="card-title">月次 固定費率推移</h3>
       <div class="chart-wrap" style="height:240px">
         <canvas id="report-fv-trend"></canvas>
@@ -4480,7 +4480,7 @@ ${(() => {
   </div>
 
   <div class="charts-row" style="margin-top:var(--sp-4)">
-    <div class="card" style="flex:1;min-width:0">
+    <div class="card" style="min-width:0">
       <h3 class="card-title">🔒 固定費カテゴリ</h3>
       <div class="table-wrap">
         <table class="tx-table fv-cat-table">
@@ -4489,7 +4489,7 @@ ${(() => {
         </table>
       </div>
     </div>
-    <div class="card" style="flex:1;min-width:0">
+    <div class="card" style="min-width:0">
       <h3 class="card-title">🔓 変動費カテゴリ</h3>
       <div class="table-wrap">
         <table class="tx-table fv-cat-table">
@@ -4608,7 +4608,7 @@ function bindReports() {
       statRow.outerHTML = `<div class="ct-stat-row">
         <div class="ct-stat-card" style="--ct-stat-color:${sa2}">
           <div class="ct-stat-label">選択カテゴリ</div>
-          <div class="ct-stat-value">${selCats2.length}<span style="font-size:var(--fs-sm);font-weight:400;color:var(--text-muted)"> / ${expCats2.length}件</span></div>
+          <div class="ct-stat-value">${selCats2.length}<span class="ct-stat-value-sub"> / ${expCats2.length}件</span></div>
         </div>
         <div class="ct-stat-card" style="--ct-stat-color:${sa2}">
           <div class="ct-stat-label">年間合計</div>
@@ -5190,7 +5190,7 @@ function renderSettings() {
         <thead><tr><th>名前</th><th>種別</th><th>カテゴリ</th><th>金額</th><th></th></tr></thead>
         <tbody>${templateRows}</tbody>
       </table>
-    </div>` : '<p class="empty" style="text-align:center;padding:12px 0;color:var(--text-muted)">テンプレートがありません</p>'}
+    </div>` : '<p class="empty">テンプレートがありません</p>'}
   </div>
 
   ${(() => {
@@ -5325,7 +5325,7 @@ function renderSettings() {
     <details class="stp-help-details">
       <summary class="stp-help-summary">Supabase初期設定手順（クリックで展開）</summary>
       <ol class="stp-help-list">
-        <li><a href="https://supabase.com" target="_blank" rel="noopener" style="color:var(--primary)">supabase.com</a> で無料プロジェクトを作成</li>
+        <li><a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> で無料プロジェクトを作成</li>
         <li>SQL Editorで以下を実行してテーブルを作成：</li>
       </ol>
       <pre class="sql-block">CREATE TABLE household_data (
