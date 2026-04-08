@@ -131,7 +131,7 @@
   --ls-snug:   -0.2px;   /* 中テキスト微細詰め（fs-md/sm+fw-bold） */
   --ls-normal:  0px;
   --ls-wide:    0.4px;
-  --ls-wider:   0.8px;
+  /* --ls-wider は v21.47 で ls-spread へ移行済み・削除 */
   /* 字間（emスケール） */
   --ls-fine:    0.01em;   /* 小テキスト微細 */
   --ls-label:   0.02em;   /* ラベル・キャプション */
@@ -3216,6 +3216,7 @@ mark.tx-hl {
   font-size: var(--fs-xs);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-snug);
+  text-wrap: balance;
   display: flex;
   flex-direction: column;
   gap: var(--sp-0-5);
@@ -3750,6 +3751,7 @@ mark.tx-hl {
   padding-left: var(--sp-4-5);
   line-height: var(--lh-spacious);
   margin-top: var(--sp-2);
+  text-wrap: balance;
 }
 
 /* 同期トースト通知 */
@@ -4854,7 +4856,6 @@ body {
   max-width: var(--size-onboard-text);
   margin-left: auto;
   margin-right: auto;
-  text-wrap: balance;
 }
 .onboarding-cta {
   display: inline-flex;
@@ -12500,6 +12501,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-fine);
+  text-wrap: balance;
 }
 
 /* モーダル */
