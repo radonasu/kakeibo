@@ -3529,7 +3529,7 @@ function renderInsightsSection(year, allTxs, months12) {
 
   const activeMonths = monthData.filter(m => m.income > 0 || m.expense > 0);
   if (activeMonths.length === 0) {
-    return `<div id="sec-insights" class="card"><p class="empty" style="padding:var(--sp-8);text-align:center">データがまだありません。取引を追加するとインサイトが表示されます。</p></div>`;
+    return `<div id="sec-insights" class="card"><p class="empty">データがまだありません。取引を追加するとインサイトが表示されます。</p></div>`;
   }
 
   // 最高/最低 貯蓄率月
@@ -3865,14 +3865,14 @@ function renderTagSection(year, yearTxs) {
       <div class="tg-stat-value">${formatMoney(total - (tagMap['タグなし'] ? tagMap['タグなし'].amount : 0))}</div>
     </div>
   </div>
-  <div class="charts-row" style="margin-top:var(--sp-4)">
+  <div class="charts-row">
     <div class="card chart-card">
       <h3 class="card-title">🔖 タグ別支出</h3>
       <div class="chart-wrap chart-h-lg">
         <canvas id="report-tag-donut"></canvas>
       </div>
     </div>
-    <div class="card" style="min-width:0">
+    <div class="card">
       <h3 class="card-title">🔖 タグ別集計（${year}年）</h3>
       <div class="table-wrap">
         <table class="tx-table tg-table">
@@ -4045,7 +4045,7 @@ function renderReports() {
         <canvas id="report-payment-donut"></canvas>
       </div>
     </div>
-    <div class="card" style="min-width:0">
+    <div class="card">
       <h3 class="card-title">💳 支払方法別集計（${year}年）</h3>
       <div class="table-wrap">
         <table class="tx-table">
@@ -4200,7 +4200,7 @@ ${(appData.members && appData.members.length > 0) ? `
       </div>` : `<div class="yoy-diff">前年データなし</div>`}
     </div>
   </div>
-  <div class="chart-wrap" style="height:280px;margin:var(--sp-4) 0 var(--sp-2)">
+  <div class="chart-wrap chart-h-2xl">
     <canvas id="report-yoy"></canvas>
   </div>
   <div class="table-wrap">
@@ -4287,13 +4287,13 @@ ${(() => {
     return row;
   }).join('');
 
-  const emptyContent = `<div class="empty" style="padding:var(--sp-6) 0">${year}年の支出データがありません</div>`;
+  const emptyContent = `<div class="empty">${year}年の支出データがありません</div>`;
 
   return `<div id="sec-dow" class="card">
   <h3 class="card-title">📆 曜日別支出パターン（${year}年）</h3>
   ${validDows.length === 0 ? emptyContent : `
   <div class="dow-stat-row">${summaryCards}</div>
-  <div class="chart-wrap" style="height:220px;margin:var(--sp-4) 0 var(--sp-2)">
+  <div class="chart-wrap chart-h-sm">
     <canvas id="report-dow"></canvas>
   </div>
   <div class="table-wrap">
@@ -4386,7 +4386,7 @@ ${(() => {
   <p class="ct-hint">カテゴリを選択してトレンドを比較できます（複数選択可）</p>
   <div class="ct-chips" role="group" aria-label="カテゴリ選択">${chipHtml}</div>
   ${statCardsHtml}
-  <div class="chart-wrap" style="height:280px;margin:0 0 var(--sp-2)">
+  <div class="chart-wrap chart-h-2xl">
     <canvas id="report-cat-trend"></canvas>
   </div>
   ${selCats.length > 0 ? `<div class="table-wrap ct-table-wrap">
@@ -4394,7 +4394,7 @@ ${(() => {
       <thead>${tableHead}</thead>
       <tbody>${tableBody}</tbody>
     </table>
-  </div>` : `<div class="empty" style="padding:var(--sp-6) 0">カテゴリを選択してください</div>`}
+  </div>` : `<div class="empty">カテゴリを選択してください</div>`}
 </div>`;
 })()}
 
@@ -4464,14 +4464,14 @@ ${(() => {
     </div>
   </div>
 
-  <div class="charts-row" style="margin-top:var(--sp-4)">
-    <div class="card chart-card" style="min-width:0">
+  <div class="charts-row">
+    <div class="card chart-card">
       <h3 class="card-title">支出の内訳</h3>
       <div class="chart-wrap chart-h-md">
         <canvas id="report-fv-donut"></canvas>
       </div>
     </div>
-    <div class="card chart-card" style="min-width:0">
+    <div class="card chart-card">
       <h3 class="card-title">月次 固定費率推移</h3>
       <div class="chart-wrap chart-h-md">
         <canvas id="report-fv-trend"></canvas>
@@ -4479,8 +4479,8 @@ ${(() => {
     </div>
   </div>
 
-  <div class="charts-row" style="margin-top:var(--sp-4)">
-    <div class="card" style="min-width:0">
+  <div class="charts-row">
+    <div class="card">
       <h3 class="card-title">🔒 固定費カテゴリ</h3>
       <div class="table-wrap">
         <table class="tx-table fv-cat-table">
@@ -4489,7 +4489,7 @@ ${(() => {
         </table>
       </div>
     </div>
-    <div class="card" style="min-width:0">
+    <div class="card">
       <h3 class="card-title">🔓 変動費カテゴリ</h3>
       <div class="table-wrap">
         <table class="tx-table fv-cat-table">
@@ -4500,7 +4500,7 @@ ${(() => {
     </div>
   </div>
 
-  <div class="card" style="margin-top:var(--sp-4)">
+  <div class="card">
     <h3 class="card-title">月別 固定費 vs 変動費</h3>
     <div class="table-wrap">
       <table class="tx-table fv-month-table">
@@ -7973,8 +7973,8 @@ function renderSidebarUser() {
     });
   } else if (typeof isSyncConfigured === 'function' && isSyncConfigured()) {
     footer.innerHTML = `
-      <div style="padding:var(--sp-1) 0">
-        <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" id="sidebar-login-btn">ログイン / 登録</button>
+      <div id="sidebar-login-wrap">
+        <button class="btn btn-primary btn-sm btn-full" id="sidebar-login-btn">ログイン / 登録</button>
       </div>`;
     on('sidebar-login-btn', 'click', () => {
       if (typeof showAuthScreen === 'function') showAuthScreen();
