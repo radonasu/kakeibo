@@ -2811,7 +2811,7 @@ function renderTxModal() {
 <div id="tx-modal" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
-      <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--warning)"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
+      <h2>${isDup ? '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:var(--sp-1-5);color:var(--warning)"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' : ''}${modalTitle}</h2>
       <button class="modal-close" id="modal-close">✕</button>
     </div>${dupBanner}
     <div id="tx-added-banner" class="tx-added-banner" style="display:none">
@@ -4873,7 +4873,7 @@ function renderCategories() {
             <tbody id="sb-tbody"></tbody>
           </table>
         </div>
-        <p class="hint" style="margin-top:8px">※ 提案額 = 過去3ヶ月の平均支出 × 110% を1,000円単位で切り上げ</p>
+        <p class="hint" style="margin-top:var(--sp-2)">※ 提案額 = 過去3ヶ月の平均支出 × 110% を1,000円単位で切り上げ</p>
       </div>
     </div>
     <div class="modal-footer">
@@ -5184,7 +5184,7 @@ function renderSettings() {
       <h3 class="card-title">⚡ よく使うテンプレート</h3>
       <button class="btn btn-primary" id="open-add-tpl">＋ テンプレート追加</button>
     </div>
-    <p class="hint" style="margin-bottom:10px">固定費や繰り返しの取引を登録。収支一覧画面でワンタップ入力できます。</p>
+    <p class="hint" style="margin-bottom:var(--sp-2-5)">固定費や繰り返しの取引を登録。収支一覧画面でワンタップ入力できます。</p>
     ${templateRows ? `<div class="table-wrap">
       <table class="tx-table">
         <thead><tr><th>名前</th><th>種別</th><th>カテゴリ</th><th>金額</th><th></th></tr></thead>
@@ -5229,9 +5229,9 @@ function renderSettings() {
     <div class="card-header-row">
       <h3 class="card-title">📐 ダッシュボード カスタマイズ</h3>
     </div>
-    <p class="hint" style="margin-bottom:12px">ダッシュボードに表示するウィジェットを選択できます</p>
+    <p class="hint" style="margin-bottom:var(--sp-3)">ダッシュボードに表示するウィジェットを選択できます</p>
     <div class="dw-grid">${rows}</div>
-    <button class="btn btn-primary" id="save-dash-widgets" style="margin-top:16px">保存</button>
+    <button class="btn btn-primary" id="save-dash-widgets" style="margin-top:var(--sp-4)">保存</button>
   </div>`;
   })()}
 </div>
@@ -5290,7 +5290,7 @@ function renderSettings() {
         <button class="btn btn-danger btn-sm" id="btn-sync-logout">ログアウト</button>
       </div>
     </div>
-    <div id="sync-login-prompt" style="margin-top:10px">
+    <div id="sync-login-prompt" style="margin-top:var(--sp-2-5)">
       ${(cfg.url && cfg.anonKey) ? `
       <button class="btn btn-primary" id="btn-sync-login-show">✉️ ログイン / 新規登録</button>
       ` : `<p class="hint">Supabase接続設定を行うと、メールアドレスでアカウント作成してクラウド同期できます。</p>`}
@@ -5346,7 +5346,7 @@ CREATE POLICY "own_data" ON household_data
 
   <div class="card">
     <h3 class="card-title">💱 為替レート設定</h3>
-    <p class="hint" style="margin-bottom:14px">外貨建て資産を日本円に換算するレートです（1外貨 = X円）。自動取得ボタンで最新レートを即時反映できます。</p>
+    <p class="hint" style="margin-bottom:var(--sp-3-5)">外貨建て資産を日本円に換算するレートです（1外貨 = X円）。自動取得ボタンで最新レートを即時反映できます。</p>
     <div class="fx-rate-grid" id="fx-rate-grid">
       ${CURRENCIES.filter(c => c.code !== 'JPY').map(c => {
         const currentRate = getExchangeRates()[c.code] || DEFAULT_FX_RATES[c.code];
@@ -5418,7 +5418,7 @@ CREATE POLICY "own_data" ON household_data
   <div class="card">
     <h3 class="card-title">📂 アカウント管理</h3>
     <p class="hint">アカウントごとに家計データを分けて管理できます（例：自分の家・親の家・事業用）。</p>
-    <div class="table-wrap" style="margin-bottom:12px">
+    <div class="table-wrap" style="margin-bottom:var(--sp-3)">
       <table class="tx-table">
         <thead><tr><th>アカウント名</th><th>状態</th><th></th></tr></thead>
         <tbody>
@@ -5443,14 +5443,14 @@ CREATE POLICY "own_data" ON household_data
 <div class="settings-panel" id="stp-other">
   <div class="card">
     <h3 class="card-title">🔔 予算アラート通知</h3>
-    <p class="hint" style="margin-bottom:12px">予算の80%到達・超過時にブラウザ通知でお知らせします。</p>
+    <p class="hint" style="margin-bottom:var(--sp-3)">予算の80%到達・超過時にブラウザ通知でお知らせします。</p>
     <div id="notif-status-area"></div>
   </div>
 
   <div class="card">
     <h3 class="card-title">📱 スマートフォンアプリとしてインストール</h3>
     <p class="hint">このアプリはPWA（プログレッシブWebアプリ）です。ホーム画面に追加するとネイティブアプリのように使えます。</p>
-    <div id="pwa-install-area" style="margin-bottom:12px"></div>
+    <div id="pwa-install-area" style="margin-bottom:var(--sp-3)"></div>
     <div class="install-guide-tabs">
       <div class="install-tab">
         <h4>🤖 Android（Chrome）</h4>
@@ -6004,11 +6004,11 @@ function bindSettings() {
             <span>予算アラートを有効にする</span>
           </label>
         </div>
-        <button class="btn btn-ghost btn-sm" id="btn-test-notif" style="margin-top:8px">テスト通知を送る</button>`;
+        <button class="btn btn-ghost btn-sm" id="btn-test-notif" style="margin-top:var(--sp-2)">テスト通知を送る</button>`;
       } else if (perm === 'denied') {
         html = '<p class="hint" style="color:var(--expense)">❌ 通知がブロックされています。ブラウザの設定から通知を許可してください。</p>';
       } else {
-        html = `<p class="hint" style="margin-bottom:10px">通知を許可すると、予算超過時に自動でお知らせします。</p>
+        html = `<p class="hint" style="margin-bottom:var(--sp-2-5)">通知を許可すると、予算超過時に自動でお知らせします。</p>
           <button class="btn btn-primary btn-sm" id="btn-request-notif">🔔 通知を許可する</button>`;
       }
       notifArea.innerHTML = html;
@@ -7973,7 +7973,7 @@ function renderSidebarUser() {
     });
   } else if (typeof isSyncConfigured === 'function' && isSyncConfigured()) {
     footer.innerHTML = `
-      <div style="padding:4px 0">
+      <div style="padding:var(--sp-1) 0">
         <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" id="sidebar-login-btn">ログイン / 登録</button>
       </div>`;
     on('sidebar-login-btn', 'click', () => {
@@ -9542,7 +9542,7 @@ function openCSVImportModal() {
               <span>その他（銀行明細・他アプリ等、列マッピング指定）</span>
             </div>
           </div>
-          <label class="btn btn-primary csv-file-label" style="margin-top:var(--sp-5);display:inline-flex;align-items:center;gap:6px;cursor:pointer">
+          <label class="btn btn-primary csv-file-label" style="margin-top:var(--sp-5);gap:var(--sp-1-5)">
             📂 CSVファイルを選択
             <input type="file" id="csv-imp-file" accept=".csv,.tsv" style="display:none">
           </label>
