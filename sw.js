@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.67'; // v21.67: デザイン改善・charts.jsフォントサイズCSS変数化（getCSSVarInt追加・getThemeColors拡張・全チャート関数のfont.size/canvas.font CSS変数統一）
+const CACHE_NAME = 'kakeibo-v21.68'; // v21.68: バグフィックス・インラインstyle除去17箇所CSS化（margin/gap CSS変数→IDベース・クラスベース・:has()文脈ルールに統一）
 const ASSETS = [
   './index.html',
   './css/style.css',

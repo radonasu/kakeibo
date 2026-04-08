@@ -3696,6 +3696,8 @@ mark.tx-hl {
 [data-theme="dark"] .sync-cloud-status-ok {
   color: var(--income);
 }
+/* クラウド同期: ログインプロンプト上余白 */
+#sync-login-prompt { margin-top: var(--sp-2-5); }
 
 .sql-block {
   background: var(--sidebar-bg);
@@ -3768,6 +3770,10 @@ mark.tx-hl {
   text-wrap: balance;
 }
 .stp-help-list a { color: var(--primary); }
+/* 設定ページ: テンプレート/アカウント/為替ヒント余白 */
+.card:has(#open-add-tpl) > .hint    { margin-bottom: var(--sp-2-5); }
+.card:has(#btn-new-account) .table-wrap { margin-bottom: var(--sp-3); }
+.card:has(#fx-rate-grid) > .hint    { margin-bottom: var(--sp-3-5); }
 
 /* 同期トースト通知 */
 .sync-toast {
@@ -4160,6 +4166,9 @@ body {
 /* ── スタンドアロン時: インストールガイドを非表示 ── */
 .pwa-standalone .install-guide-tabs,
 .pwa-standalone #pwa-install-area { display: none; }
+/* インストールエリア下余白・インストールガイド後ヒント */
+#pwa-install-area { margin-bottom: var(--sp-3); }
+.install-guide-tabs + .hint { margin-top: var(--sp-2-5); }
 
 /* ============================================================
    ボトムナビゲーション（モバイル）
@@ -4751,6 +4760,10 @@ body {
   background: color-mix(in srgb, var(--success) var(--mix-sm), transparent);
   color: var(--income-end);
 }
+/* 通知設定カード: ヒント下余白・テストボタン上余白・許可前ヒント下余白 */
+.card:has(#notif-status-area) > .hint { margin-bottom: var(--sp-3); }
+#notif-status-area .hint              { margin-bottom: var(--sp-2-5); }
+#btn-test-notif                       { margin-top: var(--sp-2); }
 
 /* ============================================================
    繰り返し取引
@@ -7609,6 +7622,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .csv-badge-auto   { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); color: var(--primary-end); }
 [data-theme="dark"] .csv-badge-manual { background: color-mix(in srgb, var(--warning) var(--mix-md), transparent); color: var(--warning); }
 
+/* CSVインポート: ステップ1ヒント下余白・ファイルラベル上余白・カード検出後ヒント余白・列マッピング後ヒント余白 */
+#csv-step1 > .hint       { margin-bottom: var(--sp-4); }
+.csv-file-label          { margin-top: var(--sp-5); gap: var(--sp-1-5); }
+.csv-detect-row + .hint  { margin: var(--sp-2) 0; }
+.csv-map-grid + .hint    { margin: var(--sp-2) 0 var(--sp-3); }
+
 /* 検出バッジ行 */
 .csv-detect-row {
   display: flex;
@@ -9210,6 +9229,9 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .settings-panel.is-active .dw-item:nth-child(17) { animation-delay: calc(16 * var(--dur-stagger-4xs)); }
 .settings-panel.is-active .dw-item:nth-child(18) { animation-delay: calc(17 * var(--dur-stagger-4xs)); }
 .settings-panel.is-active .dw-item:nth-child(19) { animation-delay: calc(18 * var(--dur-stagger-4xs)); }
+/* ダッシュボードカスタマイズ: ヒント下余白・保存ボタン上余白 */
+.card:has(#save-dash-widgets) > .hint { margin-bottom: var(--sp-3); }
+#save-dash-widgets { margin-top: var(--sp-4); }
 
 /* ══════════════════════════════════════════════════════════
    資産管理ページ ビジュアル洗練 (v5.60)
@@ -11244,6 +11266,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .debt-name { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--text); letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
 .debt-card-actions { display: flex; gap: var(--sp-1); }
+.debt-paidoff { margin-top: var(--sp-2); }
 
 /* 残高行 */
 .debt-balance-row {
@@ -11732,6 +11755,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 /* 全選択ラベル */
+/* 予算提案モーダル: テーブル下ヒント上余白 */
+#sb-table-wrap > .hint { margin-top: var(--sp-2); }
 .sb-actions-top {
   display: flex;
   align-items: center;
