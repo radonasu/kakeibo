@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v21.87)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v21.90)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3779,6 +3779,7 @@ mark.tx-hl {
   line-height: var(--lh-spacious);
   margin-top: var(--sp-2);
   text-wrap: balance;
+  text-wrap: pretty;
 }
 .stp-help-list a { color: var(--primary); }
 /* 設定ページ: テンプレート/アカウント/為替ヒント余白 */
@@ -7192,6 +7193,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--ls-num);
   line-height: var(--lh-tighter);
+  white-space: nowrap;
 }
 .sub-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
 .sub-widget-item {
@@ -8130,7 +8132,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .pt-widget-exp  { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: var(--sp-0-25); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-label); line-height: var(--lh-tighter); }
 .pt-widget-balance {
-  font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text); flex-shrink: 0; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text); flex-shrink: 0; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 
 @media (max-width: 520px) {
@@ -8743,6 +8745,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--ls-num);
   line-height: var(--lh-tighter);
+  white-space: nowrap;
 }
 .wish-widget-list {
   display: flex;
@@ -11331,7 +11334,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: var(--sp-3); margin-bottom: var(--sp-3);
 }
-.debt-balance { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--expense); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); }
+.debt-balance { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--expense); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); white-space: nowrap; }
 .debt-balance-meta { font-size: var(--fs-xs); color: var(--text-muted); margin-top: var(--sp-1); line-height: var(--lh-tighter); letter-spacing: var(--ls-fine); font-variant-numeric: tabular-nums; }
 .debt-meta-right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-1); }
 /* 年利・月返済バッジ: --debt-accent カラー連動 (v5.85) */
@@ -11340,6 +11343,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-size: var(--fs-xs); font-weight: var(--fw-semi);
   letter-spacing: var(--ls-fine); line-height: var(--lh-tighter);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   padding: var(--sp-0-5) var(--sp-2); border-radius: var(--radius-badge);
   background: color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent);
   color: var(--debt-accent, var(--primary));
@@ -11448,7 +11452,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .debt-widget-cell { flex: 1; padding: var(--sp-2) var(--sp-3); text-align: center; }
 .debt-widget-divider { width: var(--bw-thin); background: var(--border); align-self: stretch; }
 .debt-widget-cell-label { font-size: var(--fs-2xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
+.debt-widget-cell-value { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 .debt-widget-cell-value small { font-size: var(--fs-xs); font-weight: var(--fw-normal); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 
 .debt-widget-list { display: flex; flex-direction: column; gap: var(--sp-2); }
@@ -11993,8 +11997,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); white-space: nowrap; }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
+.ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); white-space: nowrap; }
+.ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); white-space: nowrap; }
 .ev-sum-card .ev-sum-none  { color: var(--on-dark-faint); font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
@@ -12299,7 +12303,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-widget-meta { display: flex; gap: var(--sp-1-5); margin-top: var(--sp-0-5); }
 .ev-widget-month { font-size: var(--fs-xs); color: var(--primary); font-weight: var(--fw-semi); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-widget-cat   { font-size: var(--fs-xs); color: var(--text-muted); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
+.ev-widget-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 
 /* --- 絵文字グリッド（モーダル内）--- */
 .ev-emoji-row { display: flex; align-items: flex-start; gap: var(--sp-3); }
@@ -13462,7 +13466,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .ci-event-icon  { font-size: var(--fs-icon); letter-spacing: var(--ls-normal); line-height: var(--lh-none); flex-shrink: 0; }
 .ci-event-name  { flex: 1; font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ci-event-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-sub); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
+.ci-event-amount { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--text-sub); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 /* フッター */
 .ci-footer { padding: 0 var(--sp-5) var(--sp-5); }
 .ci-ok-btn {
