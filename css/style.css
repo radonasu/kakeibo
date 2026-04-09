@@ -777,7 +777,7 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
 }
-input[type="number"] { -moz-appearance: textfield; }
+input[type="number"] { -moz-appearance: textfield; font-variant-numeric: tabular-nums; }
 
 /* ── オートフィルスタイリング v15.2（Chromeオートフィル背景をテーマカラーに統一） ── */
 input:-webkit-autofill,
@@ -13493,10 +13493,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--white);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
   line-height: var(--lh-none);
   margin-left: auto;
   flex-shrink: 0;
-  letter-spacing: var(--ls-normal);
+  letter-spacing: var(--ls-label);
   box-shadow: 0 1px 4px color-mix(in srgb, var(--danger-text) var(--mix-3xl), transparent);
 }
 
@@ -16201,6 +16202,7 @@ canvas.chart-clickable { cursor: pointer; }
   width: var(--size-input-budget);
   text-align: right;
   font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   padding: var(--sp-0-75) var(--sp-1-75);
