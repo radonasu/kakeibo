@@ -2818,11 +2818,11 @@ function renderTxModal() {
       ✓ <span class="tx-added-count-badge" id="tx-added-count">0</span>件追加済み — 続けて入力してください
     </div>
     <div class="modal-body tx-modal-anim">
-      <div class="type-toggle" style="--fg-i:0">
+      <div class="type-toggle">
         <button class="type-btn ${type === 'expense' ? 'active expense-btn' : ''}" data-type="expense">支出</button>
         <button class="type-btn ${type === 'income' ? 'active income-btn' : ''}" data-type="income">収入</button>
       </div>
-      <div class="receipt-scan-area" style="--fg-i:1">
+      <div class="receipt-scan-area">
         <button class="btn btn-receipt" id="receipt-scan-btn" type="button">
           📷 レシートから読み込む
         </button>
@@ -2833,7 +2833,7 @@ function renderTxModal() {
         <div id="scan-result" class="scan-result" style="display:none"></div>
         <div id="multi-receipt-list" class="multi-receipt-list" style="display:none"></div>
       </div>
-      <div class="form-group" style="--fg-i:2">
+      <div class="form-group">
         <label>日付</label>
         <input type="date" id="tx-date" value="${t ? t.date : todayStr()}" required>
         <div class="date-quick-btns">
@@ -2842,7 +2842,7 @@ function renderTxModal() {
           <button type="button" class="date-quick-btn date-quick-today" data-offset="0">今日</button>
         </div>
       </div>
-      <div class="form-group" style="--fg-i:3">
+      <div class="form-group">
         <label>金額（円）</label>
         <input type="text" id="tx-amount" inputmode="decimal" value="${src ? src.amount : ''}" placeholder="例: 1500+300" autocomplete="off">
         <div id="amt-calc-preview" class="amt-calc-preview"></div>
@@ -2855,7 +2855,7 @@ function renderTxModal() {
         </div>
         <div id="amount-hist-chips" class="amount-hist-chips" style="display:none"></div>
       </div>
-      <div class="form-group" style="--fg-i:4">
+      <div class="form-group">
         <label>カテゴリ
           <button type="button" class="btn-inline-add" id="btn-quick-cat" title="カテゴリを今すぐ追加">＋ 新規追加</button>
         </label>
@@ -2868,7 +2868,7 @@ function renderTxModal() {
           <button type="button" class="btn btn-ghost btn-sm" id="qcat-cancel">キャンセル</button>
         </div>
       </div>
-      <div class="form-group" style="--fg-i:5">
+      <div class="form-group">
         <label>摘要（メモ）</label>
         <input type="text" id="tx-memo" value="${esc2(src ? src.memo : '')}" placeholder="例: スーパーでの買い物"
                list="memo-suggestions" autocomplete="off">
@@ -2876,7 +2876,7 @@ function renderTxModal() {
         <div id="memo-hist-chips" class="memo-hist-chips" style="display:none"></div>
         <div id="memo-cat-hint" class="memo-cat-hint" style="display:none"></div>
       </div>
-      <div class="form-group" style="--fg-i:6">
+      <div class="form-group">
         <label>タグ <span class="tx-tag-label-hint">カンマ区切りで複数指定</span></label>
         <input type="text" id="tx-tags" class="form-input"
           placeholder="例: 旅行, 外食, まとめ買い"
@@ -2886,7 +2886,7 @@ function renderTxModal() {
         <div id="tx-tag-preview" class="tx-tag-preview"></div>
       </div>
 
-      <div class="form-group" style="--fg-i:7">
+      <div class="form-group">
         <label>支払方法</label>
         <select id="tx-payment">
           ${['現金','クレカ','口座振替','銀行振込','電子マネー','その他'].map(p =>
@@ -2894,7 +2894,7 @@ function renderTxModal() {
         </select>
       </div>
       <!-- 詳細設定（折りたたみ） -->
-      <details class="modal-details" style="--fg-i:8" ${src ? 'open' : ''}>
+      <details class="modal-details" ${src ? 'open' : ''}>
         <summary>詳細設定</summary>
         <div class="modal-details-body">
           <div class="form-group">
