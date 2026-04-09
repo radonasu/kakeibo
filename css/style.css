@@ -6133,8 +6133,8 @@ body {
   margin-bottom: var(--sp-1);
   flex-wrap: wrap;
 }
-.goal-saved  { font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
-.goal-target { font-weight: var(--fw-medium); color: var(--text-muted); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
+.goal-saved  { font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
+.goal-target { font-weight: var(--fw-medium); color: var(--text-muted); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 .goal-sep    { font-size: var(--fs-xs); color: var(--text-faint); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 
 .goal-remaining {
@@ -8089,7 +8089,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   margin-bottom: var(--sp-3);
 }
 .pt-widget-total-label { font-size: var(--fs-xs); color: var(--text-muted); font-weight: var(--fw-semi); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); }
+.pt-widget-total-amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); white-space: nowrap; }
 .pt-widget-expiry-header {
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
@@ -10043,7 +10043,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--ct-stat-color, var(--primary));
 }
 .ct-stat-label { font-size: var(--fs-xs); color: var(--text-muted); margin-bottom: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-tight); }
+.ct-stat-value { font-size: var(--fs-lg); font-weight: var(--fw-bold); color: var(--text); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-tight); white-space: nowrap; }
 .ct-stat-value-sub { font-size: var(--fs-sm); font-weight: var(--fw-normal); color: var(--text-muted); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ct-stat-sub   { font-size: var(--fs-xs); letter-spacing: var(--ls-fine); color: var(--text-muted); margin-top: var(--sp-0-75); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; }
 
@@ -10166,7 +10166,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .fv-stat-icon  { font-size: var(--fs-icon); letter-spacing: var(--ls-normal); line-height: var(--lh-none); margin-bottom: var(--sp-1); }
 .fv-stat-label { font-size: var(--fs-xs); color: var(--on-dark-near); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tighter); margin: var(--sp-0-5) 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.fv-stat-value { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--white); line-height: var(--lh-tighter); margin: var(--sp-0-5) 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); white-space: nowrap; }
 .fv-stat-sub   { font-size: var(--fs-xs); color: var(--on-dark-label); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; }
 
 /* テーブルセル */
@@ -11480,7 +11480,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-badge); transition: width var(--dur-fill) var(--ease-out);
 }
 .debt-widget-pct { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; letter-spacing: var(--ls-label); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; }
-.debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); }
+.debt-widget-balance { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--expense); flex-shrink: 0; font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 
 @media (max-width: 600px) {
   .debt-balance-row { flex-direction: column; }
@@ -11569,7 +11569,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sim-savings-item { text-align: center; }
 .sim-savings-label { font-size: var(--fs-xs); color: var(--income-deep); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); margin-bottom: var(--sp-1); }
 [data-theme="dark"] .sim-savings-label { color: var(--income-end); }
-.sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); }
+.sim-savings-value { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--success); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tighter); white-space: nowrap; }
 [data-theme="dark"] .sim-savings-value { color: var(--income-end); }
 .sim-savings-divider { width: var(--bw-thin); height: var(--sp-12); background: var(--success-border); }
 [data-theme="dark"] .sim-savings-divider { background: color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
@@ -11991,7 +11991,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-sum-year { background: linear-gradient(var(--grad-diagonal), var(--warning) 0%, var(--warning-end) 100%); border-top: none; }
 /* サマリーカード内テキストを白系に */
 .ev-sum-card .ev-sum-label  { color: var(--on-dark-title); margin-bottom: var(--sp-0-5); font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-.ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.ev-sum-card .ev-sum-count  { color: var(--white); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); white-space: nowrap; }
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
