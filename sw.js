@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.84'; // v21.84: タイポグラフィ改善（tx-table td.income/expense/text-mutedにwhite-space:nowrap追加・レポートテーブル金額折り返し防止）
+const CACHE_NAME = 'kakeibo-v21.85'; // v21.85: タイポグラフィ改善（white-space:nowrap補完7要素・line-height補完1要素）
 const ASSETS = [
   './index.html',
   './css/style.css',
