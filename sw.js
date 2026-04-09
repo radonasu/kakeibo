@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.91'; // v21.91: タイポグラフィ改善・white-space:nowrap補完12要素
+const CACHE_NAME = 'kakeibo-v21.92'; // v21.92: タイポグラフィ改善・white-space:nowrap補完16要素
 const ASSETS = [
   './index.html',
   './css/style.css',
