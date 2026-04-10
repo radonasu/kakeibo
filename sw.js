@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.09'; // v22.09: CSS品質改善・notif/recurring toggle checkbox flex-shrink:0補完・form-group select/mr-edit-row select cursor:pointer補完4要素
+const CACHE_NAME = 'kakeibo-v22.10'; // v22.10: CSS品質改善・text-wrap:pretty補完8要素（hint/field-msg/auth-hint/share-hint/insight-title/adv-widget-hint/opp-title/pace-msg）
 const ASSETS = [
   './index.html',
   './css/style.css',
