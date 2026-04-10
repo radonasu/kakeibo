@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.00'; // v22.00: モバイルUX改善・user-select:none+webkit-tap-highlight-color補完8要素（color-swatch/step-card/cal-cell/sb-select-all-wrap/hm-cell/ev-done-label/dd-tx-row/rpt-month-row.is-clickable）
+const CACHE_NAME = 'kakeibo-v22.01'; // v22.01: モバイルUX改善・-webkit-tap-highlight-color:transparent補完（button要素グローバル追加+8要素：tx-th-sort/stp-config-summary/stp-help-summary/notif-toggle-label/recurring-toggle-label/modal-details summary/goal-achieved-summary/ev-done-label）
 const ASSETS = [
   './index.html',
   './css/style.css',
