@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v21.98)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v21.99)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -4771,9 +4771,10 @@ body {
   line-height: var(--lh-tighter);
   cursor: pointer;
   user-select: none;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.notif-toggle-label:hover { color: var(--primary); }
+.notif-toggle-label:hover  { color: var(--primary); }
+.notif-toggle-label:active { filter: brightness(var(--brightness-press-soft)); }
 .notif-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
   height: var(--size-checkbox);
@@ -4823,9 +4824,10 @@ body {
   line-height: var(--lh-tighter);
   cursor: pointer;
   user-select: none;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.recurring-toggle-label:hover { color: var(--primary); }
+.recurring-toggle-label:hover  { color: var(--primary); }
+.recurring-toggle-label:active { filter: brightness(var(--brightness-press-soft)); }
 .recurring-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
   height: var(--size-checkbox);
@@ -11899,9 +11901,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   cursor: pointer;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.sb-select-all-wrap:hover { color: var(--primary); }
+.sb-select-all-wrap:hover  { color: var(--primary); }
+.sb-select-all-wrap:active { filter: brightness(var(--brightness-press-soft)); }
 
 /* テーブルヘッダー */
 .sb-col-suggest {
@@ -12229,9 +12232,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   cursor: pointer;
-  transition: color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.ev-done-label:hover { color: var(--text); }
+.ev-done-label:hover  { color: var(--text); }
+.ev-done-label:active { filter: brightness(var(--brightness-press-soft)); }
 /* カスタムチェックボックス（v5.91）*/
 .ev-done-cb {
   appearance: none;
