@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v21.97'; // v21.97: タイポグラフィ改善・white-space:nowrap補完19要素（tfoot合計行・月グループサマリー・予算超過メッセージ・外貨ヒント・目標期限・WLアーカイブサマリー・予測低信頼度バッジ・予測セルヒント・資産内訳アイテム・負債進捗ヘッダー/ラベル・負債履歴件数・負債アーカイブサマリー・ローン結果列ヘッダー・年間進捗ラベル・節約機会テキスト・レポート月ラベル・日次ペース超過・カテゴリ月ラベル）
+const CACHE_NAME = 'kakeibo-v21.98'; // v21.98: CSS品質改善・flexレイアウト防御8要素補完（min-width:0補完4要素+white-space:nowrap補完4要素）：asset-entry-note/memo-cat-hint-text/cc-name/dd-tx-memoにmin-width:0追加・amount-prefix/calc-hint/pace-bar-label/cat-stat-lblにwhite-space:nowrap追加
 const ASSETS = [
   './index.html',
   './css/style.css',
