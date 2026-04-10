@@ -2946,6 +2946,9 @@ mark.tx-hl {
 .type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
 .type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
+/* ev-modal の type-toggle は label+radio 構成（他の type-toggle は button.type-btn 構成） */
+.type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+.type-toggle input[type="radio"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -11944,6 +11947,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .sb-select-all-wrap:hover  { color: var(--primary); }
 .sb-select-all-wrap:active { filter: brightness(var(--brightness-press-soft)); }
+.sb-select-all-wrap input[type="checkbox"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
 
 /* テーブルヘッダー */
 .sb-col-suggest {
