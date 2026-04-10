@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.12'; // v22.12: CSS品質改善・text-wrap:pretty補完2要素（ios-guide-title/empty-debt-msg）+asset-balance ls-tight→ls-tighter修正
+const CACHE_NAME = 'kakeibo-v22.13'; // v22.13: CSS品質改善・field-msg margin-top修正+page-title/auth-title/onboarding-title letter-spacing ls-tight→ls-tighter
 const ASSETS = [
   './index.html',
   './css/style.css',
