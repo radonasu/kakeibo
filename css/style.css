@@ -1526,6 +1526,7 @@ select:focus:not(:focus-visible) {
   background-position: right var(--sp-3) center;
   background-size: var(--size-select-icon) var(--size-select-icon);
   padding-right: var(--sp-8);
+  cursor: pointer;
 }
 [data-theme="dark"] .form-group select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2394a3b8' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -3392,6 +3393,7 @@ mark.tx-hl {
   caret-color: var(--primary);
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
+.mr-edit-row select { cursor: pointer; }
 .mr-edit-row input::placeholder { color: var(--text-faint); opacity: 1; }
 .mr-edit-row input:hover,
 .mr-edit-row select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -4800,6 +4802,7 @@ body {
   height: var(--size-checkbox);
   accent-color: var(--primary);
   cursor: pointer;
+  flex-shrink: 0;
 }
 [data-theme="dark"] .notif-badge.notif-granted {
   background: color-mix(in srgb, var(--success) var(--mix-sm), transparent);
@@ -4854,6 +4857,7 @@ body {
   height: var(--size-checkbox);
   accent-color: var(--primary);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .recurring-day-group {
