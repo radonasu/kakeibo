@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.05'; // v22.05: CSS品質改善・caret-color:var(--primary)補完9要素（.adv-filter-input/.quick-cat-form input/.mr-edit-row input/.budget-input/.recurring-day-input/.qa-amount-input/.qa-memo-input/.nt-textarea/.cat-budget-input）
+const CACHE_NAME = 'kakeibo-v22.06'; // v22.06: CSS品質改善・::placeholder スタイル補完5要素（.adv-filter-input/.mr-edit-row input/.quick-cat-form input/.cat-budget-input/.fx-rate-input）
 const ASSETS = [
   './index.html',
   './css/style.css',
