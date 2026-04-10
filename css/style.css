@@ -7541,6 +7541,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .sub-inactive-section summary {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   font-size: var(--fs-sm);
   color: var(--text-muted);
   font-weight: var(--fw-semi);
@@ -8735,6 +8736,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-card);
   list-style: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   align-items: center;
   gap: var(--sp-2);
@@ -9708,6 +9710,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .ch-archive-summary {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
   color: var(--text-sub);
@@ -11505,7 +11508,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   cursor: pointer; font-size: var(--fs-sm); font-weight: var(--fw-semi);
   color: var(--text-muted); padding: var(--sp-2) 0;
   letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); font-variant-numeric: tabular-nums; white-space: nowrap;
-  list-style: none; user-select: none;
+  list-style: none; user-select: none; -webkit-tap-highlight-color: transparent;
   display: flex; align-items: center; gap: var(--sp-2);
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
@@ -15515,6 +15518,8 @@ canvas.chart-clickable { cursor: pointer; }
 /* ダッシュボードサマリーカード クリック可能 (v8.9) */
 .dash-sum-clickable {
   cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .dash-sum-clickable:hover {
