@@ -3077,6 +3077,7 @@ mark.tx-hl {
   line-height: var(--lh-tighter);
   background: var(--surface);
   color: var(--text);
+  cursor: pointer;
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 .export-range select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -7774,6 +7775,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   font-size: var(--fs-sm);
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
+  cursor: pointer;
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 .csv-map-select:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
@@ -10841,7 +10843,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   line-height: var(--lh-tighter);
   caret-color: var(--primary);
 }
-.qa-amount-input::placeholder { color: var(--text-muted); font-weight: var(--fw-normal); }
+.qa-amount-input::placeholder { color: var(--text-muted); font-weight: var(--fw-normal); opacity: 1; }
 .qa-cat-select {
   flex: 1;
   padding: var(--sp-2) var(--sp-3);
@@ -10881,7 +10883,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   min-width: 0;
 }
-.qa-memo-input::placeholder { color: var(--text-muted); }
+.qa-memo-input::placeholder { color: var(--text-muted); opacity: 1; }
 .qa-memo-input:hover { border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .qa-memo-input:focus { border-color: var(--qa-accent); outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent); }
 [data-theme="dark"] .qa-cat-select:focus { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent); }
@@ -10981,6 +10983,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .nt-textarea::placeholder {
   color: var(--text-muted);
   font-style: italic;
+  opacity: 1;
 }
 .nt-textarea:hover {
   border-color: var(--border-strong);
@@ -12051,7 +12054,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   color: var(--text-muted);
   font-size: var(--fs-sm);
   letter-spacing: var(--ls-fine);
-  line-height: var(--lh-tighter);
+  line-height: var(--lh-relaxed);
+  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 /* ============================================================
