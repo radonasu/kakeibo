@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.03'; // v22.03: モバイルUX改善・user-select:none+-webkit-tap-highlight-color:transparent補完4要素（.btn基底クラス・.dw-item・.rc-item・.sb-select-all-wrap）
+const CACHE_NAME = 'kakeibo-v22.04'; // v22.04: モバイルUX改善・-webkit-tap-highlight-color:transparent補完2要素（.rpt-month-row.is-clickable・canvas.chart-clickable）
 const ASSETS = [
   './index.html',
   './css/style.css',
