@@ -1,5 +1,5 @@
 /* ============================================================
-   style.css - 家族家計簿アプリ v5 — Modern Redesign (v21.99)
+   style.css - 家族家計簿アプリ v5 — Modern Redesign (v22.00)
    ============================================================ */
 
 /* ── リセット・ベース ─────────────────────────────────── */
@@ -3028,6 +3028,8 @@ mark.tx-hl {
   cursor: pointer;
   border: var(--bw-swatch) solid transparent;
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .color-swatch:hover   { transform: scale(var(--scale-hover-lg)); }
 .color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -4978,6 +4980,8 @@ body {
   transition: box-shadow var(--dur-faster) var(--ease-out), transform var(--dur-faster) var(--ease-bounce), border-color var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out);
   box-shadow: var(--shadow-sm);
   animation: step-card-in var(--dur-lift) var(--ease-bounce) both;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 @keyframes step-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
@@ -6636,6 +6640,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   gap: var(--sp-0-25);
   position: relative;
   overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .cal-cell.cal-sat { border-right: none; }
 .cal-cell.cal-empty {
@@ -11208,6 +11214,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-3xs);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .hm-cell:not(.hm-out):not(.hm-legend-cell) {
   animation: hm-cell-in var(--dur-medium) var(--ease-bounce) both;
@@ -11902,6 +11910,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-tighter);
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  user-select: none;
 }
 .sb-select-all-wrap:hover  { color: var(--primary); }
 .sb-select-all-wrap:active { filter: brightness(var(--brightness-press-soft)); }
@@ -12233,6 +12242,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-tighter);
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  user-select: none;
 }
 .ev-done-label:hover  { color: var(--text); }
 .ev-done-label:active { filter: brightness(var(--brightness-press-soft)); }
@@ -15025,6 +15035,8 @@ canvas.chart-clickable { cursor: pointer; }
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
   animation: dd-row-in var(--dur-base) var(--ease-bounce) both;
   animation-delay: calc(var(--dd-i, 0) * var(--dur-stagger-3xs));
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
@@ -15766,6 +15778,7 @@ canvas.chart-clickable { cursor: pointer; }
 .rpt-month-row.is-clickable {
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  user-select: none;
 }
 .rpt-month-row.is-clickable:hover {
   background: var(--surface-hover);
