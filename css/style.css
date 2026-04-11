@@ -4186,7 +4186,7 @@ body {
 .ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); letter-spacing: var(--ls-normal); line-height: var(--lh-none); }
-.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-tight); line-height: var(--lh-tighter); text-wrap: balance; text-wrap: pretty; }
+.ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-tight); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ios-guide-steps { font-size: var(--fs-sm); color: var(--sidebar-text); line-height: var(--lh-relaxed); letter-spacing: var(--ls-fine); text-wrap: balance; text-wrap: pretty; }
 .ios-guide-arrow {
   font-size: var(--fs-icon-xl); color: var(--primary);
@@ -12226,7 +12226,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-sum-card .ev-sum-count small { color: var(--on-dark-soft); font-size: var(--fs-xs); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 .ev-sum-card .ev-sum-inc   { color: var(--on-dark-bright); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
 .ev-sum-card .ev-sum-exp   { color: var(--on-dark-hint); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-micro); line-height: var(--lh-tighter); white-space: nowrap; }
-.ev-sum-card .ev-sum-none  { color: var(--on-dark-faint); font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
+.ev-sum-card .ev-sum-none  { color: var(--on-dark-faint); font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ev-sum-amounts { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
 
 /* --- 年間グリッド --- */
@@ -12357,7 +12357,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .ev-type-badge.ev-income  { background: color-mix(in srgb, var(--income) var(--mix-xs), transparent); color: var(--income); }
 .ev-type-badge.ev-expense { background: color-mix(in srgb, var(--expense) var(--mix-xs), transparent); color: var(--expense); }
-.ev-cat-badge { font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: var(--ls-label); line-height: var(--lh-tighter); }
+.ev-cat-badge { font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: var(--ls-label); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ev-card-amount {
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
@@ -13653,7 +13653,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-3) var(--sp-4);
   animation: ci-row-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 5 * var(--dur-stagger-xl)) both;
 }
-.ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
+.ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); letter-spacing: var(--ls-fine); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ci-score-badge {
   font-size: var(--fs-lg);
   font-weight: var(--fw-black);
@@ -15386,7 +15386,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   white-space: nowrap;
 }
 /* カテゴリ名表示用（数値以外）: fs-lgで収まり重視・カテゴリカラー連動 */
-.yi-card-value-cat { font-size: var(--fs-lg); color: var(--yi-cat-color); font-variant-numeric: normal; letter-spacing: var(--ls-snug); line-height: var(--lh-tighter); }
+.yi-card-value-cat { font-size: var(--fs-lg); color: var(--yi-cat-color); font-variant-numeric: normal; letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .yi-card-unit {
   font-size: var(--fs-sm);
   font-weight: var(--fw-semi);
@@ -15851,7 +15851,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-fine);
-  line-height: var(--lh-tighter);
+  line-height: var(--lh-snug);
+  text-wrap: balance;
+  text-wrap: pretty;
 }
 .md-cell-value {
   font-size: var(--fs-md);
