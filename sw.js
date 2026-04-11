@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.20'; // v22.20: CSS品質改善・tabular-nums数値系ls-fine→ls-micro統一17要素
+const CACHE_NAME = 'kakeibo-v22.21'; // v22.21: CSS品質改善・tabular-nums数値系ls-fine→ls-micro統一33要素（完全完了）
 const ASSETS = [
   './index.html',
   './css/style.css',
