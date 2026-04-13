@@ -4723,6 +4723,11 @@ body {
   filter: brightness(var(--brightness-hover-sm));
 }
 .summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v22.62: サマリーカード タイプ別ホバーカラーグロー */
+.summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
+.summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+.summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 
 /* ── モーダルアニメーション ── */
 .modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-out); }
@@ -12228,7 +12233,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .sb-row:hover {
   background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent);
   transform: translateX(var(--translate-slide));
-  box-shadow: var(--shadow-row-hover);
+  box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent);
 }
 .sb-row:active { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-2xs), transparent); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .sb-row:has(.sb-check:checked) {
@@ -14866,7 +14871,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 
-.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-sm); }
+.rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-sm), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .rc-item:active { transform: translateY(0); border-color: var(--border); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .rc-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -15688,7 +15693,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.opp-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
 .opp-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .opp-card-left { flex-shrink: 0; }
@@ -16609,7 +16614,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .cat-card:hover {
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-mid), var(--border));
 }
