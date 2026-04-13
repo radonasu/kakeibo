@@ -9237,7 +9237,7 @@ function renderSubscriptions() {
       : 0;
     const progCls = days <= 3 ? 'prog-urgent' : days <= 7 ? 'prog-soon' : 'prog-normal';
     return `
-<div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}" style="--sub-i:${idx || 0};--sub-progress:${progress}%">
+<div class="sub-card ${urgentCls} ${inactiveCls}" data-id="${s.id}" style="--sub-i:${idx || 0};--sub-progress:${progress}%;--sub-accent:${s.color || 'var(--primary)'}">
   <div class="sub-card-color-bar" style="background:${s.color || 'var(--primary)'}"></div>
   <div class="sub-card-icon" style="background:color-mix(in srgb,${s.color||'var(--primary)'} 13%,transparent);color:${s.color||'var(--primary)'}">${s.emoji || '📱'}</div>
   <div class="sub-card-body">

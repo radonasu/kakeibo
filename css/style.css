@@ -2995,8 +2995,10 @@ mark.tx-hl {
 .type-btn:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
+.type-btn.expense-btn:hover  { background: var(--expense-light); color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); }
 .type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
+.type-btn.income-btn:hover   { background: var(--income-light);  color: var(--income);  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); }
 .type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 /* ev-modal の type-toggle は label+radio 構成（他の type-toggle は button.type-btn 構成） */
 .type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -3555,7 +3557,7 @@ mark.tx-hl {
   animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
 }
 .budget-fill.warn { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
-.budget-fill.over { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); }
+.budget-fill.over { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); animation: budget-fill-in var(--dur-fill) var(--ease-out) both, over-budget-pulse 1.8s var(--ease-in-out) infinite var(--dur-fill); }
 
 .budget-pct-badge {
   font-size: var(--fs-xs);
@@ -4757,6 +4759,16 @@ body {
 @keyframes budget-fill-in {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
+}
+/* 超過予算バー警告パルス（v22.61） */
+@keyframes over-budget-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.68; }
+}
+/* 目標プログレスバー シマースイープ（v22.61） */
+@keyframes bar-shimmer {
+  0%   { transform: translateX(-150%) skewX(-15deg); }
+  100% { transform: translateX(350%) skewX(-15deg); }
 }
 .budget-item:nth-child(1) .budget-fill { animation-delay: var(--dur-stagger); }
 .budget-item:nth-child(2) .budget-fill { animation-delay: calc(2 * var(--dur-stagger)); }
@@ -6274,6 +6286,19 @@ body {
     var(--goal-accent, var(--primary)) 0%,
     color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-rich), var(--white)) 100%
   );
+  position: relative;
+  overflow: hidden;
+}
+/* v22.61: 目標バー シマースイープ */
+.goal-progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--goal-i, 0) * var(--dur-stagger-lg) + var(--dur-fill, 0.8s) + 0.2s);
+  pointer-events: none;
 }
 
 /* v5.32: マイルストーンマーカー（25/50/75%） */
@@ -7569,7 +7594,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in var(--dur-medium) var(--ease-bounce) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
-.sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
+.sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 .sub-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sub-card-color-bar {
   position: absolute;
@@ -8154,7 +8179,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
-.pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
+.pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 .pt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
@@ -12438,7 +12463,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--ev-ci,0) * var(--dur-stagger-md));
   transition: opacity var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.ev-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
 .ev-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ev-card::before {
   content: '';

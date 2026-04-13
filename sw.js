@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.60'; // v22.60: デザイン改善・収支タイプ別ホバーグロー（income/expense行）＋budget-item/asset-card/insight-item 4タイプのホバーカラーグロー拡充（8箇所）
+const CACHE_NAME = 'kakeibo-v22.61'; // v22.61: デザイン改善・ev/pt/sub-cardホバーカラーグロー＋type-btn income/expense専用ホバーグロー＋budget-fill.over警告パルス＋goal-progress-barシマースイープ（8箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
