@@ -6161,7 +6161,7 @@ body {
   animation: goal-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--goal-i, 0) * var(--dur-stagger-lg));
 }
-.goal-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
 .goal-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .goal-card-header {
@@ -6260,6 +6260,9 @@ body {
   height: 100%;
   border-radius: var(--radius-badge);
   transition: width var(--dur-glide) var(--ease-out-expo);
+  transform-origin: left center;
+  animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
+  animation-delay: calc(var(--goal-i, 0) * var(--dur-stagger-lg) + var(--dur-delay-sm));
   /* v5.32: CSS変数でグラデーション */
   background: linear-gradient(
     var(--grad-horizontal),
@@ -7552,11 +7555,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + var(--sp-1-25)) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   box-shadow: var(--shadow-btn-base);
   animation: sub-card-in var(--dur-medium) var(--ease-bounce) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
-.sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.sub-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 .sub-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sub-card-color-bar {
   position: absolute;
@@ -8137,11 +8140,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + var(--sp-1-25)) var(--sp-4);
   position: relative;
   overflow: hidden;
-  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
-.pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.pt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 .pt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
@@ -8768,7 +8771,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation-delay: calc(var(--wl-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.wl-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
 .wl-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
@@ -9776,7 +9779,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .ch-card:hover {
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
 .ch-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -9848,6 +9851,9 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   height: 100%;
   border-radius: var(--radius-2xs);
   transition: width var(--dur-fill) var(--ease-out);
+  transform-origin: left center;
+  animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
+  animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg) + var(--dur-delay-sm));
 }
 .ch-bar-ok   { background: linear-gradient(var(--grad-horizontal), var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(var(--grad-horizontal), var(--warning), var(--warning-end)); }
@@ -11593,7 +11599,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   overflow: hidden;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.debt-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(var(--translate-lift-xs)); }
+.debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
 .debt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
