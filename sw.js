@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.64'; // v22.64: デザイン改善・pt/wl/ch-summary-card タイプ別ホバーカラーグロー＋hm-stat-card タイプ別ホバーカラーグロー（13箇所）
+const CACHE_NAME = 'kakeibo-v22.65'; // v22.65: デザイン改善・ナビ・コントロール要素ホバーグロー拡充（section-tab/card-collapse-btn/btn-ghost/modal-close/btn-icon/month-nav-btn/btn-sidebar-logout/nav-item/bottom-nav-item/nav-item.active）10箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
