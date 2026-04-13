@@ -1524,7 +1524,8 @@ select:focus:not(:focus-visible) {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05);
+  /* v22.66: 外周拡散グロー追加 */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 /* ── フォームプレースホルダー・キャレット統一 v15.2 ── */
 .form-group input,
@@ -3572,9 +3573,24 @@ mark.tx-hl {
   min-width: var(--bw-select);
   transform-origin: left center;
   animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
+  position: relative;
+  overflow: hidden;
+}
+/* v22.66: 予算バー シマースイープ（通常・warn） */
+.budget-fill::after,
+.budget-fill.warn::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.30) 50%, transparent 100%);
+  animation: bar-shimmer 3.0s ease-in-out infinite;
+  animation-delay: var(--dur-fill, 0.8s);
+  pointer-events: none;
 }
 .budget-fill.warn { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
 .budget-fill.over { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); animation: budget-fill-in var(--dur-fill) var(--ease-out) both, over-budget-pulse 1.8s var(--ease-in-out) infinite var(--dur-fill); }
+.budget-fill.over::after { display: none; }
 
 .budget-pct-badge {
   font-size: var(--fs-xs);
@@ -6847,7 +6863,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-right: var(--bw-thin) solid var(--border);
   border-bottom: var(--bw-thin) solid var(--border);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   display: flex;
   flex-direction: column;
   gap: var(--sp-0-25);
@@ -6899,14 +6915,21 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-lg), var(--surface)); }
 .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-2xl), var(--surface)); }
 
-.cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); }
-.cal-cell:active:not(.cal-empty)        { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); }
+.cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.cal-cell:active:not(.cal-empty)        { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); box-shadow: none; }
 .cal-cell:focus-visible:not(.cal-empty) { outline: none; box-shadow: inset 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+/* v22.66: ヒートマップセル ホバー時に元の熱色を保持しbrightnessで強調 */
+.cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-faint), var(--surface)); filter: brightness(1.07); box-shadow: none; }
+.cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-base),  var(--surface)); filter: brightness(1.07); box-shadow: none; }
+.cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-lg),    var(--surface)); filter: brightness(1.07); box-shadow: none; }
+.cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-2xl),   var(--surface)); filter: brightness(1.07); box-shadow: none; }
 .cal-cell.selected {
   background: var(--primary-light);
   outline: var(--bw-select) solid var(--primary);
   outline-offset: var(--outline-offset-inner);
 }
+/* v22.66: 選択セルホバーグロー強化 */
+.cal-cell.selected:hover { background: var(--primary-light); box-shadow: inset 0 0 0 2px var(--primary), 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 .cal-date-num {
   font-size: var(--fs-sm);
@@ -7095,10 +7118,15 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 /* ダークモード */
-[data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) var(--mix-xs), var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-1 { background: color-mix(in srgb, var(--expense) var(--mix-xs),   var(--surface)); }
 [data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-xl), var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-4xl), var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-xl),   var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-4xl),  var(--surface)); }
+/* v22.66: ダークモード ヒートマップホバー色保持 */
+[data-theme="dark"] .cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-xs),   var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-xl),   var(--surface)); }
+[data-theme="dark"] .cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-4xl),  var(--surface)); }
 [data-theme="dark"] .cal-cell.selected {
   background: color-mix(in srgb, var(--primary) var(--mix-mid), var(--surface));
 }
@@ -8640,6 +8668,18 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-badge);
   transform-origin: left;
   animation: hs-fill-in var(--dur-fill) var(--ease-out) both;
+  position: relative;
+  overflow: hidden;
+}
+/* v22.66: スコアバー シマースイープ */
+.hs-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.4s ease-in-out infinite;
+  pointer-events: none;
 }
 @keyframes hs-fill-in {
   from { transform: scaleX(0); }
@@ -8649,6 +8689,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .hs-d1 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-3xl)); }
 .hs-d2 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-3xl)); }
 .hs-d3 .hs-bar-fill { animation-delay: calc(var(--dur-delay-lg) + 3 * var(--dur-stagger-3xl)); }
+.hs-d0 .hs-bar-fill::after { animation-delay: calc(var(--dur-delay-lg) + var(--dur-fill)); }
+.hs-d1 .hs-bar-fill::after { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-3xl) + var(--dur-fill)); }
+.hs-d2 .hs-bar-fill::after { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-3xl) + var(--dur-fill)); }
+.hs-d3 .hs-bar-fill::after { animation-delay: calc(var(--dur-delay-lg) + 3 * var(--dur-stagger-3xl) + var(--dur-fill)); }
 @media (max-width: 520px) {
   .hs-gauge-wrap { width: var(--size-hs-gauge-sm); }
   .hs-gauge-svg  { width: var(--size-hs-gauge-sm); }
@@ -15456,6 +15500,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+/* v22.66: 取引行 income/expense タイプ別カラーグロー */
+.dd-tx-row:has(.dd-tx-amount.income):hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success)      var(--mix-xs), transparent); }
+.dd-tx-row:has(.dd-tx-amount.expense):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent); }
 .dd-tx-row:active { background: var(--surface-hover); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .dd-tx-row:focus-visible {
   outline: none;
@@ -15505,6 +15552,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   line-height: var(--lh-relaxed);
   text-wrap: balance;
   text-wrap: pretty;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both; /* v22.66 */
 }
 
 /* フッター */
@@ -16841,6 +16889,19 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform-origin: left;
   animation: cat-bar-in var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-sm));
+  position: relative;
+  overflow: hidden;
+}
+/* v22.66: カテゴリ予算バー シマースイープ */
+.cat-budget-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--cc-i, 0) * var(--dur-stagger-xs) + var(--dur-delay-sm) + var(--dur-fill, 0.8s));
+  pointer-events: none;
 }
 .cat-budget-pct {
   font-size: var(--fs-2xs);
