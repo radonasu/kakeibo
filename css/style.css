@@ -1914,6 +1914,11 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-table tbody tr:hover {
   box-shadow: var(--shadow-row-selected);
 }
+/* 収支タイプ別ホバーグロー (v22.60) */
+.tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
+.tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 .tx-table tbody tr:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
@@ -3495,7 +3500,7 @@ mark.tx-hl {
   background: var(--surface);
   border-color: var(--border-strong);
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 .budget-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
@@ -5452,7 +5457,7 @@ body {
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .asset-card:hover {
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
 .asset-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -7258,6 +7263,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
+/* インサイトタイプ別ホバーグロー (v22.60) */
+.insight-item.insight-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.insight-item.insight-alert:hover   { background: color-mix(in srgb, var(--danger-text) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.insight-item.insight-success:hover { background: color-mix(in srgb, var(--success) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.insight-item.insight-warning:hover { background: color-mix(in srgb, var(--warning) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
 
 /* タイプ別ボーダー色 */
 .insight-item.insight-info    { border-left-color: var(--primary); }
