@@ -9436,7 +9436,15 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   position: relative;
   overflow: hidden;
   animation: fc-card-in var(--dur-long) var(--ease-bounce) both;
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.76: forecast-card ホバーカラーglow追加 */
+.forecast-card:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent);
+  border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border));
+}
+.forecast-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .forecast-card::before {
   content: '';
   position: absolute;
@@ -9534,8 +9542,14 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   border: var(--bw-thick) solid var(--fc-color, var(--primary));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--on-dark-half);
   pointer-events: none;
-  animation: fc-today-in var(--dur-pop) var(--ease-bounce) var(--dur-fill) both;
+  /* v22.76: 入場後にパルスglow継続 */
+  animation: fc-today-in var(--dur-pop) var(--ease-bounce) var(--dur-fill) both,
+             fc-today-pulse var(--dur-pulse) var(--ease-in-out) calc(var(--dur-fill) + var(--dur-pop) + var(--dur-pulse-delay)) infinite;
   transition: left var(--dur-fill) var(--ease-enter);
+}
+@keyframes fc-today-pulse {
+  0%, 100% { box-shadow: 0 0 0 var(--focus-ring-w) var(--on-dark-half), 0 0 0 0 color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-2xl), transparent); }
+  50%       { box-shadow: 0 0 0 var(--focus-ring-w) var(--on-dark-half), 0 0 0 5px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-2xs), transparent); }
 }
 @keyframes fc-today-in {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
@@ -10477,7 +10491,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--dow-ri, 0) * var(--dur-stagger-3xs));
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover); position: relative; z-index: var(--z-raise); }
+/* v22.76: dow-table-row ホバーにexpenseカラーglow追加 */
+.dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent); position: relative; z-index: var(--z-raise); }
 .dow-table-row:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes dow-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -13536,14 +13551,21 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   );
   background-size: var(--size-shimmer-half) 100%;
   animation: adv-shimmer var(--dur-rest) infinite linear;
+  /* v22.76: スケルトン行に入場フェードイン追加 */
+  opacity: 0;
+  animation: adv-sk-in var(--dur-appear) var(--ease-out) both, adv-shimmer var(--dur-rest) var(--dur-appear) infinite linear;
 }
-/* スケルトン行幅（各行をランダムに見せる）*/
-.adv-loading .adv-sk-line:nth-child(1) { width: 90%; }
-.adv-loading .adv-sk-line:nth-child(2) { width: 78%; }
-.adv-loading .adv-sk-line:nth-child(3) { width: 94%; }
-.adv-loading .adv-sk-line:nth-child(4) { width: 68%; }
-.adv-loading .adv-sk-line:nth-child(5) { width: 85%; }
-.adv-loading .adv-sk-line:nth-child(6) { width: 55%; }
+@keyframes adv-sk-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+/* スケルトン行幅（各行をランダムに見せる）+ stagger delay */
+.adv-loading .adv-sk-line:nth-child(1) { width: 90%; animation-delay: 0s,               var(--dur-appear); }
+.adv-loading .adv-sk-line:nth-child(2) { width: 78%; animation-delay: var(--dur-stagger-3xs), calc(var(--dur-appear) + var(--dur-stagger-3xs)); }
+.adv-loading .adv-sk-line:nth-child(3) { width: 94%; animation-delay: calc(2 * var(--dur-stagger-3xs)), calc(var(--dur-appear) + 2 * var(--dur-stagger-3xs)); }
+.adv-loading .adv-sk-line:nth-child(4) { width: 68%; animation-delay: calc(3 * var(--dur-stagger-3xs)), calc(var(--dur-appear) + 3 * var(--dur-stagger-3xs)); }
+.adv-loading .adv-sk-line:nth-child(5) { width: 85%; animation-delay: calc(4 * var(--dur-stagger-3xs)), calc(var(--dur-appear) + 4 * var(--dur-stagger-3xs)); }
+.adv-loading .adv-sk-line:nth-child(6) { width: 55%; animation-delay: calc(5 * var(--dur-stagger-3xs)), calc(var(--dur-appear) + 5 * var(--dur-stagger-3xs)); }
 
 /* アドバイステキスト */
 .adv-text {
@@ -14186,7 +14208,14 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-3) var(--sp-2);
   text-align: center;
   animation: ci-cell-in var(--dur-lift) var(--ease-bounce) both;
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
+/* v22.76: ci-cell ホバー（タイプ別カラーglow） */
+.ci-cell:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
+.ci-cell:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
+.ci-cell:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+.ci-cell:has(.positive):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.ci-cell:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ci-cell:nth-child(1) { animation-delay: var(--dur-delay-lg); }
 .ci-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-xl)); }
 .ci-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-xl)); }
@@ -14298,7 +14327,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-btn);
   padding: var(--sp-3) var(--sp-4);
   animation: ci-row-in var(--dur-medium) var(--ease-bounce) calc(var(--dur-delay-lg) + 5 * var(--dur-stagger-xl)) both;
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
+/* v22.76: ci-score-row ホバーprimaryグロー */
+.ci-score-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
+.ci-score-row:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); letter-spacing: var(--ls-fine); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ci-score-badge {
   font-size: var(--fs-lg);
@@ -14330,7 +14363,13 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-hover);
   border-radius: var(--radius-btn);
   animation: ci-ch-in var(--dur-medium) var(--ease-bounce) calc(var(--ci-ch, 0) * var(--dur-stagger-md)) both;
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce);
 }
+/* v22.76: ci-challenge-item ホバー（achieved/failedタイプ別glow） */
+.ci-challenge-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.ci-challenge-item:has(.achieved):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.ci-challenge-item:has(.failed):hover   { box-shadow: var(--shadow-row-hover), 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); }
+.ci-challenge-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes ci-ch-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -14360,7 +14399,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-btn);
   border-left: var(--accent-w) solid var(--ci-ev-accent, var(--primary));
   animation: ci-ev-in var(--dur-medium) var(--ease-bounce) calc(var(--ci-ev-i, 0) * var(--dur-stagger-md)) both;
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce);
 }
+/* v22.76: ci-event-item ホバー（ci-ev-accentカラーglow） */
+.ci-event-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent); }
+.ci-event-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes ci-ev-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
