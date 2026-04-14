@@ -18546,6 +18546,73 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wl-card-name { transition: color var(--dur-fast) var(--ease-out); }
 .wl-card:hover .wl-card-name { color: var(--wl-accent, var(--primary)); }
 
+/* ============================================================
+   v22.88: ホバー子要素 brightness+color強化 8箇所
+   （pm-sum-value / cat-card-name / cat-stat-val /
+     hs-score-num / hs-item-score / fc-cell-amount /
+     sb-suggested / cat-budget-pct）
+   ============================================================ */
+
+/* 1. 支払方法サマリーカード 金額値 brightness on hover
+   .pm-sum-card:hover 時に .pm-sum-value が brightness(1.06) で強調。
+   既存の pm-sum-color カラーはそのままで輝度のみ追加。
+   pm-sum-icon scale+drop-shadow（v22.81）と連動しカード全体の演出が完成。 */
+.pm-sum-value { transition: filter var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-value { filter: brightness(1.06); }
+
+/* 2. カテゴリカード 名前 color+brightness on hover
+   .cat-card:hover 時に .cat-card-name が cat-clr カラーに変色 + brightness(1.06)。
+   cat-card-icon scale+drop-shadow（v22.80 パターン）と連動し
+   カテゴリ名もアクセントカラーで際立ちカード全体の印象が統一される。 */
+.cat-card-name { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card-name { color: var(--cat-clr, var(--primary)); filter: brightness(1.06); }
+
+/* 3. カテゴリカード 統計値 brightness on hover
+   .cat-card:hover 時に .cat-stat-val が brightness(1.08) で輝く。
+   cat-stat-val.over の expense 色はそのまま維持し輝度のみ追加。
+   cat-card-name カラー変化と連動しカード内の数値群が同時に際立つ。 */
+.cat-stat-val { transition: filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-stat-val { filter: brightness(1.08); }
+
+/* 4. 家計スコアカード スコア数値 brightness on hover
+   .health-score-card:hover 時に .hs-score-num が brightness(1.06) で強調。
+   既存の hs-grade-color カラーはそのままで輝度のみ追加。
+   health-score-card hover の grade-color glow（v22.70 相当）と連動し
+   ゲージ円弧と中央スコア数値が同時に際立つ。 */
+.hs-score-num { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-score-num { filter: brightness(1.06); }
+
+/* 5. 家計スコア項目スコア color+brightness on hover
+   .hs-item:hover 時に .hs-item-score が hs-bar-color カラーに変色 + brightness(1.06)。
+   hs-item:hover の translateX + background 変化（v22.68）と連動し
+   バーのアクセントカラーで項目スコア数値もホバーで際立つ。 */
+.hs-item-score { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.hs-item:hover .hs-item-score { color: var(--hs-bar-color, var(--primary)); filter: brightness(1.06); }
+
+/* 6. 固定費予測カード セル金額 brightness on hover
+   .forecast-card:hover 時に .fc-cell-amount が brightness(1.08) で輝く。
+   income/expense カラーはそのまま維持し輝度のみ追加。
+   forecast-card:hover の fc-color glow（v22.70）と連動し
+   カード全体のホバー演出に金額セルの輝度強調が加わる。 */
+.fc-cell-amount { transition: filter var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-amount { filter: brightness(1.08); }
+
+/* 7. 提案予算 提案金額 brightness on hover
+   .sb-row:hover 時に .sb-suggested が brightness(1.06) で輝く。
+   既存の sb-cat-color カラーはそのままで輝度のみ追加。
+   sb-row:hover の translateX + cat-color box-shadow と連動し
+   提案金額がカテゴリカラーで際立つ。 */
+.sb-suggested { transition: filter var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-suggested { filter: brightness(1.06); }
+
+/* 8. カテゴリカード 予算% brightness on hover
+   .cat-card:hover 時に .cat-budget-pct が brightness(1.06) で輝く。
+   warn（warning色）・over（expense色）の既存カラーはそのまま維持し輝度のみ追加。
+   cat-card-name カラー変化・cat-stat-val brightness と連動し
+   カード内テキスト群が統一感のあるホバー演出を形成する。 */
+.cat-budget-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-budget-pct { filter: brightness(1.06); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
