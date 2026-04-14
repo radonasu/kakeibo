@@ -18214,6 +18214,64 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wl-priority-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .wl-card:hover .wl-priority-badge { transform: scale(1.06); filter: brightness(1.08); }
 
+/* ── v22.83: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. チャレンジカード プログレスバーglow on hover
+   .ch-card:hover 時に .ch-bar-fill が brightness(1.08) + カラー別 glow。
+   ch-bar-ok=income色/ch-bar-warn=warning色/ch-bar-over=expense色でそれぞれ発光。
+   fc-progress-fill/hs-bar-fill/debt-bar-fill と同パターン。 */
+.ch-bar-fill { transition: width var(--dur-fill) var(--ease-out), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-bar-ok   { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--income)      var(--mix-md), transparent); }
+.ch-card:hover .ch-bar-warn { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+.ch-card:hover .ch-bar-over { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--expense)     var(--mix-md), transparent); }
+
+/* 2. ゴールダッシュ バー glow on hover
+   .goal-dash-item:hover 時に .goal-dash-bar-fill が brightness(1.08) + goal-accent glow。
+   goal-card:hover .goal-ring-fill のdrop-shadow演出と同系統でダッシュ行バーにも適用。 */
+.goal-dash-bar-fill { transition: width var(--dur-glide) var(--ease-out-expo), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-bar-fill { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent); }
+
+/* 3. サブスクカード 進行バー glow on hover
+   .sub-card:hover 時に .sub-card-progress-fill が brightness(1.08) + prog-カラー別 glow。
+   prog-normal=primary色/prog-soon=warning色/prog-urgent=danger-text色で期限切迫度を強調。 */
+.sub-card-progress-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-progress-fill.prog-normal { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary)     var(--mix-md), transparent); }
+.sub-card:hover .sub-card-progress-fill.prog-soon   { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+.sub-card:hover .sub-card-progress-fill.prog-urgent { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+
+/* 4. ステップカード 絵文字アイコン scale+glow on hover
+   .step-card:hover 時に .step-icon が scale(1.1) + primary drop-shadow。
+   同ホバーで .step-num が scale(1.18)+ring-glow する演出（v22.79）と連動し、
+   番号リングと絵文字の両方が同時に拡大する立体的なホバー演出を実現。 */
+.step-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-icon { transform: scale(1.1); filter: drop-shadow(0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+
+/* 5. 資産残高数値 brightness on hover
+   .asset-card:hover 時に .asset-balance（fs-4xl/fw-black の大数値）が brightness(1.06) で輝く。
+   asset-type-badge の scale(1.03)+brightness(1.06)（v22.75）に加え、主役の残高数値も強調。 */
+.asset-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-balance { filter: brightness(1.06); }
+
+/* 6. カテゴリトレンド統計値 color+brightness on hover
+   .ct-stat-card:hover 時に .ct-stat-value が ct-stat-color に変色 + brightness(1.06)。
+   カードのborder-color/shadow変化（v22.70）と連動し、数値自体もカラーアクセントで強調。 */
+.ct-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-value { color: var(--ct-stat-color, var(--primary)); filter: brightness(1.06); }
+
+/* 7. ウィッシュリストアーカイブ絵文字 scale+glow on hover
+   .wl-archive-item:hover 時に .wl-archive-emoji が scale(1.15) + success drop-shadow。
+   アーカイブ行ホバー時のopacity:1 + translateX + success glow（v22.69）に連動し、
+   達成済みアイテムの絵文字が祝福感のある演出でポップアップ。 */
+.wl-archive-emoji { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-emoji { transform: scale(1.15); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--success) var(--mix-md), transparent)); }
+
+/* 8. 目標統計カード数値 color+brightness on hover
+   .tg-stat-card:hover 時に .tg-stat-value が primary color に変色 + brightness(1.06)。
+   .tg-stat-icon の scale(1.12)+drop-shadow（v22.80）と連動し、
+   カード全体のホバー演出に数値カラー変化を追加。 */
+.tg-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-value { color: var(--primary); filter: brightness(1.06); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
