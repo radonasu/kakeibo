@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.66'; // v22.66: デザイン改善・取引行income/expenseグロー・カレンダーセルホバーグロー＋ヒートマップ色保持・予算/スコア/カテゴリバーシマースイープ・フォームフォーカス外周glow・dd-empty入場アニメーション（10箇所）
+const CACHE_NAME = 'kakeibo-v22.67'; // v22.67: デザイン改善・smi-itemタイプ別ホバーリフト・toggleノブbounce・cat-chip選択ポップ・budget進捗バーglow・rpt-month-rowカラーglow・sub-cardカラーバーglow・月グループ行ホバー・ページ遷移改善（10箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
