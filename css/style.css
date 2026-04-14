@@ -5533,7 +5533,7 @@ body {
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .asset-card:hover {
-  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
 .asset-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -6718,6 +6718,19 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
     var(--goal-accent, var(--primary)) 0%,
     color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-deep), var(--white)) 100%
   );
+  position: relative;
+  overflow: hidden;
+}
+/* v22.72: ゴールダッシュバー シマースイープ */
+.goal-dash-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.2s ease-in-out infinite;
+  animation-delay: var(--dur-fill, 0.8s);
+  pointer-events: none;
 }
 .goal-dash-item:nth-child(1) .goal-dash-bar-fill { animation-delay: var(--dur-delay-xl); }
 .goal-dash-item:nth-child(2) .goal-dash-bar-fill { animation-delay: calc(var(--dur-stagger-md) + var(--dur-delay-xl)); }
@@ -9433,6 +9446,19 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform-origin: left center;
   animation: fc-fill-in var(--dur-fill) var(--ease-out) both;
   transition: width var(--dur-fill) var(--ease-enter);
+  position: relative;
+  overflow: hidden;
+}
+/* v22.72: 固定費バー シマースイープ */
+.fc-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.3s ease-in-out infinite;
+  animation-delay: var(--dur-fill, 0.8s);
+  pointer-events: none;
 }
 @keyframes fc-fill-in {
   from { transform: scaleX(0); }
@@ -10231,7 +10257,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
 .ch-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .ch-widget-icon {
   width: var(--size-icon-md);
@@ -11939,6 +11965,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform-origin: left center;
   animation: debt-bar-fill-in var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--dbi, 0) * var(--dur-stagger-sm) + var(--dur-delay-xl));
+  position: relative;
+  overflow: hidden;
 }
 @keyframes debt-bar-fill-in {
   from { transform: scaleX(0); }
@@ -11947,6 +11975,18 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .debt-bar-great { background: linear-gradient(var(--grad-horizontal), var(--income) 0%, var(--income-end) 100%); }
 .debt-bar-mid   { background: linear-gradient(var(--grad-horizontal), var(--warning) 0%, var(--warning-end) 100%); }
 .debt-bar-low   { background: linear-gradient(var(--grad-horizontal), var(--expense) 0%, var(--expense-end) 100%); }
+/* v22.72: 借入バー シマースイープ */
+.debt-bar-great::after,
+.debt-bar-mid::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.0s ease-in-out infinite;
+  animation-delay: var(--dur-fill, 0.8s);
+  pointer-events: none;
+}
 
 /* 完済予定 ピルスタイル (v5.85) */
 .debt-end-pill {
@@ -12044,7 +12084,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xs), transparent); }
 .debt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .debt-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm); border-radius: var(--radius-circle);
@@ -12828,6 +12868,19 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: scaleX(0);
   animation: ev-prog-grow var(--dur-swing) var(--ease-soft-bounce) both;
   animation-delay: calc(var(--ev-mi, 0) * 35ms + var(--dur-delay-md));
+  position: relative;
+  overflow: hidden;
+}
+/* v22.72: イベントバー シマースイープ */
+.ev-prog-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.1s ease-in-out infinite;
+  animation-delay: var(--dur-fill, 0.8s);
+  pointer-events: none;
 }
 @keyframes ev-prog-grow { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
 .ev-month-progress.ev-pm-done .ev-prog-fill { background: linear-gradient(var(--grad-horizontal), var(--success) 0%, var(--income-end) 100%); }
@@ -12890,7 +12943,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--ev-wi, 0) * var(--dur-stagger));
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
 .ev-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ev-widget-item-in {
   0%   { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }

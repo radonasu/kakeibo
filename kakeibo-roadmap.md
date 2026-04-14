@@ -996,3 +996,4 @@
 
 | 667 | v22.70 | デザイン改善 | マイクロインタラクション拡充10箇所（v22.70）：ct-stat-cardホバーカラーglow・pace-bar-fillシマー・dow-stat-cardタイプ別glow・yi-cardカラーglow・pm-sum-cardカラーglow強化・pm-table-rowカラーglow・ct-tableホバー・pace-bar-rowホバー・md-cat-rowホバー・md-cellタイプ別glow |
 | 668 | v22.71 | デザイン改善 | マイクロインタラクション追加7箇所（v22.71）：tg-stat-cardホバーglow・tg-tableボディ行ホバー・adv-widget-cardホバーglow・cc-itemホバー・wk-summary-cellタイプ別glow（expense/primary/success3種）・wk-bar-colホバー・nt-cardホバーglow |
+| 669 | v22.72 | デザイン改善 | マイクロインタラクション追加8箇所（v22.72）：debt-bar-fillシマー（great/mid）・ev-prog-fillシマー・goal-dash-bar-fillシマー・fc-progress-fillシマー・asset-card:hoverテーマglow（asset-accent）・debt-widget-item:hoverテーマglow・ch-widget-item:hoverテーマglow・ev-widget-item:hoverテーマglow |
