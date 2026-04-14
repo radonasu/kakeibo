@@ -18272,6 +18272,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .tg-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .tg-stat-card:hover .tg-stat-value { color: var(--primary); filter: brightness(1.06); }
 
+/* ── v22.84: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. サマリーカード 金額数値 brightness+color on hover
+   .summary-card:hover 時に .summary-amount が brightness(1.06) + タイプ別カラー変化。
+   income=success / expense=danger-text / balance(positive)=primary / balance(negative)=danger-text で各カラーに連動。
+   ct-stat-value/tg-stat-value の数値カラー変化演出と同パターン。 */
+.summary-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.summary-card.income:hover  .summary-amount { color: var(--success);      filter: brightness(1.06); }
+.summary-card.expense:hover .summary-amount { color: var(--danger-text);  filter: brightness(1.06); }
+.summary-card.balance.positive:hover .summary-amount { color: var(--primary);      filter: brightness(1.06); }
+.summary-card.balance.negative:hover .summary-amount { color: var(--danger-text);  filter: brightness(1.06); }
+
+/* 2. ヒートマップ統計カード 数値 brightness+color on hover
+   .hm-stat-card:hover 時に .hm-stat-value がタイプ別カラー変化 + brightness(1.06)。
+   nth-child別: 1=primary / 2=danger-text / 3=warning / 4=success
+   hm-stat-card:nth-child カラーglow（v22.64）と連動し数値もカードテーマ色に変化。 */
+.hm-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.hm-stat-card:nth-child(1):hover .hm-stat-value { color: var(--primary);     filter: brightness(1.06); }
+.hm-stat-card:nth-child(2):hover .hm-stat-value { color: var(--danger-text); filter: brightness(1.06); }
+.hm-stat-card:nth-child(3):hover .hm-stat-value { color: var(--warning);     filter: brightness(1.06); }
+.hm-stat-card:nth-child(4):hover .hm-stat-value { color: var(--success);     filter: brightness(1.06); }
+
+/* 3. 年次ビューセル 数値 brightness on hover
+   .yr-cell-income/expense/savings:hover 時に .yr-cell-value が brightness(1.12) で輝く。
+   各セルの数値カラー（success/danger-text/warning）は既存のまま維持し、輝度のみ追加。 */
+.yr-cell-value { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-cell-value { filter: brightness(1.12); }
+.yr-cell-expense:hover         .yr-cell-value { filter: brightness(1.12); }
+.yr-cell-savings-success:hover .yr-cell-value { filter: brightness(1.12); }
+.yr-cell-savings-warn:hover    .yr-cell-value { filter: brightness(1.12); }
+.yr-cell-savings-danger:hover  .yr-cell-value { filter: brightness(1.12); }
+
+/* 4. 取引テーブル 金額セル brightness+glow on hover
+   .tx-table tbody tr[data-type]:hover 時に td.amount が brightness(1.08) + カラーglow。
+   income行=success色 / expense行=danger-text色 でホバー時の金額が際立つ演出。 */
+.tx-table td.amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr[data-type="income"]:hover  td.amount { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.tx-table tbody tr[data-type="expense"]:hover td.amount { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 5. レポート月別行 金額セル brightness on hover
+   .rpt-month-row.is-clickable:hover 時に td.income/td.expense が brightness(1.08)。
+   行全体のtranslateY+glow（v22.67）に連動し、金額セル自体も視覚的に強調される。 */
+.rpt-month-row td.income,
+.rpt-month-row td.expense { transition: filter var(--dur-fast) var(--ease-out); }
+.rpt-month-row.is-clickable:hover td.income  { filter: brightness(1.08); }
+.rpt-month-row.is-clickable:hover td.expense { filter: brightness(1.08); }
+
+/* 6. 財務予測 統計カード 数値 brightness on hover
+   .fv-stat-card:hover 時に .fv-stat-value（白テキスト）が brightness(1.1) で輝く。
+   fv-stat-icon の scale(1.1)+白 drop-shadow（v22.81）と連動し数値も白く輝く演出。 */
+.fv-stat-value { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-value { filter: brightness(1.1); }
+
+/* 7. 曜日別支出 統計カード 金額 brightness on hover
+   .dow-stat-card:hover 時に .dow-stat-amount（白テキスト）が brightness(1.1) で輝く。
+   dow-stat-icon の scale(1.1)+白 drop-shadow（v22.81）と連動し数値も白く輝く演出。 */
+.dow-stat-amount { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-amount { filter: brightness(1.1); }
+
+/* 8. ポイントカード ポイント残高 brightness+color on hover
+   .pt-card:hover 時に .pt-card-balance が pt-accent カラーに変色 + brightness(1.06)。
+   pt-card-icon の scale(1.1)+pt-accent drop-shadow（v22.81）と連動し、
+   カードホバー時にアクセントカラーで残高ポイント数値が光る演出を実現。 */
+.pt-card-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-balance { color: var(--pt-accent, var(--primary)); filter: brightness(1.06); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
