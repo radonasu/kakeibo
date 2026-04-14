@@ -5635,7 +5635,11 @@ body {
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   animation: asset-row-in var(--dur-medium) var(--ease-bounce) both;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  border-radius: var(--radius-nano);
 }
+/* v22.69: 資産履歴行 ホバーグロー */
+.asset-entry-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .asset-entry-row:nth-child(1) { animation-delay: var(--dur-long); }
 .asset-entry-row:nth-child(2) { animation-delay: calc(var(--dur-long) + var(--dur-stagger-md)); }
 .asset-entry-row:nth-child(3) { animation-delay: calc(var(--dur-long) + 2 * var(--dur-stagger-md)); }
@@ -6636,7 +6640,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   align-items: center;
   gap: var(--sp-3);
   animation: gd-item-in var(--dur-medium) var(--ease-bounce) both;
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-1) var(--sp-1);
 }
+/* v22.69: ダッシュボード目標アイテム ホバーグロー */
+.goal-dash-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
 .goal-dash-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
 .goal-dash-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-md)); }
 
@@ -7535,10 +7544,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.sub-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.sub-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .sub-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
+/* v22.69: サブスクウィジェット タイプ別ホバーグロー */
+.sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.sub-widget-item.sub-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
 .sub-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-btn-sm);
@@ -8473,10 +8485,13 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   from { opacity: 0; transform: translateY(var(--enter-y-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.pt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.pt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .pt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) var(--mix-faint), transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) var(--mix-faint), transparent); }
+/* v22.69: ポイントウィジェット タイプ別ホバーグロー */
+.pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
 .pt-widget-icon {
   width: var(--size-icon-md); height: var(--size-icon-md); border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
@@ -9119,6 +9134,13 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   opacity: var(--opacity-dim);
   animation: wl-arc-item-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--wa-i, 0) * var(--dur-stagger-md));
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+/* v22.69: アーカイブアイテム ホバー（達成済みにsuccessグロー） */
+.wl-archive-item:hover {
+  opacity: 1;
+  transform: translateX(var(--translate-slide));
+  box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
 }
 @keyframes wl-arc-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -9175,7 +9197,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: ww-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ww-i, 0) * var(--dur-stagger-md));
 }
-.wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
+.wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .wish-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ww-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -9623,7 +9645,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dw-item:hover {
   background: var(--surface-hover);
   transform: translateX(var(--translate-slide));
-  box-shadow: var(--shadow-row-hover);
+  box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 .dw-item:active { background: var(--surface-hover); transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .dw-item-label {
@@ -10022,6 +10044,20 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform-origin: left center;
   animation: budget-fill-in var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg) + var(--dur-delay-sm));
+  position: relative;
+  overflow: hidden;
+}
+/* v22.69: チャレンジバー シマースイープ（ok・warn） */
+.ch-bar-ok::after,
+.ch-bar-warn::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.1s ease-in-out infinite;
+  animation-delay: calc(var(--ch-i, 0) * var(--dur-stagger-lg) + var(--dur-delay-sm) + var(--dur-fill, 0.8s));
+  pointer-events: none;
 }
 .ch-bar-ok   { background: linear-gradient(var(--grad-horizontal), var(--income), var(--income-end)); }
 .ch-bar-warn { background: linear-gradient(var(--grad-horizontal), var(--warning), var(--warning-end)); }
@@ -11903,7 +11939,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   letter-spacing: var(--ls-fine); line-height: var(--lh-tighter);
   animation: debt-entry-in var(--dur-appear) var(--ease-bounce) both;
   animation-delay: calc(var(--de-i, 0) * var(--dur-stagger-3xs));
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  border-radius: var(--radius-nano);
 }
+/* v22.69: 負債返済履歴行 ホバーグロー */
+.debt-entry-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: 0 1px 6px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 @keyframes debt-entry-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -14371,6 +14411,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item:not(.notif-read):hover {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
 }
+/* v22.69: 通知アイテム タイプ別ホバーカラーグロー */
+.notif-item.notif-type-danger:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.notif-item.notif-type-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+.notif-item.notif-type-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.notif-item.notif-type-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .notif-item.notif-read {
   opacity: var(--opacity-read);
 }
