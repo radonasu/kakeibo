@@ -16063,7 +16063,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   overflow: hidden;
   animation: yi-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--yi-si, 0) * var(--dur-stagger-lg));
-  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out), border-color var(--dur-faster) var(--ease-out);
 }
 /* v22.70: 年次インサイトカード ホバーカラーglow */
 .yi-card:hover {
@@ -17895,6 +17895,57 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 #debt-sim-modal.modal-is-open .modal-footer {
   animation: ci-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-sm) both;
 }
+
+/* ── v22.77: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. ペース日次グリッドセル ホバー（ステータス別カラーglow）
+   .pace-daily-cell にはtransitionがなかった → transform/shadow/filterを追加。
+   ハイライト中のセルはステータス色でglow */
+.pace-daily-cell {
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+.pace-daily-cell:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(1.03); }
+.pace-daily-cell:hover:has(.pace-good) { box-shadow: 0 3px 10px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.pace-daily-cell:hover:has(.pace-warn) { box-shadow: 0 3px 10px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+.pace-daily-cell:hover:has(.pace-over) { box-shadow: 0 3px 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-daily-cell:hover { filter: brightness(1.06); }
+
+/* 2. 月ドリルダウン 件数セル ホバー（他のmd-cellと統一）
+   .md-cell-count のみ:hoverが未定義だったため追加 */
+.md-cell-count:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--border-strong) var(--mix-lg), transparent); filter: brightness(1.04); }
+
+/* 3. サブスクカード ホバー時アイコンスケール
+   .sub-card:hover 時に .sub-card-icon を軽く拡大・glow → goal-ring-wrap と同じ演出 */
+.sub-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-icon { transform: scale(1.12); filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 4. 節約機会カード ホバー時アイコンスケール
+   .opp-card:hover 時に .opp-icon を軽く拡大 */
+.opp-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-md), transparent)); }
+
+/* 5. オンボーディング ステップカード ホバー時ステップ番号ポップ
+   step-card:hover 時に step-num を拡大＋プライマリカラーのリングglow */
+.step-num { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-num { transform: scale(1.18); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. 日次取引サマリーアイテム ホバー
+   .dd-summary-item は全くhoverがなかった → 軽いリフト＋glowを追加 */
+.dd-summary-item {
+  border-radius: var(--radius-nano);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+.dd-summary-item:hover { transform: translateY(calc(-1 * var(--translate-lift-xs))); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(1.03); }
+[data-theme="dark"] .dd-summary-item:hover { filter: brightness(1.06); }
+
+/* 7. 年次インサイトカード border-colorトランジション
+   .yi-card のtransitionにborder-colorを追加（上部で既修正）→ ここで同値のdarkモード補完 */
+[data-theme="dark"] .yi-card:hover { border-color: color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--border)); }
+
+/* 8. 資産カード ホバー時バッジ輝度向上
+   .asset-type-badge はhover時に何も変化がなかった → brightlift */
+.asset-type-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce); }
+.asset-card:hover .asset-type-badge { filter: brightness(1.06); transform: scale(1.03); }
 
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
