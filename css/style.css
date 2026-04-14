@@ -7821,10 +7821,24 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   height: 100%;
   width: var(--sub-progress, 0%);
   animation: sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
+  position: relative;
+  overflow: hidden;
 }
 .sub-card-progress-fill.prog-normal { background: var(--primary); opacity: var(--opacity-ghost); }
 .sub-card-progress-fill.prog-soon   { background: var(--warning); }
 .sub-card-progress-fill.prog-urgent { background: var(--danger-text); }
+/* v22.73: サブスクカードボトムバー シマースイープ（normal/soon） */
+.sub-card-progress-fill.prog-normal::after,
+.sub-card-progress-fill.prog-soon::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  animation: bar-shimmer 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+  pointer-events: none;
+}
 
 /* 状態クラス */
 .sub-card.sub-urgent {
@@ -8412,10 +8426,24 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   height: 100%;
   width: var(--pt-progress, 0%);
   animation: pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
+  position: relative;
+  overflow: hidden;
 }
 .pt-exp-bar-fill.prog-normal { background: var(--pt-accent, var(--primary)); opacity: var(--opacity-secondary); }
 .pt-exp-bar-fill.prog-soon   { background: var(--warning); }
 .pt-exp-bar-fill.prog-urgent { background: var(--danger-text); }
+/* v22.73: 支払方法カードボトムバー シマースイープ（normal/soon） */
+.pt-exp-bar-fill.prog-normal::after,
+.pt-exp-bar-fill.prog-soon::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  animation: bar-shimmer 3.0s ease-in-out infinite;
+  animation-delay: calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+  pointer-events: none;
+}
 
 /* 空状態 */
 .pt-empty {
@@ -10443,6 +10471,19 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   width: var(--dow-bar-w, 0%);
   animation: dow-bar-fill var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl));
+  position: relative;
+  overflow: hidden;
+}
+/* v22.73: 曜日別バー シマースイープ */
+.dow-mini-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.1s ease-in-out infinite;
+  animation-delay: calc(var(--dow-bar-delay, 0) * var(--dur-stagger-lg) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+  pointer-events: none;
 }
 
 /* -- ダークモード -- */
@@ -10750,6 +10791,19 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform-origin: left center;
   animation: fv-bar-fill var(--dur-fill) var(--ease-out) both;
   animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-sm));
+  position: relative;
+  overflow: hidden;
+}
+/* v22.73: 財務予測カテゴリミニバー シマースイープ */
+.fv-mini-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.0s ease-in-out infinite;
+  animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-sm) + var(--dur-fill, 0.8s));
+  pointer-events: none;
 }
 @keyframes fv-bar-fill {
   from { transform: scaleX(0); }
@@ -10790,6 +10844,19 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: fv-seg-in var(--dur-spin) var(--ease-out) both;
   animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs));
   transform-origin: left;
+  position: relative;
+  overflow: hidden;
+}
+/* v22.73: 財務予測固変セグメント シマースイープ（fixed/var） */
+.fv-seg-fixed::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 60%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  animation: bar-shimmer 3.4s ease-in-out infinite;
+  animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs) + var(--dur-spin, 0.4s) + 0.4s);
+  pointer-events: none;
 }
 .fv-seg-var {
   height: 100%;
@@ -10798,6 +10865,18 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: fv-seg-in var(--dur-spin) var(--ease-out) both;
   animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs) + var(--dur-stagger-lg));
   transform-origin: right;
+  position: relative;
+  overflow: hidden;
+}
+.fv-seg-var::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 60%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  animation: bar-shimmer 3.4s ease-in-out infinite;
+  animation-delay: calc(var(--fv-ri, 0) * var(--dur-stagger-4xs) + var(--dur-stagger-lg) + var(--dur-spin, 0.4s) + 0.4s);
+  pointer-events: none;
 }
 @keyframes fv-seg-in {
   from { opacity: 0; }
@@ -11026,10 +11105,24 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius-bar) var(--radius-bar) var(--radius-nano) var(--radius-nano);
   min-height: var(--size-bar-min);
   position: relative;
+  overflow: hidden;
   z-index: var(--z-raise);
   transform-origin: bottom;
   animation: wk-bar-grow var(--dur-fill) var(--ease-out) calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both;
 }
+/* v22.73: 週間バーグラフ シマースイープ（通常・週末バーのみ） */
+.wk-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  animation: bar-shimmer 3.3s ease-in-out infinite;
+  animation-delay: calc(var(--wk-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+  pointer-events: none;
+}
+.wk-bar-future .wk-bar-fill::after,
+.wk-bar-today  .wk-bar-fill::after { display: none; }
 .wk-bar-future  .wk-bar-fill { background: var(--border); }
 .wk-bar-today   .wk-bar-fill {
   background: var(--danger-text);
@@ -14082,6 +14175,19 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-radius: var(--radius-badge);
   background: linear-gradient(var(--grad-horizontal), var(--success) 0%, var(--income-end) 100%);
   transition: width var(--dur-swell) var(--ease-bounce) var(--dur-slow);
+  position: relative;
+  overflow: hidden;
+}
+/* v22.73: チャレンジ貯蓄率バー シマースイープ */
+.ci-savings-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  animation: bar-shimmer 3.3s ease-in-out infinite;
+  animation-delay: var(--dur-slow, 1.2s);
+  pointer-events: none;
 }
 .ci-savings-pct {
   font-size: var(--fs-sm);
