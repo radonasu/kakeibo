@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.88'; // v22.88: デザイン改善・ホバー子要素 brightness+color強化 8箇所（pm-sum-value/cat-card-name/cat-stat-val/hs-score-num/hs-item-score/fc-cell-amount/sb-suggested/cat-budget-pct）
+const CACHE_NAME = 'kakeibo-v22.89'; // v22.89: デザイン改善・静的ビジュアル強化8箇所（page-titleグラデテキスト/section-tab.is-activeテキストglow/nav-item.activeテキストglow/summary-amount白glow/diff.up glow/diff.down glow/hs-score-num static primary glow/bottom-nav-item.active label glow）
 const ASSETS = [
   './index.html',
   './css/style.css',

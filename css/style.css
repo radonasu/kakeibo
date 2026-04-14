@@ -18613,6 +18613,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cat-budget-pct { transition: filter var(--dur-fast) var(--ease-out); }
 .cat-card:hover .cat-budget-pct { filter: brightness(1.06); }
 
+/* ============================================================
+   v22.89: 静的ビジュアル強化 8箇所
+   （page-title グラデテキスト / section-tab.is-active テキストglow /
+     nav-item.active テキストglow / summary-amount 白glow /
+     diff.up glow / diff.down glow /
+     hs-score-num static primary glow /
+     bottom-nav-item.active label glow）
+   ============================================================ */
+
+/* 1. ページタイトル グラデテキスト
+   .page-title のテキストを --text から --primary-end 方向へのグラデーションに変更。
+   ライトモード：ダークネイビー → ライトパープルでサブタイトル感。
+   ダークモード：ニアホワイト → ライトパープルで華やかな見出しに。
+   animation: ph-in の opacity/transform には影響しない。 */
+.page-title {
+  background: linear-gradient(135deg, var(--text) 0%, var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 2. セクションタブ アクティブ テキストglow
+   .section-tab.is-active のラベルテキストに primary の text-shadow を追加。
+   現状の primary カラーに加えてホワイトが浮き上がるような輝き効果。
+   ダークモードではより際立って見える。 */
+.section-tab.is-active {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+[data-theme="dark"] .section-tab.is-active {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* 3. サイドナビ アクティブアイテム テキストglow
+   .nav-item.active のテキスト（primary-end カラー）に glow を追加。
+   アクティブなナビアイテムが視認しやすく、sidebar の奥行き感が増す。 */
+.nav-item.active {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 4. サマリーカード 金額数値 白glow
+   .summary-amount（white テキスト）に白いテキストシャドウを追加し奥行き感を強化。
+   グラデ背景カードの大型数値がよりプレミアムに見える。 */
+.summary-amount {
+  text-shadow: 0 2px 10px rgba(255,255,255,0.25), 0 0 20px rgba(255,255,255,0.08);
+}
+
+/* 5. 差分バッジ 前月比プラス glow
+   .diff.up（success テキスト）に success color の text-shadow を追加。
+   プラス値がより視認しやすく、ポジティブなフィードバックが明確に。 */
+.diff.up {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-md), transparent);
+}
+
+/* 6. 差分バッジ 前月比マイナス glow
+   .diff.down（expense テキスト）に expense color の text-shadow を追加。
+   マイナス値が警告感を持つ視覚表現に強化される。 */
+.diff.down {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--expense) var(--mix-md), transparent);
+}
+
+/* 7. 家計スコア数値 静的 primary glow
+   .hs-score-num に常時 primary の text-shadow を追加。
+   v22.88 のホバー brightness と合わせ、常に輝きを持つスコア数値に。
+   ダークモードで特に際立って見える。 */
+.hs-score-num {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .hs-score-num {
+  text-shadow: 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 8. モバイルボトムナビ アクティブラベル glow
+   .bottom-nav-item.active .bottom-nav-label に primary text-shadow を追加。
+   モバイル利用時にアクティブページのラベルが輝いて見える。
+   .bottom-nav-item.active はすでに color: primary を持つため整合性あり。 */
+.bottom-nav-item.active .bottom-nav-label {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
