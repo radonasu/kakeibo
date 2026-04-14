@@ -10866,7 +10866,13 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   text-align: center;
   animation: wk-cell-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: var(--dur-delay-md);
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: 週間サマリーセル タイプ別カラーglow */
+.wk-summary-row .wk-cell:nth-child(1):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--expense) var(--mix-mid), var(--border)); }
+.wk-summary-row .wk-cell:nth-child(2):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
+.wk-summary-row .wk-cell:nth-child(3):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--success) var(--mix-mid), var(--border)); }
+.wk-summary-row .wk-cell:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .wk-summary-row .wk-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-md) + var(--dur-stagger-xl)); }
 .wk-summary-row .wk-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-md) + 2 * var(--dur-stagger-xl)); }
 
@@ -10956,7 +10962,14 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   gap: var(--sp-0-5);
   animation: wk-col-in var(--dur-snap) var(--ease-bounce) both;
   animation-delay: calc(var(--wk-i, 0) * var(--dur-stagger-md));
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: 週間バー列ホバー */
+.wk-bar-col:hover { background: color-mix(in srgb, var(--primary) var(--mix-nano), transparent); }
+.wk-bar-col:hover .wk-bar-fill { filter: brightness(1.08); }
+.wk-bar-col.wk-bar-today:hover .wk-bar-fill { filter: brightness(1.1); }
+.wk-bar-col:active { filter: brightness(var(--brightness-press-mist)); }
 .wk-bar-wrap {
   width: 100%;
   height: var(--size-icon-2xl);
@@ -11382,7 +11395,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   overflow: hidden;
   border-top: var(--accent-w) solid var(--primary);
   animation: nt-card-in var(--dur-long) var(--ease-bounce) both;
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: 月次ノートカードホバーglow */
+.nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.nt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .nt-card::before {
   content: '';
   position: absolute;
@@ -13123,7 +13140,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   gap: var(--sp-1);
   animation: tg-stat-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--tg-si, 0) * var(--dur-stagger-mid));
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: タグ統計カードホバーglow */
+.tg-stat-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
+.tg-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .tg-stat-icon { font-size: var(--fs-icon-lg); letter-spacing: var(--ls-normal); line-height: var(--lh-none); }
 .tg-stat-label {
   font-size: var(--fs-xs);
@@ -13154,7 +13175,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .tg-table tbody tr {
   animation: tg-row-in var(--dur-gentle) var(--ease-bounce) both;
   animation-delay: calc(var(--tg-i, 0) * var(--dur-stagger-sm) + var(--dur-delay-sm));
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: タグテーブル行ホバーglow */
+.tg-table tbody tr:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); }
+.tg-table tbody tr:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: none; }
@@ -13186,7 +13211,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
     color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface)) 100%
   );
   animation: adv-card-in var(--dur-long) var(--ease-soft-bounce) both;
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: AIアドバイスカードホバーglow */
+.adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.adv-widget-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .adv-widget-card::before {
   content: '';
   position: absolute;
@@ -13454,7 +13483,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   line-height: var(--lh-tighter);
   animation: cc-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--cci, 0) * var(--dur-stagger-md));
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.71: カテゴリ比較アイテムホバー */
+.cc-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); padding-inline: var(--sp-1); }
+.cc-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .cc-dot {
   width: var(--size-dot);
   height: var(--size-dot);
