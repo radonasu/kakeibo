@@ -18042,6 +18042,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .pt-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .pt-card:hover .pt-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent)); }
 
+/* ── v22.80: デザイン改善バッチ ────────────────────────────────────── */
+
+/* ウィジェット一覧アイテム・統計カード アイコンホバースケール11箇所
+   各ウィジェットアイテム/カードにホバーした際、内包アイコンが scale + drop-shadow で拡大発光する。
+   v22.79 までにカードアイコン系(wl/ch/cat/pm-sum/fv-stat/ev/notif/pt/sub/opp/debt-type)は対応済み。
+   今回はウィジェットリスト行のアイコン・統計カードのアイコン・ゴール絵文字・曜日統計アイコンを完備。 */
+
+/* 1. サブスクウィジェット行 ホバー時アイコンスケール
+   .sub-widget-item:hover 時に .sub-widget-icon を scale(1.1) + primaryカラー drop-shadow */
+.sub-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover .sub-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 2. ポイントウィジェット行 ホバー時アイコンスケール
+   .pt-widget-item:hover 時に .pt-widget-icon を scale(1.1) + primaryカラー drop-shadow */
+.pt-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.pt-widget-item:hover .pt-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 3. ウィッシュリストウィジェット行 ホバー時アイコンスケール
+   .wish-widget-item:hover 時に .wish-widget-icon を scale(1.1) + primaryカラー drop-shadow */
+.wish-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.wish-widget-item:hover .wish-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 4. チャレンジウィジェット行 ホバー時アイコンスケール
+   .ch-widget-item:hover 時に .ch-widget-icon を scale(1.1) + ch-accentカラー drop-shadow */
+.ch-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 5. 負債ウィジェット行 ホバー時アイコンスケール
+   .debt-widget-item:hover 時に .debt-widget-icon を scale(1.1) + debt-accentカラー drop-shadow */
+.debt-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent)); }
+
+/* 6. 収支イベントウィジェット行 ホバー時アイコンスケール
+   .ev-widget-item:hover 時に .ev-widget-icon を scale(1.1) + ev-accentカラー drop-shadow */
+.ev-widget-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 7. ゴールダッシュウィジェット行 ホバー時絵文字スケール
+   .goal-dash-item:hover 時に .goal-dash-emoji を scale(1.12) + goal-accentカラー drop-shadow */
+.goal-dash-emoji { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-emoji { transform: scale(1.12); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 8. 目標統計カード ホバー時アイコンスケール
+   .tg-stat-card:hover 時に .tg-stat-icon を scale(1.12) + primaryカラー drop-shadow */
+.tg-stat-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-icon { transform: scale(1.12); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 9. 年次インサイトカード ホバー時アイコンスケール
+   .yi-card:hover 時に .yi-card-icon を scale(1.1) + primaryカラー drop-shadow */
+.yi-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 10. 曜日別統計カード ホバー時アイコンスケール
+    .dow-stat-card:hover 時に .dow-stat-icon を scale(1.1) + rgba白色 drop-shadow（グラデ背景のため） */
+.dow-stat-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-icon { transform: scale(1.1); filter: drop-shadow(0 3px 8px rgba(255,255,255,0.35)); }
+
+/* 11. ウィジェット設定行 ホバー時アイコンスケール
+    .dw-item:hover 時に .dw-item-icon を scale(1.1) + primaryカラー drop-shadow */
+.dw-item-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.dw-item:hover .dw-item-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
