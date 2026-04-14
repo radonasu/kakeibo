@@ -18409,6 +18409,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .sim-savings-banner { animation: sim-savings-in var(--dur-lift) var(--ease-bounce) both; }
 .sim-savings-value  { animation: sim-savings-val-pop var(--dur-medium) var(--ease-bounce) var(--dur-delay-sm) both; }
 
+/* ============================================================
+   v22.86: ホバー子要素 brightness+color強化 8箇所
+   （dd-tx-amount / dd-summary-value / pace-bar-fill / pace-pct /
+     pace-daily-val / md-cat-bar / md-cat-amount / ci-cell-value）
+   ============================================================ */
+
+/* 1. ドリルダウン取引金額 brightness+text-shadow on hover
+   .dd-tx-row:hover 時に .dd-tx-amount が brightness(1.1) + タイプ別 text-shadow。
+   income = success カラー / expense = danger-text カラーで発光。
+   v22.84 の .tx-table td.amount と同パターンをドリルダウンモーダルに適用。 */
+.dd-tx-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-tx-row:hover .dd-tx-amount.income  { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.dd-tx-row:hover .dd-tx-amount.expense { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 2. ドリルダウンサマリー数値 primary変色+brightness on hover
+   .dd-summary-item:hover 時に .dd-summary-value が primary カラーに変色 + brightness(1.06)。
+   v22.84 の ct-stat-value / tg-stat-value 数値カラー変化パターンをサマリーアイテムに適用。 */
+.dd-summary-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.dd-summary-item:hover .dd-summary-value { color: var(--primary); filter: brightness(1.06); }
+
+/* 3. ペースモニターバー brightness+glow on hover
+   .pace-bar-row:hover 時に .pace-bar-fill が brightness(1.1) + ステータス別カラー box-shadow。
+   good = success / warn = warning / over = expense 色でバー色と統一したグロー演出。
+   v22.83 の ch-bar-fill / sub-card-progress-fill と同パターンをペースバーに適用。 */
+.pace-bar-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.pace-bar-row:hover .pace-bar-fill                          { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary)     var(--mix-md), transparent); }
+.pace-bar-row:hover .pace-bar-expense.pace-good             { box-shadow: 0 1px 8px color-mix(in srgb, var(--success)     var(--mix-md), transparent); }
+.pace-bar-row:hover .pace-bar-expense.pace-warn             { box-shadow: 0 1px 8px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+.pace-bar-row:hover .pace-bar-expense.pace-over             { box-shadow: 0 1px 8px color-mix(in srgb, var(--expense)     var(--mix-md), transparent); }
+
+/* 4. ペースバー行 ％数値 brightness on hover
+   .pace-bar-row:hover 時に .pace-pct が brightness(1.06)。
+   すでに good/warn/over のカラーが付いているため輝度のみ追加。 */
+.pace-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.pace-bar-row:hover .pace-pct { filter: brightness(1.06); }
+
+/* 5. デイリーペースセル 数値 brightness on hover
+   .pace-daily-cell:hover 時に .pace-daily-val が brightness(1.08)。
+   すでに pace-good/warn/over のカラーが付いているため輝度のみ追加。
+   pace-daily-cell には v22.70 で transform/shadow が追加済み。 */
+.pace-daily-val { transition: filter var(--dur-fast) var(--ease-out); }
+.pace-daily-cell:hover .pace-daily-val { filter: brightness(1.08); }
+
+/* 6. 月別詳細カテゴリバー brightness+glow on hover
+   .md-cat-row:hover 時に .md-cat-bar が brightness(1.1) + --md-cat-color drop-shadow。
+   バーのグラデーション色（md-cat-color）と同色で発光しカテゴリカラーと統一。 */
+.md-cat-bar { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-bar { filter: brightness(1.1); box-shadow: 0 1px 6px color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. 月別詳細カテゴリ金額 color+brightness on hover
+   .md-cat-row:hover 時に .md-cat-amount が --md-cat-color に変色 + brightness(1.06)。
+   収入カテゴリ（md-cat-amount-income）は success カラーで発光。
+   v22.83 の ct-stat-value / v22.84 の tg-stat-value と同パターン。 */
+.md-cat-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-amount                   { color: var(--md-cat-color, var(--primary)); filter: brightness(1.06); }
+.md-cat-row:hover .md-cat-amount.md-cat-amount-income { color: var(--success); }
+
+/* 8. 月次レビューサマリーセル 数値 brightness+color on hover
+   .ci-cell:hover 時に .ci-cell-value が brightness(1.1) + タイプ別カラー変色。
+   income = income 色 / expense = expense 色 / positive = success 色 / negative = danger-text 色。
+   ci-cell:hover の box-shadow カラー（v22.70）と数値カラーが連動し
+   セル全体のタイプ別演出が完結する。 */
+.ci-cell-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ci-cell:hover .ci-cell-value          { filter: brightness(1.1); }
+.ci-cell:hover .ci-cell-value.income   { color: var(--income); }
+.ci-cell:hover .ci-cell-value.expense  { color: var(--expense); }
+.ci-cell:hover .ci-cell-value.positive { color: var(--success); }
+.ci-cell:hover .ci-cell-value.negative { color: var(--danger-text); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
