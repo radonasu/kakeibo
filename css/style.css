@@ -1571,7 +1571,8 @@ select:focus:not(:focus-visible) {
 }
 .amount-input-wrap:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05);
+  /* v22.74: 外周拡散グロー追加（通常input:focus v22.66と統一） */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 .amount-prefix {
   padding: 0 var(--sp-2) 0 var(--sp-3);
@@ -1682,12 +1683,13 @@ select:focus:not(:focus-visible) {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* v22.74: cat-chip:hover primaryグロー追加（未選択chipのホバー品質向上） */
 .cat-chip:hover {
-  border-color: var(--border-strong);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
   background: var(--surface-hover);
   color: var(--text);
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm), 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 .cat-chip:active { transform: translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -4773,8 +4775,11 @@ body {
 
 /* ── カードホバーリフト ── */
 .card { transition: box-shadow var(--dur-appear) var(--ease-bounce), transform var(--dur-appear) var(--ease-bounce), border-color var(--dur-appear) var(--ease-out), filter var(--dur-press) var(--ease-out); }
-.card:hover { box-shadow: var(--shadow-md); transform: translateY(var(--translate-lift-md)); border-color: var(--border-strong); }
+/* v22.74: .card:hover primary color glow追加（全カードに適用） */
+.card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); transform: translateY(var(--translate-lift-md)); border-color: var(--border-strong); }
 .card:active { transform: translateY(0); box-shadow: var(--shadow-sm); border-color: var(--border); filter: brightness(var(--brightness-press-soft)); }
+/* v22.74: ダークモード .card:hover 専用グロー */
+[data-theme="dark"] .card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); }
 .summary-card:hover {
   transform: translateY(var(--translate-lift-lg));
@@ -4841,7 +4846,12 @@ body {
 .budget-item:nth-child(5) .budget-fill { animation-delay: calc(5 * var(--dur-stagger)); }
 .budget-item:nth-child(6) .budget-fill { animation-delay: calc(6 * var(--dur-stagger)); }
 .budget-item:nth-child(7) .budget-fill { animation-delay: calc(7 * var(--dur-stagger)); }
-.budget-item:nth-child(8) .budget-fill { animation-delay: calc(8 * var(--dur-stagger)); }
+.budget-item:nth-child(8)  .budget-fill { animation-delay: calc(8  * var(--dur-stagger)); }
+/* v22.74: 予算バーstagger 9-12まで延長 */
+.budget-item:nth-child(9)  .budget-fill { animation-delay: calc(9  * var(--dur-stagger)); }
+.budget-item:nth-child(10) .budget-fill { animation-delay: calc(10 * var(--dur-stagger)); }
+.budget-item:nth-child(11) .budget-fill { animation-delay: calc(11 * var(--dur-stagger)); }
+.budget-item:nth-child(12) .budget-fill { animation-delay: calc(12 * var(--dur-stagger)); }
 
 /* ── テーブル行ストッガード ── */
 @keyframes row-in {
@@ -4861,7 +4871,13 @@ body {
 .tx-table tbody tr:nth-child(7)  { animation-delay: calc(6 * var(--dur-stagger-sm)); }
 .tx-table tbody tr:nth-child(8)  { animation-delay: calc(7 * var(--dur-stagger-sm)); }
 .tx-table tbody tr:nth-child(9)  { animation-delay: calc(8 * var(--dur-stagger-sm)); }
-.tx-table tbody tr:nth-child(10) { animation-delay: calc(9 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(10) { animation-delay: calc(9  * var(--dur-stagger-sm)); }
+/* v22.74: TXテーブル行stagger 11-15延長 */
+.tx-table tbody tr:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(13) { animation-delay: calc(12 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(14) { animation-delay: calc(13 * var(--dur-stagger-sm)); }
+.tx-table tbody tr:nth-child(15) { animation-delay: calc(14 * var(--dur-stagger-sm)); }
 /* ソート変更時: 縦フェードで順序変化を視覚的に伝える */
 .tx-table.tx-sorting tbody tr { animation: tx-sort-row-in var(--dur-base) var(--ease-bounce) both; }
 .tx-table.tx-sorting tbody tr:nth-child(2)  { animation-delay: var(--dur-stagger-2xs); }
@@ -6090,7 +6106,12 @@ body {
   padding: var(--sp-3) var(--sp-4);
   min-width: 0;
   animation: yr-cell-in var(--dur-lift) var(--ease-bounce) both;
+  /* v22.74: ホバー対応追加 */
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
+/* v22.74: 前年比較アイテム ホバーグロー */
+.yoy-summary-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: var(--border-strong); }
+.yoy-summary-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .yoy-summary-item:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 .yoy-summary-label {
   font-size: var(--fs-xs);
@@ -6200,6 +6221,14 @@ body {
 }
 [data-theme="dark"] .section-tab.is-active {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+/* v22.74: ダークモード section-tab:hover 強化 */
+[data-theme="dark"] .section-tab:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface));
+  border-bottom-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
+}
+[data-theme="dark"] .section-tab.is-active:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
 
 [data-theme="dark"] .section-tabs {

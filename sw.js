@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.73'; // v22.73: デザイン改善・sub/pt-exp底バーシマー・wk-bar-fillシマー・dow-mini-bar-fillシマー・fv-mini-fillシマー・fv-seg-fixed/varシマー・ci-savings-fillシマー（8箇所）
+const CACHE_NAME = 'kakeibo-v22.74'; // v22.74: デザイン改善・card:hover primaryグロー・dark card:hover・yoy-summary-item:hover・amount-input-wrap focusグロー統一・cat-chip:hover primaryグロー・budget stagger9-12延長・TXrow stagger11-15延長・dark section-tab:hover強化（8箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
