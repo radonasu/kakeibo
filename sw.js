@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.81'; // v22.81: デザイン改善・アイコン/ドット/絵文字ホバースケール+glow 8箇所（cat-chip-icon/ct-chip-icon/insight-icon/ci-event-icon/cc-dot/goal-emoji/fc-progress-fill/budget-color-dot）
+const CACHE_NAME = 'kakeibo-v22.82'; // v22.82: デザイン改善・カードホバー/グレードバッジ/ゲージ/今日パルス/バッジglow 8箇所（cal-sum-item/sub-summary-card/hs-grade-badge/hs-gauge-fill/cal-date-num.today/fv-rate-badge/debt-bar-fill/wl-priority-badge）
 const ASSETS = [
   './index.html',
   './css/style.css',

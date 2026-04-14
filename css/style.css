@@ -18154,6 +18154,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .budget-item:hover .color-dot { transform: scale(1.25); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .budget-item:has(.budget-fill.over):hover .color-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 
+/* ── v22.82: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. カレンダーサマリーカード ホバーlift+カラーglow
+   カレンダーページ上部の収入/支出/差額カード3枚に hover 効果を追加。
+   income/expense クラスを持つ値があればそれぞれのカラーglow を付与。 */
+.cal-sum-item { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); cursor: pointer; }
+.cal-sum-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
+.cal-sum-item:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.cal-sum-item:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+.cal-sum-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+
+/* 2. サブスクサマリーカード ホバーlift+カラーglow
+   月額/年額の2枚グラデーションカードに hover 効果を追加。summary-card 系と同演出。 */
+.sub-summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); cursor: pointer; }
+.sub-summary-card.sub-monthly:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
+.sub-summary-card.sub-yearly:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
+.sub-summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+
+/* 3. ヘルスグレードバッジ ホバー scale+グレード別glow
+   ヘルスチェックページのグレードバッジ（A/B/C等）hover 時に拡大+カラーglow。 */
+.hs-grade-badge { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.hs-grade-badge:hover { transform: scale(1.12); }
+.hs-grade-s:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary)     var(--mix-lg), transparent); }
+.hs-grade-a:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--success)     var(--mix-lg), transparent); }
+.hs-grade-b:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--info-text)   var(--mix-lg), transparent); }
+.hs-grade-c:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--warning)     var(--mix-lg), transparent); }
+.hs-grade-d:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent); }
+
+/* 4. ヘルスゲージfill ホバー時 brightness+glow
+   .health-score-card hover 時に円弧ゲージのfillが輝度向上+glow。 */
+.hs-gauge-fill { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-gauge-fill { filter: brightness(1.12) drop-shadow(0 0 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+
+/* 5. 今日の日付 パルスring animation
+   カレンダーの today バッジに外周 ring が呼吸するような pulse を追加し視認性を向上。 */
+@keyframes today-ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+  50%       { box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+}
+.cal-date-num.today { animation: today-ring-pulse 2.4s var(--ease-in-out) infinite; }
+
+/* 6. 固定変動費率バッジ ホバー scale+カラーglow
+   .fv-rate-badge（high/mid/low）hover 時に scale(1.06) + 色別 brightness+glow。 */
+.fv-rate-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.fv-rate-badge:hover { transform: scale(1.06); }
+.fv-rate-badge.high:hover { filter: brightness(1.1) drop-shadow(0 1px 6px color-mix(in srgb, var(--primary)     var(--mix-md), transparent)); }
+.fv-rate-badge.mid:hover  { filter: brightness(1.1) drop-shadow(0 1px 6px color-mix(in srgb, var(--warning)     var(--mix-md), transparent)); }
+.fv-rate-badge.low:hover  { filter: brightness(1.1) drop-shadow(0 1px 6px color-mix(in srgb, var(--success)     var(--mix-md), transparent)); }
+
+/* 7. 負債バー ホバー時 brightness+glow
+   .debt-card hover 時に .debt-bar-fill が brightness(1.1) + debt-accent glow で輝く。
+   hs-bar-fill/fc-progress-fill と同パターン。 */
+.debt-bar-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-bar-fill { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-md), transparent); }
+
+/* 8. ウィッシュリスト優先度バッジ ホバー scale
+   .wl-card hover 時に .wl-priority-badge が scale(1.06) + brightness でポップ。 */
+.wl-priority-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-priority-badge { transform: scale(1.06); filter: brightness(1.08); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
