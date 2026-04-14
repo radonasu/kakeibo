@@ -18478,6 +18478,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ci-cell:hover .ci-cell-value.positive { color: var(--success); }
 .ci-cell:hover .ci-cell-value.negative { color: var(--danger-text); }
 
+/* ============================================================
+   v22.87: ホバー子要素 brightness+color強化 8箇所
+   （yi-card-value / sub-card-amount / ch-progress-pct /
+     opp-saving / notif-item-title / debt-entry-balance /
+     step-title / wl-card-name）
+   ============================================================ */
+
+/* 1. 年次インサイトカード 主要数値 color+brightness on hover
+   .yi-card:hover 時に .yi-card-value が primary カラーに変色 + brightness(1.06)。
+   カテゴリ名表示（.yi-card-value-cat）は yi-cat-color をそのまま使用 + brightness。
+   yi-card-icon scale（v22.80）と連動しカード全体の数値演出が完成。 */
+.yi-card-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-value     { color: var(--primary); filter: brightness(1.06); }
+.yi-card:hover .yi-card-value-cat { filter: brightness(1.06); }
+
+/* 2. サブスクカード 金額 color+brightness on hover
+   .sub-card:hover 時に .sub-card-amount が sub-accent カラーに変色 + brightness(1.06)。
+   sub-card-icon scale（v22.79）・sub-card-progress-fill glow（v22.83）と連動し
+   サブスクカード全体のホバー演出が完結する。 */
+.sub-card-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-amount { color: var(--sub-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 3. チャレンジカード 進捗% brightness on hover
+   .ch-card:hover 時に .ch-progress-pct が brightness(1.1)。
+   ch-pct-ok（income色）・ch-pct-over（expense色）の既存カラーはそのまま維持し輝度のみ追加。
+   ch-bar-fill glow（v22.83）・ch-card-icon scale と連動しバーと%数値が同時に強調。 */
+.ch-progress-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-progress-pct { filter: brightness(1.1); }
+
+/* 4. 節約機会カード 節約額 brightness on hover
+   .opp-card:hover 時に .opp-saving strong が brightness(1.1) で success 色が深まる。
+   opp-icon scale+glow（v22.79）と連動し節約機会カードの金額表示がホバーで際立つ。 */
+.opp-saving strong { transition: filter var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-saving strong { filter: brightness(1.1); }
+
+/* 5. 通知アイテム タイトル color+brightness on hover
+   .notif-item:hover 時に .notif-item-title がタイプ別カラーに変色 + brightness(1.06)。
+   danger = danger-text / warning = warning / success = success / info = primary 色。
+   notif-item-icon scale（v22.79）と連動し通知タイトルもホバーでカラーアクセントが入る。 */
+.notif-item-title { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.notif-item:hover                    .notif-item-title { filter: brightness(1.06); }
+.notif-item.notif-type-danger:hover  .notif-item-title { color: var(--danger-text); }
+.notif-item.notif-type-warning:hover .notif-item-title { color: var(--warning); }
+.notif-item.notif-type-success:hover .notif-item-title { color: var(--success); }
+.notif-item.notif-type-info:hover    .notif-item-title { color: var(--primary); }
+
+/* 6. 負債返済履歴 残高 brightness on hover
+   .debt-entry-row:hover 時に .debt-entry-balance が brightness(1.12) で expense 色が深まる。
+   debt-entry-row:hover の translateX + expense shadow と連動し
+   残高数値もホバーで視覚的に強調される。 */
+.debt-entry-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-entry-row:hover .debt-entry-balance { filter: brightness(1.12); }
+
+/* 7. ステップカード タイトル color on hover
+   .step-card:hover 時に .step-title が primary カラーに変色。
+   step-num scale+ring-glow（v22.79）・step-icon scale+drop-shadow（v22.83）と連動し
+   カード全体のホバー時に見出しテキストもプライマリカラーで際立つ。 */
+.step-title { transition: color var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-title { color: var(--primary); }
+
+/* 8. ウィッシュリストカード 商品名 color on hover
+   .wl-card:hover 時に .wl-card-name が wl-accent カラーに変色。
+   wl-card-icon scale（v22.79）・wl-priority-badge pop（v22.82）・
+   wl-card-price color変化（v22.85）と連動し
+   カード全体のホバー時に商品名もアクセントカラーで際立つ。 */
+.wl-card-name { transition: color var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-name { color: var(--wl-accent, var(--primary)); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
