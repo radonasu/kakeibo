@@ -18104,6 +18104,56 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .dw-item-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .dw-item:hover .dw-item-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
 
+/* ── v22.81: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. カテゴリチップ ホバー時アイコンスケール
+   .cat-chip:hover 時に .cat-chip-icon を scale(1.15) + cat-color drop-shadow
+   cat-chip-icon はトランザクションモーダルのカテゴリ選択チップのアイコン絵文字 */
+.cat-chip-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.cat-chip:hover .cat-chip-icon { transform: scale(1.15); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 2. カテゴリトレンドチップ ホバー時アイコンスケール
+   .ct-chip:hover 時に .ct-chip-icon を scale(1.1) + ct-color drop-shadow */
+.ct-chip-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ct-chip:hover .ct-chip-icon { transform: scale(1.1); filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 3. インサイトアイテム ホバー時アイコンスケール
+   .insight-item:hover 時に .insight-icon を scale(1.1) + タイプ別カラー drop-shadow */
+.insight-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.insight-item:hover .insight-icon { transform: scale(1.1); filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+.insight-item.insight-alert:hover   .insight-icon { filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent)); }
+.insight-item.insight-success:hover .insight-icon { filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--success) var(--mix-sm), transparent)); }
+.insight-item.insight-warning:hover .insight-icon { filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--warning) var(--mix-sm), transparent)); }
+
+/* 4. 月次レビューイベントアイテム ホバー時アイコンスケール
+   .ci-event-item:hover 時に .ci-event-icon を scale(1.1) + ci-ev-accentカラー drop-shadow */
+.ci-event-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ci-event-item:hover .ci-event-icon { transform: scale(1.1); filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 5. カテゴリ比較ウィジェット行 ホバー時カラードットスケール
+   .cc-item:hover 時に .cc-dot を scale(1.3) + 方向別カラー box-shadow（rc-cat-dot と同パターン） */
+.cc-dot { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.cc-item:hover .cc-dot { transform: scale(1.3); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+
+/* 6. ゴールカード ホバー時絵文字 drop-shadow 追加
+   .goal-card:hover 時に .goal-emoji に drop-shadow を追加（ring-wrap scale(1.07)に重ねて光彩演出） */
+.goal-emoji { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-emoji { filter: drop-shadow(0 2px 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent)); }
+
+/* 7. 財務予測カード ホバー時プログレスバー輝度向上
+   .forecast-card:hover 時に .fc-progress-fill を brightness(1.08) + fc-color glow で強調 */
+.fc-progress-fill { transition: width var(--dur-slow) var(--ease-out), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-progress-fill { filter: brightness(1.08); box-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. 予算アイテム ホバー時カテゴリカラードットスケール
+   .budget-item:hover 時に .budget-cat-name 内の .color-dot を scale(1.25) + primary glow
+   ※ .budget-item .color-dot スコープで他ページの .color-dot に影響しない */
+.budget-item .color-dot { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:hover .color-dot { transform: scale(1.25); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.budget-item:has(.budget-fill.over):hover .color-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
