@@ -18338,6 +18338,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .pt-card-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .pt-card:hover .pt-card-balance { color: var(--pt-accent, var(--primary)); filter: brightness(1.06); }
 
+/* ── v22.85: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. ウィッシュリストカード 目標金額 color+brightness on hover
+   .wl-card:hover 時に .wl-card-price が wl-accent カラーに変色 + brightness(1.06)。
+   wl-card-icon scale+glow（v22.79）・wl-priority-badge pop（v22.82）と連動し
+   カード全体のホバー演出が完成する。 */
+.wl-card-price { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-price { color: var(--wl-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 2. ゴールカード 貯蓄額 color+brightness on hover
+   .goal-card:hover 時に .goal-saved が goal-accent カラーに変色 + brightness(1.06)。
+   goal-ring-fill glow（v22.68）・goal-emoji drop-shadow（v22.81）と連動し
+   カードの数値もアクセントカラーで際立つ演出を追加。 */
+.goal-saved { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-saved { color: var(--goal-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 3. 負債カード 残高数値 brightness on hover
+   .debt-card:hover 時に .debt-balance が brightness(1.08) で expense 色が深まる。
+   debt-type-icon-wrap scale（v22.78）・debt-bar-fill glow（v22.82）と連動し
+   残高の大きな数値も視覚的に強調される。 */
+.debt-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-balance { filter: brightness(1.08); }
+
+/* 4. 定期収支アイテム 金額 brightness+color on hover
+   .rc-item:hover 時に .rc-item-amount がタイプ別カラー変化 + brightness(1.08)。
+   :has() セレクタで rc-type-inc/exp バッジを検出し income=success / expense=danger-text で連動。
+   rc-cat-dot scale（v22.78）と同時発動しアイテム全体の演出が整合する。 */
+.rc-item-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.rc-item:hover:has(.rc-type-inc) .rc-item-amount { color: var(--success);     filter: brightness(1.08); }
+.rc-item:hover:has(.rc-type-exp) .rc-item-amount { color: var(--danger-text); filter: brightness(1.08); }
+
+/* 5. 予算 使用額/上限数値 brightness+color on hover
+   .budget-item:hover 時に .budget-nums が primary カラー + brightness(1.06)。
+   over 状態（予算超過）は expense カラーで更に強調。
+   budget-fill shimmer（v22.66）・color-dot scale（v22.81）と連動し数値も色彩的に連動。 */
+.budget-nums { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-nums                          { color: var(--primary); filter: brightness(1.06); }
+.budget-item:has(.budget-fill.over):hover .budget-nums  { color: var(--expense); filter: brightness(1.08); }
+
+/* 6. サブスクウィジェット 金額 brightness+color on hover
+   .sub-widget-item:hover 時に .sub-widget-amount が brightness(1.08)。
+   urgent（期限切迫）= danger-text / soon（もうすぐ）= warning で切迫度別カラー変化。
+   sub-widget-icon scale（v22.80）と連動しアイコンと金額が同時に強調される。 */
+.sub-widget-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover            .sub-widget-amount { color: var(--primary);     filter: brightness(1.08); }
+.sub-widget-item.sub-urgent:hover .sub-widget-amount { color: var(--danger-text); filter: brightness(1.1); }
+.sub-widget-item.sub-soon:hover   .sub-widget-amount { color: var(--warning);     filter: brightness(1.08); }
+
+/* 7. 収支イベントウィジェット 金額 brightness+color on hover
+   .ev-widget-item:hover 時に .ev-widget-amount が ev-accent カラーに変色 + brightness(1.08)。
+   左ボーダー色・shadow のカラー（ev-accent）と同色で統一感のあるホバー演出。
+   ev-widget-icon scale（v22.80）と連動しアイコンと金額が同時にアクセントカラーで際立つ。 */
+.ev-widget-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-amount { color: var(--ev-accent, var(--primary)); filter: brightness(1.08); }
+
+/* 8. ローンシミュレーター 節約バナー 入場アニメーション追加
+   .sim-savings-banner に bounce 入場アニメーション（translateY + scale）を追加。
+   .sim-savings-value（節約額の大きな成功数値）に pop 入場アニメーションを追加し
+   結果が表示された瞬間の達成感・視覚的インパクトを強化する。 */
+@keyframes sim-savings-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-md)) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes sim-savings-val-pop {
+  from { opacity: 0; transform: scale(0.75); }
+  60%  { transform: scale(1.07); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.sim-savings-banner { animation: sim-savings-in var(--dur-lift) var(--ease-bounce) both; }
+.sim-savings-value  { animation: sim-savings-val-pop var(--dur-medium) var(--ease-bounce) var(--dur-delay-sm) both; }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
