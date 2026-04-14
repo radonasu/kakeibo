@@ -18000,6 +18000,48 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: var(--shadow-sm), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent);
 }
 
+/* ── v22.79: デザイン改善バッチ ────────────────────────────────────── */
+
+/* 1. ウィッシュリストカード ホバー時アイコンスケール
+   .wl-card:hover 時に .wl-card-icon を scale(1.1) + wl-accentカラー drop-shadow */
+.wl-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 2. チャレンジカード ホバー時アイコンスケール
+   .ch-card:hover 時に .ch-card-icon を scale(1.1) + ch-accentカラー drop-shadow */
+.ch-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 3. カテゴリカード ホバー時アイコンスケール
+   .cat-card:hover 時に .cat-card-icon を scale(1.1) + cat-clrカラー drop-shadow */
+.cat-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 4. 支払方法サマリーカード ホバー時アイコンスケール
+   .pm-sum-card:hover 時に .pm-sum-icon を scale(1.1) + pm-sum-colorカラー drop-shadow */
+.pm-sum-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-icon { transform: scale(1.1); filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 5. 財務予測統計カード ホバー時アイコンスケール
+   .fv-stat-card:hover 時に .fv-stat-icon を scale(1.1) + 白色 drop-shadow（グラデ背景のため） */
+.fv-stat-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px rgba(255,255,255,0.4)); }
+
+/* 6. 収支イベントカード ホバー時アイコンスケール
+   .ev-card:hover 時に .ev-card-icon-wrap を scale(1.1) + ev-accentカラー drop-shadow */
+.ev-card-icon-wrap { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-icon-wrap { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* 7. 通知アイテム ホバー時アイコンスケール+brightness向上
+   .notif-item:hover 時に .notif-item-icon を scale(1.08) + brightness(1.12) */
+.notif-item-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.notif-item:hover .notif-item-icon { transform: scale(1.08); filter: brightness(1.12); }
+
+/* 8. ポイントカード ホバー時アイコンスケール
+   .pt-card:hover 時に .pt-card-icon を scale(1.1) + pt-accentカラー drop-shadow */
+.pt-card-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent)); }
+
 /* ── アクセシビリティ: アニメーション削減モード v15.2 ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
