@@ -19906,3 +19906,71 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .notif-item.notif-type-warning:hover .notif-item-body { color: var(--warning); }
 .notif-item.notif-type-success:hover .notif-item-body { color: var(--success); }
 .notif-item.notif-type-info:hover    .notif-item-body { color: var(--primary); }
+
+/* ============================================================
+   Sprint #700 v23.04: ホバー子要素カラー変化・brightness 8箇所
+   debt-widget-name-color / debt-widget-balance-brightness /
+   debt-widget-pct-color / debt-widget-bar-fill-glow /
+   goal-dash-name-color / goal-dash-pct-brightness /
+   goal-dash-amount-color / debt-entry-date-color
+   ============================================================ */
+
+/* 1. debt-widget-item:hover → .debt-widget-name カラー変化
+   .debt-widget-item:hover 時に .debt-widget-name（負債ウィジェット負債名テキスト）を
+   debt-accent（expense）カラーへ変色。debt-widget-icon の scale+drop-shadow（v22.81）と
+   連動しアイコン・名称が一体的に反応するウィジェット行ホバー演出の完成形に。 */
+.debt-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-name { color: var(--debt-accent, var(--expense)); }
+
+/* 2. debt-widget-item:hover → .debt-widget-balance brightness(1.08)
+   .debt-widget-item:hover 時に .debt-widget-balance（負債ウィジェット残高金額）を
+   brightness(1.08) で expense 色が深まる。debt-widget-name 変色（本スプリント）・
+   debt-widget-icon scale（v22.81）と連動し名称・残高・アイコンが一体的に反応する完成形に。 */
+.debt-widget-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-balance { filter: brightness(1.08); }
+
+/* 3. debt-widget-item:hover → .debt-widget-pct カラー変化
+   .debt-widget-item:hover 時に .debt-widget-pct（負債ウィジェット返済進捗%テキスト）を
+   primary カラーへ変色。debt-widget-name 変色（本スプリント）・
+   debt-widget-bar-fill glow（本スプリント）と連動し
+   バー・%・名称・残高が一体的に反応する完成形に。 */
+.debt-widget-pct { transition: color var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-pct { color: var(--primary); }
+
+/* 4. debt-widget-item:hover → .debt-widget-bar-fill brightness(1.08) + debt-accent glow
+   .debt-widget-item:hover 時に .debt-widget-bar-fill（負債ウィジェット返済進捗バー）が
+   brightness(1.08) + debt-accent glow で輝く。debt-widget-pct 変色（本スプリント）・
+   goal-dash-bar-fill glow（v23.00）・hs-bar-fill glow と同系統で返済バーにも適用。 */
+.debt-widget-bar-fill { transition: width var(--dur-fill) var(--ease-out), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-bar-fill { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-md), transparent); }
+
+/* 5. goal-dash-item:hover → .goal-dash-name カラー変化
+   .goal-dash-item:hover 時に .goal-dash-name（目標ダッシュボード目標名テキスト）を
+   goal-accent（primary）カラーへ変色。goal-dash-emoji の scale+drop-shadow（v22.83）・
+   goal-dash-bar-fill glow（v23.00）と連動し名称・絵文字・バーが一体的に反応する完成形に。 */
+.goal-dash-name { transition: color var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-name { color: var(--goal-accent, var(--primary)); }
+
+/* 6. goal-dash-item:hover → .goal-dash-pct brightness(1.06)
+   .goal-dash-item:hover 時に .goal-dash-pct（目標達成率%テキスト）を
+   brightness(1.06) で goal-accent 色が深まる。goal-dash-pct は既に goal-accent カラーで
+   着色されており（text-faint フォールバック）輝度のみ追加してグロウ感を演出。
+   goal-dash-name 変色（本スプリント）・goal-dash-bar-fill glow（v23.00）と連動。 */
+.goal-dash-pct { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-pct { filter: brightness(1.06); }
+
+/* 7. goal-dash-item:hover → .goal-dash-amount カラー変化
+   .goal-dash-item:hover 時に .goal-dash-amount（目標貯蓄進捗金額テキスト）を
+   goal-accent（primary）カラーへ変色。goal-dash-name 変色（本スプリント）・
+   goal-dash-pct brightness（本スプリント）・goal-dash-emoji scale（v22.83）と連動し
+   目標ダッシュ行の全テキストが一体的に反応する完成形に。 */
+.goal-dash-amount { transition: color var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-amount { color: var(--goal-accent, var(--primary)); }
+
+/* 8. debt-entry-row:hover → .debt-entry-date カラー変化
+   .debt-entry-row:hover 時に .debt-entry-date（負債返済履歴の記録日テキスト）を
+   primary カラーへ変色。debt-entry-balance brightness（v22.84）・
+   debt-entry-row の translateX+expense shadow（v22.60）と連動し
+   日付・残高が一体的に反応するホバー演出に。asset-entry-date 変色（v23.03）と同パターン。 */
+.debt-entry-date { transition: color var(--dur-fast) var(--ease-out); }
+.debt-entry-row:hover .debt-entry-date { color: var(--primary); }
