@@ -19377,3 +19377,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
   box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-base), transparent);
 }
+
+/* ============================================================
+   v22.97: ホバー子要素カラー変化・静的glow 8箇所
+   (ch-card-name-color / smi-label-color / yi-card-label-color /
+    debt-balance-meta-color / insight-title-brightness /
+    tx-memo-cell-color / asset-delta-glow / goal-ring-static-glow)
+   ============================================================ */
+
+/* 1. ch-card:hover → .ch-card-name カラー変化
+   チャレンジカードのホバー時に名称テキストを ch-accent カラーに変色。
+   ch-card-icon scale（v22.77）・ch-bar-fill glow（v22.83）・
+   ch-progress-pct brightness（v22.83）と連動し
+   アイコン・名称・バー・%が一体的に反応するホバー体験に統一。 */
+.ch-card-name { transition: color var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-card-name { color: var(--ch-accent, var(--primary)); }
+
+/* 2. smi-income/expense:hover → .smi-label タイプ別カラー変化
+   サマリーミニバーのラベルテキスト（「収入」「支出」）をホバー時に
+   タイプ別カラーに変色。smi-amount の変色（v22.94）と連動し
+   ラベル・金額の両方がタイプ色で揃って応答する一体感を演出。 */
+.smi-label { transition: color var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-label { color: var(--success); }
+.smi-expense:hover .smi-label { color: var(--danger-text); }
+
+/* 3. yi-card:hover → .yi-card-label カラー変化
+   年次インサイトカードのラベルテキストをホバー時に primary カラーに変色。
+   yi-card-icon scale（v22.81）・yi-card-value 変色（v22.84）と連動し
+   アイコン・ラベル・数値が一体的に primary アクセント色で応答する。 */
+.yi-card-label { transition: color var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-label { color: var(--primary); }
+
+/* 4. debt-card:hover → .debt-balance-meta カラー変化
+   負債カードのメタテキスト（元本残高・月次情報）をホバー時に
+   primary カラーに変色。debt-name 変色（v22.95）・
+   debt-balance brightness（v22.87）・badge glow（v22.95）と連動し
+   カードホバーで名称・残高・メタ情報が揃って視覚的に応答する。 */
+.debt-balance-meta { transition: color var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-balance-meta { color: var(--primary); }
+
+/* 5. insight-item:hover → .insight-title brightness 追加
+   インサイトアイテムのホバー時にタイトルテキストに brightness(1.08) を追加。
+   insight-title は静的にタイプ別カラーが設定済み（primary/danger-text/success/warning）
+   なので brightness で輝きを強化し、insight-icon glow（v22.93）と連動した
+   ホバー時のリッチな視覚フィードバックを実現。 */
+.insight-title { transition: filter var(--dur-fast) var(--ease-out); }
+.insight-item:hover .insight-title { filter: brightness(1.1); }
+
+/* 6. tx-table tr:hover → td.memo-cell カラー変化
+   取引テーブル行のホバー時にメモセルのテキストを primary カラーに変色。
+   td.amount の glow（v22.93）・行全体の box-shadow（既存）と連動し
+   メモ内容も視覚的にホバーを反映する。text-overflow:ellipsis は維持。 */
+.tx-table td.memo-cell { transition: color var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.memo-cell { color: var(--primary); }
+
+/* 7. asset-card:hover → .asset-balance-delta タイプ別 brightness + glow
+   資産カードのホバー時に変動バッジ（+/-デルタ）にタイプ別 brightness と
+   ソフトなカラー glow を追加。up（増加・緑）と down（減少・赤）で色分け。
+   asset-name 変色（v22.95）・asset-balance brightness（v22.88）と連動し
+   資産カードホバーの全要素が一体的に強調される。 */
+.asset-balance-delta { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-balance-delta.up   { filter: brightness(1.1); box-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.asset-card:hover .asset-balance-delta.down { filter: brightness(1.1); box-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+
+/* 8. goal-ring-fill 静的 drop-shadow glow
+   目標カードのリング進捗（SVG stroke）に常時 goal-accent カラーの
+   drop-shadow glow を追加。ホバー時の glow 強化（v22.68）との組み合わせで
+   通常時は淡く光り、ホバー時は強く輝くグラデーション演出になる。
+   goal-ring-wrap scale（v22.68）・goal-pct text-shadow（v22.94）と連動し
+   リングの静的プレゼンスが高まる。 */
+.goal-ring-fill {
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent));
+}
+.goal-card:hover .goal-ring-fill {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent));
+}
