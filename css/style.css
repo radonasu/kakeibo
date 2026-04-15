@@ -18798,3 +18798,109 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   v22.91: モーダル・フォーム・空状態の静的ビジュアル洗練 8箇所
+   （modal-h2-gradient / modal-top-border / modal-header-separator /
+     form-label-focus-glow / badge-active-glow / btn-primary-text-shadow /
+     modal-footer-separator / empty-icon-drop-shadow）
+   ============================================================ */
+
+/* 1. モーダルタイトル グラデテキスト
+   .modal-header h2 に page-title（v22.89）と同パターンのグラデーションを適用。
+   text → primary-end の135°グラデで modal タイトルがブランドカラーに染まる。
+   ダークモードは near-white → primary-end でより華やかな印象に。
+   sim-modal-header は h3.modal-title を使用しているため影響なし。 */
+.modal-header h2 {
+  background: linear-gradient(135deg, var(--text) 0%, var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="dark"] .modal-header h2 {
+  background: linear-gradient(135deg, var(--text-strong) 0%, var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 2. モーダル トップアクセントボーダー
+   .modal の上端に primary カラーの 2px ボーダーを追加。
+   radius-lg によって上角は丸まり、プレミアムなクローム感を演出。
+   page-title のグラデと連携しモーダル全体にブランドカラーが通る。 */
+.modal {
+  border-top: 2px solid color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+}
+[data-theme="dark"] .modal {
+  border-top-color: color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* 3. モーダルヘッダー ボーダーボトム primary tint
+   .modal-header の border-bottom に primary tint を加えて仕切り線に色彩を追加。
+   section-tabs（v22.90）と同アプローチで、ヘッダーとボディの境界が
+   ブランドカラーで穏やかに際立つ。 */
+.modal-header {
+  border-bottom-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border));
+}
+[data-theme="dark"] .modal-header {
+  border-bottom-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border));
+}
+
+/* 4. フォームラベル フォーカス時 text-shadow glow
+   .form-group:focus-within > label はすでに color: primary に変色する。
+   v22.89 のアクティブタブ・ナビと同パターンの text-shadow glow を追加し
+   フォーカス中のラベルが primary カラーで輝き、入力中のフィールドが
+   より分かりやすくなる。 */
+.form-group:focus-within > label {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .form-group:focus-within > label {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 5. アクティブバッジ income glow
+   .badge-active（アカウント管理のアクティブ表示バッジ）に
+   income カラーの box-shadow glow を追加。
+   income-light 背景 + income テキストの既存スタイルと相乗りし
+   「稼働中」の緑のバッジがほのかに輝く。 */
+.badge-active {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-xs), transparent);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--income) var(--mix-sm), transparent);
+}
+
+/* 6. プライマリボタン テキスト白glow
+   .btn-primary の白テキストに微細な白色 text-shadow を追加。
+   summary-amount（v22.89）・fv-stat-value（v22.84）と同パターンで
+   グラデ・ソリッドカラー背景の上の白テキストが浮き上がるような質感に。 */
+.btn-primary {
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.2), 0 0 14px rgba(255, 255, 255, 0.08);
+}
+
+/* 7. モーダルフッター ボーダートップ primary tint
+   .modal-footer の border-top に primary tint を加えて仕切り線を装飾。
+   modal-header（#3）と対称的にモーダルの上下ボーダーが
+   同色のブランドアクセントで統一感のあるフレームを形成。 */
+.modal-footer {
+  border-top-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border));
+}
+[data-theme="dark"] .modal-footer {
+  border-top-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border));
+}
+
+/* 8. 空状態アイコン drop-shadow glow
+   empty-icon-float アニメーションで浮遊する各空状態アイコンに
+   primary カラーの drop-shadow を追加。
+   フワフワ浮く絵文字が淡く光りながら揺れるリッチな演出に。
+   empty-month / empty-goal / empty-asset / empty-debt の4種すべてに適用。 */
+.empty-month-icon,
+.empty-goal-icon,
+.empty-asset-icon,
+.empty-debt-icon {
+  filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+}
+[data-theme="dark"] .empty-month-icon,
+[data-theme="dark"] .empty-goal-icon,
+[data-theme="dark"] .empty-asset-icon,
+[data-theme="dark"] .empty-debt-icon {
+  filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
