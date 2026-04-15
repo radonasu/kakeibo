@@ -20536,3 +20536,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    名称・金額の両方が一体的に success 色で達成感を演出する完成形に。 */
 .wl-archive-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .wl-archive-item:hover .wl-archive-price { color: var(--success); filter: brightness(1.08); }
+
+/* ── v23.13 ホバー子要素カラー変化・brightness・scale・glow 8箇所 ──────────────────────────
+   yi-card-unit-brightness / yi-grade-badge-scale /
+   asset-sparkline-label-color / asset-balance-jpy-brightness / asset-currency-badge-scale /
+   fv-mini-fill-brightness-glow / debt-type-badge-scale / ch-widget-label-color
+   ──────────────────────────────────────────────────────────────────────────────────── */
+
+/* 1. yi-card:hover → .yi-card-unit brightness(1.1)
+   年次インサイトカードのホバー時に .yi-card-unit（「%」「ヶ月」「円」等の単位テキスト：color:text-muted・fs-xl）を
+   brightness(1.1) で輝かせる。yi-card-value 変色+brightness（v22.82）・yi-card-label 変色（v22.x）・
+   yi-card-sub 変色（v23.07）と連動し単位テキストもホバーで一体的に強調される完成形に。 */
+.yi-card-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-unit { filter: brightness(1.1); }
+
+/* 2. yi-card:hover → .yi-grade-badge scale(1.06) + brightness(1.1)
+   年次インサイトカードのホバー時に .yi-grade-badge（「優秀」「良好」等の貯蓄率グレードバッジ）を
+   scale(1.06) + brightness(1.1) でポップに強調。yi-card-value 変色+brightness・yi-card-unit brightness（本スプリント）と
+   連動しバッジ・値・単位が一体的にホバーで引き立つ演出に。 */
+.yi-grade-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-grade-badge { transform: scale(1.06); filter: brightness(1.1); }
+
+/* 3. asset-card:hover → .asset-sparkline-label primary カラー変化
+   資産カードのホバー時に .asset-sparkline-label（「残高推移」テキスト：color:text-muted・fs-3xs）を
+   primary カラーへ変色。asset-name 変色（v22.x）・asset-balance brightness（v22.x）・
+   asset-date-label 変色（v22.x）と連動しスパークラインラベルもホバーで一体的に反応する演出に。 */
+.asset-sparkline-label { transition: color var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-sparkline-label { color: var(--primary); }
+
+/* 4. asset-card:hover → .asset-balance-jpy brightness(1.06)
+   資産カードのホバー時に .asset-balance-jpy（外貨資産の円換算額テキスト：color:text-muted・fs-sm）を
+   brightness(1.06) で輝かせる。asset-balance brightness（v22.x）と連動し
+   元通貨・円換算額の両方がホバーで一体的に強調される演出に（外貨資産保有時のみ表示）。 */
+.asset-balance-jpy { transition: filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-balance-jpy { filter: brightness(1.06); }
+
+/* 5. asset-card:hover → .asset-currency-badge scale(1.05) + brightness(1.08)
+   資産カードのホバー時に .asset-currency-badge（「🇺🇸 USD」等の通貨バッジ：color:text-muted・fs-xs）を
+   scale(1.05) + brightness(1.08) でポップに強調。asset-type-badge scale（v22.x）・
+   asset-balance brightness（v22.x）と連動しバッジ類が一体的にホバーで反応する演出に（外貨資産時のみ表示）。 */
+.asset-currency-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-currency-badge { transform: scale(1.05); filter: brightness(1.08); }
+
+/* 6. fv-cat-table tbody tr:hover → .fv-mini-fill brightness(1.08) + fv-cat-color glow
+   財務予測カテゴリテーブルの行ホバー時に .fv-mini-fill（カテゴリ別ミニプログレスバー塗り部分）を
+   brightness(1.08) + fv-cat-color カラーの box-shadow glow で輝かせる。
+   fv-cat-amt brightness・fv-pct-txt 変色（v23.10）と連動しバー・金額・%の全要素が
+   一体的にホバーで反応する完成形に。 */
+.fv-mini-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-mini-fill { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--fv-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. debt-card:hover → .debt-type-badge scale(1.05) + brightness(1.08)
+   負債カードのホバー時に .debt-type-badge（「住宅ローン」「カードローン」等の負債種別バッジ）を
+   scale(1.05) + brightness(1.08) でポップに強調。debt-name 変色（v22.x）・debt-balance brightness（v22.x）・
+   debt-progress-label 変色（v23.11）・debt-end-pill 変色+brightness（v23.11）と連動し
+   バッジも含めたカード全体がホバーで一体的に反応する完成形に。 */
+.debt-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-type-badge { transform: scale(1.05); filter: brightness(1.08); }
+
+/* 8. ch-widget-item:hover → .ch-widget-label ch-accent カラー変化
+   チャレンジウィジェット行のホバー時に .ch-widget-label（「残り3日」「今月で達成」等の進捗ラベル：color:text-muted・fs-3xs）を
+   ch-accent/primary カラーへ変色。ch-widget-name 変色（v23.05）・ch-widget-pct brightness（v23.05）・
+   ch-bar-fill glow（v23.05）と連動しラベルも含めたウィジェット行の全要素が
+   ホバーで一体的に反応する完成形に。 */
+.ch-widget-label { transition: color var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-label { color: var(--ch-accent, var(--primary)); }
