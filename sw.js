@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v22.92'; // v22.92: デザイン改善・トースト/今日日付/予算バッジ/タブ/チップ等の視覚改善8箇所（toast-glassmorphism/toast-type-glow/cal-today-pulse/budget-badge-glow/section-tab-gradient/cat-chip-glow/placeholder-focus-fade/scrollbar-primary-tint）
+const CACHE_NAME = 'kakeibo-v22.93'; // v22.93: デザイン改善・マイクロインタラクション強化8箇所（tx-amount-glow/summary-deco-scale/fab-rotate/btn-success-textglow/month-nav-glow/insight-icon-glow/page-title-accent-line/wk-bar-top-glow）
 const ASSETS = [
   './index.html',
   './css/style.css',

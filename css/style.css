@@ -19023,3 +19023,106 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   background: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong));
 }
 * { scrollbar-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) transparent; }
+
+/* ============================================================
+   v22.93: マイクロインタラクション強化8箇所
+   （tx-amount-glow / summary-deco-scale / fab-rotate /
+     btn-success-textglow / month-nav-glow / insight-icon-glow /
+     page-title-accent-line / wk-bar-top-glow）
+   ============================================================ */
+
+/* 1. tx-table行ホバー → 金額text-shadow タイプ別glow
+   取引テーブル行ホバー時に金額セルに収支タイプ別カラーのtext-shadowを追加。
+   dd-tx-row（v22.84）と同パターンで、メインの取引テーブルにも同じ質感を統一。
+   income行 → success（緑）glow、expense行 → danger-text（赤）glow。 */
+.tx-table tbody tr[data-type="income"]:hover  td.amount {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+}
+.tx-table tbody tr[data-type="expense"]:hover td.amount {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+
+/* 2. summary-card ホバー → デコレーション円スケール拡大
+   サマリーカードの::after（右上小円）・::before（左下大円）に
+   transitionを付与し、ホバー時にそれぞれ scale(1.2) / scale(1.15) で滑らかに拡大。
+   カード全体のlift・glowアニメーション（v22.62）と連動して
+   背景装飾が動くリッチなホバー演出になる。 */
+.summary-card::after  { transition: transform var(--dur-fast) var(--ease-bounce); }
+.summary-card::before { transition: transform var(--dur-fast) var(--ease-bounce); }
+.summary-card:hover::after  { transform: scale(1.2); }
+.summary-card:hover::before { transform: scale(1.15); }
+
+/* 3. FAB + アイコン ホバー rotate(45deg)
+   FABのSVGアイコンにtransitionを付与し、ホバー時に45度回転させる。
+   「+」が斜めに傾く洗練されたマイクロインタラクション。
+   ボタン本体のscale(1.05)（既存）と組み合わせて躍動感が増す。
+   active時はrotateを保持しつつ微縮小。 */
+#global-fab svg {
+  transition: transform var(--dur-fast) var(--ease-bounce);
+}
+#global-fab:hover svg  { transform: rotate(45deg); }
+#global-fab:active svg { transform: rotate(45deg) scale(0.88); }
+
+/* 4. btn-success 白 text-shadow 追加
+   btn-primary（v22.89）と同パターンで成功ボタンにも白色text-shadowを追加。
+   インカムグリーン背景上の白テキストが内側から発光するような質感になる。
+   ホバー時はさらに明るく強調され、クリック誘引効果が高まる。 */
+.btn-success {
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.2), 0 0 14px rgba(255, 255, 255, 0.08);
+}
+.btn-success:hover {
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.35), 0 0 18px rgba(255, 255, 255, 0.14);
+}
+
+/* 5. month-nav-btn ホバー text-shadow glow
+   月ナビ矢印（‹ ›）ホバー時にprimaryカラーのtext-shadowを追加。
+   既存のborder/color/background変化に加え、矢印文字自体がprimary色で光る演出で
+   クリック可能であることの視覚フィードバックが強化される。 */
+.month-nav-btn:hover:not(:disabled) {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+}
+
+/* 6. insight-icon タイプ別 drop-shadow glow
+   インサイトアイテムの絵文字アイコンにタイプ別の発光エフェクトを追加。
+   既存のborder-left accent色・背景色と連動し、アイコンがほんのり輝くことで
+   インサイトのタイプが視覚的により鮮明に伝わる。
+   info/alert/success/warning の4タイプ全対応。 */
+.insight-item.insight-info    .insight-icon {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary) var(--mix-base), transparent));
+}
+.insight-item.insight-alert   .insight-icon {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--danger-text) var(--mix-base), transparent));
+}
+.insight-item.insight-success .insight-icon {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--success) var(--mix-base), transparent));
+}
+.insight-item.insight-warning .insight-icon {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--warning) var(--mix-base), transparent));
+}
+
+/* 7. page-title グラデーション下線アクセント
+   page-titleの直下に ::after でprimary→primary-end→透明のグラデーションラインを追加。
+   v22.89のテキストグラデーションと連動してページタイトルエリア全体に
+   ブランドアクセントが通り、タイトルとコンテンツの間に視覚的分離が生まれる。 */
+.page-title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to right, var(--primary), var(--primary-end), transparent);
+  margin-top: var(--sp-1);
+  width: 45%;
+  pointer-events: none;
+}
+
+/* 8. wk-bar-col ホバー → wk-bar-fill top drop-shadow glow
+   週間バー列ホバー時にバーフィルの上端にdrop-shadowグローを追加。
+   既存のbrightness(1.08)に重ねてバーの先端が光る演出で
+   ホバー状態がより立体的でリッチになる。
+   通常バー → primary glow、今日バー → danger-text glow で色を分岐。 */
+.wk-bar-col:hover .wk-bar-fill {
+  filter: brightness(1.08) drop-shadow(0 -3px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+}
+.wk-bar-col.wk-bar-today:hover .wk-bar-fill {
+  filter: brightness(1.1) drop-shadow(0 -3px 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent));
+}
