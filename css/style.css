@@ -19532,3 +19532,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tx-table th {
   text-shadow: 0 1px 4px color-mix(in srgb, var(--primary-end) var(--mix-faint), transparent);
 }
+
+/* ============================================================
+   v22.99: ホバー子要素カラー変化・brightness 8箇所
+   （pm-sum-label-color / yr-cell-label-typecolor /
+     fv-stat-label-brightness / dow-stat-label-brightness /
+     fc-cell-label-color / sub-widget-name-typecolor /
+     ev-widget-name-color / rpt-month-label-color）
+   ============================================================ */
+
+/* 1. pm-sum-card:hover → .pm-sum-label pm-sum-color カラー変化
+   支払方法サマリーカードのホバー時に .pm-sum-label（「現金」「カード」等）を
+   --pm-sum-color へ変色。pm-sum-value brightness（v22.88）・
+   pm-sum-icon scale+drop-shadow（v22.81）と連動し
+   ラベル・値・アイコンが一体的に反応する完成形に。 */
+.pm-sum-label { transition: color var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-label { color: var(--pm-sum-color); }
+
+/* 2. yr-cell:hover → .yr-cell-label タイプ別カラー変化
+   年次ウィジェット各セルのホバー時に .yr-cell-label（月名テキスト・text-muted）を
+   タイプ別カラーに変色。yr-cell-value brightness（v22.82）・
+   yr-cell-sub text-shadow glow（v22.96）と連動し
+   ラベル・値・サブが一体的に強調される演出に統一。 */
+.yr-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-cell-label { color: var(--success); }
+.yr-cell-expense:hover         .yr-cell-label { color: var(--danger-text); }
+.yr-cell-savings-success:hover .yr-cell-label { color: var(--success); }
+.yr-cell-savings-warn:hover    .yr-cell-label { color: var(--warning); }
+.yr-cell-savings-danger:hover  .yr-cell-label { color: var(--danger-text); }
+
+/* 3. fv-stat-card:hover → .fv-stat-label brightness(1.1)
+   固定費ウィジェット統計カードのホバー時に .fv-stat-label（グラデ背景上の
+   on-dark-near ラベルテキスト）を brightness(1.1) で明るくする。
+   fv-stat-value brightness（v22.82）・fv-stat-icon scale（v22.81）と連動し
+   グラデーション背景カード上の全テキストがホバーで一体的に輝く。 */
+.fv-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-label { filter: brightness(1.1); }
+
+/* 4. dow-stat-card:hover → .dow-stat-label brightness(1.1)
+   曜日別集計カードのホバー時に .dow-stat-label（グラデ背景上の
+   on-dark-title ラベルテキスト）を brightness(1.1) で明るくする。
+   dow-stat-amount brightness（v22.82）と連動し
+   dow-stat-day・label・amount の3要素が揃ってホバーで反応する。 */
+.dow-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-label { filter: brightness(1.1); }
+
+/* 5. forecast-card:hover → .fc-cell-label カラー変化
+   キャッシュフロー予測カードのホバー時に .fc-cell-label（「現金残高」等・
+   text-muted カラー）を primary に変色。fc-cell-amount brightness（v22.88）・
+   fc-progress-fill glow（v22.81）と連動しラベルと金額が揃ってホバーで強調。 */
+.fc-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-label { color: var(--primary); }
+
+/* 6. sub-widget-item:hover → .sub-widget-name タイプ別カラー変化
+   サブスクウィジェット行のホバー時に .sub-widget-name（サブスク名称）を
+   タイプ別カラーに変色。sub-urgent=danger-text・sub-soon=warning・通常=primary。
+   sub-widget-amount 変色（v22.88）・sub-widget-icon scale（v22.80）と連動し
+   名称・アイコン・金額が一体的に反応するホバー体験に統一。 */
+.sub-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover            .sub-widget-name { color: var(--primary); }
+.sub-widget-item.sub-urgent:hover .sub-widget-name { color: var(--danger-text); }
+.sub-widget-item.sub-soon:hover   .sub-widget-name { color: var(--warning); }
+
+/* 7. ev-widget-item:hover → .ev-widget-name カラー変化
+   イベントウィジェット行のホバー時に .ev-widget-name（イベント名称）を
+   ev-accent(primary) カラーに変色。ev-widget-amount 変色（v22.88）・
+   ev-widget-icon scale+drop-shadow（v22.80）と連動し
+   名称・アイコン・金額が一体的に反応する完成形に。 */
+.ev-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-name { color: var(--ev-accent, var(--primary)); }
+
+/* 8. rpt-month-row.is-clickable:hover → .rpt-month-label カラー変化
+   レポート月行のホバー時に .rpt-month-label（「1月」等の月名テキスト）を
+   primary カラーに変色。income/expense td brightness（v22.82）と連動し
+   月ラベルも含めた行全体がホバーで視覚的に応答する一体感を実現。 */
+.rpt-month-label { transition: color var(--dur-fast) var(--ease-out); }
+.rpt-month-row.is-clickable:hover .rpt-month-label { color: var(--primary); }
