@@ -19452,3 +19452,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .goal-card:hover .goal-ring-fill {
   filter: drop-shadow(0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent));
 }
+
+/* ============================================================
+   v22.98: ホバー子要素カラー変化・静的glow 8箇所
+   (wl-card-note-color / md-cat-text-color / pace-label-statuscolor /
+    pace-value-statusglow / adv-filter-on-glow / summary-label-opacity /
+    cat-chip-name-color / tx-th-textshadow)
+   ============================================================ */
+
+/* 1. wl-card:hover → .wl-card-note カラー変化
+   ウィッシュリストカードのホバー時にメモテキストを primary カラーに変色。
+   wl-card-name 変色（v22.94）・wl-card-price 変色（v22.88）・
+   wl-card-icon scale（v22.77）と連動し名称・メモ・価格が一体的に反応する。 */
+.wl-card-note { transition: color var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-note { color: var(--primary); }
+
+/* 2. md-cat-row:hover → .md-cat-text カラー変化
+   月ドリルダウンのカテゴリ行ホバー時にカテゴリ名テキストを
+   --md-cat-color に変色。md-cat-amount 変色（v22.88）と連動し
+   カテゴリ名・金額が同じアクセント色で揃って応答する一体感を演出。 */
+.md-cat-text { transition: color var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-text { color: var(--md-cat-color, var(--primary)); }
+
+/* 3. pace-bar-row:hover → .pace-bar-label ステータス別カラー変化
+   ペースバー行のホバー時にラベルテキストをステータスに応じた色に変色。
+   :has() でfill要素のステータスクラスを検出し
+   good=success（緑）/ warn=warning（黄橙）/ over=danger-text（赤）に分岐。
+   pace-daily-cell の :has() パターン（v22.75）と同系統の演出。 */
+.pace-bar-label { transition: color var(--dur-fast) var(--ease-out); }
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-label { color: var(--success); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-label { color: var(--warning); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-label { color: var(--danger-text); }
+
+/* 4. pace-bar-row:hover → .pace-bar-value ステータス別 brightness + カラー
+   ペースバー行のホバー時に右側の値テキストにも同様のステータス色変化を適用。
+   pace-bar-label 変色（本スプリント）と連動してラベル・値が揃って反応し
+   ペース全体のホバー演出がより鮮明になる。 */
+.pace-bar-value { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value { color: var(--success);     filter: brightness(1.08); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value { color: var(--warning);     filter: brightness(1.08); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value { color: var(--danger-text); filter: brightness(1.08); }
+
+/* 5. adv-filter-toggle.adv-filter-on 静的 box-shadow glow
+   詳細フィルターが有効（.adv-filter-on）の時にトグルボタンに primary の
+   外周グロー（box-shadow）を追加。既存の border-color/color/background に加え
+   glow が付与され、フィルターが適用中であることが視覚的に際立つ。
+   ダークモードでは primary-end ベースのグローに調整。 */
+.adv-filter-toggle.adv-filter-on {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .adv-filter-toggle.adv-filter-on {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 6. summary-card:hover → .summary-label opacity → 1
+   サマリーカードのホバー時にラベルテキスト（「収入」「支出」「残高」）の
+   opacity を var(--opacity-near)（0.80）から 1.0 に上げ完全に表示する。
+   summary-amount 変色（v22.88）・summary-deco-scale（v22.93）・
+   diff scale（v22.94）と連動しカード全要素が一体的に強調される。 */
+.summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.summary-card:hover .summary-label { opacity: 1; }
+
+/* 7. cat-chip:hover → .cat-chip-name カラー変化
+   カテゴリチップのホバー時に名称テキストを --cat-color に変色。
+   cat-chip-icon の scale+drop-shadow（v22.83）と連動し
+   アイコン・名称が一体的に反応するホバー体験になる。
+   未選択チップのホバー品質向上（v22.74）に名称変色を追加して完成形に。 */
+.cat-chip-name { transition: color var(--dur-fast) var(--ease-out); }
+.cat-chip:hover .cat-chip-name { color: var(--cat-color, var(--primary)); }
+
+/* 8. .tx-table th 静的 primary micro text-shadow
+   取引テーブルのヘッダーセルに常時 primary カラーの極微細 text-shadow を追加。
+   card-title glow（v22.90）・page-title accent（v22.93）と同系統で
+   ヘッダー文字が背景から僅かに浮き上がるプレミアム感を付与する。
+   ダークモードでは primary-end ベースで同様に調整。 */
+.tx-table th {
+  text-shadow: 0 1px 3px color-mix(in srgb, var(--primary) var(--mix-micro), transparent);
+}
+[data-theme="dark"] .tx-table th {
+  text-shadow: 0 1px 4px color-mix(in srgb, var(--primary-end) var(--mix-faint), transparent);
+}
