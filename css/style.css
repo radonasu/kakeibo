@@ -20601,3 +20601,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ホバーで一体的に反応する完成形に。 */
 .ch-widget-label { transition: color var(--dur-fast) var(--ease-out); }
 .ch-widget-item:hover .ch-widget-label { color: var(--ch-accent, var(--primary)); }
+
+/* ── v23.14 ホバー子要素カラー変化・brightness・scale・glow 8箇所 ────────────────────────
+   sub-monthly-equiv-brightness / sub-cycle-unit-color /
+   ev-type-badge-scale / ev-cat-badge-color /
+   ci-badge-scale / ct-tbl-dot-scale /
+   hs-score-unit-brightness / hs-prev-badge-scale
+   ──────────────────────────────────────────────────────────────────────────────────── */
+
+/* 1. sub-card:hover → .sub-monthly-equiv brightness(1.06)
+   サブスクカードのホバー時に .sub-monthly-equiv（「月換算: ¥xxx」等の月換算金額テキスト：color:text-muted・fs-2xs）を
+   brightness(1.06) で輝かせる。sub-card-amount カラー変化（v23.08）・sub-card-name カラー変化（v23.08）・
+   sub-cycle-tag 変色（v23.02）と連動し月換算額もホバーで一体的に反応する完成形に。 */
+.sub-monthly-equiv { transition: filter var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-monthly-equiv { filter: brightness(1.06); }
+
+/* 2. sub-card:hover → .sub-cycle-unit sub-accent カラー変化
+   サブスクカードのホバー時に .sub-cycle-unit（「/月」「/年」等のサイクル単位テキスト：color:text-muted・fs-3xs）を
+   sub-accent/primary カラーへ変色。sub-card-amount カラー変化（v23.08）・sub-monthly-equiv brightness（本スプリント）・
+   sub-cycle-tag 変色（v23.02）と連動しサブスク詳細情報が一体的にホバーで反応する完成形に。 */
+.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-unit { color: var(--sub-accent, var(--primary)); }
+
+/* 3. ev-card:hover → .ev-type-badge scale(1.05) + brightness(1.08)
+   収支予定カードのホバー時に .ev-type-badge（「収入」「支出」バッジ）を
+   scale(1.05) + brightness(1.08) でポップに強調。ev-card-icon-wrap scale（v22.x）・
+   ev-card-name/amount/memo 変色（v23.02）と連動し種別バッジも含めたカード全体が
+   ホバーで一体的に反応する完成形に。 */
+.ev-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-type-badge { transform: scale(1.05); filter: brightness(1.08); }
+
+/* 4. ev-card:hover → .ev-cat-badge primary カラー変化
+   収支予定カードのホバー時に .ev-cat-badge（カテゴリ名テキスト：color:text-muted・fs-2xs）を
+   primary カラーへ変色。ev-type-badge scale（本スプリント）・ev-card-name 変色（v23.02）と連動し
+   カード内全テキスト要素がホバーで反応する完成形に。 */
+.ev-cat-badge { transition: color var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-cat-badge { color: var(--primary); }
+
+/* 5. ci-challenge-item:hover → .ci-badge scale(1.06) + brightness(1.1)
+   マンスリーチェックインのチャレンジ行ホバー時に .ci-badge（「達成」「未達」バッジ）を
+   scale(1.06) + brightness(1.1) でポップに強調。ci-challenge-name 変色（v22.95）と連動し
+   チャレンジ名・達成バッジが一体的にホバーで反応する演出に。 */
+.ci-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ci-challenge-item:hover .ci-badge { transform: scale(1.06); filter: brightness(1.1); }
+
+/* 6. ct-table tbody tr:hover → .ct-tbl-dot scale(1.25) + primary glow
+   カテゴリ比較テーブルの行ホバー時に .ct-tbl-dot（カテゴリ色付きドット）を
+   scale(1.25) + primary box-shadow glow で輝かせる。ct-month-cell 変色・ct-cell-val brightness・
+   ct-row-total glow（v23.09）と連動しドット・月ラベル・金額の全要素が一体的に
+   ホバーで反応する完成形に。 */
+.ct-tbl-dot { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.ct-table tbody tr:hover .ct-tbl-dot { transform: scale(1.25); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 7. health-score-card:hover → .hs-score-unit brightness(1.1)
+   家計スコアカードのホバー時に .hs-score-unit（「点」テキスト：ゲージ内単位）を
+   brightness(1.1) で輝かせる。hs-gauge-fill brightness+glow（v22.x）・hs-score-num brightness（v22.x）と
+   連動しゲージ内の数値・単位が一体的にホバーで強調される完成形に。 */
+.hs-score-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-score-unit { filter: brightness(1.1); }
+
+/* 8. health-score-card:hover → .hs-prev-badge scale(1.05) + brightness(1.1)
+   家計スコアカードのホバー時に .hs-prev-badge（「▲3pt」「▼2pt」等のトレンドバッジ）を
+   scale(1.05) + brightness(1.1) でポップに強調。hs-gauge-fill brightness+glow（v22.x）・
+   hs-score-num brightness（v22.x）と連動しバッジもホバーで一体的に引き立つ演出に。 */
+.hs-prev-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-prev-badge { transform: scale(1.05); filter: brightness(1.1); }
