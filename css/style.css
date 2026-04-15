@@ -19126,3 +19126,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wk-bar-col.wk-bar-today:hover .wk-bar-fill {
   filter: brightness(1.1) drop-shadow(0 -3px 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent));
 }
+
+/* ============================================================
+   v22.94: ホバー子要素カラー変化・静的glow 8箇所
+   （smi-amount-color / budget-cat-name-color / rc-item-name-color /
+     goal-pct-glow / diff-scale / goal-target-color /
+     yr-cell-sub-glow / debt-balance-glow）
+   ============================================================ */
+
+/* 1. smi-amount ホバー タイプ別カラー変化
+   .smi-income:hover / .smi-expense:hover 時に .smi-amount のテキスト色を
+   収支タイプ別カラーに変化させる。
+   現状はコンテナの brightness+shadow のみ → 数値テキスト自体もタイプ色に変色し
+   サマリーミニバーのホバー体験を統一する。 */
+.smi-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-amount { color: var(--success);     filter: brightness(1.08); }
+.smi-expense:hover .smi-amount { color: var(--danger-text); filter: brightness(1.08); }
+
+/* 2. budget-cat-name ホバーカラー変化
+   .budget-item:hover 時に .budget-cat-name のテキストを primary カラーに変色。
+   既存の .budget-nums カラー変化（v22.88）・.color-dot スケール（v22.81）と連動し
+   予算行ホバー時に名称・数値・ドットの全要素が一体的に反応するようになる。
+   over-budget 行は expense カラーへの変色で警告感を強調。 */
+.budget-cat-name { transition: color var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-cat-name                          { color: var(--primary); }
+.budget-item:has(.budget-fill.over):hover .budget-cat-name  { color: var(--expense); }
+
+/* 3. rc-item-name ホバーカラー変化
+   .rc-item:hover 時に .rc-item-name のテキストを primary カラーに変色。
+   既存の .rc-item-amount タイプ別カラー（v22.87）と組み合わさり
+   繰り返し支出アイテムのホバー時に名称・金額の両方が視覚的に応答する。 */
+.rc-item-name { transition: color var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-name { color: var(--primary); }
+
+/* 4. goal-pct 静的 text-shadow glow
+   目標カードの達成率パーセント（.goal-pct）に常時 goal-accent カラーの
+   text-shadow を追加。goal-accent 色でテキスト着色済みの数値が
+   輝くことで達成率の重要性が視覚的に強調される。
+   goal-ring-fill の静的 glow（SVG drop-shadow）と呼応する演出。 */
+.goal-pct {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .goal-pct {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent);
+}
+
+/* 5. summary-card:hover → diff badge スケール
+   サマリーカードのホバー時に .diff（前月比バッジ）を scale(1.06) で拡大。
+   既存の summary-card::after/before スケール（v22.93）・金額 brightness と連動し
+   カード全体のホバーで背景円・金額・バッジの全要素が一体的に反応する。 */
+.diff { transition: transform var(--dur-fast) var(--ease-bounce); }
+.summary-card:hover .diff { transform: scale(1.06); }
+
+/* 6. goal-target ホバーカラー変化
+   .goal-card:hover 時に .goal-target（目標金額：text-muted カラー）を
+   primary カラーに変色。goal-saved の変色（v22.88）と連動して
+   saved/target の両金額がホバー時に揃って primary アクセント色に変化し
+   目標金額ペアの一体感が生まれる。 */
+.goal-target { transition: color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-target { color: var(--primary); }
+
+/* 7. yr-cell-sub.yr-up / yr-down 静的 text-shadow glow
+   年次ウィジェットのトレンド表示テキスト（↑↓ + パーセント）に
+   常時タイプ別カラーの text-shadow を追加。
+   yr-up（成功・緑）と yr-down（危険・赤）のトレンド指標が
+   静的に輝き、yr-cell のホバー glow と相乗りする。 */
+.yr-cell-sub.yr-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-md), transparent); }
+.yr-cell-sub.yr-down { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+
+/* 8. debt-balance 静的 text-shadow glow
+   負債カード .debt-balance（大型残高数値）に常時 expense カラーの
+   text-shadow glow を追加。ホバー時の brightness(1.08)（v22.87）と合わさり
+   通常時にも残高数値が expense カラーで静かに光る警告感のある演出になる。 */
+.debt-balance {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .debt-balance {
+  text-shadow: 0 0 16px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
+}
