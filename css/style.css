@@ -20118,3 +20118,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    金額・メモが一体的にホバーで反応する演出に。 */
 .tx-table td.amount { transition: filter var(--dur-fast) var(--ease-out); }
 .tx-table tbody tr:hover td.amount { filter: brightness(1.08); }
+
+/* =====================================================================
+   v23.07: ホバー子要素カラー変化・brightness・glow 8箇所
+   （ci-cell-label-color/cal-date-num-color/cal-amount-brightness/
+     fc-cell-balance-glow/fc-cell-hint-color/insight-desc-brightness/
+     md-cat-pct-color/yi-card-sub-color）
+   ===================================================================== */
+
+/* 1. ci-cell:hover → .ci-cell-label primary カラー変化
+   マンスリーチェックインモーダルの .ci-cell:hover 時に .ci-cell-label
+   （「収入」「支出」「収支」等のラベルテキスト：color:text-muted）を
+   primary カラーへ変色。
+   ci-cell-value brightness+タイプ別カラー（v22.70）と連動し
+   ラベル・数値が一体的にホバーで反応する完成形に。 */
+.ci-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.ci-cell:hover .ci-cell-label { color: var(--primary); }
+
+/* 2. cal-cell:hover → .cal-date-num primary カラー変化
+   カレンダーセルのホバー時に .cal-date-num（日付数字：color:text-muted）を
+   primary カラーへ変色（.today バッジは白色維持・sun/sat 曜日色も維持）。
+   cal-cell:hover の inset border glow（既存）と連動し
+   日付数字がホバーを視覚的に強調する。 */
+.cal-date-num { transition: color var(--dur-fast) var(--ease-out); }
+.cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { color: var(--primary); }
+
+/* 3. cal-cell:hover → .cal-amount brightness(1.1)
+   カレンダーセルのホバー時に .cal-amount（当日の収入/支出金額テキスト）を
+   brightness(1.1) で強調。inc=success / exp=expense の既存カラーは維持し
+   輝度のみ追加して金額が際立つ。
+   cal-date-num 変色（本スプリント）と連動しセル内の全テキストが一体的に反応。 */
+.cal-amount { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-cell:hover:not(.cal-empty) .cal-amount { filter: brightness(1.1); }
+
+/* 4. forecast-card:hover → .fc-cell-balance brightness(1.08) + fc-color glow
+   キャッシュフロー予測カードのホバー時に .fc-cell-balance（現金残高セル背景付きエリア）を
+   brightness(1.08) で強調し fc-color の box-shadow glow を追加。
+   fc-cell-amount brightness（v22.x）・fc-cell-label 変色（v22.x）・
+   fc-status-badge scale（v23.06）と連動し残高セルも一体的に反応する演出に。 */
+.fc-cell-balance { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-balance { filter: brightness(1.08); box-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. forecast-card:hover → .fc-cell-hint primary カラー変化
+   キャッシュフロー予測カードのホバー時に .fc-cell-hint（「先月比：+¥12,345」等の
+   ヒントテキスト：color:text-faint）を primary カラーへ変色。
+   fc-cell-label 変色（v22.x）・fc-cell-amount brightness（v22.x）と連動し
+   カード内のすべてのテキスト要素がホバーで揃って反応する完成形に。 */
+.fc-cell-hint { transition: color var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-hint { color: var(--primary); }
+
+/* 6. insight-item:hover → .insight-desc brightness(1.08) タイプ別
+   インサイトアイテムのホバー時に .insight-desc（説明文テキスト：color:text-muted）を
+   brightness(1.08) で強調。insight-title brightness（v22.x）・insight-icon scale+glow（v22.x）と
+   連動しアイコン・タイトル・説明文の全要素が一体的にホバーで反応する完成形に。 */
+.insight-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.insight-item:hover .insight-desc { filter: brightness(1.08); }
+
+/* 7. md-cat-row:hover → .md-cat-pct --md-cat-color カラー変化 + brightness(1.06)
+   月別ドリルダウンモーダルのカテゴリ行ホバー時に .md-cat-pct（達成率パーセント：color:text-muted）を
+   --md-cat-color カラーへ変色 + brightness(1.06) で強調。
+   md-cat-bar brightness+glow（v22.x）・md-cat-amount 変色（v22.x）・
+   md-cat-text 変色（v22.x）と連動し行内の全要素が一体的に反応する完成形に。 */
+.md-cat-pct { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-pct { color: var(--md-cat-color, var(--primary)); filter: brightness(1.06); }
+
+/* 8. yi-card:hover → .yi-card-sub primary カラー変化
+   年次インサイトカードのホバー時に .yi-card-sub（補足テキスト・月平均等の数値情報）を
+   primary カラーへ変色。yi-card-icon scale（v22.x）・yi-card-value 変色（v22.x）・
+   yi-card-label 変色（v22.x）と連動しアイコン・ラベル・値・補足情報の全要素が
+   一体的に反応する完成形に。 */
+.yi-card-sub { transition: color var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-sub { color: var(--primary); }
