@@ -20189,3 +20189,73 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的に反応する完成形に。 */
 .yi-card-sub { transition: color var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-card-sub { color: var(--primary); }
+
+/* =====================================================================
+   v23.08: ホバー子要素カラー変化・brightness・glow 8箇所
+   （ct-month-cell-color/ct-cell-val-brightness/ct-row-total-glow/
+     tg-tag-chip-pop/tg-text-muted-color/tg-expense-glow/
+     rpt-income-glow/rpt-expense-glow）
+   ===================================================================== */
+
+/* 1. ct-table tbody tr:hover → .ct-month-cell primary カラー変化
+   カテゴリ比較テーブルの行ホバー時に .ct-month-cell（「2024年1月」等の月ラベルセル：
+   fw-semi・color:text）を primary カラーへ変色。
+   ct-table tr:hover の translateY+shadow（既存）と連動し
+   月ラベルがホバーを視覚的に強調する起点になる。 */
+.ct-month-cell { transition: color var(--dur-fast) var(--ease-out); }
+.ct-table tbody tr:hover .ct-month-cell { color: var(--primary); }
+
+/* 2. ct-table tbody tr:hover → .ct-cell-val brightness(1.08)
+   カテゴリ比較テーブルの行ホバー時に .ct-cell-val（各月の金額セル：tabular-nums）を
+   brightness(1.08) で輝かせる。ct-month-cell 変色（本スプリント）と連動し
+   月ラベル・金額セルが一体的にホバーで反応する演出に。 */
+.ct-cell-val { transition: filter var(--dur-fast) var(--ease-out); }
+.ct-table tbody tr:hover .ct-cell-val { filter: brightness(1.08); }
+
+/* 3. ct-table tbody tr:hover → .ct-row-total brightness(1.1) + primary text-shadow glow
+   カテゴリ比較テーブルの行ホバー時に .ct-row-total（行合計セル：fw-bold・color:text）を
+   brightness(1.1) + primary text-shadow glow で強調。
+   ct-cell-val brightness（本スプリント）より強めにして行合計が際立つ演出に。
+   ct-month-cell 変色・ct-cell-val brightness（本スプリント）と連動し
+   行内の全セルが一体的に反応する完成形に。 */
+.ct-row-total { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-table tbody tr:hover .ct-row-total { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. tg-table tbody tr:hover → .tx-tag-chip scale(1.05) + brightness(1.1)
+   タグ分析テーブルの行ホバー時に .tx-tag-chip（「#食費」等のタグチップ）を
+   scale(1.05) + brightness(1.1) でポップに強調。
+   tg-table tr:hover の translateX+shadow（v22.71）と連動し
+   タグチップがホバーで引き立つマイクロインタラクション。 */
+.tg-table .tx-tag-chip { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover .tx-tag-chip { transform: scale(1.05); filter: brightness(1.1); }
+
+/* 5. tg-table tbody tr:hover → td.text-muted primary カラー変化
+   タグ分析テーブルの行ホバー時に td.text-muted（「3件」「42%」等の件数・割合テキスト）を
+   primary カラーへ変色。tg-tag-chip pop（本スプリント）・tg-expense-glow（本スプリント）と
+   連動しタグ・件数・金額・割合の全要素が一体的に反応する完成形に。 */
+.tg-table td.text-muted { transition: color var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td.text-muted { color: var(--primary); }
+
+/* 6. tg-table tbody tr:hover → td.expense brightness(1.08) + expense text-shadow glow
+   タグ分析テーブルの行ホバー時に td.expense（支出金額セル）を
+   brightness(1.08) + expense text-shadow glow で強調。
+   tg-tag-chip pop・td.text-muted 変色（本スプリント）と連動し
+   タグ行の全要素が一体的にホバーで反応する完成形に。 */
+.tg-table td.expense { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td.expense { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 7. rpt-month-row:hover → td.income brightness(1.08) + success text-shadow glow
+   レポート月別表の行ホバー時に td.income（収入金額セル）に
+   success text-shadow glow を追加（brightness(1.08) は既存ルールを引き継ぎ）。
+   rpt-month-label 変色（v22.99）・rpt-row-chevron のスライド（既存）と連動し
+   収入セルもホバーで輝く演出を追加。 */
+.rpt-month-row td.income { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rpt-month-row.is-clickable:hover td.income { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 8. rpt-month-row:hover → td.expense brightness(1.08) + expense text-shadow glow
+   レポート月別表の行ホバー時に td.expense（支出金額セル）に
+   expense text-shadow glow を追加（brightness(1.08) は既存ルールを引き継ぎ）。
+   td.income glow（本スプリント）と対称でホバー時の行全体の演出を強化し
+   収入・支出・収支の全数値列が揃って輝く完成形に。 */
+.rpt-month-row td.expense { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rpt-month-row.is-clickable:hover td.expense { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
