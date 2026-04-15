@@ -18904,3 +18904,122 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .empty-debt-icon {
   filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
 }
+
+/* ============================================================
+   v22.92: トースト・今日日付・予算バッジ・タブ・チップ等の視覚改善8箇所
+   （toast-glassmorphism / toast-type-glow / cal-today-pulse /
+     budget-badge-glow / section-tab-gradient / cat-chip-glow /
+     placeholder-focus-fade / scrollbar-primary-tint）
+   ============================================================ */
+
+/* 1. kk-toast ガラスモーフィズム（backdrop-blur）
+   トースト通知に backdrop-filter: blur を追加しガラスのような透明感を演出。
+   背景を少し透過させ、下のコンテンツがぼやけて見えるモダンな glassmorphism 効果。
+   ダークモードでも同様に適用し、border に primary nano tint を追加して
+   ブランドカラーの繊細なアクセントを加える。 */
+.kk-toast {
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-nano), var(--border));
+}
+[data-theme="dark"] .kk-toast {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border));
+}
+
+/* 2. kk-toast タイプ別 box-shadow glow
+   success / error / warning トーストに対応する色の外周グローを追加。
+   既存のフラットな shadow-md に加え、タイプカラーの拡散グローが
+   通知の種類を視覚的に強調し一目で分かるようになる。 */
+.kk-toast-success {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+}
+.kk-toast-error {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+}
+.kk-toast-warning {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--warning) var(--mix-xs), transparent);
+}
+
+/* 3. カレンダー 今日セル パルスアニメーション
+   .cal-date-num.today に拍動するリングアニメーションを追加。
+   週間バー（wk-today-pulse: v22.xx）と同系統のパルスで、
+   カレンダー上の今日が一目で分かるダイナミックなアクセント。
+   box-shadow が 2px → 4px と波打ち、今日が視覚的に際立つ。 */
+@keyframes cal-today-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+                0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  }
+}
+.cal-date-num.today {
+  animation: cal-today-pulse 2.5s ease-in-out infinite;
+}
+
+/* 4. 予算パーセントバッジ warn/over glow
+   .budget-pct-badge.warn・.over に対応タイプカラーの text-shadow glow を追加。
+   warning（黄橙）・expense（赤）の既存カラーテキストにグローが加わり、
+   予算超過・警告バッジが視覚的に強調される。
+   hover時の budget-fill glow（v22.67）と連動し予算超過の緊迫感が増す。 */
+.budget-pct-badge.warn {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent);
+}
+.budget-pct-badge.over {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense) var(--mix-base), transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-2xs), transparent);
+}
+
+/* 5. section-tab.is-active グラデーション背景
+   フラットな --primary-light 背景を上から下へのグラデーションに変更。
+   上端が primary nano tint で始まり primary-light に溶け込む奥行き感のある
+   グラデーション背景に。v22.90 の section-tabs border-glow と連動し
+   アクティブタブ全体にプレミアム感が生まれる。
+   ダークモードは on-dark ベースで調整。 */
+.section-tab.is-active {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface)),
+    var(--primary-light)
+  );
+}
+[data-theme="dark"] .section-tab.is-active {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--primary) var(--mix-base), transparent),
+    color-mix(in srgb, var(--primary) var(--mix-sm), transparent)
+  );
+}
+
+/* 6. cat-chip.selected cat-color 外周グロー
+   選択済みカテゴリチップに --cat-color の拡散 box-shadow を追加。
+   既存の focus-ring（focus-ring-w solid）に加え、カテゴリ固有カラーの
+   外周グローが選択状態をより鮮やかに表現。
+   cat-card（v22.87）・income/expense 行ホバー glow と同系統の演出。 */
+.cat-chip.selected {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent),
+              0 0 14px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent);
+}
+
+/* 7. フォーム input フォーカス時 placeholder fade
+   フォーカス中の input/textarea で placeholder テキストが opacity 0.4 に薄まる。
+   入力開始のタイミングで placeholder が控えめになり、
+   ユーザーの入力テキストとの視覚的コントラストが高まる洗練された動作。 */
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+  opacity: 0.35;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+/* 8. スクロールバー サム primary ティント
+   グローバルスクロールバーのサムに primary カラーのわずかな色味を加える。
+   従来のニュートラルグレー（--border-strong）から
+   color-mix で primary 12% をブレンドしたブランドカラーティントに変更。
+   Firefox の scrollbar-color も同様に更新。ダークモードは別管理で影響なし。 */
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong));
+}
+* { scrollbar-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) transparent; }
