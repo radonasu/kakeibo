@@ -20395,3 +20395,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ラベル・金額・バーの全要素が一体的にホバーで反応する完成形に。 */
 .wk-bar-label { transition: color var(--dur-fast) var(--ease-out); }
 .wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { color: var(--primary); }
+
+/* ── v23.11 ホバー子要素カラー変化・brightness 8箇所 ────────────────────────────────────
+   cal-ev-cat-color / cal-ev-badge-brightness /
+   sub-widget-next-color / sub-cycle-badge-brightness /
+   sb-diff-pill-brightness / pt-note-color /
+   debt-progress-label-color / debt-end-pill-brightness
+   ──────────────────────────────────────────────────────────────────────────────────── */
+
+/* 1. cal-ev-item:hover → .cal-ev-cat cal-ev-color カラー変化
+   カレンダーイベント行のホバー時に .cal-ev-cat（カテゴリ名テキスト：color:text-muted）を
+   cal-ev-color/primary カラーへ変色。cal-ev-name 変色（v22.x）・cal-ev-amount brightness（v22.x）・
+   cal-ev-icon scale+glow（v22.x）と連動しカテゴリも含めたアイテム全体が一体的に反応する完成形に。 */
+.cal-ev-cat { transition: color var(--dur-fast) var(--ease-out); }
+.cal-ev-item:hover .cal-ev-cat { color: var(--cal-ev-color, var(--primary)); }
+
+/* 2. cal-ev-item:hover → .cal-ev-badge brightness(1.1)
+   カレンダーイベント行のホバー時に .cal-ev-badge（「完了」「予定」等のステータスバッジ）を
+   brightness(1.1) で輝かせる。done=success / pending=text-muted の既存カラーを維持しつつ
+   輝度のみ追加。cal-ev-name・cal-ev-cat・cal-ev-amount・cal-ev-icon と連動し
+   バッジもホバーで一体的に強調されるマイクロインタラクション。 */
+.cal-ev-badge { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-ev-item:hover .cal-ev-badge { filter: brightness(1.1); }
+
+/* 3. sub-widget-item:hover → .sub-widget-next タイプ別カラー変化
+   サブスクウィジェット行のホバー時に .sub-widget-next（「次回: 4/30」等の次回支払日テキスト：color:text-muted）を
+   タイプ別カラーへ変色。通常=primary / sub-urgent=danger-text / sub-soon=warning。
+   sub-widget-name 変色（v22.x）・sub-widget-amount 変色+brightness（v22.x）・
+   sub-widget-icon scale（v22.x）と連動し次回日付も含めたアイテム全体がホバーで揃って反応する完成形に。 */
+.sub-widget-next { transition: color var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover            .sub-widget-next { color: var(--primary); }
+.sub-widget-item.sub-urgent:hover .sub-widget-next { color: var(--danger-text); }
+.sub-widget-item.sub-soon:hover   .sub-widget-next { color: var(--warning); }
+
+/* 4. sub-widget-item:hover → .sub-cycle-badge brightness(1.1)
+   サブスクウィジェット行のホバー時に .sub-cycle-badge（「月払い」「年払い」等のサイクルバッジ）を
+   brightness(1.1) で明るく強調。sub-widget-next 変色（本スプリント）・sub-widget-amount 変色（v22.x）と
+   連動しバッジ・日付・金額の補足情報が一体的にホバーで反応するウィジェット演出に。 */
+.sub-cycle-badge { transition: filter var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover .sub-cycle-badge { filter: brightness(1.1); }
+
+/* 5. sb-row:hover → .sb-diff-pill brightness(1.1)
+   支出提案行のホバー時に .sb-diff-pill（前月比差分ピル：up=danger-text / down=success / same=text-muted）を
+   brightness(1.1) で輝かせる。sb-suggested brightness（v22.x）・sb-row:hover の translateX+shadow と連動し
+   差分ピルもホバーで視覚的に引き立つマイクロインタラクション。 */
+.sb-diff-pill { transition: filter var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-diff-pill { filter: brightness(1.1); }
+
+/* 6. pt-card:hover → .pt-note pt-accent カラー変化
+   ポイントカードのホバー時に .pt-note（メモテキスト：color:text-muted・fs-2xs）を
+   pt-accent/primary カラーへ変色。pt-card-name 変色（v22.x）・pt-card-balance 変色（v22.x）・
+   pt-exp-badge brightness（v22.x）と連動しメモも含めたカード内の全要素が
+   ホバーで揃って反応する完成形に。 */
+.pt-note { transition: color var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-note { color: var(--pt-accent, var(--primary)); }
+
+/* 7. debt-card:hover → .debt-progress-label primary カラー変化
+   負債カードのホバー時に .debt-progress-label（「返済率: 42%」等の進捗ラベル：color:text、fw-semi）を
+   primary カラーへ変色。debt-bar-fill brightness+glow（v22.x）・debt-name 変色（v22.x）・
+   debt-balance brightness（v22.x）と連動しラベルもホバーで一体的に強調される演出に。 */
+.debt-progress-label { transition: color var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-progress-label { color: var(--primary); }
+
+/* 8. debt-card:hover → .debt-end-pill brightness(1.08) + primary カラー変化
+   負債カードのホバー時に .debt-end-pill（「完済予定: 2026年3月」等の完済予定バッジ：color:text-muted）を
+   brightness(1.08) + primary カラーへ変色。debt-progress-label 変色（本スプリント）・
+   debt-balance brightness（v22.x）・debt-rate-badge/debt-monthly-badge brightness（v22.x）と
+   連動しバッジも含めたカード下部情報が一体的にホバーで反応する完成形に。 */
+.debt-end-pill { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-end-pill { color: var(--primary); filter: brightness(1.08); }
