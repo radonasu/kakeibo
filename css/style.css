@@ -19608,3 +19608,87 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    月ラベルも含めた行全体がホバーで視覚的に応答する一体感を実現。 */
 .rpt-month-label { transition: color var(--dur-fast) var(--ease-out); }
 .rpt-month-row.is-clickable:hover .rpt-month-label { color: var(--primary); }
+
+/* ============================================================
+   v23.00: ホバー子要素カラー変化・brightness・静的glow 8箇所
+   (tg-stat-label-brightness / hm-stat-label-typecolor /
+    ct-stat-label-brightness / ct-stat-sub-brightness /
+    yoy-summary-value-brightness / yoy-summary-label-brightness /
+    sim-savings-value-staticglow / tg-stat-unit-color)
+   ============================================================ */
+
+/* 1. tg-stat-card:hover → .tg-stat-label brightness(1.1)
+   タグ統計カードのホバー時に .tg-stat-label（「合計支出」「利用件数」等の
+   テキスト-muted ラベル）を brightness(1.1) で明るく強調。
+   tg-stat-value primary変色+brightness（v22.82）・
+   tg-stat-icon scale+glow（v22.80）と連動し
+   ラベル・値・アイコンが一体的に反応する完成形に。 */
+.tg-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-label { filter: brightness(1.1); }
+
+/* 2. hm-stat-card:hover → .hm-stat-label タイプ別カラー変化
+   ヒートマップ統計カードのホバー時に .hm-stat-label を
+   nth-child 別のテーマカラーに変色。
+   1=primary / 2=danger-text / 3=warning / 4=success。
+   hm-stat-value タイプ別カラー（v22.84）と連動し
+   ラベル・値が揃って同じアクセント色で強調される一体感を実現。 */
+.hm-stat-label { transition: color var(--dur-fast) var(--ease-out); }
+.hm-stat-card:nth-child(1):hover .hm-stat-label { color: var(--primary); }
+.hm-stat-card:nth-child(2):hover .hm-stat-label { color: var(--danger-text); }
+.hm-stat-card:nth-child(3):hover .hm-stat-label { color: var(--warning); }
+.hm-stat-card:nth-child(4):hover .hm-stat-label { color: var(--success); }
+
+/* 3. ct-stat-card:hover → .ct-stat-label brightness(1.1)
+   カテゴリトレンド統計カードのホバー時に .ct-stat-label を
+   brightness(1.1) で明るく強調。
+   ct-stat-value ct-stat-color変色+brightness（v22.82）と連動し
+   ラベル・値が一体的にカードテーマ色で応答する。 */
+.ct-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-label { filter: brightness(1.1); }
+
+/* 4. ct-stat-card:hover → .ct-stat-sub brightness(1.05)
+   カテゴリトレンド統計カードのホバー時に .ct-stat-sub（サブ情報テキスト）を
+   brightness(1.05) でわずかに明るく。ct-stat-label brightness（本スプリント）・
+   ct-stat-value 変色（v22.82）と連動しカード内の全テキスト要素が
+   ホバー時に揃って微細な輝きで応答する統一感を実現。 */
+.ct-stat-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-sub { filter: brightness(1.05); }
+
+/* 5. yoy-summary-item:hover → .yoy-summary-value brightness(1.08)
+   前年比較サマリーカードのホバー時に .yoy-summary-value（大型年間数値）を
+   brightness(1.08) で輝かせる。yoy-up/yoy-down の色設定（danger-text/success）は
+   既存のまま維持し、brightness で数値の存在感を強調。
+   yoy-summary-item:hover の translateY+shadow（v22.74）・
+   .diff scale（v22.94）と連動しカード全体のホバー演出に数値輝きを追加。 */
+.yoy-summary-value { transition: filter var(--dur-fast) var(--ease-out); }
+.yoy-summary-item:hover .yoy-summary-value { filter: brightness(1.08); }
+
+/* 6. yoy-summary-item:hover → .yoy-summary-label brightness(1.1)
+   前年比較サマリーカードのホバー時に .yoy-summary-label（「今年」「昨年」等の
+   text-muted キャップスラベル）を brightness(1.1) で明るく。
+   yoy-summary-value brightness（本スプリント）と連動し
+   ラベル・値の両方がホバーで一体的に輝く演出に統一。 */
+.yoy-summary-label { transition: filter var(--dur-fast) var(--ease-out); }
+.yoy-summary-item:hover .yoy-summary-label { filter: brightness(1.1); }
+
+/* 7. .sim-savings-value 静的 success text-shadow glow
+   ローンシミュレーターの節約額大型数値（fw-black・fs-xl・success色）に
+   常時 success カラーの text-shadow glow を追加。
+   debt-balance 静的 expense glow（v22.94）・goal-pct text-shadow（v22.94）と
+   同パターンで、重要な成功数値が通常時から柔らかく輝く演出を付与。
+   ダークモードでは income-end ベースで調整し既存の color 変数に合わせる。 */
+.sim-savings-value {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .sim-savings-value {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
+}
+
+/* 8. tg-stat-card:hover → .tg-stat-unit primary カラー変化
+   タグ統計カードのホバー時に .tg-stat-unit（「件」「円」等の単位テキスト）を
+   primary カラーへ変色。tg-stat-label brightness（本スプリント）・
+   tg-stat-value primary変色（v22.82）と連動し
+   ラベル・値・単位の3要素が揃ってホバーで primary アクセント色に染まる
+   一体的な演出で完成形に。 */
+.tg-stat-unit { transition: color var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-unit { color: var(--primary); }
