@@ -19692,3 +19692,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的な演出で完成形に。 */
 .tg-stat-unit { transition: color var(--dur-fast) var(--ease-out); }
 .tg-stat-card:hover .tg-stat-unit { color: var(--primary); }
+
+/* ============================================================
+   Sprint #697 v23.01: ホバー子要素カラー変化・brightness 8箇所
+   goal-name-color / goal-remaining-color / dw-item-label-color /
+   bottom-nav-label-color / cal-sum-label-brightness /
+   cal-sum-value-brightness / nav-icon-bg-hover / pt-exp-badge-brightness
+   ============================================================ */
+
+/* 1. goal-card:hover → .goal-name カラー変化
+   .goal-card:hover 時に .goal-name（目標名称）を goal-accent(primary) カラーへ変色。
+   .goal-saved 変色（v22.88）・.goal-target 変色（v22.99）と連動し
+   名称・保存額・目標額が一体的に反応する完成形に。 */
+.goal-name { transition: color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-name { color: var(--goal-accent, var(--primary)); }
+
+/* 2. goal-card:hover → .goal-remaining カラー変化
+   .goal-card:hover 時に .goal-remaining（残り金額テキスト）を
+   goal-accent(primary) カラーへ変色。.goal-done-hint は success のまま維持。
+   .goal-name 変色（本スプリント）と連動しカード全テキストが一体的に反応。 */
+.goal-remaining:not(.goal-done-hint) { transition: color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-remaining:not(.goal-done-hint) { color: var(--goal-accent, var(--primary)); }
+
+/* 3. dw-item:hover → .dw-item-label カラー変化
+   .dw-item:hover 時に .dw-item-label（ウィジェット設定トグルのラベル名称）を
+   primary カラーへ変色。dw-item-icon scale+drop-shadow（v22.81）と連動し
+   ラベル・アイコンが一体的に反応するダッシュボード設定モーダルのホバー演出。 */
+.dw-item-label { transition: color var(--dur-fast) var(--ease-out); }
+.dw-item:hover .dw-item-label { color: var(--primary); }
+
+/* 4. bottom-nav-item:hover → .bottom-nav-label カラー変化
+   .bottom-nav-item:not(.active):hover 時に .bottom-nav-label を
+   primary カラーへ変色。bottom-nav-icon scale（v22.74）と連動し
+   アイコン・ラベルが一体的に反応するモバイルボトムナビの操作感向上。 */
+.bottom-nav-label { transition: color var(--dur-fast) var(--ease-out); }
+.bottom-nav-item:not(.active):hover .bottom-nav-label { color: var(--primary); }
+
+/* 5. cal-sum-item:hover → .cal-sum-label brightness(1.1)
+   カレンダーページ収支サマリーカードのホバー時に .cal-sum-label を
+   brightness(1.1) で明るく強調。cal-sum-value brightness（本スプリント）と
+   連動しラベル・値が一体的に輝くホバー演出に統一。 */
+.cal-sum-label { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-sum-item:hover .cal-sum-label { filter: brightness(1.1); }
+
+/* 6. cal-sum-item:hover → .cal-sum-value brightness(1.08)
+   カレンダーページ収支サマリーカードのホバー時に .cal-sum-value（大型金額数値）を
+   brightness(1.08) で輝かせる。income=success/expense=expense の既存色は維持しつつ
+   brightnessで数値の存在感を強調。cal-sum-label brightness（本スプリント）と連動。 */
+.cal-sum-value { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-sum-item:hover .cal-sum-value { filter: brightness(1.08); }
+
+/* 7. nav-item:hover → .nav-icon subtle background highlight
+   サイドナビ非アクティブ項目のホバー時に .nav-icon に
+   微細な primary background + padding を追加し視覚的な反応を強化。
+   現状の scale(1.12) に加えて色ある背景が付与され active 状態との
+   連続性を持ったホバーフィードバックに。 */
+.nav-icon { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), padding var(--dur-base) var(--ease-bounce); }
+.nav-item:not(.active):hover .nav-icon {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  padding: var(--sp-0-5);
+}
+[data-theme="dark"] .nav-item:not(.active):hover .nav-icon {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 8. pt-card:hover → .pt-exp-badge brightness 強化
+   .pt-card:hover 時に通常の .pt-exp-badge を brightness(1.1) で明るく強調。
+   .pt-urgent-badge/.pt-soon-badge はそれぞれ danger-text/warning カラーの
+   text-shadow glow（0 0 6px）を追加し視覚的なタイプ識別性を向上。
+   pt-card-name 変色（v22.95）・pt-card-balance 変色（v22.88）と連動し
+   バッジも含めたカードホバー演出を統一。 */
+.pt-exp-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-exp-badge { filter: brightness(1.1); }
+.pt-card:hover .pt-urgent-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); filter: brightness(1.08); }
+.pt-card:hover .pt-soon-badge   { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); filter: brightness(1.08); }
