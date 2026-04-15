@@ -19833,3 +19833,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    メモ・タグ・次回請求日・名称のすべてが一体的に反応する完成形に。 */
 .sub-card-memo { transition: color var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-card-memo { color: var(--primary); }
+
+/* ============================================================
+   Sprint #699 v23.03: ホバー子要素カラー変化・brightness 8箇所
+   ev-card-name-color / ev-card-amount-color / ev-card-memo-color /
+   ev-widget-cat-color / smi-count-typecolor /
+   asset-entry-date-color / asset-entry-note-color / notif-item-body-typecolor
+   ============================================================ */
+
+/* 1. ev-card:hover → .ev-card-name カラー変化
+   .ev-card:hover 時に .ev-card-name（収支予定カード名称テキスト）を
+   ev-accent(primary) カラーへ変色。ev-card-icon-wrap scale+drop-shadow（v22.83）と
+   連動しアイコン・名称が一体的に反応するカードホバー演出の完成形に。 */
+.ev-card-name { transition: color var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-name { color: var(--ev-accent, var(--primary)); }
+
+/* 2. ev-card:hover → .ev-card-amount カラー変化 + brightness(1.06)
+   .ev-card:hover 時に .ev-card-amount（収支予定カード金額）を
+   ev-accent カラーへ変色 + brightness(1.06)。ev-card-name 変色（本スプリント）・
+   ev-card-icon-wrap scale（v22.83）と連動し名称・金額・アイコンが
+   一体的に反応する完成形に。 */
+.ev-card-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-amount { color: var(--ev-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 3. ev-card:hover → .ev-card-memo カラー変化
+   .ev-card:hover 時に .ev-card-memo（収支予定メモテキスト）を primary カラーへ変色。
+   ev-card-name 変色（本スプリント）・ev-card-amount 変色（本スプリント）と連動し
+   名称・金額・メモの全テキストが一体的に反応する完成形に。 */
+.ev-card-memo { transition: color var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-memo { color: var(--primary); }
+
+/* 4. ev-widget-item:hover → .ev-widget-cat カラー変化
+   .ev-widget-item:hover 時に .ev-widget-cat（収支予定ウィジェットカテゴリ名テキスト）を
+   primary カラーへ変色。ev-widget-name 変色（v22.99）・ev-widget-amount 変色（v22.88）・
+   ev-widget-icon scale+drop-shadow（v22.80）と連動し名称・カテゴリ・金額・アイコンの
+   全要素が一体的に反応する完成形に。 */
+.ev-widget-cat { transition: color var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-cat { color: var(--primary); }
+
+/* 5. smi-income/expense:hover → .smi-count タイプ別カラー変化
+   .smi-income:hover 時に .smi-count を success カラーへ、
+   .smi-expense:hover 時に danger-text カラーへ変色。
+   smi-amount タイプ別変色（v22.82）・smi-label タイプ別変色（v22.95）と連動し
+   金額・ラベル・件数の全要素が一体的にタイプカラーで応答する完成形に。 */
+.smi-count { transition: color var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-count { color: var(--success); }
+.smi-expense:hover .smi-count { color: var(--danger-text); }
+
+/* 6. asset-entry-row:hover → .asset-entry-date カラー変化
+   .asset-entry-row:hover 時に .asset-entry-date（資産履歴の記録日テキスト）を
+   primary カラーへ変色。asset-entry-balance 変色（v22.74）・
+   asset-entry-row の translateX+box-shadow（既存）と連動し
+   日付・残高が一体的に反応するホバー演出に。 */
+.asset-entry-date { transition: color var(--dur-fast) var(--ease-out); }
+.asset-entry-row:hover .asset-entry-date { color: var(--primary); }
+
+/* 7. asset-entry-row:hover → .asset-entry-note カラー変化
+   .asset-entry-row:hover 時に .asset-entry-note（資産履歴のメモテキスト）を
+   primary カラーへ変色（opacity は既存値を維持）。
+   asset-entry-date 変色（本スプリント）・asset-entry-balance 変色（v22.74）と
+   連動しメモ・日付・残高が揃って反応する完成形に。 */
+.asset-entry-note { transition: color var(--dur-fast) var(--ease-out); }
+.asset-entry-row:hover .asset-entry-note { color: var(--primary); }
+
+/* 8. notif-item:hover → .notif-item-body タイプ別カラー変化
+   .notif-item:hover 時に .notif-item-body（通知詳細テキスト）を
+   notif-item-title と同じタイプ別カラーへ変色。
+   notif-item-title タイプ別変色（v22.74）・notif-item-icon タイプ別 drop-shadow（v22.88）
+   と連動しタイトル・ボディ・アイコンの全要素が一体的に応答する完成形に。 */
+.notif-item-body { transition: color var(--dur-fast) var(--ease-out); }
+.notif-item.notif-type-danger:hover  .notif-item-body { color: var(--danger-text); }
+.notif-item.notif-type-warning:hover .notif-item-body { color: var(--warning); }
+.notif-item.notif-type-success:hover .notif-item-body { color: var(--success); }
+.notif-item.notif-type-info:hover    .notif-item-body { color: var(--primary); }
