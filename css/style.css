@@ -20046,3 +20046,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的に反応する完成形に。asset-entry-note 変色（v23.03）と同パターン。 */
 .debt-entry-note { transition: color var(--dur-fast) var(--ease-out); }
 .debt-entry-row:hover .debt-entry-note { color: var(--primary); }
+
+/* =====================================================================
+   v23.06: ホバー子要素カラー変化・brightness・glow 8箇所
+   （fc-status-badge-scale/fc-avg-badge-scale/yoy-diff-glow/
+     dd-tx-date-color/dd-tx-memo-color/asset-date-label-color/
+     pm-sum-sub-color/tx-amount-brightness）
+   ===================================================================== */
+
+/* 1. forecast-card:hover → .fc-status-badge scale(1.04) + brightness(1.1)
+   .forecast-card:hover 時に .fc-status-badge（「良好」「注意」「超過」バッジ）を
+   scale(1.04) + brightness(1.1) でポップに強調。
+   fc-progress-fill glow（v22.76）・fc-cell-amount brightness（v22.x）・
+   fc-cell-label 変色（v22.x）と連動しカード内の全要素が一体的に反応する完成形に。 */
+.fc-status-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce); }
+.forecast-card:hover .fc-status-badge { transform: scale(1.04); filter: brightness(1.1); }
+
+/* 2. forecast-card:hover → .fc-avg-badge scale(1.04) + brightness(1.08)
+   .forecast-card:hover 時に .fc-avg-badge（「▲+12%」「▼-5%」等の平均比較バッジ）を
+   scale(1.04) + brightness(1.08) でポップに強調。
+   fc-avg-up=danger-text / fc-avg-down=success の既存カラーは維持し輝度・拡大のみ追加。
+   fc-status-badge scale（本スプリント）と同パターンでバッジが一体的に引き立つ演出に。 */
+.fc-avg-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce); }
+.forecast-card:hover .fc-avg-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 3. yoy-summary-item:hover → .yoy-diff brightness(1.1) + タイプ別 text-shadow glow
+   .yoy-summary-item:hover 時に .yoy-diff（前年比較差分テキスト「+¥12,345（+8.5%）」等）を
+   brightness(1.1) で強調し yoy-up=danger-text / yoy-down=success のタイプ別
+   text-shadow glow を追加。
+   yoy-summary-value brightness（v22.x）・yoy-summary-label brightness（v22.x）と連動し
+   ラベル・値・差分の全要素が一体的に反応する完成形に。 */
+.yoy-diff { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yoy-summary-item:hover .yoy-diff                        { filter: brightness(1.1); }
+.yoy-summary-item:hover .yoy-diff.yoy-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+.yoy-summary-item:hover .yoy-diff.yoy-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-md), transparent); }
+
+/* 4. dd-tx-row:hover → .dd-tx-date カラー変化
+   .dd-tx-row:hover 時に .dd-tx-date（デイリーダッシュボード取引行の日付テキスト）を
+   primary カラーへ変色。dd-tx-amount brightness+glow（v22.x）と連動し
+   日付・金額が一体的に反応するホバー演出に。 */
+.dd-tx-date { transition: color var(--dur-fast) var(--ease-out); }
+.dd-tx-row:hover .dd-tx-date { color: var(--primary); }
+
+/* 5. dd-tx-row:hover → .dd-tx-memo カラー変化
+   .dd-tx-row:hover 時に .dd-tx-memo（デイリーダッシュボード取引行のメモ・名称テキスト）を
+   primary カラーへ変色。dd-tx-date 変色（本スプリント）・dd-tx-amount brightness+glow（v22.x）と
+   連動しメモ・日付・金額の全要素が一体的に反応する完成形に。 */
+.dd-tx-memo { transition: color var(--dur-fast) var(--ease-out); }
+.dd-tx-row:hover .dd-tx-memo { color: var(--primary); }
+
+/* 6. asset-card:hover → .asset-date-label カラー変化
+   .asset-card:hover 時に .asset-date-label（資産残高カードの最終更新日テキスト）を
+   primary カラーへ変色。asset-name 変色（v22.x）・asset-balance brightness（v22.x）・
+   asset-balance-delta glow（v22.x）・asset-type-badge scale（v22.x）と連動し
+   日付ラベルも含めたカード全体が一体的に反応する完成形に。 */
+.asset-date-label { transition: color var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-date-label { color: var(--primary); }
+
+/* 7. pm-sum-card:hover → .pm-sum-sub pm-sum-color カラー変化
+   .pm-sum-card:hover 時に .pm-sum-sub（支払方法サマリーの補足テキスト「○件」等）を
+   pm-sum-color カラーへ変色。pm-sum-icon scale+drop-shadow（v22.x）・
+   pm-sum-value brightness（v22.x）・pm-sum-label 変色（v22.x）と連動し
+   補足テキストも含めたカード全体が一体的に反応する完成形に。 */
+.pm-sum-sub { transition: color var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-sub { color: var(--pm-sum-color, var(--primary)); }
+
+/* 8. tx-table tbody tr:hover → .td.amount タイプ別 brightness(1.08)
+   取引テーブル行のホバー時に .td.amount（金額セル）を brightness(1.08) で強調。
+   income=success / expense=danger-text の既存カラーは維持し輝度のみ追加。
+   memo-cell 変色（v22.x）・row タイプ別 shadow glow（v22.60）と連動し
+   金額・メモが一体的にホバーで反応する演出に。 */
+.tx-table td.amount { transition: filter var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.amount { filter: brightness(1.08); }
