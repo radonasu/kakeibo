@@ -20464,3 +20464,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    連動しバッジも含めたカード下部情報が一体的にホバーで反応する完成形に。 */
 .debt-end-pill { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-end-pill { color: var(--primary); filter: brightness(1.08); }
+
+/* ── v23.12 ホバー子要素カラー変化・brightness 8箇所 ────────────────────────────────────
+   cc-name-color / cc-amount-color /
+   dow-label-cell-brightness / dow-pct-badge-scale /
+   wk-cell-label-color / wk-cell-value-brightness /
+   wl-archive-name-color / wl-archive-price-color
+   ──────────────────────────────────────────────────────────────────────────────────── */
+
+/* 1. cc-item:hover → .cc-name カラー変化
+   カテゴリ比較ウィジェットのホバー時に .cc-name（カテゴリ名テキスト：color:text）を
+   列種別カラーへ変色。増加列（cc-col-up）＝danger-text / 節約列（cc-col-down）＝success。
+   cc-dot scale+glow（v22.x）・cc-amount 変色（本スプリント）と連動し
+   名称・ドット・金額が一体的にホバーで反応する完成形に。 */
+.cc-name { transition: color var(--dur-fast) var(--ease-out); }
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-name { color: var(--danger-text); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-name { color: var(--success); }
+
+/* 2. cc-item:hover → .cc-amount brightness(1.08) + カラー変化
+   カテゴリ比較ウィジェットのホバー時に .cc-amount（現月金額テキスト：color:text-muted・fw-normal）を
+   brightness(1.08) + 列種別カラーへ変色。増加列（cc-col-up）＝danger-text / 節約列（cc-col-down）＝success。
+   cc-name 変色（本スプリント）・cc-dot glow（v22.x）と連動し金額も揃って一体感ある演出に。 */
+.cc-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-amount { color: var(--danger-text); filter: brightness(1.08); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-amount { color: var(--success);     filter: brightness(1.08); }
+
+/* 3. dow-table-row:hover → .dow-label-cell brightness(1.12)
+   曜日別統計テーブル行のホバー時に .dow-label-cell（「月曜日」等の曜日名テキスト）を
+   brightness(1.12) で明るく輝かせる。inline style で --dow-row-color が設定済みのため
+   color は上書きせず filter のみで自然に輝き感を追加。dow-table-row:hover の
+   translateY+shadow と連動し曜日ラベルもホバーで存在感を増す演出に。 */
+.dow-label-cell { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover .dow-label-cell { filter: brightness(1.12); }
+
+/* 4. dow-table-row:hover → .dow-pct-badge scale(1.06) + brightness(1.1)
+   曜日別統計テーブル行のホバー時に .dow-pct-badge（「高」「中」「低」パーセントバッジ）を
+   scale(1.06) + brightness(1.1) でポップに強調。dow-label-cell brightness（本スプリント）・
+   dow-table-row:hover の translateY+shadow と連動しラベル・バッジが一体的に反応する演出に。 */
+.dow-pct-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover .dow-pct-badge { transform: scale(1.06); filter: brightness(1.1); }
+
+/* 5. wk-summary-row .wk-cell:hover → .wk-cell-label タイプ別カラー変化
+   週間サマリーカードのホバー時に .wk-cell-label（「今日の支出」「今週の支出」「無支出日」ラベル）を
+   セル種別カラーへ変色。1番目（今日の支出）＝danger-text / 2番目（今週の支出）＝primary /
+   3番目（無支出日）＝success。各セルの既存ホバー box-shadow カラー（v22.x）と統一した
+   テーマカラーでラベルも一体的に強調される演出に。 */
+.wk-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-label { color: var(--danger-text); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-label { color: var(--primary); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-label { color: var(--success); }
+
+/* 6. wk-summary-row .wk-cell:hover → .wk-cell-value brightness(1.1)
+   週間サマリーカードのホバー時に .wk-cell-value（金額・日数の大型数値）を
+   brightness(1.1) で輝かせる。wk-today-exp=danger-text / wk-nospend=success の既存カラーを
+   維持しつつ輝度のみ追加。wk-cell-label 変色（本スプリント）と連動しラベル・数値が
+   一体的にホバーで強調される演出に。 */
+.wk-cell-value { transition: filter var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:hover .wk-cell-value { filter: brightness(1.1); }
+
+/* 7. wl-archive-item:hover → .wl-archive-name success カラー変化
+   ウィッシュリスト達成済みアーカイブ行のホバー時に .wl-archive-name（取り消し線付き商品名：color:text-muted）を
+   success カラーへ変色。達成＝喜びの演出として success 色で「良い思い出」感を強調。
+   wl-archive-emoji scale+glow（v22.x）と連動しアイコン・名称が一体的に
+   ホバーで達成感を表現する演出に。 */
+.wl-archive-name { transition: color var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-name { color: var(--success); }
+
+/* 8. wl-archive-item:hover → .wl-archive-price brightness(1.08) + success カラー変化
+   ウィッシュリスト達成済みアーカイブ行のホバー時に .wl-archive-price（購入金額テキスト：color:text-muted）を
+   brightness(1.08) + success カラーへ変色。wl-archive-name success 変色（本スプリント）と連動し
+   名称・金額の両方が一体的に success 色で達成感を演出する完成形に。 */
+.wl-archive-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-price { color: var(--success); filter: brightness(1.08); }
