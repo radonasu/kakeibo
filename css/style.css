@@ -19974,3 +19974,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    日付・残高が一体的に反応するホバー演出に。asset-entry-date 変色（v23.03）と同パターン。 */
 .debt-entry-date { transition: color var(--dur-fast) var(--ease-out); }
 .debt-entry-row:hover .debt-entry-date { color: var(--primary); }
+
+/* ============================================================
+   Sprint #701 v23.05 — ホバー子要素カラー変化・brightness・glow 8箇所
+   ch-widget-name-color / ch-widget-pct-brightness / ch-widget-bar-glow /
+   ch-card-meta-color / ch-status-brightness / opp-desc-brightness /
+   pt-card-yen-brightness / debt-entry-note-color
+   ============================================================ */
+
+/* 1. ch-widget-item:hover → .ch-widget-name ch-accent カラー変化
+   .ch-widget-item:hover 時に .ch-widget-name（チャレンジウィジェット名称テキスト）を
+   ch-accent（primary）カラーへ変色。ch-widget-icon scale+drop-shadow（v22.81）と連動し
+   アイコン・名称が一体的に反応するウィジェット行ホバー演出の完成形に。 */
+.ch-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-name { color: var(--ch-accent, var(--primary)); }
+
+/* 2. ch-widget-item:hover → .ch-widget-pct brightness(1.08)
+   .ch-widget-item:hover 時に .ch-widget-pct（達成率%数値）を brightness(1.08) で強調。
+   ch-pct-ok=income色 / ch-pct-over=expense色 の既存カラーは維持し輝度のみ追加。
+   ch-widget-name 変色（本スプリント）・ch-widget-icon scale（v22.81）と連動。 */
+.ch-widget-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-pct { filter: brightness(1.08); }
+
+/* 3. ch-widget-item:hover → .ch-bar-fill brightness(1.06) + カラー別 glow
+   ウィジェット内プログレスバーのホバー時輝き。ch-card:hover .ch-bar-fill glow（v22.83）
+   と同パターンをウィジェット行に適用。ch-bar-ok=income / ch-bar-warn=warning /
+   ch-bar-over=expense でそれぞれ発光しバー・%・名称が一体的に反応する完成形に。 */
+.ch-widget-item:hover .ch-bar-ok   { filter: brightness(1.06); box-shadow: 0 1px 6px color-mix(in srgb, var(--income)  var(--mix-sm), transparent); }
+.ch-widget-item:hover .ch-bar-warn { filter: brightness(1.06); box-shadow: 0 1px 6px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+.ch-widget-item:hover .ch-bar-over { filter: brightness(1.06); box-shadow: 0 1px 6px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 4. ch-card:hover → .ch-card-meta カラー変化
+   .ch-card:hover 時に .ch-card-meta（ch-type-badge＋カテゴリ名テキスト）を
+   primary カラーへ変色。ch-card-name 変色（v22.99）・ch-card-icon scale（v22.81）・
+   ch-bar-fill glow（v22.83）と連動しカード内の全テキストが一体的に反応する完成形に。 */
+.ch-card-meta { transition: color var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-card-meta { color: var(--primary); }
+
+/* 5. ch-card:hover → .ch-status brightness(1.08) + タイプ別 text-shadow
+   .ch-card:hover 時に .ch-status（「達成」「未達」「超過」「進行中」バッジ）を
+   brightness(1.08) で輝かせる。ch-status-done=success / ch-status-fail=danger-text /
+   ch-status-over=warning の各バッジにタイプ別 glow を追加し視覚的識別性を強化。
+   ch-card-name 変色（v22.99）・ch-card-icon scale（v22.81）と連動。 */
+.ch-status { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-status { filter: brightness(1.08); }
+.ch-card:hover .ch-status-done { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-md), transparent); }
+.ch-card:hover .ch-status-fail { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+.ch-card:hover .ch-status-over { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* 6. opp-card:hover → .opp-desc brightness(1.05)
+   .opp-card:hover 時に .opp-desc（節約機会カードの説明テキスト）を
+   brightness(1.05) で微細に明るく。opp-title 変色（v22.64）・opp-icon scale（v22.79）・
+   opp-saving strong brightness（v22.85）と連動し説明文も含めた
+   カード全体のテキストがホバーで一体的に反応する演出に。 */
+.opp-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-desc { filter: brightness(1.05); }
+
+/* 7. pt-card:hover → .pt-card-yen brightness(1.06) + primary カラー変化
+   .pt-card:hover 時に .pt-card-yen（ポイントカードの円換算金額テキスト）を
+   primary カラーへ変色 + brightness(1.06) で強調。
+   pt-card-balance 変色+brightness（v22.85）・pt-card-name 変色（v22.95）・
+   pt-card-icon scale（v22.81）と連動しポイント残高・YEN換算・名称・アイコンが
+   一体的に反応する完成形に。 */
+.pt-card-yen { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-yen { color: var(--pt-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 8. debt-entry-row:hover → .debt-entry-note カラー変化
+   .debt-entry-row:hover 時に .debt-entry-note（負債返済履歴のメモテキスト）を
+   primary カラーへ変色。debt-entry-date 変色（v23.04）・
+   debt-entry-balance brightness（v22.84）と連動しメモ・日付・残高が
+   一体的に反応する完成形に。asset-entry-note 変色（v23.03）と同パターン。 */
+.debt-entry-note { transition: color var(--dur-fast) var(--ease-out); }
+.debt-entry-row:hover .debt-entry-note { color: var(--primary); }
