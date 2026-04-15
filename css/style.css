@@ -19204,3 +19204,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-balance {
   text-shadow: 0 0 16px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v22.95: ホバー子要素カラー変化・静的glow 8箇所
+   (debt-name-color/asset-name-color/pt-card-name-color/
+    ci-challenge-name-color/ci-event-amount-color/
+    ci-savings-pct-glow/debt-badge-glow/asset-entry-balance-color)
+   ============================================================ */
+
+/* 1. debt-card:hover → .debt-name カラー変化
+   .debt-card:hover 時に .debt-name（負債名称テキスト）を
+   debt-accent（primary）カラーに変色。
+   wl-card-name（v22.78）・rc-item-name（v22.94）・budget-cat-name（v22.94）
+   と同パターンで各カードのホバー時カード名変色を統一する。 */
+.debt-name { transition: color var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-name { color: var(--debt-accent, var(--primary)); }
+
+/* 2. asset-card:hover → .asset-name カラー変化
+   .asset-card:hover 時に .asset-name（資産名称テキスト）を
+   asset-accent（primary）カラーに変色。
+   asset-balanceのbrightness(1.06)（v22.88）と連動し
+   カードホバーで名称・残高の両方が視覚的に応答する。 */
+.asset-name { transition: color var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-name { color: var(--asset-accent, var(--primary)); }
+
+/* 3. pt-card:hover → .pt-card-name カラー変化
+   .pt-card:hover 時に .pt-card-name（ポイント名称テキスト）を
+   pt-accent（primary）カラーに変色。
+   pt-card-iconのscale/drop-shadow（v22.78）と連動し
+   カードホバーでアイコン・名称が一体的に反応する。 */
+.pt-card-name { transition: color var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-name { color: var(--pt-accent, var(--primary)); }
+
+/* 4. ci-challenge-item:hover → .ci-challenge-name カラー変化
+   .ci-challenge-item:hover 時に .ci-challenge-name（チャレンジ名称）を
+   primary カラーに変色。ci-event-name の変色（v22.94）と対になり
+   チャレンジ・イベント両リストのホバーで名称テキストが揃って反応する。 */
+.ci-challenge-name { transition: color var(--dur-fast) var(--ease-out); }
+.ci-challenge-item:hover .ci-challenge-name { color: var(--primary); }
+
+/* 5. ci-event-item:hover → .ci-event-amount カラー変化
+   .ci-event-item:hover 時に .ci-event-amount（イベント金額）を
+   ci-ev-accent（primary）カラーに変色。
+   ci-event-icon の scale/drop-shadow（v22.85）と連動し
+   アイコン・金額がホバーで一体的に輝く。 */
+.ci-event-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ci-event-item:hover .ci-event-amount { color: var(--ci-ev-accent, var(--primary)); filter: brightness(1.06); }
+
+/* 6. ci-savings-pct 静的 text-shadow glow
+   月次チャレンジの節約率テキスト（.ci-savings-pct）に常時 success カラーの
+   text-shadow glow を追加。goal-pct-glow（v22.94）と同パターンで
+   success 色テキストに対応する輝きを加え達成率の存在感を強調する。 */
+.ci-savings-pct {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .ci-savings-pct {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-md), transparent);
+}
+
+/* 7. debt-rate-badge / debt-monthly-badge 静的 box-shadow glow
+   負債カードのバッジ（金利・月返済額）に常時 debt-accent カラーの
+   外周ソフトグローを追加。badge-active glow（v22.91）と同パターンで
+   静的なブランドカラーアクセントがバッジの存在感を高める。 */
+.debt-rate-badge,
+.debt-monthly-badge {
+  box-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent);
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+.debt-card:hover .debt-rate-badge,
+.debt-card:hover .debt-monthly-badge {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent);
+}
+
+/* 8. asset-entry-row:hover → .asset-entry-balance カラー変化
+   資産履歴行（.asset-entry-row）のホバー時に .asset-entry-balance（残高数値）を
+   primary カラーに変色。asset-entry-row:hover の translateX/box-shadow
+   と連動し履歴行全体のホバー体験を一体的に強化する。 */
+.asset-entry-balance { transition: color var(--dur-fast) var(--ease-out); }
+.asset-entry-row:hover .asset-entry-balance { color: var(--primary); }
