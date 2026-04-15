@@ -20328,3 +20328,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .yr-cell-savings-success:hover .yr-cell-sub { filter: brightness(1.1); }
 .yr-cell-savings-warn:hover    .yr-cell-sub { filter: brightness(1.1); }
 .yr-cell-savings-danger:hover  .yr-cell-sub { filter: brightness(1.1); }
+
+/* ── v23.10 ホバー子要素カラー変化・brightness 8箇所 ────────────────────────────────────
+   goal-pct-brightness / goal-deadline-color / goal-monthly-target-brightness /
+   goal-note-color / fv-cat-amt-brightness / fv-pct-txt-color /
+   wk-bar-amount-color / wk-bar-label-color
+   ──────────────────────────────────────────────────────────────────────────────────── */
+
+/* 1. goal-card:hover → .goal-pct brightness(1.1)
+   目標カードのホバー時に .goal-pct（達成率%テキスト：color:goal-accent/primary・fw-bold・fs-xs）を
+   brightness(1.1) で輝かせる。goal-ring-wrap scale・goal-ring-fill glow・goal-emoji drop-shadow・
+   goal-name/saved/target/remaining 変色・goal-progress-bar-fill brightness（各v22.x/v23.x）と連動し
+   %テキストもホバーで一体的に反応する完成形に。 */
+.goal-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-pct { filter: brightness(1.1); }
+
+/* 2. goal-card:hover → .goal-deadline:not(.over) goal-accent カラー変化
+   目標カードのホバー時に .goal-deadline（期限表示エリア：color:text-muted）を
+   goal-accent/primary カラーへ変色。.goal-deadline.over（期限切れ：danger-text+danger-bg）は
+   スタイル維持。goal-name/saved/target/remaining 変色（各v22.x/v23.x）と連動し
+   期限テキストもホバーで一体的に反応する完成形に。 */
+.goal-deadline { transition: color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-deadline:not(.over) { color: var(--goal-accent, var(--primary)); }
+
+/* 3. goal-card:hover → .goal-monthly-target brightness(1.08)
+   目標カードのホバー時に .goal-monthly-target（月額必要貯蓄テキスト：color:primary・fw-semi）を
+   brightness(1.08) で輝かせる。goal-saved 変色+brightness（v22.x）・goal-pct brightness（本スプリント）と連動し
+   月額目標金額もホバーで一体的に強調される完成形に。 */
+.goal-monthly-target { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-monthly-target { filter: brightness(1.08); }
+
+/* 4. goal-card:hover → .goal-note goal-accent カラー変化
+   目標カードのホバー時に .goal-note（メモテキスト：color:text-faint・italic・fs-xs）を
+   goal-accent/primary カラーへ変色。goal-note は通常 text-faint の最も淡いテキストのため
+   primary 変色でホバー時の視認性が明確に向上。goal-name/saved/target/remaining 変色・
+   goal-deadline 変色（本スプリント）と連動しメモも含めたカード内の全テキスト要素が
+   ホバーで揃って反応する完成形に。 */
+.goal-note { transition: color var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-note { color: var(--goal-accent, var(--primary)); }
+
+/* 5. fv-cat-table tbody tr:hover → .fv-cat-amt brightness(1.08)
+   財務予測カテゴリテーブルの行ホバー時に .fv-cat-amt（カテゴリ別金額：fw-semi・tabular-nums）を
+   brightness(1.08) で輝かせる。fv-cat-table tbody tr:hover の translateY+shadow（v22.68）と連動し
+   金額テキストもホバーで引き立つマイクロインタラクションに。fv-pct-txt 変色（本スプリント）と連動。 */
+.fv-cat-amt { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-cat-amt { filter: brightness(1.08); }
+
+/* 6. fv-cat-table tbody tr:hover → .fv-pct-txt primary カラー変化
+   財務予測カテゴリテーブルの行ホバー時に .fv-pct-txt（達成率%テキスト：color:text-muted・fs-xs）を
+   primary カラーへ変色。fv-cat-amt brightness（本スプリント）と連動し%・金額の両テキストが
+   一体的にホバーで反応するテーブル行演出に。 */
+.fv-pct-txt { transition: color var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-pct-txt { color: var(--primary); }
+
+/* 7. wk-bar-col:hover → .wk-bar-amount primary カラー変化
+   週次支出バーのカラムホバー時に .wk-bar-amount（バー下の金額テキスト：color:text-muted・fs-4xs）を
+   primary カラーへ変色。wk-bar-col:hover .wk-bar-fill brightness（v22.x）と連動し
+   バーの輝きと金額テキストの変色が一体的に反応するホバー演出に。wk-bar-label 変色（本スプリント）と連動。 */
+.wk-bar-amount { transition: color var(--dur-fast) var(--ease-out); }
+.wk-bar-col:hover .wk-bar-amount { color: var(--primary); }
+
+/* 8. wk-bar-col:hover → .wk-bar-label:not(.wk-today-label) primary カラー変化
+   週次支出バーのカラムホバー時に .wk-bar-label（曜日ラベル：color:text-muted・fs-2xs・fw-medium）を
+   primary カラーへ変色。.wk-today-label（今日=danger-text+danger-bg）は :not() 除外で
+   danger-text スタイルを維持。wk-bar-amount 変色（本スプリント）・wk-bar-fill brightness と連動し
+   ラベル・金額・バーの全要素が一体的にホバーで反応する完成形に。 */
+.wk-bar-label { transition: color var(--dur-fast) var(--ease-out); }
+.wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { color: var(--primary); }
