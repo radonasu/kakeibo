@@ -19766,3 +19766,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .pt-card:hover .pt-exp-badge { filter: brightness(1.1); }
 .pt-card:hover .pt-urgent-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); filter: brightness(1.08); }
 .pt-card:hover .pt-soon-badge   { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #698 v23.02: ホバー子要素カラー変化・brightness・glow 8箇所
+   goal-progress-bar-fill-glow / hs-item-label-brightness /
+   budget-pct-badge-brightness / rc-item-meta-color /
+   rc-type-badge-pop / sub-cycle-tag-color /
+   sub-next-billing-color / sub-card-memo-color
+   ============================================================ */
+
+/* 1. goal-card:hover → .goal-progress-bar-fill brightness + glow
+   .goal-card:hover 時に .goal-progress-bar-fill を brightness(1.08) + goal-accent
+   カラーの box-shadow glow で強調。goal-ring-fill glow（v22.68）・goal-emoji
+   drop-shadow（v22.79）と連動しリング・バー両方がホバーで輝く演出に統一。 */
+.goal-progress-bar-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), width var(--dur-glide) var(--ease-out-expo); }
+.goal-card:hover .goal-progress-bar-fill { filter: brightness(1.08); box-shadow: 0 1px 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent); }
+
+/* 2. hs-item:hover → .hs-item-label brightness(1.1)
+   .hs-item:hover 時に .hs-item-label（「食費」「住居費」等のカテゴリラベル）を
+   brightness(1.1) で明るく強調。.hs-item-score hs-bar-color 変色（v22.85）と
+   連動しラベル・スコア値が一体的にホバーで反応する完成形に。 */
+.hs-item-label { transition: filter var(--dur-fast) var(--ease-out); }
+.hs-item:hover .hs-item-label { filter: brightness(1.1); }
+
+/* 3. budget-item:hover → .budget-pct-badge brightness(1.1) タイプ別
+   .budget-item:hover 時に .budget-pct-badge を brightness(1.1) で輝かせる。
+   .budget-fill.over 含む行は expense バッジが強調されるよう対応。
+   budget-nums カラー変化（v22.87）・budget-cat-name 変色（v22.94）と連動し
+   バッジも含めたカード全体のホバー演出を統一。 */
+.budget-pct-badge { transition: filter var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-pct-badge                          { filter: brightness(1.1); }
+.budget-item:has(.budget-fill.over):hover .budget-pct-badge  { filter: brightness(1.12); }
+
+/* 4. rc-item:hover → .rc-item-meta カラー変化
+   .rc-item:hover 時に .rc-item-meta（繰り返し取引の次回実行日・週 etc テキスト）を
+   primary カラーへ変色。rc-item-name 変色（v22.94）・rc-item-amount タイプ別変色
+   （v22.87）と連動しメタ情報も含めたカード全体のホバー演出を統一。 */
+.rc-item-meta { transition: color var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-meta { color: var(--primary); }
+
+/* 5. rc-item:hover → .rc-type-badge scale(1.06) + brightness(1.08)
+   .rc-item:hover 時に .rc-type-badge（「収入」「支出」バッジ）を
+   scale(1.06) + brightness(1.08) でポップに強調。rc-cat-dot scale（v22.80）と
+   同パターンでホバー時にバッジが引き立つマイクロインタラクション。 */
+.rc-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-type-badge { transform: scale(1.06); filter: brightness(1.08); }
+
+/* 6. sub-card:hover → .sub-cycle-tag カラー変化
+   .sub-card:hover 時に .sub-cycle-tag（「月払い」「年払い」等のサイクルタグ）を
+   primary カラーへ変色。sub-card-name 変色（v23.00）・sub-card-amount 変色（v22.85）
+   と連動しタグも含めたカード全体のホバー演出を統一。 */
+.sub-cycle-tag { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-tag { color: var(--primary); }
+
+/* 7. sub-card:hover → .sub-next-billing カラー変化
+   .sub-card:hover 時に .sub-next-billing（次回請求日テキスト）を
+   primary カラーへ変色。sub-cycle-tag 変色（本スプリント）・sub-card-name 変色
+   （v23.00）と連動しメタ情報も含めたカード全体のホバー演出を統一。 */
+.sub-next-billing { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-next-billing { color: var(--primary); }
+
+/* 8. sub-card:hover → .sub-card-memo カラー変化
+   .sub-card:hover 時に .sub-card-memo（サブスクメモテキスト）を
+   primary カラーへ変色。sub-next-billing 変色（本スプリント）・sub-cycle-tag 変色
+   （本スプリント）・sub-card-name 変色（v23.00）と連動し
+   メモ・タグ・次回請求日・名称のすべてが一体的に反応する完成形に。 */
+.sub-card-memo { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-memo { color: var(--primary); }
