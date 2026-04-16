@@ -20741,3 +20741,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    グラデーション系サマリーカードの一貫したラベルホバー演出を達成。 */
 .ch-sum-achieved .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
 .ch-sum-achieved:hover .ch-summary-label { opacity: 1; }
+
+/* ============================================================
+   v23.16: ホバー子要素カラー変化・brightness・glow・scale 8箇所
+   wl-archive-date-color / sub-summary-amount-glow /
+   sub-summary-sub-brightness / step-desc-brightness /
+   tx-cat-badge-brightness / opp-saving-brightness /
+   ct-chip-name-color / notif-unread-dot-scale
+   ============================================================ */
+
+/* 1. wl-archive-item:hover → .wl-archive-date success カラー変化
+   ウィッシュリスト達成済みアーカイブ行のホバー時に .wl-archive-date
+   （購入日テキスト：color:text-muted・fs-3xs）をsuccess カラーへ変色。
+   wl-archive-name success変色・wl-archive-price brightness+success変色（v23.12）
+   と連動し行内の全テキストがホバーで一体的に達成の喜びの色に染まる完成形に。 */
+.wl-archive-date { transition: color var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-date { color: var(--success); }
+
+/* 2. sub-summary-card:hover → .sub-summary-amount text-shadow glow（白）
+   サブスクサマリーカード（sub-monthly/sub-yearly：グラデーション背景）の
+   ホバー時に .sub-summary-amount（白大型金額：color:white・fs-3xl・fw-bold）に
+   白い text-shadow glow を追加。ch-sum-achieved:hover .ch-summary-value glow
+   （v23.15）・wl-sum-count glow と同パターンでグラデーション系サマリーカードの
+   数値ホバー演出を統一。 */
+.sub-summary-amount { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.sub-summary-card:hover .sub-summary-amount { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+
+/* 3. sub-summary-card:hover → .sub-summary-sub brightness(1.1)
+   サブスクサマリーカードのホバー時に .sub-summary-sub（「3件のサブスク」等の
+   補足テキスト：color:on-dark-title・fs-2xs）を brightness(1.1) で輝かせる。
+   sub-summary-amount glow（本スプリント）と連動しラベル・金額・サブテキストの
+   全要素がホバーで一体的に明るく反応する演出に。 */
+.sub-summary-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.sub-summary-card:hover .sub-summary-sub { filter: brightness(1.1); }
+
+/* 4. step-card:hover → .step-desc brightness(1.06)
+   PWAインストールガイドのステップカードのホバー時に .step-desc（説明文テキスト：
+   color:text-muted・fs-sm）を brightness(1.06) で輝かせる。step-num scale+ring-glow
+   （v22.79）・step-icon scale+drop-shadow（v22.83）・step-title primary変色（v22.x）
+   と連動しカード内の全要素がホバーで一体的に反応する完成形に。 */
+.step-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-desc { filter: brightness(1.06); }
+
+/* 5. tx-table tbody tr:hover → .cat-badge brightness(1.08)
+   トランザクションテーブルの行ホバー時に .cat-badge（カテゴリ名バッジ：
+   背景 cat-color 12%・文字 cat-color・fs-xs・fw-semi）を brightness(1.08) で
+   輝かせる。td.amount brightness/td.memo-cell primary変色（各v22.x）と連動し
+   カテゴリバッジもホバーで一体的に引き立つ行演出に。 */
+.cat-badge { transition: filter var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover .cat-badge { filter: brightness(1.08); }
+
+/* 6. opp-card:hover → .opp-saving brightness(1.06)
+   節約機会カードのホバー時に .opp-saving（「節約可能: ¥xxx/月」テキスト全体：
+   color:text-muted・fs-sm）を brightness(1.06) で輝かせる。opp-saving strong
+   brightness（v22.x）・opp-title opp-accent変色（v23.04）・opp-desc brightness
+   （v23.08）・opp-icon scale+drop-shadow（v22.81）と連動し節約額情報全体が
+   一体的にホバーで輝く演出の完成形に。 */
+.opp-saving { transition: filter var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-saving { filter: brightness(1.06); }
+
+/* 7. ct-chip:hover → .ct-chip-name ct-color カラー変化
+   カテゴリトレンドチップのホバー時に .ct-chip-name（カテゴリ名テキスト：
+   color:text・fs-sm）を ct-color/primary カラーへ変色。ct-chip-icon scale+
+   ct-color drop-shadow（v22.81）と連動しアイコン・名称が一体的にホバーで
+   カテゴリテーマ色に染まる演出に。 */
+.ct-chip-name { transition: color var(--dur-fast) var(--ease-out); }
+.ct-chip:hover .ct-chip-name { color: var(--ct-color, var(--primary)); }
+
+/* 8. notif-item:hover → .notif-unread-dot scale(1.15) + brightness(1.2)
+   未読通知アイテムのホバー時に .notif-unread-dot（primaryドット：
+   background:primary・box-shadow:0 0 0 2px primary-light）を scale(1.15)+
+   brightness(1.2) でポップに強調。notif-item-icon scale+brightness（v22.81）・
+   notif-item-title タイプ別カラー（v23.04）・notif-item-body タイプ別カラー
+   （v23.08）と連動し未読ドットもホバーで一体的に反応する演出の完成形に。 */
+.notif-unread-dot { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.notif-item:hover .notif-unread-dot { transform: scale(1.15); filter: brightness(1.2); }
