@@ -21983,3 +21983,103 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ウィジェット下部フッターラベルのホバー演出を統一。 */
 .yr-topcat-label { transition: color var(--dur-fast) var(--ease-out); }
 .yr-widget-card:hover .yr-topcat-label { color: var(--primary); }
+
+/* ============================================================
+   v23.31 スプリント#727 デザイン改善
+   sb-banner hover base / sb-banner-num-glow / sb-banner-lbl-brightness /
+   sb-banner-div-brightness / dd-summary-label-color /
+   insight-title-typecolor / md-cell-balance-value-brightness /
+   md-cell-count-label-value-brightness
+   ============================================================ */
+
+/* 1. sb-banner hover base — translateY lift + primary glow
+   支出提案ページのグラデーションバナー（.sb-banner：
+   background:linear-gradient(primary→primary-end)・border-radius:card・
+   padding:sp-3/sp-4・flex）に transition + translateY lift + primary glow を追加。
+   sim-savings-banner:hover（v23.30）・adv-widget-card:hover（v22.71）・
+   hm-stat-card:hover（v22.68）と同パターンで
+   静的グラデーションバナーにもマイクロインタラクションを付与。 */
+.sb-banner {
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+}
+.sb-banner:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .sb-banner:hover {
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* 2. sb-banner:hover → .sb-banner-num brightness(1.1) + white text-shadow glow
+   支出提案バナーのホバー時に .sb-banner-num（前月比合計・変化額等の
+   大数値テキスト：color:white・fs-xl・fw-bold・tabular-nums）を
+   brightness(1.1) + text-shadow 白グロー（0 0 12px rgba(255,255,255,0.55)）で輝かせる。
+   sim-savings-banner:hover .sim-savings-value glow（v23.30）・
+   ev-sum-card:hover .ev-sum-count glow（v23.29）・
+   summary-card:hover .summary-amount glow（v23.27）と同パターンで
+   グラデーション背景上の白数値ホバー演出を統一。 */
+.sb-banner-num { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-banner:hover .sb-banner-num { filter: brightness(1.1); text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 3. sb-banner:hover → .sb-banner-lbl brightness(1.15)
+   支出提案バナーのホバー時に .sb-banner-lbl（「先月支出合計」等の
+   ラベルテキスト：color:on-dark-title・fs-2xs・fw-medium・ls-label）を
+   brightness(1.15) で輝かせる。
+   sim-savings-banner:hover .sim-savings-label brightness（v23.30）・
+   fv-stat-card:hover .fv-stat-label brightness（v23.x）と同パターンで
+   バナー内ラベルにもホバー強調を追加。 */
+.sb-banner-lbl { transition: filter var(--dur-fast) var(--ease-out); }
+.sb-banner:hover .sb-banner-lbl { filter: brightness(1.15); }
+
+/* 4. sb-banner:hover → .sb-banner-div brightness(1.4)
+   支出提案バナーのホバー時に .sb-banner-div（バナー内区切り線：
+   width:bw-thin・height:size-icon-sm・background:on-dark-overlay）を
+   brightness(1.4) で輝かせる。
+   sim-savings-banner:hover .sim-savings-divider brightness(1.4)（v23.30）と
+   同パターンでバナー内区切り線のホバー演出を統一。
+   バナー内全要素が一体的に輝く演出を完成。 */
+.sb-banner-div { transition: filter var(--dur-fast) var(--ease-out); }
+.sb-banner:hover .sb-banner-div { filter: brightness(1.4); }
+
+/* 5. dd-summary-item:hover → .dd-summary-label primary カラー変化
+   デイリーダッシュ（ドリルダウンモーダル）の上部サマリーアイテムのホバー時に
+   .dd-summary-label（「収入」「支出」等のラベルテキスト：
+   color:text-muted・fs-xs・fw-medium・ls-fine）を primary カラーへ変色。
+   dd-summary-item:hover .dd-summary-value primary変色（v22.x）と連動し
+   ラベル + 数値の両テキストが一体的にホバーで反応するサマリーアイテム完成形演出に。 */
+.dd-summary-label { transition: color var(--dur-fast) var(--ease-out); }
+.dd-summary-item:hover .dd-summary-label { color: var(--primary); }
+
+/* 6. insight-item:hover → .insight-title タイプ別カラー変化
+   ホーム/AIアドバイスページのインサイト行のホバー時に
+   .insight-title（見出しテキスト：color:text・fw-semi・fs-sm・ls-fine）を
+   タイプ別カラーへ変色（info=primary / alert=danger-text / success=success / warning=warning）。
+   notif-item.notif-type-XXX:hover .notif-item-title タイプ別変色（v22.x）・
+   insight-item:hover .insight-icon タイプ別 drop-shadow（v22.x）と同パターンで
+   insight-title も各タイプのカラーアイデンティティでホバー時に染まる完成形演出に。 */
+.insight-title { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.insight-item.insight-info:hover    .insight-title { color: var(--primary); }
+.insight-item.insight-alert:hover   .insight-title { color: var(--danger-text); }
+.insight-item.insight-success:hover .insight-title { color: var(--success); }
+.insight-item.insight-warning:hover .insight-title { color: var(--warning); }
+
+/* 7. md-cell-balance-pos/neg:hover → .md-cell-value brightness(1.06) 完成形
+   月次詳細モーダルの収支差額セルホバー時に .md-cell-value（差額金額値）を
+   brightness(1.06) で輝かせる。
+   md-cell-income:hover .md-cell-value brightness（v23.26）・
+   md-cell-expense:hover .md-cell-value brightness（v23.26）と同パターンで
+   balance-pos（黒字：primary色）・balance-neg（赤字：danger-text色）にも適用し
+   md-cell 4種（income/expense/balance-pos/balance-neg）の
+   .md-cell-value brightness ホバー演出を完全統一。 */
+.md-cell-balance-pos:hover .md-cell-value,
+.md-cell-balance-neg:hover .md-cell-value { filter: brightness(1.06); }
+
+/* 8. md-cell-count:hover → .md-cell-label + .md-cell-value brightness
+   月次詳細モーダルの件数セルホバー時に .md-cell-label（「件数」等ラベル：
+   color:text-muted）と .md-cell-value（件数値：color:text）の両テキストを
+   それぞれ brightness で強調。
+   md-cell-income/expense:hover .md-cell-label 変色（v23.26）と同系統で
+   件数セルのラベル・値がホバーで一体的に反応する演出を追加。
+   md-cell-count:hover の lift+shadow（v22.82）と連動し完成形に。 */
+.md-cell-count:hover .md-cell-label { filter: brightness(1.1); }
+.md-cell-count:hover .md-cell-value { filter: brightness(1.06); }
