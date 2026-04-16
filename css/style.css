@@ -22463,3 +22463,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    バー全体とラベルが一体的にホバーで反応する家計スコア項目の完成形演出に。 */
 .hs-bar-track { transition: filter var(--dur-fast) var(--ease-out); }
 .hs-item:hover .hs-bar-track { filter: brightness(1.05); }
+
+/* ── v23.37 Sprint #733 ── 8 hover child-element improvements ──────────────── */
+
+/* 1. section-tab:not(.is-active):hover → color: primary
+   セクションタブの非アクティブ状態のホバー時にタブテキストを primary カラーへ変色。
+   既存の .section-tab:hover { color: var(--text) } に対し :not(.is-active) で
+   特異度を上乗せし、非アクティブタブのみ primary へ昇格させる。
+   .tab-icon scale（既存 v22.x）と連動し、ホバー時の視覚的フィードバックを
+   より明確にする演出に。 */
+.section-tab:not(.is-active):hover { color: var(--primary); }
+
+/* 2. section-tab:hover → .tab-icon drop-shadow primary glow
+   セクションタブのホバー時に .tab-icon（絵文字アイコン）に
+   primary カラーの drop-shadow glow を追加。
+   scale(var(--scale-hover))（既存）と連動し、絵文字が浮き上がり輝く演出を追加。
+   tab-icon の transition に filter を追記してスムーズにアニメーション。 */
+.section-tab .tab-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.section-tab:hover .tab-icon { filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 3. yr-widget-card:hover → .yr-progress-track brightness(1.05)
+   年次ウィジェットカードのホバー時に .yr-progress-track（年間進捗バー背景トラック：
+   background:on-dark-bg）を brightness(1.05) で輝かせる。
+   yr-widget-card:hover .yr-progress-fill brightness+glow（v23.27）・
+   yr-progress-label primary（v23.27）と連動し、プログレスバー全体が
+   一体的にホバーで反応する完成形に。 */
+.yr-progress-track { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-progress-track { filter: brightness(1.05); }
+
+/* 4. debt-card:hover → .debt-bar-track brightness(1.05)
+   負債カードのホバー時に .debt-bar-track（返済進捗バー背景トラック：
+   background:border）を brightness(1.05) で輝かせる。
+   debt-card:hover .debt-bar-fill brightness+glow（v22.x）・
+   debt-progress-hdr brightness（v23.35）・debt-history-title color（v23.36）と
+   連動し、返済進捗バー全体のホバー演出を完成させる。 */
+.debt-bar-track { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-bar-track { filter: brightness(1.05); }
+
+/* 5. pt-card:hover → .pt-exp-bar brightness(1.05)
+   ポイントカードのホバー時に .pt-exp-bar（有効期限進捗バー背景トラック：
+   background:border・height:size-bar-mid・radius-pill）を brightness(1.05) で輝かせる。
+   pt-card:hover .pt-exp-bar-fill brightness+glow（v23.19）・
+   pt-card:hover の lift+shadow（v22.x）と連動し、
+   有効期限バーのフィルとトラックが一体的にホバーで反応する完成形に。 */
+.pt-exp-bar { transition: filter var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-exp-bar { filter: brightness(1.05); }
+
+/* 6. health-score-card:hover → .hs-gauge-track brightness(1.08)
+   家計スコアカードのホバー時に .hs-gauge-track（ゲージSVG 背景弧：
+   stroke:border・stroke-width:6・fill:none）を brightness(1.08) で輝かせる。
+   health-score-card:hover .hs-gauge-fill brightness+drop-shadow（v22.68）と
+   連動し、ゲージの前景弧（fill）と背景弧（track）が一体的にホバーで
+   反応するゲージ全体ホバー演出の完成形に。 */
+.hs-gauge-track { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-gauge-track { filter: brightness(1.08); }
+
+/* 7. cat-card:hover → .cat-budget-bar-wrap brightness(1.05)
+   カテゴリカードのホバー時に .cat-budget-bar-wrap（月次予算バーの背景トラック：
+   background:border・height:size-bar・radius-2xs）を brightness(1.05) で輝かせる。
+   cat-card:hover .cat-budget-bar-fill brightness+glow（v22.x）と連動し、
+   予算バーのフィルとトラックが一体的にホバーで反応する
+   カテゴリカード予算バーホバー演出の完成形に。 */
+.cat-budget-bar-wrap { transition: filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-budget-bar-wrap { filter: brightness(1.05); }
+
+/* 8. dw-item:hover → .dw-slider brightness(1.12)
+   ダッシュボードウィジェット設定アイテムのホバー時に .dw-slider（トグルスイッチ本体：
+   unchecked=border グレー / checked=primary カラー）を brightness(1.12) で輝かせる。
+   dw-item:hover の translateX+shadow（v22.71）・dw-item-icon scale+glow（v22.80）・
+   dw-item-label primary（v22.99）と連動し、トグルスイッチもホバーで
+   一体的に反応する dw-item ホバー演出の完成形に。
+   dw-slider の transition に filter を追記してスムーズにアニメーション。 */
+.dw-slider { transition: background var(--dur-base) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.dw-item:hover .dw-slider { filter: brightness(1.12); }
