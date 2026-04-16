@@ -21623,3 +21623,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ラベル＋金額値が一体的に反応する支出セルの完成形演出に。
    md-cell-income brightness（本スプリント）と対称パターン。 */
 .md-cell-expense:hover .md-cell-value { filter: brightness(1.06); }
+
+/* ============================================================
+   v23.27 ホバー子要素カラー変化・brightness・glow・scale 8箇所
+   summary-amount-glow / debt-summary-sub-brightness /
+   tx-date-color / yr-elapsed-badge-hover /
+   yr-progress-label-color / yr-progress-fill-glow /
+   yi-half-label-color / yi-half-val-glow
+   ============================================================ */
+
+/* 1. summary-card:hover → .summary-amount text-shadow white glow
+   ダッシュボード上部サマリーカード（収入・支出・残高）のホバー時に
+   .summary-amount（大数値テキスト：fs-5xl/fw-black）の
+   text-shadowを強化して白グローを追加。
+   sub-summary-card:hover .sub-summary-amount（v23.16）・
+   pt-summary-card:hover .pt-summary-amount（v23.17）と同パターンで
+   グラデーション系サマリーカード全種の数値ホバー演出を統一する。 */
+.summary-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.summary-card:hover .summary-amount { text-shadow: 0 0 18px rgba(255,255,255,0.65), 0 2px 12px rgba(255,255,255,0.35); }
+
+/* 2. debt-summary-total/monthly:hover → .debt-summary-sub brightness(1.1)
+   負債ページの合計カード・月額カードのホバー時に
+   .debt-summary-sub（「N件のローン」「毎月の支払い合計」等の
+   補足テキスト：fs-xs・ls-micro・opacity-near）を brightness(1.1) で輝かせる。
+   debt-summary-total/monthly:hover の lift+shadow（v22.62）と連動し
+   カードホバー時に数値・補足テキストが一体的に反応する演出に。 */
+.debt-summary-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-summary-total:hover   .debt-summary-sub,
+.debt-summary-monthly:hover .debt-summary-sub { filter: brightness(1.1); }
+
+/* 3. tx-table tbody tr:hover → td:first-child（日付列）primary カラー変化
+   取引一覧テーブルの行ホバー時に td:first-child（日付テキスト：
+   formatDate で「4/15」等の形式・color:text デフォルト）を
+   primary カラーへ変色。tx-col-pay primary 変色（v23.24）・
+   tx-col-mem primary 変色（v23.24）と同パターンで
+   日付列もホバー時に視覚的ハイライトを追加。行ホバーで
+   日付・支払方法・担当者のテキスト要素が統一的に primary 変色。 */
+.tx-table td:first-child { transition: color var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td:first-child { color: var(--primary); }
+
+/* 4. yr-widget-card:hover → .yr-elapsed-badge scale(1.04) + brightness(1.08) + primary カラー変化
+   年次ウィジェットカードのホバー時に .yr-elapsed-badge（「N月経過」バッジ：
+   fs-xs・color:text-muted・background:surface-hover・border-radius:badge）を
+   scale(1.04) + brightness(1.08) + color:primary に変化。
+   yr-widget-card:hover の lift+shadow（v22.68）と連動し
+   カードホバーでバッジが浮き上がりプライマリカラーに輝く演出。 */
+.yr-elapsed-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-elapsed-badge { transform: scale(1.04); filter: brightness(1.08); color: var(--primary); }
+
+/* 5. yr-widget-card:hover → .yr-progress-label primary カラー変化
+   年次ウィジェットカードのホバー時に .yr-progress-label（「年間進捗」「XX%（N/12ヶ月）」等の
+   進捗ラベルテキスト：fs-xs・color:text-sub）を primary カラーへ変色。
+   yr-elapsed-badge primary 変色（本スプリント）と連動し
+   カードヘッダーバッジ・フッター進捗ラベルが一体的に primary で反応する演出に。 */
+.yr-progress-label { transition: color var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-progress-label { color: var(--primary); }
+
+/* 6. yr-widget-card:hover → .yr-progress-fill brightness(1.1) + primary glow
+   年次ウィジェットカードのホバー時に .yr-progress-fill（年間進捗バープレースバー塗り部分：
+   background:primary-gradient・shimmerアニメーション付き）を
+   brightness(1.1) + primary box-shadow glow で輝かせる。
+   yr-progress-label primary 変色（本スプリント）と連動し
+   進捗バーのラベル・バー塗り部分がカードホバーで一体的に強調される演出。 */
+.yr-progress-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-progress-fill { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+
+/* 7. yi-card:hover → .yi-half-label primary カラー変化
+   年間収支インサイトカードのホバー時に .yi-half-label（「1〜6月」「7〜12月」等の
+   上下半期ラベルテキスト：color:text-sub・fs-xs）を primary カラーへ変色。
+   yi-card:hover の yi-card-label primary 変色（v22.x）・yi-card-sub primary 変色（v22.x）
+   と同パターンで半期ラベルもホバー時にプライマリ色でハイライト。 */
+.yi-half-label { transition: color var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-half-label { color: var(--primary); }
+
+/* 8. yi-card:hover → .yi-half-val brightness(1.08) + expense text-shadow glow
+   年間収支インサイトカードのホバー時に .yi-half-val（上下半期支出金額：
+   color:expense・fw-semi・tabular-nums）を brightness(1.08) +
+   expense text-shadow glow（0 0 8px）で輝かせる。
+   yi-half-label primary 変色（本スプリント）と連動し
+   ラベル・金額値が一体的に反応する半期セルのホバー演出完成形。 */
+.yi-half-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-half-val { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
