@@ -21475,3 +21475,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的に反応する予測カードの完成形演出に。ライト/ダーク両モード対応。 */
 .fc-low-conf { transition: filter var(--dur-fast) var(--ease-out); }
 .forecast-card:hover .fc-low-conf { filter: brightness(1.06); }
+
+/* ============================================================
+   v23.25: ホバー子要素カラー変化・brightness・scale・glow 8箇所
+   ch-progress-label-brightness / budget-over-msg-glow /
+   ct-stat-value-sub-brightness / ev-widget-month-brightness /
+   pace-daily-label-statuscolor / fv-cat-color-dot-scale /
+   fv-cat-name-color / goal-sep-brightness
+   ============================================================ */
+
+/* 1. ch-card:hover → .ch-progress-label brightness(1.1)
+   チャレンジカードのホバー時に .ch-progress-label（「¥50,000 / ¥100,000」等の
+   進捗テキスト：color:text-sub・fs-xs・ls-fine）を brightness(1.1) で輝かせる。
+   ch-progress-pct brightness（v22.83）と連動しラベル・パーセンテージの両テキストが
+   ホバーで一体的に反応するチャレンジカード演出の完成形に。 */
+.ch-progress-label { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-progress-label { filter: brightness(1.1); }
+
+/* 2. budget-item:has(.budget-fill.over):hover → .budget-over-msg brightness(1.1) + expense glow
+   超過予算アイテムのホバー時に .budget-over-msg（「⚠ ¥X,XXX 超過」等の警告テキスト：
+   color:expense・fs-xs・fw-semi・tabular-nums）を brightness(1.1) +
+   expense text-shadow glow で輝かせる。budget-nums expense color（v22.x）・
+   budget-pct-badge brightness（v23.x）と連動し警告アイテムのホバー時に
+   超過メッセージも一体的に輝く警告感のある演出に統一する。 */
+.budget-over-msg { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:has(.budget-fill.over):hover .budget-over-msg { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 3. ct-stat-card:hover → .ct-stat-value-sub brightness(1.05)
+   カテゴリトレンド統計カードのホバー時に .ct-stat-value-sub（「/ 12件」等の
+   .ct-stat-value 内のサブテキスト：fs-sm・fw-normal・text-muted・tabular-nums）を
+   brightness(1.05) で輝かせる。ct-stat-value color+brightness（v22.x）と連動し
+   メイン数値・サブテキストの両要素がホバーで一体的に反応する演出に統一する。 */
+.ct-stat-value-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-value-sub { filter: brightness(1.05); }
+
+/* 4. ev-widget-item:hover → .ev-widget-month brightness(1.15)
+   収支予定ウィジェット行のホバー時に .ev-widget-month（「4月」等の月テキスト：
+   color:primary・fs-xs・fw-semi・ls-label）をさらに brightness(1.15) で輝かせる。
+   ev-widget-name color（v23.x）・ev-widget-amount color+brightness（v22.x）・
+   ev-widget-cat color（v23.x）と連動しウィジェット行の全テキスト要素が
+   ホバーで一体的に反応する完成形演出に。 */
+.ev-widget-month { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-month { filter: brightness(1.15); }
+
+/* 5. pace-daily-cell:hover → .pace-daily-label ステータス別カラー変化
+   ペース管理1日グリッドセルのホバー時に .pace-daily-label（日付テキスト：
+   color:text-faint・fs-2xs・ls-label）をステータス別カラーへ変色。
+   pace-daily-val brightness（v22.x）と連動し日付ラベル・金額値の両要素が
+   ホバーで一体的にステータスカラーで応答するセル演出の完成形に。 */
+.pace-daily-label { transition: color var(--dur-fast) var(--ease-out); }
+.pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label { color: var(--success); }
+.pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label { color: var(--warning); }
+.pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label { color: var(--danger-text); }
+
+/* 6. fv-cat-table tbody tr:hover → .color-dot scale(1.25) + fv-cat-color glow
+   固定費/変動費カテゴリテーブル行のホバー時に .color-dot（カテゴリカラーインジケーター円：
+   background:fv-cat-color インライン指定）を scale(1.25) + fv-cat-color glow で強調。
+   budget-item:hover .color-dot scale（v22.81）・pm-table-row:hover .color-dot scale（v23.23）
+   と同パターンでカテゴリテーブル行にも初のホバー子要素演出を追加する。 */
+.fv-cat-table tbody tr:hover .color-dot { transform: scale(1.25); box-shadow: 0 0 0 2px color-mix(in srgb, var(--fv-cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. fv-cat-table tbody tr:hover → td:first-child primary カラー変化
+   固定費/変動費カテゴリテーブル行のホバー時に td:first-child（カテゴリ名テキスト）を
+   primary カラーへ変色。color-dot scale（本スプリント）と連動しカテゴリ名・
+   ドットの両要素がホバーで一体的に反応する演出に統一する。
+   pm-table-row:hover td:first-child（v23.23）と同パターン。 */
+.fv-cat-table tbody tr { transition: color var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover td:first-child { color: var(--primary); }
+
+/* 8. goal-card:hover → .goal-sep brightness(1.2)
+   目標カードのホバー時に .goal-sep（貯蓄進捗「¥XX」と目標金額「¥XXX」の間の「/」区切り文字：
+   color:text-faint・fs-xs・ls-fine）を brightness(1.2) で輝かせる。
+   goal-saved color+brightness（v22.x）・goal-target color（v22.x）と連動し
+   貯蓄金額・区切り文字・目標金額の3要素が揃ってホバーで一体的に反応する完成形演出に。 */
+.goal-sep { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-sep { filter: brightness(1.2); }
