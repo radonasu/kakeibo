@@ -22158,3 +22158,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    と連動し hm-stat-card の全子要素ホバー演出を完成形に。 */
 .hm-stat-unit { transition: color var(--dur-fast) var(--ease-out); }
 .hm-stat-card:hover .hm-stat-unit { color: var(--primary); }
+
+/* ============================================================
+   v23.33 スプリント#729
+   fv-month-cell-color / fv-fixed-val-brightness / fv-var-val-brightness /
+   fv-rate-badge-scale-glow / dow-td2-brightness / dow-td4-color /
+   rc-item-amount-brightness-color / yi-half-sep-brightness 8箇所
+   ============================================================ */
+
+/* 1. fv-month-table tbody tr:hover → .fv-month-cell primary カラー変化
+   固定費 vs 変動費 月別テーブルの行ホバー時に .fv-month-cell（「1月」「2月」等の
+   月ラベルセル：fw-semi・ls-snug・tabular-nums）を primary カラーに変色。
+   tx-table tbody tr:hover の lift+shadow（既存）と連動し、月ラベルが
+   ホバーで一体的に反応する演出を追加。 */
+.fv-month-cell { transition: color var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-month-cell { color: var(--primary); }
+
+/* 2. fv-month-table tbody tr:hover → .fv-fixed-val brightness(1.08)
+   固定費 vs 変動費 月別テーブルの行ホバー時に .fv-fixed-val（固定費金額：
+   color:primary・fw-semi・tabular-nums）を brightness(1.08) で輝かせる。
+   fv-month-cell primary 変色（上記）と連動し、月ラベルと固定費値が
+   一体的にホバーで反応する演出に。 */
+.fv-fixed-val { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-fixed-val { filter: brightness(1.08); }
+
+/* 3. fv-month-table tbody tr:hover → .fv-var-val brightness(1.08)
+   固定費 vs 変動費 月別テーブルの行ホバー時に .fv-var-val（変動費金額：
+   color:success・fw-semi・tabular-nums）を brightness(1.08) で輝かせる。
+   fv-fixed-val brightness（上記）と同パターンで変動費値にも同様のホバー輝き演出。 */
+.fv-var-val { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-var-val { filter: brightness(1.08); }
+
+/* 4. fv-month-table tbody tr:hover → .fv-rate-badge scale(1.04) + brightness(1.08) + タイプ別 glow
+   固定費 vs 変動費 月別テーブルの行ホバー時に .fv-rate-badge（「70%」等の固定費率バッジ）を
+   scale(1.04) + brightness(1.08) でポップに強調。high/mid/low の各タイプに
+   応じたカラー drop-shadow glow を追加し、比率の重要度を視覚的に訴求。
+   fv-month-cell / fv-fixed-val / fv-var-val のホバー演出と連動し
+   テーブル行全体のホバー演出の完成形に。 */
+.fv-month-table .fv-rate-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-rate-badge             { transform: scale(1.04); filter: brightness(1.08); }
+.fv-month-table tbody tr:hover .fv-rate-badge.high { filter: brightness(1.08) drop-shadow(0 1px 5px color-mix(in srgb, var(--primary)  var(--mix-sm), transparent)); }
+.fv-month-table tbody tr:hover .fv-rate-badge.mid  { filter: brightness(1.08) drop-shadow(0 1px 5px color-mix(in srgb, var(--warning)  var(--mix-sm), transparent)); }
+.fv-month-table tbody tr:hover .fv-rate-badge.low  { filter: brightness(1.08) drop-shadow(0 1px 5px color-mix(in srgb, var(--success)  var(--mix-sm), transparent)); }
+
+/* 5. dow-table-row:hover → td:nth-child(2) brightness(1.06)
+   曜日別支出パターンテーブルの行ホバー時に 2列目セル（「12件 / 8日」等の
+   件数・日数テキスト：color:text-muted・tabular-nums）を brightness(1.06) で
+   明るく強調。dow-label-cell brightness（v22.x）・dow-pct-badge scale（v22.x）・
+   dow-mini-bar-fill glow（v23.31）と連動し、件数/日数テキストもホバーで
+   一体的に反応するdow-table-row 行ホバー演出の完成形に。 */
+.dow-table-row td:nth-child(2) { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(2) { filter: brightness(1.06); }
+
+/* 6. dow-table-row:hover → td:nth-child(4) primary カラー変化
+   曜日別支出パターンテーブルの行ホバー時に 4列目セル（「¥X,XXX」等の
+   1日平均額テキスト：tabular-nums・通常色）を primary カラーに変色。
+   dow-label-cell brightness・dow-pct-badge scale・dow-mini-bar-fill glow・
+   td:nth-child(2) brightness（上記）と連動し平均額も一体的に反応する
+   dow-table-row 行ホバー演出の完成形に。 */
+.dow-table-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(4) { color: var(--primary); }
+
+/* 7. rc-item:hover → .rc-item-amount brightness(1.08) + primary カラー変化
+   定期収支アイテムのホバー時に .rc-item-amount（金額テキスト：fw-bold・tabular-nums・
+   color:text）を brightness(1.08) + primary カラーに変色。
+   rc-cat-dot scale+glow（v22.x）・rc-item-name primary（v22.x）・
+   rc-item-meta primary（v22.x）・rc-type-badge scale（v22.x）と連動し
+   rc-item の全子要素ホバー演出の完成形に。 */
+.rc-item-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-amount { color: var(--primary); filter: brightness(1.08); }
+
+/* 8. yi-card:hover → .yi-half-sep brightness(1.4)
+   年間サマリーカードのホバー時に .yi-half-sep（前半期 / 後半期 を区切る
+   縦区切り線：width:bw-thin・background:border・flex-shrink:0）を
+   brightness(1.4) で輝かせ、セクション区切りに視覚的な存在感を付加。
+   yi-half-label primary（v23.31）・yi-half-val brightness（v23.31）と連動し
+   yi-half-row エリアの全要素がホバーで一体的に反応する演出の完成形に。 */
+.yi-half-sep { transition: filter var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-half-sep { filter: brightness(1.4); }
