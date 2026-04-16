@@ -21883,3 +21883,103 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .smi-balance:has(.smi-amount.expense):hover  .smi-label { color: var(--danger-text); }
 .smi-balance:hover                           .smi-amount.income  { color: var(--success);     filter: brightness(1.08); }
 .smi-balance:hover                           .smi-amount.expense { color: var(--danger-text); filter: brightness(1.08); }
+
+/* ============================================================
+   v23.30 スプリント#726 デザイン改善
+   ch-type-badge hover pop / sim-savings-banner hover /
+   yr-prev-badge hover pop / adv-month-badge hover pop /
+   yr-topcat-label hover
+   ============================================================ */
+
+/* 1. ch-card:hover → .ch-type-badge scale(1.04) + brightness(1.08)
+   チャレンジカードのホバー時に .ch-type-badge（「支出制限」「貯蓄」等の
+   タイプバッジ：background:surface-2・border-radius:2xs・padding:0.25/1.5）を
+   scale(1.04) + brightness(1.08) で浮き上がらせる。
+   ev-type-badge:scale(1.05)+brightness(1.08)（v23.x）・
+   wl-priority-badge:scale(1.06)+brightness(1.08)（v23.x）・
+   debt-type-badge:scale(1.05)+brightness(1.08)（v23.x）と同パターンで
+   チャレンジカードのタイプバッジにも hover pop を追加し
+   カード内バッジ hover 演出を統一。 */
+.ch-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-type-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 2. sim-savings-banner hover — translateY lift + success glow
+   繰上返済シミュレーターの節約バナー（.sim-savings-banner：
+   gradient background・border:success-border・border-radius:card）に
+   translateY lift + success glow を追加。
+   hm-stat-card:hover（v22.68）・forecast-card:hover（v22.70）・
+   adv-widget-card:hover（v22.71）と同パターンで
+   静的バナーにもマイクロインタラクションを付与。 */
+.sim-savings-banner {
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+}
+.sim-savings-banner:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .sim-savings-banner:hover {
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
+}
+
+/* 3. sim-savings-banner:hover → .sim-savings-value brightness(1.1) + text-shadow glow
+   節約バナーのホバー時に .sim-savings-value（節約額：
+   fs-xl・fw-black・color:success・tabular-nums）を
+   brightness(1.1) + text-shadow glow で輝かせる。
+   summary-card:hover .summary-amount text-shadow（v23.28）・
+   ev-sum-card:hover .ev-sum-count text-shadow（v23.29）と同パターンで
+   節約バナーの主要数値にもホバー輝き演出を追加。 */
+.sim-savings-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sim-savings-banner:hover .sim-savings-value { filter: brightness(1.1); text-shadow: 0 0 12px color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+
+/* 4. sim-savings-banner:hover → .sim-savings-label brightness(1.1)
+   節約バナーのホバー時に .sim-savings-label（「利息節約額」等の
+   ラベルテキスト：fs-xs・color:income-deep・ls-fine）を
+   brightness(1.1) で輝かせる。
+   fv-stat-card:hover .fv-stat-label brightness（v23.x）・
+   yr-cell:hover .yr-cell-label（v23.x）と同パターンで
+   バナー内ラベルにもホバー強調を追加。 */
+.sim-savings-label { transition: filter var(--dur-fast) var(--ease-out); }
+.sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); }
+
+/* 5. sim-savings-banner:hover → .sim-savings-divider brightness(1.4)
+   節約バナーのホバー時に .sim-savings-divider（区切り線：
+   width:bw-thin・height:sp-12・background:success-border）を
+   brightness(1.4) で輝かせる。バナー内全要素が一体的に
+   輝く演出でホバー体験を完成させる。 */
+.sim-savings-divider { transition: filter var(--dur-fast) var(--ease-out); }
+.sim-savings-banner:hover .sim-savings-divider { filter: brightness(1.4); }
+
+/* 6. yr-cell:hover → .yr-prev-badge scale(1.04) + brightness(1.08)
+   年間ビューの収入/支出/貯蓄セルホバー時に .yr-prev-badge
+   （前年比バッジ：yr-prev-down/up・success/danger-text カラー）を
+   scale(1.04) + brightness(1.08) で浮き上がらせる。
+   debt-type-badge:scale(1.05)+brightness(1.08)（v23.x）・
+   ev-type-badge:scale(1.05)+brightness(1.08)（v23.x）・
+   asset-currency-badge:scale(1.05)+brightness(1.08)（v23.x）と同パターンで
+   年間ビューの前年比バッジにも hover pop を追加。 */
+.yr-prev-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-prev-badge { transform: scale(1.04); filter: brightness(1.08); }
+.yr-cell-expense:hover         .yr-prev-badge { transform: scale(1.04); filter: brightness(1.08); }
+.yr-cell-savings-success:hover .yr-prev-badge { transform: scale(1.04); filter: brightness(1.08); }
+.yr-cell-savings-warn:hover    .yr-prev-badge { transform: scale(1.04); filter: brightness(1.08); }
+.yr-cell-savings-danger:hover  .yr-prev-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 7. adv-widget-card:hover → .adv-month-badge scale(1.04) + brightness(1.08)
+   AIアドバイスカードのホバー時に .adv-month-badge（「2026年4月」等の
+   月バッジ：background:primary-mix-2xs・color:primary・fs-xs・fw-semi・
+   ::before にパルスドット付き）を scale(1.04) + brightness(1.08) で浮き上がらせる。
+   adv-widget-card:hover .adv-widget-desc brightness（v23.x）・
+   adv-widget-card:hover .adv-widget-hint brightness（v23.x）と連動し
+   アドバイスカードのホバー演出を完成させる。 */
+.adv-month-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-month-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 8. yr-widget-card:hover → .yr-topcat-label primary カラー変化
+   年間ビューウィジェットのホバー時に .yr-topcat-label（「最多支出カテゴリ」等の
+   ラベルテキスト：fs-2xs・color:text-muted）を primary カラーへ変化。
+   yr-widget-card:hover .yr-avg-label primary（v23.28）・
+   yr-widget-card:hover .yr-progress-label primary（v23.27）と同パターンで
+   ウィジェット下部フッターラベルのホバー演出を統一。 */
+.yr-topcat-label { transition: color var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-topcat-label { color: var(--primary); }
