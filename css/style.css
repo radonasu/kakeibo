@@ -20816,3 +20816,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    （v23.08）と連動し未読ドットもホバーで一体的に反応する演出の完成形に。 */
 .notif-unread-dot { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .notif-item:hover .notif-unread-dot { transform: scale(1.15); filter: brightness(1.2); }
+
+/* ============================================================
+   v23.17: ホバー子要素カラー変化・brightness・glow 8箇所
+   wl-summary-value-glow / wl-summary-label-brightness /
+   wl-summary-unit-brightness / tx-month-income-brightness /
+   tx-month-expense-brightness / nt-char-count-color /
+   nt-saved-at-color / insight-desc-brightness
+   ============================================================ */
+
+/* 1. wl-sum-count/budget/done:hover → .wl-summary-value text-shadow glow（白）
+   ウィッシュリストサマリーカード（グラデーション背景）のホバー時に
+   .wl-summary-value（白大型数値：color:white・fs-xl・fw-bold）に
+   白い text-shadow glow を追加。ch-summary-value glow（v23.15）・
+   sub-summary-amount glow（v23.16）と同パターンでグラデーション系
+   サマリーカードの数値ホバー演出を統一。wl-sum-count/budget/done:hover の
+   translateY+shadow+brightness（v22.64）と連動し数値が特に際立つ演出に。 */
+.wl-summary-value { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.wl-sum-count:hover  .wl-summary-value,
+.wl-sum-budget:hover .wl-summary-value,
+.wl-sum-done:hover   .wl-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 2. wl-sum-count/budget/done:hover → .wl-summary-label brightness(1.2)
+   ウィッシュリストサマリーカードのホバー時に .wl-summary-label（ラベルテキスト：
+   color:on-dark-title=rgba(255,255,255,.80)）を brightness(1.2) で輝かせる。
+   on-dark-title は半透明の白テキストのため brightness で完全な白に近づき
+   ラベルの視認性が高まる。wl-summary-value glow（本スプリント）と連動し
+   数値・ラベルが一体的にホバーで明るく反応する演出に。 */
+.wl-summary-label { transition: filter var(--dur-fast) var(--ease-out); }
+.wl-sum-count:hover  .wl-summary-label,
+.wl-sum-budget:hover .wl-summary-label,
+.wl-sum-done:hover   .wl-summary-label { filter: brightness(1.2); }
+
+/* 3. wl-sum-count/budget/done:hover → .wl-summary-unit brightness(1.15)
+   ウィッシュリストサマリーカードのホバー時に .wl-summary-unit（単位テキスト：
+   color:on-dark-soft=rgba(255,255,255,.70)/text-muted）を brightness(1.15) で
+   輝かせる。wl-summary-value glow・wl-summary-label brightness（本スプリント）
+   と連動し値・ラベル・単位の3要素が揃ってホバーで一体的に明るく反応する
+   グラデーション系サマリーカードの完成形演出に。 */
+.wl-summary-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.wl-sum-count:hover  .wl-summary-unit,
+.wl-sum-budget:hover .wl-summary-unit,
+.wl-sum-done:hover   .wl-summary-unit { filter: brightness(1.15); }
+
+/* 4. tx-month-group-row:hover → .tx-month-group-summary .income brightness(1.08)
+   取引リストの月グループ見出し行ホバー時に .tx-month-group-summary 内の
+   .income スパン（収入合計金額：color:var(--income)・tabular-nums）を
+   brightness(1.08) で輝かせる。.tx-month-group-label primary変色・
+   .tx-month-group-count primary変色（v23.09）・行 background+inset-shadow
+   （v22.67）と連動し収入金額もホバーで一体的に強調される演出に。 */
+.tx-month-group-summary .income { transition: filter var(--dur-fast) var(--ease-out); }
+.tx-month-group-row:hover .tx-month-group-summary .income { filter: brightness(1.08); }
+
+/* 5. tx-month-group-row:hover → .tx-month-group-summary .expense brightness(1.08)
+   取引リストの月グループ見出し行ホバー時に .tx-month-group-summary 内の
+   .expense スパン（支出合計金額：color:var(--expense)・tabular-nums）を
+   brightness(1.08) で輝かせる。.income brightness（本スプリント）と連動し
+   月グループ見出し内の収入・支出・件数・月ラベルの全要素が一体的に
+   ホバーで反応する完成形に。 */
+.tx-month-group-summary .expense { transition: filter var(--dur-fast) var(--ease-out); }
+.tx-month-group-row:hover .tx-month-group-summary .expense { filter: brightness(1.08); }
+
+/* 6. nt-card:hover → .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) primary カラー変化
+   メモカードのホバー時に通常状態の文字数カウント（color:text-muted・fs-2xs）を
+   primary カラーへ変色。.nt-cnt-warn（warning）・.nt-cnt-danger（danger-text）は
+   :not() で除外し既存の警告カラーを維持。nt-card:hover の lift+shadow（v22.67）・
+   nt-progress-fill brightness+glow（v23.15）と連動しメモカードのホバー演出に
+   文字数インジケーターも参加する演出に。 */
+.nt-char-count { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { color: var(--primary); }
+
+/* 7. nt-card:hover → .nt-saved-at primary カラー変化 + border-color変化
+   メモカードのホバー時に保存日時ピル（color:text-muted・background:surface-hover・
+   border:border）を primary カラー + border-color primary に変色。ピル全体が
+   primary テーマに染まり存在感を増す演出。nt-char-count 変色（本スプリント）・
+   nt-progress-fill glow（v23.15）と連動しメモフッター全体がホバーで
+   一体的に反応する完成形に。 */
+.nt-saved-at { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+.nt-card:hover .nt-saved-at { color: var(--primary); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. insight-item:hover → .insight-desc brightness(1.1)
+   インサイトアイテムのホバー時に .insight-desc（説明テキスト：color:text-muted・
+   fs-xs・lh-relaxed）を brightness(1.1) で輝かせる。insight-icon drop-shadow
+   （v22.93）・insight-title brightness（v22.98）と連動し
+   アイテム内のアイコン・タイトル・説明文の全要素がホバーで一体的に
+   反応する完成形に。ライト/ダーク両モードで読みやすさが向上。 */
+.insight-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.insight-item:hover .insight-desc { filter: brightness(1.1); }
