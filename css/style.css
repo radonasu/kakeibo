@@ -22083,3 +22083,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    md-cell-count:hover の lift+shadow（v22.82）と連動し完成形に。 */
 .md-cell-count:hover .md-cell-label { filter: brightness(1.1); }
 .md-cell-count:hover .md-cell-value { filter: brightness(1.06); }
+
+/* ============================================================
+   v23.32 スプリント#728
+   debt-summary-label-brightness / debt-summary-amount-glow /
+   step-action-brightness / cat-yayoi-tag-brightness-border /
+   tg-table-td-first-color / wl-card-meta-brightness /
+   hm-stat-label-brightness / hm-stat-unit-color 8箇所
+   ============================================================ */
+
+/* 1. debt-summary-total/monthly:hover → .summary-label brightness(1.2)
+   負債サマリーカード（合計・月次）ホバー時に .summary-label（「総残債」「月次返済」
+   等のラベルテキスト：color:text-muted・fs-xs）を brightness(1.2) で明るく強調。
+   同カードの lift+shadow ホバー演出と連動し、ラベルがホバーで一体的に反応する。 */
+.debt-summary-total .summary-label,
+.debt-summary-monthly .summary-label { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-summary-total:hover .summary-label,
+.debt-summary-monthly:hover .summary-label { filter: brightness(1.2); }
+
+/* 2. debt-summary-total/monthly:hover → .summary-amount white text-shadow glow
+   負債サマリーカード（合計・月次）ホバー時に .summary-amount（金額値テキスト：
+   color:white・fw-bold）に白グローのテキストシャドウを付加。
+   グラデーション背景上の白テキストが輝き、視覚的なフォーカス感を演出。
+   debt-summary-label brightness（上記）と連動し完成形に。 */
+.debt-summary-total .summary-amount,
+.debt-summary-monthly .summary-amount { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.debt-summary-total:hover .summary-amount,
+.debt-summary-monthly:hover .summary-amount { text-shadow: 0 0 14px rgba(255,255,255,0.55); }
+
+/* 3. step-card:hover → .step-action brightness(1.1)
+   ステップカードホバー時に .step-action（「→ 設定する」等のアクションテキスト：
+   color:primary・fs-sm・fw-medium）を brightness(1.1) で輝かせる。
+   step-card:hover の lift+shadow 演出と連動し、アクション誘導リンクが
+   ホバーで一体的に明るく反応する。 */
+.step-action { transition: filter var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-action { filter: brightness(1.1); }
+
+/* 4. cat-card:hover → .cat-yayoi-tag brightness(1.06) + primary border-color
+   カテゴリカードホバー時に .cat-yayoi-tag（「弥生」タグバッジ）を
+   brightness(1.06) で輝かせ、border-color を primary 半透過色に変化させる。
+   cat-card:hover の lift+shadow 演出と連動し、タグが一体的に反応する。 */
+.cat-yayoi-tag { transition: filter var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-yayoi-tag { filter: brightness(1.06); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. tg-table tbody tr:hover → td:first-child primary カラー変化
+   タグ管理テーブルの行ホバー時に先頭セル（タグ名・カテゴリ名等：
+   color:text・fw-medium）を primary カラーに変色。
+   tg-table tbody tr:hover の translateX+shadow（v22.71）・
+   tx-tag-chip scale（v23.07）・td.text-muted 変色（v22.xx）と連動し
+   先頭テキストもホバーで一体的に反応する完成形に。 */
+.tg-table td:first-child { transition: color var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td:first-child { color: var(--primary); }
+
+/* 6. wl-card:hover → .wl-card-meta brightness(1.05)
+   欲しいものリストカードホバー時に .wl-card-meta（優先度・カテゴリ等の
+   メタ情報エリア：color:text-muted・fs-xs）を brightness(1.05) で明るく強調。
+   wl-card:hover の wl-card-name 変色（v22.xx）・wl-card-price 変色（v22.xx）・
+   wl-card-note 変色（v23.x）と連動し、メタ情報もホバーで一体的に反応する。 */
+.wl-card-meta { transition: filter var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-meta { filter: brightness(1.05); }
+
+/* 7. hm-stat-card:hover → .hm-stat-label brightness(1.1)
+   ヒートマップ統計カードホバー時に .hm-stat-label（「最高支出日」等の
+   ラベルテキスト：color:text-muted・fs-xs）を brightness(1.1) で明るく強調。
+   hm-stat-card:hover の hm-stat-value 変色（v22.xx）・hm-stat-sub brightness（v23.x）
+   と連動し、ラベルもホバーで一体的に反応する。 */
+.hm-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.hm-stat-card:hover .hm-stat-label { filter: brightness(1.1); }
+
+/* 8. hm-stat-card:hover → .hm-stat-unit primary カラー変化
+   ヒートマップ統計カードホバー時に .hm-stat-unit（「円」「日」等の
+   単位テキスト：color:text-muted・fs-xs）を primary カラーに変色。
+   hm-stat-label brightness（上記）・hm-stat-value 変色・hm-stat-sub brightness
+   と連動し hm-stat-card の全子要素ホバー演出を完成形に。 */
+.hm-stat-unit { transition: color var(--dur-fast) var(--ease-out); }
+.hm-stat-card:hover .hm-stat-unit { color: var(--primary); }
