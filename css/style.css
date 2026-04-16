@@ -21394,3 +21394,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    連動しカード上部ボーダーもホバーで輝き、カード全体の存在感が高まる演出に。 */
 .cat-card-accent { transition: box-shadow var(--dur-fast) var(--ease-out); }
 .cat-card:hover .cat-card-accent { box-shadow: 0 0 8px 2px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-md), transparent); }
+
+/* ============================================================
+   v23.24: ホバー子要素カラー変化・brightness・scale・glow 8箇所
+   hs-msg-brightness / hs-trend-label-color /
+   sub-paused-badge-scale / asset-fx-rate-color /
+   asset-foreign-hint-brightness / pt-exp-expired-glow /
+   pt-card-color-bar-glow / fc-low-conf-brightness
+   ============================================================ */
+
+/* 1. health-score-card:hover → .hs-msg brightness(1.06)
+   家計スコアカードのホバー時に .hs-msg（スコアに応じたメッセージテキスト：
+   color:text-muted・fs-sm・flex:1・lh-relaxed）を brightness(1.06) で輝かせる。
+   hs-gauge-fill brightness+drop-shadow（v22.x）・hs-score-num brightness（v22.x）・
+   hs-grade-badge scale（v22.x）・hs-prev-badge scale+brightness（v23.14）と連動し
+   メッセージテキストもホバーで一体的に反応するスコアカードの完成形演出に。 */
+.hs-msg { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-msg { filter: brightness(1.06); }
+
+/* 2. health-score-card:hover → .hs-trend-label primary カラー変化
+   家計スコアカードのホバー時に .hs-trend-label（「先月比トレンド」等のラベルテキスト：
+   color:text-muted・fs-xs・fw-medium）を primary カラーへ変色。
+   hs-prev-badge scale+brightness（v23.14）と連動しトレンドセクションのラベル・
+   バッジの両要素がホバーで一体的に反応する演出に統一する。 */
+.hs-trend-label { transition: color var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-trend-label { color: var(--primary); }
+
+/* 3. sub-card:hover → .sub-paused-badge scale(1.04) + brightness(1.08)
+   サブスクカードのホバー時に .sub-paused-badge（「一時停止中」バッジ：
+   background:surface-hover・color:text-muted・radius:badge）を
+   scale(1.04) + brightness(1.08) でポップに強調。
+   sub-card-name/amount/icon scale（各v22.x/v23.x）と連動しサブスク状態バッジも
+   ホバーで一体的に反応するカード完成形演出に。
+   なお pt-urgent/pt-soon の一時停止系バッジと同パターン。 */
+.sub-paused-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-paused-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 4. asset-card:hover → .asset-fx-rate primary カラー変化
+   外貨建て資産カードのホバー時に .asset-fx-rate（「¥150.23 / 1 USD」等の
+   為替レートテキスト：color:text-muted・fs-3xs・tabular-nums）を
+   primary カラーへ変色。asset-currency-badge scale+brightness（v23.13）・
+   asset-balance-jpy brightness（v23.13）と連動し外貨資産の
+   レート・JPY換算・通貨バッジの全要素がホバーで一体的に反応する完成形演出に。 */
+.asset-fx-rate { transition: color var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-fx-rate { color: var(--primary); }
+
+/* 5. asset-card:hover → .asset-foreign-hint brightness(1.06)
+   外貨建て資産カードのホバー時に .asset-foreign-hint（外貨資産の補足ヒントテキスト：
+   color:text-muted・fs-xs・tabular-nums）を brightness(1.06) で輝かせる。
+   asset-fx-rate カラー変化（本スプリント）と連動し外貨関連テキストが
+   一体的にホバーで応答する演出に統一する。ダークモードで特に視認性向上。 */
+.asset-foreign-hint { transition: filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-foreign-hint { filter: brightness(1.06); }
+
+/* 6. pt-card:hover → .pt-exp-expired brightness(1.08) + danger-text text-shadow glow
+   ポイントカードのホバー時に .pt-exp-expired（「期限切れ」ラベルテキスト：
+   color:danger-text・fs-2xs・fw-bold）を brightness(1.08) + danger-text の
+   text-shadow glow で輝かせる。pt-exp-badge brightness（v22.x）・
+   pt-urgent-badge/pt-soon-badge text-shadow glow（v23.12）と同パターンで
+   期限切れ状態も視覚的に強調し警告感のあるホバー演出に統一する。 */
+.pt-exp-expired { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-exp-expired { filter: brightness(1.08); text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+
+/* 7. pt-card:hover → .pt-card-color-bar brightness(1.1) + pt-accent box-shadow glow
+   ポイントカードのホバー時に .pt-card-color-bar（左側アクセントカラーバー：
+   background:pt-accent インライン指定・width:size-accent-bar）を
+   brightness(1.1) + pt-accent の box-shadow glow で輝かせる。
+   sub-card:hover .sub-card-color-bar（v22.x）と同パターンで
+   ポイントカードのカラーバーにも同等のホバー演出を追加しデザイン統一を図る。
+   pt-urgent/pt-soon のカードは .pt-card-color-bar { display:none } のため影響なし。 */
+.pt-card-color-bar { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-color-bar { filter: brightness(1.1); box-shadow: 2px 0 10px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-md), transparent); }
+
+/* 8. forecast-card:hover → .fc-low-conf brightness(1.06)
+   予算予測カードのホバー時に .fc-low-conf（「データ不足のため予測精度が低い場合があります」
+   等の低信頼度警告テキスト：color:text-muted・background:surface-2・
+   border:border・fs-xs・radius-sm）を brightness(1.06) で輝かせる。
+   fc-progress-fill brightness+glow（v22.x）・fc-avg-badge scale（v23.10）・
+   fc-cell-label 変色（v23.09）と連動しカード内の全要素がホバーで
+   一体的に反応する予測カードの完成形演出に。ライト/ダーク両モード対応。 */
+.fc-low-conf { transition: filter var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-low-conf { filter: brightness(1.06); }
