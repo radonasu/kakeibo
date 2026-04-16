@@ -22323,3 +22323,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    連動しカード全体のホバー演出を統一。 */
 .fc-sparkline { transition: filter var(--dur-fast) var(--ease-out); }
 .forecast-card:hover .fc-sparkline { filter: brightness(1.05); }
+
+/* ── v23.35 Sprint #731 ── 8 hover child-element improvements ──────────────── */
+
+/* 1. yr-widget-card:hover → .yr-spark brightness(1.05)
+   年間ウィジェットカードのホバー時に .yr-spark（月別支出SVGスパークライン）を
+   brightness(1.05) で全体的に輝かせる。forecast-card:hover .fc-sparkline（v23.34）・
+   yr-widget-card:hover の lift+shadow（v22.68）と連動しカード全体のホバー演出を統一。 */
+.yr-spark { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-spark { filter: brightness(1.05); }
+
+/* 2. asset-card:hover → .asset-sparkline-wrap brightness(1.05)
+   資産カードのホバー時に .asset-sparkline-wrap（スパークラインSVGコンテナ）を
+   brightness(1.05) で輝かせる。fc-sparkline（v23.34）・yr-spark（v23.35 #1）と
+   同パターンで資産カードのホバー演出を補完。 */
+.asset-sparkline-wrap { transition: filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-sparkline-wrap { filter: brightness(1.05); }
+
+/* 3. budget-item:hover → .budget-sep カラー変化
+   予算カード行のホバー時に .budget-sep（"/"区切り記号：通常 text-muted）を
+   タイプ別にカラー変化：通常行 → primary、予算超過行(.budget-fill.over含む) → expense。
+   budget-item:hover .budget-nums 変色（v22.x）・.budget-cat-name 変色（v22.x）と
+   連動し区切り記号も同系色に染まりカード全体のホバー演出を統一。 */
+.budget-sep { transition: color var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-sep                         { color: var(--primary); }
+.budget-item:has(.budget-fill.over):hover .budget-sep  { color: var(--expense); }
+
+/* 4. debt-card:hover → .debt-progress-hdr brightness(1.1)
+   負債カードのホバー時に .debt-progress-hdr（返済済み%ラベル＋元本テキスト行：
+   font-size:xs・color:text-muted）を brightness(1.1) で一段輝かせる。
+   debt-card:hover の lift+shadow（v22.x）・debt-progress-label 変色（v23.x）と
+   連動し進捗ヘッダー行全体がホバーに反応する演出に。 */
+.debt-progress-hdr { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-progress-hdr { filter: brightness(1.1); }
+
+/* 5. dow-table-row:hover → td:nth-child(3) brightness(1.08)
+   曜日別支出テーブル行のホバー時に 3列目（支出金額・色は expense）を
+   brightness(1.08) で輝かせる。同列内の .dow-pct-badge scale（v23.x）・
+   .dow-mini-bar-fill brightness（v23.x）はすでに対応済みで、
+   金額テキスト本体も連動してホバー演出を完結させる。 */
+.dow-table-row td:nth-child(3) { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(3) { filter: brightness(1.08); }
+
+/* 6. health-score-card:hover → .hs-spark-svg brightness(1.05)
+   家計スコアカードのホバー時に .hs-spark-svg（過去6ヶ月推移スパークラインSVG）を
+   brightness(1.05) で輝かせる。fc-sparkline（v23.34）・yr-spark（v23.35 #1）と
+   同パターンで health-score-card:hover の lift+shadow（v22.x）と連動。 */
+.hs-spark-svg { transition: filter var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-spark-svg { filter: brightness(1.05); }
+
+/* 7. sb-row:hover → td:nth-child(4) primary カラー変化
+   支出提案テーブル行のホバー時に 4列目（現在の予算額：color:text・text-right）を
+   primary カラーに変色。td:nth-child(2) sb-cat-color 変色（v23.34）・
+   td.text-muted primary 変色（v23.x）・color-dot scale（v23.x）と連動し
+   現在予算列もホバーで一体的に反応する演出に。 */
+.sb-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out); }
+.sb-row:hover td:nth-child(4) { color: var(--primary); }
+
+/* 8. debt-card:hover → .debt-progress-detail primary カラー変化
+   負債カードのホバー時に .debt-progress-detail（元本表示テキスト："元本 ¥XXX"：
+   color:text-muted）を primary カラーへ変色。debt-progress-label 変色（v23.x）・
+   debt-progress-hdr brightness（v23.35 #4）と連動し
+   プログレス行の両テキストが揃ってホバーに反応する完成形に。 */
+.debt-progress-detail { transition: color var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-progress-detail { color: var(--primary); }
