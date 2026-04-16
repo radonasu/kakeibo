@@ -20666,3 +20666,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    hs-score-num brightness（v22.x）と連動しバッジもホバーで一体的に引き立つ演出に。 */
 .hs-prev-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .health-score-card:hover .hs-prev-badge { transform: scale(1.05); filter: brightness(1.1); }
+
+/* =====================================================================
+   v23.15: ホバー子要素カラー変化・brightness・glow 8箇所
+   （pt-widget-name-color / pt-widget-balance-typecolor /
+     pt-widget-exp-typecolor / fv-stat-sub-brightness /
+     goal-dash-ring-fill-glow / nt-progress-fill-glow /
+     ch-summary-value-glow / ch-summary-label-opacity）
+   ===================================================================== */
+
+/* 1. pt-widget-item:hover → .pt-widget-name primary カラー変化
+   ポイントウィジェット行ホバー時に .pt-widget-name（ポイント名称テキスト：color:text・fs-sm・fw-semi）を
+   primary カラーへ変色。pt-widget-icon scale+glow（v22.x）と連動しアイコン・名称が
+   一体的にホバーで反応する演出に。 */
+.pt-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.pt-widget-item:hover .pt-widget-name { color: var(--primary); }
+
+/* 2. pt-widget-item:hover → .pt-widget-balance brightness(1.08) + タイプ別カラー変化
+   ポイントウィジェット行ホバー時に .pt-widget-balance（ポイント残高数値：color:text・fw-bold）を
+   brightness(1.08) + タイプ別変色。urgent=danger-text / soon=warning / normal=primary。
+   pt-widget-name 変色（本スプリント）と連動し名称・残高が一体的に反応する演出に。 */
+.pt-widget-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.pt-widget-item:hover             .pt-widget-balance { color: var(--primary);     filter: brightness(1.08); }
+.pt-widget-item.pt-urgent:hover   .pt-widget-balance { color: var(--danger-text); filter: brightness(1.08); }
+.pt-widget-item.pt-soon:hover     .pt-widget-balance { color: var(--warning);     filter: brightness(1.08); }
+
+/* 3. pt-widget-item:hover → .pt-widget-exp タイプ別カラー変化
+   ポイントウィジェット行ホバー時に .pt-widget-exp（有効期限テキスト：color:text-muted・fs-2xs）を
+   タイプ別変色（urgent=danger-text / soon=warning / normal=primary）。
+   pt-widget-name・pt-widget-balance 変色（本スプリント）と連動し行内全テキストが
+   一体的にホバーで反応する完成形に。 */
+.pt-widget-exp { transition: color var(--dur-fast) var(--ease-out); }
+.pt-widget-item:hover             .pt-widget-exp { color: var(--primary); }
+.pt-widget-item.pt-urgent:hover   .pt-widget-exp { color: var(--danger-text); }
+.pt-widget-item.pt-soon:hover     .pt-widget-exp { color: var(--warning); }
+
+/* 4. fv-stat-card:hover → .fv-stat-sub brightness(1.08)
+   財務予測統計カードのホバー時に .fv-stat-sub（「固定費 42%」等の補足テキスト：
+   color:on-dark-label・fs-xs）を brightness(1.08) で輝かせる。
+   fv-stat-icon scale（v22.x）・fv-stat-value brightness（v22.x）・fv-stat-label brightness（v22.x）と
+   連動し全要素が一体的にホバーで反応する完成形に。 */
+.fv-stat-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-sub { filter: brightness(1.08); }
+
+/* 5. goal-dash-item:hover → .goal-dash-ring-fill brightness(1.1) + goal-accent drop-shadow glow
+   目標ダッシュアイテムのホバー時に .goal-dash-ring-fill（ミニリングSVG stroke）を
+   brightness(1.1) + goal-accentカラーの filter:drop-shadow(0 0 4px ...) で輝かせる。
+   goal-dash-bar-fill brightness+glow（v22.x）と連動してリング・バーの両方がホバーで
+   光る演出に。既存の stroke-dashoffset transition との両立のため filter のみ追加。 */
+.goal-dash-ring-fill { transition: stroke-dashoffset var(--dur-wave) var(--ease-out-expo), filter var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-ring-fill { filter: brightness(1.1) drop-shadow(0 0 4px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-md), transparent)); }
+
+/* 6. nt-card:hover → .nt-progress-fill brightness(1.08) + glow
+   メモカードのホバー時に .nt-progress-fill（文字数プログレスバー塗り部分）を
+   brightness(1.08) + box-shadow glow で輝かせる。通常=primary/warn=warning/danger=danger-text の
+   各状態でタイプ別グロー演出。nt-card:hover の lift+shadow 演出と連動し
+   バーにも視覚的フィードバックが生まれる演出に。 */
+.nt-progress-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.nt-card:hover .nt-progress-fill                { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.nt-card:hover .nt-progress-fill.nt-prog-warn   { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.nt-card:hover .nt-progress-fill.nt-prog-danger { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 7. ch-sum-achieved:hover → .ch-summary-value text-shadow glow
+   チャレンジ達成数サマリーカードのホバー時に .ch-summary-value（大型数値：white・fs-3xl）に
+   白い text-shadow glow を追加して数値を際立たせる。ch-sum-achieved container の
+   filter:brightness（v22.x）と連動し、カード全体が明るくなる中で数値が特に輝く演出に。 */
+.ch-summary-value { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.ch-sum-achieved:hover .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 8. ch-sum-achieved:hover → .ch-summary-label opacity: 1
+   チャレンジ達成数サマリーカードのホバー時に .ch-summary-label（「達成数」ラベル：
+   opacity: var(--opacity-near)/0.8）を opacity: 1 に上げ完全表示。
+   summary-card:hover .summary-label opacity:1（v22.x）と同パターンで
+   グラデーション系サマリーカードの一貫したラベルホバー演出を達成。 */
+.ch-sum-achieved .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.ch-sum-achieved:hover .ch-summary-label { opacity: 1; }
