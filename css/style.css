@@ -21704,3 +21704,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ラベル・金額値が一体的に反応する半期セルのホバー演出完成形。 */
 .yi-half-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-half-val { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #724 v23.28 — ホバー子要素カラー変化・brightness・glow・scale 8箇所
+   dow-mini-bar-fill-glow / wk-unit-color / sb-color-dot-scale /
+   sb-text-muted-color / dow-stat-day-brightness /
+   yr-avg-label-color / yr-avg-val-brightness / yr-topcat-amt-brightness
+   ============================================================ */
+
+/* 1. dow-table-row:hover → .dow-mini-bar-fill brightness(1.1) + dow-row-color glow
+   曜日別統計テーブル行のホバー時に .dow-mini-bar-fill（曜日バー塗りつぶし：
+   gradient with dow-row-color）を brightness(1.1) + dow-row-color box-shadow glow で強調。
+   dow-table-row:hover の translateX+shadow（v22.x）と連動しバー自体も輝いて
+   曜日ごとのカラーアイデンティティを視覚的に強調する演出に。 */
+.dow-mini-bar-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover .dow-mini-bar-fill { filter: brightness(1.1); box-shadow: 0 1px 6px color-mix(in srgb, var(--dow-row-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. wk-summary-row .wk-cell:hover → .wk-unit タイプ別カラー変化
+   週間サマリーカードのホバー時に .wk-unit（「円」「日」等の単位テキスト）を
+   セル種別カラーへ変色。1番目（今日の支出）＝danger-text / 2番目（今週の支出）＝primary /
+   3番目（無支出日）＝success。wk-cell-label 変色（v23.16）・wk-cell-value brightness（v23.16）・
+   wk-cell-sub 変色（v23.xx）と連動しセル内全テキストが一体的にホバーで反応する完成形に。 */
+.wk-unit { transition: color var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-unit { color: var(--danger-text); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-unit { color: var(--primary); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-unit { color: var(--success); }
+
+/* 3. sb-row:hover → .color-dot scale(1.2) + sb-cat-color glow
+   支出内訳テーブル行のホバー時に .color-dot（カテゴリカラーインジケーター円）を
+   scale(1.2) + sb-cat-color box-shadow glow で強調。
+   budget-item:hover .color-dot scale（v22.81）・pm-table-row:hover .color-dot scale（v23.23）・
+   fv-cat-table tr:hover .color-dot scale（v23.25）と同パターンを内訳行にも適用し
+   カテゴリカラーがホバーで際立つ統一感ある演出に。 */
+.sb-row .color-dot { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover .color-dot { transform: scale(1.2); box-shadow: 0 0 0 2px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. sb-row:hover → td.text-muted primary カラー変化
+   支出内訳テーブル行のホバー時に td.text-muted（件数・割合等の補足テキスト：
+   color:text-muted・fs-xs）を primary カラーへ変色。
+   sb-row:hover の translateX+shadow（v22.x）・sb-suggested brightness（v22.x）と連動し
+   補足テキストもホバー時に一体的に強調される演出に。 */
+.sb-row td.text-muted { transition: color var(--dur-fast) var(--ease-out); }
+.sb-row:hover td.text-muted { color: var(--primary); }
+
+/* 5. dow-stat-card:hover → .dow-stat-day brightness(1.1)
+   曜日別統計カードのホバー時に .dow-stat-day（「月曜日」等の曜日名テキスト：
+   color:white!important・fs-xl・fw-bold）を brightness(1.1) で輝かせる。
+   dow-stat-card:hover の dow-stat-icon scale（v22.x）・dow-stat-amount brightness（v22.84）・
+   dow-stat-label brightness（v22.x）・dow-stat-unit brightness（v23.xx）と連動し
+   白テキストの曜日名もホバーで輝いてカード全体の一体感ある演出に。 */
+.dow-stat-day { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-day { filter: brightness(1.1); }
+
+/* 6. yr-widget-card:hover → .yr-avg-label primary カラー変化
+   年次ウィジェットカードのホバー時に .yr-avg-label（「月平均支出」「月平均収入」等のラベル：
+   color:text-muted・fs-2xs）を primary カラーへ変色。
+   yr-widget-card:hover の yr-elapsed-badge scale（v23.27）・yr-progress-label 変色（v23.27）と
+   連動しフッターの平均値セクションもホバーで一体的に強調される演出に。 */
+.yr-avg-label { transition: color var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-avg-label { color: var(--primary); }
+
+/* 7. yr-widget-card:hover → .yr-avg-val brightness(1.1)
+   年次ウィジェットカードのホバー時に .yr-avg-val（月平均金額テキスト：
+   color:danger-text / yr-avg-income=success・fs-sm・fw-semi・tabular-nums）を
+   brightness(1.1) で輝かせる。yr-avg-label primary 変色（本スプリント）と連動し
+   ラベル・金額が一体的に反応する平均値セクションのホバー演出完成形。 */
+.yr-avg-val { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-avg-val { filter: brightness(1.1); }
+
+/* 8. yr-widget-card:hover → .yr-topcat-amt brightness(1.1)
+   年次ウィジェットカードのホバー時に .yr-topcat-amt（トップカテゴリ金額テキスト：
+   color:danger-text・fs-xs・fw-semi・tabular-nums）を brightness(1.1) で輝かせる。
+   yr-avg-label 変色・yr-avg-val brightness（本スプリント）と連動し
+   フッター全体のホバー演出が統一された完成形に。 */
+.yr-topcat-amt { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-topcat-amt { filter: brightness(1.1); }
