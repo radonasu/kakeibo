@@ -21072,3 +21072,80 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    収入・支出のどちらの行も均等にホバーで輝く一体的な演出に統一する。 */
 .tg-table td.income { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .tg-table tbody tr:hover td.income { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.20: ホバー子要素brightness・glow・opacity 8箇所
+   ch-sum-active-value-glow / ch-sum-active-label-opacity /
+   ch-sum-active-unit-brightness / ch-sum-total-value-glow /
+   ch-sum-total-label-opacity / ch-sum-total-unit-brightness /
+   ch-sum-achieved-unit-brightness / dow-stat-unit-brightness
+   ============================================================ */
+
+/* 1. ch-sum-active:hover → .ch-summary-value text-shadow glow（白）
+   チャレンジ「アクティブ数」サマリーカード（青グラデーション）のホバー時に
+   .ch-summary-value（白大型数値：color:white・fs-3xl・fw-bold）に
+   白い text-shadow glow を追加。
+   ch-sum-achieved:hover .ch-summary-value glow（v23.15）と同パターンで
+   active/achieved/total の3枚グラデーションカードのホバー数値演出を統一する。
+   .ch-summary-value には v23.15 で transition が設定済み。 */
+.ch-sum-active:hover .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 2. ch-sum-active:hover → .ch-summary-label opacity:1
+   チャレンジ「アクティブ数」サマリーカードのホバー時に .ch-summary-label
+   （「挑戦中」等のラベル：color:on-dark-title・opacity:var(--opacity-near)）の
+   透明度を完全不透明に。ch-sum-achieved:hover .ch-summary-label opacity:1
+   （v23.15）と同パターンで active/achieved の両カードのラベルホバー演出を統一。 */
+.ch-sum-active .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.ch-sum-active:hover .ch-summary-label { opacity: 1; }
+
+/* 3. ch-sum-active:hover → .ch-summary-unit brightness(1.15)
+   チャレンジ「アクティブ数」サマリーカードのホバー時に .ch-summary-unit
+   （「件」等の単位テキスト：opacity:var(--opacity-soft)・fs-sm）を
+   brightness(1.15) で輝かせる。
+   ch-sum-active .ch-summary-value glow・label opacity（本スプリント）と連動し
+   数値・ラベル・単位の3要素がホバーで一体的に反応するグラデーションカードの
+   完成形演出に。 */
+.ch-summary-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-sum-active:hover .ch-summary-unit { filter: brightness(1.15); }
+
+/* 4. ch-sum-total:hover → .ch-summary-value text-shadow glow（白）
+   チャレンジ「総数」サマリーカード（ティールグラデーション）のホバー時に
+   .ch-summary-value に白い text-shadow glow を追加。
+   ch-sum-active value glow（本スプリント）・ch-sum-achieved value glow（v23.15）と
+   同パターンで active/achieved/total の3枚カードのホバー数値演出を完全統一する。 */
+.ch-sum-total:hover .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 5. ch-sum-total:hover → .ch-summary-label opacity:1
+   チャレンジ「総数」サマリーカードのホバー時に .ch-summary-label の
+   透明度を完全不透明に。ch-sum-active label opacity（本スプリント）・
+   ch-sum-achieved label opacity（v23.15）と同パターンで
+   active/achieved/total の3枚カードのラベルホバー演出を完全統一する。 */
+.ch-sum-total .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.ch-sum-total:hover .ch-summary-label { opacity: 1; }
+
+/* 6. ch-sum-total:hover → .ch-summary-unit brightness(1.15)
+   チャレンジ「総数」サマリーカードのホバー時に .ch-summary-unit を
+   brightness(1.15) で輝かせる。ch-summary-unit には本スプリント③で
+   transition を設定済み。ch-sum-active unit・ch-sum-achieved unit（本スプリント）と
+   連動し active/achieved/total の3枚カードの単位ホバー演出を完全統一する。 */
+.ch-sum-total:hover .ch-summary-unit { filter: brightness(1.15); }
+
+/* 7. ch-sum-achieved:hover → .ch-summary-unit brightness(1.15)
+   チャレンジ「達成数」サマリーカードのホバー時に .ch-summary-unit を
+   brightness(1.15) で輝かせる。ch-sum-achieved:hover には v23.15 で
+   value glow・label opacity が追加済みだが unit は未対応だった。
+   ch-sum-active unit・ch-sum-total unit（本スプリント）と合わせることで
+   active/achieved/total 3枚カードの数値・ラベル・単位の全要素が
+   一体的にホバーで反応する完成形演出に統一される。 */
+.ch-sum-achieved:hover .ch-summary-unit { filter: brightness(1.15); }
+
+/* 8. dow-stat-card:hover → .dow-stat-unit brightness(1.1)
+   曜日別統計カード（グラデーション背景）のホバー時に .dow-stat-unit
+   （「円」等の単位テキスト：opacity:var(--opacity-soft)・fs-xs）を
+   brightness(1.1) で輝かせる。
+   dow-stat-card:hover の dow-stat-icon scale（v22.x）・dow-stat-amount brightness
+   （v22.x）・dow-stat-label brightness（v23.09）と連動し
+   アイコン・金額・ラベル・単位の全要素がホバーで一体的に反応する
+   曜日別統計カードの完成形演出に。 */
+.dow-stat-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-unit { filter: brightness(1.1); }
