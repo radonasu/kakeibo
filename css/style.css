@@ -21234,3 +21234,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    asset-type-badge scale（v22.x）と連動し資産カード全体のホバー演出に統一感を追加。 */
 .asset-type-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-type-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent)); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v23.22: 取引一覧ページ 全面入場アニメーション強化
+   ─ 取引テーブル行・月グループ行・タグフィルターチップ・フッター合計行に
+     stagger入場アニメーションを追加し、収支一覧ページを開くたびに
+     各要素が滑らかに登場するように改善。
+   ─ CSS-only実装（JS変更なし）
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* 1. 取引テーブル本文行 stagger入場アニメーション
+   .tx-table tbody tr に左からのfade+slide入場を追加。
+   dd-tx-rowの --dd-i CSS変数方式と異なり、nth-child方式で実装。
+   stagger間隔は--dur-stagger-3xs(28ms)で軽快に。 */
+@keyframes tx-row-in {
+  from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
+  to   { opacity: 1; transform: none; }
+}
+.tx-table tbody tr:not(.tx-month-group-row) {
+  animation: tx-row-in var(--dur-appear) var(--ease-bounce) both;
+}
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(1)  { animation-delay: calc(var(--dur-delay-xs) + 0  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(2)  { animation-delay: calc(var(--dur-delay-xs) + 1  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(3)  { animation-delay: calc(var(--dur-delay-xs) + 2  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(4)  { animation-delay: calc(var(--dur-delay-xs) + 3  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(5)  { animation-delay: calc(var(--dur-delay-xs) + 4  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(6)  { animation-delay: calc(var(--dur-delay-xs) + 5  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(7)  { animation-delay: calc(var(--dur-delay-xs) + 6  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(8)  { animation-delay: calc(var(--dur-delay-xs) + 7  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(9)  { animation-delay: calc(var(--dur-delay-xs) + 8  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(10) { animation-delay: calc(var(--dur-delay-xs) + 9  * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(11) { animation-delay: calc(var(--dur-delay-xs) + 10 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(12) { animation-delay: calc(var(--dur-delay-xs) + 11 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(13) { animation-delay: calc(var(--dur-delay-xs) + 12 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(14) { animation-delay: calc(var(--dur-delay-xs) + 13 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(15) { animation-delay: calc(var(--dur-delay-xs) + 14 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(16) { animation-delay: calc(var(--dur-delay-xs) + 15 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(17) { animation-delay: calc(var(--dur-delay-xs) + 16 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(18) { animation-delay: calc(var(--dur-delay-xs) + 17 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(19) { animation-delay: calc(var(--dur-delay-xs) + 18 * var(--dur-stagger-3xs)); }
+.tx-table tbody tr:not(.tx-month-group-row):nth-child(20) { animation-delay: calc(var(--dur-delay-xs) + 19 * var(--dur-stagger-3xs)); }
+
+/* 2. 月グループ行 入場アニメーション
+   全期間表示時の月グループ見出し行を上からfade入場させる。
+   データ行と異なる方向・大きさで差別化し、セクション区切りとして視覚的に強調。 */
+@keyframes tx-group-row-in {
+  from { opacity: 0; transform: translateY(calc(-1 * var(--enter-y-xs))) scale(0.995); }
+  to   { opacity: 1; transform: none; }
+}
+.tx-month-group-row {
+  animation: tx-group-row-in var(--dur-gentle) var(--ease-bounce) both;
+}
+
+/* 3. タグフィルターチップ stagger入場アニメーション
+   収支一覧上部のタグフィルター横スクロール行に登場アニメを追加。
+   cat-chip stagger（モーダル内v14.x）と同パターン。 */
+@keyframes tx-tag-chip-in {
+  from { opacity: 0; transform: scale(var(--scale-anim-cell-in)) translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: none; }
+}
+.tx-tag-filter-row .tx-tag-filter-all,
+.tx-tag-filter-row .tx-tag-filter-chip {
+  animation: tx-tag-chip-in var(--dur-base) var(--ease-bounce) both;
+}
+.tx-tag-filter-row > *:nth-child(1)  { animation-delay: calc(0  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(2)  { animation-delay: calc(1  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(3)  { animation-delay: calc(2  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(4)  { animation-delay: calc(3  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(5)  { animation-delay: calc(4  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(6)  { animation-delay: calc(5  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(7)  { animation-delay: calc(6  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(8)  { animation-delay: calc(7  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(9)  { animation-delay: calc(8  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(10) { animation-delay: calc(9  * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-3xs)); }
+.tx-tag-filter-row > *:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-3xs)); }
+
+/* 4. フッター合計行 フェードイン
+   テーブル下部の収入合計・支出合計行をフェード入場させる。
+   データ行より遅れて登場し「締め」感を演出。 */
+@keyframes tx-footer-in {
+  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
+  to   { opacity: 1; transform: none; }
+}
+.tx-table tfoot .total-row {
+  animation: tx-footer-in var(--dur-gentle) var(--ease-out) both;
+  animation-delay: calc(var(--dur-delay-xs) + 20 * var(--dur-stagger-3xs));
+}
