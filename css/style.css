@@ -20903,3 +20903,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    反応する完成形に。ライト/ダーク両モードで読みやすさが向上。 */
 .insight-desc { transition: filter var(--dur-fast) var(--ease-out); }
 .insight-item:hover .insight-desc { filter: brightness(1.1); }
+
+/* ============================================================
+   v23.18: ホバー子要素カラー変化・brightness・scale・glow 8箇所
+   wk-cell-sub-brightness / adv-widget-desc-brightness /
+   cc-badge-scale / goal-achieved-badge-scale /
+   pt-exp-bar-fill-glow / cal-ev-cat-brightness /
+   cal-ev-badge-scale / fc-progress-label-color
+   ============================================================ */
+
+/* 1. wk-summary-row .wk-cell:hover → .wk-cell-sub brightness(1.08) + タイプ別カラー変化
+   ウィークリーサマリーセル（支出・総計・収入の3セル）のホバー時に .wk-cell-sub
+   （「今週の実績」「収入 ¥xxx」等の補足テキスト：color:text-muted・fs-2xs・tabular-nums）を
+   brightness(1.08) で輝かせ、セルタイプに合わせたカラーへ変色。
+   .wk-cell-label タイプ別カラー変化（v23.16）・.wk-cell-value brightness（v23.16）と
+   連動しセル内ラベル・値・補足テキストの全要素が一体的にホバーで反応する完成形に。 */
+.wk-cell-sub { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub { filter: brightness(1.08); color: var(--danger-text); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub { filter: brightness(1.08); color: var(--primary); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub { filter: brightness(1.08); color: var(--success); }
+
+/* 2. adv-widget-card:hover → .adv-widget-desc brightness(1.06)
+   AIアドバイスウィジェットカードのホバー時に .adv-widget-desc（説明文テキスト：
+   color:text-muted・fs-sm・lh-relaxed）を brightness(1.06) で輝かせる。
+   adv-widget-card:hover のリフト+shadow（v22.x）と連動し
+   カード全体のホバー演出に説明文も参加して一体感を演出。
+   ライト/ダーク両モードで文字の読みやすさが向上。 */
+.adv-widget-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-widget-desc { filter: brightness(1.06); }
+
+/* 3. cc-item:hover → .cc-badge scale(1.05) + brightness(1.08) + 方向別glow
+   カテゴリ比較ウィジェットのホバー時に .cc-badge（「+12%」「-5%」等の
+   変化率バッジ：fs-2xs・fw-bold・tabular-nums）を scale(1.05)+brightness(1.08) で
+   ポップに強調。cc-col-up（増加）には expense glow・cc-col-down（減少）には success glow を追加。
+   cc-name 変色・cc-amount brightness（v23.13）・cc-dot scale（v22.x）と連動し
+   名称・金額・バッジの全要素が一体的にホバーで反応する完成形に。 */
+.cc-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.cc-item:hover .cc-badge                        { transform: scale(1.05); filter: brightness(1.08); }
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-badge { box-shadow: 0 0 6px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-badge { box-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 4. goal-card:hover → .goal-achieved-badge scale(1.04) + success text-shadow glow
+   貯蓄目標カードのホバー時に .goal-achieved-badge（「達成！」バッジ：
+   background:success-bg・color:success・fs-xs・radius-badge）を
+   scale(1.04) + success カラーの text-shadow glow で輝かせる。
+   goal-card:hover の goal-progress-bar-fill brightness+glow（v23.12）・
+   goal-name 変色（v23.13）と連動し達成バッジもホバーで際立つ演出に。 */
+.goal-achieved-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-achieved-badge { transform: scale(1.04); filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
+
+/* 5. pt-card:hover → .pt-exp-bar-fill brightness(1.08) + ステータス別glow
+   ポイントカードのホバー時に .pt-exp-bar-fill（有効期限進捗バー）を
+   brightness(1.08) で輝かせ、ステータス別（normal/soon/urgent）のカラーで glow を追加。
+   pt-card:hover の pt-card-icon scale+glow（v22.x）・pt-card-balance 変色（v22.x）と
+   連動しカード内の数値・アイコン・バーが一体的にホバーで反応する演出に。 */
+.pt-exp-bar-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-exp-bar-fill.prog-normal { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-md), transparent); }
+.pt-card:hover .pt-exp-bar-fill.prog-soon   { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+.pt-card:hover .pt-exp-bar-fill.prog-urgent { filter: brightness(1.08); box-shadow: 0 1px 6px color-mix(in srgb, var(--danger-text)  var(--mix-md), transparent); }
+
+/* 6. cal-ev-item:hover → .cal-ev-cat brightness(1.15)
+   カレンダーパネルの収支予定リストアイテムのホバー時に .cal-ev-cat
+   （カテゴリ名テキスト：color は JS で cal-ev-color 直接指定・fs-xs・lh-snug）を
+   brightness(1.15) で輝かせる。color は既にカテゴリカラーで着色されているため
+   brightness で視認性を高める。cal-ev-item:hover の translateX+shadow（v22.x）・
+   cal-ev-name 変色・cal-ev-amount brightness（v22.x）と連動し
+   名称・金額・カテゴリの全要素が一体的に反応する完成形に。 */
+.cal-ev-cat { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-ev-item:hover .cal-ev-cat { filter: brightness(1.15); }
+
+/* 7. cal-ev-item:hover → .cal-ev-badge scale(1.04) + brightness(1.08)
+   カレンダーパネルの収支予定リストアイテムのホバー時に .cal-ev-badge
+   （「完了」background:success-mix・color:success / 「未完了」background:surface-hover・
+   border:border）を scale(1.04) + brightness(1.08) でポップに強調。
+   .cal-ev-badge.done には success glow・.pending には primary glow を追加し
+   状態の違いを視覚的に際立たせる。cal-ev-cat brightness（本スプリント）・
+   cal-ev-name 変色と連動しアイテム全体のホバー演出を完成させる。 */
+.cal-ev-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.cal-ev-item:hover .cal-ev-badge         { transform: scale(1.04); filter: brightness(1.08); }
+.cal-ev-item:hover .cal-ev-badge.done    { box-shadow: 0 0 6px color-mix(in srgb, var(--success)  var(--mix-sm), transparent); }
+.cal-ev-item:hover .cal-ev-badge.pending { box-shadow: 0 0 6px color-mix(in srgb, var(--primary)  var(--mix-xs), transparent); }
+
+/* 8. forecast-card:hover → .fc-progress-label primary カラー変化
+   予算予測カードのホバー時に .fc-progress-label（進捗バー横の日数ラベル
+   「残 xx 日」等：color:text-muted・fs-xs・tabular-nums・white-space:nowrap）を
+   primary カラーへ変色。fc-progress-fill brightness+glow（v22.70）・
+   fc-status-badge scale（v23.13）・fc-cell-label 変色（v23.09）と連動し
+   カード内の全テキスト・バッジ・バー要素がホバーで一体的に反応する完成形に。 */
+.fc-progress-label { transition: color var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-progress-label { color: var(--primary); }
