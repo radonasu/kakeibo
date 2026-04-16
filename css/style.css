@@ -21779,3 +21779,107 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    フッター全体のホバー演出が統一された完成形に。 */
 .yr-topcat-amt { transition: filter var(--dur-fast) var(--ease-out); }
 .yr-widget-card:hover .yr-topcat-amt { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #725 v23.29 — ev-sum-card完全ホバー実装 + smi-balanceホバー補完
+   ev-sum-card-hover / ev-sum-count-glow / ev-sum-label-opacity /
+   ev-sum-count-small-brightness / ev-sum-inc-brightness /
+   ev-sum-exp-brightness / smi-balance-hover / smi-balance-label-amount-color
+   ============================================================ */
+
+/* 1. ev-sum-card hover ベース + タイプ別 box-shadow glow
+   収支予定グラデーションサマリーカード（今月/来月/今年）に
+   translateY lift + shadow-summary-hover + タイプ別カラー glow を追加。
+   ev-sum-this（primary グラデ）= primary glow /
+   ev-sum-next（income グラデ）= income glow /
+   ev-sum-year（warning グラデ）= warning glow。
+   sub-summary-card:hover（v23.16）・pt-summary-card:hover（v23.17）・
+   ch-sum-active/total/achieved:hover（v23.20）と同系統の
+   グラデーション系サマリーカードのホバー演出を ev-sum-card にも適用。 */
+.ev-sum-card {
+  transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+}
+.ev-sum-card:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover); }
+.ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent); }
+.ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent); }
+.ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent); }
+.ev-sum-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+
+/* 2. ev-sum-card:hover → .ev-sum-count white text-shadow glow
+   収支予定サマリーカードのホバー時に .ev-sum-count（件数大数値：
+   color:white・fs-2xl・fw-bold・tabular-nums）に白い text-shadow glow を追加。
+   sub-summary-card:hover .sub-summary-amount（v23.16）・
+   pt-summary-card:hover .pt-summary-amount（v23.17）・
+   summary-card:hover .summary-amount（v23.28）と同パターンで
+   グラデーション背景上の数値が輝いて浮き上がる演出に統一。 */
+.ev-sum-card .ev-sum-count { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-count { text-shadow: 0 0 14px rgba(255, 255, 255, 0.55); }
+
+/* 3. ev-sum-card:hover → .ev-sum-label opacity: 1
+   収支予定サマリーカードのホバー時に .ev-sum-label（「今月の予定」等の
+   ラベルテキスト：color:on-dark-title（opacity 0.80相当））の
+   透明度を完全不透明に変化させて視認性を高める。
+   pt-summary-card:hover .pt-summary-label opacity:1（v23.17）・
+   ch-sum-active:hover .ch-summary-label opacity:1（v23.20）と同パターンで
+   グラデーションカードのラベルホバー演出を統一。 */
+.ev-sum-card .ev-sum-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-label { opacity: 1; }
+
+/* 4. ev-sum-card:hover → .ev-sum-count small brightness(1.15)
+   収支予定サマリーカードのホバー時に .ev-sum-count small（「件」等の
+   ユニットテキスト：color:on-dark-soft（opacity 0.70相当）・fs-xs・fw-normal）を
+   brightness(1.15) で輝かせる。ch-sum-active:hover .ch-summary-unit brightness（v23.20）・
+   pt-summary-card:hover .pt-summary-unit brightness（v23.17）と同パターンで
+   サマリーカードの件数ユニットホバー演出を統一。 */
+.ev-sum-card .ev-sum-count small { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-count small { filter: brightness(1.15); }
+
+/* 5. ev-sum-card:hover → .ev-sum-inc brightness(1.15)
+   収支予定サマリーカードのホバー時に .ev-sum-inc（「+¥XX,XXX」等の
+   計画収入金額テキスト：color:on-dark-bright（opacity 0.95相当）・fs-sm・fw-semi）を
+   brightness(1.15) で輝かせる。on-dark-bright はすでに高輝度だが
+   ホバー時のさらなる強調でアイ・キャッチ感を向上させる。
+   ev-sum-exp（本スプリント）と連動し収支金額の両テキストがホバーで一体的に反応。 */
+.ev-sum-card .ev-sum-inc { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-inc { filter: brightness(1.15); }
+
+/* 6. ev-sum-card:hover → .ev-sum-exp brightness(1.15)
+   収支予定サマリーカードのホバー時に .ev-sum-exp（「-¥XX,XXX」等の
+   計画支出金額テキスト：color:on-dark-hint（opacity 0.85相当）・fs-sm・fw-semi）を
+   brightness(1.15) で輝かせる。ev-sum-inc（本スプリント）と連動し
+   収支金額の両テキストが一体的にホバーで輝く演出に。
+   全変更は .ev-sum-card .ev-sum-count/.ev-sum-label/.ev-sum-count small/.ev-sum-inc/.ev-sum-exp への
+   transition追加のみ（CSS-only、JS変更なし）。 */
+.ev-sum-card .ev-sum-exp { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-exp { filter: brightness(1.15); }
+
+/* 7. smi-balance hover ベース + タイプ別 glow
+   収支ミニサマリーの「収支」行（.smi-item.smi-balance）に
+   translateY lift + :has() で残高タイプ別 glow を追加。
+   .smi-income:hover / .smi-expense:hover（v22.67）と同パターンで
+   収入・支出・収支の3行すべてのホバー演出を統一。
+   残高がプラスの場合（.smi-amount.income を含む）→ primary/success glow、
+   残高がマイナスの場合（.smi-amount.expense を含む）→ expense/danger-text glow。 */
+.smi-balance { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out); }
+.smi-balance:hover { filter: brightness(1.04); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.smi-balance:has(.smi-amount.income):hover  { box-shadow: 0 3px 12px color-mix(in srgb, var(--income)   var(--mix-sm), transparent); }
+.smi-balance:has(.smi-amount.expense):hover { box-shadow: 0 3px 12px color-mix(in srgb, var(--expense)  var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-balance:hover { box-shadow: 0 3px 12px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-balance:has(.smi-amount.income):hover  { box-shadow: 0 3px 12px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense):hover { box-shadow: 0 3px 12px color-mix(in srgb, var(--expense)       var(--mix-sm), transparent); }
+
+/* 8. smi-balance:hover → .smi-label + .smi-amount タイプ別カラー変化
+   収支ミニサマリーの「収支」行ホバー時に
+   .smi-label（「収支」テキスト）を残高タイプ別カラーへ変色、
+   .smi-amount を残高タイプ別カラー + brightness(1.08) で強調。
+   .smi-income:hover .smi-label color（v23.x）・
+   .smi-expense:hover .smi-label color（v23.x）・
+   .smi-income:hover .smi-amount color+brightness（v22.x）・
+   .smi-expense:hover .smi-amount color+brightness（v22.x）と同パターンで
+   収支行にも同等のホバー演出を追加し smi-item ホバー体験の完成形に。 */
+.smi-balance .smi-label   { transition: color var(--dur-fast) var(--ease-out); }
+.smi-balance .smi-amount  { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.smi-balance:hover                           .smi-label { color: var(--primary); }
+.smi-balance:has(.smi-amount.expense):hover  .smi-label { color: var(--danger-text); }
+.smi-balance:hover                           .smi-amount.income  { color: var(--success);     filter: brightness(1.08); }
+.smi-balance:hover                           .smi-amount.expense { color: var(--danger-text); filter: brightness(1.08); }

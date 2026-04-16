@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v23.28'; // v23.28: ホバー子要素カラー変化・brightness・glow・scale 8箇所（dow-mini-bar-fill-glow/wk-unit-color/sb-color-dot-scale/sb-text-muted-color/dow-stat-day-brightness/yr-avg-label-color/yr-avg-val-brightness/yr-topcat-amt-brightness）
+const CACHE_NAME = 'kakeibo-v23.29'; // v23.29: ev-sum-card完全ホバー実装＋smi-balanceホバー補完 8箇所（ev-sum-card-hover/ev-sum-count-glow/ev-sum-label-opacity/ev-sum-count-small-brightness/ev-sum-inc-brightness/ev-sum-exp-brightness/smi-balance-hover/smi-balance-label-amount-color）
 const ASSETS = [
   './index.html',
   './css/style.css',
