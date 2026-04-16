@@ -20992,3 +20992,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カード内の全テキスト・バッジ・バー要素がホバーで一体的に反応する完成形に。 */
 .fc-progress-label { transition: color var(--dur-fast) var(--ease-out); }
 .forecast-card:hover .fc-progress-label { color: var(--primary); }
+
+/* ============================================================
+   v23.19: ホバー子要素カラー変化・brightness・scale・glow 8箇所
+   ci-score-label-color / ci-score-badge-glow /
+   wish-widget-name-color / wish-widget-price-color /
+   adv-widget-hint-brightness / sub-summary-card-hover /
+   sub-summary-label-brightness / tg-table-income-glow
+   ============================================================ */
+
+/* 1. ci-score-row:hover → .ci-score-label primary カラー変化
+   チェックアップスコア行（.ci-score-row）のホバー時に .ci-score-label
+   （「家計スコア」等のラベルテキスト：color:text-sub・fs-sm・lh-snug）を
+   primary カラーへ変色。ci-score-row:hover の translateY+shadow（v22.76）と
+   連動しラベルもホバーで際立つ演出を追加する。 */
+.ci-score-label { transition: color var(--dur-fast) var(--ease-out); }
+.ci-score-row:hover .ci-score-label { color: var(--primary); }
+
+/* 2. ci-score-row:hover → .ci-score-badge brightness(1.08) + primary text-shadow glow
+   チェックアップスコア行のホバー時に .ci-score-badge（グレード・得点表示：
+   fw-black・fs-lg・color:primary・tabular-nums）を brightness(1.08) +
+   primary text-shadow glow で輝かせる。ci-score-label 変色（本スプリント）と
+   連動しラベル・スコアバッジが一体的にホバーで反応する完成形に。 */
+.ci-score-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-score-row:hover .ci-score-badge { filter: brightness(1.08); text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+
+/* 3. wish-widget-item:hover → .wish-widget-name primary カラー変化
+   ウィッシュリストウィジェットアイテムのホバー時に .wish-widget-name
+   （商品名テキスト：fw-semi・fs-sm・color:text・tabular-numbers不使用）を
+   primary カラーへ変色。wish-widget-item:hover の translateX+shadow（v22.x）・
+   wish-widget-icon scale+glow（v22.x）と連動しアイコン・名称が一体的にホバーで
+   反応する演出を強化。 */
+.wish-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.wish-widget-item:hover .wish-widget-name { color: var(--primary); }
+
+/* 4. wish-widget-item:hover → .wish-widget-price primary カラー変化 + brightness(1.06)
+   ウィッシュリストウィジェットアイテムのホバー時に .wish-widget-price
+   （商品価格：fw-bold・fs-sm・color:text・tabular-nums）を
+   primary カラーへ変色 + brightness(1.06) で輝かせる。
+   wish-widget-name 変色（本スプリント）と連動し名称・価格の両方が
+   ホバーで一体的にprimaryカラーに染まる演出の完成形に。 */
+.wish-widget-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.wish-widget-item:hover .wish-widget-price { color: var(--primary); filter: brightness(1.06); }
+
+/* 5. adv-widget-card:hover → .adv-widget-hint brightness(1.08)
+   AIアドバイスウィジェットカードのホバー時に .adv-widget-hint
+   （ヒントボックス：background:surface-hover・border-radius:radius-sm・
+   color:text-muted・fs-xs）を brightness(1.08) で輝かせる。
+   adv-widget-desc brightness（v23.18）・adv-widget-card:hover リフト+glow（v22.71）と
+   連動しカード全体のホバー演出に説明文・ヒントの両方が参加する完成形に。 */
+.adv-widget-hint { transition: filter var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-widget-hint { filter: brightness(1.08); }
+
+/* 6. sub-summary-card:hover → カード lift + タイプ別 box-shadow glow
+   サブスクリプションサマリーカード（月額合計・年額換算の2枚グラデーションカード）に
+   ホバー時の translateY リフト + タイプ別カラーグローを追加。
+   wl-sum-count/budget/done（v22.x）・summary-card（v22.x）と同パターンで
+   グラデーションサマリーカードがホバーで浮き上がる演出を統一する。
+   sub-monthly には primary glow・sub-yearly には teal glow を適用。 */
+.sub-summary-card { transition: transform var(--dur-gentle) var(--ease-bounce), box-shadow var(--dur-gentle) var(--ease-out), filter var(--dur-gentle) var(--ease-out); }
+.sub-summary-card:hover { transform: translateY(var(--translate-lift-sm)); }
+.sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-md), transparent); }
+
+/* 7. sub-summary-card:hover → .sub-summary-label brightness(1.2)
+   サブスクリプションサマリーカードのホバー時に .sub-summary-label
+   （「月額合計」「年額換算」等の大文字ラベル：color:on-dark-title・fs-xs・
+   text-transform:uppercase）を brightness(1.2) で輝かせる。
+   sub-summary-card カード lift（本スプリント）・sub-summary-amount text-shadow glow
+   （v23.16）・sub-summary-sub brightness（v23.17）と連動し
+   ラベル・金額・補足テキストの全要素がホバーで一体的に反応する完成形に。 */
+.sub-summary-label { transition: filter var(--dur-fast) var(--ease-out); }
+.sub-summary-card:hover .sub-summary-label { filter: brightness(1.2); }
+
+/* 8. tg-table tbody tr:hover → td.income brightness(1.08) + success text-shadow glow
+   タグ分析テーブルの行ホバー時に td.income（収入金額セル）を
+   brightness(1.08) + success text-shadow glow で強調。
+   tg-table td.expense glow（v23.09）と対称形で収入セルにも同等の演出を追加し
+   収入・支出のどちらの行も均等にホバーで輝く一体的な演出に統一する。 */
+.tg-table td.income { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td.income { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
