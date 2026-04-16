@@ -22236,3 +22236,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    yi-half-row エリアの全要素がホバーで一体的に反応する演出の完成形に。 */
 .yi-half-sep { transition: filter var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-half-sep { filter: brightness(1.4); }
+
+/* ============================================================
+   v23.34 スプリント#730
+   yr-widget-cat-badge-scale / insight-desc-typecolor /
+   pt-unit-color / ev-done-label-color /
+   wl-priority-badge-glow / sb-diff-pill-glow /
+   sb-row-cat-color / fc-sparkline-brightness 8箇所
+   ============================================================ */
+
+/* 1. yr-widget-card:hover → .cat-badge scale(1.04) + brightness(1.08)
+   年間ウィジェットカードのホバー時に .cat-badge（「食費」「交際費」等の
+   トップカテゴリバッジ：カテゴリカラー背景・小バッジ形式）を
+   scale(1.04) + brightness(1.08) でポップに強調。
+   yr-topcat-amt brightness（v23.x）・yr-topcat-label primary（v23.32）と
+   連動し yr-topcat エリアの全要素がホバーで一体的に反応する完成形に。 */
+.yr-widget-card .cat-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .cat-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 2. insight-item:hover → .insight-desc タイプ別カラー変化
+   インサイトアイテムのホバー時に .insight-desc（説明文テキスト：
+   color:text-muted・fs-xs・lh-relaxed）をタイプ別カラーへ変色
+   （info=primary / alert=danger-text / success=success / warning=warning）。
+   insight-title タイプ別変色（v23.31）・insight-icon タイプ別glow（v22.x）と
+   連動し、アイテム内の全テキスト要素が一体的にタイプカラーで反応する完成形に。 */
+.insight-desc { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.insight-item.insight-info:hover    .insight-desc { color: var(--primary); }
+.insight-item.insight-alert:hover   .insight-desc { color: var(--danger-text); }
+.insight-item.insight-success:hover .insight-desc { color: var(--success); }
+.insight-item.insight-warning:hover .insight-desc { color: var(--warning); }
+
+/* 3. pt-card:hover → .pt-unit primary カラー変化
+   ポイントカードのホバー時に .pt-unit（「pt」等の単位テキスト：
+   color:text-muted・fs-xs）を primary カラーへ変色。
+   pt-card-balance 変色（v22.x）・pt-card-yen 変色（v23.x）・
+   pt-card-name 変色（v23.x）と連動し pt-card の全子要素
+   ホバー演出の完成形に。 */
+.pt-unit { transition: color var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-unit { color: var(--primary); }
+
+/* 4. ev-card:hover → .ev-done-label primary カラー変化
+   ev-card のホバー時に .ev-done-label（「完了にする」等の
+   チェック用ラベル：color:text-muted・fs-xs・cursor:pointer）を
+   primary カラーへ変色。ev-card-name / ev-card-amount / ev-card-memo
+   各変色（v23.03）と連動し ev-card の全テキスト要素が
+   ホバーで一体的に反応する完成形に。 */
+.ev-done-label { transition: color var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-done-label { color: var(--primary); }
+
+/* 5. wl-card:hover → .wl-priority-badge タイプ別 drop-shadow glow
+   欲しいものリストカードのホバー時に .wl-priority-badge（優先度バッジ）に
+   タイプ別 drop-shadow glow を追加：
+   wl-pri-high → danger-text glow / wl-pri-medium → warning glow /
+   wl-pri-low → success glow。
+   wl-priority-badge scale(1.06)+brightness(1.08)（v22.x）と連動し
+   優先度の視覚的訴求をさらに強化。 */
+.wl-card:hover .wl-pri-high   { box-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.wl-card:hover .wl-pri-medium { box-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.wl-card:hover .wl-pri-low    { box-shadow: 0 0 8px color-mix(in srgb, var(--success)      var(--mix-sm), transparent); }
+
+/* 6. sb-row:hover → .sb-diff-pill タイプ別 drop-shadow glow
+   支出提案テーブル行のホバー時に .sb-diff-pill（変化ピルバッジ）に
+   タイプ別 drop-shadow glow を追加：
+   sb-diff-up → danger-text glow（予算増加）/
+   sb-diff-down → success glow（予算削減）。
+   sb-diff-pill brightness(1.1)（v23.x）と連動し
+   差異ピルの方向性を視覚的により明確に訴求。 */
+.sb-diff-pill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-diff-pill.sb-diff-up   { box-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.sb-row:hover .sb-diff-pill.sb-diff-down { box-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 7. sb-row:hover → td:nth-child(2) sb-cat-color カラー変化
+   支出提案テーブル行のホバー時に 2列目セル（カテゴリ名テキスト：
+   color:text・fw-normal）を --sb-cat-color へ変色。
+   sb-row:hover .color-dot scale+glow（v23.x）・
+   td.text-muted primary 変色（v23.x）と連動し
+   カテゴリ名もホバーで一体的に反応する完成形に。 */
+.sb-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out); }
+.sb-row:hover td:nth-child(2) { color: var(--sb-cat-color, var(--primary)); }
+
+/* 8. forecast-card:hover → .fc-sparkline brightness(1.05)
+   キャッシュフロー予測カードのホバー時に .fc-sparkline（SVGスパークライン
+   チャート全体：実績線・予測線・平均線・今日ドット）を brightness(1.05)
+   で全体的に輝かせる。forecast-card:hover の lift+shadow（v22.x）・
+   fc-progress-fill glow（v22.72）・fc-avg-badge scale（v23.x）と
+   連動しカード全体のホバー演出を統一。 */
+.fc-sparkline { transition: filter var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-sparkline { filter: brightness(1.05); }
