@@ -22387,3 +22387,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    プログレス行の両テキストが揃ってホバーに反応する完成形に。 */
 .debt-progress-detail { transition: color var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-progress-detail { color: var(--primary); }
+
+/* ── v23.36 Sprint #732 ── 8 hover child-element improvements ──────────────── */
+
+/* 1. fv-month-table tbody tr:hover → .fv-seg-fixed brightness(1.12) + primary glow
+   固定費/変動費月別テーブル行のホバー時に .fv-seg-fixed（固定費セグメントバー：
+   background:primary・width:calc(var(--fv-fi)*1%)）を brightness(1.12) +
+   primary の box-shadow glow で輝かせる。
+   fv-fixed-val brightness(1.08)（v23.33）・fv-rate-badge scale+glow（v23.33）と
+   連動し、固定費の量感が一体的にホバーで強調される演出に。 */
+.fv-seg-fixed { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-seg-fixed { filter: brightness(1.12); box-shadow: 0 1px 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+
+/* 2. fv-month-table tbody tr:hover → .fv-seg-var brightness(1.12) + success glow
+   固定費/変動費月別テーブル行のホバー時に .fv-seg-var（変動費セグメントバー：
+   background:success・flex:1）を brightness(1.12) + success の box-shadow glow で輝かせる。
+   fv-var-val brightness(1.08)（v23.33）・fv-seg-fixed brightness+glow（本スプリント#1）と
+   連動し、固定費バー・変動費バーの両セグメントが揃ってホバーで輝く演出の完成形に。 */
+.fv-seg-var { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-seg-var { filter: brightness(1.12); box-shadow: 0 1px 6px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
+
+/* 3. debt-card:hover → .debt-history-title primary カラー変化
+   負債カードのホバー時に .debt-history-title（「返済履歴」等のセクションタイトル：
+   color:text-muted・fs-xs・fw-semi）を primary カラーへ変色。
+   debt-card:hover の lift+shadow（v22.x）・debt-entry-row:hover の date/note/balance 各変色
+   （v22.x/v23.x）と連動し、返済履歴セクション全体がホバーで
+   一体的に反応する演出を補完する。 */
+.debt-history-title { transition: color var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-history-title { color: var(--primary); }
+
+/* 4. budget-item:hover → .budget-track brightness(1.05)
+   予算カード行のホバー時に .budget-track（バー背景トラック：
+   background:border・height:size-bar・radius-2xs）を brightness(1.05) で輝かせる。
+   budget-item:hover .budget-fill brightness(1.08)（v22.x）・
+   budget-item:hover .budget-track border-glow（v22.x）と連動し、
+   フィル（塗り）とトラック（背景）の両方がホバーで一体的に反応する
+   バー全体ホバー演出を完成させる。 */
+.budget-track { transition: filter var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-track { filter: brightness(1.05); }
+
+/* 5. goal-card:hover → .goal-progress-bar-bg brightness(1.06)
+   目標カードのホバー時に .goal-progress-bar-bg（進捗バー背景トラック：
+   background:border・height:size-bar-mid・radius-pill）を
+   brightness(1.06) で輝かせる。
+   goal-card:hover .goal-progress-bar-fill brightness(1.08)+glow（v23.12）と
+   連動し、フィルとトラックの両要素がホバーで一体的に反応する
+   目標バーホバー演出を完成させる。 */
+.goal-progress-bar-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-progress-bar-bg { filter: brightness(1.06); }
+
+/* 6. goal-card:hover → .goal-achieved-date brightness(1.1)
+   達成済み目標カードのホバー時に .goal-achieved-date（「達成日: YYYY年M月D日」等の
+   達成日テキスト：color:success・fs-xs・tabular-nums）を brightness(1.1) で輝かせる。
+   goal-card:hover .goal-achieved-badge scale+success glow（v23.12）と連動し
+   達成バッジ・達成日テキストの両要素がホバーで一体的に反応する
+   達成済みカードのホバー演出を完成させる。 */
+.goal-achieved-date { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-achieved-date { filter: brightness(1.1); }
+
+/* 7. ch-card:hover → .ch-bar-bg brightness(1.05)
+   チャレンジカードのホバー時に .ch-bar-bg（進捗バー背景トラック：
+   background:border・height:size-bar・radius-2xs）を brightness(1.05) で輝かせる。
+   ch-card:hover .ch-bar-fill brightness(1.08)+glow（v22.83）・
+   ch-card:hover .ch-progress-label brightness(1.1)（v23.25）と連動し
+   バー全体・進捗テキストが一体的にホバーで反応する演出の完成形に。 */
+.ch-bar-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-bar-bg { filter: brightness(1.05); }
+
+/* 8. hs-item:hover → .hs-bar-track brightness(1.05)
+   ヘルススコア項目のホバー時に .hs-bar-track（スコアバー背景トラック：
+   background:surface-hover・height:size-bar-mid・radius-badge）を
+   brightness(1.05) で輝かせる。
+   hs-item:hover .hs-bar-fill brightness(1.1)+glow（v22.85）・
+   hs-item:hover .hs-item-label brightness(1.1)（v23.x）と連動し
+   バー全体とラベルが一体的にホバーで反応する家計スコア項目の完成形演出に。 */
+.hs-bar-track { transition: filter var(--dur-fast) var(--ease-out); }
+.hs-item:hover .hs-bar-track { filter: brightness(1.05); }
