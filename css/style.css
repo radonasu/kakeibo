@@ -22619,3 +22619,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    hover を直接追記。 */
 .goal-dash-bar-bg { transition: filter var(--dur-fast) var(--ease-out); }
 .goal-dash-item:hover .goal-dash-bar-bg { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #735 / v23.39 — 8 hover sub-element brightness effects
+   ============================================================ */
+
+/* 1. pace-bar-row:hover → .pace-bar-track brightness(1.05)
+   ペース管理バーのホバー時に .pace-bar-track（進捗バー背景トラック：
+   background:border・height:bar-md）を brightness(1.05) で輝かせる。
+   pace-bar-row:hover .pace-bar-fill brightness(1.1)+glow（v22.x）・
+   pace-bar-row:hover .pace-pct brightness（v22.x）と連動し、
+   fillとトラックが一体的にホバーで反応するペースバーホバー演出の完成形に。 */
+.pace-bar-track { transition: filter var(--dur-fast) var(--ease-out); }
+.pace-bar-row:hover .pace-bar-track { filter: brightness(1.05); }
+
+/* 2. ev-card:hover → .ev-prog-bar brightness(1.05)
+   イベントカードのホバー時に .ev-prog-bar（進捗バー背景トラック：
+   background:surface-hover・height:bar-xs）を brightness(1.05) で輝かせる。
+   ev-card:hover .ev-prog-fill brightness+glow（v23.38）・
+   ev-card:hover .ev-prog-pct primary（v23.38）と連動し、
+   fillとトラックが一体的にホバーで反応するイベントバーホバー演出の完成形に。 */
+.ev-prog-bar { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-prog-bar { filter: brightness(1.05); }
+
+/* 3. sub-card:hover → .sub-card-progress brightness(1.1)
+   サブスクカードのホバー時に .sub-card-progress（底辺アクセントバートラック：
+   background:border・height:accent-w）を brightness(1.1) で輝かせる。
+   sub-card:hover .sub-card-progress-fill brightness(1.08)+glow（v22.x）と連動し、
+   fillとトラックが一体的にホバーで反応するサブスクバーホバー演出の完成形に。 */
+.sub-card-progress { transition: filter var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-progress { filter: brightness(1.1); }
+
+/* 4. md-cat-row:hover → .md-cat-bar-wrap brightness(1.05)
+   月次詳細カテゴリ行ホバー時に .md-cat-bar-wrap（カテゴリバー背景トラック：
+   background:surface-hover・height:bar）を brightness(1.05) で輝かせる。
+   md-cat-row:hover .md-cat-bar brightness(1.1)+glow（v22.x）・
+   md-cat-row:hover .md-cat-amount primary（v22.x）と連動し、
+   fillとトラックが一体的にホバーで反応するカテゴリバーホバー演出の完成形に。 */
+.md-cat-bar-wrap { transition: filter var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-bar-wrap { filter: brightness(1.05); }
+
+/* 5. goal-card:hover → .goal-ring-bg brightness(1.12)
+   ゴールカードホバー時に .goal-ring-bg（リングSVGトラック円：
+   stroke:border）を brightness(1.12) で輝かせる。
+   goal-card:hover .goal-ring-fill drop-shadow glow（v22.x）・
+   goal-card:hover .goal-emoji drop-shadow（v22.x）と連動し、
+   リングfillとトラックが一体的にホバーで反応するゴールリングホバー演出の完成形に。 */
+.goal-ring-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-ring-bg { filter: brightness(1.12); }
+
+/* 6. fv-cat-table tbody tr:hover → .fv-mini-bar brightness(1.08)
+   固定変動費テーブル行ホバー時に .fv-mini-bar（ミニバー背景トラック：
+   background:border・height:bar-sm）を brightness(1.08) で輝かせる。
+   fv-cat-table tbody tr:hover .fv-mini-fill brightness(1.08)+glow（v23.21）と連動し、
+   fillとトラックが一体的にホバーで反応するfv-catバーホバー演出の完成形に。 */
+.fv-mini-bar { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-mini-bar { filter: brightness(1.08); }
+
+/* 7. nt-card:hover → .nt-progress-bar brightness(1.05)
+   メモカードホバー時に .nt-progress-bar（文字数バー背景トラック：
+   background:border・height:accent-w）を brightness(1.05) で輝かせる。
+   nt-card:hover .nt-progress-fill brightness+glow（v23.15）と連動し、
+   fillとトラックが一体的にホバーで反応するメモバーホバー演出の完成形に。 */
+.nt-progress-bar { transition: filter var(--dur-fast) var(--ease-out); }
+.nt-card:hover .nt-progress-bar { filter: brightness(1.05); }
+
+/* 8. wk-bar-col:hover → .wk-bar-wrap brightness(1.05)
+   週次バーグラフ列ホバー時に .wk-bar-wrap（バー背景トラック：
+   background:border-muted）を brightness(1.05) で輝かせる。
+   wk-bar-col:hover .wk-bar-fill brightness(1.08)+glow（v22.x）・
+   wk-bar-col:hover .wk-bar-amount primary（v22.x）と連動し、
+   fillとトラックが一体的にホバーで反応する週次バーホバー演出の完成形に。 */
+.wk-bar-wrap { transition: filter var(--dur-fast) var(--ease-out); }
+.wk-bar-col:hover .wk-bar-wrap { filter: brightness(1.05); }
