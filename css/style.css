@@ -22536,3 +22536,86 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    dw-slider の transition に filter を追記してスムーズにアニメーション。 */
 .dw-slider { transition: background var(--dur-base) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .dw-item:hover .dw-slider { filter: brightness(1.12); }
+
+/* ── v23.38 Sprint #734 ── 8 hover improvements ────────────────────────────── */
+
+/* 1. ev-month-col:hover → translateY lift + border-color primary tint + box-shadow
+   収支予定の年次12ヶ月グリッドの月カラムにホバーリフトを追加。
+   現状 ev-month-col は transition/hover が未設定で静的表示のまま。
+   translateY(-2px) + shadow-card-hover + border-color primary tint で
+   カードと同様のホバー演出を付与。ev-month-current の primary border と
+   非衝突するよう、:not(.ev-month-current) で通常月のみリフト適用。
+   ダークモードでも同アプローチ（CSS変数使用のため追記不要）。 */
+.ev-month-col { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out); }
+.ev-month-col:not(.ev-month-current):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border)); }
+
+/* 2. ev-month-col:hover → .ev-month-label primary カラー変化
+   月カラムのホバー時に .ev-month-label（「1月」〜「12月」・fw-bold テキスト）を
+   primary カラーへ変色。ev-month-col:hover lift（本スプリント #1）と連動し
+   月ラベルがホバーで視覚的に反応する演出を追加。
+   ev-month-current の月ラベルはすでに primary 系 border があるため
+   :not(.ev-month-current) の親セレクタで重複を回避。 */
+.ev-month-label { transition: color var(--dur-fast) var(--ease-out); }
+.ev-month-col:not(.ev-month-current):hover .ev-month-label { color: var(--primary); }
+
+/* 3. ev-month-col:hover → .ev-mtot brightness(1.1)
+   月カラムのホバー時に .ev-mtot（月収支合計テキスト：income/expense カラー）を
+   brightness(1.1) で輝かせる。ev-month-col:hover lift（#1）・
+   ev-month-label color（#2）と連動し、月グリッドの数値情報もホバーで
+   一体的に反応する完成形に。income/expense カラーは固有色なので
+   color 変更ではなく brightness で自然に強調。 */
+.ev-mtot { transition: filter var(--dur-fast) var(--ease-out); }
+.ev-month-col:hover .ev-mtot { filter: brightness(1.1); }
+
+/* 4. ev-card:hover → .ev-prog-fill brightness(1.1) + progCls 別 glow
+   収支予定カードのホバー時に .ev-prog-fill（月次進捗バーのfill）を
+   brightness(1.1) + progCls 別カラー glow で輝かせる。
+   ev-card:hover の lift+shadow（v22.x）・ev-card-name/amount カラー変化（v23.02）・
+   ev-type-badge scale（v23.14）と連動し、月次進捗バーもホバーで
+   一体的に反応する完成形に。ev-pm-done=success / ev-pm-mid=warning / その他=primary。 */
+.ev-prog-fill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-prog-fill                    { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+.ev-card:hover .ev-month-progress.ev-pm-done .ev-prog-fill { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
+.ev-card:hover .ev-month-progress.ev-pm-mid  .ev-prog-fill { filter: brightness(1.1); box-shadow: 0 1px 8px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* 5. ev-card:hover → .ev-prog-pct brightness(1.1) + primary カラー変化
+   収支予定カードのホバー時に .ev-prog-pct（「75%」等の進捗率テキスト）を
+   brightness(1.1) + primary カラーへ変色。
+   ev-prog-fill brightness+glow（本スプリント #4）と連動し、
+   進捗バーfillとパーセントテキストが一体的にホバーで反応する完成形に。
+   ev-pm-done/ev-pm-mid の固有カラーは既存スタイルで定義済みのため
+   通常状態のみ primary で上書きし自然な強調に。 */
+.ev-prog-pct { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-prog-pct { filter: brightness(1.1); color: var(--primary); }
+
+/* 6. asset-card:hover → .asset-history-title primary カラー変化
+   資産カードのホバー時に .asset-history-title（「残高履歴」セクションタイトル）を
+   primary カラーへ変色。debt-history-title color（v23.36）と同パターンで
+   資産カードにも適用。asset-card:hover の lift+shadow（v22.x）・
+   asset-name/balance brightness（v22.x）・asset-date-label color（v20.x）と
+   連動し、履歴セクションタイトルもホバーで一体的に反応する演出に。 */
+.asset-history-title { transition: color var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-history-title { color: var(--primary); }
+
+/* 7. forecast-card:hover → .fc-progress-track brightness(1.05)
+   予測カードのホバー時に .fc-progress-track（月次予算進捗バー背景トラック：
+   background:border・border-radius:pill）を brightness(1.05) で輝かせる。
+   forecast-card:hover .fc-progress-fill brightness+glow（v22.x）・
+   fc-progress-label primary（v22.x）と連動し、進捗バーのfillとトラックが
+   一体的にホバーで反応する予測カード進捗バーホバー演出の完成形に。
+   yr-progress-track（v23.37）・debt-bar-track（v23.37）・pt-exp-bar（v23.37）・
+   hs-gauge-track（v23.37）・cat-budget-bar-wrap（v23.37）と同パターンを
+   forecast-card にも適用。 */
+.fc-progress-track { transition: filter var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-progress-track { filter: brightness(1.05); }
+
+/* 8. goal-dash-item:hover → .goal-dash-bar-bg brightness(1.1)
+   ゴールダッシュボード行ホバー時に .goal-dash-bar-bg（進捗バー背景トラック：
+   stroke:border の SVG circle）を brightness(1.1) で輝かせる。
+   goal-dash-item:hover .goal-dash-bar-fill brightness+glow（v22.x）・
+   goal-dash-item:hover .goal-dash-ring-fill glow（v22.x）と連動し、
+   バーfillとトラックが一体的にホバーで反応するゴールダッシュバーホバー演出の完成形に。
+   SVG要素への filter: brightness 適用のため goal-dash-bar-bg に transition と
+   hover を直接追記。 */
+.goal-dash-bar-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-bar-bg { filter: brightness(1.1); }
