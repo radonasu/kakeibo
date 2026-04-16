@@ -21149,3 +21149,88 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    曜日別統計カードの完成形演出に。 */
 .dow-stat-unit { transition: filter var(--dur-fast) var(--ease-out); }
 .dow-stat-card:hover .dow-stat-unit { filter: brightness(1.1); }
+
+/* ============================================================
+   v23.21: ホバー子要素brightness・glow・opacity・scale 8箇所
+   pt-summary-card-hover / pt-summary-amount-glow /
+   pt-summary-label-opacity / pt-summary-sub-brightness /
+   pt-summary-unit-brightness / yr-unit-brightness /
+   pace-unit-typecolor / asset-type-icon-scale-glow
+   ============================================================ */
+
+/* 1. pt-summary-card hover → lift + タイプ別 box-shadow glow
+   ポイント残高管理のサマリーカード（pt-total=primary青グラデーション /
+   pt-expiring=warning橙グラデーション）にホバー時のリフト+タイプ別グロー演出を追加。
+   fv-stat-card:hover（v22.81）・ch-sum-achieved:hover（v23.15）・
+   sub-summary-card:hover（v23.16）と同パターンでグラデーション系サマリーカードの
+   ホバー演出を統一する。pt-summary-card には transition 設定済み。 */
+.pt-summary-card:hover        { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-summary-hover); }
+.pt-total:hover               { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.pt-expiring:hover            { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-md), transparent); }
+
+/* 2. pt-summary-card:hover → .pt-summary-amount text-shadow glow（白）
+   ポイント残高サマリーカードのホバー時に .pt-summary-amount（白大型数値：
+   color:white・fs-2xl・fw-bold）に白い text-shadow glow を追加。
+   ch-sum-achieved:hover .ch-summary-value glow（v23.15）・
+   sub-summary-amount glow（v23.16）と同パターンでグラデーション系カードの
+   数値ホバー演出を統一する。 */
+.pt-summary-amount { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-amount { text-shadow: 0 0 14px rgba(255, 255, 255, 0.55); }
+
+/* 3. pt-summary-card:hover → .pt-summary-label opacity:1
+   ポイント残高サマリーカードのホバー時に .pt-summary-label
+   （「合計ポイント」「期限間近ポイント」等：color:on-dark-label・fw-bold・
+   text-transform:uppercase）を完全不透明に。
+   ch-sum-achieved:hover label opacity:1（v23.15）と同パターンでグラデーション系
+   サマリーカードのラベルホバー演出を統一する。 */
+.pt-summary-label { transition: opacity var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-label { opacity: 1; }
+
+/* 4. pt-summary-card:hover → .pt-summary-sub brightness(1.1)
+   ポイント残高サマリーカードのホバー時に .pt-summary-sub
+   （「有効期限: x件」等の補足テキスト：color:on-dark-muted・fs-2xs）を
+   brightness(1.1) で明るく強調。pt-summary-amount glow・pt-summary-label opacity
+   （本スプリント）と連動しカード内全要素がホバーで一体的に反応する完成形に。 */
+.pt-summary-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-sub { filter: brightness(1.1); }
+
+/* 5. pt-summary-card:hover → .pt-summary-unit brightness(1.15)
+   ポイント残高サマリーカードのホバー時に .pt-summary-unit
+   （「pt」等の単位テキスト：fw-normal・fs-sm）を brightness(1.15) で輝かせる。
+   ch-summary-unit brightness（v23.20）・dow-stat-unit brightness（v23.20）と
+   同パターンでグラデーション系サマリーカードの単位ホバー演出を統一する。 */
+.pt-summary-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-unit { filter: brightness(1.15); }
+
+/* 6. yr-cell:hover → .yr-unit brightness(1.1)
+   年間ウィジェットセル（収入・支出・貯蓄率）のホバー時に .yr-unit
+   （「円」「%」等の単位テキスト：fs-sm・fw-normal・yr-cell-value に続く inline要素）を
+   brightness(1.1) で輝かせる。yr-cell-value brightness（v22.84）・yr-cell-label
+   カラー変化（v23.00）・yr-cell-sub brightness（v23.08）と連動し
+   値・ラベル・単位・サブテキストの全要素がホバーで一体的に反応する完成形演出に。 */
+.yr-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-unit { filter: brightness(1.1); }
+.yr-cell-expense:hover         .yr-unit { filter: brightness(1.1); }
+.yr-cell-savings-success:hover .yr-unit { filter: brightness(1.1); }
+.yr-cell-savings-warn:hover    .yr-unit { filter: brightness(1.1); }
+.yr-cell-savings-danger:hover  .yr-unit { filter: brightness(1.1); }
+
+/* 7. pace-bar-row:hover → .pace-unit ステータス別カラー変化
+   ペース管理ウィジェットのバー行ホバー時に .pace-unit（「円/日」等の単位テキスト：
+   color:text-faint・fs-xs）をステータス別カラーへ変色。
+   pace-bar-label ステータス別カラー（v23.04）・pace-bar-value ステータス別カラー
+   （v23.04）と同パターンでラベル・値・単位の全テキスト要素が揃って
+   ステータスカラーで反応する完成形演出に。 */
+.pace-unit { transition: color var(--dur-fast) var(--ease-out); }
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit { color: var(--success); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit { color: var(--warning); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit { color: var(--danger-text); }
+
+/* 8. asset-card:hover → .asset-type-icon scale(1.1) + asset-accent glow
+   資産管理カードのホバー時に .asset-type-icon（資産タイプアイコン円形背景：
+   background:asset-accent mix・size:icon-lg・border-radius:circle）を
+   scale(1.1) に拡大 + asset-accent カラーの drop-shadow glow で強調。
+   asset-card:hover の asset-balance brightness（v22.84）・asset-name 変色（v22.x）・
+   asset-type-badge scale（v22.x）と連動し資産カード全体のホバー演出に統一感を追加。 */
+.asset-type-icon { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-type-icon { transform: scale(1.1); filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent)); }
