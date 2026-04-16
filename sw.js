@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v23.22'; // v23.22: 取引一覧ページ全面入場アニメーション強化（tx-table tbody tr stagger入場/月グループ行入場/タグフィルターチップstagger入場/フッター合計行フェードイン）
+const CACHE_NAME = 'kakeibo-v23.23'; // v23.23: ホバー子要素カラー変化・brightness 8箇所（pm-color-dot-scale-glow/pm-name-typecolor/pm-expense-brightness-glow/pm-text-muted-brightness/tx-tag-chip-scale-brightness/tx-col-pay-color/tx-col-mem-color/cat-card-accent-glow）
 const ASSETS = [
   './index.html',
   './css/style.css',

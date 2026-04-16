@@ -21321,3 +21321,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   animation: tx-footer-in var(--dur-gentle) var(--ease-out) both;
   animation-delay: calc(var(--dur-delay-xs) + 20 * var(--dur-stagger-3xs));
 }
+
+/* ============================================================
+   v23.23: ホバー子要素カラー変化・brightness 8箇所
+   pm-color-dot-scale-glow / pm-name-typecolor /
+   pm-expense-brightness-glow / pm-text-muted-brightness /
+   tx-tag-chip-scale-brightness / tx-col-pay-color /
+   tx-col-mem-color / cat-card-accent-glow
+   ============================================================ */
+
+/* 1. pm-table-row:hover → .color-dot scale(1.2) + pm-row-color glow
+   支払方法テーブル行のホバー時に .color-dot（支払方法カラーインジケーター円）を
+   scale(1.2) に拡大 + pm-row-color の ring shadow glow で強調。
+   budget-item:hover .color-dot scale+glow（v22.81）と同パターンで
+   支払方法テーブルに初のホバー子要素演出を追加。 */
+.pm-table-row .color-dot { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out); }
+.pm-table-row:hover .color-dot { transform: scale(1.2); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. pm-table-row:hover → td:first-child テキスト pm-row-color カラー変化
+   支払方法テーブル行のホバー時に td:first-child（支払方法名テキスト）を
+   pm-row-color に変色。pm-row-color はJS側で各行に設定される支払方法固有カラー。
+   .color-dot scale+glow（本スプリント①）と連動しアイコン・名称が
+   一体的に反応するホバー演出の完成形に。 */
+.pm-table-row td:first-child { transition: color var(--dur-fast) var(--ease-out); }
+.pm-table-row:hover td:first-child { color: var(--pm-row-color, var(--primary)); }
+
+/* 3. pm-table-row:hover → td.expense brightness(1.08) + expense text-shadow glow
+   支払方法テーブル行のホバー時に td.expense（支払金額セル：expense カラー・
+   fw-bold・tabular-nums）を brightness(1.08) + expense text-shadow glow で強調。
+   tg-table td.expense glow（v23.09）・tx-table td.amount glow（v22.x）と同パターン。 */
+.pm-table-row td.expense { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pm-table-row:hover td.expense { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 4. pm-table-row:hover → td.text-muted brightness(1.1)
+   支払方法テーブル行のホバー時に td.text-muted（件数「3件」・割合「15%」の
+   テキスト：color:text-muted・tabular-nums）を brightness(1.1) で明るく強調。
+   tg-table td.text-muted カラー変化（v23.09）と同系統で
+   支払方法テーブルの補足情報がホバーで際立つ演出を追加。 */
+.pm-table-row td.text-muted { transition: filter var(--dur-fast) var(--ease-out); }
+.pm-table-row:hover td.text-muted { filter: brightness(1.1); }
+
+/* 5. tx-table tbody tr:hover → .tx-tag-chip scale(1.05) + brightness(1.1)
+   取引一覧テーブルの行ホバー時に .tx-tag-chip（タグチップ：
+   --tc カラー・fs-2xs・fw-semi・border-radius:badge）を
+   scale(1.05) に拡大 + brightness(1.1) で輝かせる。
+   tg-table tbody tr:hover .tx-tag-chip（v23.07）と同パターンで
+   取引テーブルのタグチップにも行ホバー連動演出を追加。 */
+.tx-table .tx-tag-chip { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover .tx-tag-chip { transform: scale(1.05); filter: brightness(1.1); }
+
+/* 6. tx-table tbody tr:hover → td.tx-col-pay primary カラー変化
+   取引一覧テーブルの行ホバー時に td.tx-col-pay（支払方法列テキスト：
+   デスクトップのみ表示・通常色）を primary カラーへ変色。
+   tx-table td.memo-cell カラー変化（v22.x）・tx-tag-chip scale（本スプリント⑤）と
+   連動しデスクトップ表示でテーブル全列がホバーで統一感を持って反応する完成形に。 */
+.tx-table td.tx-col-pay { transition: color var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.tx-col-pay { color: var(--primary); }
+
+/* 7. tx-table tbody tr:hover → td.tx-col-mem primary カラー変化
+   取引一覧テーブルの行ホバー時に td.tx-col-mem（担当者列テキスト：
+   デスクトップのみ表示）を primary カラーへ変色。
+   tx-col-pay カラー変化（本スプリント⑥）と同パターンで担当者列にも適用し
+   支払方法・担当者の両補足列が揃ってホバーで primary 色に染まる演出に統一。 */
+.tx-table td.tx-col-mem { transition: color var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.tx-col-mem { color: var(--primary); }
+
+/* 8. cat-card:hover → .cat-card-accent box-shadow glow（cat-clr）
+   カテゴリ管理カードのホバー時に .cat-card-accent（上部アクセントボーダーバー：
+   height:accent-w・background:cat-clr・border-radius:sm sm 0 0）に
+   cat-clr の box-shadow glow を追加。
+   cat-card:hover の cat-card-icon scale+glow（v22.x）・cat-card-name 変色（v22.86）と
+   連動しカード上部ボーダーもホバーで輝き、カード全体の存在感が高まる演出に。 */
+.cat-card-accent { transition: box-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card-accent { box-shadow: 0 0 8px 2px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-md), transparent); }
