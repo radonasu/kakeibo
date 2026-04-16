@@ -21550,3 +21550,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    貯蓄金額・区切り文字・目標金額の3要素が揃ってホバーで一体的に反応する完成形演出に。 */
 .goal-sep { transition: filter var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-sep { filter: brightness(1.2); }
+
+/* ============================================================
+   Sprint #722 v23.26 — ホバー子要素カラー変化・brightness・glow 8箇所
+   yi-sub-muted-brightness / yi-diff-up-glow / yi-diff-down-glow /
+   md-cat-dot-scale / md-cell-income-label-color / md-cell-expense-label-color /
+   md-cell-income-value-brightness / md-cell-expense-value-brightness
+   ============================================================ */
+
+/* 1. yi-card:hover → .yi-sub-muted brightness(1.08)
+   年間収支カードのホバー時に .yi-sub-muted（最高/最低貯蓄月の収支詳細テキスト・
+   黒字継続記録の説明文・前年データなし表示など：color:text-muted）を
+   brightness(1.08) で微細に輝かせる。
+   yi-card-icon scale/drop-shadow・yi-card-value 変色・yi-card-label 変色・
+   yi-card-sub 変色（各 v22.x/v23.x）と連動し、カード内の全テキストが
+   ホバーで一体的に反応する完成形演出に。 */
+.yi-sub-muted { transition: filter var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-sub-muted { filter: brightness(1.08); }
+
+/* 2. yi-card:hover → .yi-diff-up brightness(1.08) + danger-text text-shadow glow
+   年間支出カードのホバー時に .yi-diff-up（前年比増加「▲XX% 前年比増」：
+   color:danger-text・fw-semi・tabular-nums）を brightness(1.08) で輝かせ、
+   danger-text カラーの text-shadow glow を追加して支出増加を視覚的に強調する。
+   yi-card-value 変色/brightness（v22.x）・yi-card-label 変色（v22.x）と連動。 */
+.yi-diff-up { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-diff-up { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) 40%, transparent); }
+
+/* 3. yi-card:hover → .yi-diff-down brightness(1.08) + income text-shadow glow
+   年間支出カードのホバー時に .yi-diff-down（前年比減少「▼XX% 前年比減」：
+   color:income・fw-semi・tabular-nums）を brightness(1.08) で輝かせ、
+   income カラーの text-shadow glow を追加して支出削減の改善を視覚的に祝福する演出。
+   yi-diff-up brightness+glow（本スプリント）と対称パターン。 */
+.yi-diff-down { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-diff-down { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--income, var(--success)) 40%, transparent); }
+
+/* 4. md-cat-row:hover → .md-cat-dot scale(1.25) + --md-cat-color glow
+   月次詳細モーダルのカテゴリ行ホバー時に .md-cat-dot（カテゴリカラーインジケーター：
+   background:--md-cat-color・size-dot・border-radius:circle）を
+   scale(1.25) + --md-cat-color カラーの box-shadow glow で弾ませる。
+   budget-item:hover .color-dot scale（v22.81）・pm-table-row:hover .color-dot scale（v23.23）・
+   fv-cat-table tr:hover .color-dot scale（v23.25）と同パターンをモーダル詳細行にも適用。
+   md-cat-text 変色・md-cat-bar brightness・md-cat-amount 変色・md-cat-pct 変色（各 v22.x/v23.x）と連動。 */
+.md-cat-dot { transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-dot { transform: scale(1.25); box-shadow: 0 0 0 2px color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. md-cell-income:hover → .md-cell-label success 変色
+   月次詳細モーダルの収入セル（md-cell-income）ホバー時に .md-cell-label（「収入」ラベル：
+   fs-xs・fw-medium・既に color-mix(success,mix-label,text) の薄緑で表示）を
+   success カラーへ変色してラベルを鮮明に強調する。
+   md-cell-income:hover の lift+shadow（v22.x）と連動し、セル全体のホバー演出を完成させる。 */
+.md-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.md-cell-income:hover  .md-cell-label { color: var(--success); }
+.md-cell-expense:hover .md-cell-label { color: var(--danger-text); }
+
+/* 6. md-cell-balance-pos:hover → .md-cell-label primary 変色
+   md-cell-balance-pos（残高正）ホバー時に残高ラベルを primary カラーへ変色。
+   md-cell-balance-neg ホバー時は danger-text カラーへ変色。
+   md-cell-income/expense の label 変色（本スプリント）と同パターン。 */
+.md-cell-balance-pos:hover .md-cell-label { color: var(--primary); }
+.md-cell-balance-neg:hover .md-cell-label { color: var(--danger-text); }
+
+/* 7. md-cell-income:hover → .md-cell-value brightness(1.06)
+   月次詳細モーダルの収入セルホバー時に .md-cell-value（収入金額：fs-md・fw-bold・tabular-nums）を
+   brightness(1.06) で輝き強調。md-cell-label success 変色（本スプリント）と連動し
+   ラベル＋金額値が一体的にホバーで反応する収入セルの完成形演出に。 */
+.md-cell-value { transition: filter var(--dur-fast) var(--ease-out); }
+.md-cell-income:hover  .md-cell-value { filter: brightness(1.06); }
+
+/* 8. md-cell-expense:hover → .md-cell-value brightness(1.06)
+   月次詳細モーダルの支出セルホバー時に .md-cell-value（支出金額）を brightness(1.06) で輝き強調。
+   md-cell-label danger-text 変色（本スプリント）と連動し
+   ラベル＋金額値が一体的に反応する支出セルの完成形演出に。
+   md-cell-income brightness（本スプリント）と対称パターン。 */
+.md-cell-expense:hover .md-cell-value { filter: brightness(1.06); }
