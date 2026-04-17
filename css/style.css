@@ -19479,7 +19479,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    :has() でfill要素のステータスクラスを検出し
    good=success（緑）/ warn=warning（黄橙）/ over=danger-text（赤）に分岐。
    pace-daily-cell の :has() パターン（v22.75）と同系統の演出。 */
-.pace-bar-label { transition: color var(--dur-fast) var(--ease-out); }
+.pace-bar-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-label { color: var(--success); }
 .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-label { color: var(--warning); }
 .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-label { color: var(--danger-text); }
@@ -19488,7 +19488,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ペースバー行のホバー時に右側の値テキストにも同様のステータス色変化を適用。
    pace-bar-label 変色（本スプリント）と連動してラベル・値が揃って反応し
    ペース全体のホバー演出がより鮮明になる。 */
-.pace-bar-value { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pace-bar-value { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value { color: var(--success);     filter: brightness(1.08); }
 .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value { color: var(--warning);     filter: brightness(1.08); }
 .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value { color: var(--danger-text); filter: brightness(1.08); }
@@ -19823,7 +19823,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .sub-card:hover 時に .sub-next-billing（次回請求日テキスト）を
    primary カラーへ変色。sub-cycle-tag 変色（本スプリント）・sub-card-name 変色
    （v23.00）と連動しメタ情報も含めたカード全体のホバー演出を統一。 */
-.sub-next-billing { transition: color var(--dur-fast) var(--ease-out); }
+.sub-next-billing { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-next-billing { color: var(--primary); }
 
 /* 8. sub-card:hover → .sub-card-memo カラー変化
@@ -20385,7 +20385,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    週次支出バーのカラムホバー時に .wk-bar-amount（バー下の金額テキスト：color:text-muted・fs-4xs）を
    primary カラーへ変色。wk-bar-col:hover .wk-bar-fill brightness（v22.x）と連動し
    バーの輝きと金額テキストの変色が一体的に反応するホバー演出に。wk-bar-label 変色（本スプリント）と連動。 */
-.wk-bar-amount { transition: color var(--dur-fast) var(--ease-out); }
+.wk-bar-amount { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wk-bar-col:hover .wk-bar-amount { color: var(--primary); }
 
 /* 8. wk-bar-col:hover → .wk-bar-label:not(.wk-today-label) primary カラー変化
@@ -20393,7 +20393,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary カラーへ変色。.wk-today-label（今日=danger-text+danger-bg）は :not() 除外で
    danger-text スタイルを維持。wk-bar-amount 変色（本スプリント）・wk-bar-fill brightness と連動し
    ラベル・金額・バーの全要素が一体的にホバーで反応する完成形に。 */
-.wk-bar-label { transition: color var(--dur-fast) var(--ease-out); }
+.wk-bar-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { color: var(--primary); }
 
 /* ── v23.11 ホバー子要素カラー変化・brightness 8箇所 ────────────────────────────────────
@@ -20423,7 +20423,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    タイプ別カラーへ変色。通常=primary / sub-urgent=danger-text / sub-soon=warning。
    sub-widget-name 変色（v22.x）・sub-widget-amount 変色+brightness（v22.x）・
    sub-widget-icon scale（v22.x）と連動し次回日付も含めたアイテム全体がホバーで揃って反応する完成形に。 */
-.sub-widget-next { transition: color var(--dur-fast) var(--ease-out); }
+.sub-widget-next { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-widget-item:hover            .sub-widget-next { color: var(--primary); }
 .sub-widget-item.sub-urgent:hover .sub-widget-next { color: var(--danger-text); }
 .sub-widget-item.sub-soon:hover   .sub-widget-next { color: var(--warning); }
@@ -20679,14 +20679,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ポイントウィジェット行ホバー時に .pt-widget-name（ポイント名称テキスト：color:text・fs-sm・fw-semi）を
    primary カラーへ変色。pt-widget-icon scale+glow（v22.x）と連動しアイコン・名称が
    一体的にホバーで反応する演出に。 */
-.pt-widget-name { transition: color var(--dur-fast) var(--ease-out); }
+.pt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pt-widget-item:hover .pt-widget-name { color: var(--primary); }
 
 /* 2. pt-widget-item:hover → .pt-widget-balance brightness(1.08) + タイプ別カラー変化
    ポイントウィジェット行ホバー時に .pt-widget-balance（ポイント残高数値：color:text・fw-bold）を
    brightness(1.08) + タイプ別変色。urgent=danger-text / soon=warning / normal=primary。
    pt-widget-name 変色（本スプリント）と連動し名称・残高が一体的に反応する演出に。 */
-.pt-widget-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.pt-widget-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pt-widget-item:hover             .pt-widget-balance { color: var(--primary);     filter: brightness(1.08); }
 .pt-widget-item.pt-urgent:hover   .pt-widget-balance { color: var(--danger-text); filter: brightness(1.08); }
 .pt-widget-item.pt-soon:hover     .pt-widget-balance { color: var(--warning);     filter: brightness(1.08); }
@@ -24009,3 +24009,86 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存brightness(1.1)（v23.x）と連動しgoal-achieved-badge scale+success glow（v23.12）と
    合わせてバッジ・達成日が一体的に輝く達成済みカードホバー演出の完成形。 */
 .goal-card:hover .goal-achieved-date { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #756 — v23.60 child hover text-shadow glow (8 items)
+   pt-widget-name-glow / pt-widget-balance-glow /
+   sub-next-billing-glow / sub-widget-next-glow /
+   pace-bar-label-glow / pace-bar-value-glow /
+   wk-bar-amount-glow / wk-bar-label-glow
+   ============================================================ */
+
+/* v23.60: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①pt-widget-item:hover .pt-widget-name primary glow、②pt-widget-item:hover .pt-widget-balance タイプ別 glow、
+   ③sub-card:hover .sub-next-billing primary glow、④sub-widget-item:hover .sub-widget-next タイプ別 glow、
+   ⑤pace-bar-row:hover .pace-bar-label ステータス別 glow、⑥pace-bar-row:hover .pace-bar-value ステータス別 glow、
+   ⑦wk-bar-col:hover .wk-bar-amount primary glow、⑧wk-bar-col:hover .wk-bar-label primary glow。
+   各要素の既存 color/filter transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. pt-widget-item:hover → .pt-widget-name primary text-shadow glow
+   ポイントウィジェット行ホバー時にポイント名称テキストにprimary text-shadow glow追加。
+   既存color:primary変色と連動しpt-widget-icon scale+glow（v22.x）・
+   pt-widget-balance glow（本スプリント）・pt-widget-exp glow（v23.55）と
+   合わせて行内全テキストがホバーで一体的に輝くウィジェット行完成形演出。 */
+.pt-widget-item:hover .pt-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. pt-widget-item:hover → .pt-widget-balance タイプ別 text-shadow glow
+   ポイントウィジェット行ホバー時に残高数値テキストにタイプ別text-shadow glow追加。
+   通常=primary / pt-urgent=danger-text / pt-soon=warning。
+   既存タイプ別color+brightness変色と連動しpt-widget-name glow（本スプリント）・
+   pt-widget-exp glow（v23.55）と合わせてウィジェット行全テキストが揃って輝く完成形演出。 */
+.pt-widget-item:hover             .pt-widget-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.pt-widget-item.pt-urgent:hover   .pt-widget-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.pt-widget-item.pt-soon:hover     .pt-widget-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 3. sub-card:hover → .sub-next-billing primary text-shadow glow
+   サブスクカードホバー時に次回請求日テキストにprimary text-shadow glow追加。
+   既存color:primary変色と連動しsub-cycle-unit glow（v23.58）・
+   sub-cycle-tag glow（v23.54）・sub-monthly-equiv glow（v23.55）と
+   合わせてカード金額エリア・メタ情報が一体的に輝くサブスクカード完成形演出。 */
+.sub-card:hover .sub-next-billing { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. sub-widget-item:hover → .sub-widget-next タイプ別 text-shadow glow
+   サブスクウィジェット行ホバー時に次回支払日テキストにタイプ別text-shadow glow追加。
+   通常=primary / sub-urgent=danger-text / sub-soon=warning。
+   既存タイプ別color変色と連動しsub-widget-name変色・sub-widget-amount変色+brightness・
+   sub-cycle-badge brightness（各v22.x）と合わせて行内全テキストが一体的に輝く完成形演出。 */
+.sub-widget-item:hover            .sub-widget-next { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.sub-widget-item.sub-urgent:hover .sub-widget-next { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.sub-widget-item.sub-soon:hover   .sub-widget-next { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 5. pace-bar-row:hover → .pace-bar-label ステータス別 text-shadow glow
+   ペースバー行ホバー時にカテゴリラベルテキストにステータス別text-shadow glow追加。
+   良好=success / 注意=warning / 超過=danger-text。
+   既存ステータス別color変色と連動しpace-bar-fill brightness+glow・
+   pace-bar-value glow（本スプリント）・pace-unit glow（v23.x）と
+   合わせてペースバー行全要素がホバーで一体的に輝く完成形演出。 */
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-label { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 6. pace-bar-row:hover → .pace-bar-value ステータス別 text-shadow glow
+   ペースバー行ホバー時に値テキスト（金額・パーセント）にステータス別text-shadow glow追加。
+   良好=success / 注意=warning / 超過=danger-text。
+   既存ステータス別color+brightness変色と連動しpace-bar-label glow（本スプリント）・
+   pace-unit glow（v23.x）と合わせてラベル・値・単位が揃って輝くペースバー完成形演出。 */
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 7. wk-bar-col:hover → .wk-bar-amount primary text-shadow glow
+   週次支出バーカラムホバー時に金額テキストにprimary text-shadow glow追加。
+   既存color:primary変色と連動しwk-bar-fill brightness（v22.x）・
+   wk-bar-label glow（本スプリント）と合わせてバー・ラベル・金額が
+   一体的に輝く週次バー完成形演出。 */
+.wk-bar-col:hover .wk-bar-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. wk-bar-col:hover → .wk-bar-label:not(.wk-today-label) primary text-shadow glow
+   週次支出バーカラムホバー時に曜日ラベルテキスト（今日以外）にprimary text-shadow glow追加。
+   .wk-today-label（danger-text）は除外しスタイル維持。
+   既存color:primary変色と連動しwk-bar-fill brightness（v22.x）・
+   wk-bar-amount glow（本スプリント）と合わせてラベル・金額・バーが
+   一体的に輝く週次バー完成形演出。 */
+.wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
