@@ -22692,3 +22692,64 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fillとトラックが一体的にホバーで反応する週次バーホバー演出の完成形に。 */
 .wk-bar-wrap { transition: filter var(--dur-fast) var(--ease-out); }
 .wk-bar-col:hover .wk-bar-wrap { filter: brightness(1.05); }
+
+/* ============================================================
+   Sprint #736 / v23.40 — 8 hover sub-element brightness effects
+   dow-mini-bar-track + ch-bar-bg(widget) + debt-widget-bar-bg +
+   fv-seg-bar + goal-dash-ring-bg + wl-priority-badge(widget) +
+   fv-month-td4 + ev-prog-fill(month-col)
+   ============================================================ */
+
+/* 1. dow-table-row:hover → .dow-mini-bar-track brightness(1.05)
+   曜日テーブル行ホバー時に .dow-mini-bar-track（ミニバー背景トラック）を
+   brightness(1.05) で輝かせる。fill側（dow-mini-bar-fill）はv23.xで対応済み。
+   fillとトラックが一体的にホバーで反応する曜日バーホバー演出の完成形に。 */
+.dow-mini-bar-track { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover .dow-mini-bar-track { filter: brightness(1.05); }
+
+/* 2. ch-widget-item:hover → .ch-bar-bg brightness(1.05)（ウィジェット文脈）
+   ウィジェット内チャレンジ項目ホバー時に .ch-bar-bg（バー背景トラック）を
+   brightness(1.05) で輝かせる。.ch-bar-bg の transition は v23.37 で追加済み。
+   カード側（ch-card:hover）は既対応。ウィジェット側の fill+track 完成形に。 */
+.ch-widget-item:hover .ch-bar-bg { filter: brightness(1.05); }
+
+/* 3. debt-widget-item:hover → .debt-widget-bar-bg brightness(1.05)
+   ウィジェット内ローン項目ホバー時に .debt-widget-bar-bg（バー背景トラック）を
+   brightness(1.05) で輝かせる。fill側（debt-widget-bar-fill）はv23.xで対応済み。
+   fillとトラックが一体的にホバーで反応するローンウィジェットホバー演出の完成形に。 */
+.debt-widget-bar-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-bar-bg { filter: brightness(1.05); }
+
+/* 4. fv-month-table tbody tr:hover → .fv-seg-bar brightness(1.05)
+   将来費テーブル行ホバー時に .fv-seg-bar（セグメントバー背景トラック）を
+   brightness(1.05) で輝かせる。fill側（fv-seg-fixed / fv-seg-var）はv23.xで対応済み。
+   fillとトラックが一体的にホバーで反応する将来費セグメントバーホバー演出の完成形に。 */
+.fv-seg-bar { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-seg-bar { filter: brightness(1.05); }
+
+/* 5. goal-dash-item:hover → .goal-dash-ring-bg brightness(1.1)
+   目標ダッシュボード項目ホバー時に .goal-dash-ring-bg（リング背景SVGサークル）を
+   brightness(1.1) で輝かせる。fill側（goal-dash-ring-fill）はv23.xで対応済み。
+   fillとトラックが一体的にホバーで反応するゴールリングホバー演出の完成形に。 */
+.goal-dash-ring-bg { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-ring-bg { filter: brightness(1.1); }
+
+/* 6. wish-widget-item:hover → .wl-priority-badge scale(1.06) + brightness(1.08)（ウィジェット文脈）
+   ウィジェット内ウィッシュリスト項目ホバー時に .wl-priority-badge（優先度バッジ）を
+   scale(1.06) + brightness(1.08) で強調。.wl-priority-badge の transition は v23.xで追加済み。
+   カード側（wl-card:hover）は既対応。ウィジェット側のバッジホバー演出完成形に。 */
+.wish-widget-item:hover .wl-priority-badge { transform: scale(1.06); filter: brightness(1.08); }
+
+/* 7. fv-month-table tbody tr:hover → td:nth-child(4) brightness(1.08)（合計列）
+   将来費テーブル行ホバー時に4列目（合計金額セル、クラス名なし）を
+   brightness(1.08) で輝かせる。2列目（fv-fixed-val）・3列目（fv-var-val）は既対応。
+   全列が一体的にホバーで反応する将来費テーブルホバー演出の完成形に。 */
+.fv-month-table td:nth-child(4) { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover td:nth-child(4) { filter: brightness(1.08); }
+
+/* 8. ev-month-col:hover → .ev-prog-fill brightness(1.1)（正しい親セレクタ修正）
+   イベント月列ホバー時に .ev-prog-fill（進捗バーfill）を brightness(1.1) で輝かせる。
+   .ev-prog-fill の transition は v23.xで追加済み。
+   ev-card:hover .ev-prog-fill は dead code（ev-prog-fill は ev-month-col 内に存在するため）。
+   正しい親セレクタ ev-month-col:hover を使用し、現在月は除外する。 */
+.ev-month-col:not(.ev-month-current):hover .ev-prog-fill { filter: brightness(1.1); }
