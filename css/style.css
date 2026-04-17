@@ -23017,3 +23017,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    cat-card-name glow・cat-stat-val glow（本スプリント）と合わせてカード内全テキスト演出を統一。 */
 .cat-budget-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cat-card:hover .cat-budget-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #741 v23.45
+   wl-name-glow + wl-price-glow + wl-note-glow +
+   goal-name-glow + goal-remaining-glow + goal-target-glow +
+   budget-nums-glow + budget-cat-name-glow 8箇所
+   ============================================================ */
+
+/* 1. wl-card:hover → .wl-card-name wl-accent text-shadow glow
+   ウィッシュリストカードのホバー時に .wl-card-name（アイテム名）に
+   wl-accent text-shadow glow を追加。既存の color:wl-accent 変色（v22.78）と連動し、
+   wl-card-price glow・wl-card-icon glow と合わせてカード全体のホバー演出を完成させる。 */
+.wl-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-name { text-shadow: 0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. wl-card:hover → .wl-card-price wl-accent text-shadow glow
+   ウィッシュリストカードのホバー時に .wl-card-price（価格テキスト）に
+   wl-accent text-shadow glow を追加。既存の color:wl-accent + brightness(1.06)（v22.85）と連動し、
+   wl-card-name glow（本スプリント）と合わせてカード内テキスト演出を統一。 */
+.wl-card-price { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-price { text-shadow: 0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. wl-card:hover → .wl-card-note wl-accent text-shadow glow
+   ウィッシュリストカードのホバー時に .wl-card-note（メモ・説明テキスト）に
+   wl-accent text-shadow glow を追加。既存の color 変化（v23.x）と連動し、
+   wl-card-name glow・wl-card-price glow（本スプリント）と合わせてカード全テキスト演出を完成させる。 */
+.wl-card-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-note { text-shadow: 0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. goal-card:hover → .goal-name goal-accent text-shadow glow
+   目標カードのホバー時に .goal-name（目標名称テキスト）に
+   goal-accent text-shadow glow を追加。既存の color:goal-accent 変色（v23.x）と連動し、
+   goal-saved glow（v23.42）・goal-ring-fill glow と合わせてカードホバー演出の完成形に。 */
+.goal-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-name { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. goal-card:hover → .goal-remaining goal-accent text-shadow glow
+   目標カードのホバー時に .goal-remaining（残り金額テキスト）に
+   goal-accent text-shadow glow を追加。既存の color:goal-accent 変色（v23.x）と連動し、
+   goal-name glow（本スプリント）・goal-saved glow（v23.42）と連動してカード内全テキスト演出を統一。 */
+.goal-remaining:not(.goal-done-hint) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-remaining:not(.goal-done-hint) { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. goal-card:hover → .goal-target primary text-shadow glow
+   目標カードのホバー時に .goal-target（目標金額テキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色（v23.x）と連動し、
+   goal-name glow・goal-remaining glow（本スプリント）と合わせて目標カードホバー演出の完成形に。 */
+.goal-target { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-target { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. budget-item:hover → .budget-nums タイプ別 text-shadow glow
+   予算行のホバー時に .budget-nums（支出金額・予算金額テキスト）に
+   タイプ別 text-shadow glow を追加。通常行は primary glow、超過行は expense glow。
+   既存の color:primary/expense + brightness（v22.87）と連動し budget-cat-name glow（本スプリント）と統一。 */
+.budget-nums { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-nums                         { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over):hover .budget-nums  { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 8. budget-item:hover → .budget-cat-name タイプ別 text-shadow glow
+   予算行のホバー時に .budget-cat-name（カテゴリ名称テキスト）に
+   タイプ別 text-shadow glow を追加。通常行は primary glow、超過行は expense glow。
+   既存の color:primary/expense 変色（v22.94）と連動し budget-nums glow（本スプリント）と対称の演出。 */
+.budget-cat-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-cat-name                          { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over):hover .budget-cat-name  { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
