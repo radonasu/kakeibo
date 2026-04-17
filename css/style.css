@@ -23463,3 +23463,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ev-expense.ev-mtot { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #748 — v23.52 child hover text-shadow glow (8 items)
+   dw-item-label-glow + sb-suggested-glow + sb-cat-col-glow +
+   sf-chip-glow + date-quick-glow + opp-challenge-glow +
+   sim-preset-glow + summary-label-glow
+   ============================================================ */
+
+/* 1. dw-item:hover → .dw-item-label primary text-shadow glow
+   ウィジェット設定トグル行のホバー時に .dw-item-label（ウィジェット名称テキスト：
+   fs-sm・color:text）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.x）と連動し名称がはっきり輝くホバー演出に。
+   dw-item-icon scale+drop-shadow と合わせてアイコン・名称が一体的に輝く完成形。 */
+.dw-item-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dw-item:hover .dw-item-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. sb-row:hover → .sb-suggested sb-cat-color text-shadow glow
+   支出提案テーブル行のホバー時に .sb-suggested（提案予算金額：fw-bold・
+   color:sb-cat-color/primary）に sb-cat-color text-shadow glow を追加。
+   既存の filter:brightness(1.06)（v22.x）と連動し提案金額がカテゴリカラーで
+   輝くホバー演出に。sb-row:hover td:nth-child(2) color 変色（v23.35）と合わせて
+   カテゴリ名・提案金額が同じカテゴリカラーで揃って輝く完成形。 */
+.sb-suggested { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-suggested { text-shadow: 0 0 8px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. sb-row:hover → td:nth-child(2) sb-cat-color text-shadow glow
+   支出提案テーブル行のホバー時に 2列目（カテゴリ名テキスト）に
+   sb-cat-color text-shadow glow を追加。既存の color:sb-cat-color 変色（v23.34）と
+   連動しカテゴリ名がカテゴリカラーで輝く演出に。sb-suggested glow（本スプリント②）と
+   合わせてカテゴリ名・提案金額が揃って同カラーで輝く完成形。 */
+.sb-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover td:nth-child(2) { text-shadow: 0 0 8px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. sf-chip:hover → self primary text-shadow glow
+   保存フィルターチップのホバー時にチップテキスト自身に primary text-shadow glow を追加。
+   既存の color:primary 変色・border-color・background変化（v22.x）と連動し
+   チップのラベルテキストがprimaryカラーで輝くホバー演出に。
+   sf-chip-del hover演出と合わせてフィルターチップのインタラクション品質を向上。 */
+.sf-chip { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sf-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. date-quick-btn:hover → self primary text-shadow glow
+   日付クイックボタン（昨日・今日等）のホバー時に primary text-shadow glow を追加。
+   既存の color:primary 変色・border・box-shadow 演出（v22.75）と連動し
+   ボタンテキストが primary カラーで輝くホバー演出に。
+   フォーム内のインタラクション品質向上に貢献。 */
+.date-quick-btn { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.date-quick-btn:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. opp-challenge-btn:hover → self opp-accent text-shadow glow
+   節約オポチュニティのチャレンジボタンのホバー時に opp-accent text-shadow glow を追加。
+   既存の filter:brightness・transform・box-shadow 演出（v22.x）と連動し
+   ボタンテキストが深刻度別アクセントカラー（高=danger-text/中=warning/低=primary）で
+   輝くホバー演出に。box-shadow の opp-accent カラーと統一感ある演出。 */
+.opp-challenge-btn { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.opp-challenge-btn:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. sim-preset:hover → self white text-shadow glow
+   ローンシミュレーターのプリセットボタン（+1万/+3万等）のホバー時に
+   白い text-shadow glow を追加。ホバーで background:primary・color:white になるため
+   白グローが最適。既存の transform・box-shadow 演出（v22.x）と連動し
+   プリセットボタンのテキストが白く輝くホバー演出に。 */
+.sim-preset { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sim-preset:hover { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
+/* 8. summary-card:hover → .summary-label white text-shadow glow
+   ダッシュボード上部サマリーカード（収入・支出・残高）のホバー時に
+   .summary-label（「今月の収入」等のラベルテキスト：on-dark-hint/opacity変化）に
+   白い text-shadow glow を追加。グラデーション背景上のラベルに白グローが最適。
+   summary-card:hover .summary-amount white glow（v23.28）・
+   summary-card:hover .summary-label opacity:1（v22.x）と連動し
+   カード内のラベル・金額が揃って輝く完成形。 */
+.summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.summary-card:hover .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
