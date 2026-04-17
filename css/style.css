@@ -18535,7 +18535,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .step-card:hover 時に .step-title が primary カラーに変色。
    step-num scale+ring-glow（v22.79）・step-icon scale+drop-shadow（v22.83）と連動し
    カード全体のホバー時に見出しテキストもプライマリカラーで際立つ。 */
-.step-title { transition: color var(--dur-fast) var(--ease-out); }
+.step-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .step-card:hover .step-title { color: var(--primary); }
 
 /* 8. ウィッシュリストカード 商品名 color on hover
@@ -19240,7 +19240,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .ci-challenge-item:hover 時に .ci-challenge-name（チャレンジ名称）を
    primary カラーに変色。ci-event-name の変色（v22.94）と対になり
    チャレンジ・イベント両リストのホバーで名称テキストが揃って反応する。 */
-.ci-challenge-name { transition: color var(--dur-fast) var(--ease-out); }
+.ci-challenge-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ci-challenge-item:hover .ci-challenge-name { color: var(--primary); }
 
 /* 5. ci-event-item:hover → .ci-event-amount カラー変化
@@ -19280,7 +19280,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    資産履歴行（.asset-entry-row）のホバー時に .asset-entry-balance（残高数値）を
    primary カラーに変色。asset-entry-row:hover の translateX/box-shadow
    と連動し履歴行全体のホバー体験を一体的に強化する。 */
-.asset-entry-balance { transition: color var(--dur-fast) var(--ease-out); }
+.asset-entry-balance { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-entry-row:hover .asset-entry-balance { color: var(--primary); }
 
 /* ============================================================
@@ -19294,7 +19294,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    通知アイテムのホバー時にタイトルテキストをタイプ別色に変色。
    notif-item-icon の scale+brightness（v22.77）と連動し
    アイコン・タイトルの両方が視覚的にタイプを強調する。 */
-.notif-item-title { transition: color var(--dur-fast) var(--ease-out); }
+.notif-item-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .notif-item.notif-type-danger:hover  .notif-item-title { color: var(--danger-text); }
 .notif-item.notif-type-warning:hover .notif-item-title { color: var(--warning); }
 .notif-item.notif-type-success:hover .notif-item-title { color: var(--success); }
@@ -19339,7 +19339,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    cal-ev-color（primary）カラーに変色。
    cal-ev-icon の scale+drop-shadow（v22.77）と連動し
    アイコン・名称が一体的に反応するホバー体験に統一。 */
-.cal-ev-name { transition: color var(--dur-fast) var(--ease-out); }
+.cal-ev-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-ev-item:hover .cal-ev-name { color: var(--cal-ev-color, var(--primary)); }
 .cal-ev-done:hover .cal-ev-name { color: var(--text-muted); } /* 完了済みは変色しない */
 
@@ -19397,7 +19397,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    サマリーミニバーのラベルテキスト（「収入」「支出」）をホバー時に
    タイプ別カラーに変色。smi-amount の変色（v22.94）と連動し
    ラベル・金額の両方がタイプ色で揃って応答する一体感を演出。 */
-.smi-label { transition: color var(--dur-fast) var(--ease-out); }
+.smi-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .smi-income:hover  .smi-label { color: var(--success); }
 .smi-expense:hover .smi-label { color: var(--danger-text); }
 
@@ -19405,7 +19405,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    年次インサイトカードのラベルテキストをホバー時に primary カラーに変色。
    yi-card-icon scale（v22.81）・yi-card-value 変色（v22.84）と連動し
    アイコン・ラベル・数値が一体的に primary アクセント色で応答する。 */
-.yi-card-label { transition: color var(--dur-fast) var(--ease-out); }
+.yi-card-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-card-label { color: var(--primary); }
 
 /* 4. debt-card:hover → .debt-balance-meta カラー変化
@@ -19413,7 +19413,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary カラーに変色。debt-name 変色（v22.95）・
    debt-balance brightness（v22.87）・badge glow（v22.95）と連動し
    カードホバーで名称・残高・メタ情報が揃って視覚的に応答する。 */
-.debt-balance-meta { transition: color var(--dur-fast) var(--ease-out); }
+.debt-balance-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-balance-meta { color: var(--primary); }
 
 /* 5. insight-item:hover → .insight-title brightness 追加
@@ -23245,3 +23245,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    各要素の既存 color 変色 transition に text-shadow を追加し、
    カード名称テキストが hover 時にアクセントカラーで輝く演出を完成。
    全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* ============================================================
+   Sprint #745 — v23.49 child hover text-shadow glow (8 items)
+   notif-item-title-glow / step-title-glow /
+   ci-challenge-name-glow / asset-entry-balance-glow /
+   cal-ev-name-glow / smi-label-glow /
+   yi-card-label-glow / debt-balance-meta-glow
+   ============================================================ */
+
+/* 1. notif-item:hover → .notif-item-title タイプ別 text-shadow glow
+   通知アイテムのホバー時に .notif-item-title（通知タイトル）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   notif-item-icon タイプ別 drop-shadow glow（v22.x）と合わせて
+   アイコン・タイトルが一体的に発光するホバー演出を完成させる。 */
+.notif-item.notif-type-danger:hover  .notif-item-title { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.notif-item.notif-type-warning:hover .notif-item-title { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.notif-item.notif-type-success:hover .notif-item-title { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.notif-item.notif-type-info:hover    .notif-item-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+
+/* 2. step-card:hover → .step-title primary text-shadow glow
+   ステップカードのホバー時に .step-title（ステップ見出し）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   step-num scale+ring-glow・step-icon drop-shadow と合わせて
+   カードホバー演出を完成させる。 */
+.step-card:hover .step-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ci-challenge-item:hover → .ci-challenge-name primary text-shadow glow
+   チャレンジリストアイテムのホバー時に .ci-challenge-name（チャレンジ名称）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   ci-event-name glow（v23.48）と対になりチャレンジ・イベント両名称が
+   一体的に輝くホバー演出を統一する。 */
+.ci-challenge-item:hover .ci-challenge-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. asset-entry-row:hover → .asset-entry-balance primary text-shadow glow
+   資産履歴行のホバー時に .asset-entry-balance（残高数値）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   asset-entry-row の translateX/box-shadow と合わせて
+   履歴行ホバー時の数値演出を完成させる。 */
+.asset-entry-row:hover .asset-entry-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. cal-ev-item:hover → .cal-ev-name cal-ev-color text-shadow glow
+   カレンダーイベントリストのホバー時に .cal-ev-name（イベント名称）に
+   cal-ev-color text-shadow glow を追加。既存の color:cal-ev-color 変色と連動し、
+   cal-ev-icon scale+drop-shadow と合わせてイベント名もアクセントカラーで輝く演出に統一。
+   完了済み（cal-ev-done）は text-muted 変色のため glow なし。 */
+.cal-ev-item:not(.cal-ev-done):hover .cal-ev-name { text-shadow: 0 0 8px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. smi-income/expense:hover → .smi-label タイプ別 text-shadow glow
+   収支ミニバーのラベルテキストのホバー時に .smi-label（「収入」「支出」）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   smi-amount glow（v23.46）と合わせてラベル・金額が揃って輝くホバー演出を完成させる。 */
+.smi-income:hover  .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-expense:hover .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 7. yi-card:hover → .yi-card-label primary text-shadow glow
+   年次インサイトカードのホバー時に .yi-card-label（ラベルテキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   yi-card-icon scale・yi-card-value glow（v23.46）と合わせて
+   カード内ラベル・数値が揃って輝くホバー演出を完成させる。 */
+.yi-card:hover .yi-card-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. debt-card:hover → .debt-balance-meta primary text-shadow glow
+   負債カードのホバー時に .debt-balance-meta（元本残高・月次情報メタテキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   debt-name glow（v23.48）・debt-balance brightness と合わせて
+   カードホバー演出の全テキスト要素を統一する。 */
+.debt-card:hover .debt-balance-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
