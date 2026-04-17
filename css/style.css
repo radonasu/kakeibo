@@ -24092,3 +24092,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    wk-bar-amount glow（本スプリント）と合わせてラベル・金額・バーが
    一体的に輝く週次バー完成形演出。 */
 .wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #757 — v23.61 child hover text-shadow glow (8 items)
+   hs-item-label-glow / hs-item-max-glow /
+   debt-progress-label-glow / debt-end-pill-glow /
+   debt-type-badge-glow / rc-type-badge-glow /
+   opp-saving-strong-glow / budget-pct-badge-hover-glow
+   ============================================================ */
+
+/* v23.61: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①hs-item:hover .hs-item-label hs-bar-color glow、②hs-item:hover .hs-item-max hs-bar-color glow、
+   ③debt-card:hover .debt-progress-label primary glow、④debt-card:hover .debt-end-pill primary glow、
+   ⑤debt-card:hover .debt-type-badge debt-accent glow、⑥rc-item:hover .rc-type-badge タイプ別 glow、
+   ⑦opp-card:hover .opp-saving strong success glow、⑧budget-item:hover .budget-pct-badge タイプ別 glow。
+   各要素の既存 color/filter transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. hs-item:hover → .hs-item-label hs-bar-color text-shadow glow
+   家計スコア項目ホバー時にカテゴリラベルテキストにhs-bar-color text-shadow glow追加。
+   既存brightness(1.1)（v23.02）と連動しhs-item-score hs-bar-color変色+glow（v22.85/v23.55）・
+   hs-bar-fill glow（v22.82）と合わせてラベル・スコア値・バーが一体的に輝く完成形演出。 */
+.hs-item-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hs-item:hover .hs-item-label { text-shadow: 0 0 8px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. hs-item:hover → .hs-item-max hs-bar-color text-shadow glow
+   家計スコア項目ホバー時に上限テキスト（「上限: ¥30,000」等）にhs-bar-color text-shadow glow追加。
+   既存brightness(1.06)（v23.12）と連動しhs-item-label glow（本スプリント）・
+   hs-item-score glow（v23.55）と合わせてラベル・スコア・上限が揃って輝く完成形演出。 */
+.hs-item-max { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hs-item:hover .hs-item-max { text-shadow: 0 0 8px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. debt-card:hover → .debt-progress-label primary text-shadow glow
+   負債カードホバー時に進捗ラベルテキスト（「返済率: 42%」等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.11）と連動しdebt-name glow（v22.x）・debt-balance glow（v23.58）・
+   debt-balance-meta glow（v23.59）と合わせてカード内全テキストが一体的に輝く完成形演出。 */
+.debt-progress-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-progress-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. debt-card:hover → .debt-end-pill primary text-shadow glow
+   負債カードホバー時に完済予定バッジテキスト（「完済予定: 2026年3月」等）にprimary text-shadow glow追加。
+   既存color:primary + brightness(1.08)（v23.11）と連動しdebt-progress-label glow（本スプリント）・
+   debt-history-title glow（v23.58）と合わせてカード下部情報が一体的に輝く完成形演出。 */
+.debt-end-pill { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-end-pill { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. debt-card:hover → .debt-type-badge debt-accent text-shadow glow
+   負債カードホバー時に負債種別バッジテキスト（「住宅ローン」等）にdebt-accent text-shadow glow追加。
+   既存scale(1.05) + brightness(1.08)（v23.12）と連動しdebt-name glow（v22.x）・
+   debt-end-pill glow（本スプリント）と合わせてバッジ含めたカード全体がホバーで揃って輝く完成形演出。 */
+.debt-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-type-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. rc-item:hover → .rc-type-badge タイプ別 text-shadow glow
+   繰り返し取引カードホバー時に種別バッジテキスト（「収入」「支出」）にタイプ別text-shadow glow追加。
+   収入=success / 支出=danger-text。既存scale(1.06) + brightness(1.08)（v23.12）と連動し
+   rc-item-name glow（v22.x）・rc-item-meta glow（v23.58）・rc-item-amount glow（v23.58）と
+   合わせてカード内全要素がホバーで一体的に輝く完成形演出。 */
+.rc-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item:hover:has(.rc-type-inc) .rc-type-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.rc-item:hover:has(.rc-type-exp) .rc-type-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 7. opp-card:hover → .opp-saving strong success text-shadow glow
+   節約機会カードホバー時に節約金額の強調テキスト（strong要素）にsuccess text-shadow glow追加。
+   既存brightness(1.1)（v22.85）と連動しopp-title glow（v22.64）・opp-desc glow（v23.55/v23.59）・
+   opp-saving brightness（v22.83）と合わせてカード全テキストがホバーで一体的に輝く完成形演出。 */
+.opp-saving strong { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-saving strong { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 8. budget-item:hover → .budget-pct-badge タイプ別 text-shadow glow（ホバー時追加分）
+   予算項目ホバー時に予算達成率バッジにタイプ別text-shadow glow追加。
+   通常=primary / .warn=warning / .over=expense（.over は既存の静的glowをホバーで更に強調）。
+   既存brightness(1.1/1.12)（v23.02）と連動しbudget-nums glow（v23.58）・
+   budget-cat-name glow（v23.58）と合わせてバッジ含めた行全体がホバーで一体的に輝く完成形演出。 */
+.budget-pct-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:hover                            .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)  var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over):hover     .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)  var(--mix-sm), transparent); }
+.budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)  var(--mix-sm), transparent); }
