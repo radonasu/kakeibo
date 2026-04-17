@@ -19156,8 +19156,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .rc-item:hover 時に .rc-item-name のテキストを primary カラーに変色。
    既存の .rc-item-amount タイプ別カラー（v22.87）と組み合わさり
    繰り返し支出アイテムのホバー時に名称・金額の両方が視覚的に応答する。 */
-.rc-item-name { transition: color var(--dur-fast) var(--ease-out); }
-.rc-item:hover .rc-item-name { color: var(--primary); }
+.rc-item-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-name { color: var(--primary); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 4. goal-pct 静的 text-shadow glow
    目標カードの達成率パーセント（.goal-pct）に常時 goal-accent カラーの
@@ -19217,24 +19217,24 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    debt-accent（primary）カラーに変色。
    wl-card-name（v22.78）・rc-item-name（v22.94）・budget-cat-name（v22.94）
    と同パターンで各カードのホバー時カード名変色を統一する。 */
-.debt-name { transition: color var(--dur-fast) var(--ease-out); }
-.debt-card:hover .debt-name { color: var(--debt-accent, var(--primary)); }
+.debt-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-name { color: var(--debt-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 2. asset-card:hover → .asset-name カラー変化
    .asset-card:hover 時に .asset-name（資産名称テキスト）を
    asset-accent（primary）カラーに変色。
    asset-balanceのbrightness(1.06)（v22.88）と連動し
    カードホバーで名称・残高の両方が視覚的に応答する。 */
-.asset-name { transition: color var(--dur-fast) var(--ease-out); }
-.asset-card:hover .asset-name { color: var(--asset-accent, var(--primary)); }
+.asset-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-name { color: var(--asset-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 3. pt-card:hover → .pt-card-name カラー変化
    .pt-card:hover 時に .pt-card-name（ポイント名称テキスト）を
    pt-accent（primary）カラーに変色。
    pt-card-iconのscale/drop-shadow（v22.78）と連動し
    カードホバーでアイコン・名称が一体的に反応する。 */
-.pt-card-name { transition: color var(--dur-fast) var(--ease-out); }
-.pt-card:hover .pt-card-name { color: var(--pt-accent, var(--primary)); }
+.pt-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-card-name { color: var(--pt-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 4. ci-challenge-item:hover → .ci-challenge-name カラー変化
    .ci-challenge-item:hover 時に .ci-challenge-name（チャレンジ名称）を
@@ -19322,8 +19322,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-card-icon scale（v22.77）・sub-card-progress-fill glow（v22.83）・
    sub-card-amount変色（v22.84）と連動し名称・アイコン・金額が一体的に反応する。
    wl-card-name/debt-name/asset-name 等の統一パターンに準拠。 */
-.sub-card-name { transition: color var(--dur-fast) var(--ease-out); }
-.sub-card:hover .sub-card-name { color: var(--sub-accent, var(--primary)); }
+.sub-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-name { color: var(--sub-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 4. ci-event-item:hover → .ci-event-name カラー変化
    チャレンジイベントリストのホバー時にイベント名称テキストを
@@ -19331,8 +19331,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ci-event-icon scale（v22.85）・ci-event-amount変色（v22.95）と連動し
    アイコン・名称・金額が一体的に反応する。
    ci-challenge-name 変色（v22.95）と対になりチャレンジ・イベント両リストを統一。 */
-.ci-event-name { transition: color var(--dur-fast) var(--ease-out); }
-.ci-event-item:hover .ci-event-name { color: var(--ci-ev-accent, var(--primary)); }
+.ci-event-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-event-item:hover .ci-event-name { color: var(--ci-ev-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 5. cal-ev-item:hover → .cal-ev-name カラー変化
    カレンダーイベントリストのホバー時にイベント名称テキストを
@@ -19357,8 +19357,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    opp-icon scale+glow（v22.79）・opp-saving brightness（v22.84）と連動し
    アイコン・タイトル・節約額が一体的に強調される。
    wl-card-name/debt-name 等のカード名変色パターンに準拠。 */
-.opp-title { transition: color var(--dur-fast) var(--ease-out); }
-.opp-card:hover .opp-title { color: var(--opp-accent, var(--primary)); }
+.opp-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-title { color: var(--opp-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 8. ボトムナビ アクティブ状態 ラベル glow + アイコン box-shadow
    アクティブなボトムナビアイテムのラベルに primary text-shadow glow を追加し
@@ -19390,8 +19390,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ch-card-icon scale（v22.77）・ch-bar-fill glow（v22.83）・
    ch-progress-pct brightness（v22.83）と連動し
    アイコン・名称・バー・%が一体的に反応するホバー体験に統一。 */
-.ch-card-name { transition: color var(--dur-fast) var(--ease-out); }
-.ch-card:hover .ch-card-name { color: var(--ch-accent, var(--primary)); }
+.ch-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-card-name { color: var(--ch-accent, var(--primary)); text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 2. smi-income/expense:hover → .smi-label タイプ別カラー変化
    サマリーミニバーのラベルテキスト（「収入」「支出」）をホバー時に
@@ -23225,3 +23225,23 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-card-amount 変色+brightness と合わせて金額エリア全体のホバー演出を完成させる。 */
 .sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-cycle-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #744 — v23.48 child hover text-shadow glow (8 items)
+   rc-item-name-glow / debt-name-glow / asset-name-glow /
+   pt-card-name-glow / sub-card-name-glow / ci-event-name-glow /
+   opp-title-glow / ch-card-name-glow
+   ============================================================ */
+
+/* v23.48: 各カード名称テキストへのホバー text-shadow glow 追加（8箇所）
+   rc-item:hover→.rc-item-name primary glow、
+   debt-card:hover→.debt-name debt-accent glow、
+   asset-card:hover→.asset-name asset-accent glow、
+   pt-card:hover→.pt-card-name pt-accent glow、
+   sub-card:hover→.sub-card-name sub-accent glow、
+   ci-event-item:hover→.ci-event-name ci-ev-accent glow、
+   opp-card:hover→.opp-title opp-accent glow、
+   ch-card:hover→.ch-card-name ch-accent glow。
+   各要素の既存 color 変色 transition に text-shadow を追加し、
+   カード名称テキストが hover 時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
