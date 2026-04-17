@@ -19606,7 +19606,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    レポート月行のホバー時に .rpt-month-label（「1月」等の月名テキスト）を
    primary カラーに変色。income/expense td brightness（v22.82）と連動し
    月ラベルも含めた行全体がホバーで視覚的に応答する一体感を実現。 */
-.rpt-month-label { transition: color var(--dur-fast) var(--ease-out); }
+.rpt-month-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .rpt-month-row.is-clickable:hover .rpt-month-label { color: var(--primary); }
 
 /* ============================================================
@@ -19690,7 +19690,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    tg-stat-value primary変色（v22.82）と連動し
    ラベル・値・単位の3要素が揃ってホバーで primary アクセント色に染まる
    一体的な演出で完成形に。 */
-.tg-stat-unit { transition: color var(--dur-fast) var(--ease-out); }
+.tg-stat-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .tg-stat-card:hover .tg-stat-unit { color: var(--primary); }
 
 /* ============================================================
@@ -20008,7 +20008,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .ch-card:hover 時に .ch-card-meta（ch-type-badge＋カテゴリ名テキスト）を
    primary カラーへ変色。ch-card-name 変色（v22.99）・ch-card-icon scale（v22.81）・
    ch-bar-fill glow（v22.83）と連動しカード内の全テキストが一体的に反応する完成形に。 */
-.ch-card-meta { transition: color var(--dur-fast) var(--ease-out); }
+.ch-card-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-card:hover .ch-card-meta { color: var(--primary); }
 
 /* 5. ch-card:hover → .ch-status brightness(1.08) + タイプ別 text-shadow
@@ -20027,7 +20027,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    brightness(1.05) で微細に明るく。opp-title 変色（v22.64）・opp-icon scale（v22.79）・
    opp-saving strong brightness（v22.85）と連動し説明文も含めた
    カード全体のテキストがホバーで一体的に反応する演出に。 */
-.opp-desc { transition: filter var(--dur-fast) var(--ease-out); }
+.opp-desc { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .opp-card:hover .opp-desc { filter: brightness(1.05); }
 
 /* 7. pt-card:hover → .pt-card-yen brightness(1.06) + primary カラー変化
@@ -20348,7 +20348,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    goal-accent/primary カラーへ変色。.goal-deadline.over（期限切れ：danger-text+danger-bg）は
    スタイル維持。goal-name/saved/target/remaining 変色（各v22.x/v23.x）と連動し
    期限テキストもホバーで一体的に反応する完成形に。 */
-.goal-deadline { transition: color var(--dur-fast) var(--ease-out); }
+.goal-deadline { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-deadline:not(.over) { color: var(--goal-accent, var(--primary)); }
 
 /* 3. goal-card:hover → .goal-monthly-target brightness(1.08)
@@ -20364,7 +20364,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary 変色でホバー時の視認性が明確に向上。goal-name/saved/target/remaining 変色・
    goal-deadline 変色（本スプリント）と連動しメモも含めたカード内の全テキスト要素が
    ホバーで揃って反応する完成形に。 */
-.goal-note { transition: color var(--dur-fast) var(--ease-out); }
+.goal-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-note { color: var(--goal-accent, var(--primary)); }
 
 /* 5. fv-cat-table tbody tr:hover → .fv-cat-amt brightness(1.08)
@@ -20657,7 +20657,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    家計スコアカードのホバー時に .hs-score-unit（「点」テキスト：ゲージ内単位）を
    brightness(1.1) で輝かせる。hs-gauge-fill brightness+glow（v22.x）・hs-score-num brightness（v22.x）と
    連動しゲージ内の数値・単位が一体的にホバーで強調される完成形に。 */
-.hs-score-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.hs-score-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .health-score-card:hover .hs-score-unit { filter: brightness(1.1); }
 
 /* 8. health-score-card:hover → .hs-prev-badge scale(1.05) + brightness(1.1)
@@ -22449,7 +22449,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    goal-card:hover .goal-achieved-badge scale+success glow（v23.12）と連動し
    達成バッジ・達成日テキストの両要素がホバーで一体的に反応する
    達成済みカードのホバー演出を完成させる。 */
-.goal-achieved-date { transition: filter var(--dur-fast) var(--ease-out); }
+.goal-achieved-date { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-achieved-date { filter: brightness(1.1); }
 
 /* 7. ch-card:hover → .ch-bar-bg brightness(1.05)
@@ -23942,3 +23942,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-monthly-equiv glow（v23.55）と合わせてカード金額エリア全テキストが輝く完成形。 */
 .sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-cycle-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #755 — v23.59 child hover text-shadow glow (8 items)
+   rpt-month-label-glow / tg-stat-unit-glow /
+   ch-card-meta-glow / opp-desc-glow /
+   goal-deadline-glow / goal-note-glow /
+   hs-score-unit-glow / goal-achieved-date-glow
+   ============================================================ */
+
+/* v23.59: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①rpt-month-row:hover .rpt-month-label primary glow、②tg-stat-card:hover .tg-stat-unit primary glow、
+   ③ch-card:hover .ch-card-meta primary glow、④opp-card:hover .opp-desc primary glow、
+   ⑤goal-card:hover .goal-deadline goal-accent glow、⑥goal-card:hover .goal-note goal-accent glow、
+   ⑦health-score-card:hover .hs-score-unit primary glow、⑧goal-card:hover .goal-achieved-date success glow。
+   各要素の既存 color/filter transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. rpt-month-row.is-clickable:hover → .rpt-month-label primary text-shadow glow
+   レポート月行ホバー時に月名テキスト（「1月」等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しtd.income/td.expense brightness（v22.82）と
+   合わせて月ラベル・収支数値が揃ってホバーで輝くレポート月行完成形演出。 */
+.rpt-month-row.is-clickable:hover .rpt-month-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. tg-stat-card:hover → .tg-stat-unit primary text-shadow glow
+   タグ統計カードホバー時に単位テキスト（「件」「円」等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.00）と連動しtg-stat-value primary+brightness（v22.82）・
+   tg-stat-label brightness・tg-stat-icon scale+glow（v22.x）と合わせて
+   カード内ラベル・値・単位・アイコンが一体的に輝くタグ統計カード完成形演出。 */
+.tg-stat-card:hover .tg-stat-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ch-card:hover → .ch-card-meta primary text-shadow glow
+   チャレンジカードホバー時にメタテキスト（ch-type-badge＋カテゴリ名）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しch-card-name変色（v22.99）・ch-card-icon scale（v22.81）・
+   ch-bar-fill glow（v22.83）と合わせてカード内全テキストがホバーで輝く完成形演出。 */
+.ch-card:hover .ch-card-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. opp-card:hover → .opp-desc primary text-shadow glow
+   節約機会カードホバー時に説明文テキストにprimary text-shadow glow追加。
+   既存brightness(1.05)（v23.x）と連動しopp-title glow（v22.64）・opp-icon scale（v22.79）・
+   opp-saving strong brightness（v22.85）と合わせてカード全テキストが一体的に輝く完成形演出。 */
+.opp-card:hover .opp-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. goal-card:hover → .goal-deadline:not(.over) goal-accent text-shadow glow
+   目標カードホバー時に期限テキスト（「残○日」等）にgoal-accent text-shadow glow追加。
+   既存color:goal-accent変色（v23.x）と連動しgoal-name/saved/target/remaining glow（各v23.x）と
+   合わせて期限テキストもホバーで輝く目標カード完成形演出。期限切れ(.over)は除外。 */
+.goal-card:hover .goal-deadline:not(.over) { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. goal-card:hover → .goal-note goal-accent text-shadow glow
+   目標カードホバー時にメモテキスト（italic・text-faint）にgoal-accent text-shadow glow追加。
+   既存color:goal-accent変色（v23.x）と連動しgoal-name/saved/target/deadline glow（各v23.x）と
+   合わせてメモも含めたカード内全テキストがホバーで揃って輝く完成形演出。 */
+.goal-card:hover .goal-note { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. health-score-card:hover → .hs-score-unit primary text-shadow glow
+   家計スコアカードホバー時に単位テキスト（「点」）にprimary text-shadow glow追加。
+   既存brightness(1.1)（v23.x）と連動しhs-gauge-fill brightness+glow（v22.x）・
+   hs-score-num brightness（v22.x）・hs-trend-label glow（v23.x）と合わせて
+   ゲージ内全要素がホバーで一体的に輝く家計スコアカード完成形演出。 */
+.health-score-card:hover .hs-score-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. goal-card:hover → .goal-achieved-date success text-shadow glow
+   達成済み目標カードホバー時に達成日テキスト（color:success）にsuccess text-shadow glow追加。
+   既存brightness(1.1)（v23.x）と連動しgoal-achieved-badge scale+success glow（v23.12）と
+   合わせてバッジ・達成日が一体的に輝く達成済みカードホバー演出の完成形。 */
+.goal-card:hover .goal-achieved-date { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
