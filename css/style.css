@@ -23380,3 +23380,86 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
 .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #747 — v23.51 child hover text-shadow glow (8 items)
+   wl-archive-date-glow / ct-chip-name-glow /
+   pace-daily-label-glow / md-cell-label-glow /
+   yi-half-label-glow / wk-unit-glow /
+   insight-desc-glow / ev-mtot-glow
+   ============================================================ */
+
+/* 1. wl-archive-item:hover → .wl-archive-date success text-shadow glow
+   ウィッシュリストアーカイブ行のホバー時に .wl-archive-date（購入日テキスト）に
+   success text-shadow glow を追加。既存の color:success 変色と連動し、
+   wl-archive-name success 変色・wl-archive-price brightness と合わせて
+   行内の全テキストが達成の喜びの色で輝く演出を完成させる。 */
+.wl-archive-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-date { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 2. ct-chip:hover → .ct-chip-name ct-color text-shadow glow
+   カテゴリトレンドチップのホバー時に .ct-chip-name（カテゴリ名テキスト）に
+   ct-color/primary text-shadow glow を追加。既存の color:ct-color 変色と連動し、
+   ct-chip-icon ct-color drop-shadow と合わせてアイコン・名称が一体的に
+   カテゴリテーマ色で輝く演出を完成させる。 */
+.ct-chip-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-chip:hover .ct-chip-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. pace-daily-cell:hover → .pace-daily-label ステータス別 text-shadow glow
+   ペース管理1日グリッドセルのホバー時に .pace-daily-label（日付テキスト）に
+   ステータス別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   良好=success / 注意=warning / 超過=danger-text のカラーで輝く演出を完成させる。 */
+.pace-daily-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 4. md-cell-*:hover → .md-cell-label タイプ別 text-shadow glow
+   月次詳細モーダルの各セルホバー時に .md-cell-label（セルラベルテキスト）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   収入=success / 支出=danger-text / 残高正=primary / 残高負=danger-text で輝く。
+   md-cell-value brightness+glow（v22.x）と合わせてセルホバー演出の完成形に。 */
+.md-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.md-cell-income:hover      .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.md-cell-expense:hover     .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.md-cell-balance-pos:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.md-cell-balance-neg:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 5. yi-card:hover → .yi-half-label primary text-shadow glow
+   年間収支インサイトカードのホバー時に .yi-half-label（上下半期ラベルテキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   yi-card-label/sub primary 変色・yi-half-val brightness+glow と合わせて
+   カード内の全テキスト要素が一体的に輝くホバー演出を完成させる。 */
+.yi-half-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-half-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. wk-summary-row .wk-cell:hover → .wk-unit タイプ別 text-shadow glow
+   週次サマリーセルのホバー時に .wk-unit（「円」等の単位テキスト）に
+   カラムタイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   支出=danger-text / 今週=primary / 無支出=success のカラーで輝く演出を完成させる。
+   wk-unit color（v23.x）・wk-cell-sub glow（v23.50）と合わせてセル内の完成形に。 */
+.wk-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 7. insight-item:hover → .insight-desc タイプ別 text-shadow glow
+   インサイトアイテムのホバー時に .insight-desc（説明文テキスト）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色・brightness と連動し、
+   info=primary / alert=danger-text / success=success / warning=warning で輝く。
+   insight-title タイプ別 glow（v23.49）と合わせてアイテム内テキスト演出の完成形に。 */
+.insight-desc { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.insight-item.insight-info:hover    .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.insight-item.insight-alert:hover   .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.insight-item.insight-success:hover .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.insight-item.insight-warning:hover .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 8. ev-month-col:hover → .ev-income/.ev-expense.ev-mtot タイプ別 text-shadow glow
+   イベント月別合計のホバー時に .ev-income/.ev-expense.ev-mtot（月合計金額テキスト）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色・brightness と連動し、
+   収入=success / 支出=danger-text のカラーで輝く演出を完成させる。
+   ev-month-label primary 変色（v23.41）・ev-prog-fill brightness と合わせて完成形に。 */
+.ev-income.ev-mtot  { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-expense.ev-mtot { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
