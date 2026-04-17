@@ -23794,3 +23794,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    dow-label-cell brightness（v23.x）と合わせて行ホバー演出の完成形。 */
 .dow-table-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .dow-table-row:hover td:nth-child(2) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #753 — v23.57 child hover text-shadow glow (8 items)
+   tx-first-col-glow / tx-col-mem-glow /
+   tx-month-group-label-glow / dd-tx-date-glow /
+   dd-tx-memo-glow / sb-muted-glow /
+   sb-nth4-glow / dow-td4-glow
+   ============================================================ */
+
+/* v23.57: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①tx-table td:first-child primary glow、②tx-table td.tx-col-mem primary glow、
+   ③tx-month-group-label primary glow、④dd-tx-date primary glow、
+   ⑤dd-tx-memo primary glow、⑥sb-row td.text-muted primary glow、
+   ⑦sb-row td:nth-child(4) primary glow、⑧dow-table-row td:nth-child(4) primary glow。
+   各要素の既存 color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. tx-table tbody tr:hover → td:first-child primary text-shadow glow
+   取引テーブル行ホバー時に日付列テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しtx-col-pay glow（v23.55）・memo-cell glow（v23.54）と
+   合わせてテーブル行の日付・支払・メモ全列が一体的に輝く完成形。 */
+.tx-table td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td:first-child { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. tx-table tbody tr:hover → td.tx-col-mem primary text-shadow glow
+   取引テーブル行ホバー時に担当者列テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.24）と連動しtx-col-pay glow（v23.55）・td:first-child glow（本スプリント）と
+   合わせてデスクトップ全補足列ホバー演出の完成形。 */
+.tx-table td.tx-col-mem { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.tx-col-mem { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. tx-month-group-row:hover → .tx-month-group-label primary text-shadow glow
+   取引月グループ見出し行ホバー時に月ラベルテキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.09）と連動しtx-month-group-summary income/expense glow（v23.x）と
+   合わせて月グループ行ホバー演出の完成形。 */
+.tx-month-group-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-month-group-row:hover .tx-month-group-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. dd-tx-row:hover → .dd-tx-date primary text-shadow glow
+   デイリーダッシュボード取引行ホバー時に日付テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.09）と連動しdd-tx-amount brightness+glow（v22.x）・dd-tx-memo glow（本スプリント）と
+   合わせてダッシュボード取引行の日付・メモ・金額が一体的に輝く完成形。 */
+.dd-tx-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-tx-row:hover .dd-tx-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. dd-tx-row:hover → .dd-tx-memo primary text-shadow glow
+   デイリーダッシュボード取引行ホバー時にメモ・名称テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.09）と連動しdd-tx-date glow（本スプリント）・dd-tx-amount brightness+glow（v22.x）と
+   合わせてダッシュボード取引行全テキストが一体的に輝く完成形。 */
+.dd-tx-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-tx-row:hover .dd-tx-memo { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. sb-row:hover → td.text-muted primary text-shadow glow
+   支出提案テーブル行ホバー時に補足テキスト（件数・割合等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しsb-suggested glow（v23.x）・td:nth-child(2) glow（v23.x）と
+   合わせてテーブル行ホバー演出の完成形。 */
+.sb-row td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. sb-row:hover → td:nth-child(4) primary text-shadow glow
+   支出提案テーブル行ホバー時に現在予算額列テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.35）と連動しtd:nth-child(2) glow・td.text-muted glow（本スプリント）と
+   合わせてテーブル行全列ホバー演出の完成形。 */
+.sb-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover td:nth-child(4) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. dow-table-row:hover → td:nth-child(4) primary text-shadow glow
+   曜日別テーブル行ホバー時に1日平均額列テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.35）と連動しtd:nth-child(2) glow（v23.56）・
+   dow-label-cell brightness（v23.x）と合わせて行ホバー演出の完成形。 */
+.dow-table-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(4) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
