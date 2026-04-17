@@ -22954,3 +22954,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fc-progress-fill glow・fc-cell-label 変色・fc-cell-balance glow と連動した
    財務予測カードホバー演出の完成形に。 */
 .forecast-card:hover .fc-cell-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #740 — v23.44 child hover text-shadow glow (8 items)
+   tx-month-income-glow + tx-month-expense-glow +
+   pm-sum-value-glow + cat-name-glow + cat-stat-glow +
+   dd-summary-value-glow + ci-event-amount-glow + cat-budget-pct-glow
+   ============================================================ */
+
+/* 1. tx-month-group-row:hover → .tx-month-group-summary .income success text-shadow glow
+   取引リスト月グループ見出し行ホバー時に .tx-month-group-summary 内の収入合計に
+   success text-shadow glow を追加。既存の brightness(1.08)（v23.x）と連動し、
+   rpt-month-row:hover td.income glow（v23.09）と同パターンで収入数値の輝き演出を統一。 */
+.tx-month-group-summary .income { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-month-group-row:hover .tx-month-group-summary .income { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 2. tx-month-group-row:hover → .tx-month-group-summary .expense expense text-shadow glow
+   取引リスト月グループ見出し行ホバー時に .tx-month-group-summary 内の支出合計に
+   expense text-shadow glow を追加。既存の brightness(1.08)（v23.x）と連動し、
+   rpt-month-row:hover td.expense glow（v23.09）・income glow（本スプリント）と対称で演出を統一。 */
+.tx-month-group-summary .expense { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-month-group-row:hover .tx-month-group-summary .expense { filter: brightness(1.08); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 3. pm-sum-card:hover → .pm-sum-value pm-sum-color text-shadow glow
+   支払方法サマリーカードのホバー時に .pm-sum-value（合計金額大型数値）に
+   pm-sum-color text-shadow glow を追加。既存の brightness(1.06)（v22.88）と連動し、
+   pm-sum-label 変色・pm-sum-icon scale+glow と連動したカード全体のホバー演出を完成させる。 */
+.pm-sum-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-value { text-shadow: 0 0 8px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. cat-card:hover → .cat-card-name cat-clr text-shadow glow
+   カテゴリカードのホバー時に .cat-card-name（カテゴリ名称テキスト）に
+   cat-clr text-shadow glow を追加。既存の color:cat-clr + brightness(1.06)（v22.86）と連動し、
+   cat-card-icon glow・cat-card-accent glow と連動した完成形カードホバー演出に。 */
+.cat-card-name { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-card-name { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. cat-card:hover → .cat-stat-val cat-clr text-shadow glow
+   カテゴリカードのホバー時に .cat-stat-val（統計数値）に
+   cat-clr text-shadow glow を追加。既存の brightness(1.08)（v22.86）と連動し、
+   cat-card-name glow（本スプリント）と合わせてカード内テキスト要素の演出を統一。 */
+.cat-stat-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-stat-val { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. dd-summary-item:hover → .dd-summary-value primary text-shadow glow
+   ダッシュボード日次サマリーアイテムのホバー時に .dd-summary-value（金額数値）に
+   primary text-shadow glow を追加。既存の color:primary + brightness(1.06)（v22.x）と連動し、
+   dd-summary-label color（v23.41）と合わせてサマリーアイテムのホバー演出を完成させる。 */
+.dd-summary-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-summary-item:hover .dd-summary-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. ci-event-item:hover → .ci-event-amount ci-ev-accent text-shadow glow
+   月次レビューページのイベントアイテムホバー時に .ci-event-amount（イベント金額）に
+   ci-ev-accent text-shadow glow を追加。既存の color:ci-ev-accent + brightness(1.06)（v22.x）と連動し、
+   ci-event-icon scale+glow（v22.81）と合わせてイベントアイテムのホバー演出を完成させる。 */
+.ci-event-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-event-item:hover .ci-event-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. cat-card:hover → .cat-budget-pct cat-clr text-shadow glow
+   カテゴリカードのホバー時に .cat-budget-pct（予算使用率%テキスト）に
+   cat-clr text-shadow glow を追加。既存の brightness(1.06)（v22.97）と連動し、
+   cat-card-name glow・cat-stat-val glow（本スプリント）と合わせてカード内全テキスト演出を統一。 */
+.cat-budget-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-budget-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent); }
