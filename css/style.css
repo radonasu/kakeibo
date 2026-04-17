@@ -23312,3 +23312,71 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    debt-name glow（v23.48）・debt-balance brightness と合わせて
    カードホバー演出の全テキスト要素を統一する。 */
 .debt-card:hover .debt-balance-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #746 — v23.50 child hover text-shadow glow (8 items)
+   wk-cell-sub-glow / fc-progress-label-glow /
+   ci-score-label-glow / wish-widget-name-glow /
+   wish-widget-price-glow / asset-fx-rate-glow /
+   hs-trend-label-glow / pace-unit-glow
+   ============================================================ */
+
+/* 1. wk-summary-row .wk-cell:hover → .wk-cell-sub タイプ別 text-shadow glow
+   ウィークリーサマリーセルのホバー時に .wk-cell-sub（サブテキスト）に
+   カラムタイプ別 text-shadow glow を追加。既存の color 変色+brightness と連動し、
+   支出=danger-text / 総計=primary / 収入=success のカラーで輝く演出を完成させる。 */
+.wk-cell-sub { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 2. forecast-card:hover → .fc-progress-label primary text-shadow glow
+   予算予測カードのホバー時に .fc-progress-label（進捗バー横の日数ラベル）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   fc-cell-label glow（v23.48）と合わせてカードホバー演出を一体化する。 */
+.fc-progress-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-progress-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ci-score-row:hover → .ci-score-label primary text-shadow glow
+   チェックアップスコア行のホバー時に .ci-score-label（スコアラベル）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   ci-score-badge glow と合わせてラベル・バッジが揃って輝く演出を完成させる。 */
+.ci-score-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-score-row:hover .ci-score-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. wish-widget-item:hover → .wish-widget-name primary text-shadow glow
+   ウィッシュリストウィジェットアイテムのホバー時に .wish-widget-name（商品名）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   wish-widget-price glow（本スプリント⑤）と合わせて名称・価格が揃って輝く。 */
+.wish-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wish-widget-item:hover .wish-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. wish-widget-item:hover → .wish-widget-price primary text-shadow glow
+   ウィッシュリストウィジェットアイテムのホバー時に .wish-widget-price（価格）に
+   primary text-shadow glow を追加。既存の color:primary+brightness と連動し、
+   wish-widget-name glow（本スプリント④）と合わせて名称・価格が揃って輝く。 */
+.wish-widget-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wish-widget-item:hover .wish-widget-price { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. asset-card:hover → .asset-fx-rate primary text-shadow glow
+   資産カードのホバー時に .asset-fx-rate（為替レート表示）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   asset-name glow（v23.48）と合わせてカードホバー演出のテキスト要素を統一する。 */
+.asset-fx-rate { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-fx-rate { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. health-score-card:hover → .hs-trend-label primary text-shadow glow
+   家計スコアカードのホバー時に .hs-trend-label（トレンドラベル）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   hs-msg brightness と合わせてスコアカードホバー演出を完成させる。 */
+.hs-trend-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-trend-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. pace-bar-row:hover → .pace-unit タイプ別 text-shadow glow
+   ペース管理バー行のホバー時に .pace-unit（「円/日」等の単位テキスト）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   良好=success / 注意=warning / 超過=danger-text のカラーで輝く演出を完成させる。 */
+.pace-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
