@@ -23537,3 +23537,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カード内のラベル・金額が揃って輝く完成形。 */
 .summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .summary-card:hover .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* ============================================================
+   Sprint #749 — v23.53 child hover text-shadow glow (8 items)
+   yr-avg-label-glow / fv-month-cell-glow / budget-sep-glow /
+   pt-unit-glow / ev-done-label-glow /
+   debt-history-title-glow / asset-history-title-glow /
+   tg-first-col-glow
+   ============================================================ */
+
+/* 1. yr-widget-card:hover → .yr-avg-label primary text-shadow glow
+   年間ウィジェットカードのホバー時に .yr-avg-label（「平均」ラベルテキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   yr-avg-val brightness（v23.x）・yr-topcat-label glow（v23.47）と合わせて
+   ウィジェット内の全テキスト要素が一体的に輝くホバー演出の完成形に。 */
+.yr-avg-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-avg-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. fv-month-table tbody tr:hover → .fv-month-cell primary text-shadow glow
+   将来費月別テーブル行のホバー時に .fv-month-cell（月名テキスト：fs-sm・color:text）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   fv-fixed-val/fv-var-val brightness・fv-seg-bar brightness（v23.x）・
+   td:nth-child(4) brightness（v23.40）と合わせて行全体のホバー演出の完成形に。 */
+.fv-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-month-cell { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. budget-item:hover → .budget-sep タイプ別 text-shadow glow
+   予算カード行のホバー時に .budget-sep（「/」区切り記号：color:text-muted）に
+   タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
+   通常=primary / 超過=expense のカラーで輝く演出を完成させる。
+   budget-nums glow（v23.45）・budget-cat-name glow（v23.45）と合わせて
+   行内の全テキスト要素が一体的に輝くホバー演出の完成形に。 */
+.budget-sep { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-item:hover .budget-sep                        { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over):hover .budget-sep { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 4. pt-card:hover / pt-widget-item:hover → .pt-unit primary text-shadow glow
+   ポイントカード・ウィジェット行のホバー時に .pt-unit（「pt」単位テキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。既存の color:primary 変色（カード・ウィジェット双方）と連動し、
+   pt-card-amount brightness（v22.x）・pt-widget-balance brightness（v22.x）と合わせて
+   カード・ウィジェット両文脈での単位テキストホバー演出の完成形に。 */
+.pt-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-unit        { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.pt-widget-item:hover .pt-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. ev-card:hover → .ev-done-label primary text-shadow glow
+   イベントカードのホバー時に .ev-done-label（「完了」ラベルテキスト：color:text-muted）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   ev-card-name 変色（v23.x）・ev-month-col hover 演出と合わせて
+   カードホバー演出の完成形に。 */
+.ev-done-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-done-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. debt-card:hover → .debt-history-title primary text-shadow glow
+   負債カードのホバー時に .debt-history-title（「返済履歴」見出しテキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   debt-name 変色（v22.x）・debt-progress-detail 変色（v23.x）と合わせて
+   カード内見出しテキストがホバーで輝く演出を完成させる。 */
+.debt-history-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-history-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. asset-card:hover → .asset-history-title primary text-shadow glow
+   資産カードのホバー時に .asset-history-title（「残高履歴」見出しテキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   debt-history-title glow（本スプリント#6）と同パターンで資産カードにも展開。
+   asset-name 変色（v22.x）・asset-sparkline brightness（v23.35）と合わせた完成形に。 */
+.asset-history-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-history-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. tg-table tbody tr:hover → td:first-child primary text-shadow glow
+   目標トラッカーテーブル行のホバー時に1列目（月名テキスト：color:text）に
+   primary text-shadow glow を追加。既存の color:primary 変色と連動し、
+   tg-stat-value glow（v23.46）と合わせてテーブル行ホバー演出の完成形に。 */
+.tg-table td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td:first-child { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
