@@ -22824,3 +22824,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的にホバーで反応する曜日テーブルホバー演出の完成形に。 */
 .dow-table-row td:nth-child(4) { transition: filter var(--dur-fast) var(--ease-out); }
 .dow-table-row:hover td:nth-child(4) { filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #738 — v23.42 child hover enhancements (8 items)
+   ============================================================ */
+
+/* 1. cal-cell:hover → .cal-amount.inc/.exp タイプ別 text-shadow glow
+   カレンダーセルのホバー時に収入/支出金額テキストをタイプ別グロー演出。
+   .cal-amount brightness(1.1)（既存）と連動し、
+   income=success glow・exp=expense glow で金額種類を視覚的に強調。 */
+.cal-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-cell:hover:not(.cal-empty) .cal-amount.inc { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.cal-cell:hover:not(.cal-empty) .cal-amount.exp { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 2. ev-month-col:hover → .ev-income.ev-mtot / .ev-expense.ev-mtot タイプ別カラー
+   イベント月別合計のホバー時にタイプ別カラーを付与。
+   .ev-mtot brightness(1.1)（既存）に加えて収入=success・支出=danger-text で
+   明るさ＋色変化による二重の視覚フィードバックを実現。 */
+.ev-income.ev-mtot { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-expense.ev-mtot { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot { color: var(--success); }
+.ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot { color: var(--danger-text); }
+
+/* 3. pace-daily-cell:hover → .pace-daily-val ステータス別カラー
+   ペース日別セルのホバー時に値テキストにステータス別カラー付与。
+   .pace-daily-label が既にステータス別カラー（success/warning/danger-text）を持ち、
+   :has() セレクタで val のクラスを参照してラベルと値を揃える演出。 */
+.pace-daily-val { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val { color: var(--success); }
+.pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val { color: var(--warning); }
+.pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val { color: var(--danger-text); }
+
+/* 4. cal-sum-item:hover → .cal-sum-value タイプ別 text-shadow glow
+   カレンダー月合計行のホバー時に金額テキストをタイプ別グロー演出。
+   .cal-sum-value brightness(1.08)（既存）と連動し、
+   income=success glow・expense=expense glow で金額種類を視覚的に強調。 */
+.cal-sum-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 5. yr-cell:hover → .yr-cell-value タイプ別 text-shadow glow
+   年間推移セルのホバー時に値テキストにタイプ別グロー演出追加。
+   既存の per-type brightness(1.12) に加えて text-shadow glow を重ね、
+   .yr-cell-sub の静的 text-shadow と統一感を持たせる。 */
+.yr-cell-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover .yr-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.yr-cell-expense:hover .yr-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+.yr-cell-savings:hover .yr-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. hm-stat-card:hover → .hm-stat-value タイプ別 text-shadow glow
+   ホームサマリーカードのホバー時に値テキストにタイプ別グロー演出追加。
+   既存の per-nth-child color + brightness に加えて text-shadow glow を重ね、
+   ホームウィジェットのホバー演出をさらにリッチに。 */
+.hm-stat-value { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hm-stat-card:nth-child(1):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(2):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(3):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(4):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 7. goal-card:hover → .goal-saved goal-accent text-shadow glow
+   目標カードのホバー時に貯蓄済み金額テキストにアクセントグロー演出追加。
+   既存の color: goal-accent + brightness(1.06) に加えて text-shadow glow を重ね、
+   目標進捗の達成感を視覚的に強調する演出。 */
+.goal-saved { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-saved { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. debt-card:hover → .debt-balance debt-accent text-shadow glow
+   負債カードのホバー時に残高テキストにアクセントグロー演出追加。
+   既存の brightness(1.08) に加えて debt-accent glow を重ね、
+   静的 text-shadow（line 19197）のホバー版として動的グロー演出を実現。 */
+.debt-balance { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent); }
