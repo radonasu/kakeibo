@@ -22753,3 +22753,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ev-card:hover .ev-prog-fill は dead code（ev-prog-fill は ev-month-col 内に存在するため）。
    正しい親セレクタ ev-month-col:hover を使用し、現在月は除外する。 */
 .ev-month-col:not(.ev-month-current):hover .ev-prog-fill { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #737 / v23.41 — 8 hover sub-element brightness effects
+   pt-widget-unit-color + cat-fixed-badge-scale +
+   ev-month-col-ev-prog-bar + ev-month-col-ev-prog-pct +
+   sub-cycle-unit-color + sub-monthly-equiv-color +
+   dow-td2-color + dow-td4-brightness
+   ============================================================ */
+
+/* 1. pt-widget-item:hover → .pt-unit primary カラー変化（ウィジェット文脈）
+   ポイントウィジェット行のホバー時に .pt-unit（「pt」単位テキスト：color:text-muted・fs-xs）を
+   primary カラーへ変色。.pt-unit の transition は pt-card:hover 文脈で追加済み。
+   pt-widget-item:hover の pt-widget-balance 変色+brightness（v23.x）と連動し、
+   残高数値と単位テキストが一体的にホバーで反応する完成形に。 */
+.pt-widget-item:hover .pt-unit { color: var(--primary); }
+
+/* 2. cat-card:hover → .cat-fixed-badge scale(1.04) + brightness(1.08)
+   カテゴリカードのホバー時に .cat-fixed-badge（「固定費」「変動費」バッジ）を
+   scale(1.04) + brightness(1.08) でポップに強調。
+   cat-card:hover の cat-yayoi-tag brightness+border（v23.x）・
+   cat-card-icon scale+glow（v22.x）と連動しバッジも一体的にホバーで引き立つ演出に。 */
+.cat-fixed-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-fixed-badge { transform: scale(1.04); filter: brightness(1.08); }
+
+/* 3. ev-month-col:hover → .ev-prog-bar brightness(1.05)（正しい親セレクタ）
+   イベント月列ホバー時に .ev-prog-bar（進捗バー背景トラック）を brightness(1.05) で輝かせる。
+   .ev-prog-bar の transition は v23.35 Sprint #735 で追加済み（ev-card:hover は dead code）。
+   ev-month-col:hover .ev-prog-fill brightness（v23.40）と連動し、
+   fillとトラックが一体的にホバーで反応するイベント月進捗バーホバー演出の完成形に。 */
+.ev-month-col:not(.ev-month-current):hover .ev-prog-bar { filter: brightness(1.05); }
+
+/* 4. ev-month-col:hover → .ev-prog-pct brightness(1.1) + primary カラー変化（正しい親セレクタ）
+   イベント月列ホバー時に .ev-prog-pct（「75%」等の進捗率テキスト）を
+   brightness(1.1) + primary カラーへ変色。.ev-prog-pct の transition は v23.38 Sprint #734 で追加済み。
+   ev-card:hover .ev-prog-pct は dead code（ev-prog-pct は ev-month-col 内に存在するため）。
+   ev-month-col:hover .ev-prog-fill（v23.40）・.ev-prog-bar（本スプリント）と連動し
+   バーfill・トラック・%テキストの全要素が一体的に反応するイベント月グリッドの完成形に。 */
+.ev-month-col:not(.ev-month-current):hover .ev-prog-pct { filter: brightness(1.1); color: var(--primary); }
+
+/* 5. sub-card:hover → .sub-cycle-unit primary カラー変化
+   サブスクカードのホバー時に .sub-cycle-unit（「/月」「/年」単位テキスト：
+   color:text-muted・fs-3xs・fw-normal）を primary カラーへ変色。
+   sub-card:hover の sub-card-amount 変色+brightness（v22.x）と連動し、
+   金額テキストと単位が一体的にホバーで sub-accent 色に染まる完成形に。 */
+.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-unit { color: var(--sub-accent, var(--primary)); }
+
+/* 6. sub-card:hover → .sub-monthly-equiv primary カラー変化
+   サブスクカードのホバー時に .sub-monthly-equiv（「月換算 ¥X,XXX」テキスト：
+   color:text-muted・fs-2xs・tabular-nums）を primary カラーへ変色。
+   sub-card:hover の sub-card-amount 変色（v22.x）・sub-cycle-unit 変色（本スプリント）と
+   連動し、金額エリア全体がホバーで一体的に反応する完成形に。 */
+.sub-monthly-equiv { transition: color var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-monthly-equiv { color: var(--primary); }
+
+/* 7. dow-table-row:hover → td:nth-child(2) primary カラー変化
+   曜日別統計テーブル行のホバー時に 2列目（「X件 / Y日」件数・日数テキスト：
+   color:text-muted・fs-base）を primary カラーへ変色。
+   dow-table-row:hover の dow-label-cell brightness（v23.x）・
+   td:nth-child(3) brightness（v23.x）と連動し、ラベル・件数・支出の全列が
+   一体的にホバーで反応する曜日テーブルホバー演出の完成形に。 */
+.dow-table-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(2) { color: var(--primary); }
+
+/* 8. dow-table-row:hover → td:nth-child(4) brightness(1.08)
+   曜日別統計テーブル行のホバー時に 4列目（平均金額セル：クラス名なし・fs-base・tabular-nums）を
+   brightness(1.08) で輝かせる。dow-table-row:hover の td:nth-child(3) brightness（v23.x）・
+   dow-label-cell brightness（v23.x）と連動し、支出金額・平均金額の両列が
+   一体的にホバーで反応する曜日テーブルホバー演出の完成形に。 */
+.dow-table-row td:nth-child(4) { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(4) { filter: brightness(1.08); }
