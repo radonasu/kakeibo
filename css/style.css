@@ -24248,3 +24248,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    合わせて行内テキスト全体がホバーで一体的に輝くウィジェット行完成形演出。 */
 .ch-widget-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-widget-item:hover .ch-widget-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #759 — v23.63 child hover text-shadow glow (8 items)
+   ev-widget-cat-glow / smi-count-glow /
+   notif-item-body-glow / debt-entry-date-glow /
+   debt-entry-note-glow / ci-cell-label-glow /
+   pm-sum-sub-glow / pt-note-glow
+   ============================================================ */
+
+/* v23.63: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①ev-widget-item:hover .ev-widget-cat primary glow、②smi-income/expense:hover .smi-count タイプ別 glow、
+   ③notif-item:hover .notif-item-body タイプ別 glow、④debt-entry-row:hover .debt-entry-date primary glow、
+   ⑤debt-entry-row:hover .debt-entry-note primary glow、⑥ci-cell:hover .ci-cell-label primary glow、
+   ⑦pm-sum-card:hover .pm-sum-sub pm-sum-color glow、⑧pt-card:hover .pt-note pt-accent glow。
+   各要素の既存 color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. ev-widget-item:hover → .ev-widget-cat primary text-shadow glow
+   収支予定ウィジェット行ホバー時にカテゴリ名テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しev-widget-name glow（v23.54）・
+   ev-widget-amount glow（v23.46）・ev-widget-month brightness（v23.25）と
+   合わせてウィジェット行全テキストがホバーで一体的に輝く完成形演出。 */
+.ev-widget-cat { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-cat { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. smi-income/expense:hover → .smi-count タイプ別 text-shadow glow
+   収支サマリー件数テキストにタイプ別text-shadow glow追加。
+   収入=success / 支出=danger-text。既存タイプ別color変色（v23.x）と連動し
+   smi-label glow（v23.58）・smi-amount glow（v23.58）と合わせて
+   サマリー行の全テキストがホバーで一体的に輝く完成形演出。 */
+.smi-count { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-count { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-expense:hover .smi-count { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 3. notif-item:hover → .notif-item-body タイプ別 text-shadow glow
+   通知アイテムホバー時に本文テキストにタイプ別text-shadow glow追加。
+   danger=danger-text / warning=warning / success=success / info=primary。
+   既存タイプ別color変色（v23.x）と連動しnotif-item-title タイプ別変色（v22.x）・
+   notif-item-icon scale+brightness（v22.x）と合わせてアイテム全テキストが輝く完成形演出。 */
+.notif-item-body { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.notif-item.notif-type-danger:hover  .notif-item-body { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.notif-item.notif-type-warning:hover .notif-item-body { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.notif-item.notif-type-success:hover .notif-item-body { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.notif-item.notif-type-info:hover    .notif-item-body { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+
+/* 4. debt-entry-row:hover → .debt-entry-date primary text-shadow glow
+   負債返済履歴行ホバー時に記録日テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しdebt-entry-balance brightness（v22.x）・
+   debt-entry-note glow（本スプリント）と合わせてエントリ行全テキストが輝く完成形演出。 */
+.debt-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-entry-row:hover .debt-entry-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. debt-entry-row:hover → .debt-entry-note primary text-shadow glow
+   負債返済履歴行ホバー時にメモテキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しdebt-entry-date glow（本スプリント）・
+   debt-entry-balance brightness（v22.x）と合わせて履歴行の全テキストが輝く完成形演出。 */
+.debt-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-entry-row:hover .debt-entry-note { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. ci-cell:hover → .ci-cell-label primary text-shadow glow
+   月次チェックインセルホバー時にラベルテキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しci-cell-value タイプ別color+brightness（v22.x）と
+   合わせてセル内ラベル・数値が一体的にホバーで輝く完成形演出。 */
+.ci-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-cell:hover .ci-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. pm-sum-card:hover → .pm-sum-sub pm-sum-color text-shadow glow
+   支払方法サマリーカードホバー時に件数テキスト（「○件」等）にpm-sum-color text-shadow glow追加。
+   既存color:pm-sum-color変色（v23.x）と連動しpm-sum-label glow（v23.46）・
+   pm-sum-value brightness（v22.x）・pm-sum-icon scale+glow（v22.x）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.pm-sum-sub { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. pt-card:hover → .pt-note pt-accent text-shadow glow
+   ポイントカードホバー時にメモテキストにpt-accent text-shadow glow追加。
+   既存color:pt-accent変色（v23.x）と連動しpt-card-name変色（v22.x）・
+   pt-card-amount brightness（v22.x）・pt-unit glow（v23.53）と
+   合わせてカード内全テキストがホバーで一体的に輝くポイントカード完成形演出。 */
+.pt-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card:hover .pt-note { text-shadow: 0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); }
