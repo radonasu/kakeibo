@@ -23153,3 +23153,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ci-cell:hover .ci-cell-value.expense  { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)     var(--mix-sm), transparent); }
 .ci-cell:hover .ci-cell-value.positive { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .ci-cell:hover .ci-cell-value.negative { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #743 — v23.47 child hover text-shadow glow (8 items)
+   pm-sum-label-glow + yr-cell-label-glow + hm-stat-unit-glow +
+   yr-topcat-label-glow + dd-summary-label-glow + fc-cell-label-glow +
+   insight-title-glow + sub-cycle-unit-glow
+   ============================================================ */
+
+/* 1. pm-sum-card:hover → .pm-sum-label pm-sum-color text-shadow glow
+   支払方法サマリーカードホバー時に .pm-sum-label（「現金」「カード」等のラベルテキスト）に
+   pm-sum-color text-shadow glow を追加。既存の color:pm-sum-color 変色（v22.x）と連動し、
+   pm-sum-value glow（v23.44）・pm-sum-icon scale+glow と合わせてカード全体ホバー演出の完成形に。 */
+.pm-sum-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pm-sum-card:hover .pm-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. yr-cell:hover → .yr-cell-label タイプ別 text-shadow glow
+   年次ウィジェット各セルのホバー時に .yr-cell-label（月名テキスト）に
+   タイプ別 text-shadow glow を追加。income=success/expense=danger-text/savings タイプ別対応。
+   既存の color 変化（v22.x）と連動し、yr-cell-value brightness・yr-cell-sub glow と合わせて
+   セル内全テキスト要素のホバー演出を完成させる。 */
+.yr-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-expense:hover         .yr-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.yr-cell-savings-success:hover .yr-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-savings-warn:hover    .yr-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.yr-cell-savings-danger:hover  .yr-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 3. hm-stat-card:hover → .hm-stat-unit primary text-shadow glow
+   ヒートマップ統計カードホバー時に .hm-stat-unit（「円」「日」等の単位テキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色（v23.x）と連動し、
+   hm-stat-value 変色・hm-stat-label brightness・hm-stat-sub brightness と合わせて
+   カード内全テキスト要素のホバー演出を完成させる。 */
+.hm-stat-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hm-stat-card:hover .hm-stat-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. yr-widget-card:hover → .yr-topcat-label primary text-shadow glow
+   年間ビューウィジェットホバー時に .yr-topcat-label（「最多支出カテゴリ」等の
+   フッターラベルテキスト）に primary text-shadow glow を追加。既存の color:primary 変色（v23.x）と連動し、
+   yr-avg-label・yr-progress-label と同パターンでウィジェット下部フッターラベルの演出を統一。 */
+.yr-topcat-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-topcat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. dd-summary-item:hover → .dd-summary-label primary text-shadow glow
+   デイリーダッシュのサマリーアイテムホバー時に .dd-summary-label（「収入」「支出」等の
+   ラベルテキスト）に primary text-shadow glow を追加。既存の color:primary 変色（v23.x）と連動し、
+   dd-summary-value glow（v23.44）と合わせてサマリーアイテムのホバー演出を完成させる。 */
+.dd-summary-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-summary-item:hover .dd-summary-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. forecast-card:hover → .fc-cell-label primary text-shadow glow
+   キャッシュフロー予測カードホバー時に .fc-cell-label（「現金残高」等のラベルテキスト）に
+   primary text-shadow glow を追加。既存の color:primary 変色（v22.x）と連動し、
+   fc-cell-amount brightness と合わせてラベルと金額が揃ってホバーで輝く演出に統一。 */
+.fc-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. insight-item:hover → .insight-title タイプ別 text-shadow glow
+   インサイト行のホバー時に .insight-title（見出しテキスト）に
+   タイプ別 text-shadow glow を追加。info=primary/alert=danger-text/success=success/warning=warning。
+   既存の color+filter 変化（v23.x）と連動しタイプカラーで輝く演出に統一。 */
+.insight-title { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.insight-item.insight-info:hover    .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.insight-item.insight-alert:hover   .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.insight-item.insight-success:hover .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.insight-item.insight-warning:hover .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 8. sub-card:hover → .sub-cycle-unit sub-accent text-shadow glow
+   サブスクカードホバー時に .sub-cycle-unit（「/月」「/年」単位テキスト）に
+   sub-accent text-shadow glow を追加。既存の color:sub-accent 変色（v23.x）と連動し、
+   sub-card-amount 変色+brightness と合わせて金額エリア全体のホバー演出を完成させる。 */
+.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
