@@ -23082,3 +23082,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .budget-cat-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .budget-item:hover .budget-cat-name                          { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .budget-item:has(.budget-fill.over):hover .budget-cat-name  { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #742 — v23.46 child hover text-shadow glow (8 items)
+   ct-stat-value-glow + tg-stat-value-glow +
+   rc-item-amount-glow + sub-widget-amount-glow +
+   ev-widget-amount-glow + smi-amount-glow +
+   yi-card-value-glow + ci-cell-value-glow
+   ============================================================ */
+
+/* 1. ct-stat-card:hover → .ct-stat-value ct-stat-color text-shadow glow
+   カテゴリ統計カードのホバー時に .ct-stat-value（統計値大数値）に
+   ct-stat-color text-shadow glow を追加。既存の color:ct-stat-color + brightness(1.06) と連動し、
+   ct-stat-value-sub brightness（v23.x）と合わせてカード内数値演出を完成させる。 */
+.ct-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. tg-stat-card:hover → .tg-stat-value primary text-shadow glow
+   タグ統計カードのホバー時に .tg-stat-value（タグ統計値）に
+   primary text-shadow glow を追加。既存の color:primary + brightness(1.06) と連動し、
+   ct-stat-value glow（本スプリント）と同パターンでタグ統計カードの数値演出を完成させる。 */
+.tg-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. rc-item:hover → .rc-item-amount タイプ別 text-shadow glow
+   直近取引アイテムのホバー時に .rc-item-amount（取引金額）に
+   タイプ別 text-shadow glow を追加。収入=success glow・支出=danger-text glow。
+   既存の color:success/danger-text + brightness(1.08) と連動したタイプ別演出の完成形。 */
+.rc-item-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item:hover:has(.rc-type-inc) .rc-item-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.rc-item:hover:has(.rc-type-exp) .rc-item-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 4. sub-widget-item:hover → .sub-widget-amount ステータス別 text-shadow glow
+   サブスクウィジェットアイテムのホバー時に .sub-widget-amount（サブスク金額）に
+   ステータス別 text-shadow glow を追加。normal=primary/urgent=danger-text/soon=warning。
+   既存のステータス別 color + brightness と連動したウィジェット金額演出の完成形。 */
+.sub-widget-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover            .sub-widget-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.sub-widget-item.sub-urgent:hover .sub-widget-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.sub-widget-item.sub-soon:hover   .sub-widget-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 5. ev-widget-item:hover → .ev-widget-amount ev-accent text-shadow glow
+   イベントウィジェットアイテムのホバー時に .ev-widget-amount（イベント金額）に
+   ev-accent text-shadow glow を追加。既存の color:ev-accent + brightness(1.08) と連動し、
+   sub-widget-amount glow（本スプリント）と同パターンでウィジェット金額の演出を統一。 */
+.ev-widget-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. smi-income/expense:hover → .smi-amount タイプ別 text-shadow glow
+   収支ミニサマリーの収入行・支出行ホバー時に .smi-amount（金額テキスト）に
+   タイプ別 text-shadow glow を追加。収入行=success glow・支出行=danger-text glow。
+   既存の color + brightness(1.08) と連動し rc-item-amount glow（本スプリント）と同パターン。 */
+.smi-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-expense:hover .smi-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 7. yi-card:hover → .yi-card-value primary text-shadow glow
+   年間収支カードのホバー時に .yi-card-value（年間値大数値）に
+   primary text-shadow glow を追加。既存の color:primary + brightness(1.06) と連動し、
+   yi-card-label color・yi-card-sub brightness と合わせてカードホバー演出を完成させる。 */
+.yi-card-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. ci-cell:hover → .ci-cell-value タイプ別 text-shadow glow
+   月次レビューセルのホバー時に .ci-cell-value（収入/支出/差額値）に
+   タイプ別 text-shadow glow を追加。income=income/expense=expense/positive=success/negative=danger-text。
+   既存の color 変化と連動し ci-cell-label 変色（v22.x）と合わせてセルホバー演出の完成形に。 */
+.ci-cell-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-cell:hover .ci-cell-value.income   { text-shadow: 0 0 8px color-mix(in srgb, var(--income)      var(--mix-sm), transparent); }
+.ci-cell:hover .ci-cell-value.expense  { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)     var(--mix-sm), transparent); }
+.ci-cell:hover .ci-cell-value.positive { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.ci-cell:hover .ci-cell-value.negative { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
