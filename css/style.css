@@ -23718,3 +23718,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    各要素の既存 color 変色 transition に text-shadow を追加し、
    ホバー時にアクセントカラーで輝く演出を完成。
    全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* ============================================================
+   Sprint #752 — v23.56 child hover text-shadow glow (8 items)
+   ch-widget-name-glow / ch-widget-pct-glow /
+   debt-widget-name-glow / debt-widget-pct-glow /
+   goal-dash-name-glow / goal-dash-pct-glow /
+   goal-dash-amount-glow / dow-td2-glow
+   ============================================================ */
+
+/* v23.56: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①ch-widget-name ch-accent glow、②ch-widget-pct タイプ別glow（ok=income/over=expense/default=primary）、
+   ③debt-widget-name debt-accent glow、④debt-widget-pct primary glow、
+   ⑤goal-dash-name goal-accent glow、⑥goal-dash-pct goal-accent glow、
+   ⑦goal-dash-amount goal-accent glow、⑧dow-table-row td:nth-child(2) primary glow。
+   各要素の既存 color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. ch-widget-item:hover → .ch-widget-name ch-accent text-shadow glow
+   チャレンジウィジェット行ホバー時にチャレンジ名テキストにch-accent text-shadow glow追加。
+   既存color:ch-accent変色（v23.04）と連動しch-widget-icon scale+drop-shadow（v22.81）と
+   合わせてアイコン・名称が一体的に輝くウィジェット行ホバー演出の完成形。 */
+.ch-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. ch-widget-item:hover → .ch-widget-pct タイプ別 text-shadow glow
+   チャレンジウィジェット達成率%テキストにタイプ別text-shadow glow追加。
+   ch-pct-ok=income / ch-pct-over=expense / デフォルト=primary。
+   既存filter:brightness(1.08)（v23.04）と連動しch-widget-name glow（本スプリント）と
+   合わせてウィジェット行の達成状態が一体的に輝く完成形。 */
+.ch-widget-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-pct              { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)  var(--mix-sm), transparent); }
+.ch-widget-item:hover .ch-widget-pct.ch-pct-ok   { text-shadow: 0 0 8px color-mix(in srgb, var(--income)   var(--mix-sm), transparent); }
+.ch-widget-item:hover .ch-widget-pct.ch-pct-over { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)  var(--mix-sm), transparent); }
+
+/* 3. debt-widget-item:hover → .debt-widget-name debt-accent text-shadow glow
+   負債ウィジェット行ホバー時に負債名テキストにdebt-accent text-shadow glow追加。
+   既存color:debt-accent変色（v23.04）と連動しdebt-widget-icon scale+drop-shadow（v22.81）と
+   合わせてアイコン・名称が一体的に輝くウィジェット行ホバー演出の完成形。 */
+.debt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent); }
+
+/* 4. debt-widget-item:hover → .debt-widget-pct primary text-shadow glow
+   負債ウィジェット返済進捗%テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.04）と連動しdebt-widget-name glow（本スプリント）・
+   debt-widget-bar-fill glow（v23.04）と合わせてバー・%・名称が一体的に輝く完成形。 */
+.debt-widget-pct { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-widget-item:hover .debt-widget-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. goal-dash-item:hover → .goal-dash-name goal-accent text-shadow glow
+   目標ダッシュボード行ホバー時に目標名テキストにgoal-accent text-shadow glow追加。
+   既存color:goal-accent変色（v23.04）と連動しgoal-dash-emoji scale+drop-shadow（v22.83）・
+   goal-dash-bar-fill glow（v23.00）と合わせて絵文字・名称・バーが一体的に輝く完成形。 */
+.goal-dash-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-name { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. goal-dash-item:hover → .goal-dash-pct goal-accent text-shadow glow
+   目標達成率%テキストにgoal-accent text-shadow glow追加。
+   既存filter:brightness(1.06)（v23.04）と連動しgoal-dash-name glow（本スプリント）・
+   goal-dash-amount glow（本スプリント）と合わせてダッシュ行全テキストが輝く完成形。 */
+.goal-dash-pct { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. goal-dash-item:hover → .goal-dash-amount goal-accent text-shadow glow
+   目標貯蓄進捗金額テキストにgoal-accent text-shadow glow追加。
+   既存color:goal-accent変色（v23.04）と連動しgoal-dash-name glow・goal-dash-pct glow（本スプリント）と
+   合わせてダッシュ行の名称・%・金額が全て一体的にgoal-accentで輝く完成形。 */
+.goal-dash-amount { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-dash-item:hover .goal-dash-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. dow-table-row:hover → td:nth-child(2) primary text-shadow glow
+   曜日別テーブル行ホバー時にカテゴリ名列テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.35）と連動しdow-table-row translateY+shadow・
+   dow-label-cell brightness（v23.x）と合わせて行ホバー演出の完成形。 */
+.dow-table-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(2) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
