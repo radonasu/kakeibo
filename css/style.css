@@ -24170,3 +24170,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .budget-item:hover                            .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)  var(--mix-sm), transparent); }
 .budget-item:has(.budget-fill.over):hover     .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)  var(--mix-sm), transparent); }
 .budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #758 — v23.62 child hover text-shadow glow (8 items)
+   ev-card-name-glow / ev-card-memo-glow /
+   ev-cat-badge-glow / cc-name-glow /
+   wk-cell-label-glow / wl-archive-name-glow /
+   asset-sparkline-label-glow / ch-widget-label-glow
+   ============================================================ */
+
+/* v23.62: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①ev-card:hover .ev-card-name ev-accent glow、②ev-card:hover .ev-card-memo primary glow、
+   ③ev-card:hover .ev-cat-badge primary glow、④cc-item:hover .cc-name タイプ別 glow、
+   ⑤wk-cell:hover .wk-cell-label タイプ別 glow、⑥wl-archive-item:hover .wl-archive-name success glow、
+   ⑦asset-card:hover .asset-sparkline-label primary glow、⑧ch-widget-item:hover .ch-widget-label ch-accent glow */
+
+/* 1. ev-card:hover → .ev-card-name ev-accent text-shadow glow
+   収支予定カードホバー時にカード名称テキストにev-accent text-shadow glow追加。
+   既存color:ev-accent変色（v23.02）と連動しev-type-badge scale+brightness（v23.x）・
+   ev-card-memo glow（本スプリント）・ev-cat-badge glow（本スプリント）と合わせて
+   カード内全テキストがホバーで一体的に輝く収支予定カード完成形演出。 */
+.ev-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. ev-card:hover → .ev-card-memo primary text-shadow glow
+   収支予定カードホバー時にメモテキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.02）と連動しev-card-name glow（本スプリント）・
+   ev-cat-badge glow（本スプリント）と合わせてカード全テキストが一体的に輝く完成形演出。 */
+.ev-card-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-card-memo { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ev-card:hover → .ev-cat-badge primary text-shadow glow
+   収支予定カードホバー時にカテゴリバッジテキスト（「食費」等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しev-card-name glow（本スプリント）・
+   ev-card-memo glow（本スプリント）と合わせてバッジ含めたカード全テキストが揃って輝く完成形演出。 */
+.ev-cat-badge { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-cat-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. cc-item:hover → .cc-name タイプ別 text-shadow glow
+   カテゴリ比較ウィジェット行ホバー時にカテゴリ名テキストにタイプ別text-shadow glow追加。
+   上昇列=danger-text / 下降列=success。既存タイプ別color変色（v23.x）と連動し
+   cc-amount brightness（v22.x）と合わせてカテゴリ名・金額が一体的に輝く完成形演出。 */
+.cc-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-name { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-name { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 5. wk-summary-row .wk-cell:hover → .wk-cell-label タイプ別 text-shadow glow
+   週間サマリーカードセルホバー時にラベルテキストにタイプ別text-shadow glow追加。
+   1列目(今日の支出)=danger-text / 2列目(今週の支出)=primary / 3列目(無支出日)=success。
+   既存タイプ別color変色（v23.x）と連動しwk-cell-value brightness（v22.x）と
+   合わせてラベル・金額が一体的に輝くサマリーセル完成形演出。 */
+.wk-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 6. wl-archive-item:hover → .wl-archive-name success text-shadow glow
+   ウィッシュリスト達成済みアーカイブ行ホバー時に商品名テキスト（取り消し線付き）に
+   success text-shadow glow追加。既存color:success変色（v23.x）と連動し
+   wl-archive-date glow（v23.x）・wl-archive-amount brightness（v22.x）と
+   合わせてアーカイブ行全テキストが一体的に輝く完成形演出。 */
+.wl-archive-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-archive-item:hover .wl-archive-name { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 7. asset-card:hover → .asset-sparkline-label primary text-shadow glow
+   資産カードホバー時にスパークライン見出しテキスト（「残高推移」等）に
+   primary text-shadow glow追加。既存color:primary変色（v23.x）と連動し
+   asset-name変色（v22.x）・asset-balance brightness（v22.x）・asset-fx-rate glow（v23.x）・
+   asset-history-title glow（v23.x）と合わせてカード内全テキストが輝く完成形演出。 */
+.asset-sparkline-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-sparkline-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. ch-widget-item:hover → .ch-widget-label ch-accent text-shadow glow
+   チャレンジウィジェット行ホバー時に進捗ラベルテキスト（「残り3日」「今月で達成」等）に
+   ch-accent text-shadow glow追加。既存color:ch-accent変色（v23.x）と連動し
+   ch-widget-name glow（v23.x）・ch-widget-pct brightness（v22.x）と
+   合わせて行内テキスト全体がホバーで一体的に輝くウィジェット行完成形演出。 */
+.ch-widget-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-widget-item:hover .ch-widget-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
