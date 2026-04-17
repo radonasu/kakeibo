@@ -18249,7 +18249,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 5. 資産残高数値 brightness on hover
    .asset-card:hover 時に .asset-balance（fs-4xl/fw-black の大数値）が brightness(1.06) で輝く。
    asset-type-badge の scale(1.03)+brightness(1.06)（v22.75）に加え、主役の残高数値も強調。 */
-.asset-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.asset-balance { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-balance { filter: brightness(1.06); }
 
 /* 6. カテゴリトレンド統計値 color+brightness on hover
@@ -18322,7 +18322,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 6. 財務予測 統計カード 数値 brightness on hover
    .fv-stat-card:hover 時に .fv-stat-value（白テキスト）が brightness(1.1) で輝く。
    fv-stat-icon の scale(1.1)+白 drop-shadow（v22.81）と連動し数値も白く輝く演出。 */
-.fv-stat-value { transition: filter var(--dur-fast) var(--ease-out); }
+.fv-stat-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .fv-stat-card:hover .fv-stat-value { filter: brightness(1.1); }
 
 /* 7. 曜日別支出 統計カード 金額 brightness on hover
@@ -18335,7 +18335,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .pt-card:hover 時に .pt-card-balance が pt-accent カラーに変色 + brightness(1.06)。
    pt-card-icon の scale(1.1)+pt-accent drop-shadow（v22.81）と連動し、
    カードホバー時にアクセントカラーで残高ポイント数値が光る演出を実現。 */
-.pt-card-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.pt-card-balance { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pt-card:hover .pt-card-balance { color: var(--pt-accent, var(--primary)); filter: brightness(1.06); }
 
 /* ── v22.85: デザイン改善バッチ ────────────────────────────────────── */
@@ -18497,14 +18497,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .sub-card:hover 時に .sub-card-amount が sub-accent カラーに変色 + brightness(1.06)。
    sub-card-icon scale（v22.79）・sub-card-progress-fill glow（v22.83）と連動し
    サブスクカード全体のホバー演出が完結する。 */
-.sub-card-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.sub-card-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-card-amount { color: var(--sub-accent, var(--primary)); filter: brightness(1.06); }
 
 /* 3. チャレンジカード 進捗% brightness on hover
    .ch-card:hover 時に .ch-progress-pct が brightness(1.1)。
    ch-pct-ok（income色）・ch-pct-over（expense色）の既存カラーはそのまま維持し輝度のみ追加。
    ch-bar-fill glow（v22.83）・ch-card-icon scale と連動しバーと%数値が同時に強調。 */
-.ch-progress-pct { transition: filter var(--dur-fast) var(--ease-out); }
+.ch-progress-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-card:hover .ch-progress-pct { filter: brightness(1.1); }
 
 /* 4. 節約機会カード 節約額 brightness on hover
@@ -18586,7 +18586,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .hs-item:hover 時に .hs-item-score が hs-bar-color カラーに変色 + brightness(1.06)。
    hs-item:hover の translateX + background 変化（v22.68）と連動し
    バーのアクセントカラーで項目スコア数値もホバーで際立つ。 */
-.hs-item-score { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.hs-item-score { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .hs-item:hover .hs-item-score { color: var(--hs-bar-color, var(--primary)); filter: brightness(1.06); }
 
 /* 6. 固定費予測カード セル金額 brightness on hover
@@ -18594,7 +18594,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    income/expense カラーはそのまま維持し輝度のみ追加。
    forecast-card:hover の fc-color glow（v22.70）と連動し
    カード全体のホバー演出に金額セルの輝度強調が加わる。 */
-.fc-cell-amount { transition: filter var(--dur-fast) var(--ease-out); }
+.fc-cell-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .forecast-card:hover .fc-cell-amount { filter: brightness(1.08); }
 
 /* 7. 提案予算 提案金額 brightness on hover
@@ -20519,7 +20519,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    brightness(1.1) で輝かせる。wk-today-exp=danger-text / wk-nospend=success の既存カラーを
    維持しつつ輝度のみ追加。wk-cell-label 変色（本スプリント）と連動しラベル・数値が
    一体的にホバーで強調される演出に。 */
-.wk-cell-value { transition: filter var(--dur-fast) var(--ease-out); }
+.wk-cell-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wk-summary-row .wk-cell:hover .wk-cell-value { filter: brightness(1.1); }
 
 /* 7. wl-archive-item:hover → .wl-archive-name success カラー変化
@@ -22895,3 +22895,62 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    静的 text-shadow（line 19197）のホバー版として動的グロー演出を実現。 */
 .debt-balance { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #739 — v23.43 child hover text-shadow glow (8 items)
+   fv-stat-value-glow + wk-cell-value-type-glow +
+   pt-balance-glow + sub-amount-glow + asset-balance-glow +
+   hs-score-glow + ch-pct-glow + fc-amount-glow
+   ============================================================ */
+
+/* 1. fv-stat-card:hover → .fv-stat-value white text-shadow glow
+   将来費サマリーカード（グラデーション背景）のホバー時に .fv-stat-value（白大型数値）に
+   白い text-shadow glow を追加。既存の brightness(1.1) と連動し、
+   ch-sum/sub-summary/ev-sum/pt-summary の白グロー演出と統一感を持たせる。 */
+.fv-stat-card:hover .fv-stat-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* 2. wk-summary-row .wk-cell:hover → .wk-cell-value タイプ別 text-shadow glow
+   週次サマリーセルのホバー時に .wk-cell-value（支出/収支/節約率の数値）に
+   タイプ別グロー演出を追加。既存の brightness(1.1)・wk-cell-label タイプ別カラー変化と連動し、
+   nth-child(1)=expense glow・nth-child(2)=primary glow・nth-child(3)=success glow で強調。 */
+.wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)  var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)  var(--mix-sm), transparent); }
+.wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success)  var(--mix-sm), transparent); }
+
+/* 3. pt-card:hover → .pt-card-balance pt-accent text-shadow glow
+   ポイントカードのホバー時に .pt-card-balance（ポイント残高大数値）に
+   pt-accent text-shadow glow を追加。既存の color:pt-accent + brightness(1.06) と連動し、
+   カラー変化＋輝度＋グローの三重ホバー演出でポイント残高を際立たせる完成形に。 */
+.pt-card:hover .pt-card-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. sub-card:hover → .sub-card-amount sub-accent text-shadow glow
+   サブスクカードのホバー時に .sub-card-amount（月額/年額金額数値）に
+   sub-accent text-shadow glow を追加。既存の color:sub-accent + brightness(1.06) と連動し、
+   カラー変化＋輝度＋グローの三重ホバー演出でサブスク金額を際立たせる完成形に。 */
+.sub-card:hover .sub-card-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. asset-card:hover → .asset-balance asset-accent text-shadow glow
+   資産カードのホバー時に .asset-balance（資産残高大数値：fs-4xl・fw-black）に
+   asset-accent text-shadow glow を追加。既存の brightness(1.06) と連動し、
+   goal-saved glow（v23.42）・debt-balance glow（v23.42）と同パターンで
+   資産残高にも動的グロー演出を実現する。 */
+.asset-card:hover .asset-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. hs-item:hover → .hs-item-score hs-bar-color text-shadow glow
+   家計スコア項目のホバー時に .hs-item-score（スコア数値）に
+   hs-bar-color text-shadow glow を追加。既存の color:hs-bar-color + brightness(1.06) と連動し、
+   カラー変化＋輝度＋グローの三重ホバー演出でスコア数値を際立たせる完成形に。 */
+.hs-item:hover .hs-item-score { text-shadow: 0 0 8px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. ch-card:hover → .ch-progress-pct ch-accent text-shadow glow
+   チャレンジカードのホバー時に .ch-progress-pct（達成率%数値）に
+   ch-accent text-shadow glow を追加。既存の brightness(1.1) と連動し、
+   ch-bar-fill glow・ch-card-icon glow・ch-card-name 変色と連動したホバー演出を完成させる。 */
+.ch-card:hover .ch-progress-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. forecast-card:hover → .fc-cell-amount fc-color text-shadow glow
+   財務予測カードのホバー時に .fc-cell-amount（金額セル数値：income/expense カラー）に
+   fc-color text-shadow glow を追加。既存の brightness(1.08) と連動し、
+   fc-progress-fill glow・fc-cell-label 変色・fc-cell-balance glow と連動した
+   財務予測カードホバー演出の完成形に。 */
+.forecast-card:hover .fc-cell-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
