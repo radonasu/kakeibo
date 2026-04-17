@@ -23867,3 +23867,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    dow-label-cell brightness（v23.x）と合わせて行ホバー演出の完成形。 */
 .dow-table-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .dow-table-row:hover td:nth-child(4) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #754 — v23.58 child hover text-shadow glow (8 items)
+   fv-cat-first-col-glow / smi-label-glow /
+   smi-amount-glow / dd-summary-label-glow /
+   hm-stat-unit-glow / rc-item-amount-glow /
+   section-tab-glow / sub-cycle-unit-glow
+   ============================================================ */
+
+/* v23.58: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①fv-cat-table tr:hover td:first-child primary glow、②smi-balance:hover .smi-label タイプ別 glow、
+   ③smi-balance:hover .smi-amount タイプ別 glow、④dd-summary-item:hover .dd-summary-label primary glow、
+   ⑤hm-stat-card:hover .hm-stat-unit primary glow、⑥rc-item:hover .rc-item-amount primary glow、
+   ⑦section-tab:not(.is-active):hover self primary glow、⑧sub-card:hover .sub-cycle-unit sub-accent glow。
+   各要素の既存 color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. fv-cat-table tbody tr:hover → td:first-child primary text-shadow glow
+   将来費カテゴリテーブル行ホバー時に1列目カテゴリ名テキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しpm-table-row td:first-child glow（v23.55）と
+   同パターンで将来費カテゴリ行の1列目ホバー演出を完成。 */
+.fv-cat-table tbody tr td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover td:first-child { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. smi-balance:hover → .smi-label タイプ別 text-shadow glow
+   収支サマリー残高行ホバー時にラベルテキスト（「残高」等）にタイプ別text-shadow glow追加。
+   収入残=primary/支出超過=danger-text。既存color タイプ別変色（v23.x）と連動し
+   smi-amount glow（本スプリント③）と合わせて残高行全テキストが一体的に輝く完成形。 */
+.smi-balance .smi-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-balance:hover                           .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)      var(--mix-sm), transparent); }
+.smi-balance:has(.smi-amount.expense):hover  .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text)  var(--mix-sm), transparent); }
+
+/* 3. smi-balance:hover → .smi-amount タイプ別 text-shadow glow
+   収支サマリー残高行ホバー時に金額テキストにタイプ別text-shadow glow追加。
+   収入=success/支出=danger-text。既存color タイプ別変色+brightness（v23.x）と連動し
+   smi-label glow（本スプリント②）と合わせてラベル・金額が揃って輝く完成形。 */
+.smi-balance .smi-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-balance:hover                           .smi-amount.income  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-balance:hover                           .smi-amount.expense { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text)  var(--mix-sm), transparent); }
+
+/* 4. dd-summary-item:hover → .dd-summary-label primary text-shadow glow
+   ダッシュボードサマリーアイテムホバー時にラベルテキストにprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しdd-summary-value primary変色（v22.x）と
+   合わせてラベル・数値が揃ってホバーで輝くサマリーアイテム完成形演出。 */
+.dd-summary-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-summary-item:hover .dd-summary-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. hm-stat-card:hover → .hm-stat-unit primary text-shadow glow
+   家計スコア統計カードホバー時に単位テキスト（「円」「日」等）にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）と連動しhm-stat-value primary変色・hm-stat-label brightness・
+   hm-stat-sub brightness（v23.x）と合わせてカード内全子要素ホバー演出の完成形。 */
+.hm-stat-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hm-stat-card:hover .hm-stat-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. rc-item:hover → .rc-item-amount primary text-shadow glow
+   繰り返し取引カードホバー時に金額テキストにprimary text-shadow glow追加。
+   既存color:primary変色+brightness(1.08)（v23.35）と連動しrc-item-meta glow（v23.54）・
+   rc-cat-dot scale+glow・rc-item-name primary（v22.x）と合わせてカード全要素ホバー演出の完成形。 */
+.rc-item-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. section-tab:not(.is-active):hover → self primary text-shadow glow
+   セクションタブ（非アクティブ）ホバー時にタブテキスト自身にprimary text-shadow glow追加。
+   既存color:primary変色（v23.x）・tab-icon scale+drop-shadow（v22.x）と連動し
+   タブラベルテキストがprimaryカラーで輝く完成形ホバー演出に。 */
+.section-tab { transition: color var(--dur-faster) var(--ease-out), border-color var(--dur-faster) var(--ease-out), background var(--dur-faster) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.section-tab:not(.is-active):hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. sub-card:hover → .sub-cycle-unit sub-accent text-shadow glow
+   サブスクカードホバー時にサイクル単位テキスト（「月」「年」等）にsub-accent text-shadow glow追加。
+   既存color:sub-accent変色（v23.x）と連動しsub-cycle-tag glow（v23.54）・
+   sub-monthly-equiv glow（v23.55）と合わせてカード金額エリア全テキストが輝く完成形。 */
+.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
