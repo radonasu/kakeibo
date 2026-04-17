@@ -23611,3 +23611,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    tg-stat-value glow（v23.46）と合わせてテーブル行ホバー演出の完成形に。 */
 .tg-table td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .tg-table tbody tr:hover td:first-child { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #750 — v23.54 child hover text-shadow glow (8 items)
+   bottom-nav-label-glow / sub-widget-name-glow /
+   ev-widget-name-glow / rc-item-meta-glow /
+   sub-cycle-tag-glow / sub-card-memo-glow /
+   cat-chip-name-glow / memo-cell-glow
+   ============================================================ */
+
+/* 1. bottom-nav-item:hover → .bottom-nav-label primary text-shadow glow
+   モバイルボトムナビのホバー時に .bottom-nav-label（ナビラベルテキスト：
+   fs-2xs・letter-spacing）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.x）と連動しラベルテキストが
+   primaryカラーで輝くホバー演出に。bottom-nav-icon scale（v22.x）と
+   合わせてアイコン・ラベルが一体的に反応するボトムナビの完成形。 */
+.bottom-nav-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.bottom-nav-item:not(.active):hover .bottom-nav-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. sub-widget-item:hover → .sub-widget-name ステータス別 text-shadow glow
+   サブスクウィジェット行のホバー時に .sub-widget-name（サービス名テキスト：
+   fs-sm・fw-medium）にステータス別 text-shadow glow を追加。
+   既存の color タイプ別変色（通常=primary/urgent=danger-text/soon=warning）と連動し、
+   sub-widget-amount glow（v23.46）と合わせて名前・金額が揃って輝く完成形。 */
+.sub-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover            .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.sub-widget-item.sub-urgent:hover .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.sub-widget-item.sub-soon:hover   .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 3. ev-widget-item:hover → .ev-widget-name ev-accent text-shadow glow
+   収支予定ウィジェット行のホバー時に .ev-widget-name（イベント名テキスト：
+   fs-sm・fw-medium）に ev-accent text-shadow glow を追加。
+   既存の color:ev-accent 変色（v23.x）と連動しイベント名がアクセントカラーで
+   輝くホバー演出に。ev-widget-amount glow（v23.46）と合わせてウィジェット行の完成形。 */
+.ev-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. rc-item:hover → .rc-item-meta primary text-shadow glow
+   繰り返し取引カードのホバー時に .rc-item-meta（次回実行日・繰り返し頻度テキスト：
+   color:text-muted・fs-xs）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.x）と連動しメタ情報テキストが primaryカラーで
+   輝くホバー演出に。rc-item:hover の lift+shadow（v22.x）と合わせた完成形。 */
+.rc-item-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item:hover .rc-item-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. sub-card:hover → .sub-cycle-tag primary text-shadow glow
+   サブスクカードのホバー時に .sub-cycle-tag（「月払い」「年払い」等のサイクルタグ：
+   color:text-muted・fs-xs）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.02）と連動しサイクルタグがprimaryカラーで
+   輝くホバー演出に。sub-card-amount 変色・sub-cycle-unit glow（v23.41）と
+   合わせてサブスクカード内の情報エリアが一体的に輝く完成形。 */
+.sub-cycle-tag { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-cycle-tag { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. sub-card:hover → .sub-card-memo primary text-shadow glow
+   サブスクカードのホバー時に .sub-card-memo（メモテキスト：
+   color:text-muted・fs-xs）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.x）と連動しメモテキストがprimaryカラーで
+   輝くホバー演出に。sub-cycle-tag glow（本スプリント⑤）・sub-next-billing 変色と
+   合わせてサブスクカード詳細情報が一体的に輝く完成形。 */
+.sub-card-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card:hover .sub-card-memo { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. cat-chip:hover → .cat-chip-name cat-color text-shadow glow
+   カテゴリチップのホバー時に .cat-chip-name（カテゴリ名テキスト）に
+   cat-color text-shadow glow を追加。既存の color:cat-color 変色（v22.x）と連動し、
+   cat-chip:hover のbox-shadow primaryグロー（v22.74）と合わせて
+   カテゴリ名テキストがカテゴリカラーで輝くホバー演出の完成形。 */
+.cat-chip-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-chip:hover .cat-chip-name { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. tx-table tr:hover → td.memo-cell primary text-shadow glow
+   取引テーブル行のホバー時に .memo-cell（メモ・説明テキストセル：
+   color:text-muted）に primary text-shadow glow を追加。
+   既存の color:primary 変色（v23.x）と連動しメモテキストがprimaryカラーで
+   輝くホバー演出に。tx-table tbody tr:hover の lift+shadow（既存）と
+   合わせてテーブル行ホバー演出の完成形。 */
+.tx-table td.memo-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover td.memo-cell { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
