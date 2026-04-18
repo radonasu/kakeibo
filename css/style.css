@@ -21604,9 +21604,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fs-xs・fw-medium・既に color-mix(success,mix-label,text) の薄緑で表示）を
    success カラーへ変色してラベルを鮮明に強調する。
    md-cell-income:hover の lift+shadow（v22.x）と連動し、セル全体のホバー演出を完成させる。 */
-.md-cell-label { transition: color var(--dur-fast) var(--ease-out); }
+.md-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .md-cell-income:hover  .md-cell-label { color: var(--success); }
 .md-cell-expense:hover .md-cell-label { color: var(--danger-text); }
+.md-cell-income:hover  .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.md-cell-expense:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 
 /* 6. md-cell-balance-pos:hover → .md-cell-label primary 変色
    md-cell-balance-pos（残高正）ホバー時に残高ラベルを primary カラーへ変色。
@@ -21614,13 +21616,16 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    md-cell-income/expense の label 変色（本スプリント）と同パターン。 */
 .md-cell-balance-pos:hover .md-cell-label { color: var(--primary); }
 .md-cell-balance-neg:hover .md-cell-label { color: var(--danger-text); }
+.md-cell-balance-pos:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.md-cell-balance-neg:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 
 /* 7. md-cell-income:hover → .md-cell-value brightness(1.06)
    月次詳細モーダルの収入セルホバー時に .md-cell-value（収入金額：fs-md・fw-bold・tabular-nums）を
    brightness(1.06) で輝き強調。md-cell-label success 変色（本スプリント）と連動し
    ラベル＋金額値が一体的にホバーで反応する収入セルの完成形演出に。 */
-.md-cell-value { transition: filter var(--dur-fast) var(--ease-out); }
+.md-cell-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .md-cell-income:hover  .md-cell-value { filter: brightness(1.06); }
+.md-cell-income:hover  .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 
 /* 8. md-cell-expense:hover → .md-cell-value brightness(1.06)
    月次詳細モーダルの支出セルホバー時に .md-cell-value（支出金額）を brightness(1.06) で輝き強調。
@@ -21628,6 +21633,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ラベル＋金額値が一体的に反応する支出セルの完成形演出に。
    md-cell-income brightness（本スプリント）と対称パターン。 */
 .md-cell-expense:hover .md-cell-value { filter: brightness(1.06); }
+.md-cell-expense:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 
 /* ============================================================
    v23.27 ホバー子要素カラー変化・brightness・glow・scale 8箇所
@@ -21945,8 +21951,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fv-stat-card:hover .fv-stat-label brightness（v23.x）・
    yr-cell:hover .yr-cell-label（v23.x）と同パターンで
    バナー内ラベルにもホバー強調を追加。 */
-.sim-savings-label { transition: filter var(--dur-fast) var(--ease-out); }
-.sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); }
+.sim-savings-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
 
 /* 5. sim-savings-banner:hover → .sim-savings-divider brightness(1.4)
    節約バナーのホバー時に .sim-savings-divider（区切り線：
@@ -22063,11 +22070,15 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    notif-item.notif-type-XXX:hover .notif-item-title タイプ別変色（v22.x）・
    insight-item:hover .insight-icon タイプ別 drop-shadow（v22.x）と同パターンで
    insight-title も各タイプのカラーアイデンティティでホバー時に染まる完成形演出に。 */
-.insight-title { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.insight-title { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .insight-item.insight-info:hover    .insight-title { color: var(--primary); }
 .insight-item.insight-alert:hover   .insight-title { color: var(--danger-text); }
 .insight-item.insight-success:hover .insight-title { color: var(--success); }
 .insight-item.insight-warning:hover .insight-title { color: var(--warning); }
+.insight-item.insight-info:hover    .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.insight-item.insight-alert:hover   .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.insight-item.insight-success:hover .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.insight-item.insight-warning:hover .insight-title { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
 
 /* 7. md-cell-balance-pos/neg:hover → .md-cell-value brightness(1.06) 完成形
    月次詳細モーダルの収支差額セルホバー時に .md-cell-value（差額金額値）を
@@ -22122,8 +22133,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    color:primary・fs-sm・fw-medium）を brightness(1.1) で輝かせる。
    step-card:hover の lift+shadow 演出と連動し、アクション誘導リンクが
    ホバーで一体的に明るく反応する。 */
-.step-action { transition: filter var(--dur-fast) var(--ease-out); }
-.step-card:hover .step-action { filter: brightness(1.1); }
+.step-action { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-action { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 4. cat-card:hover → .cat-yayoi-tag brightness(1.06) + primary border-color
    カテゴリカードホバー時に .cat-yayoi-tag（「弥生」タグバッジ）を
@@ -22146,8 +22157,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    メタ情報エリア：color:text-muted・fs-xs）を brightness(1.05) で明るく強調。
    wl-card:hover の wl-card-name 変色（v22.xx）・wl-card-price 変色（v22.xx）・
    wl-card-note 変色（v23.x）と連動し、メタ情報もホバーで一体的に反応する。 */
-.wl-card-meta { transition: filter var(--dur-fast) var(--ease-out); }
-.wl-card:hover .wl-card-meta { filter: brightness(1.05); }
+.wl-card-meta { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-card-meta { filter: brightness(1.05); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. hm-stat-card:hover → .hm-stat-label brightness(1.1)
    ヒートマップ統計カードホバー時に .hm-stat-label（「最高支出日」等の
@@ -22266,11 +22277,15 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    （info=primary / alert=danger-text / success=success / warning=warning）。
    insight-title タイプ別変色（v23.31）・insight-icon タイプ別glow（v22.x）と
    連動し、アイテム内の全テキスト要素が一体的にタイプカラーで反応する完成形に。 */
-.insight-desc { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.insight-desc { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .insight-item.insight-info:hover    .insight-desc { color: var(--primary); }
 .insight-item.insight-alert:hover   .insight-desc { color: var(--danger-text); }
 .insight-item.insight-success:hover .insight-desc { color: var(--success); }
 .insight-item.insight-warning:hover .insight-desc { color: var(--warning); }
+.insight-item.insight-info:hover    .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.insight-item.insight-alert:hover   .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.insight-item.insight-success:hover .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.insight-item.insight-warning:hover .insight-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
 
 /* 3. pt-card:hover → .pt-unit primary カラー変化
    ポイントカードのホバー時に .pt-unit（「pt」等の単位テキスト：
@@ -22360,8 +22375,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    font-size:xs・color:text-muted）を brightness(1.1) で一段輝かせる。
    debt-card:hover の lift+shadow（v22.x）・debt-progress-label 変色（v23.x）と
    連動し進捗ヘッダー行全体がホバーに反応する演出に。 */
-.debt-progress-hdr { transition: filter var(--dur-fast) var(--ease-out); }
-.debt-card:hover .debt-progress-hdr { filter: brightness(1.1); }
+.debt-progress-hdr { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-progress-hdr { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. dow-table-row:hover → td:nth-child(3) brightness(1.08)
    曜日別支出テーブル行のホバー時に 3列目（支出金額・色は expense）を
