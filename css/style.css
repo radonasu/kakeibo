@@ -25041,3 +25041,80 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑤yr-cell-*:hover .yr-unit タイプ別 glow（5種）、⑥fv-month-table tr:hover .fv-fixed-val primary glow、
    ⑦fv-month-table tr:hover .fv-var-val success glow、⑧dow-table-row:hover td:nth-child(3) expense glow。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.73・全script/linkタグ?v=23.73に更新 */
+
+/* ============================================================
+   Sprint #770 — v23.74 child hover text-shadow glow (8 items)
+   summary-amount-glow／hm-stat-value-glow／ct-stat-value-glow／
+   tg-stat-value-glow／smi-amount-glow／smi-label-glow／
+   yi-card-label-glow／debt-balance-meta-glow
+   ============================================================ */
+
+/* ①【summary-card:hover → .summary-amount タイプ別 text-shadow glow】
+   サマリーカードホバー時に金額大型数値にタイプ別 text-shadow glow を追加。
+   income=success / expense=danger-text / balance.positive=primary / balance.negative=danger-text。
+   既存の brightness(1.06)+color 変色（v22.84）と連動し数値がよりカラフルに際立つ完成形演出。
+   ダッシュボード最上段の最重要数値にホバーの深みを追加。 */
+.summary-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.summary-card.income:hover          .summary-amount { text-shadow: 0 0 10px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.summary-card.expense:hover         .summary-amount { text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.summary-card.balance.positive:hover .summary-amount { text-shadow: 0 0 10px color-mix(in srgb, var(--primary)    var(--mix-sm), transparent); }
+.summary-card.balance.negative:hover .summary-amount { text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ②【hm-stat-card:hover → .hm-stat-value タイプ別 text-shadow glow】
+   ヒートマップ統計カードホバー時に数値テキストにタイプ別 text-shadow glow を追加。
+   nth-child(1)=primary / nth-child(2)=danger-text / nth-child(3)=warning / nth-child(4)=success。
+   既存の brightness(1.06)+color 変色（v22.84）と連動し各カードのテーマ色で数値が輝く演出。 */
+.hm-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hm-stat-card:nth-child(1):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(2):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(3):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(4):hover .hm-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* ③【ct-stat-card:hover → .ct-stat-value ct-stat-color text-shadow glow】
+   カテゴリトレンド統計カードホバー時に統計値テキストに ct-stat-color text-shadow glow を追加。
+   既存の brightness(1.06)+color:ct-stat-color 変色（v22.83）と連動し
+   各カテゴリのテーマ色で数値が輝くホバー演出の完成形。 */
+.ct-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ④【tg-stat-card:hover → .tg-stat-value primary text-shadow glow】
+   目標統計カードホバー時に数値テキストに primary text-shadow glow を追加。
+   既存の brightness(1.06)+color:primary 変色（v22.83）と連動し
+   tg-stat-icon scale+drop-shadow（v22.80）と合わせてカード内数値・アイコンが一体的に輝く完成形演出。 */
+.tg-stat-value { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑤【smi-income/expense:hover → .smi-amount タイプ別 text-shadow glow】
+   サマリーミニバーホバー時に金額テキストにタイプ別 text-shadow glow を追加
+   （income=success / expense=danger-text）。
+   既存の brightness(1.08)+color 変色（v22.94）と連動し smi-label glow（本スプリント⑥）と
+   合わせてラベル・金額が一体的にタイプカラーで輝く演出の完成形。 */
+.smi-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-expense:hover .smi-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ⑥【smi-income/expense:hover → .smi-label タイプ別 text-shadow glow】
+   サマリーミニバーホバー時にラベルテキスト（「収入」「支出」）にタイプ別 text-shadow glow を追加
+   （income=success / expense=danger-text）。
+   既存の color 変色（v22.97）と連動し smi-amount glow（本スプリント⑤）と合わせて
+   ラベル・金額が一体的にタイプカラーで輝くサマリーミニバー完成形演出。 */
+.smi-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-income:hover  .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.smi-expense:hover .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ⑦【yi-card:hover → .yi-card-label primary text-shadow glow】
+   年次インサイトカードホバー時にラベルテキストに primary text-shadow glow を追加。
+   既存の color:primary 変色（v22.97）と連動し yi-card-icon scale（v22.81）・
+   yi-card-value 変色（v22.84）・yi-half-label glow（v23.51）と合わせて
+   カード内全テキストがホバーで一体的に輝く完成形演出。 */
+.yi-card-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑧【debt-card:hover → .debt-balance-meta primary text-shadow glow】
+   負債カードホバー時にメタテキスト（元本残高・月次返済情報等 fs-xs・color:text-muted）に
+   primary text-shadow glow を追加。既存の color:primary 変色（v22.97）と連動し
+   debt-name 変色（v22.95）・debt-balance brightness（v22.87）・debt-progress-hdr glow（v23.71）と
+   合わせて負債カード内全テキストがホバーで一体的に輝く完成形演出。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.74・全script/linkタグ?v=23.74に更新 */
+.debt-balance-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-balance-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
