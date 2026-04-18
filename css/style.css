@@ -18528,7 +18528,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .debt-entry-row:hover 時に .debt-entry-balance が brightness(1.12) で expense 色が深まる。
    debt-entry-row:hover の translateX + expense shadow と連動し
    残高数値もホバーで視覚的に強調される。 */
-.debt-entry-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-entry-balance { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-entry-row:hover .debt-entry-balance { filter: brightness(1.12); }
 
 /* 7. ステップカード タイトル color on hover
@@ -19853,7 +19853,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ev-accent カラーへ変色 + brightness(1.06)。ev-card-name 変色（本スプリント）・
    ev-card-icon-wrap scale（v22.83）と連動し名称・金額・アイコンが
    一体的に反応する完成形に。 */
-.ev-card-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-card-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ev-card:hover .ev-card-amount { color: var(--ev-accent, var(--primary)); filter: brightness(1.06); }
 
 /* 3. ev-card:hover → .ev-card-memo カラー変化
@@ -20036,7 +20036,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    pt-card-balance 変色+brightness（v22.85）・pt-card-name 変色（v22.95）・
    pt-card-icon scale（v22.81）と連動しポイント残高・YEN換算・名称・アイコンが
    一体的に反応する完成形に。 */
-.pt-card-yen { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pt-card-yen { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pt-card:hover .pt-card-yen { color: var(--pt-accent, var(--primary)); filter: brightness(1.06); }
 
 /* 8. debt-entry-row:hover → .debt-entry-note カラー変化
@@ -20140,7 +20140,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary カラーへ変色（.today バッジは白色維持・sun/sat 曜日色も維持）。
    cal-cell:hover の inset border glow（既存）と連動し
    日付数字がホバーを視覚的に強調する。 */
-.cal-date-num { transition: color var(--dur-fast) var(--ease-out); }
+.cal-date-num { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { color: var(--primary); }
 
 /* 3. cal-cell:hover → .cal-amount brightness(1.1)
@@ -20534,7 +20534,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ウィッシュリスト達成済みアーカイブ行のホバー時に .wl-archive-price（購入金額テキスト：color:text-muted）を
    brightness(1.08) + success カラーへ変色。wl-archive-name success 変色（本スプリント）と連動し
    名称・金額の両方が一体的に success 色で達成感を演出する完成形に。 */
-.wl-archive-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.wl-archive-price { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wl-archive-item:hover .wl-archive-price { color: var(--success); filter: brightness(1.08); }
 
 /* ── v23.13 ホバー子要素カラー変化・brightness・scale・glow 8箇所 ──────────────────────────
@@ -21362,7 +21362,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    テキスト：color:text-muted・tabular-nums）を brightness(1.1) で明るく強調。
    tg-table td.text-muted カラー変化（v23.09）と同系統で
    支払方法テーブルの補足情報がホバーで際立つ演出を追加。 */
-.pm-table-row td.text-muted { transition: filter var(--dur-fast) var(--ease-out); }
+.pm-table-row td.text-muted { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pm-table-row:hover td.text-muted { filter: brightness(1.1); }
 
 /* 5. tx-table tbody tr:hover → .tx-tag-chip scale(1.05) + brightness(1.1)
@@ -22593,7 +22593,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    進捗バーfillとパーセントテキストが一体的にホバーで反応する完成形に。
    ev-pm-done/ev-pm-mid の固有カラーは既存スタイルで定義済みのため
    通常状態のみ primary で上書きし自然な強調に。 */
-.ev-prog-pct { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ev-prog-pct { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ev-card:hover .ev-prog-pct { filter: brightness(1.1); color: var(--primary); }
 
 /* 6. asset-card:hover → .asset-history-title primary カラー変化
@@ -24496,3 +24496,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    合わせてグラデカード内全テキストがホバーで一体的に白く輝く完成形演出。 */
 .dow-stat-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .dow-stat-card:hover .dow-stat-amount { text-shadow: 0 0 14px rgba(255, 255, 255, 0.55), 0 2px 10px rgba(255, 255, 255, 0.3); }
+
+/* ── v23.66 ホバー子要素テキストへの text-shadow glow 追加（8箇所）────────────────────────────
+   Sprint #762 — v23.66 child hover text-shadow glow (8 items)
+   ev-card-amount-glow／ev-prog-pct-glow／wl-archive-price-glow／
+   pt-card-yen-glow／pt-exp-badge-glow／debt-entry-balance-glow／
+   pm-text-muted-glow／cal-date-num-glow
+   ============================================================ */
+
+/* v23.66: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①ev-card:hover .ev-card-amount ev-accent glow、②ev-card:hover .ev-prog-pct primary glow、
+   ③wl-archive-item:hover .wl-archive-price success glow、④pt-card:hover .pt-card-yen pt-accent glow、
+   ⑤pt-card:hover .pt-exp-badge primary glow、⑥debt-entry-row:hover .debt-entry-balance expense glow、
+   ⑦pm-table-row:hover td.text-muted primary glow、⑧cal-cell:hover .cal-date-num primary glow。
+   各要素の既存 color 変色・brightness 強調に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. ev-card:hover → .ev-card-amount ev-accent text-shadow glow
+   収支予定カードのホバー時に .ev-card-amount（予定収支金額：
+   +/- 付き金額テキスト）に ev-accent text-shadow glow を追加。
+   既存 color:ev-accent 変色＋brightness(1.06)（v22.87）と連動し
+   ev-card-name glow（v23.62）・ev-card-memo glow（v23.62）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.ev-card:hover .ev-card-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. ev-card:hover → .ev-prog-pct primary text-shadow glow
+   収支予定カードの月次進捗表示のホバー時に .ev-prog-pct（「75%」等の進捗率テキスト）に
+   primary text-shadow glow を追加。
+   既存 filter:brightness(1.1)＋color:primary（v23.38）と連動し
+   ev-prog-fill brightness+glow（v23.38）と
+   合わせてプログレスバー全体がホバーで一体的に輝く完成形演出。 */
+.ev-card:hover .ev-prog-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. wl-archive-item:hover → .wl-archive-price success text-shadow glow
+   ウィッシュリスト達成済みアーカイブ行のホバー時に .wl-archive-price（購入金額テキスト）に
+   success text-shadow glow を追加。
+   既存 color:success 変色＋brightness(1.08)（v23.12）と連動し
+   wl-archive-name success glow（v23.62）・wl-archive-date success glow（v23.53）と
+   合わせてアーカイブ行全テキストがホバーで一体的に success 色で輝く完成形演出。 */
+.wl-archive-item:hover .wl-archive-price { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 4. pt-card:hover → .pt-card-yen pt-accent text-shadow glow
+   ポイントカードのホバー時に .pt-card-yen（円換算金額テキスト：text-muted・tabular-nums）に
+   pt-accent text-shadow glow を追加。
+   既存 color:pt-accent 変色＋brightness(1.06)（v23.x）と連動し
+   pt-card-balance glow（v23.43）・pt-card-name glow（v23.x）・pt-unit glow（v23.56）と
+   合わせてカード内全テキストがホバーで一体的に pt-accent 色で輝く完成形演出。 */
+.pt-card:hover .pt-card-yen { text-shadow: 0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. pt-card:hover → .pt-exp-badge primary text-shadow glow
+   ポイントカードのホバー時に .pt-exp-badge（期限バッジ：通常 text-muted / urgent / soon）に
+   primary text-shadow glow を追加。urgent/soon バッジはすでにアクセント色を持つため
+   通常バッジに輝きを加えホバー時の一体感を向上。
+   既存 brightness(1.1)（v22.84）と連動し pt-card-name glow・pt-card-yen glow（本スプリント）と
+   合わせてカード全体がホバーで揃って輝く演出を完成。 */
+.pt-card:hover .pt-exp-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. debt-entry-row:hover → .debt-entry-balance expense text-shadow glow
+   負債管理の残高履歴行のホバー時に .debt-entry-balance（残高金額：color:expense・fw-semi）に
+   expense text-shadow glow を追加。
+   既存 filter:brightness(1.12)（v22.84）と連動し
+   debt-entry-date primary glow（v23.63）・debt-entry-note primary glow（v23.63）と
+   合わせて履歴行の全テキストがホバーで一体的に輝く完成形演出。 */
+.debt-entry-row:hover .debt-entry-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 7. pm-table-row:hover → td.text-muted primary text-shadow glow
+   支払方法テーブル行のホバー時に td.text-muted（補足情報セル：件数・平均単価等）に
+   primary text-shadow glow を追加。
+   既存 filter:brightness(1.1)（v22.x）と連動し
+   td:first-child pm-row-color glow（v23.23）・td.expense glow（v23.23）と
+   合わせて行内の全セルがホバーで一体的に輝く完成形演出。 */
+.pm-table-row:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. cal-cell:hover → .cal-date-num primary text-shadow glow
+   カレンダー日付セルのホバー時に .cal-date-num（日付数字：平日/土曜/日曜色）に
+   primary text-shadow glow を追加（.today バッジは白リング演出を維持）。
+   既存 color:primary 変色（v23.x）と連動し
+   cal-amount glow（v23.42）と合わせてセル内全テキストがホバーで一体的に輝く演出に。 */
+.cal-date-num { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
