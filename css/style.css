@@ -25826,3 +25826,55 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .debt-monthly-badge { transition: box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-rate-badge,
 .debt-card:hover .debt-monthly-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #780 — v23.84 text-shadow glow (8 箇所)
+   tx-th-sort-hover-glow＋tx-th-sort-active-glow＋
+   step-num-hover-glow＋btn-link-hover-glow＋
+   tx-tag-filter-chip-hover-glow＋tx-tag-filter-all-active-hover-glow＋
+   tx-tag-filter-chip-active-hover-glow＋tx-table-tag-chip-row-hover-glow
+   ============================================================ */
+
+/* 1. tx-th-sort:hover → primary text-shadow glow
+   ソートヘッダーのホバー時に primary カラーでテキスト glow 追加。
+   hover 時すでに color:primary が付くが text-shadow は未実装だった。 */
+.tx-th-sort { transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-th-sort:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. tx-th-sort.tx-th-active → static primary text-shadow glow
+   アクティブなソート列ヘッダーに常時 primary カラーの控えめな glow。 */
+.tx-th-sort.tx-th-active { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 3. step-card:hover .step-num → primary text-shadow glow
+   オンボーディングステップカードのホバー時に番号テキストに primary glow 追加。
+   既に transform+box-shadow があるが text-shadow は未実装だった。 */
+.step-num { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-num { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. btn-link:hover → primary text-shadow glow
+   リンクボタンのホバー時に primary カラーでテキスト glow 追加。
+   既に color:primary-hover が付くが text-shadow は未実装だった。 */
+.btn-link { transition: color var(--dur-fast) var(--ease-out), text-underline-offset var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-link:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. tx-tag-filter-chip:hover:not(.active) → --tc text-shadow glow
+   タグフィルターチップのホバー時にタグカラー（--tc）でテキスト glow 追加。
+   box-shadow+transform はあるが text-shadow が未実装だった。 */
+.tx-tag-filter-all,
+.tx-tag-filter-chip { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-tag-filter-chip:hover:not(.active) { text-shadow: 0 0 8px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. tx-tag-filter-all.active:hover → primary text-shadow glow
+   「すべて」タグフィルターのアクティブホバー時に primary カラーで glow 追加。 */
+.tx-tag-filter-all.active:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. tx-tag-filter-chip.active:hover → --tc text-shadow glow
+   アクティブなタグフィルターチップのホバー時にタグカラーで glow 追加。
+   box-shadow+transform はあるが text-shadow が未実装だった。 */
+.tx-tag-filter-chip.active:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. tx-table tbody tr:hover .tx-tag-chip → --tc text-shadow glow
+   取引テーブルの行ホバー時にインラインタグチップに tc カラー glow 追加。
+   既に transform+filter はあるが text-shadow が未実装だった。 */
+.tx-table .tx-tag-chip { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-table tbody tr:hover .tx-tag-chip { text-shadow: 0 0 8px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent); }
