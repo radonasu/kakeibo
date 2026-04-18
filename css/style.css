@@ -2625,10 +2625,10 @@ select:focus:not(:focus-visible) {
   white-space: nowrap;
   position: relative;
   border-color: var(--border);
-  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .adv-filter-toggle svg { flex-shrink: 0; }
-.adv-filter-toggle:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.adv-filter-toggle:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .adv-filter-toggle:active { filter: brightness(var(--brightness-press-mid)); border-color: var(--primary); }
 .adv-filter-toggle:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-toggle.adv-filter-on {
@@ -3030,17 +3030,17 @@ mark.tx-hl {
   background: transparent;
   color: var(--text-muted);
   border-radius: var(--radius-btn-sm);
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
   cursor: pointer;
 }
 .type-btn:hover { background: var(--surface-hover); color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.expense-btn:hover  { background: var(--expense-light); color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); }
+.type-btn.expense-btn:hover  { background: var(--expense-light); color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 .type-btn.expense-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 .type-btn.income-btn  { background: var(--income-light);  color: var(--income);  box-shadow: 0 1px 4px var(--black-10); }
-.type-btn.income-btn:hover   { background: var(--income-light);  color: var(--income);  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); }
+.type-btn.income-btn:hover   { background: var(--income-light);  color: var(--income);  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); text-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
 .type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 /* ev-modal の type-toggle は label+radio 構成（他の type-toggle は button.type-btn 構成） */
 .type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -3097,9 +3097,9 @@ mark.tx-hl {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
-.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 .modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -3903,10 +3903,10 @@ mark.tx-hl {
   display: flex;
   align-items: center;
   gap: var(--sp-1-5);
-  transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .stp-config-summary::-webkit-details-marker { display: none; }
-.stp-config-summary:hover  { color: var(--primary-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+.stp-config-summary:hover  { color: var(--primary-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .stp-config-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-detail-body { margin-top: var(--sp-3-5); }
@@ -4987,9 +4987,9 @@ body {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
-.notif-toggle-label:hover  { color: var(--primary); }
+.notif-toggle-label:hover  { color: var(--primary); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .notif-toggle-label:active { filter: brightness(var(--brightness-press-soft)); }
 .notif-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
@@ -5044,9 +5044,9 @@ body {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
-.recurring-toggle-label:hover  { color: var(--primary); }
+.recurring-toggle-label:hover  { color: var(--primary); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .recurring-toggle-label:active { filter: brightness(var(--brightness-press-soft)); }
 .recurring-toggle-label input[type="checkbox"] {
   width: var(--size-checkbox);
@@ -12626,11 +12626,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   text-wrap: balance;
   text-wrap: pretty;
   cursor: pointer;
-  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
-.sb-select-all-wrap:hover  { color: var(--primary); }
+.sb-select-all-wrap:hover  { color: var(--primary); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .sb-select-all-wrap:active { filter: brightness(var(--brightness-press-soft)); }
 .sb-select-all-wrap input[type="checkbox"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
 
@@ -24940,3 +24940,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    合わせてウィジェット行内全要素がホバーで一体的に輝く完成形演出に。
    wl-card:hover .wl-priority-badge glow（v23.68）と同パターンでウィジェット文脈にも適用。 */
 .wish-widget-item:hover .wl-priority-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* v23.72: ホバー text-shadow glow 8箇所
+   notif-toggle-label-glow／recurring-toggle-label-glow／
+   sb-select-all-wrap-glow／adv-filter-toggle-glow／
+   type-btn-expense-glow／type-btn-income-glow／
+   modal-close-glow／stp-config-summary-glow
+   ①notif-toggle-label:hover self primary text-shadow glow、②recurring-toggle-label:hover self primary glow、
+   ③sb-select-all-wrap:hover self primary glow、④adv-filter-toggle:hover self primary glow、
+   ⑤type-btn.expense-btn:hover self expense text-shadow glow、⑥type-btn.income-btn:hover self income glow、
+   ⑦modal-close:hover self danger-text text-shadow glow、⑧stp-config-summary:hover self primary glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.72・全script/linkタグ?v=23.72に更新 */
