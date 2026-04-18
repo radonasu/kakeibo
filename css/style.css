@@ -20164,7 +20164,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ヒントテキスト：color:text-faint）を primary カラーへ変色。
    fc-cell-label 変色（v22.x）・fc-cell-amount brightness（v22.x）と連動し
    カード内のすべてのテキスト要素がホバーで揃って反応する完成形に。 */
-.fc-cell-hint { transition: color var(--dur-fast) var(--ease-out); }
+.fc-cell-hint { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .forecast-card:hover .fc-cell-hint { color: var(--primary); }
 
 /* 6. insight-item:hover → .insight-desc brightness(1.08) タイプ別
@@ -20187,7 +20187,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary カラーへ変色。yi-card-icon scale（v22.x）・yi-card-value 変色（v22.x）・
    yi-card-label 変色（v22.x）と連動しアイコン・ラベル・値・補足情報の全要素が
    一体的に反応する完成形に。 */
-.yi-card-sub { transition: color var(--dur-fast) var(--ease-out); }
+.yi-card-sub { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-card-sub { color: var(--primary); }
 
 /* =====================================================================
@@ -20202,14 +20202,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fw-semi・color:text）を primary カラーへ変色。
    ct-table tr:hover の translateY+shadow（既存）と連動し
    月ラベルがホバーを視覚的に強調する起点になる。 */
-.ct-month-cell { transition: color var(--dur-fast) var(--ease-out); }
+.ct-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ct-table tbody tr:hover .ct-month-cell { color: var(--primary); }
 
 /* 2. ct-table tbody tr:hover → .ct-cell-val brightness(1.08)
    カテゴリ比較テーブルの行ホバー時に .ct-cell-val（各月の金額セル：tabular-nums）を
    brightness(1.08) で輝かせる。ct-month-cell 変色（本スプリント）と連動し
    月ラベル・金額セルが一体的にホバーで反応する演出に。 */
-.ct-cell-val { transition: filter var(--dur-fast) var(--ease-out); }
+.ct-cell-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ct-table tbody tr:hover .ct-cell-val { filter: brightness(1.08); }
 
 /* 3. ct-table tbody tr:hover → .ct-row-total brightness(1.1) + primary text-shadow glow
@@ -20273,7 +20273,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    取引リストの月グループ見出し行ホバー時に .tx-month-group-count（「23件」等の件数テキスト）を
    primary カラーへ変色。tx-month-group-label 変色（本スプリント）と連動し
    月ラベル・件数の両テキストが一体的にホバーで反応する完成形に。 */
-.tx-month-group-count { transition: color var(--dur-fast) var(--ease-out); }
+.tx-month-group-count { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .tx-month-group-row:hover .tx-month-group-count { color: var(--primary); }
 
 /* 3. cat-card:hover → .cat-stat-lbl brightness(1.08)
@@ -20485,7 +20485,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カテゴリ比較ウィジェットのホバー時に .cc-amount（現月金額テキスト：color:text-muted・fw-normal）を
    brightness(1.08) + 列種別カラーへ変色。増加列（cc-col-up）＝danger-text / 節約列（cc-col-down）＝success。
    cc-name 変色（本スプリント）・cc-dot glow（v22.x）と連動し金額も揃って一体感ある演出に。 */
-.cc-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.cc-amount { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cc-col:has(.cc-col-up)   .cc-item:hover .cc-amount { color: var(--danger-text); filter: brightness(1.08); }
 .cc-col:has(.cc-col-down) .cc-item:hover .cc-amount { color: var(--success);     filter: brightness(1.08); }
 
@@ -20895,7 +20895,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary テーマに染まり存在感を増す演出。nt-char-count 変色（本スプリント）・
    nt-progress-fill glow（v23.15）と連動しメモフッター全体がホバーで
    一体的に反応する完成形に。 */
-.nt-saved-at { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+.nt-saved-at { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .nt-card:hover .nt-saved-at { color: var(--primary); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 8. insight-item:hover → .insight-desc brightness(1.1)
@@ -21783,7 +21783,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    color:danger-text・fs-xs・fw-semi・tabular-nums）を brightness(1.1) で輝かせる。
    yr-avg-label 変色・yr-avg-val brightness（本スプリント）と連動し
    フッター全体のホバー演出が統一された完成形に。 */
-.yr-topcat-amt { transition: filter var(--dur-fast) var(--ease-out); }
+.yr-topcat-amt { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .yr-widget-card:hover .yr-topcat-amt { filter: brightness(1.1); }
 
 /* ============================================================
@@ -24762,3 +24762,80 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    一体的に輝く完成形演出に。 */
 .wl-priority-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wl-card:hover .wl-priority-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.69: ホバー text-shadow glow 8箇所
+   fc-cell-hint-glow／yi-card-sub-glow／ct-month-cell-glow／
+   ct-cell-val-glow／tx-month-group-count-glow／nt-saved-at-glow／
+   cc-amount-glow／yr-topcat-amt-glow
+   ①forecast-card:hover .fc-cell-hint primary glow、
+   ②yi-card:hover .yi-card-sub primary glow、
+   ③ct-table:hover .ct-month-cell primary glow、
+   ④ct-table:hover .ct-cell-val primary glow、
+   ⑤tx-month-group-row:hover .tx-month-group-count primary glow、
+   ⑥nt-card:hover .nt-saved-at primary glow、
+   ⑦cc-item:hover .cc-amount タイプ別 glow（up=danger/down=success）、
+   ⑧yr-widget-card:hover .yr-topcat-amt primary glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.69・全script/linkタグ?v=23.69に更新 */
+
+/* 1. forecast-card:hover → .fc-cell-hint primary text-shadow glow
+   キャッシュフロー予測カードホバー時に .fc-cell-hint（「先月比：+¥12,345」等の
+   補足ヒントテキスト：color:text-muted・fs-xs）に primary text-shadow glow を追加。
+   既存 color:primary 変色（v23.14）と連動し fc-cell-amount glow（v22.x）・
+   fc-cell-label glow（v22.x）・fc-cell-balance glow（v23.14）・fc-progress-label glow（v23.x）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.forecast-card:hover .fc-cell-hint { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. yi-card:hover → .yi-card-sub primary text-shadow glow
+   年次インサイトカードホバー時に .yi-card-sub（月平均・補足テキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。
+   既存 color:primary 変色（v23.14）と連動し yi-card-icon drop-shadow（v22.x）・
+   yi-card-value glow（v23.x）・yi-card-label glow（v23.x）・yi-half-label glow（v23.x）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.yi-card:hover .yi-card-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ct-table tbody tr:hover → .ct-month-cell primary text-shadow glow
+   カテゴリ比較テーブル行ホバー時に .ct-month-cell（「2024年1月」等の月ラベルセル：
+   fw-semi・tabular-nums・text）に primary text-shadow glow を追加。
+   既存 color:primary 変色（v23.14）と連動し ct-cell-val glow（本スプリント）・
+   ct-row-total glow（v23.x）と合わせて行全体がホバーで一体的に輝く完成形演出に。 */
+.ct-table tbody tr:hover .ct-month-cell { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. ct-table tbody tr:hover → .ct-cell-val primary text-shadow glow
+   カテゴリ比較テーブル行ホバー時に .ct-cell-val（各月の金額セル：tabular-nums・text-muted）に
+   primary text-shadow glow を追加。
+   既存 brightness(1.08)（v23.14）と連動し ct-month-cell glow（本スプリント）・
+   ct-row-total glow（v23.x）と合わせて行全体がホバーで一体的に輝く完成形演出に。 */
+.ct-table tbody tr:hover .ct-cell-val { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. tx-month-group-row:hover → .tx-month-group-count primary text-shadow glow
+   取引リスト月グループ見出しホバー時に .tx-month-group-count（「23件」等の件数テキスト：
+   fs-xs・text-muted・tabular-nums）に primary text-shadow glow を追加。
+   既存 color:primary 変色（v23.09）と連動し tx-month-group-label glow（v23.x）と
+   合わせて見出し行の両テキストがホバーで一体的に輝く完成形演出に。 */
+.tx-month-group-row:hover .tx-month-group-count { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. nt-card:hover → .nt-saved-at primary text-shadow glow
+   メモカードホバー時に .nt-saved-at（保存日時ピル：fs-2xs・color:text-muted・
+   border付き pill 形状）に primary text-shadow glow を追加。
+   既存 color:primary + border-color:primary 変色（v23.14）と連動し
+   nt-char-count glow（v23.68）・nt-progress-fill glow（v23.15）と
+   合わせてメモフッター全体がホバーで一体的に輝く完成形演出に。 */
+.nt-card:hover .nt-saved-at { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. cc-item:hover → .cc-amount タイプ別 text-shadow glow
+   カテゴリ比較ウィジェットのホバー時に .cc-amount（現月金額テキスト：color:text-muted・fw-normal）に
+   列種別カラーの text-shadow glow を追加。増加列（cc-col-up）＝danger-text glow・
+   節約列（cc-col-down）＝success glow。
+   既存 color+brightness（v23.13）と連動し cc-name glow（v23.x）・cc-dot scale（v22.x）と
+   合わせてアイテム内全要素がホバーで一体的に輝く完成形演出に。 */
+.cc-col:has(.cc-col-up)   .cc-item:hover .cc-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.cc-col:has(.cc-col-down) .cc-item:hover .cc-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 8. yr-widget-card:hover → .yr-topcat-amt primary text-shadow glow
+   年次ウィジェットカードホバー時に .yr-topcat-amt（トップカテゴリ金額テキスト：
+   fw-bold・tabular-nums・text-muted）に primary text-shadow glow を追加。
+   既存 brightness(1.1)（v23.x）と連動し yr-topcat-label glow（v23.x）・
+   yr-avg-label glow（v23.x）・yr-avg-val glow（v23.x）・yr-progress-label glow（v23.x）と
+   合わせてウィジェット内全テキストがホバーで一体的に輝く完成形演出に。 */
+.yr-widget-card:hover .yr-topcat-amt { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
