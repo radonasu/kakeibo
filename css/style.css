@@ -25525,3 +25525,100 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.79・全script/linkタグ?v=23.79に更新 */
 .ch-progress-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-card:hover .ch-progress-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #776 — v23.80 child hover text-shadow glow (8 items)
+   ev-sum-label-glow／pt-summary-label-glow／
+   ch-summary-label-glow／ev-type-badge-glow／
+   amt-hist-chip-glow／memo-hist-chip-glow／
+   fv-rate-badge-glow／adv-preset-chip-glow
+   ============================================================ */
+
+/* v23.80: 各ホバー子要素・自己テキストへの text-shadow glow 追加（8箇所）
+   ①ev-sum-card:hover .ev-sum-label 白 glow（収支予定サマリーカードラベル）、
+   ②pt-total/expiring:hover .pt-summary-label 白 glow（ポイントサマリーカードラベル）、
+   ③ch-sum-active/total/achieved:hover .ch-summary-label 白 glow（チャレンジサマリー3種ラベル）、
+   ④ev-card:hover .ev-type-badge タイプ別 glow（income=success/expense=danger-text）、
+   ⑤amt-hist-chip:hover self amt-chip-color glow（金額履歴チップ自己発光）、
+   ⑥memo-hist-chip:hover self memo-chip-color glow（メモ履歴チップ自己発光）、
+   ⑦fv-rate-badge.high/mid/low:hover self タイプ別 glow（高=primary/中=warning/低=success）、
+   ⑧adv-preset-chip:hover self primary glow（詳細フィルタープリセットチップ自己発光）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.80・全script/linkタグ?v=23.80に更新 */
+
+/* 1. ev-sum-card:hover → .ev-sum-label 白 text-shadow glow
+   収支予定サマリーカード（グラデーション背景）ホバー時に .ev-sum-label
+   （「今月の予定」「来月の予定」等のラベルテキスト：color:on-dark-title・fs-xs）に
+   白 text-shadow glow を追加。既存 opacity:1（v23.17）と連動し
+   ev-sum-count 白glow（v23.29）・ev-sum-inc/exp 白glow（v23.67）と合わせて
+   サマリーカード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.ev-sum-card .ev-sum-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 2. pt-total/expiring:hover → .pt-summary-label 白 text-shadow glow
+   ポイント残高サマリーカード（グラデーション背景）ホバー時に .pt-summary-label
+   （「合計ポイント」「まもなく失効」等のラベルテキスト：color:on-dark-label・fw-bold・ls-cap）に
+   白 text-shadow glow を追加。既存 opacity:1（v23.17）と連動し
+   pt-summary-amount glow・pt-summary-unit glow（v23.79）・pt-summary-sub glow（v23.79）と
+   合わせてカード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.pt-summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-total:hover    .pt-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+.pt-expiring:hover .pt-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 3. ch-sum-active/total/achieved:hover → .ch-summary-label 白 text-shadow glow
+   チャレンジサマリーカード（グラデーション背景）3種ホバー時に .ch-summary-label
+   （「アクティブ数」「総数」「達成数」等のラベルテキスト：opacity:near～1）に
+   白 text-shadow glow を追加。既存 opacity:1（各v23.17/v23.21）と連動し
+   ch-summary-value 白glow（v22.x）・ch-summary-unit 白glow（v23.79）と合わせて
+   カード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.ch-sum-achieved .ch-summary-label,
+.ch-sum-active   .ch-summary-label,
+.ch-sum-total    .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-sum-achieved:hover .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+.ch-sum-active:hover   .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+.ch-sum-total:hover    .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 4. ev-card:hover → .ev-type-badge タイプ別 text-shadow glow
+   収支予定カードホバー時に .ev-type-badge（「収入」「支出」バッジ：
+   ev-income=income色/ev-expense=expense色）にタイプ別 text-shadow glow を追加。
+   既存 scale(1.05)+brightness(1.08)（v23.x）と連動し
+   ev-card-name glow（v23.x）・ev-cat-badge glow（v23.x）・ev-card-amount glow（v23.x）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.ev-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-card:hover .ev-type-badge.ev-income  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.ev-card:hover .ev-type-badge.ev-expense { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 5. amt-hist-chip:hover → self amt-chip-color text-shadow glow
+   金額履歴チップ（「¥3,000」「¥5,000」等）のホバー時に自己テキストに
+   amt-chip-color text-shadow glow を追加。既存 background color変化+lift+shadow（v15.x）と連動し
+   チップテキストがアクセントカラーで輝くセルフホバー演出を完成させる。
+   sf-chip self glow（v23.53）・date-quick-btn self glow（v23.53）と同パターン。 */
+.amt-hist-chip { transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.amt-hist-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. memo-hist-chip:hover → self memo-chip-color text-shadow glow
+   メモ履歴チップ（メモ候補テキスト）のホバー時に自己テキストに
+   memo-chip-color text-shadow glow を追加。既存 background color変化+lift+shadow（v15.x）と連動し
+   amt-hist-chip self glow（本スプリント⑤）と同パターンでメモチップにも
+   ホバー時アクセントカラー発光演出を統一する。 */
+.memo-hist-chip { transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.memo-hist-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--memo-chip-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. fv-rate-badge.high/mid/low:hover → self タイプ別 text-shadow glow
+   財務予測レートバッジ（「5.2%」「3.1%」等の金利率バッジ）のホバー時に
+   タイプ別 text-shadow glow を追加（high=primary / mid=warning / low=success）。
+   既存 brightness(1.1)+タイプ別 drop-shadow（v23.x）と連動し
+   バッジテキスト自体も対応カラーで輝くセルフホバー演出の完成形に。 */
+.fv-rate-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-rate-badge.high:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.fv-rate-badge.mid:hover  { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.fv-rate-badge.low:hover  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 8. adv-preset-chip:hover → self primary text-shadow glow
+   詳細フィルタープリセットチップ（「今月」「先月」「3ヶ月」等）のホバー時に
+   primary text-shadow glow を追加。既存 color:primary変色+lift+shadow（v22.x）と連動し
+   sf-chip self glow（v23.53）・date-quick-btn self glow（v23.53）・
+   amt-hist-chip self glow（本スプリント⑤）と同パターンで
+   取引フィルターチップ群のホバー演出を統一する。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.80・全script/linkタグ?v=23.80に更新 */
+.adv-preset-chip { transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.adv-preset-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
