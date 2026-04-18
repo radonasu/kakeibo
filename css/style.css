@@ -24670,3 +24670,95 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ウィジェット行内全要素がホバーで一体的に輝く完成形演出に。 */
 .sub-cycle-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sub-widget-item:hover .sub-cycle-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ── v23.68 ホバー子要素テキストへの text-shadow glow 追加（8箇所）────────────────────────────
+   Sprint #764 — v23.68 child hover text-shadow glow (8 items)
+   md-cat-amount-glow／md-cat-pct-glow／yr-elapsed-badge-glow／
+   nt-char-count-glow／cal-ev-cat-glow／ct-stat-value-sub-glow／
+   cat-yayoi-tag-glow／wl-priority-badge-glow
+
+   v23.68: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①md-cat-row:hover .md-cat-amount md-cat-color glow（収入=success）、
+   ②md-cat-row:hover .md-cat-pct md-cat-color glow、
+   ③yr-widget-card:hover .yr-elapsed-badge primary glow、
+   ④nt-card:hover .nt-char-count primary glow（warn/danger除外）、
+   ⑤cal-ev-item:hover .cal-ev-cat cal-ev-color glow、
+   ⑥ct-stat-card:hover .ct-stat-value-sub ct-stat-color glow、
+   ⑦cat-card:hover .cat-yayoi-tag primary glow、
+   ⑧wl-card:hover .wl-priority-badge wl-accent glow。
+   各要素の既存 color 変色・brightness に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。
+   全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. md-cat-row:hover → .md-cat-amount md-cat-color text-shadow glow
+   月次詳細カテゴリ行ホバー時に .md-cat-amount（カテゴリ支出金額：fw-semi・tabular-nums）に
+   md-cat-color text-shadow glow を追加。既存 color:md-cat-color 変色＋brightness(1.06)（v22.x）
+   と連動し md-cat-text md-cat-color glow（v23.64）・md-cat-pct glow（本スプリント）と
+   合わせてカテゴリ行内全テキストがホバーで一体的に輝く完成形演出。
+   収入カテゴリ（.md-cat-amount-income）は success カラーで輝かせタイプを視覚的に区別。 */
+.md-cat-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-amount                      { text-shadow: 0 0 8px color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-sm), transparent); }
+.md-cat-row:hover .md-cat-amount.md-cat-amount-income { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 2. md-cat-row:hover → .md-cat-pct md-cat-color text-shadow glow
+   月次詳細カテゴリ行ホバー時に .md-cat-pct（カテゴリ割合：「52.3%」等の text-muted テキスト）に
+   md-cat-color text-shadow glow を追加。既存 color:md-cat-color 変色＋brightness(1.06)（v22.x）
+   と連動し md-cat-text glow（v23.64）・md-cat-amount glow（本スプリント）と
+   合わせてカテゴリ行内全テキストがホバーで一体的に輝く完成形演出に。 */
+.md-cat-pct { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. yr-widget-card:hover → .yr-elapsed-badge primary text-shadow glow
+   年次ウィジェットカードホバー時に .yr-elapsed-badge（「N月経過」バッジ：
+   bg:surface-2・color→primary・fw-semi）に primary text-shadow glow を追加。
+   既存 scale(1.04)+brightness(1.08)+color:primary 変色（v23.27）と連動し
+   yr-avg-label glow（v23.63）・yr-progress-label glow（v23.27）・
+   yr-topcat-label glow（v23.47）・yr-avg-val glow（v23.64）と
+   合わせてカード内全テキストがホバーで一体的に輝く年次ウィジェット完成形演出に。 */
+.yr-elapsed-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-elapsed-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. nt-card:hover → .nt-char-count primary text-shadow glow
+   ノートカードホバー時に .nt-char-count（文字数カウンター：通常 text-muted）に
+   primary text-shadow glow を追加（warn/danger 状態は除外し既存色を維持）。
+   既存 color:primary 変色（v23.x）と連動しカード内テキストがホバーで
+   一体的に primary 色で輝く演出に。 */
+.nt-char-count { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. cal-ev-item:hover → .cal-ev-cat cal-ev-color text-shadow glow
+   カレンダーパネル収支予定行ホバー時に .cal-ev-cat（カテゴリ名：text-muted→cal-ev-color 変色）に
+   cal-ev-color text-shadow glow を追加（完了済みイベントは除外）。
+   既存 color:cal-ev-color 変色（v23.x）+ brightness(1.15)（v23.x）と連動し
+   cal-ev-name glow（v23.55）と合わせてイベント行内全テキストがホバーで
+   一体的に輝く完成形演出に。 */
+.cal-ev-cat { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat { text-shadow: 0 0 8px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. ct-stat-card:hover → .ct-stat-value-sub ct-stat-color text-shadow glow
+   カテゴリトレンド統計カードホバー時に .ct-stat-value-sub（「/ 12件」等のサブテキスト：
+   fs-sm・fw-normal・text-muted・tabular-nums）に ct-stat-color text-shadow glow を追加。
+   既存 brightness(1.05)（v23.x）と連動し ct-stat-value ct-stat-color glow（v23.56）・
+   ct-stat-label ct-stat-color glow（v23.64）・ct-stat-sub primary glow（v23.64）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.ct-stat-value-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-value-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. cat-card:hover → .cat-yayoi-tag primary text-shadow glow
+   カテゴリカードホバー時に .cat-yayoi-tag（「弥生」連携バッジ：fs-xs・fw-semi・
+   text-muted→primary border）に primary text-shadow glow を追加。
+   既存 brightness(1.06)+border-color:primary（v23.x）と連動し
+   cat-card-name glow（v22.86）・cat-stat-val glow（v23.62）・cat-budget-pct glow（v23.62）と
+   合わせてカード内全要素がホバーで一体的に輝く完成形演出に。 */
+.cat-yayoi-tag { transition: filter var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-yayoi-tag { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. wl-card:hover → .wl-priority-badge wl-accent text-shadow glow
+   欲しいものリストカードホバー時に .wl-priority-badge（優先度バッジ：「★★★」等の文字）に
+   wl-accent text-shadow glow を追加。
+   既存 scale(1.06)+brightness(1.08)（v22.82）と連動し
+   wl-card-name glow（v23.48）・wl-card-price glow（v23.48）・
+   wl-card-icon drop-shadow（v22.x）と合わせてカード内全要素がホバーで
+   一体的に輝く完成形演出に。 */
+.wl-priority-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-card:hover .wl-priority-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
