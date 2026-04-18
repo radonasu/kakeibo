@@ -25347,4 +25347,101 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .sb-diff-pill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sb-row:hover .sb-diff-pill.sb-diff-up   { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 .sb-row:hover .sb-diff-pill.sb-diff-down { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #774 — v23.78 child hover text-shadow glow (8 items)
+   yi-card-value-cat-glow / pace-pct-glow /
+   yr-cell-sub-hover-glow / goal-pct-hover-glow /
+   sub-summary-sub-glow / sub-summary-label-glow /
+   wl-summary-label-glow / wl-summary-unit-glow
+   ============================================================ */
+
+/* v23.78: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①yi-card:hover .yi-card-value-cat yi-cat-color glow（年次インサイトカテゴリ名）、
+   ②pace-bar-row:hover .pace-pct ステータス別 glow（ペースバー進捗%）、
+   ③yr-cell-*:hover .yr-cell-sub タイプ別 glow（年次セル前年比差分テキスト）、
+   ④goal-card:hover .goal-pct goal-accent glow（目標達成率%）、
+   ⑤sub-summary-card:hover .sub-summary-sub 白 glow（サブスクサマリー補足）、
+   ⑥sub-summary-card:hover .sub-summary-label 白 glow（サブスクサマリーラベル）、
+   ⑦wl-sum-done:hover .wl-summary-label 白 glow（WLサマリーラベル）、
+   ⑧wl-sum-done:hover .wl-summary-unit 白 glow（WLサマリー単位テキスト）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.78・全script/linkタグ?v=23.78に更新 */
+
+/* ①【yi-card:hover → .yi-card-value-cat yi-cat-color text-shadow glow】
+   年次インサイトカードホバー時に .yi-card-value-cat（カテゴリ名テキスト：color:yi-cat-color）に
+   yi-cat-color text-shadow glow を追加。既存 brightness(1.06) と連動し
+   yi-card-value glow（v23.17）・yi-card-label glow（v23.57）・yi-card-sub glow（v23.62）・
+   yi-card-unit glow（v23.75）と合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.yi-card-value-cat { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-card-value-cat { text-shadow: 0 0 8px color-mix(in srgb, var(--yi-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ②【pace-bar-row:hover → .pace-pct ステータス別 text-shadow glow】
+   ペースバー行ホバー時に .pace-pct（「75%」等の進捗%テキスト）にステータス別 text-shadow glow 追加
+   （pace-good=success / pace-warn=warning / pace-over=danger-text）。
+   既存 brightness(1.06) と連動し pace-bar-label glow（v23.52）・pace-bar-value glow（v23.52）と
+   合わせてペースバー行の全テキストがホバーで一体的にステータス色で輝く完成形演出。 */
+.pace-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ③【yr-cell-income/expense/savings-*:hover → .yr-cell-sub タイプ別 text-shadow glow（hover強化）】
+   年次ビューセルホバー時に .yr-cell-sub（「+¥1,234（+8.5%）」等の前年比テキスト）に
+   タイプ別 text-shadow glow を追加（income=success / expense=danger-text /
+   savings-success=success / savings-warn=warning / savings-danger=danger-text）。
+   静的な yr-up/yr-down text-shadow（v22.96）を brightness(1.1)（v22.x）と連動させた
+   ホバー時強化版演出。yr-cell-value glow（v22.x）・yr-cell-label glow（v23.47）と
+   合わせてセル内全テキストがホバーで一体的に輝く完成形演出。 */
+.yr-cell-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-expense:hover         .yr-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.yr-cell-savings-success:hover .yr-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-savings-warn:hover    .yr-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.yr-cell-savings-danger:hover  .yr-cell-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ④【goal-card:hover → .goal-pct goal-accent text-shadow glow（hover強化）】
+   目標カードホバー時に .goal-pct（「75%」等の達成率%テキスト）に goal-accent text-shadow glow を追加。
+   静的な primary text-shadow（v22.94）に加えて既存 brightness(1.1) と連動し
+   ホバー時に goal-accent 色でさらに際立つ完成形演出。
+   goal-name glow・goal-remaining glow・goal-target glow・goal-saved glow・goal-pct hover glow と
+   合わせてカード内全テキストがホバーで一体的に goal-accent カラーで輝く完成形演出。 */
+.goal-pct { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ⑤【sub-summary-card:hover → .sub-summary-sub 白 text-shadow glow】
+   サブスク月次/年次サマリーカード（グラデーション背景）ホバー時に .sub-summary-sub
+   （「3件のサブスク」等の補足テキスト：on-dark-title 色）に白 text-shadow glow を追加。
+   既存 brightness(1.1)（v23.17）と連動し sub-summary-amount 白glow（v23.15）・
+   sub-summary-label 白glow（本スプリント⑥）と合わせてサマリーカード内全テキストが
+   ホバーで一体的に白く輝く完成形演出。 */
+.sub-summary-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-summary-card:hover .sub-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+
+/* ⑥【sub-summary-card:hover → .sub-summary-label 白 text-shadow glow】
+   サブスク月次/年次サマリーカード（グラデーション背景）ホバー時に .sub-summary-label
+   （「月額合計」「年額合計」等のラベルテキスト：on-dark-title 色・fw-bold）に白 text-shadow glow 追加。
+   既存 brightness(1.2)（v23.20）と連動し sub-summary-amount 白glow（v23.15）・
+   sub-summary-sub 白glow（本スプリント⑤）と合わせてサマリーカード内全テキストが
+   ホバーで一体的に白く輝く完成形演出。 */
+.sub-summary-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-summary-card:hover .sub-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ⑦【wl-sum-done:hover → .wl-summary-label 白 text-shadow glow】
+   ウィッシュリスト達成済みサマリーカード（グラデーション背景）ホバー時に .wl-summary-label
+   （「達成済み」等のラベルテキスト）に白 text-shadow glow を追加。
+   既存 brightness(1.2)（v23.22）と連動し wl-summary-value 白glow（v23.22）・
+   wl-summary-unit 白glow（本スプリント⑧）と合わせてカード内全テキストが
+   ホバーで一体的に白く輝く完成形演出。 */
+.wl-summary-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-sum-done:hover .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ⑧【wl-sum-done:hover → .wl-summary-unit 白 text-shadow glow】
+   ウィッシュリスト達成済みサマリーカード（グラデーション背景）ホバー時に .wl-summary-unit
+   （「件」等の単位テキスト）に白 text-shadow glow を追加。
+   既存 brightness(1.15)（v23.22）と連動し wl-summary-value 白glow（v23.22）・
+   wl-summary-label 白glow（本スプリント⑦）と合わせてカード内全テキストが
+   ホバーで一体的に白く輝く完成形演出。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.78・全script/linkタグ?v=23.78に更新 */
+.wl-summary-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-sum-done:hover .wl-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
 .md-cell-count:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
