@@ -25878,3 +25878,69 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既に transform+filter はあるが text-shadow が未実装だった。 */
 .tx-table .tx-tag-chip { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .tx-table tbody tr:hover .tx-tag-chip { text-shadow: 0 0 8px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #781 / v23.85 — ホバーglow 8箇所
+   qa-type-btn-hover-glow / md-nav-btn-hover-glow /
+   notif-mark-read-hover-glow / btn-notif-bell-hover-glow /
+   ci-ok-btn-hover-glow / ev-add-month-hover-glow /
+   qa-card-title-hover-glow / section-tab-active-hover-glow
+   ============================================================ */
+
+/* 1. qa-type-btn:hover → self primary text-shadow glow
+   クイック追加フォームの「収入」「支出」タイプ選択ボタンのホバー時に
+   primary text-shadow glow 追加。既存 color:primary 変色（v11.x）と連動し
+   ボタンテキスト自体も primary カラーで輝く完成形演出。 */
+.qa-type-btn { transition: background var(--dur-faster) var(--ease-out), border-color var(--dur-faster) var(--ease-out), color var(--dur-faster) var(--ease-out), box-shadow var(--dur-faster) var(--ease-out), transform var(--dur-faster) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.qa-type-btn:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. md-nav-btn:hover → self primary text-shadow glow
+   月詳細モーダルの「◀ 前月」「次月 ▶」ナビゲーションボタンのホバー時に
+   primary text-shadow glow 追加。既存 color:primary 変色+scale+box-shadow（v9.0）と連動し
+   ボタンテキスト自体も primary カラーで輝く完成形演出。 */
+.md-nav-btn { transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.md-nav-btn:hover:not(:disabled) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. notif-mark-read:hover → self primary text-shadow glow
+   通知パネルの「既読にする」ボタンのホバー時に
+   primary text-shadow glow 追加。既存 color:primary 変色+box-shadow（v14.x）と連動し
+   ボタンテキスト自体も primary カラーで輝く完成形演出。 */
+.notif-mark-read { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.notif-mark-read:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. btn-notif-bell:hover → self white text-shadow glow
+   サイドバーの通知ベルボタンのホバー時に
+   白 text-shadow glow 追加。既存 color:white 変色+scale+box-shadow（v14.x）と連動し
+   SVGアイコン自体も白く輝く完成形演出。 */
+.btn-notif-bell { transition: background var(--dur-faster) var(--ease-out), color var(--dur-faster) var(--ease-out), box-shadow var(--dur-faster) var(--ease-out), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.btn-notif-bell:hover { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
+/* 5. ci-ok-btn:hover → self white text-shadow glow
+   チェックインモーダルの「チェックイン！」ボタンのホバー時に
+   白 text-shadow glow 追加。既存 brightness+lift+box-shadow（v14.x）と連動し
+   グラデーション背景の白テキストが輝く完成形演出。 */
+.ci-ok-btn { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-ok-btn:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+
+/* 6. ev-add-month:hover → self white text-shadow glow
+   収支予定ページの月追加ボタン（「＋」）のホバー時に
+   白 text-shadow glow 追加。既存 background:primary+color:white+scale+box-shadow（v13.x）と連動し
+   ボタン内テキストが白く輝く完成形演出。 */
+.ev-add-month { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-add-month:hover { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
+/* 7. qa-toggle-btn:hover → .qa-card-title qa-accent text-shadow glow
+   クイック追加フォームのカードヘッダートグルボタンのホバー時に
+   タイトルテキスト（color:qa-accent）に qa-accent text-shadow glow 追加。
+   既存 color:qa-accent（v11.x）・background:surface-hover と連動し
+   タイトルが qa-accent カラーで輝く完成形演出。 */
+.qa-card-title { transition: color var(--dur-mid) var(--ease-out), text-shadow var(--dur-mid) var(--ease-out); }
+.qa-toggle-btn:hover .qa-card-title { text-shadow: 0 0 8px color-mix(in srgb, var(--qa-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. section-tab.is-active:hover → primary text-shadow glow 強化
+   セクションタブのアクティブタブをホバー時に静的 glow（mix-md）より強い
+   mix-lg の primary text-shadow glow でさらに強調。
+   既存 section-tab.is-active 静的 glow（v22.84）・section-tab:not(.is-active):hover glow（v23.x）
+   と合わせてホバー時に一段階輝きが増す演出に。.section-tab の transition には text-shadow を含む（v23.x）。 */
+.section-tab.is-active:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
+[data-theme="dark"] .section-tab.is-active:hover { text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
