@@ -24576,3 +24576,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    cal-amount glow（v23.42）と合わせてセル内全テキストがホバーで一体的に輝く演出に。 */
 .cal-date-num { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ── v23.67 ホバー子要素テキストへの text-shadow glow 追加（8箇所）────────────────────────────
+   Sprint #763 — v23.67 child hover text-shadow glow (8 items)
+   summary-amount-typecolor-glow／ci-badge-achieved-glow／
+   ev-sum-inc-glow／ev-sum-exp-glow／dow-pct-badge-typecolor-glow／
+   asset-type-badge-glow／goal-monthly-target-glow／sub-cycle-badge-glow
+
+   v23.67: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①summary-card income/expense/balance:hover .summary-amount タイプ別 color+white glow、
+   ②ci-challenge-item:hover .ci-badge.achieved success glow、
+   ③ev-sum-card:hover .ev-sum-inc 白 glow、
+   ④ev-sum-card:hover .ev-sum-exp 白 glow、
+   ⑤dow-table-row:hover .dow-pct-badge タイプ別 glow（high/mid/low）、
+   ⑥asset-card:hover .asset-type-badge asset-accent glow、
+   ⑦goal-card:hover .goal-monthly-target primary glow、
+   ⑧sub-widget-item:hover .sub-cycle-badge primary glow。
+   各要素の既存 scale / brightness に text-shadow を追加し、
+   ホバー演出の完成形に統一。全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. summary-card income/expense/balance:hover → .summary-amount タイプ別 color+white text-shadow glow
+   ホームサマリーカードのホバー時に金額数値テキストに白glow＋タイプ別カラーglow を追加。
+   既存 white text-shadow（v23.27）を維持しつつ type-specific カラーグローを上乗せし
+   収入=success/支出=expense/黒字=primary/赤字=danger-text で各カードタイプを視覚的に区別。
+   既存 color:success/danger-text/primary 変色+brightness(1.06) と連動して
+   グラデーション背景上の金額数値がホバーで白+カラー二重に輝く演出。 */
+.summary-amount { transition: filter var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.summary-card.income:hover           .summary-amount { text-shadow: 0 0 18px rgba(255,255,255,0.65), 0 2px 12px rgba(255,255,255,0.35), 0 0 14px color-mix(in srgb, var(--success)      30%, transparent); }
+.summary-card.expense:hover          .summary-amount { text-shadow: 0 0 18px rgba(255,255,255,0.65), 0 2px 12px rgba(255,255,255,0.35), 0 0 14px color-mix(in srgb, var(--expense)      30%, transparent); }
+.summary-card.balance.positive:hover .summary-amount { text-shadow: 0 0 18px rgba(255,255,255,0.65), 0 2px 12px rgba(255,255,255,0.35), 0 0 14px color-mix(in srgb, var(--primary)      30%, transparent); }
+.summary-card.balance.negative:hover .summary-amount { text-shadow: 0 0 18px rgba(255,255,255,0.65), 0 2px 12px rgba(255,255,255,0.35), 0 0 14px color-mix(in srgb, var(--danger-text)  30%, transparent); }
+
+/* 2. ci-challenge-item:hover → .ci-badge.achieved success text-shadow glow
+   マンスリーチェックインのチャレンジ行ホバー時に .ci-badge.achieved（「達成」バッジ：
+   background:success-bg・color:success）に success text-shadow glow を追加。
+   既存 scale(1.06)+brightness(1.1) に加えてバッジテキストも発光し
+   達成感を視覚的に強調。ci-challenge-name primary glow（v23.49）と連動し
+   チャレンジ名称・バッジが一体的に輝くホバー演出の完成形に。 */
+.ci-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-challenge-item:hover .ci-badge.achieved { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 3. ev-sum-card:hover → .ev-sum-inc 白 text-shadow glow
+   収支予定グラデーションサマリーカードのホバー時に .ev-sum-inc（計画収入金額：
+   color:on-dark-bright・fw-semi・tabular-nums）に白 text-shadow glow を追加。
+   既存 brightness(1.15)（v23.29）と連動しグラデーション背景上の収入テキストが
+   白く輝く演出に。ev-sum-exp glow（本スプリント）と対称で収支金額両方が揃って輝く完成形。 */
+.ev-sum-card .ev-sum-inc { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-inc { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* 4. ev-sum-card:hover → .ev-sum-exp 白 text-shadow glow
+   収支予定グラデーションサマリーカードのホバー時に .ev-sum-exp（計画支出金額：
+   color:on-dark-hint・fw-semi・tabular-nums）に白 text-shadow glow を追加。
+   既存 brightness(1.15)（v23.29）と連動しev-sum-inc glow（本スプリント）と
+   対称で収入・支出の両テキストが一体的に白く輝くグラデカード完成形演出に。 */
+.ev-sum-card .ev-sum-exp { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-exp { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* 5. dow-table-row:hover → .dow-pct-badge タイプ別 text-shadow glow
+   曜日別統計テーブル行のホバー時に .dow-pct-badge（「高」「中」「低」パーセントバッジ）に
+   タイプ別 text-shadow glow を追加：high=danger-text/mid=warning/low=success。
+   既存 scale(1.06)+brightness(1.1)（v23.07）と連動しバッジテキストも
+   タイプカラーで輝く演出に。dow-label-cell brightness・dow-mini-bar-fill glow（各v23.x）と
+   連動し行内全要素が一体的にホバーで反応する完成形に。 */
+.dow-pct-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover .dow-pct-high { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.dow-table-row:hover .dow-pct-mid  { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.dow-table-row:hover .dow-pct-low  { text-shadow: 0 0 8px color-mix(in srgb, var(--success)      var(--mix-sm), transparent); }
+
+/* 6. asset-card:hover → .asset-type-badge asset-accent text-shadow glow
+   資産カードのホバー時に .asset-type-badge（「現金」「銀行」「投資」等の資産タイプバッジ）に
+   asset-accent text-shadow glow を追加。
+   既存 scale(1.03)+brightness(1.06)（v22.75）と連動しバッジテキストが
+   資産テーマカラーで輝く演出に。asset-name glow（v23.48）・asset-balance glow（v23.43）・
+   asset-type-icon glow（v23.21）と連動し資産カード内全要素がホバーで一体的に輝く完成形演出に。 */
+.asset-type-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-type-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. goal-card:hover → .goal-monthly-target primary text-shadow glow
+   目標カードのホバー時に .goal-monthly-target（「月額必要貯蓄: ¥XX,XXX」テキスト：
+   color:primary・fw-semi）に primary text-shadow glow を追加。
+   既存 brightness(1.08)（v23.10）と連動し goal-name glow（v23.45）・
+   goal-saved glow（v23.42）・goal-target glow（v23.45）と合わせて
+   目標カード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.goal-monthly-target { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-monthly-target { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. sub-widget-item:hover → .sub-cycle-badge primary text-shadow glow
+   サブスクウィジェット行のホバー時に .sub-cycle-badge（「月払い」「年払い」等の
+   サイクルバッジ：background:surface-2・color:text-muted・fs-xs）に
+   primary text-shadow glow を追加。
+   既存 brightness(1.1)（v23.11）と連動し sub-widget-name glow（v23.54）・
+   sub-widget-amount glow（v23.46）・sub-widget-next タイプ別変色（v23.x）と合わせて
+   ウィジェット行内全要素がホバーで一体的に輝く完成形演出に。 */
+.sub-cycle-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-item:hover .sub-cycle-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
