@@ -26014,3 +26014,73 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    アクティブタブテキストが常に primary カラーで輝く完成形演出。 */
 .auth-tab.active { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 [data-theme="dark"] .auth-tab.active { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.87 Sprint #783: btn-ghost-hover-glow＋btn-danger-hover-glow＋
+   btn-dark-toggle-hover-glow＋btn-icon-hover-glow＋btn-preset-hover-glow＋
+   card-collapse-btn-hover-glow＋btn-share-hover-glow＋stp-help-summary-hover-glow 8箇所
+   ============================================================ */
+
+/* 1. btn-ghost:hover → self primary text-shadow glow
+   キャンセル・閉じる等のゴーストボタンホバー時に primary text-shadow glow 追加。
+   既存 background:surface-hover+border-color:border-strong+box-shadow（v1.x）と連動し
+   ボタンテキストが primary カラーで輝く完成形演出。
+   btn-ghost transition に text-shadow を追加。 */
+.btn-ghost { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-ghost:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. btn-danger:hover → self expense text-shadow glow
+   削除確認等の危険ボタンホバー時に expense text-shadow glow 追加。
+   既存 background:danger-border+border-color:expense+box-shadow（v1.x）と連動し
+   ボタンテキストが expense カラーで輝く完成形演出。
+   btn-danger transition に text-shadow を追加。 */
+.btn-danger { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-danger:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 3. btn-dark-toggle:hover → self primary-end text-shadow glow
+   ダークモード切替ボタンホバー時に primary-end text-shadow glow 追加。
+   既存 background:on-dark-border+color:sidebar-text-hi+box-shadow（v4.x）と連動し
+   ダーク背景上のトグル絵文字が primary-end カラーで輝く完成形演出。
+   btn-dark-toggle transition に text-shadow を追加。 */
+.btn-dark-toggle { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-dark-toggle:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* 4. btn-icon:hover → self primary text-shadow glow
+   汎用アイコンボタン（編集・削除・共有等）ホバー時に primary text-shadow glow 追加。
+   既存 opacity:1+background:bg+scale+box-shadow（v5.x）と連動し
+   アイコン文字が primary カラーで輝く完成形演出。
+   btn-icon transition に text-shadow を追加。 */
+.btn-icon { transition: opacity var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-icon:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. btn-preset:hover → self primary text-shadow glow
+   金額プリセットボタンホバー時に primary text-shadow glow 追加。
+   既存 background:primary-light+border-color:primary+color:primary+translate+box-shadow（v5.x）と連動し
+   プリセットテキストが primary カラーで輝く完成形演出。
+   btn-preset transition に text-shadow を追加。 */
+.btn-preset { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-preset:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. card-collapse-btn:hover → self primary text-shadow glow
+   カード折りたたみボタンホバー時に primary text-shadow glow 追加。
+   既存 background:surface-hover+color:text+scale+box-shadow（v5.x）と連動し
+   折りたたみ矢印アイコンが primary カラーで輝く完成形演出。
+   card-collapse-btn transition に text-shadow を追加。 */
+.card-collapse-btn { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.card-collapse-btn:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. btn-share:hover → self primary text-shadow glow
+   シェアボタンホバー時に primary text-shadow glow 追加。
+   既存 background:primary-mix+border-color:primary+translate+box-shadow（v5.x）と連動し
+   シェアボタンテキストが primary カラーで輝く完成形演出。
+   btn-share transition に text-shadow を追加。 */
+.btn-share { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-share:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. stp-help-summary:hover → self primary text-shadow glow
+   設定ヘルプアコーディオントリガーホバー時に primary text-shadow glow 追加。
+   既存 color:text+box-shadow:focus-ring（v5.x）と連動し
+   ヘルプテキストが primary カラーで輝く完成形演出。
+   stp-help-summary transition に text-shadow を追加。 */
+.stp-help-summary { transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.stp-help-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
