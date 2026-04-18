@@ -24951,3 +24951,93 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑤type-btn.expense-btn:hover self expense text-shadow glow、⑥type-btn.income-btn:hover self income glow、
    ⑦modal-close:hover self danger-text text-shadow glow、⑧stp-config-summary:hover self primary glow。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.72・全script/linkタグ?v=23.72に更新 */
+
+/* ============================================================
+   Sprint #769 — v23.73 child hover text-shadow glow (8 items)
+   asset-entry-date-glow / asset-entry-note-glow /
+   ev-widget-month-glow / hs-prev-badge-glow /
+   yr-unit-glow / fv-fixed-val-glow /
+   fv-var-val-glow / dow-td3-glow
+   ============================================================ */
+
+/* 1. asset-entry-row:hover → .asset-entry-date primary text-shadow glow
+   資産履歴エントリ行ホバー時に .asset-entry-date（記録日テキスト：color:primary変色済み）に
+   primary text-shadow glow を追加。既存 primary 変色と連動し
+   asset-entry-balance glow・asset-entry-row translateX+box-shadow と合わせて
+   エントリ行全体がホバーで一体的に primary 色で輝く完成形演出に。 */
+.asset-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-entry-row:hover .asset-entry-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. asset-entry-row:hover → .asset-entry-note primary text-shadow glow
+   資産履歴エントリ行ホバー時に .asset-entry-note（メモテキスト：color:primary変色済み）に
+   primary text-shadow glow を追加。asset-entry-date glow（本スプリント①）・
+   asset-entry-balance glow と連動しエントリ行内テキスト全要素が
+   ホバーで一体的に primary 色で輝く完成形演出に。 */
+.asset-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-entry-row:hover .asset-entry-note { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. ev-widget-item:hover → .ev-widget-month primary text-shadow glow
+   収支予定ウィジェット行ホバー時に .ev-widget-month（月ラベルテキスト：color:primary・fs-xs・fw-semi）に
+   primary text-shadow glow を追加。既存 brightness(1.15) と連動し
+   ev-widget-cat glow・ev-widget-name glow と合わせてウィジェット行全要素が
+   ホバーで一体的に primary 色で輝く完成形演出に。 */
+.ev-widget-month { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-widget-item:hover .ev-widget-month { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. health-score-card:hover → .hs-prev-badge タイプ別 text-shadow glow
+   家計スコアカードホバー時に .hs-prev-badge（「▲3pt」「▼2pt」トレンドバッジ）に
+   トレンド種別 text-shadow glow を追加（up=success / down=danger-text）。
+   既存 scale(1.05)+brightness(1.1) と連動し
+   hs-trend-label glow・hs-score-unit brightness と合わせてカード全体の
+   ホバー演出の完成形に。 */
+.hs-prev-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-prev-badge.hs-trend-up   { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.health-score-card:hover .hs-prev-badge.hs-trend-down { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 5. yr-cell-*:hover → .yr-unit タイプ別 text-shadow glow
+   年間ウィジェットセルホバー時に .yr-unit（「円」「%」等の単位テキスト）に
+   セルタイプ別 text-shadow glow を追加（income=success / expense=danger-text /
+   savings-success=success / savings-warn=warning / savings-danger=danger-text）。
+   既存 brightness(1.1) と連動し yr-cell-label glow・yr-cell-value brightness と
+   合わせてセル全要素がホバーで一体的に輝く完成形演出に。 */
+.yr-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-cell-income:hover          .yr-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-expense:hover         .yr-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.yr-cell-savings-success:hover .yr-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.yr-cell-savings-warn:hover    .yr-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.yr-cell-savings-danger:hover  .yr-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 6. fv-month-table tbody tr:hover → .fv-fixed-val primary text-shadow glow
+   固定費 vs 変動費 月別テーブル行ホバー時に .fv-fixed-val（固定費金額：color:primary・fw-semi）に
+   primary text-shadow glow を追加。既存 brightness(1.08) と連動し
+   fv-month-cell glow・fv-var-val glow（本スプリント⑦）・fv-rate-badge drop-shadow と合わせて
+   行全要素がホバーで一体的に輝く完成形演出に。 */
+.fv-fixed-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-fixed-val { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. fv-month-table tbody tr:hover → .fv-var-val success text-shadow glow
+   固定費 vs 変動費 月別テーブル行ホバー時に .fv-var-val（変動費金額：color:success・fw-semi）に
+   success text-shadow glow を追加。既存 brightness(1.08) と連動し
+   fv-fixed-val glow（本スプリント⑥）・fv-month-cell glow と合わせて
+   行内全値要素がホバーで色別に輝く完成形演出に。 */
+.fv-var-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover .fv-var-val { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 8. dow-table-row:hover → td:nth-child(3) expense text-shadow glow
+   曜日別支出テーブル行ホバー時に 3列目（支出金額テキスト：color:expense）に
+   expense text-shadow glow を追加。既存 brightness(1.08) と連動し
+   td:nth-child(2) primary glow・td:nth-child(4) primary glow・
+   dow-pct-badge glow と合わせて行内全テキストがホバーで完全に輝く完成形演出に。 */
+.dow-table-row td:nth-child(3) { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-table-row:hover td:nth-child(3) { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* v23.73: ホバー text-shadow glow 8箇所
+   asset-entry-date-glow／asset-entry-note-glow／
+   ev-widget-month-glow／hs-prev-badge-glow／
+   yr-unit-glow／fv-fixed-val-glow／
+   fv-var-val-glow／dow-td3-glow
+   ①asset-entry-row:hover .asset-entry-date primary glow、②asset-entry-row:hover .asset-entry-note primary glow、
+   ③ev-widget-item:hover .ev-widget-month primary glow、④health-score-card:hover .hs-prev-badge タイプ別 glow、
+   ⑤yr-cell-*:hover .yr-unit タイプ別 glow（5種）、⑥fv-month-table tr:hover .fv-fixed-val primary glow、
+   ⑦fv-month-table tr:hover .fv-var-val success glow、⑧dow-table-row:hover td:nth-child(3) expense glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.73・全script/linkタグ?v=23.73に更新 */
