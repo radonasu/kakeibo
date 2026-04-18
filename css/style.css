@@ -24330,3 +24330,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    合わせてカード内全テキストがホバーで一体的に輝くポイントカード完成形演出。 */
 .pt-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .pt-card:hover .pt-note { text-shadow: 0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #760 — v23.64 child hover text-shadow glow (8 items)
+   tg-stat-label-glow / ct-stat-label-glow /
+   ct-stat-sub-glow / yoy-summary-value-glow /
+   yoy-summary-label-glow / md-cat-text-glow /
+   yr-avg-val-glow / cal-sum-label-glow
+   ============================================================ */
+
+/* v23.64: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①tg-stat-card:hover .tg-stat-label primary glow、②ct-stat-card:hover .ct-stat-label ct-stat-color glow、
+   ③ct-stat-card:hover .ct-stat-sub primary glow、④yoy-summary-item:hover .yoy-summary-value primary glow、
+   ⑤yoy-summary-item:hover .yoy-summary-label primary glow、⑥md-cat-row:hover .md-cat-text md-cat-color glow、
+   ⑦yr-widget-card:hover .yr-avg-val primary glow、⑧cal-sum-item:hover .cal-sum-label タイプ別 glow。
+   各要素の既存 filter: brightness() または color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. tg-stat-card:hover → .tg-stat-label primary text-shadow glow
+   節約目標統計カードホバー時に.tg-stat-label（「目標支出」「実際支出」等のラベル）に
+   primary text-shadow glow追加。既存brightness(1.1)（v23.02）と連動し
+   tg-stat-value color+brightness（v22.x）・tg-stat-icon scale+glow（v22.x）と
+   合わせてカード内全要素がホバーで一体的に輝く完成形演出。 */
+.tg-stat-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-stat-card:hover .tg-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. ct-stat-card:hover → .ct-stat-label ct-stat-color text-shadow glow
+   チャレンジ統計カードホバー時に.ct-stat-label（「達成率」「継続日数」等のラベル）に
+   ct-stat-color text-shadow glow追加。既存brightness(1.1)（v23.02）と連動し
+   ct-stat-value color変色（v22.x）・ct-stat-sub brightness（v23.02）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.ct-stat-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. ct-stat-card:hover → .ct-stat-sub primary text-shadow glow
+   チャレンジ統計カードホバー時に.ct-stat-sub（補足テキスト）に
+   primary text-shadow glow追加。既存brightness(1.05)（v23.02）と連動し
+   ct-stat-label glow（本スプリント）・ct-stat-value color変色（v22.x）と
+   合わせてカード内全テキストがホバーで揃って輝く完成形演出。 */
+.ct-stat-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-stat-card:hover .ct-stat-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. yoy-summary-item:hover → .yoy-summary-value primary text-shadow glow
+   前年比較サマリー行ホバー時に.yoy-summary-value（金額テキスト）に
+   primary text-shadow glow追加。既存brightness(1.08)（v23.02）と連動し
+   yoy-diff タイプ別glow（v23.x）・yoy-summary-label brightness（v23.02）と
+   合わせて行内全テキストがホバーで一体的に輝く完成形演出。 */
+.yoy-summary-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yoy-summary-item:hover .yoy-summary-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. yoy-summary-item:hover → .yoy-summary-label primary text-shadow glow
+   前年比較サマリー行ホバー時に.yoy-summary-label（「食費」等のラベルテキスト）に
+   primary text-shadow glow追加。既存brightness(1.1)（v23.02）と連動し
+   yoy-summary-value glow（本スプリント）・yoy-diff タイプ別glow（v23.x）と
+   合わせて行内全テキストがホバーで一体的に輝く前年比較完成形演出。 */
+.yoy-summary-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yoy-summary-item:hover .yoy-summary-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. md-cat-row:hover → .md-cat-text md-cat-color text-shadow glow
+   月次詳細カテゴリ行ホバー時に.md-cat-text（カテゴリ名テキスト）に
+   md-cat-color text-shadow glow追加。既存color:md-cat-color変色（v22.x）と連動し
+   md-cat-amount 変色（v22.x）・md-cat-pct 変色（v22.x）・md-cat-bar brightness（v22.x）と
+   合わせて行内全テキストがホバーで一体的に輝く完成形演出。 */
+.md-cat-text { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.md-cat-row:hover .md-cat-text { text-shadow: 0 0 8px color-mix(in srgb, var(--md-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. yr-widget-card:hover → .yr-avg-val primary text-shadow glow
+   年次ウィジェットカードホバー時に.yr-avg-val（月平均金額テキスト）に
+   primary text-shadow glow追加。既存brightness(1.1)（v23.28）と連動し
+   yr-avg-label primary glow（v23.50）・yr-topcat-label glow（v23.47）と
+   合わせてカード内全テキストがホバーで一体的に輝く年次ウィジェット完成形演出。 */
+.yr-avg-val { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yr-widget-card:hover .yr-avg-val { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. cal-sum-item:hover → .cal-sum-label タイプ別 text-shadow glow
+   カレンダーサマリーアイテムホバー時に.cal-sum-label（「収入」「支出」等ラベル）に
+   タイプ別text-shadow glow追加。収入=success / 支出=expense / デフォルト=primary。
+   既存brightness(1.1)（v23.02）と連動しcal-sum-value タイプ別glow（v23.50）と
+   合わせてラベル・金額が一体的にホバーで輝くカレンダーサマリー完成形演出。 */
+.cal-sum-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-sum-item:hover                      .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.cal-sum-item:has(.income):hover         .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.cal-sum-item:has(.expense):hover        .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
