@@ -25445,3 +25445,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wl-summary-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .wl-sum-done:hover .wl-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
 .md-cell-count:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.79: ホバー子要素 text-shadow glow 8箇所
+   yi-sub-muted-glow＋goal-sep-glow＋ch-summary-unit-glow＋
+   dow-stat-unit-glow＋pt-summary-sub-glow＋pt-summary-unit-glow＋
+   asset-foreign-hint-glow＋ch-progress-label-glow
+   ============================================================ */
+
+/* 1. yi-card:hover → .yi-sub-muted primary text-shadow glow
+   年次インサイトカードホバー時に .yi-sub-muted（最高/最低貯蓄月収支・黒字継続説明等：
+   color:text-muted）に primary text-shadow glow 追加。既存 brightness(1.08)（v23.17）と
+   連動し yi-card-value glow・yi-card-label glow・yi-card-sub glow・yi-half-label glow・
+   yi-card-unit glow・yi-card-value-cat glow と合わせてカード内全テキストがホバーで
+   一体的に輝く完成形演出。 */
+.yi-sub-muted { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.yi-card:hover .yi-sub-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. goal-card:hover → .goal-sep goal-accent text-shadow glow
+   目標カードホバー時に .goal-sep（「残り ¥XX,XXX」等の区切り補足テキスト：
+   color:text-faint・fs-xs・ls-fine）に goal-accent text-shadow glow 追加。
+   既存 brightness(1.2)（v23.22）と連動し goal-name glow・goal-remaining glow・
+   goal-saved glow・goal-pct glow・goal-deadline glow・goal-note glow と合わせて
+   カード内全テキストがホバーで一体的に goal-accent カラーで輝く完成形演出。 */
+.goal-sep { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-card:hover .goal-sep { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. ch-sum-*:hover → .ch-summary-unit 白 text-shadow glow
+   チャレンジサマリーカード（グラデーション背景: active/total/achieved 全3種）ホバー時に
+   .ch-summary-unit（「件」等の単位テキスト：fs-sm・opacity-soft）に白 text-shadow glow 追加。
+   既存 brightness(1.15)（v23.20）と連動し ch-summary-value glow・ch-summary-label opacity と
+   合わせてカード内全テキストがホバーで一体的に白く輝くグラデーションカード完成形演出。 */
+.ch-summary-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-sum-active:hover   .ch-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+.ch-sum-total:hover    .ch-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+.ch-sum-achieved:hover .ch-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 4. dow-stat-card:hover → .dow-stat-unit 白 text-shadow glow
+   曜日別統計カード（グラデーション背景）ホバー時に .dow-stat-unit（「円」等の
+   単位テキスト：opacity-soft・fs-xs）に白 text-shadow glow 追加。
+   既存 brightness(1.1)（v23.20）と連動し dow-stat-day glow・dow-stat-amount glow・
+   dow-stat-label glow（各v23.70/v23.75）と合わせてカード内全テキストがホバーで
+   一体的に白く輝くグラデーションカード完成形演出。 */
+.dow-stat-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 5. pt-summary-card:hover → .pt-summary-sub 白 text-shadow glow
+   ポイント残高サマリーカード（グラデーション背景）ホバー時に .pt-summary-sub
+   （「有効期限: x件」等の補足テキスト：color:on-dark-muted・fs-2xs）に
+   白 text-shadow glow 追加。既存 brightness(1.1)（v23.21）と連動し
+   pt-summary-amount glow・pt-summary-unit glow（本スプリント⑥）と合わせて
+   カード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.pt-summary-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 6. pt-summary-card:hover → .pt-summary-unit 白 text-shadow glow
+   ポイント残高サマリーカード（グラデーション背景）ホバー時に .pt-summary-unit
+   （「pt」等の単位テキスト：fw-normal・fs-sm）に白 text-shadow glow 追加。
+   既存 brightness(1.15)（v23.21）と連動し pt-summary-amount glow・
+   pt-summary-sub glow（本スプリント⑤）と合わせてカード内全テキストがホバーで
+   一体的に白く輝くグラデーションカード完成形演出。 */
+.pt-summary-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-summary-card:hover .pt-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 7. asset-card:hover → .asset-foreign-hint primary text-shadow glow
+   外貨建て資産カードホバー時に .asset-foreign-hint（外貨資産補足ヒントテキスト：
+   color:text-muted・fs-xs・tabular-nums）に primary text-shadow glow 追加。
+   既存 brightness(1.06)（v23.22）と連動し asset-fx-rate 変色・
+   asset-balance-delta glow・asset-date-label glow と合わせて外貨資産関連テキストが
+   ホバーで一体的に primary カラーで輝く完成形演出。 */
+.asset-foreign-hint { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-foreign-hint { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. ch-card:hover → .ch-progress-label ch-accent text-shadow glow
+   チャレンジカードホバー時に .ch-progress-label（「¥50,000 / ¥100,000」等の
+   進捗テキスト：color:text-sub・fs-xs・ls-fine）に ch-accent text-shadow glow 追加。
+   既存 brightness(1.1)（v23.25）と連動し ch-progress-pct brightness・ch-card-name 変色glow・
+   ch-card-meta glow と合わせてカード内テキストがホバーで一体的に輝く完成形演出。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.79・全script/linkタグ?v=23.79に更新 */
+.ch-progress-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-card:hover .ch-progress-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
