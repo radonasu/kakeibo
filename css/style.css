@@ -24412,3 +24412,87 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cal-sum-item:hover                      .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .cal-sum-item:has(.income):hover         .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
 .cal-sum-item:has(.expense):hover        .cal-sum-label { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* ── v23.65 ホバー子要素テキストへの text-shadow glow 追加（8箇所）────────────────────────────
+   hm-stat-label-glow + fv-cat-amt-glow + fv-pct-txt-glow +
+   asset-date-label-glow + asset-balance-jpy-glow + tg-table-text-muted-glow +
+   dow-stat-day-glow + dow-stat-amount-glow
+   ============================================================ */
+
+/* v23.65: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①hm-stat-card:hover .hm-stat-label タイプ別 glow、②fv-cat-table tr:hover .fv-cat-amt primary glow、
+   ③fv-cat-table tr:hover .fv-pct-txt primary glow、④asset-card:hover .asset-date-label primary glow、
+   ⑤asset-card:hover .asset-balance-jpy primary glow、⑥tg-table tr:hover td.text-muted primary glow、
+   ⑦dow-stat-card:hover .dow-stat-day 白 glow、⑧dow-stat-card:hover .dow-stat-amount 白 glow。
+   各要素の既存 filter: brightness() または color 変色 transition に text-shadow を追加し、
+   ホバー時にアクセントカラーで輝く演出を完成。全変更 CSS-only 実装（JS 変更なし）。 */
+
+/* 1. hm-stat-card:hover → .hm-stat-label タイプ別 text-shadow glow
+   ヒートマップ統計カードのホバー時に .hm-stat-label（「合計支出」等のラベルテキスト）に
+   タイプ別text-shadow glow追加。1=primary / 2=expense / 3=warning / 4=success。
+   既存タイプ別color変色（v22.x）と連動し
+   hm-stat-value タイプ別glow（v22.x）・hm-stat-unit glow（v23.x）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.hm-stat-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hm-stat-card:nth-child(1):hover .hm-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(2):hover .hm-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(3):hover .hm-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(4):hover .hm-stat-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 2. fv-cat-table tbody tr:hover → .fv-cat-amt primary text-shadow glow
+   財務予測カテゴリテーブルの行ホバー時に .fv-cat-amt（カテゴリ別金額：fw-semi・tabular-nums）に
+   primary text-shadow glow追加。既存brightness(1.08)（v23.10）と連動し
+   fv-pct-txt glow（本スプリント）・fv-mini-fill glow（v23.25）・color-dot scale（v23.25）と
+   合わせてテーブル行内全要素がホバーで一体的に輝く完成形演出。 */
+.fv-cat-amt { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-cat-amt { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. fv-cat-table tbody tr:hover → .fv-pct-txt primary text-shadow glow
+   財務予測カテゴリテーブルの行ホバー時に .fv-pct-txt（達成率%テキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow追加。既存color:primary変色（v23.10）と連動し
+   fv-cat-amt glow（本スプリント）・fv-mini-fill glow（v23.25）と
+   合わせてテーブル行の全テキストがホバーで一体的に輝く完成形演出。 */
+.fv-pct-txt { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-cat-table tbody tr:hover .fv-pct-txt { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. asset-card:hover → .asset-date-label primary text-shadow glow
+   資産カードのホバー時に .asset-date-label（最終更新日テキスト：color:text-muted・fs-xs）に
+   primary text-shadow glow追加。既存color:primary変色（v23.14）と連動し
+   asset-name glow（v23.x）・asset-balance glow（v22.x）・asset-sparkline-label glow（v23.62）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.asset-date-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-date-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. asset-card:hover → .asset-balance-jpy primary text-shadow glow
+   資産カードのホバー時に .asset-balance-jpy（外貨資産の円換算額テキスト：color:text-muted・fs-sm）に
+   primary text-shadow glow追加。既存brightness(1.06)（v23.16）と連動し
+   asset-balance glow（v22.x）・asset-balance-jpy同士で外貨カードの全金額テキストが
+   ホバーで一体的に輝く演出（外貨資産保有時のみ表示）。 */
+.asset-balance-jpy { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-balance-jpy { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. tg-table tbody tr:hover → td.text-muted primary text-shadow glow
+   タグ分析テーブルの行ホバー時に td.text-muted（「3件」「42%」等の件数・割合テキスト）に
+   primary text-shadow glow追加。既存color:primary変色（v23.10）と連動し
+   tg-table td.expense glow（v23.10）・tx-tag-chip pop（v23.10）と
+   合わせてタグ行内全テキストがホバーで一体的に輝く完成形演出。 */
+.tg-table td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tg-table tbody tr:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. dow-stat-card:hover → .dow-stat-day 白 text-shadow glow
+   曜日別統計カード（グラデーション背景）のホバー時に .dow-stat-day（「月曜日」等の曜日名：
+   color:white!important・fs-xl・fw-bold）に白 text-shadow glow追加。
+   既存brightness(1.1)（v23.22）と連動し dow-stat-amount 白glow（本スプリント）・
+   dow-stat-icon scale（v22.x）・dow-stat-label brightness（v22.x）と
+   合わせてグラデカード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.dow-stat-day { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-day { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
+
+/* 8. dow-stat-card:hover → .dow-stat-amount 白 text-shadow glow
+   曜日別統計カード（グラデーション背景）のホバー時に .dow-stat-amount（金額テキスト：
+   color:white・fs-3xl・fw-black・tabular-nums）に白 text-shadow glow追加。
+   既存brightness(1.1)（v22.84）と連動し dow-stat-day 白glow（本スプリント）・
+   dow-stat-icon scale（v22.x）・dow-stat-label brightness（v22.x）と
+   合わせてグラデカード内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.dow-stat-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dow-stat-card:hover .dow-stat-amount { text-shadow: 0 0 14px rgba(255, 255, 255, 0.55), 0 2px 10px rgba(255, 255, 255, 0.3); }
