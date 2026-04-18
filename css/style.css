@@ -25262,4 +25262,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    md-cell-label glow（本スプリント⑦）と合わせてセル内全要素が
    ホバーで一体的に primary カラーで輝く完成形演出。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.76・全script/linkタグ?v=23.76に更新 */
+
+/* ============================================================
+   Sprint #773 — v23.77 child hover text-shadow glow (8 items)
+   fv-month-total-glow / sb-banner-lbl-glow /
+   hs-msg-glow / md-cell-balance-pos-value-glow /
+   md-cell-balance-neg-value-glow / opp-saving-glow /
+   asset-balance-delta-glow / sb-diff-pill-glow
+   ============================================================ */
+
+/* v23.77: 各ホバー子要素テキストへの text-shadow glow 追加（8箇所）
+   ①fv-month-table tr:hover td:nth-child(4) primary glow（財務予測合計列）、
+   ②sb-banner:hover .sb-banner-lbl 白 glow（スマート予算バナーラベル）、
+   ③health-score-card:hover .hs-msg primary glow（家計スコアメッセージ）、
+   ④md-cell-balance-pos:hover .md-cell-value primary glow（月次詳細黒字金額）、
+   ⑤md-cell-balance-neg:hover .md-cell-value danger-text glow（月次詳細赤字金額）、
+   ⑥opp-card:hover .opp-saving success glow（節約機会節約額テキスト）、
+   ⑦asset-card:hover .asset-balance-delta タイプ別 glow（資産残高変化up=success/down=danger-text）、
+   ⑧sb-row:hover .sb-diff-pill タイプ別 glow（スマート予算差分ピルup=danger-text/down=success）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.77・全script/linkタグ?v=23.77に更新 */
+
+/* ①【fv-month-table tbody tr:hover → td:nth-child(4) primary text-shadow glow】
+   財務予測月次テーブルのホバー時に4列目（合計金額列、クラス名なし）に
+   primary text-shadow glow を追加。既存 brightness(1.08)（v23.x）と連動し
+   fv-fixed-val glow（v23.75）・fv-var-val glow（v23.75）・fv-month-cell glow（v23.58）と
+   合わせてテーブル行内全テキストがホバーで一体的に輝く完成形演出。 */
+.fv-month-table td:nth-child(4) { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-table tbody tr:hover td:nth-child(4) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ②【sb-banner:hover → .sb-banner-lbl 白 text-shadow glow】
+   スマート予算バナー（グラデーション背景）ホバー時に .sb-banner-lbl（「予算の」「使用済み」等の
+   ラベルテキスト：color:on-dark-near・fs-xs）に白 text-shadow glow を追加。
+   既存 brightness(1.15)（v23.x）と連動し sb-banner-num 白glow（v23.29）・sb-banner-div（v23.29）と
+   合わせてバナー内全テキストがホバーで一体的に白く輝く完成形演出。 */
+.sb-banner-lbl { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-banner:hover .sb-banner-lbl { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ③【health-score-card:hover → .hs-msg primary text-shadow glow】
+   家計スコアカードのホバー時に .hs-msg（「家計状態：良好」等のメッセージテキスト）に
+   primary text-shadow glow を追加。既存 brightness(1.06)（v23.x）と連動し
+   hs-trend-label glow（v23.57）・hs-score-unit glow（v23.67）・hs-prev-badge glow（v23.68）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
+.hs-msg { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-msg { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ④【md-cell-balance-pos:hover → .md-cell-value primary text-shadow glow】
+   月次詳細黒字残高セルのホバー時に .md-cell-value（残高金額数値）に
+   primary text-shadow glow を追加。既存 brightness(1.06)（v23.x）と連動し
+   md-cell-balance-pos .md-cell-label glow（v23.71）と対になり
+   ラベル・金額が揃って primary カラーで輝く完成形演出。 */
+.md-cell-balance-pos:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑤【md-cell-balance-neg:hover → .md-cell-value danger-text text-shadow glow】
+   月次詳細赤字残高セルのホバー時に .md-cell-value（残高金額数値）に
+   danger-text text-shadow glow を追加。既存 brightness(1.06)（v23.x）と連動し
+   md-cell-balance-neg .md-cell-label danger-text glow（v23.71）と対になり
+   ラベル・金額が揃って danger-text カラーで輝く完成形演出。
+   md-cell-balance-pos glow（本スプリント④）と対をなし balance-pos/neg 両セルが統一完成形に。 */
+.md-cell-balance-neg:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ⑥【opp-card:hover → .opp-saving success text-shadow glow】
+   節約機会カードのホバー時に .opp-saving（「¥3,000節約できます」等の節約額テキスト全体）に
+   success text-shadow glow を追加。既存 brightness(1.06)（v23.x）と連動し
+   opp-saving strong success glow（v23.73）の strong 部分との一体感を高め
+   節約額エリア全体がホバーで success カラーで輝く完成形演出。 */
+.opp-saving { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.opp-card:hover .opp-saving { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* ⑦【asset-card:hover → .asset-balance-delta タイプ別 text-shadow glow】
+   資産カードのホバー時に .asset-balance-delta（「+¥5,000（+2.1%）」等の残高変化テキスト）に
+   タイプ別 text-shadow glow を追加。既存 brightness(1.1)+タイプ別 box-shadow（v22.x）と連動し
+   asset-balance glow（v22.x）・asset-name glow（v22.x）と合わせて
+   カード内全テキストがホバーで一体的に輝く完成形演出。up=success/down=danger-text。 */
+.asset-balance-delta { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-card:hover .asset-balance-delta.up   { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.asset-card:hover .asset-balance-delta.down { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ⑧【sb-row:hover → .sb-diff-pill タイプ別 text-shadow glow】
+   スマート予算行ホバー時に .sb-diff-pill（「▲+15%」「▼-8%」等の前月比較ピル）に
+   タイプ別 text-shadow glow を追加。既存 brightness(1.1)+タイプ別 box-shadow glow（v23.x）と連動し
+   sb-suggested glow（v23.57）・sb-row td:nth-child(2) glow（v23.57）と合わせて
+   予算行内全要素がホバーで一体的に輝く完成形演出。sb-diff-up=danger-text/sb-diff-down=success。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.77・全script/linkタグ?v=23.77に更新 */
+.sb-diff-pill { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-diff-pill.sb-diff-up   { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.sb-row:hover .sb-diff-pill.sb-diff-down { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .md-cell-count:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
