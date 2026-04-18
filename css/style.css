@@ -25757,3 +25757,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カード内全要素がホバーで一体的に輝く完成形演出。 */
 .ch-type-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-card:hover .ch-type-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #779 — v23.83 child hover text-shadow glow (8 items)
+   ci-badge-failed-glow + ct-table-text-muted-glow +
+   wk-today-label-glow + sb-low-data-glow +
+   hs-grade-badge-typecolor-glow + hs-spark-label-glow +
+   hs-spark-label-now-glow + debt-rate-monthly-badge-glow
+   ============================================================ */
+
+/* 1. ci-challenge-item:hover → .ci-badge.failed primary text-shadow glow
+   チャレンジアイテムホバー時に失敗バッジ（「失敗」）に primary text-shadow glow を追加。
+   .ci-badge.achieved には success glow（v23.78）が既に存在するが、
+   .ci-badge.failed には glow がなかった。ci-badge の transition は既に text-shadow を含む（v23.78）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.83・全script/linkタグ?v=23.83に更新 */
+.ci-challenge-item:hover .ci-badge.failed { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. ct-table tbody tr:hover → td.text-muted primary text-shadow glow
+   カテゴリ推移テーブル行ホバー時に text-muted セルに primary text-shadow glow を追加。
+   tg-table・sb-row・pm-table-row の同パターン（各v23.x）と統一し
+   テーブル系全体で td.text-muted glow が揃う完成形演出。 */
+.ct-table td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-table tbody tr:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. wk-bar-col.wk-bar-today:hover → .wk-today-label danger-text text-shadow glow
+   週次バー「今日」カラムホバー時に今日ラベル（color:danger-text）に danger-text glow を追加。
+   既存ルールは :not(.wk-today-label) で今日ラベルを除外しており、
+   .wk-bar-label の transition には既に text-shadow が含まれる（v23.11）。 */
+.wk-bar-col.wk-bar-today:hover .wk-today-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 4. sb-row:hover → .sb-low-data warning text-shadow glow
+   予算行ホバー時にデータ不足バッジ（「データ不足」：color:warning）に warning glow を追加。
+   sb-row:hover のリフト+shadow と連動し sb-row td.text-muted glow（v23.62）と
+   合わせてバッジ類も一体的に輝く完成形演出。 */
+.sb-low-data { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row:hover .sb-low-data { text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* 5. hs-grade-badge:hover → グレード別 text-shadow glow
+   ヘルスチェックページのグレードバッジ（S/A/B/C/D）自己ホバー時にグレード別 text-shadow glow 追加。
+   既存 scale(1.12)+box-shadow（v22.x）と連動し文字自体もグレードカラーで輝く完成形演出。
+   S=primary / A=success / B=info-text / C=warning / D=danger-text。 */
+.hs-grade-badge { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.hs-grade-s:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.hs-grade-a:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+.hs-grade-b:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--info-text)   var(--mix-sm), transparent); }
+.hs-grade-c:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.hs-grade-d:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 6. health-score-card:hover → .hs-spark-label primary text-shadow glow
+   ヘルスチェックカードホバー時にスパークラインラベル（月名テキスト：fs-2xs・fw-bold）に
+   primary text-shadow glow を追加。既存 hs-spark-svg brightness(1.05)（v22.x）と連動し
+   ラベルと図が一体的に輝く完成形演出。 */
+.hs-spark-label { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-spark-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. health-score-card:hover → .hs-spark-label-now primary text-shadow glow
+   ヘルスチェックカードホバー時に「現在」スパークラインラベル（fs-3xs）に
+   primary text-shadow glow を追加。hs-spark-label glow（本スプリント⑥）と同パターンで
+   スパークライン内全ラベルが一体的に輝く完成形演出。 */
+.hs-spark-label-now { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-spark-label-now { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. debt-card:hover → .debt-rate-badge / .debt-monthly-badge debt-accent text-shadow glow
+   負債カードホバー時に年利バッジ・月返済バッジ（color:debt-accent）に debt-accent text-shadow glow 追加。
+   既存 box-shadow glow（v22.94）と連動し文字自体も debt-accent カラーで輝く完成形演出。
+   debt-type-badge glow（v23.73）・debt-name glow（v22.95）と合わせてバッジ類全体が揃う。 */
+.debt-rate-badge,
+.debt-monthly-badge { transition: box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-card:hover .debt-rate-badge,
+.debt-card:hover .debt-monthly-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }

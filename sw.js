@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v23.82'; // v23.82: asset-currency-badge/sub-paused-badge/cc-badge/yi-grade-badge/yr-prev-badge/yr-widget-cat-badge/tx-cat-badge/ch-type-badge に text-shadow glow 8箇所
+const CACHE_NAME = 'kakeibo-v23.83'; // v23.83: ci-badge-failed/ct-table-text-muted/wk-today-label/sb-low-data/hs-grade-badge/hs-spark-label/hs-spark-label-now/debt-rate-monthly-badge に text-shadow glow 8箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
