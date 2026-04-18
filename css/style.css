@@ -25944,3 +25944,73 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    と合わせてホバー時に一段階輝きが増す演出に。.section-tab の transition には text-shadow を含む（v23.x）。 */
 .section-tab.is-active:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
 [data-theme="dark"] .section-tab.is-active:hover { text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
+
+/* ============================================================
+   Sprint #782 / v23.86 — ホバーglow 8箇所
+   nav-item-hover-glow / nav-item-active-hover-glow /
+   sidebar-logout-hover-glow / account-add-hover-glow /
+   tx-sort-badge-hover-glow / btn-inline-add-hover-glow /
+   auth-tab-hover-glow / auth-tab-active-glow
+   ============================================================ */
+
+/* 1. nav-item:not(.active):hover → self primary-end text-shadow glow
+   サイドバーの非アクティブナビ項目ホバー時に primary-end text-shadow glow 追加。
+   既存 background:on-dark-divider+color:sidebar-text+box-shadow（v11.x）と連動し
+   ダーク背景上のナビテキストが primary-end カラーで輝く完成形演出。
+   nav-item transition に text-shadow を追加。 */
+.nav-item { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.nav-item:not(.active):hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. nav-item.active:hover → self primary-end text-shadow glow 強化
+   サイドバーのアクティブナビ項目ホバー時に primary-end text-shadow glow 追加。
+   既存 color:primary-end（v11.x）・background+box-shadow ホバー効果（v11.x）と連動し
+   アクティブナビテキストがホバーでさらに primary-end カラーで輝く完成形演出。 */
+.nav-item.active:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* 3. btn-sidebar-logout:hover → self expense text-shadow glow
+   サイドバーのログアウトボタンホバー時に expense text-shadow glow 追加。
+   既存 color:expense+box-shadow（v12.x）と連動し
+   ログアウトテキストが expense カラーで輝く完成形演出。
+   btn-sidebar-logout transition に text-shadow を追加。 */
+.btn-sidebar-logout { transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-sidebar-logout:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 4. btn-account-add:hover → self white text-shadow glow
+   サイドバーのアカウント追加ボタン（「＋」）ホバー時に白 text-shadow glow 追加。
+   既存 background:on-dark-strong+box-shadow（v11.x）と連動し
+   ダーク背景上の「＋」が白く輝く完成形演出。
+   btn-account-add transition に text-shadow を追加。 */
+.btn-account-add { transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-account-add:hover { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
+/* 5. tx-sort-badge:hover → self primary text-shadow glow
+   取引一覧のソートバッジホバー時に primary text-shadow glow 追加。
+   既存 background+transform+box-shadow（v12.x）と連動し
+   ソートバッジテキストが primary カラーで輝く完成形演出。
+   tx-sort-badge transition に text-shadow を追加。 */
+.tx-sort-badge { transition: background var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-sort-badge:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. btn-inline-add:hover → self primary text-shadow glow
+   インライン追加ボタン（カテゴリ追加など）ホバー時に primary text-shadow glow 追加。
+   既存 background:primary-light+transform+box-shadow（v13.x）と連動し
+   ボタンテキストが primary カラーで輝く完成形演出。
+   btn-inline-add transition に text-shadow を追加。 */
+.btn-inline-add { transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-inline-add:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. auth-tab:not(.active):hover → self primary text-shadow glow
+   認証画面の非アクティブタブホバー時に primary text-shadow glow 追加。
+   既存 background:surface-hover+color:text+box-shadow（v14.x）と連動し
+   タブテキストが primary カラーで輝く完成形演出。
+   auth-tab transition に text-shadow を追加。 */
+.auth-tab { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.auth-tab:not(.active):hover { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .auth-tab:not(.active):hover { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+
+/* 8. auth-tab.active → static primary text-shadow glow
+   認証画面のアクティブタブに静的 primary text-shadow glow 追加。
+   既存 color:primary+shadow-tab（v14.x）と連動し
+   アクティブタブテキストが常に primary カラーで輝く完成形演出。 */
+.auth-tab.active { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+[data-theme="dark"] .auth-tab.active { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
