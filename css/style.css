@@ -25185,3 +25185,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カード内全テキストがホバーで一体的に輝く完成形演出。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.75・全script/linkタグ?v=23.75に更新 */
 .yi-card:hover .yi-card-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #772 — v23.76 child hover text-shadow glow (8 items)
+   fc-status-badge-glow / fc-avg-badge-glow /
+   fc-cell-balance-glow / fc-low-conf-glow /
+   debt-summary-sub-glow / debt-summary-label-glow /
+   md-cell-count-label-glow / md-cell-count-value-glow
+   ============================================================ */
+
+/* ①【forecast-card:hover → .fc-status-badge fc-color text-shadow glow】
+   キャッシュフロー予測カードホバー時に .fc-status-badge（「良好」「注意」「超過」バッジ）に
+   fc-color text-shadow glow を追加。既存 scale(1.04)+brightness(1.1)（v22.x）と連動し
+   fc-cell-amount glow・fc-cell-label glow・fc-cell-hint glow と合わせて
+   カード内全要素がホバーで一体的に輝く完成形演出。 */
+.fc-status-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-status-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ②【forecast-card:hover → .fc-avg-badge fc-color text-shadow glow】
+   キャッシュフロー予測カードホバー時に .fc-avg-badge（「▲+12%」「▼-5%」等の平均比較バッジ）に
+   fc-color text-shadow glow を追加。既存 scale(1.04)+brightness(1.08)（v22.x）と連動し
+   fc-status-badge glow（本スプリント①）・fc-cell-amount glow と合わせて
+   カード内全要素がホバーで一体的に輝く完成形演出。 */
+.fc-avg-badge { transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-avg-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ③【forecast-card:hover → .fc-cell-balance fc-color text-shadow glow】
+   キャッシュフロー予測カードホバー時に .fc-cell-balance（月次残高テキスト）に
+   fc-color text-shadow glow を追加。既存 brightness(1.08)+fc-color box-shadow（v22.x）と連動し
+   fc-cell-amount glow・fc-cell-label glow と合わせて
+   カード内全数値テキストがホバーで一体的に輝く完成形演出。 */
+.fc-cell-balance { transition: filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-cell-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ④【forecast-card:hover → .fc-low-conf primary text-shadow glow】
+   キャッシュフロー予測カードホバー時に .fc-low-conf（「予測精度：低」等の低精度表示テキスト）に
+   primary text-shadow glow を追加。既存 brightness(1.06)（v22.x）と連動し
+   fc-cell-hint glow・fc-progress-label glow と合わせて
+   カード内全テキストがホバーで一体的に輝く完成形演出。 */
+.fc-low-conf { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.forecast-card:hover .fc-low-conf { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑤【debt-summary-total/monthly:hover → .debt-summary-sub 白 text-shadow glow】
+   負債サマリーカード（グラデーション背景）ホバー時に .debt-summary-sub（「目標完済」「月返済合計」等の
+   補足テキスト：fs-xs・on-dark-hint カラー）に白 text-shadow glow を追加。
+   既存 brightness(1.1)（v22.62）と連動し .summary-amount white glow（v22.x）・
+   .summary-label glow（本スプリント⑥）と合わせてカード内全テキストがホバーで
+   一体的に白く輝く完成形演出。 */
+.debt-summary-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-summary-total:hover   .debt-summary-sub,
+.debt-summary-monthly:hover .debt-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ⑥【debt-summary-total/monthly:hover → .summary-label 白 text-shadow glow】
+   負債サマリーカード（グラデーション背景）ホバー時に .summary-label（「負債残高」「月次支払」等の
+   ラベルテキスト：color:on-dark-hint）に白 text-shadow glow を追加。
+   既存 brightness(1.2)（v22.x）と連動し .summary-amount white glow・
+   .debt-summary-sub glow（本スプリント⑤）と合わせてカード内全テキストがホバーで
+   一体的に白く輝く完成形演出。 */
+.debt-summary-total   .summary-label,
+.debt-summary-monthly .summary-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-summary-total:hover   .summary-label,
+.debt-summary-monthly:hover .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ⑦【md-cell-count:hover → .md-cell-label primary text-shadow glow】
+   月次詳細件数セルホバー時に .md-cell-label（「件数」ラベルテキスト）に
+   primary text-shadow glow を追加。既存 brightness(1.1)（v22.82）と連動し
+   md-cell-value glow（本スプリント⑧）と合わせてセル内全要素が
+   ホバーで一体的に primary カラーで輝く完成形演出。
+   md-cell-income/expense:hover .md-cell-label（v23.71）と同パターンで
+   md-cell-count 文脈にも適用。 */
+.md-cell-count:hover .md-cell-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑧【md-cell-count:hover → .md-cell-value primary text-shadow glow】
+   月次詳細件数セルホバー時に .md-cell-value（件数数値テキスト）に
+   primary text-shadow glow を追加。既存 brightness(1.06)（v22.82）と連動し
+   md-cell-label glow（本スプリント⑦）と合わせてセル内全要素が
+   ホバーで一体的に primary カラーで輝く完成形演出。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.76・全script/linkタグ?v=23.76に更新 */
+.md-cell-count:hover .md-cell-value { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
