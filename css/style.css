@@ -24839,3 +24839,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    yr-avg-label glow（v23.x）・yr-avg-val glow（v23.x）・yr-progress-label glow（v23.x）と
    合わせてウィジェット内全テキストがホバーで一体的に輝く完成形演出に。 */
 .yr-widget-card:hover .yr-topcat-amt { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.70: ホバー text-shadow glow 8箇所
+   fv-stat-label-glow／fv-stat-sub-glow／adv-widget-desc-glow／
+   adv-widget-hint-glow／adv-month-badge-glow／ev-month-prog-pct-glow／
+   cat-fixed-badge-glow／wish-widget-priority-glow
+   ①fv-stat-card:hover .fv-stat-label 白 glow、
+   ②fv-stat-card:hover .fv-stat-sub 白 glow、
+   ③adv-widget-card:hover .adv-widget-desc primary glow、
+   ④adv-widget-card:hover .adv-widget-hint primary glow、
+   ⑤adv-widget-card:hover .adv-month-badge primary glow、
+   ⑥ev-month-col:hover .ev-prog-pct primary glow、
+   ⑦cat-card:hover .cat-fixed-badge タイプ別 glow（is-fixed=primary/is-var=success）、
+   ⑧wish-widget-item:hover .wl-priority-badge primary glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.70・全script/linkタグ?v=23.70に更新 */
+
+/* 1. fv-stat-card:hover → .fv-stat-label 白 text-shadow glow
+   財務予測統計カード（グラデーション背景）ホバー時に .fv-stat-label（「固定費」等の
+   on-dark-near カラーラベルテキスト：fs-xs・ls-fine）に白 text-shadow glow を追加。
+   既存 brightness(1.1)（v23.18）と連動し fv-stat-value brightness（v22.82）・
+   fv-stat-sub glow（本スプリント②）・fv-stat-icon scale（v22.81）と
+   合わせてグラデカード内全テキストがホバーで一体的に白く輝く完成形演出に。 */
+.fv-stat-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* 2. fv-stat-card:hover → .fv-stat-sub 白 text-shadow glow
+   財務予測統計カード（グラデーション背景）ホバー時に .fv-stat-sub（「固定費 42%」等の
+   on-dark-label 補足テキスト：fs-xs）に白 text-shadow glow を追加。
+   既存 brightness(1.08)（v23.18）と連動し fv-stat-label glow（本スプリント①）・
+   fv-stat-value brightness（v22.82）・fv-stat-icon scale（v22.81）と
+   合わせてグラデカード内全テキストがホバーで一体的に白く輝く完成形演出に。 */
+.fv-stat-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-stat-card:hover .fv-stat-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 3. adv-widget-card:hover → .adv-widget-desc primary text-shadow glow
+   AIアドバイスウィジェットカードホバー時に .adv-widget-desc（説明文テキスト：
+   color:text-muted・fs-sm・lh-relaxed）に primary text-shadow glow を追加。
+   既存 brightness(1.06)（v23.18）と連動し adv-widget-hint glow（本スプリント④）・
+   adv-month-badge glow（本スプリント⑤）・adv-widget-card リフト+glow（v22.71）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.adv-widget-desc { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-widget-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. adv-widget-card:hover → .adv-widget-hint primary text-shadow glow
+   AIアドバイスウィジェットカードホバー時に .adv-widget-hint（ヒントテキスト：
+   color:text-muted・fs-xs・surface-hover 背景）に primary text-shadow glow を追加。
+   既存 brightness(1.08)（v23.23）と連動し adv-widget-desc glow（本スプリント③）・
+   adv-month-badge glow（本スプリント⑤）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.adv-widget-hint { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-widget-hint { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. adv-widget-card:hover → .adv-month-badge primary text-shadow glow
+   AIアドバイスウィジェットカードホバー時に .adv-month-badge（「2026年4月」等の
+   primary カラーバッジ：color:primary・bg:primary-mix）に primary text-shadow glow を追加。
+   既存 scale(1.04)+brightness(1.08)（v23.30）と連動し adv-widget-desc glow（本スプリント③）・
+   adv-widget-hint glow（本スプリント④）と
+   合わせてカード内全テキストがホバーで一体的に輝く完成形演出に。 */
+.adv-month-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.adv-widget-card:hover .adv-month-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. ev-month-col:hover → .ev-prog-pct primary text-shadow glow
+   収支予定月次列ホバー時に .ev-prog-pct（進捗率テキスト：color:primary+brightness変色）に
+   primary text-shadow glow を追加。既存 brightness(1.1)+color:primary（v23.40）と連動し
+   ev-month-col:hover .ev-prog-fill brightness（v23.40）・ev-month-label glow（v23.x）と
+   合わせてプログレスエリア全体がホバーで一体的に primary 色で輝く完成形演出に。
+   ev-card:hover .ev-prog-pct glow（v23.66）と同パターンで ev-month-col 文脈にも適用。 */
+.ev-month-col:not(.ev-month-current):hover .ev-prog-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. cat-card:hover → .cat-fixed-badge タイプ別 text-shadow glow
+   カテゴリカードホバー時に .cat-fixed-badge（「固定費」「変動費」バッジ）に
+   タイプ別 text-shadow glow を追加（is-fixed=primary / is-var=success）。
+   既存 scale(1.04)+brightness(1.08)（v23.40）と連動し
+   cat-card-name glow（v22.86）・cat-yayoi-tag glow（v23.68）・cat-stat-val glow（v23.62）・
+   cat-budget-pct glow（v23.62）と合わせてカード内全要素がホバーで一体的に輝く完成形演出に。 */
+.cat-fixed-badge { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-card:hover .cat-fixed-badge.is-fixed { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.cat-card:hover .cat-fixed-badge.is-var   { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 8. wish-widget-item:hover → .wl-priority-badge primary text-shadow glow
+   ウィッシュリストウィジェット行ホバー時に .wl-priority-badge（「★★★」等の優先度バッジ）に
+   primary text-shadow glow を追加。既存 scale(1.06)+brightness(1.08)（v23.40）と連動し
+   wish-widget-name glow（v23.50）・wish-widget-price glow（v23.50）と
+   合わせてウィジェット行内全要素がホバーで一体的に輝く完成形演出に。
+   wl-card:hover .wl-priority-badge glow（v23.68）と同パターンでウィジェット文脈にも適用。 */
+.wish-widget-item:hover .wl-priority-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
