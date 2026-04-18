@@ -25622,3 +25622,57 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.80・全script/linkタグ?v=23.80に更新 */
 .adv-preset-chip { transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .adv-preset-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   v23.81: Sprint #777 — ホバー text-shadow glow 8箇所
+   step-desc-glow＋ev-sum-count-small-glow＋hs-score-num-hover-glow＋
+   tx-tag-chip-glow＋wl-sum-count-label-glow＋wl-sum-budget-label-glow＋
+   wl-sum-count-unit-glow＋wl-sum-budget-unit-glow
+   ============================================================ */
+
+/* 1. step-card:hover → .step-desc primary text-shadow glow
+   ステップカードホバー時に説明テキストへ primary glow を追加。
+   step-title・step-action（既実装）と統一し、カード全体の輝き演出を完成。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.81・全script/linkタグ?v=23.81に更新 */
+.step-desc { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.step-card:hover .step-desc { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. ev-sum-card:hover → .ev-sum-count small 白 text-shadow glow
+   イベントサマリーカードホバー時に件数の単位テキスト（「件」）へ白 glow を追加。
+   親 .ev-sum-count の白 glow（既実装）と連動し、数値と単位の輝きを統一する。 */
+.ev-sum-card .ev-sum-count small { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ev-sum-card:hover .ev-sum-count small { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 3. health-score-card:hover → .hs-score-num primary text-shadow glow（ホバー強化）
+   ヘルススコアカードホバー時にスコア数値の glow を強化。
+   静的 glow（既実装）からホバーで intensity を上げ、他スコア要素と演出を統一する。 */
+.hs-score-num { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.health-score-card:hover .hs-score-num { text-shadow: 0 0 16px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. tx-tag-chip:hover → self --tc color text-shadow glow
+   取引タグチップのホバー時に対応カラー（--tc）で self glow を追加。
+   sf-chip・date-quick-btn・amt-hist-chip・adv-preset-chip（既実装）と同パターンで
+   タグチップ群のホバー演出を統一する。 */
+.tx-tag-chip { transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.tx-tag-chip:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. wl-sum-count:hover → .wl-summary-label 白 text-shadow glow
+   ウィッシュリスト件数カード（グラデーション背景）ホバー時にラベルへ白 glow を追加。
+   wl-sum-done の白 glow（v23.78実装）と同パターンで3カードのラベル演出を統一する。 */
+.wl-sum-count:hover .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 6. wl-sum-budget:hover → .wl-summary-label 白 text-shadow glow
+   ウィッシュリスト予算カード（グラデーション背景）ホバー時にラベルへ白 glow を追加。
+   wl-sum-count（本スプリント⑤）・wl-sum-done（v23.78）と統一。 */
+.wl-sum-budget:hover .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* 7. wl-sum-count:hover → .wl-summary-unit 白 text-shadow glow
+   ウィッシュリスト件数カードホバー時に単位テキストへ白 glow を追加。
+   wl-sum-done の白 glow（v23.78実装）と同パターンで統一する。 */
+.wl-sum-count:hover .wl-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+
+/* 8. wl-sum-budget:hover → .wl-summary-unit 白 text-shadow glow
+   ウィッシュリスト予算カードホバー時に単位テキストへ白 glow を追加。
+   wl-sum-count（本スプリント⑦）・wl-sum-done（v23.78）と統一し
+   3カード全ての単位テキスト演出を完成させる。 */
+.wl-sum-budget:hover .wl-summary-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
