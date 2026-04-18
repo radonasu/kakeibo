@@ -19347,7 +19347,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カレンダーイベントのホバー時に金額テキストに brightness と
    タイプ別 text-shadow glow を追加。
    cal-ev-icon の演出と連動しイベント行のホバー全体に深みを与える。 */
-.cal-ev-amount { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-ev-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-ev-item:hover .cal-ev-amount     { filter: brightness(1.08); }
 .cal-ev-item:hover .cal-ev-amount.inc { filter: brightness(1.1); }
 .cal-ev-item:hover .cal-ev-amount.exp { filter: brightness(1.1); }
@@ -19574,7 +19574,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    on-dark-title ラベルテキスト）を brightness(1.1) で明るくする。
    dow-stat-amount brightness（v22.82）と連動し
    dow-stat-day・label・amount の3要素が揃ってホバーで反応する。 */
-.dow-stat-label { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-stat-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .dow-stat-card:hover .dow-stat-label { filter: brightness(1.1); }
 
 /* 5. forecast-card:hover → .fc-cell-label カラー変化
@@ -19926,7 +19926,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .debt-widget-item:hover 時に .debt-widget-balance（負債ウィジェット残高金額）を
    brightness(1.08) で expense 色が深まる。debt-widget-name 変色（本スプリント）・
    debt-widget-icon scale（v22.81）と連動し名称・残高・アイコンが一体的に反応する完成形に。 */
-.debt-widget-balance { transition: filter var(--dur-fast) var(--ease-out); }
+.debt-widget-balance { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-widget-item:hover .debt-widget-balance { filter: brightness(1.08); }
 
 /* 3. debt-widget-item:hover → .debt-widget-pct カラー変化
@@ -20280,7 +20280,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カテゴリカードのホバー時に .cat-stat-lbl（「支出」「予算」「件数」等の統計ラベル）を
    brightness(1.08) で明るく強調。cat-stat-val brightness（v22.86）・cat-card-name 変色（v22.97）・
    cat-budget-pct brightness（v22.97）と連動しラベル・値が一体的にホバーで反応する完成形に。 */
-.cat-stat-lbl { transition: filter var(--dur-fast) var(--ease-out); }
+.cat-stat-lbl { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cat-card:hover .cat-stat-lbl { filter: brightness(1.08); }
 
 /* 4. cat-card:hover → .cat-budget-bar-fill brightness(1.08) + cat-clr glow
@@ -20306,7 +20306,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ヒートマップ統計カードのホバー時に .hm-stat-sub（「支出最大: ¥xx,xxx」等のサブ情報テキスト）を
    brightness(1.08) で強調。hm-stat-value 変色（v22.84）・hm-stat-label 変色（v23.00）・
    hm-stat-unit 変色（本スプリント）と連動しカード内の全テキスト要素がホバーで揃って反応する完成形に。 */
-.hm-stat-sub { transition: filter var(--dur-fast) var(--ease-out); }
+.hm-stat-sub { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .hm-stat-card:hover .hm-stat-sub { filter: brightness(1.08); }
 
 /* 7. hs-item:hover → .hs-item-max brightness(1.06)
@@ -20415,7 +20415,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    brightness(1.1) で輝かせる。done=success / pending=text-muted の既存カラーを維持しつつ
    輝度のみ追加。cal-ev-name・cal-ev-cat・cal-ev-amount・cal-ev-icon と連動し
    バッジもホバーで一体的に強調されるマイクロインタラクション。 */
-.cal-ev-badge { transition: filter var(--dur-fast) var(--ease-out); }
+.cal-ev-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-ev-item:hover .cal-ev-badge { filter: brightness(1.1); }
 
 /* 3. sub-widget-item:hover → .sub-widget-next タイプ別カラー変化
@@ -20494,7 +20494,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    brightness(1.12) で明るく輝かせる。inline style で --dow-row-color が設定済みのため
    color は上書きせず filter のみで自然に輝き感を追加。dow-table-row:hover の
    translateY+shadow と連動し曜日ラベルもホバーで存在感を増す演出に。 */
-.dow-label-cell { transition: filter var(--dur-fast) var(--ease-out); }
+.dow-label-cell { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .dow-table-row:hover .dow-label-cell { filter: brightness(1.12); }
 
 /* 4. dow-table-row:hover → .dow-pct-badge scale(1.06) + brightness(1.1)
@@ -20547,7 +20547,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    年次インサイトカードのホバー時に .yi-card-unit（「%」「ヶ月」「円」等の単位テキスト：color:text-muted・fs-xl）を
    brightness(1.1) で輝かせる。yi-card-value 変色+brightness（v22.82）・yi-card-label 変色（v22.x）・
    yi-card-sub 変色（v23.07）と連動し単位テキストもホバーで一体的に強調される完成形に。 */
-.yi-card-unit { transition: filter var(--dur-fast) var(--ease-out); }
+.yi-card-unit { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .yi-card:hover .yi-card-unit { filter: brightness(1.1); }
 
 /* 2. yi-card:hover → .yi-grade-badge scale(1.06) + brightness(1.1)
@@ -25118,3 +25118,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.74・全script/linkタグ?v=23.74に更新 */
 .debt-balance-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-balance-meta { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #771 — v23.75 child hover text-shadow glow (8 items)
+   cal-ev-amount-glow / dow-stat-label-glow /
+   debt-widget-balance-glow / cat-stat-lbl-glow /
+   hm-stat-sub-glow / cal-ev-badge-glow /
+   dow-label-cell-glow / yi-card-unit-glow
+   ============================================================ */
+
+/* ①【cal-ev-item:hover → .cal-ev-amount タイプ別 text-shadow glow】
+   カレンダーイベント行ホバー時に金額テキストにタイプ別 text-shadow glow を追加。
+   inc=success / exp=expense のタイプ別カラーで輝かせる。
+   既存 brightness(1.08/1.1)（v20.x）と連動し cal-ev-name/cal-ev-cat glow と合わせて
+   イベント行内全テキストがホバーで一体的にタイプカラーで輝く完成形演出。 */
+.cal-ev-item:hover .cal-ev-amount.inc { text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.cal-ev-item:hover .cal-ev-amount.exp { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* ②【dow-stat-card:hover → .dow-stat-label 白 text-shadow glow】
+   曜日別集計カードホバー時にラベルテキスト（on-dark-title カラー）に
+   白い text-shadow glow を追加。dow-stat-day glow（v23.70）・dow-stat-amount glow（v23.70）と連動し
+   day・label・amount の全テキストが一体的に白く輝くグラデカード完成形演出。 */
+.dow-stat-card:hover .dow-stat-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* ③【debt-widget-item:hover → .debt-widget-balance debt-accent text-shadow glow】
+   負債ウィジェット行ホバー時に残高金額テキストに debt-accent text-shadow glow を追加。
+   既存 brightness(1.08)（v22.x）と連動し debt-widget-name glow（v23.51）・
+   debt-widget-pct glow（v23.51）と合わせてウィジェット行内全テキストが
+   ホバーで一体的に debt-accent カラーで輝く完成形演出。 */
+.debt-widget-item:hover .debt-widget-balance { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent); }
+
+/* ④【cat-card:hover → .cat-stat-lbl cat-clr text-shadow glow】
+   カテゴリカードホバー時に統計ラベルテキスト（「支出」「予算」「件数」等）に
+   cat-clr text-shadow glow を追加。既存 brightness(1.08)（v22.86）と連動し
+   cat-stat-val glow（v23.07）・cat-card-name glow（v23.07）・cat-budget-pct glow（v23.07）と合わせて
+   カード内全テキストがホバーで一体的に cat-clr で輝く完成形演出。 */
+.cat-card:hover .cat-stat-lbl { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent); }
+
+/* ⑤【hm-stat-card:hover → .hm-stat-sub タイプ別 text-shadow glow】
+   ヒートマップ統計カードホバー時にサブ情報テキスト（「支出最大: ¥xx,xxx」等）に
+   タイプ別 text-shadow glow を追加（nth-child: 1=primary / 2=expense / 3=warning / 4=success）。
+   既存 brightness(1.08)（v22.x）と連動し hm-stat-value glow・hm-stat-label glow・hm-stat-unit glow と合わせて
+   カード内全テキストがホバーで一体的にテーマカラーで輝く完成形演出。 */
+.hm-stat-card:nth-child(1):hover .hm-stat-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(2):hover .hm-stat-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--expense)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(3):hover .hm-stat-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(4):hover .hm-stat-sub { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* ⑥【cal-ev-item:hover → .cal-ev-badge cal-ev-color text-shadow glow】
+   カレンダーイベント行ホバー時にバッジ（「完了」「予定」等）に
+   cal-ev-color text-shadow glow を追加。既存 brightness(1.1)（v20.x）と連動し
+   cal-ev-name glow・cal-ev-cat glow・cal-ev-amount glow（本スプリント①）と合わせて
+   イベント行内全要素がホバーで一体的に輝く完成形演出。 */
+.cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge { text-shadow: 0 0 8px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ⑦【dow-table-row:hover → .dow-label-cell primary text-shadow glow】
+   曜日別統計テーブル行ホバー時に曜日ラベルセルテキストに primary text-shadow glow を追加。
+   既存 brightness(1.12)（v20.x）と連動し dow-pct-badge glow（v23.67）・
+   dow-table-row translateY+shadow と合わせてラベル・バッジが一体的に輝くテーブル行演出。 */
+.dow-table-row:hover .dow-label-cell { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ⑧【yi-card:hover → .yi-card-unit primary text-shadow glow】
+   年次インサイトカードホバー時に単位テキスト（「%」「ヶ月」「円」等・color:text-muted）に
+   primary text-shadow glow を追加。既存 brightness(1.1)（v20.x）と連動し
+   yi-card-value glow・yi-card-label glow・yi-card-sub glow・yi-half-label glow と合わせて
+   カード内全テキストがホバーで一体的に輝く完成形演出。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.75・全script/linkタグ?v=23.75に更新 */
+.yi-card:hover .yi-card-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
