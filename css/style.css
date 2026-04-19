@@ -26872,3 +26872,87 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    adv-month-badge の transition には text-shadow を含む（v23.68）。 */
 .adv-month-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .adv-month-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #795 / v23.99 — バッジ・差分・スコア要素の静的グロー 8箇所
+   yoy-up-static-glow＋yoy-down-static-glow＋ci-score-badge-static-glow＋
+   asset-delta-up-static-glow＋asset-delta-down-static-glow＋
+   md-cell-balance-pos-static-glow＋md-cell-balance-neg-static-glow＋
+   notif-granted-badge-static-glow
+   ============================================================ */
+
+/* 1. .yoy-diff.yoy-up → static danger-text text-shadow glow
+   年次比較サマリーの「増加」差分テキスト（.yoy-diff.yoy-up：color:danger-text）に
+   常時 danger-text text-shadow を追加。
+   .yoy-summary-item:hover .yoy-diff.yoy-up danger-text glow（v23.02）と対称で
+   未ホバー時から「前年比増加（支出増＝要注意）」を danger カラーで静的に訴求する。
+   .yoy-diff.yoy-down static glow（本スプリント②）と対称に
+   増加・減少の全差分テキストが danger/success で常時発光する完成形演出に統一。 */
+.yoy-diff.yoy-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yoy-diff.yoy-up   { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 2. .yoy-diff.yoy-down → static success text-shadow glow
+   年次比較サマリーの「減少」差分テキスト（.yoy-diff.yoy-down：color:success）に
+   常時 success text-shadow を追加。
+   .yoy-summary-item:hover .yoy-diff.yoy-down success glow（v23.02）と対称で
+   未ホバー時から「前年比減少（支出減＝良好）」を success カラーで静的に演出する。
+   .yoy-diff.yoy-up static glow（本スプリント①）と対称に完成形演出に統一。 */
+.yoy-diff.yoy-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yoy-diff.yoy-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 3. .ci-score-badge → static primary text-shadow glow
+   チェックインスコア行のスコアバッジ（.ci-score-badge：fw-black・fs-lg・color:primary）に
+   常時 primary text-shadow を追加。
+   .ci-score-row:hover .ci-score-badge primary glow（v23.01）と対称で
+   未ホバー時からチェックインスコアが primary カラーで静的に輝く演出に。
+   ci-score-badge の transition には text-shadow を含む（v23.01）。 */
+.ci-score-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-score-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .asset-balance-delta.up → static success text-shadow glow
+   資産カードの「増加」デルタバッジ（.asset-balance-delta.up：success-bg/success カラー）に
+   常時 success text-shadow を追加。
+   .asset-card:hover .asset-balance-delta.up success glow（v23.73）と対称で
+   未ホバー時から資産増加を success カラーで静的に演出する。
+   .asset-balance-delta.down static glow（本スプリント⑤）と対称に
+   増加・減少の全デルタバッジが success/danger カラーで常時発光する完成形演出に統一。 */
+.asset-balance-delta.up   { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-balance-delta.up   { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 5. .asset-balance-delta.down → static danger-text text-shadow glow
+   資産カードの「減少」デルタバッジ（.asset-balance-delta.down：danger-bg/danger-text カラー）に
+   常時 danger-text text-shadow を追加。
+   .asset-card:hover .asset-balance-delta.down danger-text glow（v23.73）と対称で
+   未ホバー時から資産減少を danger カラーで静的に強調する。
+   .asset-balance-delta.up static glow（本スプリント④）と対称に完成形演出に統一。 */
+.asset-balance-delta.down { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-balance-delta.down { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .md-cell-balance-pos → static primary box-shadow glow
+   月ドリルダウン黒字サマリーセル（.md-cell-balance-pos：primary グラデ背景・primary カラー）に
+   常時 primary box-shadow glow を追加。
+   .md-cell-balance-pos:hover primary box-shadow glow（v22.70）と対称で
+   未ホバー時から「月次黒字」を primary カラーの光輪で静的に演出する。
+   md-cell の transition には box-shadow を含む（v22.70）。 */
+.md-cell-balance-pos { box-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-pos { box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 7. .md-cell-balance-neg → static expense box-shadow glow
+   月ドリルダウン赤字サマリーセル（.md-cell-balance-neg：danger-text グラデ背景・danger-text カラー）に
+   常時 expense box-shadow glow を追加。
+   .md-cell-balance-neg:hover expense box-shadow glow（v22.70）と対称で
+   未ホバー時から「月次赤字」を expense カラーの光輪で静的に危険訴求する演出に。
+   .md-cell-balance-pos static glow（本スプリント⑥）と対称に
+   黒字・赤字の全残高セルが primary/expense カラーで常時発光する完成形演出に統一。 */
+.md-cell-balance-neg { box-shadow: 0 0 8px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-neg { box-shadow: 0 0 10px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 8. .notif-badge.notif-granted → static success text-shadow glow
+   通知許可済みバッジ（.notif-badge.notif-granted：income-light bg / income カラー）に
+   常時 success text-shadow を追加。transition に text-shadow を追加。
+   通知許可状態が success カラーで静的に輝き「通知ON」を視覚的に強調する演出に。
+   hs-trend-up static glow（v23.98）・goal-achieved-badge static glow（v23.95）と
+   同パターンで「良い状態」を success カラーで常時発光させる演出を統一。 */
+.notif-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.notif-badge.notif-granted { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-badge.notif-granted { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
