@@ -27136,3 +27136,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    yr-avg-val の transition には text-shadow を含む（v23.64）。 */
 .yr-avg-income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .yr-avg-income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   v24.02: yr-avg-expense-val-static-glow＋pace-diff-good-static-glow＋
+   pace-diff-warn-static-glow＋pace-diff-over-static-glow＋
+   wk-nospend-static-glow＋wk-today-exp-static-glow＋
+   fv-var-val-static-glow＋fv-fixed-val-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .yr-avg-expense .yr-avg-val → static danger-text text-shadow glow
+   年次ウィジェットフッターの月平均支出値テキスト
+   （color:danger-text・fs-sm・fw-semi・tabular-nums）に常時 danger-text カラーの text-shadow を追加。
+   yr-widget-card:hover .yr-avg-val primary glow（v23.64）と対称で
+   未ホバー時からも月平均支出が expense カラーで静かに警告光する演出に。
+   .yr-avg-income static success glow（v24.01）と対称に
+   年次ウィジェットの収入・支出月平均値が income/expense で常時発光する完成形演出に統一。
+   yr-avg-val の transition には text-shadow を含む（v23.64）。 */
+.yr-avg-expense .yr-avg-val { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-avg-expense .yr-avg-val { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 2. .pace-diff-val.pace-good → static success text-shadow glow
+   支出ペースカードの「良好」状態差分値テキスト
+   （color:success・fw-bold・tabular-nums）に常時 success カラーの text-shadow を追加。
+   .pace-pct.pace-good static success glow（v24.01）と連動し
+   ペース「良好」の正の差分値も success カラーで常時発光する完成形演出に。 */
+.pace-diff-val.pace-good { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-diff-val.pace-good { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 3. .pace-diff-val.pace-warn → static warning text-shadow glow
+   支出ペースカードの「警告」状態差分値テキスト
+   （color:warning・fw-bold・tabular-nums）に常時 warning カラーの text-shadow を追加。
+   .pace-pct.pace-warn static warning glow（v24.01）と連動し
+   ペース「警告」の差分値も warning カラーで常時注意を促す演出に。 */
+.pace-diff-val.pace-warn { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-diff-val.pace-warn { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 4. .pace-diff-val.pace-over → static danger-text text-shadow glow
+   支出ペースカードの「超過」状態差分値テキスト
+   （color:danger-text・fw-bold・tabular-nums）に常時 danger-text カラーの text-shadow を追加。
+   .pace-pct.pace-over static danger-text glow（v24.01）と連動し
+   ペース「超過」の差分値も danger カラーで常時発光し緊迫感を高める演出に。
+   pace-diff-val の good/warn/over 全3ステータスが各カラーで常時発光する完成形演出に統一。 */
+.pace-diff-val.pace-over { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-diff-val.pace-over { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .wk-cell-value.wk-nospend → static success text-shadow glow
+   週次サマリーの「ゼロ支出日」セルの金額テキスト
+   （color:success・fw-semi・tabular-nums）に常時 success カラーの text-shadow を追加。
+   wk-summary-row .wk-cell:hover .wk-cell-value success glow（v22.x）と対称で
+   未ホバー時からもゼロ支出達成を success カラーで静的に称賛する演出に。
+   .wk-cell-value.wk-today-exp static glow（本スプリント⑥）と対として
+   週次サマリーの特殊ステータス日が常時対応カラーで発光する完成形演出に統一。
+   wk-cell-value の transition には text-shadow を含む（v23.x）。 */
+.wk-cell-value.wk-nospend { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-cell-value.wk-nospend { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .wk-cell-value.wk-today-exp → static danger-text text-shadow glow
+   週次サマリーの「今日の支出」セルの金額テキスト
+   （color:danger-text・fw-semi・tabular-nums）に常時 danger-text カラーの text-shadow を追加。
+   wk-summary-row .wk-cell:hover .wk-cell-value expense glow（v22.x）と対称で
+   未ホバー時からも今日の支出を danger カラーで静的に強調する演出に。
+   .wk-cell-value.wk-nospend static success glow（本スプリント⑤）と対称に
+   週次サマリーのゼロ支出日・当日支出が常時対応カラーで発光する完成形演出に統一。 */
+.wk-cell-value.wk-today-exp { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-cell-value.wk-today-exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .fv-var-val → static success text-shadow glow
+   固定費vs変動費テーブルの変動費金額テキスト
+   （color:success・fw-semi・tabular-nums）に常時 success カラーの text-shadow を追加。
+   fv-month-row:hover .fv-var-val success glow（v23.75）と対称で
+   未ホバー時からも変動費金額が success カラーで静かに輝く演出に。
+   .fv-fixed-val static primary glow（本スプリント⑧）と対として
+   固定費・変動費の両金額が常時対応カラーで発光する完成形演出に統一。
+   fv-var-val の transition には text-shadow を含む（v23.75）。 */
+.fv-var-val { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-var-val { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .fv-fixed-val → static primary text-shadow glow
+   固定費vs変動費テーブルの固定費金額テキスト
+   （color:primary・fw-semi・tabular-nums）に常時 primary カラーの text-shadow を追加。
+   fv-month-row:hover .fv-fixed-val primary glow（v23.75）と対称で
+   未ホバー時からも固定費金額が primary カラーで静かに輝く演出に。
+   .fv-var-val static success glow（本スプリント⑦）と対として
+   固定費・変動費の両金額が常時対応カラーで発光する完成形演出に統一。
+   fv-fixed-val の transition には text-shadow を含む（v23.75）。 */
+.fv-fixed-val { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-fixed-val { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
