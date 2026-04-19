@@ -26791,3 +26791,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ci-month-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
 .ci-month-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.30), 0 0 12px rgba(255, 255, 255, 0.15); }
 [data-theme="dark"] .ci-month-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.40), 0 0 14px rgba(255, 255, 255, 0.20); }
+
+/* ============================================================
+   Sprint #794 / v23.98 — バッジ・トレンド要素の静的グロー 8箇所
+   cal-ev-badge-done-static-glow＋sub-paused-badge-static-glow＋
+   yi-grade-badge-static-glow＋ch-type-badge-static-glow＋
+   hs-trend-up-static-glow＋hs-trend-down-static-glow＋
+   fc-status-badge-static-glow＋adv-month-badge-static-glow
+   ============================================================ */
+
+/* 1. .cal-ev-badge.done → static success box-shadow glow
+   カレンダーパネルの「完了」イベントバッジ（.cal-ev-badge.done：success-bg/success カラー）に
+   常時 success box-shadow glow を追加。
+   cal-ev-item:hover .cal-ev-badge.done success glow（v23.19）と対称で
+   未ホバー時から「完了済み」を success カラーの光輪で静的に演出する。
+   cal-ev-badge の transition には box-shadow を含む（v23.19）。 */
+.cal-ev-badge.done { box-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-badge.done { box-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .sub-paused-badge → static warning text-shadow glow
+   サブスクカードの「一時停止中」バッジ（.sub-paused-badge：surface-hover bg）に
+   常時 warning text-shadow を追加。
+   sub-card:hover .sub-paused-badge warning glow（v23.83）と対称で
+   未ホバー時からサブスク停止状態を warning カラーで静的に訴求する演出に。
+   sub-paused-badge の transition には text-shadow を含む（v23.83）。 */
+.sub-paused-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-paused-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 3. .yi-grade-badge → static white text-shadow glow
+   年次インサイトカードの貯蓄率グレードバッジ（.yi-grade-badge：circle型・white カラー）に
+   常時白 text-shadow を追加。
+   yi-card:hover .yi-grade-badge 白 glow（v23.84）と対称で
+   未ホバー時から貯蓄率グレードが白く静的に輝く演出に。
+   yi-grade-badge の transition には text-shadow を含む（v23.84）。 */
+.yi-grade-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.30), 0 0 12px rgba(255, 255, 255, 0.15); }
+[data-theme="dark"] .yi-grade-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.40), 0 0 14px rgba(255, 255, 255, 0.20); }
+
+/* 4. .ch-type-badge → static ch-accent text-shadow glow
+   チャレンジカードのタイプバッジ（.ch-type-badge：surface-2 bg・ch-accent テーマカラー）に
+   常時 ch-accent text-shadow を追加。
+   ch-card:hover .ch-type-badge ch-accent glow（v23.87）と対称で
+   未ホバー時からチャレンジタイプが ch-accent カラーで静的に輝く演出に。
+   ch-type-badge の transition には text-shadow を含む（v23.87）。 */
+.ch-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .hs-trend-up → static success text-shadow glow
+   家計スコアカードの「▲Npt」上昇トレンドバッジ（.hs-trend-up：success-bg/success カラー）に
+   常時 success text-shadow を追加。
+   health-score-card:hover .hs-prev-badge.hs-trend-up success glow（v23.73）と対称で
+   未ホバー時からスコア上昇を success カラーで静的に演出する。
+   .hs-trend-down static glow（本スプリント⑥）と対称に
+   上昇・下降の全トレンドバッジが success/danger カラーで常時発光する完成形演出に統一。 */
+.hs-trend-up { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-trend-up { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .hs-trend-down → static danger-text text-shadow glow
+   家計スコアカードの「▼Npt」下降トレンドバッジ（.hs-trend-down：danger-bg/danger-text カラー）に
+   常時 danger-text text-shadow を追加。
+   health-score-card:hover .hs-prev-badge.hs-trend-down danger glow（v23.73）と対称で
+   スコア下降を danger カラーで静的に強調する演出に統一。
+   .hs-trend-up static glow（本スプリント⑤）と合わせてトレンドバッジ完成形演出。 */
+.hs-trend-down { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-trend-down { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .fc-status-badge → static fc-color text-shadow glow
+   キャッシュフロー予測カードのステータスバッジ（.fc-status-badge：fc-color テーマカラー）に
+   常時 fc-color text-shadow を追加。
+   forecast-card:hover .fc-status-badge fc-color glow（v23.76）と対称で
+   未ホバー時から予測ステータス（良好/注意/超過）が各テーマカラーで静的に輝く演出に。
+   fc-status-badge の transition には text-shadow を含む（v23.76）。 */
+.fc-status-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--fc-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-status-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .adv-month-badge → static primary text-shadow glow
+   AIアドバイスカードの月バッジ（.adv-month-badge：primary-mix bg / primary color）に
+   常時 primary text-shadow を追加。
+   adv-widget-card:hover .adv-month-badge primary glow（v23.68）と対称で
+   未ホバー時から月表示バッジが primary カラーで静的に輝く演出に。
+   adv-month-badge の transition には text-shadow を含む（v23.68）。 */
+.adv-month-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-month-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
