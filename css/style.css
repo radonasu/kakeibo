@@ -27310,3 +27310,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    常時発光する完成形演出に統一。yi-diff-down の transition には text-shadow を含む（v23.26）。 */
 .yi-diff-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .yi-diff-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   v24.04: スプリント#800 静的glowシリーズ第8弾 8箇所
+   （yi-card-value-static-glow＋asset-delta-up-static-glow＋
+     asset-delta-down-static-glow＋sw-total-amount-static-glow＋
+     sub-card-amount-static-glow＋yi-half-val-static-glow＋
+     sub-summary-monthly-yearly-static-glow＋pt-summary-amount-static-glow）
+   ============================================================ */
+
+/* 1. .yi-card-value → static primary text-shadow glow
+   年次インサイトカードのメイン数値（fs-2xl・fw-bold・color:text・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .yi-card:hover .yi-card-value primary glow（v23.46）と対称で
+   未ホバー時から年間合計値が primary カラーで静かに輝く品質感のある演出に。
+   yi-card-value の transition には text-shadow を含む（v23.46）。 */
+.yi-card-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .asset-balance-delta.up → static success text-shadow glow
+   資産カードの「増加」差分バッジテキスト（color:success・fw-semi・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   資産増加のポジティブな情報をsuccessカラーで常時強調し
+   資産一覧を開いた瞬間に増加バッジが輝く安心感のある演出に。
+   .asset-balance-delta.down static glow（本スプリント③）と対称に
+   増加・減少バッジが常時対応カラーで発光する完成形演出に統一。 */
+.asset-balance-delta.up   { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-balance-delta.up   { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 3. .asset-balance-delta.down → static danger-text text-shadow glow
+   資産カードの「減少」差分バッジテキスト（color:danger-text・fw-semi・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   資産減少の警告情報を danger-text カラーで常時強調し
+   資産一覧を開いた瞬間に減少バッジが赤く警告光する演出に。
+   本スプリント②と対称に増加・減少バッジの完成形演出に統一。 */
+.asset-balance-delta.down { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-balance-delta.down { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 4. .sub-widget-total-amount → static primary text-shadow glow
+   サブスクウィジェットの月額合計金額（fs-xl・fw-bold・color:text・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   ダッシュボードのサブスクウィジェットを開いた瞬間に
+   月額合計金額が primary カラーで静かに輝く存在感のある演出に。
+   transition に text-shadow を追加し将来のホバー演出との連動を準備。 */
+.sub-widget-total-amount { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-total-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-widget-total-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .sub-card-amount → static sub-accent text-shadow glow
+   サブスクカードの個別金額テキスト（fs-lg・fw-bold・color:text・tabular-nums）に
+   常時 sub-accent（各サブスクのテーマカラー）の text-shadow を追加。
+   .sub-card:hover .sub-card-amount sub-accent glow（v22.x）と対称で
+   未ホバー時からもサブスク固有カラーで金額が静かに輝く演出に。
+   sub-card-amount の transition には text-shadow を含む（v22.x）。 */
+.sub-card-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .yi-half-val → static expense text-shadow glow
+   年次インサイトカードの前半期・後半期支出金額（fw-semi・tabular-nums・white-space:nowrap）に
+   常時 expense カラーの text-shadow を追加。
+   .yi-card:hover .yi-half-val expense glow（v23.31）と対称で
+   未ホバー時から上下半期の支出金額が expense カラーで静かに警告光する演出に。
+   yi-half-val の transition には text-shadow を含む（v23.31）。 */
+.yi-half-val { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)      var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-half-val { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .sub-summary-card.sub-monthly/.sub-yearly .sub-summary-amount → static white text-shadow glow
+   月額・年額サブスクサマリーカードの合計金額（color:white・fs-3xl・fw-bold・tabular-nums）に
+   常時白の text-shadow を追加。
+   .sub-summary-card:hover .sub-summary-amount white glow（v23.16）と対称で
+   未ホバー時からもグラデーション背景上の白テキストが静かに浮き上がる品質感のある演出に。
+   sub-summary-amount の transition には text-shadow を含む（v23.16）。 */
+.sub-summary-card.sub-monthly .sub-summary-amount,
+.sub-summary-card.sub-yearly  .sub-summary-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 8. .pt-summary-amount → static white text-shadow glow
+   定期収支サマリーカードの合計金額（color:white・fs-2xl・fw-bold・tabular-nums）に
+   常時白の text-shadow を追加。
+   .pt-summary-card:hover .pt-summary-amount white glow（v23.x）と対称で
+   未ホバー時からもグラデーション背景上の白テキストが静かに浮き上がる品質感のある演出に。
+   pt-summary-amount の transition には text-shadow を含む（v23.x）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.04・全script/linkタグ?v=24.04に更新。 */
+.pt-summary-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
