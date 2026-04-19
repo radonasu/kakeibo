@@ -26482,3 +26482,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    qa-type-btn の transition には text-shadow を含む（v23.85）。 */
 .qa-type-btn.qa-type-active[data-qa-type="expense"] { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
 .qa-type-btn.qa-type-active[data-qa-type="income"]  { text-shadow: 0 0 8px color-mix(in srgb, var(--income)      var(--mix-xs), transparent); }
+
+/* ============================================================
+   Sprint #790 / v23.94 — 警告・状態バッジの静的グロー 8箇所
+   pt-urgent-badge-static-glow＋pt-soon-badge-static-glow＋
+   wl-pri-high-static-glow＋wl-pri-medium-static-glow＋
+   ch-status-done-static-glow＋ch-status-fail-static-glow＋
+   ch-status-over-static-glow＋ch-status-active-static-glow
+   ============================================================ */
+
+/* 1. pt-urgent-badge → static danger-text text-shadow glow
+   ポイント期限バッジ「⚠ 今すぐ!」（.pt-urgent-badge）に常時 danger-text text-shadow を追加。
+   danger-bg 背景 + danger-text 文字の既存スタイルと相乗りし、
+   緊急バッジが未ホバー時から赤く輝き「今すぐ使う」を視覚的に訴求。
+   pt-card:hover .pt-exp-badge glow（v23.67）・pt-exp-expired glow（v22.x）と連動し
+   ポイント期限状態の全バリエーションが一貫した発光演出になる完成形。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.94・全script/linkタグ?v=23.94に更新 */
+.pt-urgent-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-urgent-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* 2. pt-soon-badge → static warning text-shadow glow
+   ポイント期限バッジ「⏰ もうすぐ」（.pt-soon-badge）に常時 warning text-shadow を追加。
+   warning-bg 背景 + warning 文字の既存スタイルと相乗りし、
+   期限近バッジが未ホバー時から黄橙色に輝き「早めに使う」を優しく促す。
+   pt-urgent-badge static glow（本スプリント）と対称に期限状態２段階の静的発光を統一。 */
+.pt-soon-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-soon-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* 3. wl-pri-high → static danger-text box-shadow glow
+   ウィッシュリスト高優先度バッジ「🔴 高」（.wl-pri-high）に常時 danger-text box-shadow glow を追加。
+   danger-bg 背景 + danger-text 文字 + danger-border の既存スタイルと相乗りし、
+   高優先ウィッシュリストが未ホバー時から赤い光輪を纏う視覚演出に。
+   wl-card:hover .wl-priority-badge scale+brightness（v23.x）と連動し
+   ホバー前から優先度の高さが一目で伝わる完成形のバッジ演出に。 */
+.wl-pri-high { box-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-pri-high { box-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 4. wl-pri-medium → static warning box-shadow glow
+   ウィッシュリスト中優先度バッジ「🟡 中」（.wl-pri-medium）に常時 warning box-shadow glow を追加。
+   warning-bg 背景 + warning 文字 + warning-border の既存スタイルと相乗りし、
+   中優先バッジが未ホバー時から黄橙の光輪を纏う。
+   wl-pri-high static glow（本スプリント）と対称に高・中の優先度が
+   それぞれ danger/warning カラーで視覚的に差別化された完成形演出。 */
+.wl-pri-medium { box-shadow: 0 0 6px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-pri-medium { box-shadow: 0 0 7px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* 5. ch-status-done → static success text-shadow glow
+   達成チャレンジのステータスバッジ「✅ 達成」（.ch-status-done）に常時 success text-shadow を追加。
+   success-bg 背景 + income-deep 文字の既存スタイルと相乗りし、
+   達成バッジが未ホバー時から緑に輝き達成感を常に演出。
+   ch-card:hover .ch-status-done text-shadow glow（v23.x）と対称で
+   ホバー前から「達成済み」の状態が緑の輝きで直感的に伝わる完成形に。 */
+.ch-status-done { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-status-done { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* 6. ch-status-fail → static danger-text text-shadow glow
+   失敗チャレンジのステータスバッジ「❌ 未達」（.ch-status-fail）に常時 danger-text text-shadow を追加。
+   danger-bg 背景 + danger-text 文字の既存スタイルと相乗りし、
+   失敗バッジが未ホバー時から赤に輝き「改善が必要」を静的に訴求。
+   ch-status-done static glow（本スプリント）と対称に達成・失敗の両状態が
+   それぞれ success/danger カラーで視覚的に差別化された完成形演出。 */
+.ch-status-fail { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-status-fail { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* 7. ch-status-over → static warning text-shadow glow
+   超過チャレンジのステータスバッジ「⚡ 超過」（.ch-status-over）に常時 warning text-shadow を追加。
+   warning-bg 背景 + warning 文字の既存スタイルと相乗りし、
+   超過バッジが未ホバー時から黄橙に輝き「予算オーバー注意」を静的に強調。
+   ch-status-done/fail static glow（本スプリント）と合わせ
+   done/fail/over の全ステータスバッジが各カラーで常時発光する完成形バッジ演出に統一。 */
+.ch-status-over { text-shadow: 0 0 6px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-status-over { text-shadow: 0 0 7px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* 8. ch-status-active → static primary text-shadow glow
+   進行中チャレンジのステータスバッジ「🔥 進行中」（.ch-status-active）に常時 primary text-shadow を追加。
+   primary 文字の既存スタイルと相乗りし、進行中バッジが未ホバー時から primary カラーで輝く。
+   ch-status-done/fail/over static glow（本スプリント）と合わせ
+   active/done/fail/over の全４ステータスが各カラーで常時発光する
+   チャレンジカード完成形ステータス演出に統一。
+   ch-status の transition に text-shadow を追加。 */
+.ch-status { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-status-active { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-status-active { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
