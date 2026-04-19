@@ -27465,4 +27465,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    未ホバー時からチャレンジ名が各カード固有の ch-accent カラーで静かに輝く演出に。
    ch-card-name の transition には text-shadow を含む（v22.x）。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.05・全script/linkタグ?v=24.05に更新。 */
+
+/* ============================================================
+   スプリント#802 static glow（v24.06）
+   ウィッシュリスト・目標・チャレンジテキスト static glow
+   （wl-card-name-static-glow＋wl-card-price-static-glow＋
+     wl-card-note-static-glow＋goal-name-static-glow＋
+     goal-saved-static-glow＋goal-remaining-static-glow＋
+     goal-target-static-glow＋ci-challenge-name-static-glow）
+   ============================================================ */
+
+/* 1. .wl-card-name → static wl-accent text-shadow glow
+   ウィッシュリストカードのアイテム名テキスト（transition:color+text-shadow 設定済み）に
+   常時 wl-accent カラーの text-shadow を追加。
+   .wl-card:hover .wl-card-name wl-accent glow（v22.x）と対称で
+   未ホバー時からウィッシュリスト名が各カード固有の wl-accent カラーで静かに輝く演出に。
+   wl-card-price/note static glow（本スプリント②③）と連動しカード全テキストの静的演出を統一。 */
+.wl-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .wl-card-price → static wl-accent text-shadow glow
+   ウィッシュリストカードの価格テキスト（transition:filter+color+text-shadow 設定済み）に
+   常時 wl-accent カラーの text-shadow を追加。
+   .wl-card:hover .wl-card-price wl-accent glow（v22.x）と対称で
+   未ホバー時から価格テキストも wl-accent カラーで静かに輝く演出に。
+   wl-card-name static glow（①）と連動しカード名・価格が常時揃って輝く完成形演出に。 */
+.wl-card-price { text-shadow: 0 0 6px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .wl-card-note → static wl-accent text-shadow glow
+   ウィッシュリストカードのメモテキスト（transition:color+text-shadow 設定済み）に
+   常時 wl-accent カラーの text-shadow を追加。
+   .wl-card:hover .wl-card-note wl-accent glow（v22.x）と対称で
+   未ホバー時からメモテキストも wl-accent カラーで静かに輝く演出に。
+   ①②と合わせてウィッシュリストカード名・価格・メモ全テキストが常時 wl-accent で発光する完成形演出に統一。 */
+.wl-card-note { text-shadow: 0 0 6px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .goal-name → static goal-accent text-shadow glow
+   目標カードの目標名テキスト（transition:color+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-name goal-accent glow（v22.x）と対称で
+   未ホバー時から目標名が各カード固有の goal-accent カラーで静かに輝く演出に。
+   goal-saved/remaining/target static glow（本スプリント⑤⑥⑦）と連動し目標カード全テキストの静的演出を統一。 */
+.goal-name { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .goal-saved → static goal-accent text-shadow glow
+   目標カードの貯蓄済み金額テキスト（transition:color+filter+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-saved goal-accent glow（v23.42）と対称で
+   未ホバー時からも貯蓄済み金額が goal-accent カラーで静かに輝く安心感のある演出に。
+   goal-name static glow（④）と連動し目標名・貯蓄済み金額が常時 goal-accent で発光する演出に統一。 */
+.goal-saved { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .goal-remaining:not(.goal-done-hint) → static goal-accent text-shadow glow
+   目標カードの残り金額テキスト（transition:color+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-remaining goal-accent glow（v22.x）と対称で
+   未ホバー時からも残り金額が goal-accent カラーで静かに輝く演出に。
+   ④⑤と合わせて目標名・貯蓄済み・残り金額が常時 goal-accent で発光する完成形演出に統一。 */
+.goal-remaining:not(.goal-done-hint) { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .goal-target → static primary text-shadow glow
+   目標カードの目標金額テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .goal-card:hover .goal-target primary glow（v22.x）と対称で
+   未ホバー時からも目標金額が primary カラーで静かに輝く演出に。
+   ④⑤⑥の goal-accent glow と対として目標カード内の全テキストが常時発光する完成形演出に統一。 */
+.goal-target { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-target { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .ci-challenge-name → static primary text-shadow glow
+   チェックインチャレンジ一覧のチャレンジ名テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .ci-challenge-item:hover .ci-challenge-name primary glow（v22.x）と対称で
+   未ホバー時からチャレンジ名が primary カラーで静かに輝く演出に。
+   ch-card-name static glow（v24.05）・ci-event-name static glow（v24.05）と連動し
+   チャレンジ関連テキストが常時 primary カラーで発光する統一演出に。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.06・全script/linkタグ?v=24.06に更新。 */
+.ci-challenge-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-challenge-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 .ch-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent,  var(--primary)) var(--mix-xs), transparent); }
