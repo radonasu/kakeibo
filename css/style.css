@@ -27543,3 +27543,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ci-challenge-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .ci-challenge-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 .ch-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent,  var(--primary)) var(--mix-xs), transparent); }
+
+/* ============================================================
+   スプリント#803 static glow（v24.07）
+   ダッシュボードウィジェットテキスト static glow
+   （ch-widget-name-static-glow＋ch-widget-pct-static-glow＋
+     debt-widget-name-static-glow＋debt-widget-pct-static-glow＋
+     goal-dash-name-static-glow＋goal-dash-pct-static-glow＋
+     goal-dash-amount-static-glow＋dow-td2-static-glow）
+   ============================================================ */
+
+/* 1. .ch-widget-name → static ch-accent text-shadow glow
+   チャレンジウィジェット行のチャレンジ名テキスト（transition:color+text-shadow 設定済み）に
+   常時 ch-accent カラーの text-shadow を追加。
+   .ch-widget-item:hover .ch-widget-name ch-accent glow（v23.56）と対称で
+   未ホバー時からチャレンジ名が各チャレンジ固有の ch-accent カラーで静かに輝く演出に。
+   ch-card-name static glow（v24.05）と連動しチャレンジ関連テキストが常時 ch-accent で発光する統一演出に。 */
+.ch-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .ch-widget-pct → static タイプ別 text-shadow glow
+   チャレンジウィジェット達成率%テキストに常時タイプ別 text-shadow を追加。
+   達成済み（ch-pct-ok）= income カラー、超過（ch-pct-over）= expense カラーで静かに発光。
+   .ch-widget-item:hover .ch-widget-pct タイプ別glow（v23.56）と対称で
+   未ホバー時から達成状態が対応カラーで静かに識別できる演出に。
+   ch-widget-name static glow（①）と連動しウィジェット行全テキストの静的演出を統一。 */
+.ch-widget-pct.ch-pct-ok   { text-shadow: 0 0 6px color-mix(in srgb, var(--income)  var(--mix-xs), transparent); }
+.ch-widget-pct.ch-pct-over { text-shadow: 0 0 6px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-widget-pct.ch-pct-ok   { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-widget-pct.ch-pct-over { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 3. .debt-widget-name → static debt-accent text-shadow glow
+   負債ウィジェット行の負債名テキスト（transition:color+text-shadow 設定済み）に
+   常時 debt-accent カラーの text-shadow を追加。
+   .debt-widget-item:hover .debt-widget-name debt-accent glow（v23.56）と対称で
+   未ホバー時から負債名が各負債固有の debt-accent カラーで静かに輝く演出に。
+   debt-name static glow（v24.05）と連動し負債カード・ウィジェット双方が常時 debt-accent で発光する完成形に。 */
+.debt-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xs), transparent); }
+
+/* 4. .debt-widget-pct → static primary text-shadow glow
+   負債ウィジェット行の返済進捗%テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-widget-item:hover .debt-widget-pct primary glow（v23.56）と対称で
+   未ホバー時から返済%が primary カラーで静かに輝く演出に。
+   debt-widget-name static glow（③）と連動しウィジェット行の名称・%が常時 debt-accent/primary で発光する完成形に。 */
+.debt-widget-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-widget-pct { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 5. .goal-dash-name → static goal-accent text-shadow glow
+   目標ダッシュボード行の目標名テキスト（transition:color+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-dash-item:hover .goal-dash-name goal-accent glow（v23.56）と対称で
+   未ホバー時から目標名が各目標固有の goal-accent カラーで静かに輝く演出に。
+   goal-dash-pct/amount static glow（本スプリント⑥⑦）と連動しダッシュ行全テキストの静的演出を統一。 */
+.goal-dash-name { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .goal-dash-pct → static goal-accent text-shadow glow
+   目標ダッシュボード行の達成率%テキスト（transition:color+filter+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-dash-item:hover .goal-dash-pct goal-accent glow（v23.56）と対称で
+   未ホバー時から達成率%が goal-accent カラーで静かに輝く演出に。
+   goal-dash-name（⑤）・goal-dash-amount（⑦）と連動しダッシュ行全テキストの静的演出を統一。 */
+.goal-dash-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .goal-dash-amount → static goal-accent text-shadow glow
+   目標ダッシュボード行の貯蓄進捗金額テキスト（transition:color+text-shadow 設定済み）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-dash-item:hover .goal-dash-amount goal-accent glow（v23.56）と対称で
+   未ホバー時から貯蓄金額が goal-accent カラーで静かに輝く演出に。
+   ⑤⑥と合わせて目標ダッシュ行の名前・%・金額が常時 goal-accent で発光する完成形演出に統一。 */
+.goal-dash-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .dow-table-row td:nth-child(2) → static primary text-shadow glow
+   曜日別支出テーブル行のカテゴリ名列テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .dow-table-row:hover td:nth-child(2) primary glow（v23.56）と対称で
+   未ホバー時からカテゴリ名が primary カラーで静かに輝く演出に。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.07・全script/linkタグ?v=24.07に更新。 */
+.dow-table-row td:nth-child(2) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dow-table-row td:nth-child(2) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
