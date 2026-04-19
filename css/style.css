@@ -27222,3 +27222,91 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fv-fixed-val の transition には text-shadow を含む（v23.75）。 */
 .fv-fixed-val { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .fv-fixed-val { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   v24.03: tx-amount-income-static-glow＋tx-amount-expense-static-glow＋
+   dd-tx-amount-income-static-glow＋dd-tx-amount-expense-static-glow＋
+   md-cell-income-val-static-glow＋md-cell-expense-val-static-glow＋
+   yi-diff-up-static-glow＋yi-diff-down-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .tx-table tbody tr[data-type="income"] td.amount → static success text-shadow glow
+   取引テーブルの収入行の金額テキスト（color:success・fw-bold・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .tx-table tbody tr[data-type="income"]:hover td.amount success glow（v22.x）と対称で
+   未ホバー時から収入金額が success カラーで静かに輝く安心感のある演出に。
+   .tx-table tbody tr[data-type="expense"] td.amount static glow（本スプリント②）と対称に
+   取引テーブルの収入・支出全金額が income/expense で常時発光する完成形演出に統一。
+   td.amount の transition には text-shadow を含む（v22.x）。 */
+.tx-table tbody tr[data-type="income"] td.amount  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="income"] td.amount  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .tx-table tbody tr[data-type="expense"] td.amount → static danger-text text-shadow glow
+   取引テーブルの支出行の金額テキスト（color:danger-text・fw-bold・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   .tx-table tbody tr[data-type="expense"]:hover td.amount danger-text glow（v22.x）と対称で
+   未ホバー時から支出金額が danger-text カラーで静かに警告光する演出に。
+   本スプリント①と対称に取引テーブルの収入・支出全金額の完成形演出に統一。 */
+.tx-table tbody tr[data-type="expense"] td.amount { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"] td.amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .dd-tx-amount.income → static success text-shadow glow
+   日別ドリルダウンの取引一覧の収入金額テキスト（color:success・fw-semi・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .dd-tx-row:hover .dd-tx-amount.income success glow（v22.x）と対称で
+   未ホバー時からも収入金額が success カラーで静かに輝く演出に。
+   .dd-tx-amount.expense static glow（本スプリント④）と対称に
+   ドリルダウンの収入・支出全金額が income/expense で常時発光する完成形演出に統一。
+   dd-tx-amount の transition には text-shadow を含む（v22.x）。 */
+.dd-tx-amount.income  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-tx-amount.income  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .dd-tx-amount.expense → static danger-text text-shadow glow
+   日別ドリルダウンの取引一覧の支出金額テキスト（color:danger-text・fw-semi・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   .dd-tx-row:hover .dd-tx-amount.expense danger-text glow（v22.x）と対称で
+   未ホバー時からも支出金額が danger-text カラーで静かに警告光する演出に。
+   本スプリント③と対称にドリルダウン金額の完成形演出に統一。 */
+.dd-tx-amount.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-tx-amount.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .md-cell-income .md-cell-value → static success text-shadow glow
+   月次詳細モーダルの収入セル内金額値テキスト（色:success継承・fs-md・fw-bold・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   md-cell-income:hover .md-cell-value success glow（v23.26）と対称で
+   未ホバー時からも収入金額が success カラーで静かに輝く演出に。
+   .md-cell-expense .md-cell-value static glow（本スプリント⑥）と対称に
+   月次詳細の収入・支出金額値が常時対応カラーで発光する完成形演出に統一。
+   md-cell-value の transition には text-shadow を含む（v23.26）。 */
+.md-cell-income  .md-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-income  .md-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .md-cell-expense .md-cell-value → static danger-text text-shadow glow
+   月次詳細モーダルの支出セル内金額値テキスト（色:danger-text継承・fs-md・fw-bold・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   md-cell-expense:hover .md-cell-value danger-text glow（v23.26）と対称で
+   未ホバー時からも支出金額が danger-text カラーで静かに警告光する演出に。
+   本スプリント⑤と対称に月次詳細金額値の完成形演出に統一。 */
+.md-cell-expense .md-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-expense .md-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .yi-diff-up → static danger-text text-shadow glow
+   年間支出カードの「前年比増加」差分テキスト（color:danger-text・fw-semi・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   .yi-card:hover .yi-diff-up danger-text glow（v23.26）と対称で
+   未ホバー時からも前年比増加を danger-text カラーで静かに警告光する演出に。
+   .yi-diff-down static glow（本スプリント⑧）と対称に
+   年間支出カードの増加・減少差分が常時対応カラーで発光する完成形演出に統一。
+   yi-diff-up の transition には text-shadow を含む（v23.26）。 */
+.yi-diff-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-diff-up   { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 8. .yi-diff-down → static success text-shadow glow
+   年間支出カードの「前年比減少」差分テキスト（color:income・fw-semi・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .yi-card:hover .yi-diff-down income glow（v23.26）と対称で
+   未ホバー時からも前年比減少を success カラーで静かに称賛する演出に。
+   本スプリント⑦と対称に年間支出カードの増加・減少差分が danger/success で
+   常時発光する完成形演出に統一。yi-diff-down の transition には text-shadow を含む（v23.26）。 */
+.yi-diff-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-diff-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
