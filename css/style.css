@@ -27047,3 +27047,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    debt-widget-balance の transition には text-shadow を含む（v22.x）。 */
 .debt-widget-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
 [data-theme="dark"] .debt-widget-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   v24.01: cal-ev-amount-inc-static-glow＋cal-ev-amount-exp-static-glow＋
+   smi-amount-income-static-glow＋smi-amount-expense-static-glow＋
+   pace-pct-good-static-glow＋pace-pct-warn-static-glow＋
+   pace-pct-over-static-glow＋yr-avg-income-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .cal-ev-amount.inc → static income text-shadow glow
+   カレンダーパネル収支予定一覧の収入金額テキスト
+   （color:income・fs-xs～sm・fw-bold・tabular-nums）に常時 income カラーの text-shadow を追加。
+   cal-ev-item:hover .cal-ev-amount.inc income glow（v23.75）と対称で
+   未ホバー時からも収入金額が income カラーで静かに輝く演出に。
+   .cal-ev-amount.exp static glow（本スプリント②）と対称に
+   収入・支出の全イベント金額が income/expense で常時発光する完成形演出に統一。
+   cal-ev-amount の transition には text-shadow を含む（v23.75）。 */
+.cal-ev-amount.inc { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-amount.inc { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .cal-ev-amount.exp → static expense text-shadow glow
+   カレンダーパネル収支予定一覧の支出金額テキスト
+   （color:expense・fs-xs～sm・fw-bold・tabular-nums）に常時 expense カラーの text-shadow を追加。
+   cal-ev-item:hover .cal-ev-amount.exp expense glow（v23.75）と対称で
+   未ホバー時からも支出金額が expense カラーで静かに警告光する演出に。
+   .cal-ev-amount.inc static glow（本スプリント①）と対称に
+   収入・支出の全イベント金額が income/expense で常時発光する完成形演出に統一。 */
+.cal-ev-amount.exp { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-amount.exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .smi-amount.income → static income text-shadow glow
+   ホーム月次サマリーの収入合計金額テキスト
+   （color:income・fs-lg・fw-black・tabular-nums）に常時 income カラーの text-shadow を追加。
+   smi-income:hover .smi-amount success glow（v23.46）と対称で
+   未ホバー時からも収入金額が income カラーで静かに輝く安心感のある演出に。
+   .smi-amount.expense static glow（本スプリント④）と対称に
+   収入・支出の全サマリー金額が income/expense で常時発光する完成形演出に統一。
+   smi-amount の transition には text-shadow を含む（v23.46）。 */
+.smi-amount.income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-amount.income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .smi-amount.expense → static expense text-shadow glow
+   ホーム月次サマリーの支出合計金額テキスト
+   （color:expense・fs-lg・fw-black・tabular-nums）に常時 expense カラーの text-shadow を追加。
+   smi-expense:hover .smi-amount danger-text glow（v23.46）と対称で
+   未ホバー時からも支出金額が expense カラーで静かに警告光する演出に。
+   .smi-amount.income static glow（本スプリント③）と対称に完成形演出に統一。 */
+.smi-amount.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-amount.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .pace-pct.pace-good → static success text-shadow glow
+   ホーム支出ペースバーの「良好」状態パーセント値
+   （color:success・fs-xs・fw-semi）に常時 success カラーの text-shadow を追加。
+   pace-bar-row:has(.pace-good):hover .pace-pct success glow（v23.78）と対称で
+   未ホバー時からも「良好」ペース達成を success カラーで静的に強調する演出に。
+   .pace-pct.pace-warn/over static glow（本スプリント⑥⑦）と合わせて
+   全ペースステータスが常時対応カラーで発光する完成形演出に統一。
+   pace-pct の transition には text-shadow を含む（v23.78）。 */
+.pace-pct.pace-good { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-pct.pace-good { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .pace-pct.pace-warn → static warning text-shadow glow
+   ホーム支出ペースバーの「警告」状態パーセント値
+   （color:warning・fs-xs・fw-semi）に常時 warning カラーの text-shadow を追加。
+   pace-bar-row:has(.pace-warn):hover .pace-pct warning glow（v23.78）と対称で
+   未ホバー時からも「警告」ペース到達を warning カラーで静的に注意を促す演出に。
+   .pace-pct.pace-good/over static glow（本スプリント⑤⑦）と合わせて完成形演出に統一。 */
+.pace-pct.pace-warn { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-pct.pace-warn { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 7. .pace-pct.pace-over → static danger-text text-shadow glow
+   ホーム支出ペースバーの「超過」状態パーセント値
+   （color:danger-text・fs-xs・fw-semi）に常時 danger-text カラーの text-shadow を追加。
+   pace-bar-row:has(.pace-over):hover .pace-pct danger-text glow（v23.78）と対称で
+   未ホバー時からも「超過」ペース危機を danger カラーで常時発光させ緊迫感を高める演出に。
+   .pace-pct.pace-good/warn static glow（本スプリント⑤⑥）と合わせて
+   全ペースステータスが success/warning/danger カラーで常時発光する完成形演出に統一。 */
+.pace-pct.pace-over { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-pct.pace-over { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 8. .yr-avg-income → static success text-shadow glow
+   年次ウィジェットフッターの月平均収入値テキスト
+   （color:success・fs-sm・fw-semi・tabular-nums）に常時 success カラーの text-shadow を追加。
+   yr-widget-card:hover .yr-avg-val primary glow（v23.64）と対称で
+   未ホバー時からも月平均収入が success カラーで静かに輝く安心感のある演出に。
+   yr-cell-sub.yr-down static glow・yr-avg-val glow（v23.64）と連携し
+   年次ウィジェットの収入系テキストが常時 success カラーで発光する完成形演出に統一。
+   yr-avg-val の transition には text-shadow を含む（v23.64）。 */
+.yr-avg-income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-avg-income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
