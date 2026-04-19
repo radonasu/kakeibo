@@ -26564,3 +26564,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ch-status { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .ch-status-active { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 [data-theme="dark"] .ch-status-active { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #791 / v23.95 — 評価・達成バッジの静的グロー 8箇所
+   hs-grade-s-static-glow＋hs-grade-a-static-glow＋
+   hs-grade-b-static-glow＋hs-grade-c-static-glow＋
+   hs-grade-d-static-glow＋goal-achieved-badge-static-glow＋
+   wl-pri-low-static-glow＋debt-type-badge-static-glow
+   ============================================================ */
+
+/* 1. .hs-grade-s → static primary text-shadow glow
+   家計スコアSグレードバッジ（最高評価：color:primary-dark/bg:primary-light）に
+   常時 primary text-shadow を追加。hs-grade-s:hover glow（v23.76）と対称で
+   未ホバー時から「最高評価」の輝きを primary カラーで静的に演出。
+   hs-grade-a/b/c/d static glow（本スプリント②〜⑤）と合わせて
+   全グレードバッジが各カラーで常時発光する完成形グレード演出に統一。
+   hs-grade-badge の transition に text-shadow を含む（v23.76）。 */
+.hs-grade-s { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-s { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* 2. .hs-grade-a → static success text-shadow glow
+   Aグレードバッジ（優秀：color:income-deep/bg:success-bg）に常時 success text-shadow を追加。
+   hs-grade-s static glow（本スプリント①）と対称に
+   S→A のグレード序列を primary→success の色彩グラデーションで表現した完成形に。 */
+.hs-grade-a { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-a { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+
+/* 3. .hs-grade-b → static info-text text-shadow glow
+   Bグレードバッジ（良好：color:info-text/bg:info-bg）に常時 info-text text-shadow を追加。
+   hs-grade-s/a static glow（本スプリント①②）と連携し
+   S→A→B のグレード序列を各カラーで視覚的に差別化する完成形演出に。 */
+.hs-grade-b { text-shadow: 0 0 6px color-mix(in srgb, var(--info-text)   var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-b { text-shadow: 0 0 7px color-mix(in srgb, var(--info-text)    var(--mix-md), transparent); }
+
+/* 4. .hs-grade-c → static warning text-shadow glow
+   Cグレードバッジ（要注意：color:warning/bg:warning-bg）に常時 warning text-shadow を追加。
+   warning カラーで「改善の余地あり」を静的に強調し
+   グレード一覧での視認性を向上させる演出に。 */
+.hs-grade-c { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-c { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-md), transparent); }
+
+/* 5. .hs-grade-d → static danger-text text-shadow glow
+   Dグレードバッジ（要改善：color:danger-text/bg:danger-bg）に常時 danger-text text-shadow を追加。
+   hs-grade-s/a/b/c static glow（本スプリント①〜④）と合わせて
+   S/A/B/C/D 全グレードバッジが各テーマカラーで常時発光する
+   家計スコアグレード完成形演出に統一。 */
+.hs-grade-d { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-d { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-md), transparent); }
+
+/* 6. .goal-achieved-badge → static success text-shadow glow
+   達成済みゴールのバッジ「🏆 達成！」（.goal-achieved-badge：success-bg/income-deep）に
+   常時 success text-shadow を追加。goal-card:hover .goal-achieved-badge glow（v23.12）と対称で
+   未ホバー時から「達成済み」の緑の輝きを静的に演出し goal カード一覧での達成感を強化。
+   ch-status-done static glow（v23.94）と同パターンで
+   達成系バッジの静的発光演出を統一。goal-achieved-badge の transition に text-shadow を含む（v23.12）。 */
+.goal-achieved-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+[data-theme="dark"] .goal-achieved-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+
+/* 7. .wl-pri-low → static success box-shadow glow
+   ウィッシュリスト低優先度バッジ「🟢 低」（.wl-pri-low：success-bg/success/success-border）に
+   常時 success box-shadow glow を追加。
+   wl-pri-high static danger glow（v23.94）・wl-pri-medium static warning glow（v23.94）と対称に
+   高・中・低の全３優先度バッジが danger/warning/success カラーで常時発光する
+   ウィッシュリスト優先度完成形演出に統一。 */
+.wl-pri-low { box-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-pri-low { box-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .debt-type-badge → static debt-accent text-shadow glow
+   負債タイプバッジ（.debt-type-badge：bg:debt-accent mix / color:debt-accent）に
+   常時 debt-accent text-shadow を追加。debt-card:hover .debt-type-badge glow（v23.73）と対称で
+   未ホバー時から負債タイプが debt-accent カラーで静的に輝く演出に。
+   debt-rate-badge/debt-monthly-badge hover glow（v23.76）と合わせて
+   負債カードバッジ類の発光演出を完成形に統一。debt-type-badge の transition に text-shadow を含む（v23.73）。 */
+.debt-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent); }
