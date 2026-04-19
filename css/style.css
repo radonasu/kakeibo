@@ -27621,3 +27621,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.07・全script/linkタグ?v=24.07に更新。 */
 .dow-table-row td:nth-child(2) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 [data-theme="dark"] .dow-table-row td:nth-child(2) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#804 static glow（v24.08）
+   取引テーブル・ダッシュボード取引・提案テーブル・曜日別テーブル static glow
+   （tx-first-col-static-glow＋tx-col-mem-static-glow＋
+     tx-month-group-label-static-glow＋dd-tx-date-static-glow＋
+     dd-tx-memo-static-glow＋sb-muted-static-glow＋
+     sb-nth4-static-glow＋dow-td4-static-glow）
+   ============================================================ */
+
+/* 1. .tx-table td:first-child → static primary text-shadow glow
+   取引テーブル日付列テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .tx-table tbody tr:hover td:first-child primary glow（v23.57）と対称で
+   未ホバー時から日付列が primary カラーで静かに輝く演出に。
+   td.amount static glow（v24.03）・tx-col-pay/tx-col-mem static glow（本スプリント②）と
+   連動し取引テーブルの全主要列が常時発光する完成形演出に統一。 */
+.tx-table td:first-child { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table td:first-child { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .tx-table td.tx-col-mem → static primary text-shadow glow
+   取引テーブル担当者列テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .tx-table tbody tr:hover td.tx-col-mem primary glow（v23.57）と対称で
+   未ホバー時から担当者列が primary カラーで静かに輝く演出に。
+   td:first-child static glow（①）と連動しデスクトップ全補足列が常時発光する完成形演出に統一。 */
+.tx-table td.tx-col-mem { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table td.tx-col-mem { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 3. .tx-month-group-label → static primary text-shadow glow
+   取引月グループ見出し行の月ラベルテキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .tx-month-group-row:hover .tx-month-group-label primary glow（v23.57）と対称で
+   未ホバー時から月見出しラベルが primary カラーで静かに輝く演出に。
+   tx-month-group-summary income/expense static glow（v24.03）と連動し
+   月グループ行の全テキストが常時発光する完成形演出に統一。 */
+.tx-month-group-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-month-group-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .dd-tx-date → static primary text-shadow glow
+   デイリーダッシュボード取引行の日付テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .dd-tx-row:hover .dd-tx-date primary glow（v23.57）と対称で
+   未ホバー時から日付テキストが primary カラーで静かに輝く演出に。
+   dd-tx-amount static glow（v24.03）・dd-tx-memo static glow（本スプリント⑤）と連動し
+   ダッシュボード取引行の日付・メモ・金額が常時発光する完成形演出に統一。 */
+.dd-tx-date { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-tx-date { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 5. .dd-tx-memo → static primary text-shadow glow
+   デイリーダッシュボード取引行のメモ・名称テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .dd-tx-row:hover .dd-tx-memo primary glow（v23.57）と対称で
+   未ホバー時からメモ・名称テキストが primary カラーで静かに輝く演出に。
+   dd-tx-date static glow（④）・dd-tx-amount static glow（v24.03）と連動し
+   ダッシュボード取引行の全テキストが常時発光する完成形演出に統一。 */
+.dd-tx-memo { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-tx-memo { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 6. .sb-row td.text-muted → static primary text-shadow glow
+   支出提案テーブル行の補足テキスト（件数・割合等）（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .sb-row:hover td.text-muted primary glow（v23.57）と対称で
+   未ホバー時から補足テキストが primary カラーで静かに輝く演出に。
+   sb-row td:nth-child(4) static glow（本スプリント⑦）と連動し
+   支出提案テーブル行の全補足列が常時発光する完成形演出に統一。 */
+.sb-row td.text-muted { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .sb-row td.text-muted { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 7. .sb-row td:nth-child(4) → static primary text-shadow glow
+   支出提案テーブル行の現在予算額列テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .sb-row:hover td:nth-child(4) primary glow（v23.57）と対称で
+   未ホバー時から現在予算額が primary カラーで静かに輝く演出に。
+   sb-row td.text-muted static glow（⑥）と連動し
+   支出提案テーブル行の全補足列が常時発光する完成形演出に統一。 */
+.sb-row td:nth-child(4) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .sb-row td:nth-child(4) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .dow-table-row td:nth-child(4) → static primary text-shadow glow
+   曜日別支出テーブル行の1日平均額列テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .dow-table-row:hover td:nth-child(4) primary glow（v23.57）と対称で
+   未ホバー時から1日平均額が primary カラーで静かに輝く演出に。
+   dow-table-row td:nth-child(2) static glow（v24.07）と連動し
+   曜日別テーブル行の主要テキスト列が常時 primary で発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.08・全script/linkタグ?v=24.08に更新。 */
+.dow-table-row td:nth-child(4) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dow-table-row td:nth-child(4) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
