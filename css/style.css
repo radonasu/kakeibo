@@ -27710,3 +27710,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.08・全script/linkタグ?v=24.08に更新。 */
 .dow-table-row td:nth-child(4) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 [data-theme="dark"] .dow-table-row td:nth-child(4) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#805 static glow（v24.09）
+   fv-cat-first-col-static-glow＋smi-label-static-glow＋
+   smi-amount-static-glow＋dd-summary-label-static-glow＋
+   hm-stat-unit-static-glow＋rc-item-amount-static-glow＋
+   section-tab-static-glow＋sub-cycle-unit-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .fv-cat-table tbody tr td:first-child → static primary text-shadow glow
+   将来費カテゴリテーブル行の1列目カテゴリ名テキストに常時 primary カラーの text-shadow を追加。
+   .fv-cat-table tbody tr:hover td:first-child primary glow（v23.58）と対称で
+   未ホバー時からカテゴリ名が primary カラーで静かに輝く演出に。 */
+.fv-cat-table tbody tr td:first-child { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-cat-table tbody tr td:first-child { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .smi-balance .smi-label → status-based static text-shadow glow
+   収支サマリー残高行のラベルテキストに常時ステータス別 text-shadow を追加。
+   残高プラス=primary / 残高マイナス=danger-text。
+   .smi-balance:hover .smi-label glow（v23.58）と対称で未ホバー時から
+   ラベルテキストが残高状態に応じたカラーで静かに輝く演出に。 */
+.smi-balance .smi-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)      var(--mix-xs), transparent); }
+.smi-balance:has(.smi-amount.expense) .smi-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-balance .smi-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense) .smi-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 3. .smi-balance .smi-amount → status-based static text-shadow glow
+   収支サマリー残高行の金額テキストに常時ステータス別 text-shadow を追加。
+   income=success / expense=danger-text。
+   .smi-balance:hover .smi-amount glow（v23.58）と対称で未ホバー時から
+   金額テキストが income/expense 状態に応じたカラーで静かに輝く演出に。 */
+.smi-balance .smi-amount.income  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.smi-balance .smi-amount.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-balance .smi-amount.income  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-balance .smi-amount.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 4. .dd-summary-label → static primary text-shadow glow
+   ダッシュボードサマリーアイテムのラベルテキストに常時 primary カラーの text-shadow を追加。
+   .dd-summary-item:hover .dd-summary-label primary glow（v23.58）と対称で
+   未ホバー時からラベルが primary カラーで静かに輝く演出に。 */
+.dd-summary-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-summary-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 5. .hm-stat-unit → static primary text-shadow glow
+   ヒートマップ統計カードの単位テキスト（「円」「日」等）に常時 primary カラーの text-shadow を追加。
+   .hm-stat-card:hover .hm-stat-unit primary glow（v23.58）と対称で
+   未ホバー時から単位テキストが primary カラーで静かに輝く演出に。 */
+.hm-stat-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 6. .rc-item-amount → static primary text-shadow glow
+   定期収支アイテムの金額テキストに常時 primary カラーの text-shadow を追加。
+   .rc-item:hover .rc-item-amount primary glow（v23.58）と対称で
+   未ホバー時から金額テキストが primary カラーで静かに輝く演出に。
+   rc-item-name static glow（v24.05）と連動しカード名・金額が常時発光する完成形演出に統一。 */
+.rc-item-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .rc-item-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 7. .section-tab:not(.is-active) → static primary text-shadow glow
+   非アクティブセクションタブに常時 primary カラーの text-shadow を追加。
+   .section-tab:not(.is-active):hover primary glow（v23.58）と対称で
+   未ホバー時からもタブテキストが primary カラーで静かに輝く演出に。
+   section-tab.is-active（mix-md: v22.84）より控えめな mix-xs で階層を維持。 */
+.section-tab:not(.is-active) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .section-tab:not(.is-active) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .sub-cycle-unit → static sub-accent text-shadow glow
+   サブスクカードのサイクル単位テキスト（「/月」「/年」等）に常時 sub-accent カラーの text-shadow を追加。
+   .sub-card:hover .sub-cycle-unit sub-accent glow（v23.58）と対称で
+   未ホバー時からサイクル単位が各サブスク固有の sub-accent カラーで静かに輝く演出に。
+   sub-card-amount static glow（v24.03）・sub-card-name static glow（v24.05）と連動し
+   サブスクカード全テキストが常時 sub-accent で発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.09・全script/linkタグ?v=24.09に更新。 */
+.sub-cycle-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); }
