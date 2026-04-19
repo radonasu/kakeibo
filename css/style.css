@@ -26410,3 +26410,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    transition に text-shadow を追加。 */
 .cat-chip { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cat-chip.selected:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #789 / v23.93 — 選択・アクティブ状態の静的グロー 8箇所
+   section-tab-active-tab-icon-drop-shadow＋
+   tx-tag-filter-all-active-glow＋tx-tag-filter-chip-active-glow＋
+   adv-preset-chip-active-glow＋date-quick-btn-active-glow＋
+   type-btn-expense-static-glow＋type-btn-income-static-glow＋
+   qa-type-active-static-glow 8箇所
+   ============================================================ */
+
+/* 1. section-tab.is-active .tab-icon → static primary drop-shadow グロー
+   アクティブセクションタブのアイコン（絵文字）に常時 primary drop-shadow を追加。
+   既存 scale(var(--scale-hover-lg)) + animation はあるが drop-shadow なし。
+   section-tab:hover .tab-icon drop-shadow（v22.x）と対称で、
+   ホバー前から「現在のページ」であることを絵文字の輝きで視覚的に明示。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.93・全script/linkタグ?v=23.93に更新 */
+.section-tab.is-active .tab-icon { filter: drop-shadow(0 1px 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+[data-theme="dark"] .section-tab.is-active .tab-icon { filter: drop-shadow(0 1px 7px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+
+/* 2. tx-tag-filter-all.active → static primary text-shadow グロー
+   「すべて」タグフィルターの選択中状態に常時 primary text-shadow を追加。
+   既存 color:primary + box-shadow はあるが text-shadow なし。
+   active:hover glow（v23.84）と対称で未ホバー時から選択を視覚強調。
+   tx-tag-filter-all の transition には text-shadow を含む（v23.84）。 */
+.tx-tag-filter-all.active { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 3. tx-tag-filter-chip.active → static --tc text-shadow グロー
+   アクティブなタグフィルターチップに常時 --tc カラーの text-shadow を追加。
+   既存 color:--tc + box-shadow + scale はあるが text-shadow なし。
+   active:hover glow（v23.84）と対称で未ホバー時から選択チップを視覚強調。
+   tx-tag-filter-chip の transition には text-shadow を含む（v23.84）。 */
+.tx-tag-filter-chip.active { text-shadow: 0 0 6px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. adv-preset-chip.active → static primary text-shadow グロー
+   詳細フィルターのアクティブプリセットチップに常時 primary text-shadow を追加。
+   既存 color:primary + box-shadow はあるが text-shadow なし。
+   adv-preset-chip:hover glow（v23.80）・tx-tag-filter-all/chip active glow（本スプリント）
+   と同パターンでアクティブフィルターチップ群の静的演出を統一。
+   adv-preset-chip の transition には text-shadow を含む（v23.80）。 */
+.adv-preset-chip.active { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 5. date-quick-btn.active → static white text-shadow グロー
+   選択中の日付クイックボタン（primary背景・白テキスト）に常時白 text-shadow を追加。
+   既存 color:white + background:primary + box-shadow はあるが text-shadow なし。
+   date-quick-btn:hover glow（v23.72）と対称で、未ホバー時から
+   選択日が白く輝き「現在選択中」を直感的に伝える演出に。
+   date-quick-btn の transition には text-shadow を含む（v23.72）。 */
+.date-quick-btn.active { text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); }
+
+/* 6. type-btn.expense-btn → static expense text-shadow グロー
+   取引モーダルで支出タイプが選択中の状態（expense-btn クラスが付く時）に
+   常時 expense text-shadow を追加。既存 color:expense + background:expense-light は
+   あるが text-shadow なし。type-btn.expense-btn:hover glow（v23.63）と対称で
+   未ホバーでも「支出選択中」の色彩演出が内側から光る完成形に。
+   type-btn の transition には text-shadow を含む（v23.x）。 */
+.type-btn.expense-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+
+/* 7. type-btn.income-btn → static income text-shadow グロー
+   取引モーダルで収入タイプが選択中の状態（income-btn クラスが付く時）に
+   常時 income text-shadow を追加。既存 color:income + background:income-light は
+   あるが text-shadow なし。type-btn.income-btn:hover glow（v23.63）と対称で
+   type-btn.expense-btn glow（本スプリント）と対称にタイプ選択状態を完成形演出に統一。 */
+.type-btn.income-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
+
+/* 8. qa-type-btn.qa-type-active → static タイプ別 text-shadow グロー
+   クイック追加フォームの選択中タイプボタン（支出=danger-text / 収入=income）に
+   常時タイプ別 text-shadow を追加。既存 color:danger-text/income + background + box-shadow
+   はあるが text-shadow なし。qa-type-btn:hover glow（v23.85）と対称で
+   type-btn active glow（本スプリント）と同パターン、QAフォームのタイプ選択視認性を完成。
+   qa-type-btn の transition には text-shadow を含む（v23.85）。 */
+.qa-type-btn.qa-type-active[data-qa-type="expense"] { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.qa-type-btn.qa-type-active[data-qa-type="income"]  { text-shadow: 0 0 8px color-mix(in srgb, var(--income)      var(--mix-xs), transparent); }
