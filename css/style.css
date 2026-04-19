@@ -26353,3 +26353,60 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存 border-color:primary+scale+box-shadow（v12.x）と連動し選択促進UX向上。
    transition には既に filter あり追加不要。 */
 .ev-done-cb:hover:not(:checked) { filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #788 / v23.92
+   delete-cat-hover-glow + onboarding-cta-hover-glow +
+   global-fab-svg-hover-drop-shadow + bottom-nav-active-svg-drop-shadow +
+   nav-active-svg-drop-shadow + rpt-chevron-hover-drop-shadow +
+   cat-chip-selected-glow + cat-chip-selected-hover-glow 8箇所
+   ============================================================ */
+
+/* 1. delete-cat:hover → danger-text グロー上書き
+   .delete-cat は .btn-icon を継承するため btn-icon:hover の primary text-shadow が適用されるが、
+   delete-cat:hover は color: var(--danger-text) に変わる → 危険色グローで意味的整合性を確保。 */
+.delete-cat:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 2. onboarding-cta:hover → white text-shadow グロー
+   グラデーションボタンにホバー時 transform+box-shadow はあるが text-shadow なし。
+   白文字グローでグラデ演出と統一し「初回CTAボタン感」を強調。
+   transition に text-shadow を追加。 */
+.onboarding-cta { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.onboarding-cta:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* 3. #global-fab:hover svg → white drop-shadow グロー
+   FAB SVG はホバー時 rotate(45deg) のみで発光なし。
+   白グロー追加でグラデFABボタンの演出を強化し「開く感」を視覚強調。
+   transition に filter を追加。 */
+#global-fab svg { transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+#global-fab:hover svg { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); }
+
+/* 4. bottom-nav-item.active .bottom-nav-icon svg → primary 静的 drop-shadow グロー
+   アクティブ底部ナビのラッパーには box-shadow、ラベルには text-shadow があるが
+   SVG アイコン自体に drop-shadow なし → SVG にも一貫したグロー演出を付加。
+   ダークモードでは primary-end で強調。 */
+.bottom-nav-item.active .bottom-nav-icon svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon svg { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* 5. nav-item.active .nav-icon svg → primary-end 静的 drop-shadow グロー
+   サイドナビのアクティブアイコンラッパーに box-shadow はあるが SVG 自体に drop-shadow なし。
+   bottom-nav（④）と対称に SVG レイヤーにも発光を追加し上下ナビを統一。 */
+.nav-item.active .nav-icon svg { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+
+/* 6. rpt-month-row.is-clickable:hover .rpt-row-chevron → primary 色 + drop-shadow
+   chevron SVG はホバー時 opacity:0→1 + translateX で出現するが色・グローなし。
+   primary 色付け + drop-shadow でクリック可能を視覚的に明示。
+   transition に color・filter を追加。 */
+.rpt-row-chevron { transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.rpt-month-row.is-clickable:hover .rpt-row-chevron { color: var(--primary); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 7. cat-chip.selected → cat-color 静的 text-shadow グロー
+   選択中カテゴリチップは primary-light 背景 + cat-color 文字になるが text-shadow なし。
+   cat-color グローで「選択済み」状態を視覚的に強調し未選択との差別化を明確化。 */
+.cat-chip.selected { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. cat-chip.selected:hover → cat-color 強化 text-shadow グロー
+   選択中チップをさらにホバーした際に glow を強化し「クリックで解除できる」操作性を示唆。
+   transition に text-shadow を追加。 */
+.cat-chip { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cat-chip.selected:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-md), transparent); }
