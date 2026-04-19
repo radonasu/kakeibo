@@ -27391,3 +27391,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    pt-summary-amount の transition には text-shadow を含む（v23.x）。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.04・全script/linkタグ?v=24.04に更新。 */
 .pt-summary-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* ============================================================
+   スプリント#801 static glow（v24.05）
+   カード名テキスト static glow
+   （rc-item-name-static-glow＋debt-name-static-glow＋
+     asset-name-static-glow＋pt-card-name-static-glow＋
+     sub-card-name-static-glow＋ci-event-name-static-glow＋
+     opp-title-static-glow＋ch-card-name-static-glow）
+   ============================================================ */
+
+/* 1. .rc-item-name → static primary text-shadow glow
+   定期収支一覧アイテムの名称テキスト（transition:color+text-shadow 設定済み）に
+   常時 primary カラーの text-shadow を追加。
+   .rc-item:hover .rc-item-name primary glow（v22.x）と対称で
+   未ホバー時から定期収支名が primary カラーで静かに輝く演出に。
+   rc-item-name の transition には text-shadow を含む（v22.94）。 */
+.rc-item-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .rc-item-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .debt-name → static debt-accent text-shadow glow
+   負債カードの負債名テキスト（transition:color+text-shadow 設定済み）に
+   常時 debt-accent カラーの text-shadow を追加。
+   .debt-card:hover .debt-name debt-accent glow（v22.x）と対称で
+   未ホバー時から負債名が各カード固有の debt-accent カラーで静かに輝く演出に。
+   debt-name の transition には text-shadow を含む（v22.x）。 */
+.debt-name { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent,  var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .asset-name → static asset-accent text-shadow glow
+   資産カードの資産名テキスト（transition:color+text-shadow 設定済み）に
+   常時 asset-accent カラーの text-shadow を追加。
+   .asset-card:hover .asset-name asset-accent glow（v22.x）と対称で
+   未ホバー時から資産名が各カード固有の asset-accent カラーで静かに輝く演出に。
+   asset-name の transition には text-shadow を含む（v22.x）。 */
+.asset-name { text-shadow: 0 0 6px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .pt-card-name → static pt-accent text-shadow glow
+   ポイントカードのカード名テキスト（transition:color+text-shadow 設定済み）に
+   常時 pt-accent カラーの text-shadow を追加。
+   .pt-card:hover .pt-card-name pt-accent glow（v22.x）と対称で
+   未ホバー時からポイントカード名が各カード固有の pt-accent カラーで静かに輝く演出に。
+   pt-card-name の transition には text-shadow を含む（v22.x）。 */
+.pt-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--pt-accent,  var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .sub-card-name → static sub-accent text-shadow glow
+   サブスクカードのサービス名テキスト（transition:color+text-shadow 設定済み）に
+   常時 sub-accent カラーの text-shadow を追加。
+   .sub-card:hover .sub-card-name sub-accent glow（v22.x）と対称で
+   未ホバー時からサブスクサービス名が各カード固有の sub-accent カラーで静かに輝く演出に。
+   sub-card-name の transition には text-shadow を含む（v22.x）。 */
+.sub-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .ci-event-name → static ci-ev-accent text-shadow glow
+   カレンダーイベントアイテムのイベント名テキスト（transition:color+text-shadow 設定済み）に
+   常時 ci-ev-accent カラーの text-shadow を追加。
+   .ci-event-item:hover .ci-event-name ci-ev-accent glow（v22.x）と対称で
+   未ホバー時からイベント名が各イベント固有の ci-ev-accent カラーで静かに輝く演出に。
+   ci-event-name の transition には text-shadow を含む（v22.x）。 */
+.ci-event-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .opp-title → static opp-accent text-shadow glow
+   節約チャンスカードのタイトルテキスト（transition:color+text-shadow 設定済み）に
+   常時 opp-accent カラーの text-shadow を追加。
+   .opp-card:hover .opp-title opp-accent glow（v22.x）と対称で
+   未ホバー時からチャンスカードタイトルが各カード固有の opp-accent カラーで静かに輝く演出に。
+   opp-title の transition には text-shadow を含む（v22.x）。 */
+.opp-title { text-shadow: 0 0 6px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .ch-card-name → static ch-accent text-shadow glow
+   チャレンジカードのチャレンジ名テキスト（transition:color+text-shadow 設定済み）に
+   常時 ch-accent カラーの text-shadow を追加。
+   .ch-card:hover .ch-card-name ch-accent glow（v22.x）と対称で
+   未ホバー時からチャレンジ名が各カード固有の ch-accent カラーで静かに輝く演出に。
+   ch-card-name の transition には text-shadow を含む（v22.x）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.05・全script/linkタグ?v=24.05に更新。 */
+.ch-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent,  var(--primary)) var(--mix-xs), transparent); }
