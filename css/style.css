@@ -26638,3 +26638,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    負債カードバッジ類の発光演出を完成形に統一。debt-type-badge の transition に text-shadow を含む（v23.73）。 */
 .debt-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--primary))     var(--mix-xs), transparent); }
 [data-theme="dark"] .debt-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #792 / v23.96 — バッジ・アクティブ要素の静的グロー 8箇所
+   rc-type-inc-static-glow＋rc-type-exp-static-glow＋
+   asset-currency-badge-static-glow＋asset-count-badge-static-glow＋
+   yr-prev-down-static-glow＋yr-prev-up-static-glow＋
+   nav-badge-static-glow＋sim-preset-active-static-glow
+   ============================================================ */
+
+/* 1. .rc-type-inc → static success text-shadow glow
+   定期収支「収入」タイプバッジ（.rc-type-inc：success-bg/success カラー）に
+   常時 success text-shadow を追加。rc-type-badge の transition（v23.76）に text-shadow 含む。
+   rc-type-exp static glow（本スプリント②）と対称に
+   収入・支出の全タイプバッジが success/danger カラーで常時発光する
+   定期収支タイプバッジ完成形演出に統一。 */
+.rc-type-inc { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+[data-theme="dark"] .rc-type-inc { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+
+/* 2. .rc-type-exp → static danger-text text-shadow glow
+   定期収支「支出」タイプバッジ（.rc-type-exp：danger-bg/danger カラー）に
+   常時 danger-text text-shadow を追加。rc-type-inc static glow（本スプリント①）と対称に
+   収入・支出の全タイプバッジが success/danger カラーで常時発光する完成形演出に統一。 */
+.rc-type-exp { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .rc-type-exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-md), transparent); }
+
+/* 3. .asset-currency-badge → static warning text-shadow glow
+   資産カードの外貨通貨バッジ（.asset-currency-badge：warning-bg/warning-deep カラー）に
+   常時 warning text-shadow を追加。asset-currency-badge の transition（v23.x）に text-shadow 含む。
+   外貨資産の通貨種別（USD/EUR 等）が未ホバー時から warning カラーで静的に輝き
+   ひと目で外貨資産と認識できる視認性向上演出に。 */
+.asset-currency-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .asset-currency-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-md), transparent); }
+
+/* 4. .asset-count-badge → static primary text-shadow glow
+   資産カードの件数バッジ（.asset-count-badge：primary-light/primary-dark カラー）に
+   常時 primary text-shadow を追加。asset-count-badge の transition に text-shadow を含む。
+   保有資産件数バッジが primary カラーで静的に輝き資産数の視認性が向上する演出に。 */
+.asset-count-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.asset-count-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+[data-theme="dark"] .asset-count-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-md), transparent); }
+
+/* 5. .yr-prev-down → static success text-shadow glow
+   年間ビュー前年比「↓」バッジ（.yr-prev-down：success-bg/success カラー）に
+   常時 success text-shadow を追加。yr-prev-badge の transition（v23.x）に text-shadow 含む。
+   yr-prev-up static glow（本スプリント⑥）と対称に
+   前年比↓（減少＝良好）・↑（増加＝要注意）の全バッジが success/danger カラーで
+   常時発光する年間ビュー前年比バッジ完成形演出に統一。 */
+.yr-prev-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-prev-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+
+/* 6. .yr-prev-up → static danger-text text-shadow glow
+   年間ビュー前年比「↑」バッジ（.yr-prev-up：danger-bg/danger-text カラー）に
+   常時 danger-text text-shadow を追加。yr-prev-down static glow（本スプリント⑤）と対称に
+   前年比増加（支出増加＝要注意）を danger カラーで静的に強調する演出に統一。 */
+.yr-prev-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-prev-up   { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-md), transparent); }
+
+/* 7. .nav-badge → static danger-text box-shadow glow
+   サイドナビゲーションの通知数バッジ（.nav-badge：danger-text 背景・white テキスト）に
+   常時 danger-text box-shadow glow を追加。nav-badge の transition に box-shadow を含む。
+   未読件数バッジが danger カラーの光輪を纏い「要確認」を静的に訴求する演出に。 */
+.nav-badge { transition: box-shadow var(--dur-fast) var(--ease-out); }
+.nav-badge { box-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .nav-badge { box-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-md), transparent); }
+
+/* 8. .sim-preset.sim-preset-active → static white text-shadow glow
+   シミュレーション選択中プリセット（.sim-preset.sim-preset-active：primary 背景・white テキスト）に
+   常時 white text-shadow を追加。sim-preset の transition（v23.x）に text-shadow 含む。
+   選択中の節約プリセットが白いテキストグローで輝き「現在選択中」を視覚的に強調する静的演出に。
+   グラデーション背景カード（fv-stat/hm-stat/dow-stat）の白グロー演出（v23.70）と同パターン。 */
+.sim-preset.sim-preset-active { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.35), 0 0 14px rgba(255, 255, 255, 0.15); }
+[data-theme="dark"] .sim-preset.sim-preset-active { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 0 18px rgba(255, 255, 255, 0.20); }
