@@ -26710,3 +26710,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    グラデーション背景カード（fv-stat/hm-stat/dow-stat）の白グロー演出（v23.70）と同パターン。 */
 .sim-preset.sim-preset-active { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.35), 0 0 14px rgba(255, 255, 255, 0.15); }
 [data-theme="dark"] .sim-preset.sim-preset-active { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 0 18px rgba(255, 255, 255, 0.20); }
+
+/* ============================================================
+   Sprint #793 / v23.97 — タイプ・状態バッジの静的グロー 8箇所
+   ev-type-badge-income-static-glow＋ev-type-badge-expense-static-glow＋
+   smi-filter-badge-static-glow＋ci-badge-achieved-static-glow＋
+   cat-budget-pct-warn-static-glow＋cat-budget-pct-over-static-glow＋
+   asset-type-badge-static-glow＋ci-month-badge-static-glow
+   ============================================================ */
+
+/* 1. .ev-type-badge.ev-income → static income text-shadow glow
+   収支予定カードの「収入」タイプバッジ（.ev-type-badge.ev-income：income-bg/income カラー）に
+   常時 income text-shadow を追加。ev-card:hover .ev-type-badge タイプ別 glow（v23.78）と対称で
+   未ホバー時から「収入」を income カラーで静的に輝かせる演出に。
+   ev-type-badge.ev-expense static glow（本スプリント②）と対称に収入・支出タイプバッジ完成形演出に統一。
+   ev-type-badge の transition には text-shadow を含む（v23.78）。 */
+.ev-type-badge.ev-income  { text-shadow: 0 0 6px color-mix(in srgb, var(--income)      var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-type-badge.ev-income  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .ev-type-badge.ev-expense → static expense text-shadow glow
+   収支予定カードの「支出」タイプバッジ（.ev-type-badge.ev-expense：expense-bg/expense カラー）に
+   常時 expense text-shadow を追加。ev-type-badge.ev-income static glow（本スプリント①）と対称に
+   収入・支出タイプバッジが income/expense カラーで常時発光する完成形演出に統一。 */
+.ev-type-badge.ev-expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-type-badge.ev-expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .smi-filter-badge → static primary text-shadow glow
+   検索フィルター適用中バッジ（.smi-filter-badge：primary-light/primary カラー）に
+   常時 primary text-shadow を追加。フィルターが有効であることを未ホバー時から
+   primary カラーで静的に輝かせ視認性を向上する演出に。
+   tx-tag-filter-all.active static glow（v23.93）・adv-preset-chip.active static glow（v23.93）と
+   同パターンでフィルター系アクティブバッジの静的発光演出を統一。
+   smi-filter-badge の transition に text-shadow を追加。 */
+.smi-filter-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.smi-filter-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)      var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-filter-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .ci-badge.achieved → static success text-shadow glow
+   マンスリーチェックインの「達成」バッジ（.ci-badge.achieved：success-bg/success カラー）に
+   常時 success text-shadow を追加。ci-challenge-item:hover .ci-badge.achieved success glow（v23.78）と対称で
+   未ホバー時から「達成済み」を success カラーで静的に輝かせる演出に。
+   goal-achieved-badge static glow（v23.95）・ch-status-done static glow（v23.94）と同パターンで
+   達成系バッジの静的発光演出を統一。ci-badge の transition には text-shadow を含む（v23.78）。 */
+.ci-badge.achieved { text-shadow: 0 0 6px color-mix(in srgb, var(--success)      var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-badge.achieved { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 5. .cat-budget-pct.warn → static warning text-shadow glow
+   カテゴリ予算の警告状態パーセンテージ（.cat-budget-pct.warn：warning カラー）に
+   常時 warning text-shadow を追加。cat-card:hover .cat-budget-pct cat-clr glow（v23.62）と対称で
+   予算80%超過時から未ホバー時でも warning カラーで静的に注意を促す演出に。
+   cat-budget-pct.over static glow（本スプリント⑥）と対称に警告・超過の両状態が
+   warning/expense カラーで常時発光する予算パーセント完成形演出に統一。
+   cat-budget-pct の transition には text-shadow を含む（v23.62）。 */
+.cat-budget-pct.warn { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)      var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-budget-pct.warn { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 6. .cat-budget-pct.over → static expense text-shadow glow
+   カテゴリ予算の超過状態パーセンテージ（.cat-budget-pct.over：expense カラー）に
+   常時 expense text-shadow を追加。cat-budget-pct.warn static glow（本スプリント⑤）と対称に
+   予算超過時に expense カラーで静的に危険を訴求する演出に統一。
+   pt-urgent-badge static glow（v23.94）と同パターンで緊急度高の静的発光演出を統一。 */
+.cat-budget-pct.over  { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)      var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-budget-pct.over  { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .asset-type-badge → static asset-accent text-shadow glow
+   資産タイプバッジ（.asset-type-badge：--asset-accent カラー：現金/銀行/投資/不動産等）に
+   常時 asset-accent text-shadow を追加。asset-card:hover .asset-type-badge asset-accent glow（v23.78）と対称で
+   未ホバー時から資産種別を asset-accent カラーで静的に輝かせ資産カードの視認性を向上する演出に。
+   asset-currency-badge static glow（v23.96）と合わせて資産カードバッジ類の静的発光演出を完成形に統一。
+   asset-type-badge の transition には text-shadow を含む（v23.78）。 */
+.asset-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--asset-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .ci-month-badge → static white text-shadow glow
+   チェックインモーダルの月バッジ（.ci-month-badge：on-dark-overlay 背景・white テキスト）に
+   常時白 text-shadow を追加。グラデーション背景（チェックインモーダルヘッダー）上の
+   白テキストバッジが白く輝き月表示の視認性を高める演出に。
+   sim-preset.sim-preset-active static white glow（v23.96）・
+   ci-month-badge の transition に text-shadow を追加。 */
+.ci-month-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.ci-month-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.30), 0 0 12px rgba(255, 255, 255, 0.15); }
+[data-theme="dark"] .ci-month-badge { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.40), 0 0 14px rgba(255, 255, 255, 0.20); }
