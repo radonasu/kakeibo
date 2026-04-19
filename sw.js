@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v23.87'; // v23.87: btn-ghost/btn-danger/btn-dark-toggle/btn-icon/btn-preset/card-collapse-btn/btn-share/stp-help-summary に text-shadow glow 8箇所
+const CACHE_NAME = 'kakeibo-v23.88'; // v23.88: btn-primary/hamburger/edit-tx/delete-tx/dup-tx/sub-emoji-btn/btn-continue/install-banner-close に text-shadow glow 8箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

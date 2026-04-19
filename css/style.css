@@ -26084,3 +26084,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    stp-help-summary transition に text-shadow を追加。 */
 .stp-help-summary { transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .stp-help-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #784 / v23.88
+   btn-primary-hover-glow＋hamburger-hover-glow＋edit-tx-hover-glow＋
+   delete-tx-hover-glow＋dup-tx-hover-glow＋sub-emoji-btn-hover-glow＋
+   btn-continue-hover-glow＋install-banner-close-hover-glow 8箇所
+   ============================================================ */
+
+/* 1. btn-primary:hover → self white text-shadow glow（強化）
+   プライマリボタンホバー時に白 text-shadow glow を強化。
+   静的 white glow（v22.89）よりホバー時に intensity を上げ
+   btn-success:hover 白glow（v22.89）と同パターンで完成形演出。
+   btn-primary transition に text-shadow を追加。 */
+.btn-primary { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-primary:hover { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 0 20px rgba(255, 255, 255, 0.18); }
+
+/* 2. #hamburger:hover → self primary-end text-shadow glow
+   モバイルヘッダーのハンバーガーメニューボタンホバー時に primary-end text-shadow glow 追加。
+   既存 background:on-dark-base+box-shadow（v1.x）と連動し
+   ダーク背景上のメニューアイコンが primary-end カラーで輝く完成形演出。
+   #hamburger transition に text-shadow を追加。 */
+#hamburger { transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+#hamburger:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* 3. edit-tx:hover → self primary text-shadow glow
+   取引行の編集ボタンホバー時に primary text-shadow glow 追加。
+   既存 color:primary+scale+box-shadow（v17.1）と連動し
+   編集アイコン文字が primary カラーで輝く完成形演出。
+   edit-tx transition に text-shadow を追加。 */
+.edit-tx { transition: opacity var(--dur-faster) var(--ease-out), background var(--dur-faster) var(--ease-out), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), color var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.edit-tx:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. delete-tx:hover → self danger-text text-shadow glow
+   取引行の削除ボタンホバー時に danger-text text-shadow glow 追加。
+   既存 color:danger-text+scale+box-shadow（v17.1）と連動し
+   削除アイコン文字が danger-text カラーで輝く完成形演出。
+   delete-tx transition に text-shadow を追加。 */
+.delete-tx { transition: opacity var(--dur-faster) var(--ease-out), background var(--dur-faster) var(--ease-out), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), color var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.delete-tx:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 5. dup-tx:hover → self warning text-shadow glow
+   取引行の複製ボタンホバー時に warning text-shadow glow 追加。
+   既存 color:warning（ベース）+scale+box-shadow（v5.81）と連動し
+   複製アイコン文字が warning カラーで輝く完成形演出。
+   dup-tx transition に text-shadow を追加。 */
+.dup-tx { transition: opacity var(--dur-faster) var(--ease-out), background var(--dur-faster) var(--ease-out), transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-faster) var(--ease-out); }
+.dup-tx:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* 6. sub-emoji-btn:hover → self primary text-shadow glow
+   サブスク絵文字選択ボタンホバー時に primary text-shadow glow 追加。
+   既存 scale+box-shadow（v5.x）と連動し
+   絵文字アイコンが primary カラーのグロー演出で際立つ完成形演出。
+   sub-emoji-btn transition に text-shadow を追加。 */
+.sub-emoji-btn { transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-emoji-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+
+/* 7. btn-continue:hover → self primary text-shadow glow
+   オンボーディング「続ける」ボタンホバー時に primary text-shadow glow 追加。
+   既存 color:primary（ベース）+background+border+translate+box-shadow（v15.x）と連動し
+   ボタンテキストが primary カラーで輝く完成形演出。
+   btn-continue transition に text-shadow を追加。 */
+.btn-continue { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.btn-continue:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 8. install-banner-close:hover → self white text-shadow glow
+   PWAインストールバナーの閉じるボタンホバー時に white text-shadow glow 追加。
+   既存 color:sidebar-text-hi+scale+box-shadow（v4.x）と連動し
+   ダーク背景上の「×」アイコンが白く輝く完成形演出。
+   install-banner-close transition に text-shadow を追加。 */
+.install-banner-close { transition: color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.install-banner-close:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.55); }
