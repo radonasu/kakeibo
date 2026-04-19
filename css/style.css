@@ -26289,3 +26289,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ci-ok-btn glow（v23.85）・ios-guide-close glow（本スプリント⑥）と同パターン。
    ci-close transition に text-shadow を追加。 */
 .ci-close:hover { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+
+/* ============================================================
+   Sprint #787 / v23.91
+   goal-color-btn-hover-brightness＋sub-color-btn-hover-brightness＋
+   pt-color-btn-hover-brightness＋ch-color-btn-hover-brightness＋
+   color-swatch-hover-brightness＋nav-icon-hover-drop-shadow＋
+   bottom-nav-icon-hover-drop-shadow＋ev-done-cb-hover-brightness 8箇所
+   ============================================================ */
+
+/* 1. goal-color-btn:hover → filter: brightness(1.1) でカラー強調
+   カラーピッカーの丸ボタンホバー時に輝度を上げ色鮮やかな視覚フィードバック追加。
+   既存 transform:scale+box-shadow（v6.x）と連動し「より明るく選びやすい」演出。
+   transition の filter を dur-press → dur-fast に更新しホバー応答を軽快に。 */
+.goal-color-btn { transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-color-btn:hover { filter: brightness(1.1); }
+
+/* 2. sub-color-btn:hover → filter: brightness(1.1) でカラー強調
+   サブカテゴリカラーピッカーボタンホバー時に輝度強調。
+   goal-color-btn（①）と同パターン、カラー選択UI全体の統一感を確立。
+   transition の filter を dur-press → dur-fast に更新。 */
+.sub-color-btn { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.sub-color-btn:hover { filter: brightness(1.1); }
+
+/* 3. pt-color-btn:hover → filter: brightness(1.1) でカラー強調
+   ポイントカラーピッカーボタンホバー時に輝度強調。
+   goal/sub-color-btn（①②）と同パターン、全カラー選択ボタンへの統一適用。
+   transition の filter を dur-press → dur-fast に更新。 */
+.pt-color-btn { transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pt-color-btn:hover { filter: brightness(1.1); }
+
+/* 4. ch-color-btn:hover → filter: brightness(1.1) でカラー強調
+   チャレンジカラーピッカーボタンホバー時に輝度強調。
+   goal/sub/pt-color-btn（①②③）と同パターン、カラー選択UI全コンポーネント統一完成。
+   transition の filter を dur-press → dur-fast に更新。 */
+.ch-color-btn { transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ch-color-btn:hover { filter: brightness(1.1); }
+
+/* 5. color-swatch:hover → filter: brightness(1.1) でカラー強調
+   イベントカラー選択スウォッチホバー時に輝度強調。
+   color-btn系（①〜④）と同パターン、カラー系インタラクション全体を統一。
+   transition の filter を dur-press → dur-fast に更新。 */
+.color-swatch { transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.color-swatch:hover { filter: brightness(1.1); }
+
+/* 6. nav-icon:hover → filter: drop-shadow で primary グロー
+   サイドナビのアイコンホバー時に primary drop-shadow グロー追加。
+   SVG要素に text-shadow は効かないため drop-shadow() フィルター採用。
+   既存 transform:scale+background（v9.x）と連動しアクティブ感を強化。
+   nav-icon transition に filter を追加しスムーズなアニメを実現。 */
+.nav-icon { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), padding var(--dur-base) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.nav-item:not(.active):hover .nav-icon { filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+
+/* 7. bottom-nav-icon:hover → filter: drop-shadow で primary グロー
+   ボトムナビのアイコンホバー時に primary drop-shadow グロー追加。
+   nav-icon（⑥）と同パターン、上下ナビバーのアイコンホバー演出を統一。
+   bottom-nav-icon transition に filter を追加。 */
+.bottom-nav-icon { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), width var(--dur-base) var(--ease-bounce), height var(--dur-base) var(--ease-bounce), padding var(--dur-base) var(--ease-bounce), border-radius var(--dur-base) var(--ease-bounce), filter var(--dur-fast) var(--ease-out); }
+.bottom-nav-item:not(.active):hover .bottom-nav-icon { filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+
+/* 8. ev-done-cb:hover:not(:checked) → filter: brightness(1.08) で輝度強調
+   イベントチェックボックスホバー時に輝度を上げ「チェック前の最終確認感」演出。
+   既存 border-color:primary+scale+box-shadow（v12.x）と連動し選択促進UX向上。
+   transition には既に filter あり追加不要。 */
+.ev-done-cb:hover:not(:checked) { filter: brightness(1.08); }
