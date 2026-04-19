@@ -27784,3 +27784,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    サブスクカード全テキストが常時 sub-accent で発光する完成形演出に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.09・全script/linkタグ?v=24.09に更新。 */
 .sub-cycle-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* ============================================================
+   スプリント#806 static glow（v24.10）
+   rpt-month-label-static-glow＋tg-stat-unit-static-glow＋
+   ch-card-meta-static-glow＋opp-desc-static-glow＋
+   goal-deadline-static-glow＋goal-note-static-glow＋
+   hs-score-unit-static-glow＋goal-achieved-date-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .rpt-month-label → static primary text-shadow glow
+   レポート月行の月名テキスト（「1月」等）に常時 primary カラーの text-shadow を追加。
+   .rpt-month-row.is-clickable:hover .rpt-month-label primary glow（v23.59）と対称で
+   未ホバー時から月名ラベルが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.rpt-month-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .rpt-month-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .tg-stat-unit → static primary text-shadow glow
+   タグ統計カードの単位テキスト（「件」「円」等）に常時 primary カラーの text-shadow を追加。
+   .tg-stat-card:hover .tg-stat-unit primary glow（v23.59）と対称で
+   未ホバー時から単位テキストが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.tg-stat-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-stat-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 3. .ch-card-meta → static primary text-shadow glow
+   チャレンジカードのメタテキスト（ch-type-badge＋カテゴリ名）に常時 primary カラーの text-shadow を追加。
+   .ch-card:hover .ch-card-meta primary glow（v23.59）と対称で
+   未ホバー時からメタテキストが primary カラーで静かに輝く演出に。
+   ch-card-name static glow（v24.05）と連動しチャレンジカード全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ch-card-meta { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-card-meta { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .opp-desc → static primary text-shadow glow
+   節約機会カードの説明文テキストに常時 primary カラーの text-shadow を追加。
+   .opp-card:hover .opp-desc primary glow（v23.59）と対称で
+   未ホバー時から説明文テキストが primary カラーで静かに輝く演出に。
+   opp-title static glow（v24.05）と連動し節約カード全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.opp-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .opp-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 5. .goal-deadline:not(.over) → static goal-accent text-shadow glow
+   目標カードの期限テキスト（「残○日」等）に常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-deadline:not(.over) goal-accent glow（v23.59）と対称で
+   未ホバー時から期限テキストが各目標固有の goal-accent カラーで静かに輝く演出に。
+   goal-name/saved/remaining/target static glow（v24.06）と連動し目標カード全テキストの
+   静的演出を完成形に統一。期限切れ(.over)は除外。 */
+.goal-deadline:not(.over) { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .goal-note → static goal-accent text-shadow glow
+   目標カードのメモテキスト（italic・color:text-faint）に常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-note goal-accent glow（v23.59）と対称で
+   未ホバー時からメモテキストが各目標固有の goal-accent カラーで静かに輝く演出に。
+   goal-deadline static glow（⑤）と連動し目標カードの全付加テキストが常時 goal-accent で発光する演出に統一。 */
+.goal-note { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .hs-score-unit → static primary text-shadow glow
+   家計スコアカードの単位テキスト（「点」）に常時 primary カラーの text-shadow を追加。
+   .health-score-card:hover .hs-score-unit primary glow（v23.59）と対称で
+   未ホバー時から単位テキストが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.hs-score-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-score-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .goal-achieved-date → static success text-shadow glow
+   達成済み目標カードの達成日テキスト（color:success）に常時 success カラーの text-shadow を追加。
+   .goal-card:hover .goal-achieved-date success glow（v23.59）と対称で
+   未ホバー時から達成日テキストが success カラーで静かに輝く演出に。
+   goal-achieved-badge scale+success glow（v23.12）と連動しバッジ・達成日が常時輝く完成形演出に。
+   ダークモードでは income-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.10・全script/linkタグ?v=24.10に更新。 */
+.goal-achieved-date { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-achieved-date { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
