@@ -27859,3 +27859,104 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.10・全script/linkタグ?v=24.10に更新。 */
 .goal-achieved-date { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
 [data-theme="dark"] .goal-achieved-date { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#807 static glow（v24.11）
+   pt-widget-name-static-glow＋pt-widget-balance-static-glow＋
+   sub-next-billing-static-glow＋sub-widget-next-static-glow＋
+   pace-bar-label-static-glow＋pace-bar-value-static-glow＋
+   wk-bar-amount-static-glow＋wk-bar-label-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .pt-widget-name → static primary text-shadow glow
+   ポイントウィジェット行の名称テキストに常時 primary カラーの text-shadow を追加。
+   .pt-widget-item:hover .pt-widget-name primary glow（v23.60）と対称で
+   未ホバー時からポイント名が primary カラーで静かに輝く演出に。
+   pt-widget-balance static glow（②）と連動しウィジェット行の名前・残高が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.pt-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .pt-widget-balance → static タイプ別 text-shadow glow
+   ポイントウィジェット行の残高数値テキストに常時タイプ別 text-shadow を追加。
+   通常=primary / pt-urgent=danger-text / pt-soon=warning。
+   .pt-widget-item:hover .pt-widget-balance タイプ別 glow（v23.60）と対称で
+   未ホバー時からポイント残高が期限ステータスに応じたカラーで静かに識別できる演出に。
+   pt-widget-name static glow（①）と連動しウィジェット行全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end/expense-end/warning glow。 */
+.pt-widget-balance                          { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.pt-widget-item.pt-urgent .pt-widget-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.pt-widget-item.pt-soon   .pt-widget-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-widget-balance                          { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-urgent .pt-widget-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-soon   .pt-widget-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 3. .sub-next-billing → static primary text-shadow glow
+   サブスクカードの次回請求日テキストに常時 primary カラーの text-shadow を追加。
+   .sub-card:hover .sub-next-billing primary glow（v23.60）と対称で
+   未ホバー時から次回請求日が primary カラーで静かに輝く演出に。
+   sub-card-name/amount/cycle-unit static glow（v24.05/v24.03/v24.09）と連動し
+   サブスクカード全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.sub-next-billing { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-next-billing { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .sub-widget-next → static タイプ別 text-shadow glow
+   サブスクウィジェット行の次回支払日テキストに常時タイプ別 text-shadow を追加。
+   通常=primary / sub-urgent=danger-text / sub-soon=warning。
+   .sub-widget-item:hover .sub-widget-next タイプ別 glow（v23.60）と対称で
+   未ホバー時から次回支払日が期限ステータスに応じたカラーで静かに識別できる演出に。
+   ダークモードでは primary-end/expense-end/warning glow。 */
+.sub-widget-next                            { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.sub-widget-item.sub-urgent .sub-widget-next { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.sub-widget-item.sub-soon   .sub-widget-next { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-widget-next                            { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent .sub-widget-next { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon   .sub-widget-next { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 5. .pace-bar-label → static ステータス別 text-shadow glow
+   ペースバー行のカテゴリラベルテキストに常時ステータス別 text-shadow を追加。
+   良好=success / 注意=warning / 超過=danger-text。
+   .pace-bar-row:hover .pace-bar-label ステータス別 glow（v23.60）と対称で
+   未ホバー時からラベルが予算ステータスに応じたカラーで静かに識別できる演出に。
+   pace-bar-value static glow（⑥）と連動しペースバー行のラベル・値が常時発光する完成形演出に統一。
+   ダークモードでは income-end/warning/expense-end glow。 */
+.pace-bar-row:has(.pace-bar-expense.pace-good) .pace-bar-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-bar-label { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over) .pace-bar-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good) .pace-bar-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-bar-label { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over) .pace-bar-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 6. .pace-bar-value → static ステータス別 text-shadow glow
+   ペースバー行の値テキスト（金額・パーセント）に常時ステータス別 text-shadow を追加。
+   良好=success / 注意=warning / 超過=danger-text。
+   .pace-bar-row:hover .pace-bar-value ステータス別 glow（v23.60）と対称で
+   未ホバー時から値テキストが予算ステータスに応じたカラーで静かに識別できる演出に。
+   pace-bar-label static glow（⑤）と連動しラベル・値が常時揃って輝くペースバー完成形演出に統一。
+   ダークモードでは income-end/warning/expense-end glow。 */
+.pace-bar-row:has(.pace-bar-expense.pace-good) .pace-bar-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-bar-value { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over) .pace-bar-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good) .pace-bar-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-bar-value { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over) .pace-bar-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 7. .wk-bar-amount → static primary text-shadow glow
+   週次支出バーカラムの金額テキストに常時 primary カラーの text-shadow を追加。
+   .wk-bar-col:hover .wk-bar-amount primary glow（v23.60）と対称で
+   未ホバー時から金額テキストが primary カラーで静かに輝く演出に。
+   wk-bar-label static glow（⑧）と連動しバーカラムのラベル・金額が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.wk-bar-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-bar-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .wk-bar-label:not(.wk-today-label) → static primary text-shadow glow
+   週次支出バーカラムの曜日ラベルテキスト（今日以外）に常時 primary カラーの text-shadow を追加。
+   .wk-bar-col:hover .wk-bar-label:not(.wk-today-label) primary glow（v23.60）と対称で
+   未ホバー時から曜日ラベルが primary カラーで静かに輝く演出に。.wk-today-label（danger-text）は除外しスタイル維持。
+   wk-bar-amount static glow（⑦）と連動しバーカラムのラベル・金額が常時揃って輝く完成形演出に統一。
+   ダークモードでは primary-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.11・全script/linkタグ?v=24.11に更新。 */
+.wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
