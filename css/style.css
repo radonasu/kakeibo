@@ -26956,3 +26956,94 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .notif-badge { transition: text-shadow var(--dur-fast) var(--ease-out); }
 .notif-badge.notif-granted { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .notif-badge.notif-granted { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   v24.00: asset-total-static-glow＋debt-total-static-glow＋
+   cal-ev-total-inc-static-glow＋cal-ev-total-exp-static-glow＋
+   wk-diff-up-static-glow＋wk-diff-down-static-glow＋
+   debt-entry-balance-static-glow＋debt-widget-balance-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .asset-total → static income text-shadow glow
+   資産ページ純資産内訳の「資産合計」金額テキスト（color:income・fw-semi）に
+   常時 income カラーの text-shadow を追加。
+   .asset-card:hover income glow（v23.x）と対称で未ホバー時から
+   「保有資産総額」が success カラーで静かに輝く安心感のある演出に。
+   .debt-total static glow（本スプリント②）と対称に
+   純資産内訳の資産・負債テキストが income/expense で常時発光する完成形演出に統一。 */
+.asset-total { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-total { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .debt-total → static expense text-shadow glow
+   資産ページ純資産内訳の「負債合計」金額テキスト（color:expense・fw-semi）に
+   常時 expense カラーの text-shadow を追加。
+   .debt-card:hover expense glow（v23.x）と対称で未ホバー時から
+   「負債総額」が expense カラーで静かに警告光する演出に。
+   .asset-total static glow（本スプリント①）と対称に完成形演出に統一。 */
+.debt-total { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-total { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .cal-ev-total.inc → static income text-shadow glow
+   カレンダーイベント一覧フッターの「収入合計」バッジ
+   （color:income・income tint 背景・fw-bold・tabular-nums）に
+   常時 income カラーの text-shadow を追加。
+   .cal-ev-item:hover .cal-ev-amount.inc glow（v23.75）と連携し
+   バッジ自体も常時 income カラーで輝く収入強調演出に。
+   .cal-ev-total.exp static glow（本スプリント④）と対称に
+   収入・支出の全合計バッジが income/expense で常時発光する完成形演出に統一。 */
+.cal-ev-total.inc { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-total.inc { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .cal-ev-total.exp → static expense text-shadow glow
+   カレンダーイベント一覧フッターの「支出合計」バッジ
+   （color:expense・expense tint 背景・fw-bold・tabular-nums）に
+   常時 expense カラーの text-shadow を追加。
+   .cal-ev-item:hover .cal-ev-amount.exp glow（v23.75）と連携し
+   バッジ自体も常時 expense カラーで輝く支出警告演出に。
+   .cal-ev-total.inc static glow（本スプリント③）と対称に完成形演出に統一。 */
+.cal-ev-total.exp { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-total.exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .wk-diff-up → static danger-text text-shadow glow
+   週次ビュー比較差分バッジの「増加」バリアント
+   （color:danger-text・danger-bg 背景・fw-semi・fs-2xs）に
+   常時 danger-text カラーの text-shadow を追加。
+   .wk-diff-down static glow（本スプリント⑥）と対称に
+   前週比増加（支出増加＝要注意）を danger カラーで常時強調する演出に統一。
+   yoy-diff.yoy-up static glow（v23.99）・asset-balance-delta.down static glow（v23.99）と
+   同パターンで「増加＝danger」を常時発光させる演出を統一。 */
+.wk-diff-up { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-diff-up { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .wk-diff-down → static success text-shadow glow
+   週次ビュー比較差分バッジの「減少」バリアント
+   （color:income-deep / dark:income-end・success-bg 背景・fw-semi・fs-2xs）に
+   常時 success カラーの text-shadow を追加。
+   .wk-diff-up static glow（本スプリント⑤）と対称に
+   前週比減少（支出減少＝良好）を success カラーで常時強調する演出に統一。
+   yoy-diff.yoy-down static glow（v23.99）・asset-balance-delta.up static glow（v23.99）と
+   同パターンで「減少＝success」を常時発光させる演出を統一。 */
+.wk-diff-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-diff-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 7. .debt-entry-balance → static expense text-shadow glow
+   負債管理の残高履歴一覧の残高金額テキスト
+   （color:expense・fw-semi・tabular-nums）に常時 expense カラーの text-shadow を追加。
+   .debt-entry-row:hover .debt-entry-balance expense glow（v24.xx）と対称で
+   未ホバー時からも残高数値が expense カラーで静かに警告光する演出に。
+   debt-balance static glow（v22.94）・debt-widget-balance static glow（本スプリント⑧）と
+   同パターンで負債ページの全残高テキストが expense カラーで常時発光する完成形演出に統一。
+   debt-entry-balance の transition には text-shadow を含む（v22.84）。 */
+.debt-entry-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-entry-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 8. .debt-widget-balance → static expense text-shadow glow
+   ホームのクイック負債ウィジェット行の残高金額テキスト
+   （color:expense・fw-bold・fs-sm・tabular-nums）に常時 expense カラーの text-shadow を追加。
+   .debt-widget-item:hover .debt-widget-balance expense glow（v23.75）と対称で
+   未ホバー時からも残高数値が expense カラーで静かに警告光する演出に。
+   debt-balance static glow（v22.94）・debt-entry-balance static glow（本スプリント⑦）と
+   同パターンで負債関連の全残高テキストが expense カラーで常時発光する完成形演出に統一。
+   debt-widget-balance の transition には text-shadow を含む（v22.x）。 */
+.debt-widget-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-widget-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
