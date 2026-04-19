@@ -26155,3 +26155,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    install-banner-close transition に text-shadow を追加。 */
 .install-banner-close { transition: color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .install-banner-close:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.55); }
+
+/* ============================================================
+   Sprint #785 / v23.89
+   modal-details-summary-hover-glow＋goal-achieved-summary-hover-glow＋
+   sub-inactive-summary-hover-glow＋wl-archive-summary-hover-glow＋
+   ch-archive-summary-hover-glow＋debt-archive-summary-hover-glow＋
+   adv-filter-clear-hover-glow＋type-btn-hover-glow 8箇所
+   ============================================================ */
+
+/* 1. .modal-details summary:hover → self primary text-shadow glow
+   詳細設定モーダル内の折りたたみトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   modal-details summary transition に text-shadow を追加。 */
+.modal-details summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.modal-details summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. .goal-achieved-summary:hover → self primary text-shadow glow
+   「🏆 達成済み」ゴールセクション折りたたみトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   goal-achieved-summary transition に text-shadow を追加。 */
+.goal-achieved-summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-achieved-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 3. .sub-inactive-section summary:hover → self primary text-shadow glow
+   「休止中のサブスク」セクション折りたたみトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   sub-inactive-section summary transition に text-shadow を追加。 */
+.sub-inactive-section summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-inactive-section summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 4. .wl-archive-summary:hover → self primary text-shadow glow
+   「✅ 購入済み」ウィッシュリストアーカイブトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+border-color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   wl-archive-summary transition に text-shadow を追加。 */
+.wl-archive-summary { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-archive-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 5. .ch-archive-summary:hover → self primary text-shadow glow
+   「📁 過去のチャレンジ」セクション折りたたみトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+border-color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   ch-archive-summary transition に text-shadow を追加。 */
+.ch-archive-summary { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-archive-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 6. .debt-archive-summary:hover → self primary text-shadow glow
+   「✓ 完済済み」負債アーカイブセクション折りたたみトリガーホバー時に primary text-shadow glow 追加。
+   既存 color+box-shadow と連動しテキストが primary カラーで輝く演出。
+   debt-archive-summary transition に text-shadow を追加。 */
+.debt-archive-summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-archive-summary:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 7. .adv-filter-clear:hover → self danger-text text-shadow glow
+   詳細フィルター「✕ クリア」ボタンホバー時に danger-text text-shadow glow 追加。
+   既存 background+border-color+box-shadow+filter と連動し
+   テキストが danger カラーで輝く完成形演出。
+   adv-filter-clear transition に text-shadow を追加。 */
+.adv-filter-clear { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.adv-filter-clear:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 8. .type-btn:hover → self primary text-shadow glow
+   収支タイプ選択ボタン（未選択）ホバー時に primary text-shadow glow 追加。
+   既存 transition に text-shadow が含まれているため hover rule のみ追加。
+   テキストが primary カラーで輝きボタン選択を促す演出。 */
+.type-btn:hover { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
