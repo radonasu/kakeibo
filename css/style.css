@@ -29938,3 +29938,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .step-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.33・全script/linkタグ?v=24.33に更新。 */
+
+/* ============================================================
+   Sprint #830 / v24.34 — static-glow 8箇所
+   dow-stat-day＋dow-stat-amount＋dow-stat-label＋dow-stat-unit＋
+   qa-card-title＋pm-table-row-td-text-muted＋debt-progress-label＋debt-end-pill
+   ============================================================ */
+
+/* 1. .dow-stat-day → static white text-shadow glow
+   曜日別統計カード（グラデーション背景）の曜日名テキスト（color:white!important・fw-bold・fs-xl）に
+   常時 white text-shadow を追加。
+   .dow-stat-card:hover .dow-stat-day white glow（v23.70）と対称で
+   未ホバー時から曜日名テキストが白く静かに輝く演出に。
+   dow-stat-amount/label/unit static glow（本スプリント②③④）と連動し
+   グラデカード内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.dow-stat-day { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .dow-stat-day { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 2. .dow-stat-amount → static white text-shadow glow
+   曜日別統計カード（グラデーション背景）の金額テキスト（color:white・fw-black・fs-3xl）に
+   常時 white text-shadow を追加。
+   .dow-stat-card:hover .dow-stat-amount white glow（v23.70）と対称で
+   未ホバー時から金額テキストが白く静かに輝く演出に。
+   dow-stat-day static glow（本スプリント①）と連動し
+   グラデカード内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.dow-stat-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+[data-theme="dark"] .dow-stat-amount { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 3. .dow-stat-label → static white text-shadow glow
+   曜日別統計カード（グラデーション背景）のラベルテキスト（color:on-dark-soft・fs-xs）に
+   常時 white text-shadow を追加。
+   .dow-stat-card:hover .dow-stat-label white glow（v23.71）と対称で
+   未ホバー時からラベルテキストが白く静かに輝く演出に。
+   dow-stat-day/amount static glow（本スプリント①②）と連動し
+   グラデカード内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.dow-stat-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .dow-stat-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 4. .dow-stat-unit → static white text-shadow glow
+   曜日別統計カード（グラデーション背景）の単位テキスト（「円」等：color:on-dark-soft・fs-xs）に
+   常時 white text-shadow を追加。
+   .dow-stat-card:hover .dow-stat-unit white glow（v23.82）と対称で
+   未ホバー時から単位テキストが白く静かに輝く演出に。
+   dow-stat-day/amount/label static glow（本スプリント①②③）と連動し
+   グラデカード内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.dow-stat-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .dow-stat-unit { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 5. .qa-card-title → static qa-accent text-shadow glow
+   Q&Aカードのタイトルテキスト（color:qa-accent・fw-medium）に
+   常時 qa-accent カラーの text-shadow を追加。
+   .qa-toggle-btn:hover .qa-card-title qa-accent glow（v23.82）と対称で
+   未ホバー時からタイトルテキストが qa-accent カラーで静かに輝く演出に。
+   ダークモードでは primary-end フォールバック glow。 */
+.qa-card-title { text-shadow: 0 0 6px color-mix(in srgb, var(--qa-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .qa-card-title { text-shadow: 0 0 7px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .pm-table-row td.text-muted → static primary text-shadow glow
+   支払い管理テーブル行の補足テキストセル（color:text-muted・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .pm-table-row:hover td.text-muted primary glow（v23.66）と対称で
+   未ホバー時から補足テキストが primary カラーで静かに輝く演出に。
+   pm-table-row td:first-child static glow・td.expense static glow（v24.x）と連動し
+   テーブル行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.pm-table-row td.text-muted { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pm-table-row td.text-muted { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .debt-progress-label → static primary text-shadow glow
+   負債カードの進捗ラベルテキスト（「返済率: 42%」等：color:primary・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-card:hover .debt-progress-label primary glow（v23.70）と対称で
+   未ホバー時から進捗ラベルが primary カラーで静かに輝く演出に。
+   debt-history-title static glow（v24.33）・debt-progress-hdr static glow（v24.28）と連動し
+   負債カード内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-progress-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-progress-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .debt-end-pill → static primary text-shadow glow
+   負債カードの完済予定バッジテキスト（「完済予定: 2026年3月」等：color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-card:hover .debt-end-pill primary glow（v23.70）と対称で
+   未ホバー時から完済予定バッジが primary カラーで静かに輝く演出に。
+   debt-progress-label static glow（本スプリント⑦）・debt-type-badge static glow（v24.x）と連動し
+   負債カード下部情報が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-end-pill { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-end-pill { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.34・全script/linkタグ?v=24.34に更新。 */
