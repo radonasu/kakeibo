@@ -28637,3 +28637,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダーク/ライト両モードともに warning カラーを使用。 */
 .insight-item.insight-warning .insight-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
 [data-theme="dark"] .insight-item.insight-warning .insight-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #816 — v24.20 static text-shadow glow (8 items)
+   tx-col-pay-static-glow＋budget-over-msg-static-glow＋
+   pt-exp-expired-static-glow＋yr-progress-label-static-glow＋
+   ch-sum-achieved-value-static-glow＋ch-sum-active-value-static-glow＋
+   ch-sum-total-value-static-glow＋wl-sum-done-value-static-glow
+   ============================================================ */
+
+/* 1. .tx-table td.tx-col-pay → static primary text-shadow glow
+   取引テーブルの支払方法セル（color:text・fs-sm・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .tx-table tbody tr:hover td.tx-col-pay primary glow（v23.x）と対称で
+   未ホバー時から支払方法列が primary カラーで静かに輝く演出に。
+   tx-col-pay の transition には text-shadow を含む（v23.x）。
+   ダークモードでは primary-end glow。 */
+.tx-table td.tx-col-pay { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table td.tx-col-pay { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .budget-item:has(.budget-fill.over) .budget-over-msg → static expense text-shadow glow
+   超過予算行の「予算超過」メッセージテキスト（color:expense・fs-xs・fw-semi）に
+   常時 expense カラーの text-shadow を追加。
+   .budget-item:has(.budget-fill.over):hover .budget-over-msg expense glow（v23.x）と対称で
+   未ホバー時から超過警告メッセージが expense カラーで静かに警告光する演出に。
+   budget-over-msg の transition には text-shadow を含む（v23.x）。
+   ダークモードでは expense-end glow。 */
+.budget-item:has(.budget-fill.over) .budget-over-msg { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-fill.over) .budget-over-msg { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .pt-exp-expired → static danger-text text-shadow glow
+   ポイント期限切れバッジ（「期限切れ」等：color:danger-text・fs-xs・fw-semi）に
+   常時 danger-text カラーの text-shadow を追加。
+   .pt-card:hover .pt-exp-expired danger-text glow（v23.x）と対称で
+   未ホバー時から期限切れバッジが danger-text カラーで静かに警告光する演出に。
+   pt-urgent-badge/pt-soon-badge static glow（v23.12）と連動し
+   期限系バッジが常時それぞれのカラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.pt-exp-expired { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-exp-expired { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-md), transparent); }
+
+/* 4. .yr-progress-label → static primary text-shadow glow
+   年次ウィジェットの進捗ラベルテキスト（「残り X ヶ月」等：color:text・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .yr-progress-label primary glow（v23.x）と対称で
+   未ホバー時から年次進捗ラベルが primary カラーで静かに輝く演出に。
+   yr-progress-label の transition には text-shadow を含む（v23.x）。
+   ダークモードでは primary-end glow。 */
+.yr-progress-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-progress-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .ch-sum-achieved .ch-summary-value → static white text-shadow glow
+   達成チャレンジサマリーカードの数値（color:white・fs-2xl・fw-black）に
+   常時 white の text-shadow を追加。
+   .ch-sum-achieved:hover .ch-summary-value white glow（v23.15）と対称で
+   未ホバー時から達成数値が白く静かに輝く品質感のある演出に。
+   ch-summary-value の transition には text-shadow を含む（v23.15）。 */
+.ch-sum-achieved .ch-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 6. .ch-sum-active .ch-summary-value → static white text-shadow glow
+   進行中チャレンジサマリーカードの数値（color:white・fs-2xl・fw-black）に
+   常時 white の text-shadow を追加。
+   .ch-sum-active:hover .ch-summary-value white glow（v23.15）と対称で
+   未ホバー時から進行中数値が白く静かに輝く演出に。
+   ch-sum-achieved .ch-summary-value static glow（本スプリント⑤）と対称に
+   チャレンジサマリー全カードの数値が常時白く発光する完成形演出に統一。 */
+.ch-sum-active .ch-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 7. .ch-sum-total .ch-summary-value → static white text-shadow glow
+   合計チャレンジサマリーカードの数値（color:white・fs-2xl・fw-black）に
+   常時 white の text-shadow を追加。
+   .ch-sum-total:hover .ch-summary-value white glow（v23.15）と対称で
+   未ホバー時から合計数値が白く静かに輝く演出に。
+   ch-sum-achieved/active .ch-summary-value static glow（本スプリント⑤⑥）と連動し
+   チャレンジサマリー3カード全ての数値が常時揃って白く発光する完成形演出に統一。 */
+.ch-sum-total .ch-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 8. .wl-sum-done .wl-summary-value → static white text-shadow glow
+   ウィッシュリスト達成サマリーカードの数値（color:white・fs-2xl・fw-black）に
+   常時 white の text-shadow を追加。
+   .wl-sum-done:hover .wl-summary-value white glow（v23.15）と対称で
+   未ホバー時から達成数値が白く静かに輝く演出に。
+   sub-summary-card .sub-summary-amount static glow（v24.04）・
+   ch-sum-achieved/active/total .ch-summary-value static glow（本スプリント⑤⑥⑦）と
+   同パターンでサマリーカード数値が常時白く発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.20・全script/linkタグ?v=24.20に更新。 */
+.wl-sum-done .wl-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
