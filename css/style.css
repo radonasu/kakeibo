@@ -29288,3 +29288,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.26・全script/linkタグ?v=24.26に更新。 */
 .wl-card-meta { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .wl-card-meta { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #823 — v24.27 static text-shadow glow (8 items)
+   cal-amount-inc-static-glow＋cal-amount-exp-static-glow＋
+   cal-sum-value-income-static-glow＋cal-sum-value-expense-static-glow＋
+   pt-card-balance-static-glow＋asset-balance-static-glow＋
+   ev-widget-month-static-glow＋wl-priority-badge-static-glow
+   ============================================================ */
+
+/* 1. .cal-amount.inc → static success text-shadow glow
+   カレンダーセルの収入金額テキストに常時 success カラーの text-shadow を追加。
+   .cal-cell:hover:not(.cal-empty) .cal-amount.inc success glow（v23.42）と対称で
+   未ホバー時からカレンダー収入金額が success カラーで静かに輝く演出に。
+   cal-amount.exp static glow（本スプリント②）と連動しカレンダー内収支金額が
+   常時タイプ別カラーで発光する完成形演出に統一。ダークモードでは income-end glow。 */
+.cal-amount.inc { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-amount.inc { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .cal-amount.exp → static expense text-shadow glow
+   カレンダーセルの支出金額テキストに常時 expense カラーの text-shadow を追加。
+   .cal-cell:hover:not(.cal-empty) .cal-amount.exp expense glow（v23.42）と対称で
+   未ホバー時からカレンダー支出金額が expense カラーで静かに輝く演出に。
+   cal-amount.inc static glow（本スプリント①）と連動しカレンダー内収支金額の
+   常時タイプ別発光演出を完成形に統一。ダークモードでは expense-end glow。 */
+.cal-amount.exp { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-amount.exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .cal-sum-value.income → static success text-shadow glow
+   カレンダー月次集計行の収入合計値テキストに常時 success カラーの text-shadow を追加。
+   .cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value success glow（v23.42）と対称で
+   未ホバー時からカレンダー収入集計値が success カラーで静かに輝く演出に。
+   cal-sum-value.expense static glow（本スプリント④）・cal-amount.inc/exp static glow（①②）と
+   連動しカレンダー内全金額テキストが常時タイプ別カラーで発光する完成形演出に統一。 */
+.cal-sum-value.income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-sum-value.income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .cal-sum-value.expense → static expense text-shadow glow
+   カレンダー月次集計行の支出合計値テキストに常時 expense カラーの text-shadow を追加。
+   .cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value expense glow（v23.42）と対称で
+   未ホバー時からカレンダー支出集計値が expense カラーで静かに輝く演出に。
+   cal-sum-value.income static glow（本スプリント③）と連動しカレンダー月次集計が
+   常時タイプ別カラーで発光する完成形演出に統一。ダークモードでは expense-end glow。 */
+.cal-sum-value.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-sum-value.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .pt-card-balance → static pt-accent text-shadow glow
+   ポイントカードのポイント残高大数値（fs-4xl・fw-black・tabular-nums）に
+   常時 pt-accent カラーの text-shadow を追加。
+   .pt-card:hover .pt-card-balance pt-accent glow（v23.43）と対称で
+   未ホバー時からポイント残高数値がカードテーマカラーで静かに輝く演出に。
+   pt-card-name static glow（v24.03）と連動しポイントカード内の主要テキストが
+   常時テーマカラーで発光する完成形演出に統一。 */
+.pt-card-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .asset-balance → static asset-accent text-shadow glow
+   資産カードの資産残高大数値（fs-4xl・fw-black）に常時 asset-accent カラーの
+   text-shadow を追加。.asset-card:hover .asset-balance asset-accent glow（v23.43）と対称で
+   未ホバー時から資産残高数値がカードテーマカラーで静かに輝く演出に。
+   asset-name static glow（v24.03）と連動し資産カード内の主要テキストが
+   常時テーマカラーで発光する完成形演出に統一。 */
+.asset-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .ev-widget-month → static primary text-shadow glow
+   収支予定ウィジェット行の月ラベルテキスト（color:primary・fs-xs・fw-semi）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-widget-item:hover .ev-widget-month primary glow（v23.73）と対称で
+   未ホバー時から収支予定ウィジェットの月ラベルが primary カラーで静かに輝く演出に。
+   ev-widget-cat glow・ev-widget-name glow と連動しウィジェット行内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.ev-widget-month { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-widget-month { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .wl-priority-badge → static primary text-shadow glow
+   ウィッシュリストカードの優先度バッジテキスト（「高」「中」「低」等）に
+   常時 primary カラーの text-shadow を追加。
+   .wish-widget-item:hover .wl-priority-badge primary glow（v23.71）と対称で
+   未ホバー時からウィッシュリスト優先度バッジが primary カラーで静かに輝く演出に。
+   wl-card-name/price/meta static glow と連動しウィッシュリスト関連テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.27・全script/linkタグ?v=24.27に更新。 */
+.wl-priority-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-priority-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
