@@ -29016,3 +29016,101 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    節約提案テーブル行のカテゴリ関連テキスト全体が常時 sb-cat-color で発光する完成形演出に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.23・全script/linkタグ?v=24.23に更新。 */
 .sb-row td:nth-child(2) { text-shadow: 0 0 6px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* ============================================================
+   Sprint #820 — v24.24 static text-shadow glow (8 items)
+   ev-sum-label-static-glow＋pt-summary-label-static-glow＋
+   ch-sum-achieved-label-static-glow＋ch-sum-active-label-static-glow＋
+   ch-sum-total-label-static-glow＋sub-summary-label-static-glow＋
+   wl-sum-done-label-static-glow＋step-action-static-glow
+   ============================================================ */
+
+/* 1. .ev-sum-card .ev-sum-label → static white text-shadow glow
+   収支予定サマリーカード（グラデーション背景）のラベルテキスト
+   （「今月の予定」「来月の予定」等：color:on-dark-title・fs-xs）に
+   常時 white の text-shadow を追加。
+   .ev-sum-card:hover .ev-sum-label white glow（v23.80①）と対称で
+   未ホバー時から収支予定ラベルが白く静かに輝く演出に。
+   ev-sum-count static glow（v24.16）と連動し
+   サマリーカード内テキストが常時白く発光する完成形演出に統一。
+   ダークモードではやや強めの 0.18 で輝き感を維持。 */
+.ev-sum-card .ev-sum-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ev-sum-card .ev-sum-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 2. .pt-total .pt-summary-label / .pt-expiring .pt-summary-label → static white text-shadow glow
+   ポイント残高サマリーカード（グラデーション背景）のラベルテキスト
+   （「合計ポイント」「まもなく失効」等：color:on-dark-label・fw-bold・ls-cap）に
+   常時 white の text-shadow を追加。
+   .pt-total/pt-expiring:hover .pt-summary-label white glow（v23.80②）と対称で
+   未ホバー時からポイントサマリーラベルが白く静かに輝く演出に。
+   pt-summary-amount static glow（v24.04）・pt-summary-label hover glow（v23.80）と連動し
+   カード内全テキストが常時白く発光する完成形演出に統一。 */
+.pt-total    .pt-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+.pt-expiring .pt-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .pt-total    .pt-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+[data-theme="dark"] .pt-expiring .pt-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 3. .ch-sum-achieved .ch-summary-label → static white text-shadow glow
+   達成チャレンジサマリーカード（グラデーション背景）のラベルテキスト
+   （「達成数」等：opacity 近1・text-shadow transition 済み）に
+   常時 white の text-shadow を追加。
+   .ch-sum-achieved:hover .ch-summary-label white glow（v23.80③）と対称で
+   未ホバー時から達成ラベルが白く静かに輝く演出に。
+   ch-sum-achieved .ch-summary-value static glow（v24.22）と連動し
+   達成サマリーカード内テキストが常時白く発光する完成形演出に統一。 */
+.ch-sum-achieved .ch-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ch-sum-achieved .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 4. .ch-sum-active .ch-summary-label → static white text-shadow glow
+   進行中チャレンジサマリーカード（グラデーション背景）のラベルテキスト
+   （「アクティブ数」等）に常時 white の text-shadow を追加。
+   .ch-sum-active:hover .ch-summary-label white glow（v23.80③）と対称で
+   未ホバー時から進行中ラベルが白く静かに輝く演出に。
+   ch-sum-active .ch-summary-value static glow（v24.22）・
+   ch-sum-achieved .ch-summary-label static glow（本スプリント③）と連動し
+   チャレンジサマリー系ラベルが常時白く発光する完成形演出に統一。 */
+.ch-sum-active .ch-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ch-sum-active .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 5. .ch-sum-total .ch-summary-label → static white text-shadow glow
+   合計チャレンジサマリーカード（グラデーション背景）のラベルテキスト
+   （「総数」等）に常時 white の text-shadow を追加。
+   .ch-sum-total:hover .ch-summary-label white glow（v23.80③）と対称で
+   未ホバー時から合計ラベルが白く静かに輝く演出に。
+   ch-sum-achieved/active .ch-summary-label static glow（本スプリント③④）と連動し
+   チャレンジサマリー3カード全ラベルが常時揃って白く発光する完成形演出に統一。 */
+.ch-sum-total .ch-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ch-sum-total .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 6. .sub-summary-card .sub-summary-label → static white text-shadow glow
+   サブスクリプション月次・年次サマリーカード（グラデーション背景）のラベルテキスト
+   （「月額合計」「年額合計」等：fs-xs・opacity 近1）に
+   常時 white の text-shadow を追加。
+   .sub-summary-card:hover .sub-summary-label white glow（v23.78⑥）と対称で
+   未ホバー時からサブスクサマリーラベルが白く静かに輝く演出に。
+   sub-summary-card .sub-summary-amount static glow（v24.04）と連動し
+   サブスクサマリーカード内テキストが常時白く発光する完成形演出に統一。 */
+.sub-summary-card .sub-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .sub-summary-card .sub-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 7. .wl-sum-done .wl-summary-label → static white text-shadow glow
+   ウィッシュリスト達成済みサマリーカード（グラデーション背景）のラベルテキスト
+   （「達成済み」等：fs-xs・opacity 近1）に常時 white の text-shadow を追加。
+   .wl-sum-done:hover .wl-summary-label white glow（v23.78⑦）と対称で
+   未ホバー時から達成済みラベルが白く静かに輝く演出に。
+   wl-sum-done .wl-summary-value static glow（v24.22）と連動し
+   ウィッシュリスト達成サマリーカード内テキストが常時白く発光する完成形演出に統一。 */
+.wl-sum-done .wl-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .wl-sum-done .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 8. .step-action → static primary text-shadow glow
+   設定/オンボーディングステップカードのアクションテキスト
+   （「→ 設定する」等のアクション誘導テキスト：color:primary・fs-sm・fw-medium）に
+   常時 primary カラーの text-shadow を追加。
+   .step-card:hover .step-action primary glow（v23.32③）と対称で
+   未ホバー時からステップ指示テキストが primary カラーで静かに輝く演出に。
+   step-action の transition には text-shadow を含む（v23.32）。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.24・全script/linkタグ?v=24.24に更新。
+   ダークモードでは primary-end glow。 */
+.step-action { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .step-action { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
