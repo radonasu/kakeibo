@@ -28822,3 +28822,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cc-col:has(.cc-col-down) .cc-name { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-name { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
 [data-theme="dark"] .cc-col:has(.cc-col-down) .cc-name { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #818 — v24.22 static text-shadow glow (8 items)
+   ev-cat-badge-static-glow＋wk-cell-label-static-glow＋
+   asset-sparkline-label-static-glow＋debt-entry-date-static-glow＋
+   debt-entry-note-static-glow＋ci-cell-label-static-glow＋
+   pm-sum-sub-static-glow＋tg-stat-label-static-glow
+   ============================================================ */
+
+/* 1. .ev-cat-badge → static primary text-shadow glow
+   収支予定カードのカテゴリバッジテキスト（「食費」等：color:text-muted・fs-2xs）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-card:hover .ev-cat-badge primary glow（v23.62）と対称で
+   未ホバー時からカテゴリバッジが primary カラーで静かに輝く演出に。
+   ev-card-name/memo static glow（v24.21）と連動し
+   収支予定カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ev-cat-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-cat-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .wk-summary-row .wk-cell:nth-child(N) .wk-cell-label → static タイプ別 text-shadow glow
+   週間サマリーカードの各セルラベルテキスト（「今日の支出」「今週の支出」「無支出日」）に
+   常時タイプ別 text-shadow を追加。
+   1列目=danger-text / 2列目=primary / 3列目=success。
+   .wk-summary-row .wk-cell:nth-child(N):hover .wk-cell-label タイプ別 glow（v23.62）と対称で
+   未ホバー時からセルラベルが各列のテーマカラーで静かに輝く演出に。
+   ダークモードでは expense-end / primary-end / income-end glow。 */
+.wk-summary-row .wk-cell:nth-child(1) .wk-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(2) .wk-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(3) .wk-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1) .wk-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2) .wk-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3) .wk-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 3. .asset-sparkline-label → static primary text-shadow glow
+   資産カードのスパークライン見出しテキスト（「残高推移」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .asset-card:hover .asset-sparkline-label primary glow（v23.62）と対称で
+   未ホバー時からスパークライン見出しが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.asset-sparkline-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-sparkline-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .debt-entry-date → static primary text-shadow glow
+   負債返済履歴行の記録日テキスト（color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-entry-row:hover .debt-entry-date primary glow（v23.63）と対称で
+   未ホバー時から記録日テキストが primary カラーで静かに輝く演出に。
+   debt-entry-note static glow（本スプリント⑤）と連動し
+   履歴行のサブテキスト全体が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-entry-date { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-entry-date { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .debt-entry-note → static primary text-shadow glow
+   負債返済履歴行のメモテキスト（color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-entry-row:hover .debt-entry-note primary glow（v23.63）と対称で
+   未ホバー時からメモテキストが primary カラーで静かに輝く演出に。
+   debt-entry-date static glow（本スプリント④）と連動し
+   履歴行サブテキスト全体が常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-entry-note { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-entry-note { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .ci-cell-label → static primary text-shadow glow
+   月次チェックインセルのラベルテキスト（「収入」「支出」「差額」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .ci-cell:hover .ci-cell-label primary glow（v23.63）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   ci-cell-value タイプ別 static glow（v24.21）と連動し
+   チェックインセル内テキスト全体が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ci-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .pm-sum-sub → static pm-sum-color text-shadow glow
+   支払方法サマリーカードの件数テキスト（「○件」等：color:text-muted・fs-xs）に
+   常時 pm-sum-color カラーの text-shadow を追加。
+   .pm-sum-card:hover .pm-sum-sub pm-sum-color glow（v23.63）と対称で
+   未ホバー時から件数テキストが各支払方法固有の pm-sum-color カラーで静かに輝く演出に。
+   pm-sum-label static glow（v24.x）と連動し
+   サマリーカード内テキストが常時 pm-sum-color で発光する完成形演出に統一。 */
+.pm-sum-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .tg-stat-label → static primary text-shadow glow
+   節約目標統計カードのラベルテキスト（「目標支出」「実際支出」等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .tg-stat-card:hover .tg-stat-label primary glow（v23.64）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.22・全script/linkタグ?v=24.22に更新。
+   ダークモードでは primary-end glow。 */
+.tg-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
