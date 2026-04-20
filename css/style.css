@@ -28723,3 +28723,102 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    同パターンでサマリーカード数値が常時白く発光する完成形演出に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.20・全script/linkタグ?v=24.20に更新。 */
 .wl-sum-done .wl-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* ============================================================
+   Sprint #817 — v24.21 static text-shadow glow (8 items)
+   ev-widget-cat-static-glow＋smi-count-static-glow＋
+   pt-note-static-glow＋ev-card-name-static-glow＋
+   ev-card-memo-static-glow＋wl-archive-name-static-glow＋
+   ch-widget-label-static-glow＋cc-name-static-glow
+   ============================================================ */
+
+/* 1. .ev-widget-cat → static primary text-shadow glow
+   収支予定ウィジェット行のカテゴリ名テキスト（color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-widget-item:hover .ev-widget-cat primary glow（v23.63）と対称で
+   未ホバー時からカテゴリ名が primary カラーで静かに輝く演出に。
+   ev-widget-name/amount/month static glow（v24.11）と連動し
+   ウィジェット行全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ev-widget-cat { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-widget-cat { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .smi-income/.smi-expense .smi-count → static タイプ別 text-shadow glow
+   収支サマリーミニバーの件数テキスト（「5件」等：fs-xs・fw-medium・border-left区切り）に
+   常時タイプ別 text-shadow を追加。
+   income=success / expense=danger-text。
+   .smi-income:hover .smi-count success glow（v23.63）・
+   .smi-expense:hover .smi-count danger-text glow（v23.63）と対称で
+   未ホバー時から件数テキストが収支タイプ別カラーで静かに輝く演出に。
+   smi-balance .smi-amount static glow（v24.09）と連動し
+   サマリーミニバーの全数値テキストが常時タイプカラーで発光する完成形演出に統一。
+   ダークモードでは income-end/expense-end glow。 */
+.smi-income  .smi-count { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.smi-expense .smi-count { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-income  .smi-count { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .smi-expense .smi-count { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 3. .pt-note → static pt-accent text-shadow glow
+   ポイントカードのメモテキスト（color:text-muted・fs-2xs）に
+   常時 pt-accent カラーの text-shadow を追加。
+   .pt-card:hover .pt-note pt-accent glow（v23.63）と対称で
+   未ホバー時からメモテキストが各ポイント固有の pt-accent カラーで静かに輝く演出に。
+   pt-card-name/balance static glow（v24.05/v24.11）と連動し
+   ポイントカード全テキストが常時 pt-accent で発光する完成形演出に統一。 */
+.pt-note { text-shadow: 0 0 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .ev-card-name → static ev-accent text-shadow glow
+   収支予定カードの名称テキスト（color:text・fw-semi）に
+   常時 ev-accent カラーの text-shadow を追加。
+   .ev-card:hover .ev-card-name ev-accent glow（v23.62）と対称で
+   未ホバー時から名称テキストが各イベント固有の ev-accent カラーで静かに輝く演出に。
+   ev-card-memo static glow（本スプリント⑤）と連動し
+   収支予定カードのメインテキスト名・メモが常時発光する完成形演出に統一。 */
+.ev-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .ev-card-memo → static primary text-shadow glow
+   収支予定カードのメモテキスト（color:text-muted・fs-xs・italic）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-card:hover .ev-card-memo primary glow（v23.62）と対称で
+   未ホバー時からメモテキストが primary カラーで静かに輝く演出に。
+   ev-card-name static glow（本スプリント④）と連動し
+   名称・メモの両テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ev-card-memo { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-card-memo { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .wl-archive-name → static success text-shadow glow
+   ウィッシュリストアーカイブアイテムの名称テキスト（color:text・fw-semi）に
+   常時 success カラーの text-shadow を追加。
+   .wl-archive-item:hover .wl-archive-name success glow（v23.62）と対称で
+   未ホバー時から達成アイテム名が success カラーで静かに輝く達成感のある演出に。
+   wl-card-note static glow（v24.06）・wl-sum-done .wl-summary-value static glow（v24.20）と連動し
+   ウィッシュリスト達成関連テキストが常時 success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.wl-archive-name { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-archive-name { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 7. .ch-widget-label → static ch-accent text-shadow glow
+   チャレンジウィジェット行の種別ラベルテキスト（ch-type-badge＋カテゴリ名等：color:text-muted・fs-xs）に
+   常時 ch-accent カラーの text-shadow を追加。
+   .ch-widget-item:hover .ch-widget-label ch-accent glow（v23.62）と対称で
+   未ホバー時からラベルテキストが各チャレンジ固有の ch-accent カラーで静かに輝く演出に。
+   ch-widget-name/pct static glow（v24.07）と連動し
+   チャレンジウィジェット行の全テキストが常時 ch-accent で発光する完成形演出に統一。 */
+.ch-widget-label { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .cc-col:has(.cc-col-up) .cc-name / .cc-col:has(.cc-col-down) .cc-name → static タイプ別 text-shadow glow
+   月次先月比較ウィジェットの増加・節約カテゴリ名テキストに
+   常時列種別カラーの text-shadow を追加。
+   増加列（cc-col-up）= danger-text / 節約列（cc-col-down）= success。
+   .cc-col:has(.cc-col-up) .cc-item:hover .cc-name danger-text glow（v23.62）・
+   .cc-col:has(.cc-col-down) .cc-item:hover .cc-name success glow（v23.62）と対称で
+   未ホバー時からカテゴリ名が増加/節約の区別に応じたカラーで静かに輝く演出に。
+   cc-amount static glow が付与されていないため cc-name の発光がウィジェット内の
+   視覚的アクセントとして機能する演出に。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.21・全script/linkタグ?v=24.21に更新。
+   ダークモードでは expense-end/income-end glow。 */
+.cc-col:has(.cc-col-up)   .cc-name { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.cc-col:has(.cc-col-down) .cc-name { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-name { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-name { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
