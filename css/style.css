@@ -29755,3 +29755,88 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tx-month-group-summary .income  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
 .tx-month-group-summary .expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
 [data-theme="dark"] .tx-month-group-summary .expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #828 / v24.32 — static-glow 8箇所
+   asset-entry-balance＋cal-ev-name＋smi-income-label＋smi-expense-label＋
+   hs-trend-label＋pace-bar-pace-unit＋ct-chip-name＋summary-label
+   ============================================================ */
+
+/* 1. .asset-entry-balance → static primary text-shadow glow
+   資産詳細履歴行の残高テキスト（formatMoney()出力：color:text・fw-semi・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .asset-entry-row:hover .asset-entry-balance primary glow（v23.43）と対称で
+   未ホバー時から残高テキストが primary カラーで静かに輝く演出に。
+   asset-entry-balance の transition には text-shadow を含む（v22.x）。 */
+.asset-entry-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-entry-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .cal-ev-item:not(.cal-ev-done) .cal-ev-name → static cal-ev-color text-shadow glow
+   カレンダーイベントアイテム（未完了）の名称テキスト（color:cal-ev-color・fw-semi）に
+   常時 cal-ev-color カラーの text-shadow を追加。
+   .cal-ev-item:not(.cal-ev-done):hover .cal-ev-name cal-ev-color glow（v23.43）と対称で
+   未ホバー時からイベント名が各イベント固有の cal-ev-color カラーで静かに輝く演出に。
+   cal-ev-name の transition には text-shadow を含む（v22.x）。 */
+.cal-ev-item:not(.cal-ev-done) .cal-ev-name { text-shadow: 0 0 6px color-mix(in srgb, var(--cal-ev-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done) .cal-ev-name { text-shadow: 0 0 7px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .smi-income .smi-label → static success text-shadow glow
+   収支サマリーミニ収入行のラベルテキスト（「収入」等：color:text-muted・fs-xs）に
+   常時 success カラーの text-shadow を追加。
+   .smi-income:hover .smi-label success glow（v23.x）と対称で
+   未ホバー時から収入ラベルが success カラーで静かに輝く演出に。
+   smi-amount.income static glow（v24.x）と連動し収入行の金額・ラベルが常時 success で発光する完成形演出に統一。 */
+.smi-income .smi-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-income .smi-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .smi-expense .smi-label → static danger-text text-shadow glow
+   収支サマリーミニ支出行のラベルテキスト（「支出」等：color:text-muted・fs-xs）に
+   常時 danger-text カラーの text-shadow を追加。
+   .smi-expense:hover .smi-label danger-text glow（v23.x）と対称で
+   .smi-income .smi-label static glow（本スプリント③）と対称に収入・支出の両ラベルが
+   常時それぞれのテーマカラーで輝く完成形演出に統一。 */
+.smi-expense .smi-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .smi-expense .smi-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .hs-trend-label → static primary text-shadow glow
+   ヘルススコアカードのトレンドラベルテキスト（「先月比」等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .health-score-card:hover .hs-trend-label primary glow（v23.x）と対称で
+   未ホバー時からトレンドラベルが primary カラーで静かに輝く演出に。
+   hs-trend-label の transition には text-shadow を含む（v23.x）。 */
+.hs-trend-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-trend-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .pace-bar-row .pace-unit → static タイプ別 text-shadow glow
+   支出ペース管理バー行の月/日数ユニットテキスト（「日」「残X日」等：color:text-muted）に
+   常時 pace ステータス別 text-shadow を追加。good=success / warn=warning / over=danger-text。
+   .pace-bar-row:has(.pace-bar-expense.pace-good/warn/over):hover .pace-unit glow（v23.x）と対称で
+   未ホバー時からユニットテキストがペース状態に応じたカラーで静かに輝く演出に。
+   pace-unit の transition には text-shadow を含む（v23.x）。 */
+.pace-bar-row:has(.pace-bar-expense.pace-good) .pace-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.pace-bar-row:has(.pace-bar-expense.pace-over) .pace-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good) .pace-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn) .pace-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over) .pace-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .ct-chip-name → static ct-color text-shadow glow
+   カテゴリトレンドチップの名称テキスト（color:ct-color・fw-medium）に
+   常時 ct-color カラーの text-shadow を追加。
+   .ct-chip:hover .ct-chip-name ct-color glow（v23.x）と対称で
+   未ホバー時からカテゴリ名が各カテゴリ固有の ct-color カラーで静かに輝く演出に。
+   ct-chip-name の transition には text-shadow を含む（v23.x）。 */
+.ct-chip-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ct-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-chip-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ct-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .summary-card .summary-label → static white text-shadow glow
+   月次サマリーカード（グラデーション背景）のラベルテキスト（「今月の収入」等：
+   color:on-dark-label・fs-xs）に常時 white の text-shadow を追加。
+   .summary-card:hover .summary-label white glow（v23.x）と対称で
+   未ホバー時からサマリーラベルが白く静かに輝く演出に。
+   summary-card .summary-amount static glow（v24.14）と連動しサマリーカード内テキストが
+   常時発光する完成形演出に統一。summary-label の transition には text-shadow を含む（v23.x）。 */
+.summary-card .summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .summary-card .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.32・全script/linkタグ?v=24.32に更新。 */
