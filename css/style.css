@@ -29840,3 +29840,101 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .summary-card .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.32・全script/linkタグ?v=24.32に更新。 */
+
+/* ============================================================
+   Sprint #829 / v24.33 — static-glow 8箇所
+   yr-avg-label＋budget-sep＋pt-card-pt-unit＋ev-done-label＋
+   debt-history-title＋asset-history-title＋tg-table-first-col＋step-title
+   ============================================================ */
+
+/* 1. .yr-avg-label → static primary text-shadow glow
+   年間ウィジェットカードの「平均」ラベルテキスト（color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .yr-avg-label primary glow（v23.47）と対称で
+   未ホバー時から平均ラベルが primary カラーで静かに輝く演出に。
+   yr-progress-label static glow・yr-elapsed-badge static glow（v24.20/v24.29）と連動し
+   年間ウィジェット内ラベルが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.yr-avg-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-avg-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .budget-sep → タイプ別 static primary/expense text-shadow glow
+   予算行の「/」区切り記号テキストに常時タイプ別カラーの text-shadow を追加。
+   通常=primary / 超過=expense。
+   .budget-item:hover .budget-sep primary glow・
+   .budget-item:has(.budget-fill.over):hover .budget-sep expense glow（v23.53）と対称で
+   未ホバー時から区切り記号がステータスカラーで静かに輝く演出に。
+   budget-cat-name static glow・budget-nums static glow（v24.31）と連動し
+   予算行内テキストが常時発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.budget-sep                              { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)  var(--mix-xs), transparent); }
+.budget-item:has(.budget-fill.over) .budget-sep { text-shadow: 0 0 6px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-sep                              { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-fill.over) .budget-sep { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 3. .pt-card .pt-unit → static primary text-shadow glow
+   ポイントカードの「pt」単位テキスト（color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .pt-card:hover .pt-unit primary glow（v23.53）と対称で
+   未ホバー時からポイント単位テキストが primary カラーで静かに輝く演出に。
+   pt-widget-item .pt-unit static glow（v24.28）と合わせて
+   カード・ウィジェット両文脈で pt-unit が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.pt-card .pt-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-card .pt-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .ev-done-label → static primary text-shadow glow
+   イベントカードの「完了」ラベルテキスト（color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-card:hover .ev-done-label primary glow（v23.53）と対称で
+   未ホバー時から完了ラベルが primary カラーで静かに輝く演出に。
+   ev-card-name static glow（v24.x）と連動しカード内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ev-done-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-done-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .debt-history-title → static primary text-shadow glow
+   負債カードの「返済履歴」見出しテキスト（color:primary・fw-semi・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-card:hover .debt-history-title primary glow（v23.53）と対称で
+   未ホバー時から返済履歴見出しが primary カラーで静かに輝く演出に。
+   debt-name static glow・debt-progress-hdr/detail static glow（v22.x/v24.28）と連動し
+   負債カード内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-history-title { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-history-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .asset-history-title → static primary text-shadow glow
+   資産カードの「残高履歴」見出しテキスト（color:primary・fw-semi・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .asset-card:hover .asset-history-title primary glow（v23.53）と対称で
+   未ホバー時から残高履歴見出しが primary カラーで静かに輝く演出に。
+   asset-name static glow・asset-fx-rate static glow（v22.x/v24.x）と連動し
+   資産カード内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.asset-history-title { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-history-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .tg-table tbody tr td:first-child → static primary text-shadow glow
+   目標トラッカーテーブル行の1列目月名テキスト（color:primary・fw-medium）に
+   常時 primary カラーの text-shadow を追加。
+   .tg-table tbody tr:hover td:first-child primary glow（v23.53）と対称で
+   未ホバー時から月名テキストが primary カラーで静かに輝く演出に。
+   tg-stat-value static glow（v24.30）・tg-table td.income/expense static glow（v24.28）と連動し
+   テーブル全セルが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.tg-table tbody tr td:first-child { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-table tbody tr td:first-child { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .step-title → static primary text-shadow glow
+   オンボーディングステップカードのタイトルテキスト（color:text・fw-semi・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .step-card:hover .step-title primary glow（v23.49）と対称で
+   未ホバー時からステップタイトルが primary カラーで静かに輝く演出に。
+   step-num static glow・step-action static glow（v24.30/v24.24）と連動し
+   ステップカード内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.step-title { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .step-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.33・全script/linkタグ?v=24.33に更新。 */
