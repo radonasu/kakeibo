@@ -29370,3 +29370,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.27・全script/linkタグ?v=24.27に更新。 */
 .wl-priority-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .wl-priority-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #824 — v24.28 static text-shadow glow (8 items)
+   sub-monthly-equiv-static-glow＋pace-daily-val-good-static-glow＋
+   pace-daily-val-warn-static-glow＋pace-daily-val-over-static-glow＋
+   wk-summary-expense-val-static-glow＋wk-summary-income-val-static-glow＋
+   wk-summary-savings-val-static-glow＋sim-savings-label-static-glow
+   ============================================================ */
+
+/* 1. .sub-card .sub-monthly-equiv → static primary text-shadow glow
+   サブスクカードの月換算金額テキスト（color:text-muted・fs-2xs・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .sub-card:hover .sub-monthly-equiv primary glow（v23.x）と対称で
+   未ホバー時からサブスク月換算金額が primary カラーで静かに輝く演出に。
+   sub-card-name static glow（v24.xx）と連動しサブスクカード内テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.sub-card .sub-monthly-equiv { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-card .sub-monthly-equiv { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .pace-daily-cell:has(.pace-daily-val.pace-good) .pace-daily-val → static success text-shadow glow
+   ペース管理の「良好」ステータス日の数値テキスト（color:success）に
+   常時 success カラーの text-shadow を追加。
+   .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val success glow（v23.x）と対称で
+   未ホバー時から良好ペース数値が success カラーで静かに輝く演出に。
+   pace-daily-val.pace-warn/over static glow（本スプリント③④）と連動し
+   ペース管理の全ステータス数値が常時対応カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.pace-daily-cell:has(.pace-daily-val.pace-good) .pace-daily-val { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good) .pace-daily-val { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 3. .pace-daily-cell:has(.pace-daily-val.pace-warn) .pace-daily-val → static warning text-shadow glow
+   ペース管理の「警告」ステータス日の数値テキスト（color:warning）に
+   常時 warning カラーの text-shadow を追加。
+   .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val warning glow（v23.x）と対称で
+   未ホバー時から警告ペース数値が warning カラーで静かに輝く演出に。
+   pace-daily-val.pace-good/over static glow（本スプリント②④）と連動し
+   ペース管理の全ステータス数値が常時対応カラーで発光する完成形演出に統一。 */
+.pace-daily-cell:has(.pace-daily-val.pace-warn) .pace-daily-val { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn) .pace-daily-val { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 4. .pace-daily-cell:has(.pace-daily-val.pace-over) .pace-daily-val → static danger-text text-shadow glow
+   ペース管理の「超過」ステータス日の数値テキスト（color:danger-text）に
+   常時 danger-text カラーの text-shadow を追加。
+   .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val danger-text glow（v23.x）と対称で
+   未ホバー時から超過ペース数値が danger-text カラーで静かに輝く演出に。
+   pace-daily-val.pace-good/warn static glow（本スプリント②③）と連動し
+   ペース管理の全ステータス数値が常時対応カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.pace-daily-cell:has(.pace-daily-val.pace-over) .pace-daily-val { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over) .pace-daily-val { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .wk-summary-row .wk-cell:nth-child(1) .wk-cell-value → static expense text-shadow glow
+   週次サマリー行の支出セル（1列目）の金額数値（tabular-nums）に
+   常時 expense カラーの text-shadow を追加。
+   .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-value expense glow（v23.x）と対称で
+   未ホバー時から週次支出合計がexpense カラーで静かに輝く演出に。
+   wk-summary income/savings static glow（本スプリント⑥⑦）と連動し
+   週次サマリー3セルの数値が常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.wk-summary-row .wk-cell:nth-child(1) .wk-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)   var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1) .wk-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .wk-summary-row .wk-cell:nth-child(2) .wk-cell-value → static primary text-shadow glow
+   週次サマリー行の収入セル（2列目）の金額数値（tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-value primary glow（v23.x）と対称で
+   未ホバー時から週次収入合計が primary カラーで静かに輝く演出に。
+   wk-summary expense/savings static glow（本スプリント⑤⑦）と連動し
+   週次サマリー3セルの数値が常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.wk-summary-row .wk-cell:nth-child(2) .wk-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)   var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2) .wk-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .wk-summary-row .wk-cell:nth-child(3) .wk-cell-value → static success text-shadow glow
+   週次サマリー行の残高セル（3列目）の金額数値（tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-value success glow（v23.x）と対称で
+   未ホバー時から週次残高が success カラーで静かに輝く演出に。
+   wk-summary expense/income static glow（本スプリント⑤⑥）と連動し
+   週次サマリー3セルの数値が常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.wk-summary-row .wk-cell:nth-child(3) .wk-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)   var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3) .wk-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 8. .sim-savings-label → static success text-shadow glow
+   ローンシミュレーターの節約バナーのラベルテキスト（「節約できる金額」等：
+   filter:brightness変色・fs-sm）に常時 success カラーの text-shadow を追加。
+   .sim-savings-banner:hover .sim-savings-label success glow（v23.x）と対称で
+   未ホバー時から節約バナーのラベルが success カラーで静かに輝く演出に。
+   sim-savings-value static glow（v22.94）と連動し節約バナー内全テキストが
+   常時 success カラーで発光する完成形演出に統一。ダークモードでは income-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.28・全script/linkタグ?v=24.28に更新。 */
+.sim-savings-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)   var(--mix-xs), transparent); }
+[data-theme="dark"] .sim-savings-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
