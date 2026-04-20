@@ -29464,3 +29464,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.28・全script/linkタグ?v=24.28に更新。 */
 .sim-savings-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)   var(--mix-xs), transparent); }
 [data-theme="dark"] .sim-savings-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #825 — v24.29 static text-shadow glow (8 items)
+   yi-half-label-static-glow＋yi-card-label-static-glow＋
+   yr-elapsed-badge-static-glow＋ev-widget-name-static-glow＋
+   ev-widget-amount-static-glow＋wish-widget-name-static-glow＋
+   wish-widget-price-static-glow＋sub-widget-name-static-glow
+   ============================================================ */
+
+/* 1. .yi-half-label → static primary text-shadow glow
+   年間収支インサイトカードの上下半期ラベルテキスト（「1〜6月」「7〜12月」等：
+   color:text-sub・fs-xs）に常時 primary カラーの text-shadow を追加。
+   .yi-card:hover .yi-half-label primary glow（v23.27）と対称で
+   未ホバー時から半期ラベルが primary カラーで静かに輝く演出に。
+   yi-half-val static glow（v24.27⑥）と連動し年間収支カード内
+   半期テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yi-half-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-half-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 2. .yi-card-label → static primary text-shadow glow
+   年間収支インサイトカードのカードラベルテキスト（カテゴリ名・種別名等：
+   color:text-sub・fs-sm）に常時 primary カラーの text-shadow を追加。
+   .yi-card:hover .yi-card-label primary glow（v23.37）と対称で
+   未ホバー時からカードラベルが primary カラーで静かに輝く演出に。
+   yi-card-value static glow（v24.20⑦）・yi-half-label static glow（①）と連動し
+   年間収支カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yi-card-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 3. .yr-elapsed-badge → static primary text-shadow glow
+   年次ウィジェットカードの経過月数バッジテキスト（「N月経過」等：
+   color:text-sub・fs-xs・fw-semi）に常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .yr-elapsed-badge primary glow（v24.03）と対称で
+   未ホバー時から経過月数バッジが primary カラーで静かに輝く演出に。
+   yr-progress-label static glow（v24.20）と連動し
+   年次ウィジェットのバッジ・進捗ラベルが常時揃って発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.yr-elapsed-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-elapsed-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .ev-widget-name → static ev-accent text-shadow glow
+   収支予定ウィジェット行の予定名テキスト（fw-medium・fs-sm）に
+   常時 ev-accent カラーの text-shadow を追加。
+   .ev-widget-item:hover .ev-widget-name ev-accent glow（v23.48）と対称で
+   未ホバー時から収支予定名が ev-accent カラーで静かに輝く演出に。
+   ev-widget-cat static glow（v24.28⑧→v24.29修正: v24.28⑦）と連動し
+   ウィジェット行内全テキストが常時発光する完成形演出に統一。 */
+.ev-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .ev-widget-amount → static ev-accent text-shadow glow
+   収支予定ウィジェット行の金額テキスト（fw-semi・tabular-nums）に
+   常時 ev-accent カラーの text-shadow を追加。
+   .ev-widget-item:hover .ev-widget-amount ev-accent glow（v23.34）と対称で
+   未ホバー時から収支予定金額が ev-accent カラーで静かに輝く演出に。
+   ev-widget-name static glow（④）・ev-widget-cat static glow と連動し
+   ウィジェット行内全テキストが常時発光する完成形演出に統一。 */
+.ev-widget-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .wish-widget-name → static primary text-shadow glow
+   ウィッシュリストウィジェット行の商品名テキスト（fw-medium）に
+   常時 primary カラーの text-shadow を追加。
+   .wish-widget-item:hover .wish-widget-name primary glow（v23.48）と対称で
+   未ホバー時からウィッシュリスト商品名が primary カラーで静かに輝く演出に。
+   wish-widget-price static glow（⑦）と連動し
+   ウィジェット行内テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.wish-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wish-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 7. .wish-widget-price → static primary text-shadow glow
+   ウィッシュリストウィジェット行の価格テキスト（fw-semi・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .wish-widget-item:hover .wish-widget-price primary glow（v23.48）と対称で
+   未ホバー時からウィッシュリスト価格が primary カラーで静かに輝く演出に。
+   wish-widget-name static glow（⑥）と連動し
+   ウィジェット行内テキストが常時揃って発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.wish-widget-price { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wish-widget-price { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 8. .sub-widget-item .sub-widget-name → static ステータス別 text-shadow glow
+   サブスクウィジェット行のサービス名テキスト（fw-medium・fs-sm）に
+   常時ステータス別カラーの text-shadow を追加。
+   normal=primary / urgent=danger-text / soon=warning。
+   .sub-widget-item:hover .sub-widget-name ステータス別 glow（v23.48）と対称で
+   未ホバー時から各サブスク名がステータスカラーで静かに輝く演出に。
+   sub-widget-amount static glow（v24.28）と連動しウィジェット行内
+   名称・金額が常時ステータス色で発光する完成形演出に統一。
+   ダークモードでは urgent=expense-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.29・全script/linkタグ?v=24.29に更新。 */
+.sub-widget-item             .sub-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.sub-widget-item.sub-urgent  .sub-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.sub-widget-item.sub-soon    .sub-widget-name { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-widget-item            .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon   .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)       var(--mix-sm), transparent); }
