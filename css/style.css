@@ -28225,3 +28225,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.14・全script/linkタグ?v=24.14に更新。 */
 .year-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .year-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#811 static glow（v24.15）
+   summary-amount-income-static-glow＋summary-amount-expense-static-glow＋
+   summary-amount-balance-pos-static-glow＋summary-amount-balance-neg-static-glow＋
+   hm-stat-value1-static-glow＋hm-stat-value2-static-glow＋
+   hm-stat-value3-static-glow＋hm-stat-value4-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .summary-card.income .summary-amount → static success text-shadow glow
+   収入サマリーカードの金額（fw-bold・tabular-nums・color:on-dark-title）に
+   常時 success カラーの text-shadow を追加。
+   summary-card.income:hover .summary-amount success+white glow（v24.03）と対称で
+   未ホバー時から収入金額が緑の輝きを帯びた静的演出に。
+   ダークモードでは income-end glow。 */
+.summary-card.income    .summary-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .summary-card.income    .summary-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .summary-card.expense .summary-amount → static danger-text text-shadow glow
+   支出サマリーカードの金額に常時 danger-text カラーの text-shadow を追加。
+   summary-card.expense:hover .summary-amount danger+white glow（v24.03）と対称で
+   未ホバー時から支出金額が赤の輝きを帯びた静的演出に。
+   ダークモードでは expense-end glow。 */
+.summary-card.expense   .summary-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .summary-card.expense   .summary-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .summary-card.balance.positive .summary-amount → static primary text-shadow glow
+   収支プラスサマリーカードの金額に常時 primary カラーの text-shadow を追加。
+   summary-card.balance.positive:hover .summary-amount primary+white glow（v24.03）と対称で
+   未ホバー時からプラス収支金額が primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.summary-card.balance.positive .summary-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .summary-card.balance.positive .summary-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .summary-card.balance.negative .summary-amount → static danger-text text-shadow glow
+   収支マイナスサマリーカードの金額に常時 danger-text カラーの text-shadow を追加。
+   summary-card.balance.negative:hover .summary-amount danger+white glow（v24.03）と対称で
+   未ホバー時からマイナス収支金額が赤の輝きを帯びた静的演出に。
+   ダークモードでは expense-end glow。 */
+.summary-card.balance.negative .summary-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .summary-card.balance.negative .summary-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .hm-stat-card:nth-child(1) .hm-stat-value → static primary text-shadow glow
+   ホーム統計カード1枚目（収入）の数値に常時 primary カラーの text-shadow を追加。
+   hm-stat-card:nth-child(1):hover .hm-stat-value primary glow（v24.03）と対称で
+   未ホバー時から収入統計数値が primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.hm-stat-card:nth-child(1) .hm-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(1) .hm-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 6. .hm-stat-card:nth-child(2) .hm-stat-value → static danger-text text-shadow glow
+   ホーム統計カード2枚目（支出）の数値に常時 danger-text カラーの text-shadow を追加。
+   hm-stat-card:nth-child(2):hover .hm-stat-value danger-text glow（v24.03）と対称で
+   未ホバー時から支出統計数値が赤の輝きを帯びた静的演出に。
+   ダークモードでは expense-end glow。 */
+.hm-stat-card:nth-child(2) .hm-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(2) .hm-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .hm-stat-card:nth-child(3) .hm-stat-value → static warning text-shadow glow
+   ホーム統計カード3枚目（予算進捗等）の数値に常時 warning カラーの text-shadow を追加。
+   hm-stat-card:nth-child(3):hover .hm-stat-value warning glow（v24.03）と対称で
+   未ホバー時から警戒系の統計数値が warning カラーで静かに輝く演出に。
+   ダーク/ライト両モードともに warning カラーを使用。 */
+.hm-stat-card:nth-child(3) .hm-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) .hm-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 8. .hm-stat-card:nth-child(4) .hm-stat-value → static success text-shadow glow
+   ホーム統計カード4枚目（貯蓄率等）の数値に常時 success カラーの text-shadow を追加。
+   hm-stat-card:nth-child(4):hover .hm-stat-value success glow（v24.03）と対称で
+   未ホバー時から貯蓄統計数値が緑の輝きを帯びた静的演出に。
+   hm-stat-unit static glow（v24.10）と連動し統計カード数値・単位が常時揃って発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.15・全script/linkタグ?v=24.15に更新。 */
+.hm-stat-card:nth-child(4) .hm-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) .hm-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
