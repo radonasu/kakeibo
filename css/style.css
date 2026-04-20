@@ -29114,3 +29114,96 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダークモードでは primary-end glow。 */
 .step-action { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .step-action { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #821 — v24.25 static text-shadow glow (8 items)
+   wl-sum-count-value-static-glow＋wl-sum-budget-value-static-glow＋
+   wl-sum-count-label-static-glow＋wl-sum-budget-label-static-glow＋
+   wl-sum-count-unit-static-glow＋wl-sum-budget-unit-static-glow＋
+   debt-summary-amount-static-glow＋debt-summary-label-static-glow
+   ============================================================ */
+
+/* 1. .wl-sum-count .wl-summary-value → static white text-shadow glow
+   ウィッシュリスト件数サマリーカード（グラデーション背景）の数値テキスト
+   （color:white・fs-2xl・fw-black）に常時 white の text-shadow を追加。
+   .wl-sum-count:hover .wl-summary-value white glow（v23.17）と対称で
+   未ホバー時から件数数値が白く静かに輝く演出に。
+   wl-sum-done .wl-summary-value static glow（v24.22）と連動し
+   ウィッシュリストサマリー3カード全ての数値が常時白く発光する完成形演出に統一。 */
+.wl-sum-count .wl-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 2. .wl-sum-budget .wl-summary-value → static white text-shadow glow
+   ウィッシュリスト予算サマリーカード（グラデーション背景）の数値テキスト
+   （color:white・fs-2xl・fw-black）に常時 white の text-shadow を追加。
+   .wl-sum-budget:hover .wl-summary-value white glow（v23.17）と対称で
+   未ホバー時から予算数値が白く静かに輝く演出に。
+   wl-sum-count .wl-summary-value static glow（本スプリント①）・
+   wl-sum-done .wl-summary-value static glow（v24.22）と連動し
+   ウィッシュリストサマリー3カード全ての数値が常時揃って白く発光する完成形演出に統一。 */
+.wl-sum-budget .wl-summary-value { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 3. .wl-sum-count .wl-summary-label → static white text-shadow glow
+   ウィッシュリスト件数サマリーカード（グラデーション背景）のラベルテキスト
+   （color:on-dark-title）に常時 white の text-shadow を追加。
+   .wl-sum-count:hover .wl-summary-label white glow（v23.81⑤）と対称で
+   未ホバー時から件数ラベルが白く静かに輝く演出に。
+   wl-sum-done .wl-summary-label static glow（v24.24⑦）と連動し
+   ウィッシュリストサマリー3カード全てのラベルが常時白く発光する完成形演出に統一。 */
+.wl-sum-count .wl-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .wl-sum-count .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 4. .wl-sum-budget .wl-summary-label → static white text-shadow glow
+   ウィッシュリスト予算サマリーカード（グラデーション背景）のラベルテキスト
+   （color:on-dark-title）に常時 white の text-shadow を追加。
+   .wl-sum-budget:hover .wl-summary-label white glow（v23.81⑥）と対称で
+   未ホバー時から予算ラベルが白く静かに輝く演出に。
+   wl-sum-count .wl-summary-label static glow（本スプリント③）・
+   wl-sum-done .wl-summary-label static glow（v24.24⑦）と連動し
+   ウィッシュリストサマリー3カード全てのラベルが常時揃って白く発光する完成形演出に統一。 */
+.wl-sum-budget .wl-summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .wl-sum-budget .wl-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 5. .wl-sum-count .wl-summary-unit → static white text-shadow glow
+   ウィッシュリスト件数サマリーカード（グラデーション背景）の単位テキスト
+   （「件」等：color:on-dark-soft）に常時 white の text-shadow を追加。
+   .wl-sum-count:hover .wl-summary-unit white glow（v23.81⑦）と対称で
+   未ホバー時から件数単位テキストが白く静かに輝く演出に。
+   wl-sum-count .wl-summary-value/label static glow（本スプリント①③）と連動し
+   ウィッシュリスト件数カード内全テキストが常時白く発光する完成形演出に統一。 */
+.wl-sum-count .wl-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .wl-sum-count .wl-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+
+/* 6. .wl-sum-budget .wl-summary-unit → static white text-shadow glow
+   ウィッシュリスト予算サマリーカード（グラデーション背景）の単位テキスト
+   （「円」等：color:on-dark-soft）に常時 white の text-shadow を追加。
+   .wl-sum-budget:hover .wl-summary-unit white glow（v23.81⑧）と対称で
+   未ホバー時から予算単位テキストが白く静かに輝く演出に。
+   wl-sum-count .wl-summary-unit static glow（本スプリント⑤）・
+   wl-sum-budget .wl-summary-value/label static glow（本スプリント②④）と連動し
+   ウィッシュリスト予算カード内全テキストが常時白く発光する完成形演出に統一。 */
+.wl-sum-budget .wl-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .wl-sum-budget .wl-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+
+/* 7. .debt-summary-total/.debt-summary-monthly .summary-amount → static white text-shadow glow
+   負債サマリーカード（グラデーション背景）の金額テキスト
+   （color:white・fw-bold）に常時 white の text-shadow を追加。
+   .debt-summary-total/.debt-summary-monthly:hover .summary-amount white glow（v23.32）と対称で
+   未ホバー時から負債金額が白く静かに輝く演出に。
+   debt-summary-total/monthly:hover の lift+shadow（v22.62）と連動し
+   負債サマリーカード内の金額テキストが常時発光する完成形演出に統一。 */
+.debt-summary-total   .summary-amount,
+.debt-summary-monthly .summary-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 8. .debt-summary-total/.debt-summary-monthly .summary-label → static white text-shadow glow
+   負債サマリーカード（グラデーション背景）のラベルテキスト
+   （「総残債」「月次返済」等：color:on-dark-hint）に常時 white の text-shadow を追加。
+   .debt-summary-total/.debt-summary-monthly:hover .summary-label white glow（v23.76⑥）と対称で
+   未ホバー時から負債ラベルが白く静かに輝く演出に。
+   debt-summary-total/monthly .summary-amount static glow（本スプリント⑦）と連動し
+   負債サマリーカード内全テキストが常時白く発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.25・全script/linkタグ?v=24.25に更新。
+   ダークモードではより強い white glow。 */
+.debt-summary-total   .summary-label,
+.debt-summary-monthly .summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .debt-summary-total   .summary-label,
+[data-theme="dark"] .debt-summary-monthly .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
