@@ -28449,3 +28449,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.17・全script/linkタグ?v=24.17に更新。 */
 .notif-item.notif-type-info    .notif-item-body  { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .notif-item.notif-type-info    .notif-item-body  { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#814 static glow（v24.18）
+   md-cell-balance-pos-value-static-glow＋md-cell-balance-neg-value-static-glow＋
+   md-cell-count-value-static-glow＋ct-row-total-static-glow＋
+   tg-income-static-glow＋tg-expense-static-glow＋
+   pm-table-name-static-glow＋pm-table-expense-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .md-cell-balance-pos .md-cell-value → static primary text-shadow glow
+   月次詳細黒字残高セルの金額数値（color:text・fs-xl・fw-bold・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .md-cell-balance-pos:hover .md-cell-value primary glow（v23.78）と対称で
+   未ホバー時から黒字残高金額が primary カラーで静かに輝く演出に。
+   md-cell-balance-pos .md-cell-label static glow（v24.17）と連動し
+   ラベル・金額が揃って常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.md-cell-balance-pos .md-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-pos .md-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 2. .md-cell-balance-neg .md-cell-value → static danger-text text-shadow glow
+   月次詳細赤字残高セルの金額数値に常時 danger-text カラーの text-shadow を追加。
+   .md-cell-balance-neg:hover .md-cell-value danger-text glow（v23.78）と対称で
+   未ホバー時から赤字残高金額が danger-text カラーで静かに警告光する演出に。
+   md-cell-balance-neg .md-cell-label danger-text glow（v24.17）と連動し
+   ラベル・金額が揃って常時 danger-text カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.md-cell-balance-neg .md-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-neg .md-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .md-cell-count .md-cell-value → static primary text-shadow glow
+   月次詳細件数セルの金額数値（件数表示）に常時 primary カラーの text-shadow を追加。
+   .md-cell-count:hover .md-cell-value primary glow（v23.78）と対称で
+   未ホバー時から件数数値が primary カラーで静かに輝く演出に。
+   md-cell-income/expense value static glow（v24.03）と同パターンで
+   月次詳細全セルの金額数値が常時それぞれのカラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.md-cell-count .md-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-count .md-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .ct-table tbody tr .ct-row-total → static primary text-shadow glow
+   カテゴリトレンドテーブルの行合計セル（fw-bold・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .ct-table tbody tr:hover .ct-row-total primary glow（v23.09）と対称で
+   未ホバー時から行合計が primary カラーで静かに輝く演出に。
+   ct-stat-value/label/sub static glow（v24.14）と連動し
+   カテゴリトレンドウィジェット全体が常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ct-table tbody tr .ct-row-total { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-table tbody tr .ct-row-total { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 5. .tg-table tbody tr td.income → static success text-shadow glow
+   タグ分析テーブルの収入金額セル（color:income・fw-bold・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .tg-table tbody tr:hover td.income success glow（v23.20）と対称で
+   未ホバー時から収入金額が success カラーで静かに輝く演出に。
+   tg-table td.expense static glow（本スプリント⑥）と対称に
+   収入・支出セルが常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.tg-table tbody tr td.income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-table tbody tr td.income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .tg-table tbody tr td.expense → static expense text-shadow glow
+   タグ分析テーブルの支出金額セル（color:expense・fw-bold・tabular-nums）に
+   常時 expense カラーの text-shadow を追加。
+   .tg-table tbody tr:hover td.expense expense glow（v23.09）と対称で
+   未ホバー時から支出金額が expense カラーで静かに警告光する演出に。
+   tg-table td.income static glow（本スプリント⑤）と対として
+   タグ分析テーブル全行の収入・支出が常時揃って発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.tg-table tbody tr td.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-table tbody tr td.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 7. .pm-table-row td:first-child → static pm-row-color text-shadow glow
+   支払方法テーブルの支払方法名セル（pm-row-color・fw-medium）に
+   常時 pm-row-color カラーの text-shadow を追加。
+   .pm-table-row:hover td:first-child pm-row-color glow（v23.09）と対称で
+   未ホバー時から支払方法名がカードテーマカラーで静かに輝く演出に。
+   pm-sum-value/label static glow（v24.16）と連動し
+   支払方法関連テキストが常時テーマカラーで発光する完成形演出に統一。
+   pm-row-color は JS 側で各行に設定される支払方法固有カラー。 */
+.pm-table-row td:first-child { text-shadow: 0 0 6px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .pm-table-row td.expense → static expense text-shadow glow
+   支払方法テーブルの支払金額セル（color:expense・fw-bold・tabular-nums）に
+   常時 expense カラーの text-shadow を追加。
+   .pm-table-row:hover td.expense expense glow（v23.09）と対称で
+   未ホバー時から支払金額が expense カラーで静かに警告光する演出に。
+   pm-table-row td:first-child static glow（本スプリント⑦）と連動し
+   支払方法テーブルの名称・金額が常時揃って発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.18・全script/linkタグ?v=24.18に更新。
+   ダークモードでは expense-end glow。 */
+.pm-table-row td.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pm-table-row td.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
