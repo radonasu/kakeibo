@@ -28377,3 +28377,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    hs-bar-color はバー毎に異なるテーマカラーが inline style で設定される。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.16・全script/linkタグ?v=24.16に更新。 */
 .hs-item-label { text-shadow: 0 0 6px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* ============================================================
+   スプリント#813 static glow（v24.17）
+   notif-type-danger-title-static-glow＋notif-type-warning-title-static-glow＋
+   notif-type-success-title-static-glow＋notif-type-info-title-static-glow＋
+   notif-type-danger-body-static-glow＋notif-type-warning-body-static-glow＋
+   notif-type-success-body-static-glow＋notif-type-info-body-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .notif-item.notif-type-danger .notif-item-title → static danger-text text-shadow glow
+   危険通知アイテムのタイトルテキスト（ホバー時color:danger-text・fs-sm・fw-semi）に
+   常時 danger-text カラーの text-shadow を追加。
+   .notif-item.notif-type-danger:hover .notif-item-title danger-text glow（v23.x）と対称で
+   未ホバー時から危険通知のタイトルが danger-text カラーで静かに際立つ演出に。
+   ダークモードでは expense-end glow。 */
+.notif-item.notif-type-danger  .notif-item-title { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-danger  .notif-item-title { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
+
+/* 2. .notif-item.notif-type-warning .notif-item-title → static warning text-shadow glow
+   注意通知アイテムのタイトルテキストに常時 warning カラーの text-shadow を追加。
+   .notif-item.notif-type-warning:hover .notif-item-title warning glow（v23.x）と対称で
+   未ホバー時から注意通知のタイトルが warning カラーで静かに注意を促す演出に。
+   ダークモードでも warning glow を使用。 */
+.notif-item.notif-type-warning .notif-item-title { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-warning .notif-item-title { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 3. .notif-item.notif-type-success .notif-item-title → static success text-shadow glow
+   成功通知アイテムのタイトルテキストに常時 success カラーの text-shadow を追加。
+   .notif-item.notif-type-success:hover .notif-item-title success glow（v23.x）と対称で
+   未ホバー時から成功通知のタイトルが success カラーで静かに輝く演出に。
+   ダークモードでは income-end glow。 */
+.notif-item.notif-type-success .notif-item-title { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-success .notif-item-title { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .notif-item.notif-type-info .notif-item-title → static primary text-shadow glow
+   情報通知アイテムのタイトルテキストに常時 primary カラーの text-shadow を追加。
+   .notif-item.notif-type-info:hover .notif-item-title primary glow（v23.x）と対称で
+   未ホバー時から情報通知のタイトルが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.notif-item.notif-type-info    .notif-item-title { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-info    .notif-item-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 5. .notif-item.notif-type-danger .notif-item-body → static danger-text text-shadow glow
+   危険通知アイテムの本文テキスト（ホバー時color:danger-text・fs-xs）に
+   常時 danger-text カラーの text-shadow を追加。
+   .notif-item.notif-type-danger:hover .notif-item-body danger-text glow（v23.x）と対称で
+   未ホバー時から危険通知の本文が danger-text カラーで静かに際立つ演出に。
+   ①と連動し危険通知のタイトル・本文が常時一体的に発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.notif-item.notif-type-danger  .notif-item-body  { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-danger  .notif-item-body  { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
+
+/* 6. .notif-item.notif-type-warning .notif-item-body → static warning text-shadow glow
+   注意通知アイテムの本文テキストに常時 warning カラーの text-shadow を追加。
+   ②と連動し注意通知のタイトル・本文が常時揃って warning カラーで発光する完成形演出に統一。
+   ダークモードでも warning glow を使用。 */
+.notif-item.notif-type-warning .notif-item-body  { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-warning .notif-item-body  { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 7. .notif-item.notif-type-success .notif-item-body → static success text-shadow glow
+   成功通知アイテムの本文テキストに常時 success カラーの text-shadow を追加。
+   ③と連動し成功通知のタイトル・本文が常時揃って success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.notif-item.notif-type-success .notif-item-body  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-success .notif-item-body  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .notif-item.notif-type-info .notif-item-body → static primary text-shadow glow
+   情報通知アイテムの本文テキストに常時 primary カラーの text-shadow を追加。
+   ④と連動し情報通知のタイトル・本文が常時揃って primary カラーで発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.17・全script/linkタグ?v=24.17に更新。 */
+.notif-item.notif-type-info    .notif-item-body  { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-item.notif-type-info    .notif-item-body  { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
