@@ -28299,3 +28299,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.15・全script/linkタグ?v=24.15に更新。 */
 .hm-stat-card:nth-child(4) .hm-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .hm-stat-card:nth-child(4) .hm-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#812 static glow（v24.16）
+   fv-stat-value-static-glow＋ev-sum-count-static-glow＋
+   sb-banner-num-static-glow＋debt-progress-hdr-static-glow＋
+   debt-progress-detail-static-glow＋pm-sum-value-static-glow＋
+   pm-sum-label-static-glow＋hs-item-label-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .fv-stat-value → static white text-shadow glow
+   財務予測統計カードの大型数値（color:white・fs-xl・fw-bold）に
+   常時 white カラーの text-shadow を追加。
+   .fv-stat-card:hover .fv-stat-value white glow（v22.82）と対称で
+   未ホバー時から予測数値が白く静かに輝く演出に。
+   ダーク/ライトともに white glow を使用。 */
+.fv-stat-value { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .fv-stat-value { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 2. .ev-sum-card .ev-sum-count → static white text-shadow glow
+   収支予定サマリーカードの件数大数値（color:white・fs-2xl・fw-bold）に
+   常時 white カラーの text-shadow を追加。
+   ev-sum-card:hover .ev-sum-count white glow（v23.29）と対称で
+   未ホバー時から件数数値が白く静かに輝く演出に。
+   ダーク/ライトともに white glow を使用。 */
+.ev-sum-card .ev-sum-count { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ev-sum-card .ev-sum-count { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 3. .sb-banner-num → static white text-shadow glow
+   支出提案バナーの大数値（color:white・fs-xl・fw-bold・tabular-nums）に
+   常時 white カラーの text-shadow を追加。
+   sb-banner:hover .sb-banner-num white glow（v23.32）と対称で
+   未ホバー時からバナー数値が白く静かに輝く演出に。
+   ダーク/ライトともに white glow を使用。 */
+.sb-banner-num { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .sb-banner-num { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 4. .debt-progress-hdr → static primary text-shadow glow
+   負債カードの返済率ラベル行テキストに常時 primary カラーの text-shadow を追加。
+   debt-card:hover .debt-progress-hdr primary glow（v23.71）と対称で
+   未ホバー時から返済進捗ヘッダーが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.debt-progress-hdr { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-progress-hdr { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 5. .debt-progress-detail → static primary text-shadow glow
+   負債カードの元本表示テキストに常時 primary カラーの text-shadow を追加。
+   debt-card:hover .debt-progress-detail primary glow（v23.55）と対称で
+   未ホバー時から元本テキストが primary カラーで静かに輝く演出に。
+   debt-progress-hdr static glow（④）と連動し負債カードの進捗エリア全体が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.debt-progress-detail { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-progress-detail { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 6. .pm-sum-value → static pm-sum-color text-shadow glow
+   支払方法サマリーカードの合計金額テキストに常時 pm-sum-color カラーの text-shadow を追加。
+   pm-sum-card:hover .pm-sum-value pm-sum-color glow（v23.49）と対称で
+   未ホバー時から合計金額がカードテーマカラーで静かに輝く演出に。
+   pm-sum-color はカード毎に異なるテーマカラーが inline style で設定される。
+   ダークモードでも pm-sum-color をそのまま使用。 */
+.pm-sum-value { text-shadow: 0 0 6px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .pm-sum-label → static pm-sum-color text-shadow glow
+   支払方法サマリーカードのラベルテキスト（「現金」「カード」等）に
+   常時 pm-sum-color カラーの text-shadow を追加。
+   pm-sum-card:hover .pm-sum-label pm-sum-color glow（v23.49）と対称で
+   未ホバー時からラベルがカードテーマカラーで静かに輝く演出に。
+   pm-sum-value static glow（⑥）と連動しカード内の金額・ラベルが常時揃って発光する完成形演出に統一。
+   ダークモードでも pm-sum-color をそのまま使用。 */
+.pm-sum-label { text-shadow: 0 0 6px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .hs-item-label → static hs-bar-color text-shadow glow
+   健全度スコアバー行のラベルテキスト（「食費」「住居費」等：color:text）に
+   常時 hs-bar-color カラーの text-shadow を追加。
+   hs-item:hover .hs-item-label hs-bar-color glow（v24.xx）と対称で
+   未ホバー時からラベルがバーテーマカラーで静かに輝く演出に。
+   hs-bar-color はバー毎に異なるテーマカラーが inline style で設定される。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.16・全script/linkタグ?v=24.16に更新。 */
+.hs-item-label { text-shadow: 0 0 6px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-xs), transparent); }
