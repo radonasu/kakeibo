@@ -27960,3 +27960,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.11・全script/linkタグ?v=24.11に更新。 */
 .wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 [data-theme="dark"] .wk-bar-label:not(.wk-today-label) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#808 static glow（v24.12）
+   yr-cell-income-value-static-glow＋yr-cell-expense-value-static-glow＋
+   yr-cell-savings-success-value-static-glow＋yr-cell-savings-warn-value-static-glow＋
+   yr-cell-savings-danger-value-static-glow＋wk-today-label-static-glow＋
+   rpt-td-income-static-glow＋rpt-td-expense-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .yr-cell-income .yr-cell-value → static success text-shadow glow
+   年次ウィジェット収入セルの金額テキスト（color:success）に常時 success カラーの text-shadow を追加。
+   .yr-cell-income:hover .yr-cell-value success glow（v22.93）と対称で
+   未ホバー時から収入金額が success カラーで静かに輝く演出に。
+   yr-cell-expense/savings-* value static glow（②③④⑤）と連動し
+   年次全セル金額テキストが常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.yr-cell-income .yr-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-income .yr-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 2. .yr-cell-expense .yr-cell-value → static danger-text text-shadow glow
+   年次ウィジェット支出セルの金額テキスト（color:danger-text）に常時 danger-text カラーの text-shadow を追加。
+   .yr-cell-expense:hover .yr-cell-value expense glow（v22.93）と対称で
+   未ホバー時から支出金額が danger-text カラーで静かに警告光する演出に。
+   yr-cell-income value static glow（①）と対称に完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.yr-cell-expense .yr-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-expense .yr-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 3. .yr-cell-savings-success .yr-cell-value → static success text-shadow glow
+   年次ウィジェット黒字貯蓄セルの金額テキスト（color:success）に常時 success カラーの text-shadow を追加。
+   .yr-cell-savings:hover .yr-cell-value primary glow（v22.93）の上に
+   未ホバー時から貯蓄金額が success カラーで静かに輝く安心感のある演出に。
+   yr-cell-savings-warn/danger value static glow（④⑤）と合わせて
+   全貯蓄セル金額が常時貯蓄ステータス別カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.yr-cell-savings-success .yr-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-success .yr-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 4. .yr-cell-savings-warn .yr-cell-value → static warning text-shadow glow
+   年次ウィジェット警告貯蓄セルの金額テキスト（color:warning）に常時 warning カラーの text-shadow を追加。
+   未ホバー時から貯蓄金額が warning カラーで静かに注意を促す演出に。
+   yr-cell-savings-success/danger value static glow（③⑤）と連動し
+   貯蓄セル全ステータスが常時対応カラーで発光する完成形演出に統一。
+   ダークモードでも warning glow。 */
+.yr-cell-savings-warn .yr-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-warn .yr-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 5. .yr-cell-savings-danger .yr-cell-value → static danger-text text-shadow glow
+   年次ウィジェット赤字貯蓄セルの金額テキスト（color:danger-text）に常時 danger-text カラーの text-shadow を追加。
+   未ホバー時から赤字金額が danger-text カラーで静かに警告光する演出に。
+   yr-cell-savings-success/warn value static glow（③④）と連動し
+   貯蓄セル全ステータスが常時対応カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.yr-cell-savings-danger .yr-cell-value { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-danger .yr-cell-value { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 6. .wk-today-label → static danger-text text-shadow glow
+   週次バーの今日ラベル（color:danger-text・danger-bg背景バッジ）に常時 danger-text カラーの text-shadow を追加。
+   .wk-bar-col.wk-bar-today:hover .wk-today-label danger-text glow（v23.63）と対称で
+   未ホバー時から「今日」バッジが danger-text カラーで静かに際立つ演出に。
+   .wk-bar-label:not(.wk-today-label) static primary glow（v24.11）と対として
+   週次バー全ラベルが常時それぞれのカラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.wk-today-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-today-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 7. .rpt-month-row td.income → static success text-shadow glow
+   レポートページ月次テーブル行の収入金額セル（color:income）に常時 success カラーの text-shadow を追加。
+   .rpt-month-row.is-clickable:hover td.income success glow（v23.54）と対称で
+   未ホバー時から収入金額が success カラーで静かに輝く演出に。
+   rpt-month-row td.expense static glow（⑧）と対称に収入・支出の全月次金額が常時対応カラーで発光する完成形演出に統一。
+   rpt-month-row td.income の transition には text-shadow を含む（v23.54）。
+   ダークモードでは income-end glow。 */
+.rpt-month-row td.income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .rpt-month-row td.income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 8. .rpt-month-row td.expense → static expense text-shadow glow
+   レポートページ月次テーブル行の支出金額セル（color:expense）に常時 expense カラーの text-shadow を追加。
+   .rpt-month-row.is-clickable:hover td.expense expense glow（v23.54）と対称で
+   未ホバー時から支出金額が expense カラーで静かに警告光する演出に。
+   rpt-month-row td.income static glow（⑦）と対称に完成形演出に統一。
+   rpt-month-row td.expense の transition には text-shadow を含む（v23.54）。
+   ダークモードでは expense-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.12・全script/linkタグ?v=24.12に更新。 */
+.rpt-month-row td.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .rpt-month-row td.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
