@@ -30032,3 +30032,99 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-end-pill { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.34・全script/linkタグ?v=24.34に更新。 */
+
+/* ============================================================
+   Sprint #831 / v24.35 — static-glow 8箇所
+   fc-avg-badge＋fc-cell-balance＋fc-low-conf＋debt-summary-sub＋
+   sb-banner-lbl＋hs-msg＋sb-diff-pill＋yi-card-value-cat
+   ============================================================ */
+
+/* 1. .fc-avg-badge → static fc-color text-shadow glow
+   キャッシュフロー予測カードの平均比較バッジ（「▲+12%」「▼-5%」等：color:fc-color）に
+   常時 fc-color カラーの text-shadow を追加。
+   .forecast-card:hover .fc-avg-badge fc-color glow（v23.76②）と対称で
+   未ホバー時から平均バッジが fc-color カラーで静かに輝く演出に。
+   fc-status-badge static glow（v23.93）・fc-cell-balance static glow（本スプリント②）と連動し
+   予測カード内バッジ・残高テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.fc-avg-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--fc-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-avg-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .fc-cell-balance → static fc-color text-shadow glow
+   キャッシュフロー予測カードの月次残高テキスト（fw-semi・tabular-nums）に
+   常時 fc-color カラーの text-shadow を追加。
+   .forecast-card:hover .fc-cell-balance fc-color glow（v23.76③）と対称で
+   未ホバー時から残高テキストが fc-color カラーで静かに輝く演出に。
+   fc-avg-badge static glow（本スプリント①）・fc-cell-amount/balance static glow（v24.03）と連動し
+   予測カード内数値テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.fc-cell-balance { text-shadow: 0 0 6px color-mix(in srgb, var(--fc-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-cell-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .fc-low-conf → static primary text-shadow glow
+   キャッシュフロー予測カードの低精度表示テキスト（「予測精度：低」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .forecast-card:hover .fc-low-conf primary glow（v23.76④）と対称で
+   未ホバー時から低精度テキストが primary カラーで静かに輝く演出に。
+   fc-avg-badge/fc-cell-balance static glow（本スプリント①②）と連動し
+   予測カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.fc-low-conf { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-low-conf { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .debt-summary-sub → static white text-shadow glow
+   負債サマリーカード（グラデーション背景）の補足テキスト
+   （「目標完済」「月返済合計」等：color:on-dark-hint・fs-xs）に常時 white の text-shadow を追加。
+   .debt-summary-total/.debt-summary-monthly:hover .debt-summary-sub white glow（v23.76⑤）と対称で
+   未ホバー時から補足テキストが白く静かに輝く演出に。
+   debt-summary-total/monthly .summary-label static glow（v24.25）と連動し
+   負債サマリーカード内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.debt-summary-sub { text-shadow: 0 0 8px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .debt-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.16); }
+
+/* 5. .sb-banner-lbl → static white text-shadow glow
+   スマート予算バナー（グラデーション背景）のラベルテキスト
+   （「予算の」「使用済み」等：color:on-dark-near・fs-xs）に常時 white の text-shadow を追加。
+   .sb-banner:hover .sb-banner-lbl white glow（v23.77②）と対称で
+   未ホバー時からラベルテキストが白く静かに輝く演出に。
+   sb-banner-num static glow（v24.x）と連動しバナー内全テキストが常時白く発光する完成形演出に統一。
+   ダークモードではより強い white glow。 */
+.sb-banner-lbl { text-shadow: 0 0 8px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .sb-banner-lbl { text-shadow: 0 0 10px rgba(255, 255, 255, 0.16); }
+
+/* 6. .hs-msg → static primary text-shadow glow
+   家計スコアカードのメッセージテキスト（「家計状態：良好」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .health-score-card:hover .hs-msg primary glow（v23.77③）と対称で
+   未ホバー時からメッセージテキストが primary カラーで静かに輝く演出に。
+   hs-trend-label static glow（v24.32）・hs-spark-label static glow（v24.19）と連動し
+   家計スコアカード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.hs-msg { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-msg { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .sb-diff-pill → タイプ別 static text-shadow glow
+   スマート予算行の前月比較ピル（「▲+15%」「▼-8%」等）に常時タイプ別カラーの text-shadow を追加。
+   sb-diff-up（支出増加）= danger-text / sb-diff-down（支出減少）= success。
+   .sb-row:hover .sb-diff-pill タイプ別 glow（v23.77⑧）と対称で
+   未ホバー時から差分ピルがステータスカラーで静かに輝く演出に。
+   sb-low-data static glow（v24.19）と連動しスマート予算行内テキストが常時発光する完成形演出に統一。
+   ダークモードでは expense-end/income-end glow。 */
+.sb-diff-pill.sb-diff-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.sb-diff-pill.sb-diff-down { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sb-diff-pill.sb-diff-up   { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .sb-diff-pill.sb-diff-down { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 8. .yi-card-value-cat → static yi-cat-color text-shadow glow
+   年次インサイトカードのカテゴリ名テキスト（color:yi-cat-color：カテゴリ固有カラー）に
+   常時 yi-cat-color カラーの text-shadow を追加。
+   .yi-card:hover .yi-card-value-cat yi-cat-color glow（v23.78①）と対称で
+   未ホバー時からカテゴリ名がカテゴリ固有カラーで静かに輝く演出に。
+   yi-card-value/yi-card-label/yi-card-sub static glow（v24.xx）と連動し
+   年次インサイトカード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.yi-card-value-cat { text-shadow: 0 0 6px color-mix(in srgb, var(--yi-cat-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card-value-cat { text-shadow: 0 0 7px color-mix(in srgb, var(--yi-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
