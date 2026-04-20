@@ -29207,3 +29207,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .debt-summary-monthly .summary-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
 [data-theme="dark"] .debt-summary-total   .summary-label,
 [data-theme="dark"] .debt-summary-monthly .summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* ============================================================
+   Sprint #822 — v24.26 static text-shadow glow (8 items)
+   ch-progress-pct-static-glow＋fc-cell-amount-static-glow＋
+   cat-card-name-static-glow＋cat-stat-val-static-glow＋
+   dd-summary-value-static-glow＋hs-item-score-static-glow＋
+   sub-widget-amount-static-glow＋wl-card-meta-static-glow
+   ============================================================ */
+
+/* 1. .ch-card .ch-progress-pct → static ch-accent text-shadow glow
+   チャレンジカードの達成率%数値（fs-2xl・fw-black・tabular-nums）に常時 ch-accent カラーの
+   text-shadow を追加。.ch-card:hover .ch-progress-pct ch-accent glow（v23.43）と対称で
+   未ホバー時からチャレンジ達成率数値がカードテーマカラーで静かに輝く演出に。
+   ch-card-name static glow（v24.05）・ch-card-icon static glow と連動し
+   チャレンジカード内のキー要素が常時テーマカラーで発光する完成形演出に統一。 */
+.ch-card .ch-progress-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .fc-cell-amount → static fc-color text-shadow glow
+   財務予測カードの金額セル数値（収入/支出色・fw-semi・tabular-nums）に常時 fc-color カラーの
+   text-shadow を追加。.forecast-card:hover .fc-cell-amount fc-color glow（v23.43）と対称で
+   未ホバー時から予測金額がカードテーマカラーで静かに輝く演出に。
+   fc-cell-label static glow・fc-cell-balance static glow と連動し
+   財務予測カード内の金額関連テキストが常時テーマカラーで発光する完成形演出に統一。 */
+.fc-cell-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .cat-card-name → static cat-clr text-shadow glow
+   カテゴリカードのカテゴリ名テキスト（fw-bold・cat-clr色）に常時 cat-clr カラーの
+   text-shadow を追加。.cat-card:hover .cat-card-name cat-clr glow（v23.44）と対称で
+   未ホバー時からカテゴリ名がカードテーマカラーで静かに輝く演出に。
+   cat-stat-val static glow（本スプリント④）・cat-budget-pct warn/over static glow（v23.87）と連動し
+   カテゴリカード内の名称・統計・予算が常時テーマカラーで発光する完成形演出に統一。 */
+.cat-card-name { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .cat-stat-val → static cat-clr text-shadow glow
+   カテゴリカードの統計値テキスト（fs-sm・tabular-nums・cat-clr色）に常時 cat-clr カラーの
+   text-shadow を追加。.cat-card:hover .cat-stat-val cat-clr glow（v23.44）と対称で
+   未ホバー時からカテゴリ統計値がカードテーマカラーで静かに輝く演出に。
+   cat-card-name static glow（本スプリント③）と連動しカテゴリカード内
+   名称・統計値が常時揃ってテーマカラーで発光する完成形演出に統一。 */
+.cat-stat-val { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .dd-summary-value → static primary text-shadow glow
+   ダッシュボード日次サマリーアイテムの金額数値（fw-bold・tabular-nums）に常時 primary カラーの
+   text-shadow を追加。.dd-summary-item:hover .dd-summary-value primary glow（v23.44）と対称で
+   未ホバー時からダッシュボードサマリー金額が primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.dd-summary-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .dd-summary-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .hs-item-score → static hs-bar-color text-shadow glow
+   家計スコア項目のスコア数値（fw-bold・hs-bar-color色）に常時 hs-bar-color カラーの
+   text-shadow を追加。.hs-item:hover .hs-item-score hs-bar-color glow（v23.43）と対称で
+   未ホバー時からスコア数値がカテゴリテーマカラーで静かに輝く演出に。
+   hs-item-score は inline style で hs-bar-color が各スコア項目毎に設定されるため
+   カテゴリ別カラーのグロー演出が常時適用される完成形演出に統一。 */
+.hs-item-score { text-shadow: 0 0 6px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .sub-widget-item .sub-widget-amount → static status-based text-shadow glow
+   サブスクウィジェットアイテムの金額テキスト（fw-semi・tabular-nums）に常時ステータス別カラーの
+   text-shadow を追加。normal=primary/urgent=danger-text/soon=warning。
+   .sub-widget-item:hover .sub-widget-amount ステータス別 glow（v23.45）と対称で
+   未ホバー時から各サブスク金額がステータスカラーで静かに輝く演出に。
+   pt-widget-item .pt-widget-exp static glow（v24.12）と同パターンで
+   ウィジェット金額の常時発光演出を統一。ダークモードでは各カラーの end バリアント。 */
+.sub-widget-item             .sub-widget-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.sub-widget-item.sub-urgent  .sub-widget-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.sub-widget-item.sub-soon    .sub-widget-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-widget-item             .sub-widget-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent  .sub-widget-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon    .sub-widget-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 8. .wl-card-meta → static primary text-shadow glow
+   欲しいものリストカードのメタ情報テキスト（優先度・カテゴリ等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .wl-card:hover .wl-card-meta primary glow（v23.x）と対称で
+   未ホバー時からウィッシュリストカードのメタ情報が primary カラーで静かに輝く演出に。
+   wl-card-name/price/note static glow と連動しウィッシュリストカード内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.26・全script/linkタグ?v=24.26に更新。 */
+.wl-card-meta { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-card-meta { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
