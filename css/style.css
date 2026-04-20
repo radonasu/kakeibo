@@ -29558,3 +29558,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-widget-item            .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
 [data-theme="dark"] .sub-widget-item.sub-urgent .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
 [data-theme="dark"] .sub-widget-item.sub-soon   .sub-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)       var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #826 — v24.30 static text-shadow glow (8 items)
+   ci-cell-value-income-static-glow＋ci-cell-value-expense-static-glow＋
+   ci-cell-value-positive-static-glow＋ci-cell-value-negative-static-glow＋
+   goal-monthly-target-static-glow＋debt-rate-badge-static-glow＋
+   tx-month-group-count-static-glow＋step-num-static-glow
+   ============================================================ */
+
+/* 1. .ci-cell-value.income → static income text-shadow glow
+   月次レビューセルの収入値テキスト（color:income・fw-bold・tabular-nums）に
+   常時 income カラーの text-shadow を追加。
+   .ci-cell:hover .ci-cell-value.income income glow（v23.47⑧）と対称で
+   未ホバー時から月次収入値が income カラーで静かに輝く演出に。
+   ci-cell-value.expense/positive/negative static glow（本スプリント②③④）と連動し
+   月次レビュー全値テキストが常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.ci-cell-value.income   { text-shadow: 0 0 6px color-mix(in srgb, var(--income)      var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-cell-value.income   { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .ci-cell-value.expense → static expense text-shadow glow
+   月次レビューセルの支出値テキスト（color:expense・fw-bold・tabular-nums）に
+   常時 expense カラーの text-shadow を追加。
+   .ci-cell:hover .ci-cell-value.expense expense glow（v23.47⑧）と対称で
+   未ホバー時から月次支出値が expense カラーで静かに輝く演出に。
+   ci-cell-value.income static glow（本スプリント①）と連動し
+   収入・支出値が常時タイプ別カラーで発光する対称演出に統一。
+   ダークモードでは expense-end glow。 */
+.ci-cell-value.expense  { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-cell-value.expense  { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .ci-cell-value.positive → static success text-shadow glow
+   月次レビューセルの差額プラス値テキスト（color:success・fw-bold・tabular-nums）に
+   常時 success カラーの text-shadow を追加。
+   .ci-cell:hover .ci-cell-value.positive success glow（v23.47⑧）と対称で
+   未ホバー時から月次黒字値が success カラーで静かに輝く演出に。
+   ci-cell-value.negative static glow（本スプリント④）と連動し
+   差額プラス・マイナス値が常時タイプ別カラーで発光する対称演出に統一。
+   ダークモードでは income-end glow。 */
+.ci-cell-value.positive { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-cell-value.positive { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .ci-cell-value.negative → static danger-text text-shadow glow
+   月次レビューセルの差額マイナス値テキスト（color:danger-text・fw-bold・tabular-nums）に
+   常時 danger-text カラーの text-shadow を追加。
+   .ci-cell:hover .ci-cell-value.negative danger-text glow（v23.47⑧）と対称で
+   未ホバー時から月次赤字値が danger-text カラーで静かに警告発光する演出に。
+   ci-cell-value.income/expense/positive static glow（本スプリント①②③）と連動し
+   月次レビュー全値テキストが常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.ci-cell-value.negative { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-cell-value.negative { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .goal-monthly-target → static primary text-shadow glow
+   目標カードの月額積立目安テキスト（color:primary・fw-semi・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .goal-card:hover .goal-monthly-target primary glow（v24.01⑧）と対称で
+   未ホバー時から月額積立目安値が primary カラーで静かに輝く演出に。
+   goal-saved/remaining static glow（v24.05）・goal-deadline/note static glow（v24.14）と
+   連動し目標カード内主要テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.goal-monthly-target { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-monthly-target { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .debt-rate-badge → static debt-accent text-shadow glow
+   負債カードの年利バッジ（color:debt-accent/primary・fw-semi・fs-xs）に
+   常時 debt-accent カラーの text-shadow を追加。
+   .debt-card:hover .debt-rate-badge debt-accent glow（v23.84⑧）と対称で
+   未ホバー時から年利バッジが負債テーマカラーで静かに輝く演出に。
+   debt-monthly-badge static glow（v24.15⑧）と連動しバッジ類が
+   常時 debt-accent カラーで発光する完成形演出に統一。 */
+.debt-rate-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .tx-month-group-count → static primary text-shadow glow
+   取引テーブル月グループ行の件数テキスト（「12件」等：color:text-muted・fs-xs・fw-medium）に
+   常時 primary カラーの微細 text-shadow を追加。
+   .tx-month-group-row:hover .tx-month-group-count primary glow（v23.82⑥）と対称で
+   未ホバー時から月グループ件数テキストが primary カラーで静かに輝く演出に。
+   tx-month-group-label static glow（v23.91）と連動し
+   月グループ行内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.tx-month-group-count { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-month-group-count { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .step-num → static primary text-shadow glow
+   オンボーディングステップカードの番号テキスト（「1」「2」「3」：color:primary・fw-black・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .step-card:hover .step-num primary glow（v23.84③）と対称で
+   未ホバー時からオンボーディング番号が primary カラーで静かに輝く演出に。
+   step-action static glow（v24.24⑧）と連動しステップカード内テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.30・全script/linkタグ?v=24.30に更新。 */
+.step-num { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .step-num { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
