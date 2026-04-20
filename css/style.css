@@ -28916,3 +28916,103 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダークモードでは primary-end glow。 */
 .tg-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .tg-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #819 — v24.23 static text-shadow glow (8 items)
+   pt-widget-exp-static-glow＋pt-unit-static-glow＋
+   wl-archive-date-static-glow＋wl-archive-price-static-glow＋
+   opp-saving-static-glow＋opp-saving-strong-static-glow＋
+   sb-suggested-static-glow＋sb-row-td2-static-glow
+   ============================================================ */
+
+/* 1. .pt-widget-item .pt-widget-exp → static タイプ別 text-shadow glow
+   ポイントウィジェット行の有効期限テキスト（color:text-muted・fs-2xs）に
+   常時タイプ別 text-shadow を追加。
+   通常=primary / pt-urgent=danger-text / pt-soon=warning。
+   .pt-widget-item:hover .pt-widget-exp primary glow（v23.60）・
+   .pt-widget-item.pt-urgent:hover .pt-widget-exp danger-text glow（v23.60）・
+   .pt-widget-item.pt-soon:hover .pt-widget-exp warning glow（v23.60）と対称で
+   未ホバー時からポイント期限テキストが期限ステータスに応じたカラーで静かに識別できる演出に。
+   pt-widget-balance static glow（v24.11）と連動し
+   ウィジェット行の残高・有効期限が常時揃ってタイプカラーで発光する完成形演出に統一。
+   ダークモードでは primary-end / expense-end / warning glow。 */
+.pt-widget-item             .pt-widget-exp { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.pt-widget-item.pt-urgent   .pt-widget-exp { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.pt-widget-item.pt-soon     .pt-widget-exp { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-widget-item             .pt-widget-exp { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-urgent   .pt-widget-exp { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-soon     .pt-widget-exp { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 2. .pt-widget-item .pt-unit → static primary text-shadow glow
+   ポイントウィジェット行のポイント単位テキスト（「pt」等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .pt-widget-item:hover .pt-unit primary glow（v23.64）と対称で
+   未ホバー時からポイント単位テキストが primary カラーで静かに輝く演出に。
+   pt-widget-name/balance/exp static glow（v24.11/v24.23①）と連動し
+   ウィジェット行の全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.pt-widget-item .pt-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-widget-item .pt-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .wl-archive-date → static success text-shadow glow
+   ウィッシュリスト購入済みアーカイブ行の購入日テキスト（color:text-muted・fs-xs）に
+   常時 success カラーの text-shadow を追加。
+   .wl-archive-item:hover .wl-archive-date success glow（v23.63）と対称で
+   未ホバー時から購入日テキストが success カラーで静かに輝く達成感のある演出に。
+   wl-archive-name static glow（v24.21）と連動し
+   アーカイブ行の名前・購入日が常時 success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.wl-archive-date { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-archive-date { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 4. .wl-archive-price → static success text-shadow glow
+   ウィッシュリスト購入済みアーカイブ行の購入金額テキスト（color:text-muted・fs-sm・fw-semi）に
+   常時 success カラーの text-shadow を追加。
+   .wl-archive-item:hover .wl-archive-price success glow（v23.64）と対称で
+   未ホバー時から購入金額テキストが success カラーで静かに輝く達成感のある演出に。
+   wl-archive-name/date static glow（v24.21/v24.23③）と連動し
+   アーカイブ行の全テキストが常時 success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.wl-archive-price { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-archive-price { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 5. .opp-saving → static success text-shadow glow
+   節約機会カードの節約見込みテキスト（「節約見込み ¥X,XXX/月」等：fs-sm）に
+   常時 success カラーの text-shadow を追加。
+   .opp-card:hover .opp-saving success glow（v23.76）と対称で
+   未ホバー時から節約見込みテキストが success カラーで静かに輝く演出に。
+   opp-title/desc static glow（v23.x/v24.x）と連動し
+   カード内テキスト全体が常時発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.opp-saving { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .opp-saving { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .opp-saving strong → static success text-shadow glow
+   節約機会カードの節約金額太字テキスト（¥X,XXX 部分）に
+   常時 success カラーの text-shadow を追加。
+   .opp-card:hover .opp-saving strong success glow（v23.63）と対称で
+   未ホバー時から節約金額強調テキストが success カラーで静かに輝く演出に。
+   opp-saving static glow（本スプリント⑤）と連動し
+   節約テキスト全体が常時 success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.opp-saving strong { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .opp-saving strong { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 7. .sb-row .sb-suggested → static sb-cat-color text-shadow glow
+   節約提案テーブル行の提案テキスト（カテゴリ固有色：color:sb-cat-color）に
+   常時 sb-cat-color カラーの text-shadow を追加。
+   .sb-row:hover .sb-suggested sb-cat-color glow（v23.64）と対称で
+   未ホバー時から提案テキストが各カテゴリ固有の sb-cat-color カラーで静かに輝く演出に。
+   sb-row td.text-muted/td:nth-child(4) static glow（v24.13）と連動し
+   テーブル行の全テキストが常時発光する完成形演出に統一。 */
+.sb-row .sb-suggested { text-shadow: 0 0 6px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 8. .sb-row td:nth-child(2) → static sb-cat-color text-shadow glow
+   節約提案テーブル行の2列目テキスト（カテゴリ名等：color:sb-cat-color）に
+   常時 sb-cat-color カラーの text-shadow を追加。
+   .sb-row:hover td:nth-child(2) sb-cat-color glow（v23.64）と対称で
+   未ホバー時から2列目テキストが各カテゴリ固有の sb-cat-color カラーで静かに輝く演出に。
+   sb-suggested static glow（本スプリント⑦）と連動し
+   節約提案テーブル行のカテゴリ関連テキスト全体が常時 sb-cat-color で発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.23・全script/linkタグ?v=24.23に更新。 */
+.sb-row td:nth-child(2) { text-shadow: 0 0 6px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent); }
