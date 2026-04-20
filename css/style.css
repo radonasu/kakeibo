@@ -28046,3 +28046,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.12・全script/linkタグ?v=24.12に更新。 */
 .rpt-month-row td.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
 [data-theme="dark"] .rpt-month-row td.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#809 static glow（v24.13）
+   md-cell-income-label-static-glow＋md-cell-expense-label-static-glow＋
+   md-cell-balance-pos-label-static-glow＋md-cell-balance-neg-label-static-glow＋
+   insight-info-title-static-glow＋insight-alert-title-static-glow＋
+   insight-success-title-static-glow＋insight-warning-title-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .md-cell-income .md-cell-label → static success text-shadow glow
+   月次詳細収入セルのラベルテキスト（color:color-mix(success, text-muted)）に
+   常時 success カラーの text-shadow を追加。
+   .md-cell-income:hover .md-cell-label success glow（v23.51）と対称で
+   未ホバー時からラベルが success カラーで静かに輝く演出に。
+   md-cell-income .md-cell-value static glow（v24.03）と連動し
+   収入セルのラベル・値が常時 success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.md-cell-income .md-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-income .md-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .md-cell-expense .md-cell-label → static danger-text text-shadow glow
+   月次詳細支出セルのラベルテキスト（color:color-mix(danger-text, text-muted)）に
+   常時 danger-text カラーの text-shadow を追加。
+   .md-cell-expense:hover .md-cell-label danger-text glow（v23.51）と対称で
+   未ホバー時からラベルが danger-text カラーで静かに輝く演出に。
+   md-cell-expense .md-cell-value static glow（v24.03）と連動し
+   支出セルのラベル・値が常時 danger-text カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.md-cell-expense .md-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-expense .md-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .md-cell-balance-pos .md-cell-label → static primary text-shadow glow
+   月次詳細黒字残高セルのラベルテキスト（color:color-mix(primary, text-muted)）に
+   常時 primary カラーの text-shadow を追加。
+   .md-cell-balance-pos:hover .md-cell-label primary glow（v23.51）と対称で
+   未ホバー時からラベルが primary カラーで静かに輝く演出に。
+   md-cell-balance-pos:hover .md-cell-value primary glow と連動し
+   残高正セルのラベル・値が常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.md-cell-balance-pos .md-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-pos .md-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .md-cell-balance-neg .md-cell-label → static danger-text text-shadow glow
+   月次詳細赤字残高セルのラベルテキスト（color:color-mix(danger-text, text-muted)）に
+   常時 danger-text カラーの text-shadow を追加。
+   .md-cell-balance-neg:hover .md-cell-label danger-text glow（v23.51）と対称で
+   未ホバー時からラベルが danger-text カラーで静かに際立つ演出に。
+   md-cell-expense .md-cell-label static glow（②）と対称に
+   残高負セルの完成形演出に統一。ダークモードでは expense-end glow。 */
+.md-cell-balance-neg .md-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-balance-neg .md-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .insight-item.insight-info .insight-title → static primary text-shadow glow
+   情報インサイトカードのタイトルテキスト（color:primary）に
+   常時 primary カラーの text-shadow を追加。
+   .insight-item.insight-info:hover .insight-title primary glow（v23.x）と対称で
+   未ホバー時からタイトルが primary カラーで静かに輝く演出に。
+   insight-alert/success/warning title static glow（⑥⑦⑧）と連動し
+   全タイプインサイトのタイトルが常時タイプ別カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.insight-item.insight-info    .insight-title { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-info    .insight-title { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 6. .insight-item.insight-alert .insight-title → static danger-text text-shadow glow
+   警告インサイトカードのタイトルテキスト（color:danger-text）に
+   常時 danger-text カラーの text-shadow を追加。
+   .insight-item.insight-alert:hover .insight-title danger-text glow（v23.x）と対称で
+   未ホバー時からタイトルが danger-text カラーで静かに際立つ演出に。
+   ダークモードでは expense-end glow。 */
+.insight-item.insight-alert   .insight-title { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-alert   .insight-title { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
+
+/* 7. .insight-item.insight-success .insight-title → static success text-shadow glow
+   成功インサイトカードのタイトルテキスト（color:success）に
+   常時 success カラーの text-shadow を追加。
+   .insight-item.insight-success:hover .insight-title success glow（v23.x）と対称で
+   未ホバー時からタイトルが success カラーで静かに輝く演出に。
+   ダークモードでは income-end glow。 */
+.insight-item.insight-success .insight-title { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-success .insight-title { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .insight-item.insight-warning .insight-title → static warning text-shadow glow
+   注意インサイトカードのタイトルテキスト（color:warning）に
+   常時 warning カラーの text-shadow を追加。
+   .insight-item.insight-warning:hover .insight-title warning glow（v23.x）と対称で
+   未ホバー時からタイトルが warning カラーで静かに注意を促す演出に。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.13・全script/linkタグ?v=24.13に更新。 */
+.insight-item.insight-warning .insight-title { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-warning .insight-title { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
