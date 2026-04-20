@@ -29652,3 +29652,106 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.30・全script/linkタグ?v=24.30に更新。 */
 .step-num { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .step-num { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #827 — v24.31 static text-shadow glow (8箇所)
+   ev-month-label + ci-event-amount + budget-cat-name +
+   budget-nums + yr-topcat-label + fc-cell-label +
+   yr-cell-label(タイプ別) + tx-month-group-summary income/expense
+   ============================================================ */
+
+/* 1. .ev-month-label → static primary text-shadow glow
+   収支予定カレンダーの月ラベルテキスト（「1月」〜「12月」等：fw-bold）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-month-col:not(.ev-month-current):hover .ev-month-label primary glow（v23.41）と対称で
+   未ホバー時から月ラベルが primary カラーで静かに輝く演出に。
+   ev-month-total static glow（v24.27）と連動し収支予定カレンダー内テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.ev-month-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-month-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .ci-event-amount → static ci-ev-accent text-shadow glow
+   月次レビューページのイベントアイテムの金額テキスト（color:ci-ev-accent・fw-medium）に
+   常時 ci-ev-accent カラーの text-shadow を追加。
+   .ci-event-item:hover .ci-event-amount ci-ev-accent glow（v23.46⑦）と対称で
+   未ホバー時からイベント金額が ci-ev-accent カラーで静かに輝く演出に。
+   ci-event-name static glow（v24.03）と連動しイベントアイテム内テキストが
+   常時発光する完成形演出に統一。 */
+.ci-event-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .budget-cat-name → タイプ別 static primary/expense text-shadow glow
+   予算行のカテゴリ名テキスト（通常=primary/超過=expense）に
+   常時タイプ別カラーの text-shadow を追加。
+   .budget-item:hover .budget-cat-name primary glow・超過 expense glow（v23.45⑧）と対称で
+   未ホバー時からカテゴリ名がステータスカラーで静かに輝く演出に。
+   budget-nums static glow（本スプリント④）と連動し予算行内テキストが
+   常時発光する完成形演出に統一。ダークモードでは expense-end glow。 */
+.budget-cat-name { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-cat-name { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over) .budget-cat-name { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-fill.over) .budget-cat-name { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 4. .budget-nums → タイプ別 static primary/expense text-shadow glow
+   予算行の支出金額・予算金額テキスト（通常=primary/超過=expense）に
+   常時タイプ別カラーの text-shadow を追加。
+   .budget-item:hover .budget-nums primary glow・超過 expense glow（v23.45⑦）と対称で
+   未ホバー時から予算数値がステータスカラーで静かに輝く演出に。
+   budget-cat-name static glow（本スプリント③）・budget-over-msg static glow（v24.06）と連動し
+   予算行内テキストが常時発光する完成形演出に統一。ダークモードでは expense-end glow。 */
+.budget-nums { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-nums { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+.budget-item:has(.budget-fill.over) .budget-nums { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-fill.over) .budget-nums { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 5. .yr-topcat-label → static primary text-shadow glow
+   年間ビューウィジェットの最多支出カテゴリラベルテキスト（color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .yr-topcat-label primary glow（v23.47④）と対称で
+   未ホバー時から最多カテゴリラベルが primary カラーで静かに輝く演出に。
+   yr-progress-label static glow（v24.20）と連動しウィジェット下部フッターラベルが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yr-topcat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-topcat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .fc-cell-label → static primary text-shadow glow
+   キャッシュフロー予測カードのセルラベルテキスト（「現金残高」「収入」等：color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .forecast-card:hover .fc-cell-label primary glow（v23.47⑥）と対称で
+   未ホバー時から予測セルラベルが primary カラーで静かに輝く演出に。
+   fc-cell-amount/balance static glow（v24.03）と連動し予測カード内テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fc-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .yr-cell-label → タイプ別 static text-shadow glow
+   年次ウィジェットの各セル月名テキスト（income=success/expense=danger-text/savings タイプ別）に
+   常時タイプ別カラーの text-shadow を追加。
+   .yr-cell-*:hover .yr-cell-label タイプ別 glow（v23.47②）と対称で
+   未ホバー時から月名ラベルがタイプカラーで静かに輝く演出に。
+   yr-cell-value/yr-cell-sub static glow と連動しセル内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは income-end/expense-end/warning glow。 */
+.yr-cell-income          .yr-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-income          .yr-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+.yr-cell-expense         .yr-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-expense         .yr-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+.yr-cell-savings-success .yr-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-success .yr-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+.yr-cell-savings-warn    .yr-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-warn    .yr-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+.yr-cell-savings-danger  .yr-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-danger  .yr-cell-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 8. .tx-month-group-summary .income/.expense → タイプ別 static text-shadow glow
+   取引リスト月グループ見出し行の収入・支出合計テキスト（color:success/expense）に
+   常時タイプ別カラーの text-shadow を追加。
+   .tx-month-group-row:hover .tx-month-group-summary .income success glow・
+   .expense expense glow（v23.44①②）と対称で
+   未ホバー時から月グループ収支合計がタイプカラーで静かに輝く演出に。
+   tx-month-group-label static glow（v23.91）・tx-month-group-count static glow（v24.30⑦）と連動し
+   月グループ行内テキストが常時発光する完成形演出に統一。
+   ダークモードでは income-end/expense-end glow。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.31・全script/linkタグ?v=24.31に更新。 */
+.tx-month-group-summary .income  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-month-group-summary .income  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+.tx-month-group-summary .expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-month-group-summary .expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
