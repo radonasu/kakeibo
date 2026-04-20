@@ -28135,3 +28135,93 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.13・全script/linkタグ?v=24.13に更新。 */
 .insight-item.insight-warning .insight-title { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
 [data-theme="dark"] .insight-item.insight-warning .insight-title { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* ============================================================
+   スプリント#810 static glow（v24.14）
+   tg-stat-value-static-glow＋tg-stat-label-static-glow＋
+   ct-stat-value-static-glow＋ct-stat-label-static-glow＋
+   ct-stat-sub-static-glow＋ct-stat-value-sub-static-glow＋
+   fv-month-cell-static-glow＋year-label-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .tg-stat-value → static primary text-shadow glow
+   タグ統計カードの主要数値（fs-xl・fw-black・color:text・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .tg-stat-card:hover .tg-stat-value primary glow（v23.46）と対称で
+   未ホバー時からタグ統計の大型数値が primary カラーで静かに輝く演出に。
+   tg-stat-unit static glow（v24.10）と連動しカード内数値エリア全体が
+   常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.tg-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .tg-stat-label → static primary text-shadow glow
+   タグ統計カードのラベルテキスト（fs-xs・fw-medium・color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .tg-stat-card:hover .tg-stat-label primary glow（v24.10）と対称で
+   未ホバー時からラベルが primary カラーで静かに輝く演出に。
+   tg-stat-value static glow（①）・tg-stat-unit static glow（v24.10）と連動し
+   タグ統計カード内全テキストが常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.tg-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .ct-stat-value → static ct-stat-color text-shadow glow
+   カテゴリトレンド統計カードの主要数値（fs-lg・fw-bold・color:text・tabular-nums）に
+   常時 ct-stat-color カラーの text-shadow を追加。
+   .ct-stat-card:hover .ct-stat-value ct-stat-color glow（v23.46）と対称で
+   未ホバー時から統計値がカードテーマカラーで静かに輝く演出に。
+   ct-stat-color はカード毎に異なるテーマカラーが inline style で設定される。
+   ダークモードも同変数を使用（ct-stat-color 自体が already adaptive）。 */
+.ct-stat-value { text-shadow: 0 0 6px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-stat-value { text-shadow: 0 0 7px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. .ct-stat-label → static ct-stat-color text-shadow glow
+   カテゴリトレンド統計カードのラベルテキスト（fs-xs・color:text-muted）に
+   常時 ct-stat-color カラーの text-shadow を追加。
+   .ct-stat-card:hover .ct-stat-label ct-stat-color glow（v24.10）と対称で
+   未ホバー時からラベルがカードテーマカラーで静かに輝く演出に。
+   ct-stat-value static glow（③）と連動しカード内テキスト全体が
+   常時テーマカラーで発光する完成形演出に統一。 */
+.ct-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. .ct-stat-sub → static primary text-shadow glow
+   カテゴリトレンド統計カードの補足テキスト（fs-xs・color:text-muted・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .ct-stat-card:hover .ct-stat-sub primary glow（v24.10）と対称で
+   未ホバー時から補足テキストが primary カラーで静かに輝く演出に。
+   ct-stat-label static glow（④）と連動しカード内ラベル・補足が揃って発光する完成形演出に。
+   ダークモードでは primary-end glow。 */
+.ct-stat-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-stat-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .ct-stat-value-sub → static ct-stat-color text-shadow glow
+   カテゴリトレンド統計カードのサブ数値（「/ 12件」等：fs-sm・fw-normal・color:text-muted・tabular-nums）に
+   常時 ct-stat-color カラーの text-shadow を追加。
+   .ct-stat-card:hover .ct-stat-value-sub ct-stat-color glow（v24.09）と対称で
+   未ホバー時からサブ数値がカードテーマカラーで静かに輝く演出に。
+   ct-stat-value static glow（③）と対になりメイン値・サブ値が揃って
+   常時テーマカラーで発光する完成形演出に統一。 */
+.ct-stat-value-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-stat-value-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. .fv-month-cell → static primary text-shadow glow
+   財務予測月次テーブルのセルテキスト（fw-semi・ls-snug）に
+   常時 primary カラーの text-shadow を追加。
+   .fv-month-table tbody tr:hover .fv-month-cell primary glow（v23.58）と対称で
+   未ホバー時から月次予測値が primary カラーで静かに輝く演出に。
+   fv-fixed-val static glow（v24.06）・fv-var-val static glow（v24.06）と連動し
+   財務予測テーブル全体が常時 primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.fv-month-cell { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-month-cell { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .year-label → static primary text-shadow glow
+   年次ナビゲーションの年ラベル（「2025年」等：fs-xl・fw-bold・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   年次ビューを開いた瞬間から年ラベルが primary カラーで静かに輝く
+   存在感のある演出に。ダッシュボード上部の最重要情報として視覚的に強調。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.14・全script/linkタグ?v=24.14に更新。 */
+.year-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .year-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
