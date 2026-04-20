@@ -28543,3 +28543,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダークモードでは expense-end glow。 */
 .pm-table-row td.expense { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
 [data-theme="dark"] .pm-table-row td.expense { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #815 — v24.19 static text-shadow glow (8 items)
+   sb-low-data-static-glow＋hs-spark-label-static-glow＋
+   hs-spark-label-now-static-glow＋debt-monthly-badge-static-glow＋
+   insight-info-desc-static-glow＋insight-alert-desc-static-glow＋
+   insight-success-desc-static-glow＋insight-warning-desc-static-glow
+   ============================================================ */
+
+/* 1. .sb-row .sb-low-data → static warning text-shadow glow
+   スマート予算行のデータ不足ラベル（「データ不足」等のサブテキスト：color:warning・fs-xs）に
+   常時 warning カラーの text-shadow を追加。
+   .sb-row:hover .sb-low-data warning glow（v23.x）と対称で
+   未ホバー時からデータ不足ラベルが warning カラーで静かに注意を促す演出に。
+   ダークモードでも warning カラーを使用（警告は両モード共通）。 */
+.sb-row .sb-low-data { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sb-row .sb-low-data { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 2. .health-score-card .hs-spark-label → static primary text-shadow glow
+   家計スコアカードのスパーク期間ラベル（「6ヶ月」等のラベルテキスト：color:text-sub・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .health-score-card:hover .hs-spark-label primary glow（v23.x）と対称で
+   未ホバー時からスパーク期間ラベルが primary カラーで静かに輝く演出に。
+   hs-spark-label-now static glow（本スプリント③）と連動し
+   スパーク関連ラベルが常時揃って primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.health-score-card .hs-spark-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .health-score-card .hs-spark-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 3. .health-score-card .hs-spark-label-now → static primary text-shadow glow
+   家計スコアカードの現在スパークラベル（「現在」等のバッジラベル：color:primary・fs-2xs）に
+   常時 primary カラーの text-shadow を追加。
+   .health-score-card:hover .hs-spark-label-now primary glow（v23.x）と対称で
+   未ホバー時から現在ラベルが primary カラーで静かに輝く演出に。
+   hs-spark-label static glow（本スプリント②）と連動し
+   スパーク関連ラベルが常時揃って発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.health-score-card .hs-spark-label-now { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .health-score-card .hs-spark-label-now { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .debt-card .debt-monthly-badge → static debt-accent text-shadow glow
+   負債カードの月額返済バッジテキスト（「¥X,XXX/月」等：color:white・fs-xs・fw-semi）に
+   常時 debt-accent カラーの text-shadow を追加。
+   .debt-card:hover .debt-monthly-badge debt-accent glow（v23.x）と対称で
+   未ホバー時から月額返済バッジが debt-accent カラーで静かに輝く演出に。
+   debt-progress-hdr/detail static glow（v24.16）と連動し
+   負債カードの各テキスト要素が常時テーマカラーで発光する完成形演出に統一。
+   debt-accent は負債ごとに異なるテーマカラーが CSS 変数で設定される。 */
+.debt-card .debt-monthly-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .insight-item.insight-info .insight-desc → static primary text-shadow glow
+   インサイトウィジェットの情報タイプ説明文テキスト（fs-xs・color:text-sub）に
+   常時 primary カラーの text-shadow を追加。
+   .insight-item.insight-info:hover .insight-desc primary glow（v23.x）と対称で
+   未ホバー時から情報インサイトの説明文が primary カラーで静かに輝く演出に。
+   insight-info .insight-title static glow（v24.17）と連動し
+   情報インサイトのタイトル・説明文が常時揃って primary カラーで発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.insight-item.insight-info    .insight-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-info    .insight-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 6. .insight-item.insight-alert .insight-desc → static danger-text text-shadow glow
+   インサイトウィジェットのアラートタイプ説明文テキストに
+   常時 danger-text カラーの text-shadow を追加。
+   .insight-item.insight-alert:hover .insight-desc danger-text glow（v23.x）と対称で
+   未ホバー時からアラートインサイトの説明文が danger-text カラーで静かに警告光する演出に。
+   insight-alert .insight-title static glow（v24.17）と連動し
+   アラートインサイトのタイトル・説明文が常時揃って danger-text カラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow。 */
+.insight-item.insight-alert   .insight-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-alert   .insight-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)   var(--mix-sm), transparent); }
+
+/* 7. .insight-item.insight-success .insight-desc → static success text-shadow glow
+   インサイトウィジェットの成功タイプ説明文テキストに
+   常時 success カラーの text-shadow を追加。
+   .insight-item.insight-success:hover .insight-desc success glow（v23.x）と対称で
+   未ホバー時から成功インサイトの説明文が success カラーで静かに輝く演出に。
+   insight-success .insight-title static glow（v24.17）と連動し
+   成功インサイトのタイトル・説明文が常時揃って success カラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow。 */
+.insight-item.insight-success .insight-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-success .insight-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .insight-item.insight-warning .insight-desc → static warning text-shadow glow
+   インサイトウィジェットの注意タイプ説明文テキストに
+   常時 warning カラーの text-shadow を追加。
+   .insight-item.insight-warning:hover .insight-desc warning glow（v23.x）と対称で
+   未ホバー時から注意インサイトの説明文が warning カラーで静かに注意を促す演出に。
+   insight-warning .insight-title static glow（v24.17）と連動し
+   注意インサイトのタイトル・説明文が常時揃って warning カラーで発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.19・全script/linkタグ?v=24.19に更新。
+   ダーク/ライト両モードともに warning カラーを使用。 */
+.insight-item.insight-warning .insight-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .insight-item.insight-warning .insight-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
