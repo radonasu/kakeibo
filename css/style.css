@@ -31407,3 +31407,94 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-inactive-section summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.49・全script/linkタグ?v=24.49に更新。 */
+
+/* ============================================================
+   Sprint #846 / v24.50 — static-glow 8箇所
+   bottom-nav-label-static-glow＋memo-cell-static-glow＋
+   opp-challenge-btn-static-glow＋onboarding-cta-static-glow＋
+   delete-cat-static-glow＋type-btn-static-glow＋
+   budget-pct-badge-static-glow＋ch-widget-pct-static-glow
+   ============================================================ */
+
+/* 1. .bottom-nav-item:not(.active) .bottom-nav-label → static primary text-shadow glow
+   非アクティブ状態のボトムナビラベルに常時 primary カラーの
+   text-shadow を追加。
+   .bottom-nav-item:not(.active):hover .bottom-nav-label primary glow（v23.90）と対称で
+   未ホバー時から非アクティブナビラベルが primary カラーで静かに輝く演出に。
+   bottom-nav-item.active .bottom-nav-label の primary glow（v22.x）と連動し
+   ナビラベル全体の発光演出を統一。ダークモードでは primary-end glow。 */
+.bottom-nav-item:not(.active) .bottom-nav-label { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .bottom-nav-item:not(.active) .bottom-nav-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 2. .tx-table td.memo-cell → static primary text-shadow glow
+   取引テーブルのメモセルに常時 primary カラーの
+   text-shadow を追加。
+   .tx-table tbody tr:hover td.memo-cell primary glow（v23.90）と対称で
+   未ホバー時からメモテキストが primary カラーで静かに輝く演出に。
+   tx-table td:first-child / td.tx-col-mem / td.tx-col-pay static glow と連動し
+   取引テーブル内テキスト全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.tx-table td.memo-cell { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-table td.memo-cell { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .opp-challenge-btn → static opp-accent text-shadow glow
+   節約オポチュニティのチャレンジ追加ボタンに常時 opp-accent カラーの
+   text-shadow を追加。
+   .opp-challenge-btn:hover opp-accent glow（v23.90）と対称で
+   未ホバー時からチャレンジボタンが opp-accent カラーで静かに輝く演出に。
+   opp-title / opp-desc static glow と連動しオポチュニティカード内全要素の
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.opp-challenge-btn { text-shadow: 0 0 6px color-mix(in srgb, var(--opp-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .opp-challenge-btn { text-shadow: 0 0 7px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .onboarding-cta → static white text-shadow glow
+   オンボーディング CTA ボタンに常時白い
+   text-shadow を追加。
+   .onboarding-cta:hover white glow（v23.90）と対称で
+   未ホバー時から CTA ボタンが白く静かに輝く演出に。
+   btn-primary static white glow（v22.89）と同パターンで
+   グラデーション背景上のボタンテキストの常時白色発光演出を統一。 */
+.onboarding-cta { text-shadow: 0 0 8px rgba(255, 255, 255, 0.22); }
+
+/* 5. .delete-cat → static danger-text text-shadow glow
+   カテゴリ削除ボタンに常時 danger-text カラーの
+   text-shadow を追加。
+   .delete-cat は .btn-icon を継承するため btn-icon static primary glow（v24.49）が適用されるが、
+   delete-cat の意味的役割（危険操作）に合わせ danger-text glow で上書きし意味的整合性を確保。
+   delete-cat:hover danger-text glow（v23.90）と対称で
+   未ホバー時から削除ボタンが danger-text カラーで静かに輝く演出に。
+   modal-close / adv-filter-clear / rc-close / btn-danger static glow と同パターンで
+   破壊的操作ボタンの静的発光演出を統一。ダークモードでは expense-end glow。 */
+.delete-cat { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .delete-cat { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .type-btn → static primary text-shadow glow（汎用）
+   収支タイプ選択ボタン（income/expense クラスなしの汎用状態）に常時 primary カラーの
+   text-shadow を追加。
+   .type-btn:hover primary glow（v23.90）と対称で
+   未ホバー時からタイプボタンが primary カラーで静かに輝く演出に。
+   .type-btn.expense-btn / .type-btn.income-btn static glow（v22.x）と連動し
+   タイプボタン全体の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.type-btn { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .type-btn { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 7. .budget-pct-badge → static primary text-shadow glow（汎用）
+   予算パーセントバッジ（warn/over クラスなしの通常状態）に常時 primary カラーの
+   text-shadow を追加。
+   .budget-item:hover .budget-pct-badge primary glow（v23.x）と対称で
+   未ホバー時から通常バッジが primary カラーで静かに輝く演出に。
+   .budget-pct-badge.warn / .over static glow（v22.94）と連動し
+   予算バッジ全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.budget-pct-badge { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .budget-pct-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 8. .ch-widget-pct → static primary text-shadow glow（汎用）
+   チャレンジウィジェットの進捗パーセント（pct-ok/pct-over クラスなしの汎用状態）に
+   常時 primary カラーの text-shadow を追加。
+   .ch-widget-item:hover .ch-widget-pct primary glow（v23.90）と対称で
+   未ホバー時から通常進捗が primary カラーで静かに輝く演出に。
+   .ch-widget-pct.ch-pct-ok / .ch-pct-over static glow と連動し
+   チャレンジ進捗バッジ全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.ch-widget-pct { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-widget-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.50・全script/linkタグ?v=24.50に更新。 */
