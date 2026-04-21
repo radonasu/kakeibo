@@ -30127,4 +30127,91 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .yi-card-value-cat { text-shadow: 0 0 6px color-mix(in srgb, var(--yi-cat-color, var(--primary))     var(--mix-xs), transparent); }
 [data-theme="dark"] .yi-card-value-cat { text-shadow: 0 0 7px color-mix(in srgb, var(--yi-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
 
+/* ============================================================
+   Sprint #832 / v24.36 — static-glow 8箇所
+   notif-toggle-label＋recurring-toggle-label＋sb-select-all-wrap＋
+   stp-config-summary＋stp-help-summary＋modal-details-summary＋
+   fc-progress-label＋debt-balance-meta
+   ============================================================ */
+
+/* 1. .notif-toggle-label → static primary text-shadow glow
+   通知設定画面のトグルラベルテキスト（「プッシュ通知」等：color:text）に
+   常時 primary カラーの text-shadow を追加。
+   .notif-toggle-label:hover primary glow（v24.xx）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.notif-toggle-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-toggle-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .recurring-toggle-label → static primary text-shadow glow
+   繰り返し取引設定のトグルラベルテキスト（「繰り返し取引を有効にする」等）に
+   常時 primary カラーの text-shadow を追加。
+   .recurring-toggle-label:hover primary glow（v24.xx）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   notif-toggle-label static glow（本スプリント①）と同パターンでトグルラベル演出を統一。
+   ダークモードでは primary-end glow。 */
+.recurring-toggle-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .recurring-toggle-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .sb-select-all-wrap → static primary text-shadow glow
+   スマート予算の「全選択」チェックボックスラベル（「すべて選択」等：color:text）に
+   常時 primary カラーの text-shadow を追加。
+   .sb-select-all-wrap:hover primary glow（v24.xx）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   notif-toggle-label/recurring-toggle-label static glow（本スプリント①②）と同パターンで
+   インタラクティブラベル演出を統一。ダークモードでは primary-end glow。 */
+.sb-select-all-wrap { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sb-select-all-wrap { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .stp-config-summary → static primary text-shadow glow
+   設定ページの折りたたみセクション見出し（「アカウント設定」「カテゴリ設定」等：color:text）に
+   常時 primary カラーの text-shadow を追加。
+   .stp-config-summary:hover primary glow（v24.xx）と対称で
+   未ホバー時からセクション見出しが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.stp-config-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .stp-config-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .stp-help-summary → static primary text-shadow glow
+   設定ページのヘルプ折りたたみ見出し（「このアプリについて」等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .stp-help-summary:hover primary glow（v24.xx）と対称で
+   未ホバー時からヘルプ見出しが primary カラーで静かに輝く演出に。
+   stp-config-summary static glow（本スプリント④）と連動し設定ページ内
+   折りたたみ見出しが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.stp-help-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .stp-help-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .modal-details summary → static primary text-shadow glow
+   モーダル内の詳細折りたたみ見出し（「詳細を見る」等：color:primary・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .modal-details summary:hover primary glow（v24.xx）と対称で
+   未ホバー時から詳細見出しが primary カラーで静かに輝く演出に。
+   stp-help-summary static glow（本スプリント⑤）と同パターンで
+   折りたたみ見出し演出を統一。ダークモードでは primary-end glow。 */
+.modal-details summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .modal-details summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .fc-progress-label → static primary text-shadow glow
+   キャッシュフロー予測カードの進捗ラベルテキスト（「目標達成率」等：color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .forecast-card:hover .fc-progress-label primary glow（v23.50）と対称で
+   未ホバー時から進捗ラベルが primary カラーで静かに輝く演出に。
+   fc-cell-label/fc-avg-badge/fc-cell-balance static glow と連動し
+   予測カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fc-progress-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-progress-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .debt-balance-meta → static primary text-shadow glow
+   負債カードの残高メタテキスト（「当初借入額: ¥500,000」等：color:text-muted・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .debt-card:hover .debt-balance-meta primary glow（v23.50）と対称で
+   未ホバー時から残高メタテキストが primary カラーで静かに輝く演出に。
+   debt-name/debt-progress-label/debt-end-pill static glow と連動し
+   負債カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.debt-balance-meta { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-balance-meta { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.36・全script/linkタグ?v=24.36に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
