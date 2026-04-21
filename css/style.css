@@ -31771,4 +31771,101 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.53・全script/linkタグ?v=24.53に更新。 */
 
+/* ============================================================
+   Sprint #850 / v24.54 — static-glow 8箇所
+   yi-sub-muted-static-glow＋goal-sep-static-glow＋
+   ch-summary-unit-static-glow＋pt-summary-unit-static-glow＋
+   tx-th-sort-static-glow＋asset-foreign-hint-static-glow＋
+   qa-type-btn-static-glow＋nt-cnt-warn/danger-static-glow
+   ============================================================ */
+
+/* 1. .yi-card .yi-sub-muted → static primary text-shadow glow
+   年間収支インサイトカードのサブ補足テキスト（color:text-muted系）に
+   常時 primary カラーの text-shadow を追加。
+   .yi-card:hover .yi-sub-muted primary glow（v23.80）と対称で未ホバー時から
+   補足テキストが primary カラーで静かに輝く演出に。
+   yi-card-sub/yi-card-label/yi-card-unit static glow と連動し
+   年間収支カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.yi-card .yi-sub-muted { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card .yi-sub-muted { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .goal-card .goal-sep → static goal-accent text-shadow glow
+   ゴールカードの区切りテキスト（「/」等：color:text-muted）に
+   常時 goal-accent カラーの text-shadow を追加。
+   .goal-card:hover .goal-sep goal-accent glow（v23.80）と対称で未ホバー時から
+   区切りテキストがゴールテーマカラーで静かに輝く演出に。
+   goal-name/goal-remaining/goal-saved/goal-target static glow と連動し
+   ゴールカード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.goal-card .goal-sep { text-shadow: 0 0 5px color-mix(in srgb, var(--goal-accent, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-card .goal-sep { text-shadow: 0 0 6px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .ch-sum-* .ch-summary-unit → static white text-shadow glow
+   チャレンジサマリーカード（active/total/achieved）の単位テキスト（「件」等：color:on-dark-hint）に
+   常時白 text-shadow を追加。
+   .ch-sum-active/total/achieved:hover .ch-summary-unit white glow（v23.80）と対称で未ホバー時から
+   単位テキストが白く静かに輝く演出に。
+   ch-summary-value/ch-summary-label static glow と連動し
+   チャレンジサマリーカード内全テキストが常時発光する完成形演出に統一。 */
+.ch-sum-active   .ch-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+.ch-sum-total    .ch-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+.ch-sum-achieved .ch-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .ch-sum-active   .ch-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.16); }
+[data-theme="dark"] .ch-sum-total    .ch-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.16); }
+[data-theme="dark"] .ch-sum-achieved .ch-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.16); }
+
+/* 4. .pt-summary-unit → static white text-shadow glow
+   ポイントサマリーカードの単位テキスト（「pt」等：color:on-dark-hint）に
+   常時白 text-shadow を追加。
+   .pt-summary-card:hover .pt-summary-unit white glow（v23.80）と対称で未ホバー時から
+   単位テキストが白く静かに輝く演出に。
+   pt-summary-amount/pt-summary-sub/pt-summary-label static glow と連動し
+   ポイントサマリーカード内全テキストが常時発光する完成形演出に統一。 */
+.pt-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .pt-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.16); }
+
+/* 5. .tx-th-sort → static primary text-shadow glow（汎用・非アクティブ）
+   取引テーブルのソートヘッダーセル（汎用・非アクティブ状態）に常時 primary カラーの
+   text-shadow を追加。.tx-th-sort:hover primary glow（v23.86）と対称で未ホバー時から
+   ソートヘッダーが primary カラーで静かに輝く演出に。
+   .tx-th-sort.tx-th-active static glow（v24.49）と連動しソートヘッダー全状態の
+   静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.tx-th-sort { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-th-sort { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .asset-foreign-hint → static primary text-shadow glow
+   資産カードの外貨ヒントテキスト（「¥ 換算表示」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .asset-card:hover .asset-foreign-hint primary glow（v23.80）と対称で未ホバー時から
+   外貨ヒントテキストが primary カラーで静かに輝く演出に。
+   asset-name/asset-balance/asset-date-label/asset-fx-rate static glow と連動し
+   資産カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.asset-foreign-hint { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-foreign-hint { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .qa-type-btn → static primary text-shadow glow（汎用・非アクティブ）
+   クイック追加フォームのタイプボタン（汎用・非アクティブ状態）に常時 primary カラーの
+   text-shadow を追加。.qa-type-btn:hover primary glow（v23.85）と対称で未ホバー時から
+   タイプボタンが primary カラーで静かに輝く演出に。
+   .qa-type-btn.qa-type-active static タイプ別 glow（v23.94）と連動し
+   クイック追加タイプボタン全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.qa-type-btn { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .qa-type-btn { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .nt-char-count.nt-cnt-warn/.nt-cnt-danger → static ステータス別 text-shadow glow
+   ノートカードの文字数カウンター（warn=warning / danger=danger-text カラー状態）に
+   常時ステータス別 text-shadow を追加。
+   .nt-cnt-warn は warning glow で「文字数残り少」を橙色で静かに警告。
+   .nt-cnt-danger は danger-text glow で「文字数超過注意」を赤色で静的に強調。
+   .nt-card .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) static primary glow（v24.43）と連動し
+   文字数カウンター全状態が各ステータスカラーで常時発光する完成形演出に統一。
+   ダークモードでは各対応 end カラー。 */
+.nt-char-count.nt-cnt-warn   { text-shadow: 0 0 5px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.nt-char-count.nt-cnt-danger { text-shadow: 0 0 5px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .nt-char-count.nt-cnt-warn   { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .nt-char-count.nt-cnt-danger { text-shadow: 0 0 6px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.54・全script/linkタグ?v=24.54に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.52・全script/linkタグ?v=24.52に更新。 */
