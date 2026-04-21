@@ -30511,4 +30511,94 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.39・全script/linkタグ?v=24.39に更新。 */
 
+/* ============================================================
+   Sprint #836 / v24.40 — static-glow 8箇所
+   ev-mtot(type別)-static-glow / md-cat-amount(type別)-static-glow /
+   md-cat-pct-static-glow / cal-ev-cat-static-glow /
+   cat-yayoi-tag-static-glow / step-desc-static-glow /
+   fv-rate-badge(type別)-static-glow
+   ============================================================ */
+
+/* 1. .ev-income.ev-mtot → static success text-shadow glow
+   収支予定カレンダーの月次収入合計テキスト（color:success）に常時 success カラーの text-shadow を追加。
+   .ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot success glow（v23.84）と対称で
+   未ホバー時から月次収入合計が success カラーで静かに輝く演出に。
+   ev-expense.ev-mtot static glow（②）と連動し月次合計テキストが常時タイプカラーで発光する完成形演出に統一。
+   ダークモードでは income-end glow */
+.ev-income.ev-mtot  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-income.ev-mtot  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .ev-expense.ev-mtot → static danger-text text-shadow glow
+   収支予定カレンダーの月次支出合計テキスト（color:danger-text）に常時 danger-text カラーの text-shadow を追加。
+   .ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot danger-text glow（v23.84）と対称で
+   未ホバー時から月次支出合計が danger-text カラーで静かに輝く演出に。
+   ev-income.ev-mtot static glow（①）と連動し月次合計テキストが常時タイプカラーで発光する完成形演出に統一。
+   ダークモードでは expense-end glow */
+.ev-expense.ev-mtot { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-expense.ev-mtot { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .md-cat-amount → タイプ別 static text-shadow glow
+   月次詳細カテゴリ行の金額テキスト（color:md-cat-color）に常時タイプ別 text-shadow を追加。
+   通常=md-cat-color / income=success。
+   .md-cat-row:hover .md-cat-amount タイプ別 glow（v23.84）と対称で
+   未ホバー時からカテゴリ金額がカラーで静かに輝く演出に。
+   md-cat-pct static glow（④）と連動しカテゴリ行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは md-cat-color/income-end glow */
+.md-cat-amount                      { text-shadow: 0 0 6px color-mix(in srgb, var(--md-cat-color, var(--primary))     var(--mix-xs), transparent); }
+.md-cat-amount.md-cat-amount-income { text-shadow: 0 0 6px color-mix(in srgb, var(--success)                          var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cat-amount                      { text-shadow: 0 0 7px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+[data-theme="dark"] .md-cat-amount.md-cat-amount-income { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)                       var(--mix-sm), transparent); }
+
+/* 4. .md-cat-pct → static md-cat-color text-shadow glow
+   月次詳細カテゴリ行のパーセント表示テキスト（color:md-cat-color）に常時 md-cat-color の text-shadow を追加。
+   .md-cat-row:hover .md-cat-pct md-cat-color glow（v23.84）と対称で
+   未ホバー時からカテゴリ割合テキストがカラーで静かに輝く演出に。
+   md-cat-amount static glow（③）と連動しカテゴリ行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは md-cat-color フォールバック primary-end glow */
+.md-cat-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--md-cat-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cat-pct { text-shadow: 0 0 7px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .cal-ev-item:not(.cal-ev-done) .cal-ev-cat → static cal-ev-color text-shadow glow
+   カレンダーイベント行（未完了）のカテゴリテキスト（color:cal-ev-color）に常時 cal-ev-color の text-shadow を追加。
+   .cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat cal-ev-color glow（v23.84）と対称で
+   未ホバー時からイベントカテゴリテキストがカラーで静かに輝く演出に。
+   cal-ev-name/cal-ev-badge static glow（v24.x）と連動しイベント行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは cal-ev-color フォールバック primary-end glow */
+.cal-ev-item:not(.cal-ev-done) .cal-ev-cat { text-shadow: 0 0 6px color-mix(in srgb, var(--cal-ev-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done) .cal-ev-cat { text-shadow: 0 0 7px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .cat-yayoi-tag → static primary text-shadow glow
+   カテゴリカードの弥生連携タグバッジ（color:primary）に常時 primary カラーの text-shadow を追加。
+   .cat-card:hover .cat-yayoi-tag primary glow（v23.84）と対称で
+   未ホバー時からタグバッジが primary カラーで静かに輝く演出に。
+   cat-card-name/cat-stat-val/cat-stat-lbl static glow と連動しカテゴリカード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow */
+.cat-yayoi-tag { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-yayoi-tag { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 7. .step-desc → static primary text-shadow glow
+   ステップカードの説明テキスト（color:text-muted）に常時 primary カラーの text-shadow を追加。
+   .step-card:hover .step-desc primary glow（v23.85）と対称で
+   未ホバー時から説明テキストが primary カラーで静かに輝く演出に。
+   step-num/step-title static glow と連動しステップカード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow */
+.step-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .step-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 8. .fv-rate-badge → タイプ別 static text-shadow glow
+   財務予測レートバッジ（「5.2%」等の金利率バッジ）に常時タイプ別カラーの text-shadow を追加。
+   高=primary / 中=warning / 低=success。
+   .fv-rate-badge.high/mid/low:hover タイプ別 glow（v23.85）と対称で
+   未ホバー時からレートバッジがタイプカラーで静かに輝く演出に。
+   fv-cell-label/fv-avg-badge static glow と連動し財務予測カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end/warning/income-end glow */
+.fv-rate-badge.high { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.fv-rate-badge.mid  { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.fv-rate-badge.low  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-rate-badge.high { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .fv-rate-badge.mid  { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .fv-rate-badge.low  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.40・全script/linkタグ?v=24.40に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
