@@ -31578,3 +31578,94 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .tx-tag-filter-chip:not(.active) { text-shadow: 0 0 5px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.51・全script/linkタグ?v=24.51に更新。 */
+
+/* ============================================================
+   Sprint #848 / v24.52 — static-glow 8箇所
+   date-quick-btn-static-glow＋adv-preset-chip-static-glow＋
+   sim-preset-static-glow＋sub-monthly-amount-static-glow＋
+   sub-summary-sub-static-glow＋tx-tag-filter-all-not-active-static-glow＋
+   pt-summary-sub-static-glow＋wl-sum-done-unit-static-glow
+   ============================================================ */
+
+/* 1. .date-quick-btn → static primary text-shadow glow（非アクティブ汎用）
+   日付クイックボタン（非アクティブ状態）に常時 primary カラーの
+   text-shadow を追加。
+   .date-quick-btn:hover primary glow（v23.80）と対称で
+   未ホバー時から非アクティブボタンが primary カラーで静かに輝く演出に。
+   .date-quick-btn.active static white glow（v23.93）と連動し
+   日付クイックボタン全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.date-quick-btn { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .date-quick-btn { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 2. .adv-preset-chip → static primary text-shadow glow（非アクティブ汎用）
+   詳細フィルタープリセットチップ（非アクティブ状態）に常時 primary カラーの
+   text-shadow を追加。
+   .adv-preset-chip:hover primary glow（v23.80）と対称で
+   未ホバー時から非アクティブチップが primary カラーで静かに輝く演出に。
+   .adv-preset-chip.active static primary glow（v23.93）と連動し
+   プリセットチップ全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.adv-preset-chip { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-preset-chip { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 3. .sim-preset → static white text-shadow glow（非アクティブ汎用）
+   シミュレーションプリセットボタン（非アクティブ状態）に常時控えめな
+   白い text-shadow を追加。
+   .sim-preset:hover white glow（v23.80）と対称で
+   未ホバー時から非アクティブプリセットが白く静かに輝く演出に。
+   .sim-preset.sim-preset-active static white glow（v23.93）と連動し
+   シミュレーションプリセット全状態の静的発光演出を完成形に統一。 */
+.sim-preset { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .sim-preset { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+
+/* 4. .sub-summary-card.sub-monthly .sub-summary-amount → static white text-shadow glow
+   月次サブスクリプションサマリーカードの金額大型数値に常時白い
+   text-shadow を追加。
+   .sub-summary-card.sub-yearly .sub-summary-amount static white glow（v23.x）と
+   対称でmonthlyカードも同様の静的発光演出に統一。
+   .sub-summary-card:hover .sub-summary-amount white glow（v23.16）と連動し
+   グラデーション背景カードの白色大型数値が常時輝く完成形演出。 */
+.sub-summary-card.sub-monthly .sub-summary-amount { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+[data-theme="dark"] .sub-summary-card.sub-monthly .sub-summary-amount { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 5. .sub-summary-card .sub-summary-sub → static white text-shadow glow
+   サブスクリプションサマリーカードのサブテキスト（次回更新日等）に常時白い
+   text-shadow を追加。
+   .sub-summary-card:hover .sub-summary-sub white glow（v23.x）と対称で
+   未ホバー時からサブテキストが白く静かに輝く演出に。
+   sub-summary-label / sub-summary-amount static glow と連動し
+   サブスクカード内全テキストが常時発光する完成形演出に統一。 */
+.sub-summary-card .sub-summary-sub { text-shadow: 0 0 8px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .sub-summary-card .sub-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.16); }
+
+/* 6. .tx-tag-filter-all:not(.active) → static primary text-shadow glow
+   「すべて」タグフィルターボタン（非アクティブ状態）に常時 primary カラーの
+   text-shadow を追加。
+   .tx-tag-filter-chip:not(.active) static --tc glow（v24.51）と対称で
+   非アクティブ「すべて」ボタンも primary カラーで静かに輝く演出に。
+   .tx-tag-filter-all.active static primary glow（v23.93）と連動し
+   タグフィルター全ボタン全状態の静的発光演出を完成形に統一。ダークモードでは primary-end glow。 */
+.tx-tag-filter-all:not(.active) { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-tag-filter-all:not(.active) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 7. .pt-summary-sub → static white text-shadow glow
+   ポイント残高サマリーカードのサブテキスト（有効期限等）に常時白い
+   text-shadow を追加。
+   .pt-summary-card:hover .pt-summary-sub white glow（v23.x）と対称で
+   未ホバー時からサブテキストが白く静かに輝く演出に。
+   pt-summary-label static glow（v23.x）と連動し
+   ポイントサマリーカード内テキストが常時発光する完成形演出に統一。 */
+.pt-summary-sub { text-shadow: 0 0 8px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .pt-summary-sub { text-shadow: 0 0 10px rgba(255, 255, 255, 0.16); }
+
+/* 8. .wl-sum-done .wl-summary-unit → static white text-shadow glow
+   ウィッシュリスト達成サマリーカードの単位テキストに常時白い
+   text-shadow を追加。
+   .wl-sum-done:hover .wl-summary-unit white glow（v23.x）と対称で
+   未ホバー時から単位テキストが白く静かに輝く演出に。
+   .wl-sum-count .wl-summary-unit / .wl-sum-budget .wl-summary-unit static glow（v24.x）
+   と連動しウィッシュリストサマリー全カード単位テキストの
+   静的発光演出を完成形に統一。 */
+.wl-sum-done .wl-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .wl-sum-done .wl-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.52・全script/linkタグ?v=24.52に更新。 */
