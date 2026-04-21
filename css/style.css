@@ -31059,3 +31059,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .rc-close { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.45・全script/linkタグ?v=24.45に更新。 */
+
+/* ============================================================
+   Sprint #842 / v24.46 — static-glow 8箇所
+   fv-stat-label-static-glow＋fv-stat-sub-static-glow＋
+   adv-widget-desc-static-glow＋adv-widget-hint-static-glow＋
+   sim-savings-value-static-glow＋ios-guide-close-static-glow＋
+   cal-panel-close-static-glow＋ci-close-static-glow
+   ============================================================ */
+
+/* 1. .fv-stat-label → static white text-shadow glow
+   財務予測統計カード（グラデーション背景）のラベルテキストに常時白 glow を追加。
+   .fv-stat-card:hover .fv-stat-label white glow（v23.70）と対称で
+   未ホバー時からラベルが白く静かに輝く演出に。
+   fv-stat-value static glow（v24.x）・fv-stat-sub static glow（②）と連動し
+   グラデカード内全テキストが常時白く発光する完成形演出に統一。 */
+.fv-stat-label { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .fv-stat-label { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 2. .fv-stat-sub → static white text-shadow glow
+   財務予測統計カード（グラデーション背景）のサブテキストに常時白 glow を追加。
+   .fv-stat-card:hover .fv-stat-sub white glow（v23.70）と対称で
+   未ホバー時からサブテキストが白く静かに輝く演出に。
+   fv-stat-label static glow（①）と連動しグラデカード内全テキストが
+   常時白く発光する完成形演出に統一。 */
+.fv-stat-sub { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .fv-stat-sub { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+
+/* 3. .adv-widget-desc → static primary text-shadow glow
+   AIアドバイスウィジェットカードの説明文テキストに常時 primary glow を追加。
+   .adv-widget-card:hover .adv-widget-desc primary glow（v23.70）と対称で
+   未ホバー時から説明文が primary カラーで静かに輝く演出に。
+   adv-widget-hint static glow（④）と連動しカード内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.adv-widget-desc { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-widget-desc { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .adv-widget-hint → static primary text-shadow glow
+   AIアドバイスウィジェットカードのヒントテキストに常時 primary glow を追加。
+   .adv-widget-card:hover .adv-widget-hint primary glow（v23.70）と対称で
+   未ホバー時からヒントが primary カラーで静かに輝く演出に。
+   adv-widget-desc static glow（③）と連動しカード内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.adv-widget-hint { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-widget-hint { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 5. .sim-savings-value → static success text-shadow glow
+   節約シミュレーションバナーの主要数値テキストに常時 success glow を追加。
+   .sim-savings-banner:hover .sim-savings-value success glow（v23.46）と対称で
+   未ホバー時から節約数値が success カラーで静かに輝く演出に。
+   sim-savings-label static glow（v24.x）と連動しバナー内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは income-end glow。 */
+.sim-savings-value { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+[data-theme="dark"] .sim-savings-value { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+
+/* 6. .ios-guide-close → static white text-shadow glow
+   iOSインストールガイドの閉じるボタンに常時白 glow を追加。
+   .ios-guide-close:hover white glow（v23.90）と対称で
+   未ホバー時からクローズボタンが白く静かに輝く演出に。
+   cal-panel-close/ci-close static glow（⑦⑧）と連動し
+   オーバーレイ系閉じるボタンの静的発光演出を統一。 */
+.ios-guide-close { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ios-guide-close { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 7. .cal-panel-close → static primary text-shadow glow
+   カレンダーパネルの閉じるボタンに常時 primary glow を追加。
+   .cal-panel-close:hover primary glow（v23.90）と対称で
+   未ホバー時からクローズボタンが primary カラーで静かに輝く演出に。
+   ios-guide-close/ci-close static glow（⑥⑧）と連動し
+   パネル系閉じるボタンの静的発光演出を統一。ダークモードでは primary-end glow。 */
+.cal-panel-close { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-panel-close { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .ci-close → static white text-shadow glow
+   チェックインモーダルの閉じるボタンに常時白 glow を追加。
+   .ci-close:hover white glow（v23.90）と対称で
+   未ホバー時からクローズボタンが白く静かに輝く演出に。
+   ios-guide-close static glow（⑥）と連動し
+   ダーク背景上の閉じるボタン静的発光演出を統一。 */
+.ci-close { text-shadow: 0 0 6px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ci-close { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.46・全script/linkタグ?v=24.46に更新。 */
