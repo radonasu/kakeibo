@@ -31318,3 +31318,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .stp-help-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.48・全script/linkタグ?v=24.48に更新。 */
+
+/* ============================================================
+   Sprint #845 / v24.49 — static-glow 8箇所
+   auth-tab-static-glow＋btn-icon-static-glow＋sub-emoji-btn-static-glow＋
+   btn-continue-static-glow＋install-banner-close-static-glow＋
+   modal-details-summary-static-glow＋goal-achieved-summary-static-glow＋
+   sub-inactive-section-summary-static-glow
+   ============================================================ */
+
+/* 1. .auth-tab:not(.active) → static primary text-shadow glow
+   認証タブ（非アクティブ）に常時 primary カラーの
+   text-shadow を追加。
+   .auth-tab:not(.active):hover primary glow（v23.87）と対称で
+   未ホバー時から非アクティブタブが primary カラーで静かに輝く演出に。
+   btn-icon/btn-continue static glow（②④）と連動しUIアクション要素全体の
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.auth-tab:not(.active) { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .auth-tab:not(.active) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
+
+/* 2. .btn-icon → static primary text-shadow glow
+   アイコンボタン全般に常時 primary カラーの
+   text-shadow を追加。
+   .btn-icon:hover primary glow（v23.87）と対称で
+   未ホバー時からアイコンボタンが primary カラーで静かに輝く演出に。
+   auth-tab/btn-continue static glow（①④）と連動し
+   UIアクション要素全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-icon { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-icon { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .sub-emoji-btn → static primary text-shadow glow
+   サブスクリプション絵文字ボタンに常時 primary カラーの
+   text-shadow を追加。
+   .sub-emoji-btn:hover primary glow（v23.90）と対称で
+   未ホバー時から絵文字ボタンが primary カラーで静かに輝く演出に。
+   goal-emoji-btn/ev-emoji-chip/pt-emoji-btn/ch-emoji-btn static glow（v24.45）と連動し
+   絵文字選択系ボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.sub-emoji-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-emoji-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .btn-continue → static primary text-shadow glow
+   続行ボタンに常時 primary カラーの
+   text-shadow を追加。
+   .btn-continue:hover primary glow（v23.87）と対称で
+   未ホバー時から続行ボタンが primary カラーで静かに輝く演出に。
+   auth-tab/btn-icon static glow（①②）と連動し
+   UIアクション要素全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-continue { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-continue { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .install-banner-close → static white text-shadow glow
+   インストールバナーの閉じるボタンに常時白い
+   text-shadow を追加。
+   .install-banner-close:hover white glow（v23.87）と対称で
+   未ホバー時から閉じるボタンが白く静かに輝く演出に。
+   ios-guide-close/ci-close static glow（v24.46）と連動し
+   バナー・オーバーレイ系閉じるボタンの静的発光演出を統一。 */
+.install-banner-close { text-shadow: 0 0 7px rgba(255, 255, 255, 0.35); }
+
+/* 6. .modal-details summary → static primary text-shadow glow
+   モーダル詳細アコーディオンのサマリーに常時 primary カラーの
+   text-shadow を追加。
+   .modal-details summary:hover primary glow（v23.87）と対称で
+   未ホバー時からアコーディオントリガーが primary カラーで静かに輝く演出に。
+   goal-achieved-summary/sub-inactive-section summary static glow（⑦⑧）と連動し
+   アコーディオン系サマリー全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.modal-details summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .modal-details summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .goal-achieved-summary → static primary text-shadow glow
+   目標達成アコーディオンのサマリーに常時 primary カラーの
+   text-shadow を追加。
+   .goal-achieved-summary:hover primary glow（v23.87）と対称で
+   未ホバー時から達成アコーディオントリガーが primary カラーで静かに輝く演出に。
+   modal-details summary/sub-inactive-section summary static glow（⑥⑧）と連動し
+   アコーディオン系サマリー全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.goal-achieved-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-achieved-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .sub-inactive-section summary → static primary text-shadow glow
+   サブスクリプション非アクティブセクションのサマリーに常時 primary カラーの
+   text-shadow を追加。
+   .sub-inactive-section summary:hover primary glow（v23.87）と対称で
+   未ホバー時からアコーディオントリガーが primary カラーで静かに輝く演出に。
+   modal-details summary/goal-achieved-summary static glow（⑥⑦）と連動し
+   アコーディオン系サマリー全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.sub-inactive-section summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-inactive-section summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.49・全script/linkタグ?v=24.49に更新。 */
