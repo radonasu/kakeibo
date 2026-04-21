@@ -30795,3 +30795,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .yoy-summary-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
+
+/* ================================================================
+   Sprint #839 v24.43 static-glow 8箇所
+   （ev-sum-inc-static-glow＋ev-sum-exp-static-glow＋
+     sub-cycle-badge-static-glow＋nt-char-count-static-glow＋
+     fc-cell-hint-static-glow＋yi-card-sub-static-glow＋
+     nt-saved-at-static-glow＋cc-amount(type別)-static-glow）
+   ================================================================ */
+
+/* 1. .ev-sum-card .ev-sum-inc → static white text-shadow glow
+   収支予定グラデーションサマリーカードの計画収入金額テキスト（color:on-dark-bright・fw-semi）に
+   常時白 text-shadow を追加。
+   .ev-sum-card:hover .ev-sum-inc white glow（v23.67）と対称で未ホバー時から
+   収入金額テキストが白く静かに輝く演出に。
+   ev-sum-exp static glow（②）と連動し収支金額両方が常時白く発光する完成形演出に統一。
+   ev-sum-label static glow（v24.24）と連動しグラデカード内全テキストが常時発光する完成形に。 */
+.ev-sum-card .ev-sum-inc { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ev-sum-card .ev-sum-inc { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 2. .ev-sum-card .ev-sum-exp → static white text-shadow glow
+   収支予定グラデーションサマリーカードの計画支出金額テキスト（color:on-dark-hint・fw-semi）に
+   常時白 text-shadow を追加。
+   .ev-sum-card:hover .ev-sum-exp white glow（v23.67）と対称で未ホバー時から
+   支出金額テキストが白く静かに輝く演出に。
+   ev-sum-inc static glow（①）と連動し収支金額両方が常時白く発光する完成形演出に統一。 */
+.ev-sum-card .ev-sum-exp { text-shadow: 0 0 8px rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .ev-sum-card .ev-sum-exp { text-shadow: 0 0 10px rgba(255, 255, 255, 0.18); }
+
+/* 3. .sub-cycle-badge → static primary text-shadow glow
+   サブスクウィジェット行のサイクルバッジ（「月払い」「年払い」等：fs-xs・fw-semi・text-muted）に
+   常時 primary text-shadow を追加。
+   .sub-widget-item:hover .sub-cycle-badge primary glow（v23.67）と対称で未ホバー時から
+   サイクルバッジが primary カラーで静かに輝く演出に。
+   sub-widget-name/amount/next static glow と連動しウィジェット行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.sub-cycle-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-cycle-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .nt-card .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) → static primary text-shadow glow
+   ノートカードの文字数カウンター（通常状態：color:text-muted→primary）に常時 primary text-shadow を追加。
+   warn/danger 状態は既存カラー（warning/danger-text）を維持するため除外。
+   .nt-card:hover .nt-char-count primary glow（v23.68）と対称で未ホバー時から
+   文字数カウンターが primary カラーで静かに輝く演出に。ダークモードでは primary-end glow。 */
+.nt-card .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .nt-card .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .fc-cell-hint → static primary text-shadow glow
+   キャッシュフロー予測カードの補足ヒントテキスト（「先月比：+¥12,345」等：color:text-muted→primary）に
+   常時 primary text-shadow を追加。
+   .forecast-card:hover .fc-cell-hint primary glow（v23.69）と対称で未ホバー時から
+   ヒントテキストが primary カラーで静かに輝く演出に。
+   fc-cell-label/fc-cell-amount/fc-progress-label static glow と連動し
+   財務予測カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fc-cell-hint { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fc-cell-hint { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .yi-card-sub → static primary text-shadow glow
+   年間収支インサイトカードのサブテキスト（補足情報：color:text-muted→primary）に
+   常時 primary text-shadow を追加。
+   .yi-card:hover .yi-card-sub primary glow（v23.69）と対称で未ホバー時から
+   サブテキストが primary カラーで静かに輝く演出に。
+   yi-card-value/yi-card-label/yi-half-label/yi-half-val static glow と連動し
+   年間収支カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yi-card-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .nt-saved-at → static primary text-shadow glow
+   ノートカードの保存日時テキスト（「保存: 4/21 14:30」等：color:text-muted→primary）に
+   常時 primary text-shadow を追加。
+   .nt-card:hover .nt-saved-at primary glow（v23.69）と対称で未ホバー時から
+   保存日時が primary カラーで静かに輝く演出に。
+   nt-char-count static glow（④）と連動しノートカード内の補足テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.nt-saved-at { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .nt-saved-at { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .cc-col:has(.cc-col-up/.cc-col-down) .cc-amount → static タイプ別 text-shadow glow
+   固定費比較カードの金額テキスト（tabular-nums・fw-semi）に常時タイプ別 text-shadow を追加。
+   上昇トレンド（up）=danger-text glow・下降トレンド（down）=success glow。
+   .cc-col:has(.cc-col-up/down) .cc-item:hover .cc-amount タイプ別 glow（v23.69）と対称で
+   未ホバー時から金額テキストがトレンドカラーで静かに輝く演出に。
+   cc-name/cc-badge static glow と連動し固定費比較カード内全テキストが常時発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.43・全script/linkタグ?v=24.43に更新。 */
+.cc-col:has(.cc-col-up)   .cc-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.cc-col:has(.cc-col-down) .cc-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
