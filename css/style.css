@@ -30601,4 +30601,97 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.40・全script/linkタグ?v=24.40に更新。 */
 
+/* ============================================================
+   Sprint #837 / v24.41 — static-glow 8箇所
+   ev-card-amount-static-glow＋ev-prog-pct-static-glow＋
+   rc-item-meta-static-glow＋cat-chip-name-static-glow＋
+   hs-item-max-static-glow＋dow-pct(type別)-static-glow＋
+   sub-cycle-tag-static-glow＋pt-card-yen-static-glow
+   ============================================================ */
+
+/* 1. .ev-card-amount → static ev-accent text-shadow glow
+   収支予定カードの金額テキスト（fw-bold・tabular-nums・color:ev-accent）に
+   常時 ev-accent カラーの text-shadow を追加。
+   .ev-card:hover .ev-card-amount ev-accent glow（v23.66）と対称で
+   未ホバー時から収支予定金額がカードテーマカラーで静かに輝く演出に。
+   ev-card-name static glow と連動し収支予定カード内の主要テキストが
+   常時テーマカラーで発光する完成形演出に統一。 */
+.ev-card-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .ev-prog-pct → static primary text-shadow glow
+   収支予定カードの進捗率テキスト（fw-bold・fs-xl・color:primary）に
+   常時 primary カラーの text-shadow を追加。
+   .ev-card:hover .ev-prog-pct primary glow（v23.66）と対称で
+   未ホバー時から進捗率数値が primary カラーで静かに輝く演出に。
+   ev-card-amount static glow（本スプリント①）と連動し収支予定カード内
+   金額・進捗率テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.ev-prog-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ev-prog-pct { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .rc-item-meta → static primary text-shadow glow
+   繰り返し取引カードのメタ情報テキスト（次回実行日・繰り返し頻度：
+   color:text-muted・fs-xs）に常時 primary カラーの text-shadow を追加。
+   .rc-item:hover .rc-item-meta primary glow（v23.54）と対称で
+   未ホバー時からメタ情報テキストが primary カラーで静かに輝く演出に。
+   rc-item-name/rc-item-amount/rc-item-meta static glow と連動し
+   繰り返し取引カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.rc-item-meta { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .rc-item-meta { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .cat-chip-name → static cat-color text-shadow glow
+   カテゴリチップのカテゴリ名テキスト（cat-color 変色・fs-xs）に
+   常時 cat-color カラーの text-shadow を追加。
+   .cat-chip:hover .cat-chip-name cat-color glow（v23.54）と対称で
+   未ホバー時からカテゴリ名テキストがカテゴリテーマカラーで静かに輝く演出に。
+   cat-chip:hover の box-shadow glow と連動しチップ全体が
+   常時テーマカラーで発光する完成形演出に統一。 */
+.cat-chip-name { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .hs-item-max → static hs-bar-color text-shadow glow
+   家計スコア項目の上限値テキスト（「上限: ¥30,000」等：color:text-muted・fs-xs）に
+   常時 hs-bar-color カラーの text-shadow を追加。
+   .hs-item:hover .hs-item-max hs-bar-color glow（v23.76）と対称で
+   未ホバー時から上限テキストがカテゴリテーマカラーで静かに輝く演出に。
+   hs-item-label/hs-item-score static glow と連動し家計スコア項目内
+   全テキストが常時発光する完成形演出に統一。 */
+.hs-item-max { text-shadow: 0 0 6px color-mix(in srgb, var(--hs-bar-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .dow-pct-high/mid/low → static タイプ別 text-shadow glow
+   曜日別統計テーブルの支出割合バッジ（「高」danger/「中」warning/「低」success）に
+   常時タイプ別カラーの text-shadow を追加。
+   .dow-table-row:hover .dow-pct-high/mid/low タイプ別 glow（v23.62）と対称で
+   未ホバー時から各割合バッジがタイプカラーで静的に輝く演出に。
+   dow-label-cell/dow-pct-badge static glow と連動し曜日別テーブル内
+   全要素が常時タイプカラーで発光する完成形演出に統一。
+   ダークモードでは各カラーの end バリアント。 */
+.dow-pct-high { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.dow-pct-mid  { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.dow-pct-low  { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .dow-pct-high { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .dow-pct-mid  { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .dow-pct-low  { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 7. .sub-cycle-tag → static primary text-shadow glow
+   サブスクカードのサイクルタグテキスト（「月払い」「年払い」等：
+   color:text-muted・fs-xs）に常時 primary カラーの text-shadow を追加。
+   .sub-card:hover .sub-cycle-tag primary glow（v23.54）と対称で
+   未ホバー時からサイクルタグが primary カラーで静かに輝く演出に。
+   sub-cycle-unit/sub-monthly-equiv static glow と連動しサブスクカード内
+   金額エリア全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.sub-cycle-tag { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-cycle-tag { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .pt-card-yen → static pt-accent text-shadow glow
+   ポイントカードの円換算テキスト（「≒ ¥XX,XXX」：color:text-muted・fs-sm）に
+   常時 pt-accent カラーの text-shadow を追加。
+   .pt-card:hover .pt-card-yen pt-accent glow（v23.66）と対称で
+   未ホバー時から円換算テキストがカードテーマカラーで静かに輝く演出に。
+   pt-card-name/pt-card-balance static glow と連動しポイントカード内
+   全テキストが常時発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.41・全script/linkタグ?v=24.41に更新。 */
+.pt-card-yen { text-shadow: 0 0 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); }
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
