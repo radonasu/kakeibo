@@ -30694,4 +30694,104 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.41・全script/linkタグ?v=24.41に更新。 */
 .pt-card-yen { text-shadow: 0 0 6px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); }
 
+/* ================================================================
+   Sprint #838 v24.42 static-glow 8箇所
+   （hm-stat-label(type別)-static-glow＋asset-balance-jpy-static-glow＋
+     pt-exp-badge-static-glow＋yr-unit(type別)-static-glow＋
+     dow-table-row-nth3-static-glow＋sub-card-memo-static-glow＋
+     yoy-summary-value-static-glow＋yoy-summary-label-static-glow）
+   ================================================================ */
+
+/* 1. .hm-stat-card:nth-child(N) .hm-stat-label → static タイプ別 text-shadow glow
+   ヒートマップ統計カードのラベルテキストに常時タイプ別 text-shadow を追加。
+   hm-stat-card:nth-child(N):hover .hm-stat-label タイプ別 glow（v23.87）と対称で
+   未ホバー時からラベルがカードテーマカラーで静かに輝く演出に。
+   hm-stat-value static glow（v24.34）・hm-stat-sub static glow（v24.38）と連動し
+   ヒートマップ統計カード内全テキストが常時発光する完成形演出に統一。 */
+.hm-stat-card:nth-child(1) .hm-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(2) .hm-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(3) .hm-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(4) .hm-stat-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(1) .hm-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(2) .hm-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) .hm-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) .hm-stat-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 2. .asset-balance-jpy → static primary text-shadow glow
+   外貨資産カードの円換算額テキストに常時 primary カラーの text-shadow を追加。
+   .asset-card:hover .asset-balance-jpy primary glow（v23.87）と対称で
+   未ホバー時から円換算テキストが primary カラーで静かに輝く演出に。
+   asset-balance static glow（v24.05）と連動し外貨資産カード内全金額テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.asset-balance-jpy { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-balance-jpy { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .pt-exp-badge → static primary text-shadow glow
+   ポイントカードの期限バッジ（「通常」等の有効期限バッジ：color:primary）に
+   常時 primary カラーの text-shadow を追加。
+   .pt-card:hover .pt-exp-badge primary glow（v23.xx）と対称で
+   未ホバー時から期限バッジが primary カラーで静かに輝く演出に。
+   pt-urgent-badge/pt-soon-badge static glow（v23.23）と連動し
+   ポイントカード期限バッジ系が常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.pt-exp-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .pt-exp-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .yr-cell-* .yr-unit → static タイプ別 text-shadow glow
+   年次ウィジェットセルの単位テキスト（「円」「%」等）に常時タイプ別 text-shadow を追加。
+   yr-cell-*:hover .yr-unit タイプ別 glow（v23.xx）と対称で
+   未ホバー時から単位テキストがタイプカラーで静かに輝く演出に。
+   yr-cell-value/yr-cell-label static glow（v24.xx）と連動しセル内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは各type-end glow。 */
+.yr-cell-income          .yr-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.yr-cell-expense         .yr-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.yr-cell-savings-success .yr-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.yr-cell-savings-warn    .yr-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.yr-cell-savings-danger  .yr-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-income          .yr-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-cell-expense         .yr-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-cell-savings-success .yr-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-cell-savings-warn    .yr-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+[data-theme="dark"] .yr-cell-savings-danger  .yr-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 5. .dow-table-row td:nth-child(3) → static expense text-shadow glow
+   曜日別統計テーブルの3列目（平均支出金額列：tabular-nums・color:danger-text）に
+   常時 danger-text カラーの text-shadow を追加。
+   .dow-table-row:hover td:nth-child(3) expense glow（v23.xx）と対称で
+   未ホバー時から支出金額が danger-text カラーで静かに輝く演出に。
+   dow-label-cell static glow（v24.38）・dow-table-row td:nth-child(2/4) static glow と連動し
+   曜日別テーブル内全テキスト常時発光完成形に統一。ダークモードでは expense-end glow。 */
+.dow-table-row td:nth-child(3) { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .dow-table-row td:nth-child(3) { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 6. .sub-card-memo → static primary text-shadow glow
+   サブスクリプションカードのメモテキスト（color:text-muted・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .sub-card:hover .sub-card-memo primary glow（v23.xx）と対称で
+   未ホバー時からメモが primary カラーで静かに輝く演出に。
+   sub-card-name/cycle-unit/cycle-tag/next-billing static glow と連動し
+   サブスクカード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.sub-card-memo { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-card-memo { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .yoy-summary-value → static primary text-shadow glow
+   前年比サマリーアイテムの金額数値テキスト（fw-bold・tabular-nums）に
+   常時 primary カラーの text-shadow を追加。
+   .yoy-summary-item:hover .yoy-summary-value primary glow（v23.87）と対称で
+   未ホバー時から金額数値が primary カラーで静かに輝く演出に。
+   yoy-summary-label static glow（⑧）と連動しサマリーアイテム内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yoy-summary-value { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yoy-summary-value { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .yoy-summary-label → static primary text-shadow glow
+   前年比サマリーアイテムのラベルテキスト（fs-sm・color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .yoy-summary-item:hover .yoy-summary-label primary glow（v23.87）と対称で
+   未ホバー時からラベルが primary カラーで静かに輝く演出に。
+   yoy-summary-value static glow（⑦）と連動しサマリーアイテム内全テキストが
+   常時発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.42・全script/linkタグ?v=24.42に更新。 */
+.yoy-summary-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yoy-summary-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
