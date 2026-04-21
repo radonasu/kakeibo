@@ -32010,3 +32010,61 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ch-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.56・全script/linkタグ?v=24.56に更新。 */
+
+/* ============================================================
+   Sprint #853 / v24.57 — dark-mode static-glow 補完 8箇所
+   debt-name-dark-glow＋asset-name-dark-glow＋
+   pt-card-name-dark-glow＋sub-card-name-dark-glow＋
+   ci-event-name-dark-glow＋opp-title-dark-glow＋
+   ch-card-name-dark-glow＋debt-widget-name-dark-glow
+   ============================================================ */
+
+/* 1. .debt-name → dark mode static debt-accent text-shadow glow 追加
+   負債カードの負債名テキストにダークモード専用の静的 debt-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   rc-item-name dark glow（v24.05）と同パターンでカード名テキストのダーク演出を統一。 */
+[data-theme="dark"] .debt-name { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .asset-name → dark mode static asset-accent text-shadow glow 追加
+   資産カードの資産名テキストにダークモード専用の静的 asset-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   debt-name dark glow（①）と連動しアクセント系カード名テキストのダーク演出を統一。 */
+[data-theme="dark"] .asset-name { text-shadow: 0 0 7px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .pt-card-name → dark mode static pt-accent text-shadow glow 追加
+   ポイントカードのカード名テキストにダークモード専用の静的 pt-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ①②と連動しアクセント系カード名テキストのダーク演出を統一。 */
+[data-theme="dark"] .pt-card-name { text-shadow: 0 0 7px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .sub-card-name → dark mode static sub-accent text-shadow glow 追加
+   サブスクカードのサービス名テキストにダークモード専用の静的 sub-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ①②③と連動しアクセント系カード名テキストのダーク演出を統一。 */
+[data-theme="dark"] .sub-card-name { text-shadow: 0 0 7px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .ci-event-name → dark mode static ci-ev-accent text-shadow glow 追加
+   カレンダーイベントアイテムのイベント名テキストにダークモード専用の静的 ci-ev-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ci-challenge-name dark glow（v24.06）と連動しチェックイン関連テキストのダーク演出を統一。 */
+[data-theme="dark"] .ci-event-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .opp-title → dark mode static opp-accent text-shadow glow 追加
+   節約チャンスカードのタイトルテキストにダークモード専用の静的 opp-accent glow を追加。
+   ライトモード static glow（v24.05）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ①〜⑤と連動しアクセント系カード名テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .opp-title { text-shadow: 0 0 7px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .ch-card-name → dark mode static ch-accent text-shadow glow 追加
+   チャレンジカードのチャレンジ名テキストにダークモード専用の静的 ch-accent glow を追加。
+   ライトモード static glow（v24.05/v24.06）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-widget-name dark glow（v24.56）と連動しチャレンジ関連テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-card-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .debt-widget-name → dark mode static debt-accent text-shadow glow 追加
+   負債ウィジェット行の負債名テキストにダークモード専用の静的 debt-accent glow を追加。
+   ライトモード static glow（v24.07）は既存。ダークモード対称の glow が欠落しており今回補完。
+   debt-name dark glow（①）と連動し負債カード・ウィジェット双方のダーク演出を完成形に統一。 */
+[data-theme="dark"] .debt-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.57・全script/linkタグ?v=24.57に更新。 */
