@@ -30409,4 +30409,106 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.38・全script/linkタグ?v=24.38に更新。 */
 
+/* ============================================================
+   Sprint #835 / v24.39 — static-glow 8箇所
+   yr-topcat-amt-static-glow＋wk-cell-sub(type別)-static-glow＋
+   ci-score-label-static-glow＋asset-fx-rate-static-glow＋
+   pace-daily-label(status別)-static-glow＋wk-unit(type別)-static-glow＋
+   dw-item-label-static-glow＋sf-chip-static-glow
+   ============================================================ */
+
+/* 1. .yr-topcat-amt → static primary text-shadow glow
+   年次ウィジェットの年間トップカテゴリ金額テキスト（color:danger-text・fs-xs・fw-semi）に
+   常時 primary カラーの text-shadow を追加。
+   yr-widget-card:hover .yr-topcat-amt primary glow（v23.x）と対称で
+   未ホバー時からトップカテゴリ金額が primary カラーで静かに輝く演出に。
+   yr-topcat-label static glow（v23.x）・yr-elapsed-badge static glow（v23.x）と連動し
+   年次ウィジェット内テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.yr-topcat-amt { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-topcat-amt { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 2. .wk-summary-row .wk-cell:nth-child(N) .wk-cell-sub → static タイプ別 text-shadow glow
+   ウィークリーサマリーセルの補助テキスト（「/日」「収支」等：color:text-sub・fs-xs）に
+   常時タイプ別カラーの text-shadow を追加（1=danger-text / 2=primary / 3=success）。
+   wk-cell:nth-child(1/2/3):hover .wk-cell-sub glow（v23.x）と対称で
+   未ホバー時から補助テキストが静かに輝く演出に。
+   wk-cell-value static glow（v24.x）と連動しセル内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは各タイプの end カラー glow。 */
+.wk-summary-row .wk-cell:nth-child(1) .wk-cell-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(2) .wk-cell-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(3) .wk-cell-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1) .wk-cell-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2) .wk-cell-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3) .wk-cell-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 3. .ci-score-label → static primary text-shadow glow
+   チェックアップスコア行のスコアラベルテキスト（color:text-sub・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   ci-score-row:hover .ci-score-label primary glow（v23.x）と対称で
+   未ホバー時からスコアラベルが primary カラーで静かに輝く演出に。
+   ci-score-badge static glow（v23.x）と連動しスコア行全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.ci-score-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-score-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 4. .asset-fx-rate → static primary text-shadow glow
+   資産カードの為替レートテキスト（color:text-sub・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   asset-card:hover .asset-fx-rate primary glow（v23.x）と対称で
+   未ホバー時から為替レートテキストが primary カラーで静かに輝く演出に。
+   asset-name static glow（v22.x）・asset-balance static glow（v23.x）と連動し
+   資産カード内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.asset-fx-rate { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-fx-rate { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 5. .pace-daily-label → static ステータス別 text-shadow glow
+   ペース日別ラベルテキスト（「〇日」等：color:text-sub・fs-xs）に
+   常時ステータス別カラーの text-shadow を追加（pace-good=success / pace-warn=warning / pace-over=danger-text）。
+   pace-daily-cell:has(.pace-daily-val.pace-*):hover .pace-daily-label glow（v23.x）と対称で
+   未ホバー時からラベルテキストがステータスカラーで静かに輝く演出に。
+   pace-daily-val static glow（v23.x）と連動しペースセル内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは各ステータスの end カラー glow。 */
+.pace-daily-cell:has(.pace-daily-val.pace-good) .pace-daily-label { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.pace-daily-cell:has(.pace-daily-val.pace-warn) .pace-daily-label { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.pace-daily-cell:has(.pace-daily-val.pace-over) .pace-daily-label { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good) .pace-daily-label { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn) .pace-daily-label { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over) .pace-daily-label { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .wk-summary-row .wk-cell:nth-child(N) .wk-unit → static タイプ別 text-shadow glow
+   ウィークリーサマリーセルの単位テキスト（「円」等：color:text-faint・fs-xs）に
+   常時タイプ別カラーの text-shadow を追加（1=danger-text / 2=primary / 3=success）。
+   wk-cell:nth-child(1/2/3):hover .wk-unit glow（v23.x）と対称で
+   未ホバー時から単位テキストが静かに輝く演出に。
+   wk-cell-value static glow（v24.x）・wk-cell-sub static glow（本スプリント）と連動し
+   セル内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは各タイプの end カラー glow。 */
+.wk-summary-row .wk-cell:nth-child(1) .wk-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(2) .wk-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.wk-summary-row .wk-cell:nth-child(3) .wk-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1) .wk-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2) .wk-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3) .wk-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 7. .dw-item-label → static primary text-shadow glow
+   ダッシュボードウィジェットアイテムのラベルテキスト（color:text-sub・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   dw-item:hover .dw-item-label primary glow（v23.x）と対称で
+   未ホバー時からアイテムラベルが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end フォールバック glow。 */
+.dw-item-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .dw-item-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 8. .sf-chip → static primary text-shadow glow
+   検索フィルタチップのテキスト（color:text・fs-sm）に常時 primary カラーの text-shadow を追加。
+   sf-chip:hover primary glow（v23.x）と対称で
+   未ホバー時からフィルタチップが primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end フォールバック glow。 */
+.sf-chip { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sf-chip { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.39・全script/linkタグ?v=24.39に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
