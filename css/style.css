@@ -32068,3 +32068,61 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.57・全script/linkタグ?v=24.57に更新。 */
+
+/* ============================================================
+   Sprint #854 / v24.58 — dark-mode static-glow 補完 8箇所
+   ev-widget-name-dark-glow＋ev-widget-amount-dark-glow＋
+   ev-card-amount-dark-glow＋ci-event-amount-dark-glow＋
+   cat-chip-name-dark-glow＋pt-card-yen-dark-glow＋
+   debt-rate-badge-dark-glow＋hs-item-max-dark-glow
+   ============================================================ */
+
+/* 1. .ev-widget-name → dark mode static ev-accent text-shadow glow 追加
+   収支予定ウィジェット行の予定名テキストにダークモード専用の静的 ev-accent glow を追加。
+   ライトモード static glow（v24.29）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ev-widget-amount dark glow（本スプリント②）と連動し収支予定ウィジェット行名・金額のダーク演出を統一。 */
+[data-theme="dark"] .ev-widget-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .ev-widget-amount → dark mode static ev-accent text-shadow glow 追加
+   収支予定ウィジェット行の金額テキストにダークモード専用の静的 ev-accent glow を追加。
+   ライトモード static glow（v24.29）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ev-widget-name dark glow（①）と連動し収支予定ウィジェット行の名称・金額がダークモードでも常時発光する完成形に。 */
+[data-theme="dark"] .ev-widget-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .ev-card-amount → dark mode static ev-accent text-shadow glow 追加
+   収支予定カードの金額テキストにダークモード専用の静的 ev-accent glow を追加。
+   ライトモード static glow（v24.41）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ev-widget-name/amount dark glow（①②）と連動し収支予定関連テキストのダーク演出を統一。 */
+[data-theme="dark"] .ev-card-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .ci-event-amount → dark mode static ci-ev-accent text-shadow glow 追加
+   月次レビューイベントアイテムの金額テキストにダークモード専用の静的 ci-ev-accent glow を追加。
+   ライトモード static glow（v24.31）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ci-event-name dark glow（v24.57）と連動しイベントアイテム内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ci-event-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .cat-chip-name → dark mode static cat-color text-shadow glow 追加
+   カテゴリチップの名称テキストにダークモード専用の静的 cat-color glow を追加。
+   ライトモード static glow（v24.41）は既存。ダークモード対称の glow が欠落しており今回補完。
+   cat-card-name static glow（v24.08）と同パターンでカテゴリ関連テキストのダーク演出を統一。 */
+[data-theme="dark"] .cat-chip-name { text-shadow: 0 0 7px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .pt-card-yen → dark mode static pt-accent text-shadow glow 追加
+   ポイントカードの円換算テキストにダークモード専用の静的 pt-accent glow を追加。
+   ライトモード static glow（v24.42）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pt-card-name dark glow（v24.57）と連動しポイントカード内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .pt-card-yen { text-shadow: 0 0 7px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .debt-rate-badge → dark mode static debt-accent text-shadow glow 追加
+   負債カードの年利バッジテキストにダークモード専用の静的 debt-accent glow を追加。
+   ライトモード static glow（v24.30）は既存。ダークモード対称の glow が欠落しており今回補完。
+   debt-name dark glow（v24.57）と連動し負債カード内バッジ・名称がダークモードでも常時発光する完成形に。 */
+[data-theme="dark"] .debt-rate-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-sm), transparent); }
+
+/* 8. .hs-item-max → dark mode static hs-bar-color text-shadow glow 追加
+   ヘルススコアアイテムの最大値テキストにダークモード専用の静的 hs-bar-color glow を追加。
+   ライトモード static glow（v24.41）は既存。ダークモード対称の glow が欠落しており今回補完。
+   hs-item-label/hs-item-score dark glow（v24.x）と連動しヘルスカード内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .hs-item-max { text-shadow: 0 0 7px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.58・全script/linkタグ?v=24.58に更新。 */
