@@ -30214,4 +30214,104 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.36・全script/linkタグ?v=24.36に更新。 */
 
+/* ============================================================
+   Sprint #833 / v24.37 — static-glow 8箇所
+   cat-badge＋yr-prev-badge(type別)＋ci-badge-failed＋ct-table-text-muted＋
+   goal-achieved-summary＋sub-inactive-summary＋wl-archive-summary＋ch-archive-summary
+   ============================================================ */
+
+/* 1. .cat-badge → static primary text-shadow glow
+   年次ウィジェットカード・取引テーブル行のカテゴリバッジテキスト（color:primary・fs-xs）に
+   常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .cat-badge primary glow（v23.83）・
+   .tx-table tbody tr:hover .cat-badge primary glow（v23.83）と対称で
+   未ホバー時からカテゴリバッジが primary カラーで静かに輝く演出に。
+   ev-cat-badge static glow（v24.x）と同パターンでカテゴリバッジ演出を統一。
+   ダークモードでは primary-end glow。 */
+.cat-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .yr-prev-badge → タイプ別 static text-shadow glow
+   年次テーブルの前年比較バッジ（「▲+5%」「▼-3%」等）に常時タイプ別カラーの text-shadow を追加。
+   income / savings-success セル = success glow /
+   expense / savings-danger セル = danger-text glow /
+   savings-warn セル = warning glow。
+   各 yr-cell-*:hover .yr-prev-badge タイプ別 glow（v23.83）と対称で
+   未ホバー時から前年比バッジがタイプカラーで静かに輝く演出に。
+   ダークモードでは income-end / expense-end / warning glow。 */
+.yr-cell-income .yr-prev-badge,
+.yr-cell-savings-success .yr-prev-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-income .yr-prev-badge,
+[data-theme="dark"] .yr-cell-savings-success .yr-prev-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+.yr-cell-expense .yr-prev-badge,
+.yr-cell-savings-danger .yr-prev-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-expense .yr-prev-badge,
+[data-theme="dark"] .yr-cell-savings-danger .yr-prev-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+.yr-cell-savings-warn .yr-prev-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-cell-savings-warn .yr-prev-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 3. .ci-badge.failed → static primary text-shadow glow
+   マンスリーチェックインの「未達」バッジ（.ci-badge.failed：color:text-muted・border付き）に
+   常時 primary カラーの text-shadow を追加。
+   .ci-challenge-item:hover .ci-badge.failed primary glow（v23.83）と対称で
+   未ホバー時から未達バッジが primary カラーで静かに輝く演出に。
+   .ci-badge.achieved static success glow（v24.x）と対称で
+   チェックインバッジ演出の完成形に統一。ダークモードでは primary-end glow。 */
+.ci-badge.failed { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ci-badge.failed { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .ct-table tbody tr td.text-muted → static primary text-shadow glow
+   カテゴリ別集計テーブル行の補足テキストセル（color:text-muted・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .ct-table tbody tr:hover td.text-muted primary glow（v23.83）と対称で
+   未ホバー時から補足テキストが primary カラーで静かに輝く演出に。
+   ct-row-total static glow（v24.x）と連動しテーブル行内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.ct-table tbody tr td.text-muted { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-table tbody tr td.text-muted { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .goal-achieved-summary → static primary text-shadow glow
+   目標達成済みアーカイブの折りたたみ見出し（「達成した目標 (N件)」等：color:primary・fs-sm）に
+   常時 primary カラーの text-shadow を追加。
+   .goal-achieved-summary:hover primary glow（v23.85）と対称で
+   未ホバー時から見出しが primary カラーで静かに輝く演出に。
+   stp-config-summary static glow（v24.36）と同パターンで折りたたみ見出し演出を統一。
+   ダークモードでは primary-end glow。 */
+.goal-achieved-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .goal-achieved-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .sub-inactive-section summary → static primary text-shadow glow
+   サブスク停止中セクションの折りたたみ見出し（「停止中のサブスク (N件)」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .sub-inactive-section summary:hover primary glow（v23.85）と対称で
+   未ホバー時から見出しが primary カラーで静かに輝く演出に。
+   goal-achieved-summary static glow（本スプリント⑤）と同パターンで折りたたみ見出し演出を統一。
+   ダークモードでは primary-end glow。 */
+.sub-inactive-section summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .sub-inactive-section summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .wl-archive-summary → static primary text-shadow glow
+   ウィッシュリストアーカイブの折りたたみ見出し（「購入済み (N件)」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .wl-archive-summary:hover primary glow（v23.85）と対称で
+   未ホバー時から見出しが primary カラーで静かに輝く演出に。
+   goal-achieved-summary/sub-inactive-section summary static glow（本スプリント⑤⑥）と
+   連動しアーカイブ折りたたみ見出し演出の完成形に統一。ダークモードでは primary-end glow。 */
+.wl-archive-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .wl-archive-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .ch-archive-summary → static primary text-shadow glow
+   チャレンジアーカイブの折りたたみ見出し（「過去のチャレンジ (N件)」等：color:text-muted）に
+   常時 primary カラーの text-shadow を追加。
+   .ch-archive-summary:hover primary glow（v23.85）と対称で
+   未ホバー時から見出しが primary カラーで静かに輝く演出に。
+   wl-archive-summary static glow（本スプリント⑦）と連動し
+   アーカイブ折りたたみ見出し演出の完成形に統一。ダークモードでは primary-end glow。 */
+.ch-archive-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-archive-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.37・全script/linkタグ?v=24.37に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
