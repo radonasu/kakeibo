@@ -31141,3 +31141,93 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ci-close { text-shadow: 0 0 8px rgba(255, 255, 255, 0.18); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.46・全script/linkタグ?v=24.46に更新。 */
+
+/* ============================================================
+   Sprint #843 / v24.47 — static-glow 8箇所
+   edit-tx-static-glow＋delete-tx-static-glow＋dup-tx-static-glow＋
+   btn-link-static-glow＋btn-inline-add-static-glow＋
+   tx-sort-badge-static-glow＋notif-mark-read-static-glow＋
+   md-nav-btn-static-glow
+   ============================================================ */
+
+/* 1. .edit-tx → static primary text-shadow glow
+   取引テーブルの編集ボタン（✏アイコン）に常時 primary カラーの
+   text-shadow を追加。
+   .edit-tx:hover primary glow（v23.90）と対称で
+   未ホバー時から編集ボタンが primary カラーで静かに輝く演出に。
+   delete-tx/dup-tx static glow（②③）と連動し
+   取引アクションボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.edit-tx { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .edit-tx { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .delete-tx → static danger-text text-shadow glow
+   取引テーブルの削除ボタン（🗑アイコン）に常時 danger-text カラーの
+   text-shadow を追加。
+   .delete-tx:hover danger-text glow（v23.90）と対称で
+   未ホバー時から削除ボタンが danger-text カラーで静かに輝く演出に。
+   edit-tx/dup-tx static glow（①③）と連動し
+   取引アクションボタン全体の静的発光演出を統一。ダークモードでは expense-end glow。 */
+.delete-tx { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .delete-tx { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .dup-tx → static warning text-shadow glow
+   取引テーブルの複製ボタン（📋アイコン）に常時 warning カラーの
+   text-shadow を追加。
+   .dup-tx:hover warning glow（v23.90）と対称で
+   未ホバー時から複製ボタンが warning カラーで静かに輝く演出に。
+   edit-tx/delete-tx static glow（①②）と連動し
+   取引アクションボタン全体の静的発光演出を統一。 */
+.dup-tx { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)      var(--mix-xs), transparent); }
+[data-theme="dark"] .dup-tx { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+
+/* 4. .btn-link → static primary text-shadow glow
+   リンク型ボタン（テキストリンク形式）に常時 primary カラーの
+   text-shadow を追加。
+   .btn-link:hover primary glow（v23.90）と対称で
+   未ホバー時からリンクボタンが primary カラーで静かに輝く演出に。
+   btn-inline-add static glow（⑤）と連動しインライン操作ボタンの
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-link { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-link { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .btn-inline-add → static primary text-shadow glow
+   インライン追加ボタン（「＋ 追加」等）に常時 primary カラーの
+   text-shadow を追加。
+   .btn-inline-add:hover primary glow（v23.90）と対称で
+   未ホバー時からインライン追加ボタンが primary カラーで静かに輝く演出に。
+   btn-link static glow（④）と連動しインライン操作ボタンの
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-inline-add { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-inline-add { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .tx-sort-badge → static primary text-shadow glow
+   取引テーブルのソートバッジボタン（「↑名前」等）に常時 primary カラーの
+   text-shadow を追加。
+   .tx-sort-badge:hover primary glow（v23.90）と対称で
+   未ホバー時からソートバッジが primary カラーで静かに輝く演出に。
+   edit-tx/delete-tx/dup-tx static glow（①②③）と連動し
+   取引テーブル操作UI全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.tx-sort-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tx-sort-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .notif-mark-read → static primary text-shadow glow
+   通知パネルの「既読にする」ボタンに常時 primary カラーの
+   text-shadow を追加。
+   .notif-mark-read:hover primary glow（v23.90）と対称で
+   未ホバー時から既読ボタンが primary カラーで静かに輝く演出に。
+   md-nav-btn static glow（⑧）と連動し操作ボタンの
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.notif-mark-read { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .notif-mark-read { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .md-nav-btn:not(:disabled) → static primary text-shadow glow
+   月次詳細の前月/次月ナビゲーションボタンに常時 primary カラーの
+   text-shadow を追加（disabled 状態は除外）。
+   .md-nav-btn:hover:not(:disabled) primary glow（v23.90）と対称で
+   未ホバー時からナビボタンが primary カラーで静かに輝く演出に。
+   notif-mark-read static glow（⑦）と連動しナビゲーション・操作ボタンの
+   静的発光演出を統一。ダークモードでは primary-end glow。 */
+.md-nav-btn:not(:disabled) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-nav-btn:not(:disabled) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.47・全script/linkタグ?v=24.47に更新。 */
