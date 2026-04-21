@@ -30973,3 +30973,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.44・全script/linkタグ?v=24.44に更新。 */
 .ct-table tbody tr .ct-cell-val { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .ct-table tbody tr .ct-cell-val { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #841 / v24.45 — static-glow 8箇所
+   modal-close-static-glow＋adv-filter-toggle-static-glow＋
+   adv-filter-clear-static-glow＋goal-emoji-btn-static-glow＋
+   ev-emoji-chip-static-glow＋pt-emoji-btn-static-glow＋
+   ch-emoji-btn-static-glow＋rc-close-static-glow
+   ============================================================ */
+
+/* 1. .modal-close → static danger-text text-shadow glow
+   モーダルの閉じるボタン（×アイコン：color:text-muted）に常時 danger-text カラーの
+   text-shadow を追加。
+   .modal-close:hover danger-text glow（v23.72）と対称で
+   未ホバー時からモーダルクローズボタンが danger-text カラーで静かに輝く演出に。
+   rc-close static glow（⑧）と連動し閉じる系ボタン全体の静的発光演出を統一。
+   ダークモードでは expense-end glow。 */
+.modal-close { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .modal-close { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 2. .adv-filter-toggle → static primary text-shadow glow
+   詳細フィルタのトグルボタン（「絞り込み ▼」等）に常時 primary カラーの
+   text-shadow を追加。
+   .adv-filter-toggle:hover primary glow（v23.72）と対称で
+   未ホバー時からフィルタトグルが primary カラーで静かに輝く演出に。
+   notif-toggle-label/recurring-toggle-label static glow と同パターンで
+   トグル系ボタンの静的発光演出を統一。ダークモードでは primary-end glow。 */
+.adv-filter-toggle { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-filter-toggle { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .adv-filter-clear → static danger-text text-shadow glow
+   詳細フィルタのクリアボタン（「クリア」等：color:danger-text）に常時 danger-text カラーの
+   text-shadow を追加。
+   .adv-filter-clear:hover danger-text glow（v23.85）と対称で
+   未ホバー時からクリアボタンが danger-text カラーで静かに輝く演出に。
+   modal-close static glow（①）と同パターンで破壊的操作ボタンの静的発光演出を統一。
+   ダークモードでは expense-end glow。 */
+.adv-filter-clear { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .adv-filter-clear { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 4. .goal-emoji-btn → static primary text-shadow glow
+   目標モーダルの絵文字ピッカーボタン（大型絵文字：fs-2xl）に常時 primary カラーの
+   text-shadow を追加。
+   .goal-emoji-btn:hover primary glow（v23.90）と対称で
+   未ホバー時から絵文字ボタンが primary カラーで静かに輝く演出に。
+   ev-emoji-chip/pt-emoji-btn/ch-emoji-btn static glow（⑤⑥⑦）と連動し
+   絵文字選択系ボタン全体の静的発光演出を統一。 */
+.goal-emoji-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 5. .ev-emoji-chip → static primary text-shadow glow
+   収支予定モーダルの絵文字チップ（絵文字選択UI）に常時 primary カラーの
+   text-shadow を追加。
+   .ev-emoji-chip:hover primary glow（v23.90）と対称で
+   未ホバー時から絵文字チップが primary カラーで静かに輝く演出に。
+   goal-emoji-btn/pt-emoji-btn/ch-emoji-btn static glow と連動し
+   絵文字選択系ボタン全体の静的発光演出を統一。 */
+.ev-emoji-chip { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 6. .pt-emoji-btn → static primary text-shadow glow
+   ポートフォリオモーダルの絵文字ボタン（大型絵文字：fs-2xl）に常時 primary カラーの
+   text-shadow を追加。
+   .pt-emoji-btn:hover primary glow（v23.90）と対称で
+   未ホバー時から絵文字ボタンが primary カラーで静かに輝く演出に。
+   goal-emoji-btn/ev-emoji-chip/ch-emoji-btn static glow と連動し
+   絵文字選択系ボタン全体の静的発光演出を統一。 */
+.pt-emoji-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 7. .ch-emoji-btn → static primary text-shadow glow
+   チャレンジモーダルの絵文字ボタン（大型絵文字：fs-2xl）に常時 primary カラーの
+   text-shadow を追加。
+   .ch-emoji-btn:hover primary glow（v23.90）と対称で
+   未ホバー時から絵文字ボタンが primary カラーで静かに輝く演出に。
+   goal-emoji-btn/ev-emoji-chip/pt-emoji-btn static glow と連動し
+   絵文字選択系ボタン全体の静的発光演出を統一。 */
+.ch-emoji-btn { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 8. .rc-close → static danger-text text-shadow glow
+   定期収支モーダルの閉じるボタン（×アイコン：color:danger）に常時 danger-text カラーの
+   text-shadow を追加。
+   .rc-close:hover danger-text glow（v23.90）と対称で
+   未ホバー時からクローズボタンが danger-text カラーで静かに輝く演出に。
+   modal-close static glow（①）と連動し閉じる系ボタン全体の静的発光演出を統一。
+   ダークモードでは expense-end glow。 */
+.rc-close { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .rc-close { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.45・全script/linkタグ?v=24.45に更新。 */
