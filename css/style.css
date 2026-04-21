@@ -30314,4 +30314,99 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.37・全script/linkタグ?v=24.37に更新。 */
 
+/* ============================================================
+   Sprint #834 / v24.38 — static-glow 8箇所
+   debt-archive-summary-static-glow＋cc-badge-type-static-glow＋
+   fv-month-total-static-glow＋cat-stat-lbl-static-glow＋
+   hm-stat-sub-static-glow＋dow-label-cell-static-glow＋
+   yi-card-unit-static-glow＋cal-ev-badge-static-glow
+   ============================================================ */
+
+/* 1. .debt-archive-summary → static primary text-shadow glow
+   負債の「✓ 完済済み」アーカイブ折りたたみ見出しに常時 primary カラーの text-shadow を追加。
+   .debt-archive-summary:hover primary glow（v23.89）と対称で未ホバー時から
+   アーカイブ見出しが primary カラーで静かに輝く演出に。
+   ch-archive-summary/wl-archive-summary static glow（v24.37）と連動し
+   全アーカイブ折りたたみ見出しが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.debt-archive-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .debt-archive-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .cc-col:has(.cc-col-up/.cc-col-down) .cc-badge → static タイプ別 text-shadow glow
+   カテゴリ比較ウィジェットのバッジテキスト（「増加」「減少」等）に常時タイプ別カラーの
+   text-shadow を追加。上昇列（cc-col-up）= expense / 下降列（cc-col-down）= success。
+   .cc-col:has(.cc-col-up/.cc-col-down) .cc-item:hover .cc-badge タイプ別 glow（v23.82）と対称で
+   未ホバー時からバッジがタイプカラーで静かに輝く演出に。
+   cc-name static glow と連動し cc-item ウィジェット内テキストが常時発光する完成形演出に統一。
+   ダークモードでは expense-end/income-end glow。 */
+.cc-col:has(.cc-col-up)   .cc-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+.cc-col:has(.cc-col-down) .cc-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* 3. .fv-month-table tbody tr td:nth-child(4) → static primary text-shadow glow
+   財務予測月次テーブルの4列目（合計金額列・クラス名なし）に常時 primary カラーの
+   text-shadow を追加。.fv-month-table tbody tr:hover td:nth-child(4) primary glow（v23.77）と対称で
+   未ホバー時から合計金額列が primary カラーで静かに輝く演出に。
+   fv-month-cell/fv-fixed-val/fv-var-val static glow と連動し財務予測テーブル内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fv-month-table tbody tr td:nth-child(4) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-month-table tbody tr td:nth-child(4) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .cat-stat-lbl → static cat-clr text-shadow glow
+   カテゴリカードの統計ラベルテキスト（「支出」「予算」「件数」等）に常時 cat-clr カラーの
+   text-shadow を追加。.cat-card:hover .cat-stat-lbl cat-clr glow（v23.75）と対称で
+   未ホバー時からカテゴリ統計ラベルがカードテーマカラーで静かに輝く演出に。
+   cat-card-name/cat-stat-val static glow と連動しカテゴリカード内
+   名称・統計値・ラベルが常時揃ってテーマカラーで発光する完成形演出に統一。
+   ダークモードでは cat-clr カラーでわずかに強い glow。 */
+.cat-stat-lbl { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-stat-lbl { text-shadow: 0 0 7px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .hm-stat-card:nth-child(N) .hm-stat-sub → static タイプ別 text-shadow glow
+   ヒートマップ統計カードのサブ情報テキスト（「支出最大: ¥xx,xxx」等）に常時タイプ別カラーの
+   text-shadow を追加（1=primary / 2=expense / 3=warning / 4=success）。
+   .hm-stat-card:nth-child(N):hover .hm-stat-sub タイプ別 glow（v23.75）と対称で
+   未ホバー時からサブ情報テキストがテーマカラーで静かに輝く演出に。
+   hm-stat-value static glow（v24.02）と連動し統計カード内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは各対応カラー強化。 */
+.hm-stat-card:nth-child(1) .hm-stat-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(2) .hm-stat-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(3) .hm-stat-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(4) .hm-stat-sub { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(1) .hm-stat-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(2) .hm-stat-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(3) .hm-stat-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(4) .hm-stat-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 6. .dow-label-cell → static primary text-shadow glow
+   曜日別統計テーブルの曜日ラベルセルテキスト（color:primary・fw-medium）に常時 primary カラーの
+   text-shadow を追加。.dow-table-row:hover .dow-label-cell primary glow（v23.75）と対称で
+   未ホバー時から曜日ラベルが primary カラーで静かに輝く演出に。
+   dow-pct-badge static glow と連動し曜日別テーブル内
+   ラベル・バッジが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.dow-label-cell { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .dow-label-cell { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 7. .yi-card-unit → static primary text-shadow glow
+   年次インサイトカードの単位テキスト（「%」「ヶ月」「円」等・color:text-muted）に常時 primary カラーの
+   text-shadow を追加。.yi-card:hover .yi-card-unit primary glow（v23.75）と対称で
+   未ホバー時から単位テキストが primary カラーで静かに輝く演出に。
+   yi-card-value/yi-card-label/yi-card-sub/yi-half-label/yi-half-val static glow と連動し
+   年次インサイトカード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.yi-card-unit { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+[data-theme="dark"] .yi-card-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .cal-ev-item:not(.cal-ev-done) .cal-ev-badge → static cal-ev-color text-shadow glow
+   カレンダーイベント行（未完了）のバッジテキスト（「完了」「予定」等：color:cal-ev-color）に
+   常時 cal-ev-color カラーの text-shadow を追加。
+   .cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge cal-ev-color glow（v23.75）と対称で
+   未ホバー時からイベントバッジがイベントカラーで静かに輝く演出に。
+   cal-ev-name static glow（v24.32）・cal-ev-amount static glow（v24.01）と連動し
+   カレンダーイベント行内全テキストが常時発光する完成形演出に統一。
+   ダークモードでは primary-end フォールバック glow。 */
+.cal-ev-item:not(.cal-ev-done) .cal-ev-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done) .cal-ev-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.38・全script/linkタグ?v=24.38に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.35・全script/linkタグ?v=24.35に更新。 */
