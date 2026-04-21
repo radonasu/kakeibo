@@ -31869,3 +31869,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.54・全script/linkタグ?v=24.54に更新。 */
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.52・全script/linkタグ?v=24.52に更新。 */
+
+/* ============================================================
+   Sprint #851 / v24.55 — static-glow 8箇所
+   cat-budget-pct-static-glow＋yr-avg-val-static-glow＋
+   cal-date-num-static-glow＋asset-entry-date-static-glow＋
+   asset-entry-note-static-glow＋md-cell-count-label-static-glow＋
+   goal-dash-name-dark-glow＋goal-dash-amount-dark-glow
+   ============================================================ */
+
+/* 1. .cat-budget-pct（base）→ static cat-clr text-shadow glow
+   カテゴリーカードの予算達成率テキスト（base・修飾子なし状態）に
+   常時 cat-clr（カテゴリー独自色）/ primary フォールバックの text-shadow を追加。
+   .cat-card:hover .cat-budget-pct cat-clr glow（v23.62）と対称で未ホバー時から
+   達成率テキストがカテゴリーカラーで静かに輝く演出に。
+   .cat-budget-pct.warn・.cat-budget-pct.over static glow と連動し
+   カテゴリー達成率テキスト全状態が常時発光する完成形演出に統一。
+   ダークモードでは cat-clr / primary-end フォールバック glow。 */
+.cat-budget-pct { text-shadow: 0 0 5px color-mix(in srgb, var(--cat-clr, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-budget-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .yr-avg-val（base）→ static primary text-shadow glow
+   年間平均ウィジェットカードの平均値テキスト（base・親クラス修飾子なし）に
+   常時 primary カラーの text-shadow を追加。
+   .yr-widget-card:hover .yr-avg-val primary glow（v23.64）と対称で未ホバー時から
+   平均値テキストが primary カラーで静かに輝く演出に。
+   .yr-avg-expense .yr-avg-val static danger-text glow と連動し
+   年間平均値テキスト全バリアントが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.yr-avg-val { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .yr-avg-val { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 3. .cal-cell:not(.cal-empty) .cal-date-num:not(.today) → static primary text-shadow glow
+   カレンダーセルの日付番号テキスト（空でない・今日以外のセル）に
+   常時 primary カラーの text-shadow を追加。
+   .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) primary glow（v23.80）と対称で
+   未ホバー時から日付番号が primary カラーで静かに輝く演出に。
+   ダークモードでは primary-end glow。 */
+.cal-cell:not(.cal-empty) .cal-date-num:not(.today) { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-cell:not(.cal-empty) .cal-date-num:not(.today) { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 4. .asset-entry-date → static primary text-shadow glow
+   資産明細行の日付テキストに常時 primary カラーの text-shadow を追加。
+   .asset-entry-row:hover .asset-entry-date primary glow（v23.80）と対称で
+   未ホバー時から日付テキストが primary カラーで静かに輝く演出に。
+   asset-entry-note static glow（本スプリント⑤）と連動し
+   資産明細行内テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.asset-entry-date { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-entry-date { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .asset-entry-note → static primary text-shadow glow
+   資産明細行のメモテキストに常時 primary カラーの text-shadow を追加。
+   .asset-entry-row:hover .asset-entry-note primary glow（v23.80）と対称で
+   未ホバー時からメモテキストが primary カラーで静かに輝く演出に。
+   asset-entry-date static glow（本スプリント④）と連動し
+   資産明細行内テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.asset-entry-note { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-entry-note { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .md-cell-count .md-cell-label → static primary text-shadow glow
+   月次詳細カウントセルのラベルテキスト（件数表示セル）に
+   常時 primary カラーの text-shadow を追加。
+   .md-cell-count:hover .md-cell-label primary glow（v23.80）と対称で
+   未ホバー時からラベルテキストが primary カラーで静かに輝く演出に。
+   md-cell-income/expense/balance-pos/balance-neg .md-cell-label static glow と連動し
+   月次詳細セルラベルテキスト全バリアントが常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.md-cell-count .md-cell-label { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cell-count .md-cell-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .goal-dash-name → dark mode static goal-accent text-shadow glow 追加
+   ゴールダッシュボードのゴール名テキストにダークモード専用の静的 goal-accent glow を追加。
+   ライトモード static glow は既存。ダークモード対称の glow が欠落しており今回補完。
+   .goal-dash-item:hover .goal-dash-name goal-accent glow と対称に。 */
+[data-theme="dark"] .goal-dash-name { text-shadow: 0 0 7px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .goal-dash-amount → dark mode static goal-accent text-shadow glow 追加
+   ゴールダッシュボードの金額テキストにダークモード専用の静的 goal-accent glow を追加。
+   ライトモード static glow は既存。ダークモード対称の glow が欠落しており今回補完。
+   .goal-dash-item:hover .goal-dash-amount goal-accent glow と対称に。 */
+[data-theme="dark"] .goal-dash-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.55・全script/linkタグ?v=24.55に更新。 */
