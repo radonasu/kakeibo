@@ -31231,3 +31231,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .md-nav-btn:not(:disabled) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.47・全script/linkタグ?v=24.47に更新。 */
+
+/* ============================================================
+   Sprint #844 / v24.48
+   btn-ghost-static-glow＋btn-danger-static-glow＋btn-dark-toggle-static-glow＋
+   hamburger-static-glow＋btn-preset-static-glow＋card-collapse-btn-static-glow＋
+   btn-share-static-glow＋stp-help-summary-static-glow 8箇所
+   ============================================================ */
+
+/* 1. .btn-ghost → static primary text-shadow glow
+   キャンセル・閉じる等のゴーストボタンに常時 primary カラーの
+   text-shadow を追加。
+   .btn-ghost:hover primary glow（v23.87）と対称で
+   未ホバー時からゴーストボタンが primary カラーで静かに輝く演出に。
+   btn-danger/btn-dark-toggle/btn-preset/card-collapse-btn/btn-share static glow（②③⑤⑥⑦）と連動し
+   汎用ボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-ghost { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-ghost { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 2. .btn-danger → static expense text-shadow glow
+   削除確認等の危険ボタンに常時 expense カラーの
+   text-shadow を追加。
+   .btn-danger:hover expense glow（v23.87）と対称で
+   未ホバー時から危険ボタンが expense カラーで静かに輝く演出に。
+   modal-close/adv-filter-clear/rc-close static glow（v24.45）と同パターンで
+   破壊的操作ボタンの静的発光演出を統一。ダークモードでは expense-end glow。 */
+.btn-danger { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)    var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-danger { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .btn-dark-toggle → static primary-end text-shadow glow
+   ダークモード切替ボタンに常時 primary-end カラーの
+   text-shadow を追加。
+   .btn-dark-toggle:hover primary-end glow（v23.87）と対称で
+   未ホバー時からダーク切替ボタンが primary-end カラーで静かに輝く演出に。
+   サイドバーの常時ダーク背景上のボタンのため light/dark 両モードで primary-end glow を適用。
+   hamburger static glow（④）と連動しサイドバー操作ボタン全体の静的発光演出を統一。 */
+.btn-dark-toggle { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+
+/* 4. #hamburger → static primary-end text-shadow glow
+   ハンバーガーメニューボタンに常時 primary-end カラーの
+   text-shadow を追加。
+   #hamburger:hover primary-end glow（v23.88）と対称で
+   未ホバー時からハンバーガーボタンが primary-end カラーで静かに輝く演出に。
+   サイドバー常時ダーク背景上のため light/dark 両モードで primary-end glow を適用。
+   btn-dark-toggle static glow（③）と連動しサイドバー操作ボタン全体の静的発光演出を統一。 */
+#hamburger { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+
+/* 5. .btn-preset → static primary text-shadow glow
+   金額プリセットボタンに常時 primary カラーの
+   text-shadow を追加。
+   .btn-preset:hover primary glow（v23.87）と対称で
+   未ホバー時からプリセットボタンが primary カラーで静かに輝く演出に。
+   btn-inline-add static glow（v24.47）と同パターンで
+   インライン操作ボタンの静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-preset { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-preset { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .card-collapse-btn → static primary text-shadow glow
+   カード折りたたみボタンに常時 primary カラーの
+   text-shadow を追加。
+   .card-collapse-btn:hover primary glow（v23.87）と対称で
+   未ホバー時から折りたたみボタンが primary カラーで静かに輝く演出に。
+   btn-share/stp-help-summary static glow（⑦⑧）と連動し
+   カード操作ボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.card-collapse-btn { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .card-collapse-btn { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .btn-share → static primary text-shadow glow
+   シェアボタンに常時 primary カラーの
+   text-shadow を追加。
+   .btn-share:hover primary glow（v23.87）と対称で
+   未ホバー時からシェアボタンが primary カラーで静かに輝く演出に。
+   card-collapse-btn/stp-help-summary static glow（⑥⑧）と連動し
+   カード操作ボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.btn-share { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-share { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .stp-help-summary → static primary text-shadow glow
+   設定ヘルプアコーディオントリガーに常時 primary カラーの
+   text-shadow を追加。
+   .stp-help-summary:hover primary glow（v23.87）と対称で
+   未ホバー時からヘルプテキストが primary カラーで静かに輝く演出に。
+   card-collapse-btn/btn-share static glow（⑥⑦）と連動し
+   カード・設定操作ボタン全体の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.stp-help-summary { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .stp-help-summary { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.48・全script/linkタグ?v=24.48に更新。 */
