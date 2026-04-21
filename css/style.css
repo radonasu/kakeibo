@@ -30882,3 +30882,94 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cc-col:has(.cc-col-down) .cc-amount { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
 [data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
 [data-theme="dark"] .cc-col:has(.cc-col-down) .cc-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* ================================================================
+   Sprint #840 v24.44 static-glow 8箇所
+   （ch-progress-label-static-glow＋amt-hist-chip-static-glow＋
+     memo-hist-chip-static-glow＋tx-tag-chip-static-glow＋
+     hs-grade-badge(grade別)-static-glow＋tg-table-text-muted-static-glow＋
+     ct-month-cell-static-glow＋ct-cell-val-static-glow）
+   ================================================================ */
+
+/* 1. .ch-card .ch-progress-label → static ch-accent text-shadow glow
+   チャレンジカードの進捗ラベルテキスト（「¥50,000 / ¥100,000」等：color:text-sub・fs-xs）に
+   常時 ch-accent text-shadow を追加。
+   .ch-card:hover .ch-progress-label ch-accent glow（v23.79）と対称で未ホバー時から
+   進捗ラベルが ch-accent カラーで静かに輝く演出に。
+   ch-progress-pct static glow（v24.19）と連動しチャレンジカード内全進捗テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.ch-card .ch-progress-label { text-shadow: 0 0 6px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .ch-card .ch-progress-label { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .amt-hist-chip → static amt-chip-color text-shadow glow
+   金額履歴チップ（「¥3,000」「¥5,000」等：color:amt-chip-color）に常時 amt-chip-color text-shadow を追加。
+   .amt-hist-chip:hover amt-chip-color glow（v23.80）と対称で未ホバー時から
+   金額テキストがアクセントカラーで静かに輝く演出に。
+   memo-hist-chip static glow（③）と連動し履歴チップ群が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.amt-hist-chip { text-shadow: 0 0 6px color-mix(in srgb, var(--amt-chip-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .amt-hist-chip { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 3. .memo-hist-chip → static memo-chip-color text-shadow glow
+   メモ履歴チップ（メモ候補テキスト：color:memo-chip-color）に常時 memo-chip-color text-shadow を追加。
+   .memo-hist-chip:hover memo-chip-color glow（v23.80）と対称で未ホバー時から
+   メモテキストがアクセントカラーで静かに輝く演出に。
+   amt-hist-chip static glow（②）と連動し履歴チップ群が常時発光する完成形演出に統一。
+   ダークモードでは primary-end glow。 */
+.memo-hist-chip { text-shadow: 0 0 6px color-mix(in srgb, var(--memo-chip-color, var(--primary)) var(--mix-xs), transparent); }
+[data-theme="dark"] .memo-hist-chip { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .tx-tag-chip → static --tc text-shadow glow
+   取引タグチップ（タグ名テキスト：color:--tc）に常時 --tc カラーの text-shadow を追加。
+   .tx-tag-chip:hover --tc glow（v23.81）と対称で未ホバー時から
+   タグテキストがタグカラーで静かに輝く演出に。
+   tx-tag-filter-chip.active static glow（v23.93）と同パターンで
+   取引タグチップ系が常時発光する完成形演出に統一。 */
+.tx-tag-chip { text-shadow: 0 0 6px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .hs-grade-badge グレード別 → static グレード別 text-shadow glow
+   ヘルスチェックページのグレードバッジ（S/A/B/C/D）に常時グレード別 text-shadow を追加。
+   .hs-grade-s/a/b/c/d:hover グレード別 glow（v23.83）と対称で未ホバー時から
+   グレードバッジがグレードカラーで静かに輝く演出に。
+   S=primary / A=success / B=info-text / C=warning / D=danger-text。
+   ダークモードでは各グレードのend/darkカラーで強調。 */
+.hs-grade-s { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+.hs-grade-a { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.hs-grade-b { text-shadow: 0 0 6px color-mix(in srgb, var(--info-text)   var(--mix-xs), transparent); }
+.hs-grade-c { text-shadow: 0 0 6px color-mix(in srgb, var(--warning)     var(--mix-xs), transparent); }
+.hs-grade-d { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-grade-s { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-a { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-b { text-shadow: 0 0 7px color-mix(in srgb, var(--info-text)    var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-c { text-shadow: 0 0 7px color-mix(in srgb, var(--warning)      var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-grade-d { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 6. .tg-table tbody tr td.text-muted → static primary text-shadow glow
+   タグ別集計テーブル行の補足テキストセル（color:text-muted）に常時 primary text-shadow を追加。
+   .tg-table tbody tr:hover td.text-muted primary glow（v23.83）と対称で未ホバー時から
+   補足テキストが primary カラーで静かに輝く演出に。
+   tg-table td.income/expense/td:first-child static glow と連動し
+   タグ集計テーブル内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.tg-table tbody tr td.text-muted { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .tg-table tbody tr td.text-muted { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .ct-table tbody tr .ct-month-cell → static primary text-shadow glow
+   カテゴリ比較テーブル行の月ラベルセル（「2024年1月」等：fw-semi・tabular-nums）に
+   常時 primary text-shadow を追加。
+   .ct-table tbody tr:hover .ct-month-cell primary glow（v23.69）と対称で未ホバー時から
+   月ラベルが primary カラーで静かに輝く演出に。
+   ct-cell-val static glow（⑧）と連動しカテゴリ比較テーブル内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.ct-table tbody tr .ct-month-cell { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-table tbody tr .ct-month-cell { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 8. .ct-table tbody tr .ct-cell-val → static primary text-shadow glow
+   カテゴリ比較テーブル行の金額セル（各月金額：tabular-nums・text-muted）に
+   常時 primary text-shadow を追加。
+   .ct-table tbody tr:hover .ct-cell-val primary glow（v23.69）と対称で未ホバー時から
+   金額セルが primary カラーで静かに輝く演出に。
+   ct-month-cell static glow（⑦）と連動しカテゴリ比較テーブル内全テキストが
+   常時発光する完成形演出に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.44・全script/linkタグ?v=24.44に更新。 */
+.ct-table tbody tr .ct-cell-val { text-shadow: 0 0 6px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .ct-table tbody tr .ct-cell-val { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
