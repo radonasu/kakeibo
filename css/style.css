@@ -31498,3 +31498,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ch-widget-pct { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-xs), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.50・全script/linkタグ?v=24.50に更新。 */
+
+/* ============================================================
+   Sprint #847 / v24.51 — static-glow 8箇所
+   nav-item-not-active-static-glow＋btn-sidebar-logout-static-glow＋
+   btn-account-add-static-glow＋ev-sum-count-small-static-glow＋
+   btn-notif-bell-static-glow＋ci-ok-btn-static-glow＋
+   ev-add-month-static-glow＋tx-tag-filter-chip-not-active-static-glow
+   ============================================================ */
+
+/* 1. .nav-item:not(.active) → static primary-end text-shadow glow
+   非アクティブのサイドナビ項目に常時 primary-end カラーの
+   text-shadow を追加。
+   .nav-item:not(.active):hover primary-end glow（v23.86）と対称で
+   未ホバー時から非アクティブナビ項目が primary-end カラーで静かに輝く演出に。
+   .nav-item.active static primary-end glow（v22.89）と連動し
+   サイドナビ全項目の静的発光演出を統一。ダークモードでは primary-end glow。 */
+.nav-item:not(.active) { text-shadow: 0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+
+/* 2. .btn-sidebar-logout → static expense text-shadow glow
+   サイドバーのログアウトボタンに常時 expense カラーの
+   text-shadow を追加。
+   .btn-sidebar-logout:hover expense glow（v23.86）と対称で
+   未ホバー時からログアウトボタンが expense カラーで静かに輝く演出に。
+   btn-danger / delete-cat / adv-filter-clear static expense-系 glow と連動し
+   破壊的・危険操作系ボタンの静的発光演出を統一。ダークモードでは expense-end glow。 */
+.btn-sidebar-logout { text-shadow: 0 0 6px color-mix(in srgb, var(--expense)     var(--mix-xs), transparent); }
+[data-theme="dark"] .btn-sidebar-logout { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 3. .btn-account-add → static white text-shadow glow
+   サイドバーのアカウント追加ボタン（「＋」）に常時白い
+   text-shadow を追加。
+   .btn-account-add:hover white glow（v23.86）と対称で
+   未ホバー時から「＋」アイコンが白く静かに輝く演出に。
+   install-banner-close / ios-guide-close / ci-close static white glow と連動し
+   ダーク背景上の白色アイコンボタンの静的発光演出を統一。 */
+.btn-account-add { text-shadow: 0 0 6px rgba(255, 255, 255, 0.18); }
+
+/* 4. .ev-sum-card .ev-sum-count small → static white text-shadow glow
+   収支予定サマリーカードの件数表示サブテキスト（小）に常時白い
+   text-shadow を追加。
+   .ev-sum-card:hover .ev-sum-count small white glow（v23.84）と対称で
+   未ホバー時からサブテキストが白く静かに輝く演出に。
+   ev-sum-count static glow と連動しサマリーカード内テキスト全体の
+   静的発光演出を統一。 */
+.ev-sum-card .ev-sum-count small { text-shadow: 0 0 6px rgba(255, 255, 255, 0.18); }
+
+/* 5. .btn-notif-bell → static white text-shadow glow
+   通知ベルボタンに常時白い text-shadow を追加。
+   .btn-notif-bell:hover white glow（v23.85）と対称で
+   未ホバー時から通知ベルアイコンが白く静かに輝く演出に。
+   btn-account-add / install-banner-close static white glow と連動し
+   ダーク背景上の白色アイコンボタンの静的発光演出を統一。 */
+.btn-notif-bell { text-shadow: 0 0 6px rgba(255, 255, 255, 0.18); }
+
+/* 6. .ci-ok-btn → static white text-shadow glow
+   チェックインの確認ボタン（OK）に常時白い text-shadow を追加。
+   .ci-ok-btn:hover white glow（v23.85）と対称で
+   未ホバー時から確認ボタンが白く静かに輝く演出に。
+   btn-primary / onboarding-cta static white glow と連動し
+   グラデーション背景上の白色ボタンテキストの静的発光演出を統一。 */
+.ci-ok-btn { text-shadow: 0 0 7px rgba(255, 255, 255, 0.22); }
+
+/* 7. .ev-add-month → static white text-shadow glow
+   収支予定の月追加ボタンに常時白い text-shadow を追加。
+   .ev-add-month:hover white glow（v23.85）と対称で
+   未ホバー時から月追加ボタンが白く静かに輝く演出に。
+   btn-primary / ci-ok-btn static white glow と連動し
+   グラデーション背景上のボタンテキスト静的発光演出を統一。 */
+.ev-add-month { text-shadow: 0 0 6px rgba(255, 255, 255, 0.18); }
+
+/* 8. .tx-tag-filter-chip:not(.active) → static --tc text-shadow glow
+   非アクティブのタグフィルターチップに常時タグカラーの
+   text-shadow を追加。
+   .tx-tag-filter-chip:hover:not(.active) --tc glow（v23.84）と対称で
+   未ホバー時から非アクティブチップがタグカラーで静かに輝く演出に。
+   .tx-tag-filter-chip.active static --tc glow（v23.93）と連動し
+   タグフィルターチップ全状態の静的発光演出を完成形に統一。 */
+.tx-tag-filter-chip:not(.active) { text-shadow: 0 0 5px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.51・全script/linkタグ?v=24.51に更新。 */
