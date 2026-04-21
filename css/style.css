@@ -31668,4 +31668,107 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wl-sum-done .wl-summary-unit { text-shadow: 0 0 6px rgba(255, 255, 255, 0.10); }
 [data-theme="dark"] .wl-sum-done .wl-summary-unit { text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
 
+/* ============================================================
+   Sprint #849 / v24.53 — static-glow 8箇所
+   rc-type-badge-static-glow＋md-cat-text-static-glow＋
+   cal-sum-label-static-glow＋fv-cat-amt-static-glow＋
+   fv-pct-txt-static-glow＋asset-date-label-static-glow＋
+   cat-fixed-badge-static-glow＋hs-prev-badge-static-glow
+   ============================================================ */
+
+/* 1. .rc-item:has(.rc-type-inc/.rc-type-exp) .rc-type-badge → static タイプ別 text-shadow glow
+   定期収支タイプバッジ（「収入」「支出」等）に常時タイプ別 text-shadow を追加。
+   .rc-item:hover:has(.rc-type-inc) .rc-type-badge success glow（v23.76）と対称で
+   未ホバー時から収入タイプバッジが success カラーで静かに輝く演出に。
+   .rc-item:hover:has(.rc-type-exp) .rc-type-badge danger-text glow（v23.76）と対称で
+   支出タイプバッジが danger-text カラーで輝く演出に。
+   rc-item-name / rc-item-amount static glow と連動し
+   定期収支カード内全テキストが常時発光する完成形演出に統一。 */
+.rc-item:has(.rc-type-inc) .rc-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.rc-item:has(.rc-type-exp) .rc-type-badge { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .rc-item:has(.rc-type-inc) .rc-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .rc-item:has(.rc-type-exp) .rc-type-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 2. .md-cat-name .md-cat-text → static md-cat-color text-shadow glow
+   月別詳細カテゴリ行のカテゴリ名テキストに常時 md-cat-color カラーの
+   text-shadow を追加。
+   .md-cat-row:hover .md-cat-text md-cat-color glow（v23.76）と対称で
+   未ホバー時からカテゴリ名テキストが md-cat-color で静かに輝く演出に。
+   md-cat-amount / md-cat-pct static glow と連動し
+   月別詳細カテゴリ行内全テキストが常時発光する完成形演出に統一。 */
+.md-cat-name .md-cat-text { text-shadow: 0 0 5px color-mix(in srgb, var(--md-cat-color, var(--primary))     var(--mix-xs), transparent); }
+[data-theme="dark"] .md-cat-name .md-cat-text { text-shadow: 0 0 6px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .cal-sum-label → タイプ別 static text-shadow glow
+   カレンダー収支サマリーカードのラベルテキスト（「収入」「支出」等）に常時タイプ別
+   text-shadow を追加。
+   .cal-sum-item:hover .cal-sum-label primary/success/expense glow（v23.x）と対称で
+   未ホバー時からラベルがタイプカラーで静かに輝く演出に。
+   cal-sum-value static glow と連動しサマリーカード内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは各対応 end カラー。 */
+.cal-sum-label                              { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)  var(--mix-xs), transparent); }
+.cal-sum-item:has(.income)  .cal-sum-label  { text-shadow: 0 0 5px color-mix(in srgb, var(--success)  var(--mix-xs), transparent); }
+.cal-sum-item:has(.expense) .cal-sum-label  { text-shadow: 0 0 5px color-mix(in srgb, var(--expense)  var(--mix-xs), transparent); }
+[data-theme="dark"] .cal-sum-label                              { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .cal-sum-item:has(.income)  .cal-sum-label  { text-shadow: 0 0 6px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .cal-sum-item:has(.expense) .cal-sum-label  { text-shadow: 0 0 6px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 4. .fv-cat-amt → static primary text-shadow glow
+   財務予測カテゴリテーブルの金額テキスト（fw-semi・tabular-nums）に常時 primary カラーの
+   text-shadow を追加。
+   .fv-cat-table tbody tr:hover .fv-cat-amt primary glow（v23.77）と対称で
+   未ホバー時から金額テキストが primary カラーで静かに輝く演出に。
+   fv-cat-table td:first-child / fv-pct-txt static glow（⑤）と連動し
+   カテゴリテーブル行内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fv-cat-amt { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-cat-amt { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 5. .fv-pct-txt → static primary text-shadow glow
+   財務予測カテゴリテーブルの達成率テキスト（color:text-muted・fs-xs）に常時 primary カラーの
+   text-shadow を追加。
+   .fv-cat-table tbody tr:hover .fv-pct-txt primary glow（v23.77）と対称で
+   未ホバー時から達成率テキストが primary カラーで静かに輝く演出に。
+   fv-cat-amt static glow（④）と連動し財務予測カテゴリテーブル行内全テキストが
+   常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.fv-pct-txt { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .fv-pct-txt { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 6. .asset-date-label → static primary text-shadow glow
+   資産カードの日付ラベルテキスト（「更新日」等：color:text-muted・fs-xs）に常時 primary カラーの
+   text-shadow を追加。
+   .asset-card:hover .asset-date-label primary glow（v23.77）と対称で
+   未ホバー時から日付ラベルが primary カラーで静かに輝く演出に。
+   asset-name / asset-balance / asset-balance-jpy / asset-fx-rate static glow と連動し
+   資産カード内全テキストが常時発光する完成形演出に統一。ダークモードでは primary-end glow。 */
+.asset-date-label { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .asset-date-label { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+
+/* 7. .cat-fixed-badge → タイプ別 static text-shadow glow
+   カテゴリカードの固定費/変動費バッジ（「固定」「変動」等）に常時タイプ別 text-shadow を追加。
+   .cat-card:hover .cat-fixed-badge.is-fixed primary glow（v23.77）と対称で
+   未ホバー時から固定費バッジが primary カラーで静かに輝く演出に。
+   .cat-card:hover .cat-fixed-badge.is-var success glow（v23.77）と対称で
+   変動費バッジが success カラーで輝く演出に。
+   cat-card-name / cat-stat-val / cat-budget-pct static glow と連動し
+   カテゴリカード内全テキストが常時発光する完成形演出に統一。ダークモードでは各 end カラー。 */
+.cat-fixed-badge.is-fixed { text-shadow: 0 0 5px color-mix(in srgb, var(--primary)  var(--mix-xs), transparent); }
+.cat-fixed-badge.is-var   { text-shadow: 0 0 5px color-mix(in srgb, var(--success)  var(--mix-xs), transparent); }
+[data-theme="dark"] .cat-fixed-badge.is-fixed { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .cat-fixed-badge.is-var   { text-shadow: 0 0 6px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+
+/* 8. .hs-prev-badge → タイプ別 static text-shadow glow
+   ヘルススコアカードの前期比バッジ（「▲前月比+X」等）に常時タイプ別 text-shadow を追加。
+   .health-score-card:hover .hs-prev-badge.hs-trend-up success glow（v23.77）と対称で
+   未ホバー時から上昇トレンドバッジが success カラーで静かに輝く演出に。
+   .health-score-card:hover .hs-prev-badge.hs-trend-down danger-text glow（v23.77）と対称で
+   下降トレンドバッジが danger-text カラーで輝く演出に。
+   hs-item-label / hs-item-score / hs-item-max static glow と連動し
+   ヘルススコアカード内全要素が常時発光する完成形演出に統一。 */
+.hs-prev-badge.hs-trend-up   { text-shadow: 0 0 6px color-mix(in srgb, var(--success)     var(--mix-xs), transparent); }
+.hs-prev-badge.hs-trend-down { text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+[data-theme="dark"] .hs-prev-badge.hs-trend-up   { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end)   var(--mix-sm), transparent); }
+[data-theme="dark"] .hs-prev-badge.hs-trend-down { text-shadow: 0 0 7px color-mix(in srgb, var(--expense-end)  var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.53・全script/linkタグ?v=24.53に更新。 */
+
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.52・全script/linkタグ?v=24.52に更新。 */
