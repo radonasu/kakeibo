@@ -32504,3 +32504,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .cat-stat-val { text-shadow: 0 0 7px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.64・全script/linkタグ?v=24.64に更新。 */
+
+/* ============================================================
+   スプリント#861 dark-mode static-glow 補完（v24.65）
+   pt-note-dark-glow＋ev-card-name-dark-glow＋
+   ch-widget-label-dark-glow＋tx-tag-chip-dark-glow＋
+   goal-emoji-btn-dark-glow＋ev-emoji-chip-dark-glow＋
+   pt-emoji-btn-dark-glow＋ch-emoji-btn-dark-glow 8箇所
+   ============================================================ */
+
+/* 1. .pt-note → dark mode static pt-accent text-shadow glow 追加
+   ポイントカードのメモテキストにダークモード専用の pt-accent glow を追加。
+   ライトモード static glow（v24.21）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pt-card-name/balance dark glow（v24.57/v24.64）と連動し
+   ポイントカード内全テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .pt-note { text-shadow: 0 0 7px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .ev-card-name → dark mode static ev-accent text-shadow glow 追加
+   収支予定カードの名称テキストにダークモード専用の ev-accent glow を追加。
+   ライトモード static glow（v24.21）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ev-card-memo dark glow（v24.21）と連動し収支予定カード内
+   名称・メモのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ev-card-name { text-shadow: 0 0 7px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .ch-widget-label → dark mode static ch-accent text-shadow glow 追加
+   チャレンジウィジェット行のラベルテキストにダークモード専用の ch-accent glow を追加。
+   ライトモード static glow（v24.21）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-widget-name/pct dark glow（v24.07）と連動し
+   チャレンジウィジェット行全テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-widget-label { text-shadow: 0 0 7px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .tx-tag-chip → dark mode static tc text-shadow glow 追加
+   取引タグチップのテキストにダークモード専用の tc glow を追加。
+   ライトモード static glow（v24.44）は既存。ダークモード対称の glow が欠落しており今回補完。
+   tx-tag-chip は取引ごとに --tc カラーが設定される。 */
+[data-theme="dark"] .tx-tag-chip { text-shadow: 0 0 7px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .goal-emoji-btn → dark mode static primary-end text-shadow glow 追加
+   目標カードの絵文字ボタンにダークモード専用の primary-end glow を追加。
+   ライトモード static glow 8px（v24.45）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-emoji-btn/ev-emoji-chip/pt-emoji-btn/ch-emoji-btn dark glow（⑤〜⑧）で
+   絵文字系ボタン全体のダーク演出を完成形に統一。 */
+[data-theme="dark"] .goal-emoji-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 6. .ev-emoji-chip → dark mode static primary-end text-shadow glow 追加
+   収支予定カードの絵文字チップにダークモード専用の primary-end glow を追加。
+   ライトモード static glow 8px（v24.45）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-emoji-btn dark glow（本スプリント⑤）と連動。 */
+[data-theme="dark"] .ev-emoji-chip { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 7. .pt-emoji-btn → dark mode static primary-end text-shadow glow 追加
+   ポイントカードの絵文字ボタンにダークモード専用の primary-end glow を追加。
+   ライトモード static glow 8px（v24.45）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-emoji-btn dark glow（本スプリント⑤）と連動。 */
+[data-theme="dark"] .pt-emoji-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .ch-emoji-btn → dark mode static primary-end text-shadow glow 追加
+   チャレンジカードの絵文字ボタンにダークモード専用の primary-end glow を追加。
+   ライトモード static glow 8px（v24.45）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-emoji-btn dark glow（本スプリント⑤）と連動し絵文字系ボタン4種の
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-emoji-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.65・全script/linkタグ?v=24.65に更新。 */
