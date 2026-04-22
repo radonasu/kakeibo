@@ -32437,3 +32437,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .pm-table-row td:first-child { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.63・全script/linkタグ?v=24.63に更新。 */
+
+/* ============================================================
+   Sprint #860 / v24.64 — dark-mode static-glow 補完 8箇所
+   wl-sum-count-value-dark-glow＋wl-sum-budget-value-dark-glow＋
+   debt-summary-amount-dark-glow＋pt-card-balance-dark-glow＋
+   asset-balance-dark-glow＋hs-item-score-dark-glow＋
+   cat-card-name-dark-glow＋cat-stat-val-dark-glow
+   ============================================================ */
+
+/* 1. .wl-sum-count .wl-summary-value → dark mode static white text-shadow glow 追加
+   ウィッシュリスト件数サマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.25）は既存。ダークモード対称の glow が欠落しており今回補完。
+   wl-sum-budget .wl-summary-value dark glow（本スプリント②）・
+   wl-sum-done .wl-summary-value dark glow（v24.63）と連動しウィッシュリストサマリー
+   3カード全数値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .wl-sum-count .wl-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 2. .wl-sum-budget .wl-summary-value → dark mode static white text-shadow glow 追加
+   ウィッシュリスト予算サマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.25）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ①と連動しウィッシュリストサマリー3カード全数値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .wl-sum-budget .wl-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 3. .debt-summary-total/.debt-summary-monthly .summary-amount → dark mode static white text-shadow glow 追加
+   負債サマリーカードの金額テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.25）は既存。ダークモード対称の glow が欠落しており今回補完。
+   debt-summary label dark glow（v24.25）と連動し負債サマリーカード内全テキストの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .debt-summary-total   .summary-amount,
+[data-theme="dark"] .debt-summary-monthly .summary-amount { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 4. .pt-card-balance → dark mode static pt-accent text-shadow glow 追加
+   ポイントカードの残高大数値テキストにダークモード専用の pt-accent glow を追加。
+   ライトモード static glow（v24.27）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pt-card-name dark glow（v24.57）と連動しポイントカード内主要テキストの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .pt-card-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .asset-balance → dark mode static asset-accent text-shadow glow 追加
+   資産カードの残高大数値テキストにダークモード専用の asset-accent glow を追加。
+   ライトモード static glow（v24.27）は既存。ダークモード対称の glow が欠落しており今回補完。
+   asset-name dark glow（v24.57）と連動し資産カード内主要テキストの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .asset-balance { text-shadow: 0 0 7px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .hs-item-score → dark mode static hs-bar-color text-shadow glow 追加
+   家計スコア項目のスコア数値テキストにダークモード専用の hs-bar-color glow を追加。
+   ライトモード static glow（v24.26）は既存。ダークモード対称の glow が欠落しており今回補完。
+   hs-item-label dark glow（v24.63）・hs-item-max dark glow（v24.58）と連動し
+   ヘルスカード内スコア数値・ラベル・最大値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .hs-item-score { text-shadow: 0 0 7px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .cat-card-name → dark mode static cat-clr text-shadow glow 追加
+   カテゴリカードのカテゴリ名テキストにダークモード専用の cat-clr glow を追加。
+   ライトモード static glow（v24.26）は既存。ダークモード対称の glow が欠落しており今回補完。
+   cat-stat-val dark glow（本スプリント⑧）・cat-budget-pct dark glow（v24.x）と連動し
+   カテゴリカード内の名称・統計・予算のダーク演出を完成形に統一。 */
+[data-theme="dark"] .cat-card-name { text-shadow: 0 0 7px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .cat-stat-val → dark mode static cat-clr text-shadow glow 追加
+   カテゴリカードの統計値テキストにダークモード専用の cat-clr glow を追加。
+   ライトモード static glow（v24.26）は既存。ダークモード対称の glow が欠落しており今回補完。
+   cat-card-name dark glow（本スプリント⑦）と連動しカテゴリカード内
+   名称・統計値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .cat-stat-val { text-shadow: 0 0 7px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.64・全script/linkタグ?v=24.64に更新。 */
