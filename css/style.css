@@ -32256,3 +32256,63 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .onboarding-cta { text-shadow: 0 0 10px rgba(255, 255, 255, 0.30); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.60・全script/linkタグ?v=24.60に更新。 */
+
+/* ============================================================
+   Sprint #857 / v24.61 — dark-mode static-glow 補完 8箇所
+   tx-th-sort-active-dark-glow＋sub-card-amount-dark-glow＋
+   sub-cycle-unit-dark-glow＋goal-deadline-dark-glow＋
+   goal-note-dark-glow＋pm-sum-value-dark-glow＋
+   pm-sum-label-dark-glow＋pm-sum-sub-dark-glow
+   ============================================================ */
+
+/* 1. .tx-th-sort.tx-th-active → dark mode static primary-end text-shadow glow 追加
+   アクティブなソートヘッダーセルにダークモード専用の静的 primary-end glow を追加。
+   ライトモード static glow（v23.84）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .tx-th-sort dark glow（v24.54）と連動しソートヘッダー全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .tx-th-sort.tx-th-active { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .sub-card-amount → dark mode static sub-accent text-shadow glow 追加
+   サブスクリプションカードの金額テキストにダークモード専用の静的 sub-accent glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   sub-card-name dark glow（v24.57）と連動しサブスクカード内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .sub-card-amount { text-shadow: 0 0 7px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .sub-cycle-unit → dark mode static sub-accent text-shadow glow 追加
+   サブスクリプションカードのサイクル単位テキスト（「/月」等）にダークモード専用の静的 sub-accent glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   sub-card-amount dark glow（本スプリント②）と連動しサブスクカード内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .sub-cycle-unit { text-shadow: 0 0 7px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .goal-deadline:not(.over) → dark mode static goal-accent text-shadow glow 追加
+   目標カードの期限テキスト（未超過状態）にダークモード専用の静的 goal-accent glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-name dark glow（v24.56）と連動し目標カード内テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .goal-deadline:not(.over) { text-shadow: 0 0 7px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .goal-note → dark mode static goal-accent text-shadow glow 追加
+   目標カードのメモテキストにダークモード専用の静的 goal-accent glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   goal-deadline dark glow（本スプリント④）と連動し目標カード期限・メモのダーク演出を完成形に統一。 */
+[data-theme="dark"] .goal-note { text-shadow: 0 0 7px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .pm-sum-value → dark mode static pm-sum-color text-shadow glow 追加
+   支払管理サマリーカードの金額値テキストにダークモード専用の静的 pm-sum-color glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pm-sum-label dark glow（本スプリント⑦）・pm-sum-sub dark glow（本スプリント⑧）と連動し
+   支払管理サマリーカード内全テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .pm-sum-value { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .pm-sum-label → dark mode static pm-sum-color text-shadow glow 追加
+   支払管理サマリーカードのラベルテキストにダークモード専用の静的 pm-sum-color glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pm-sum-value dark glow（本スプリント⑥）と連動し支払管理サマリーカード内テキストのダーク演出を統一。 */
+[data-theme="dark"] .pm-sum-label { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .pm-sum-sub → dark mode static pm-sum-color text-shadow glow 追加
+   支払管理サマリーカードのサブテキストにダークモード専用の静的 pm-sum-color glow を追加。
+   ライトモード static glow（v24.xx）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pm-sum-value/pm-sum-label dark glow（本スプリント⑥⑦）と連動し
+   支払管理サマリーカード内全テキストが常時 pm-sum-color で発光する完成形演出に統一。 */
+[data-theme="dark"] .pm-sum-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.61・全script/linkタグ?v=24.61に更新。 */
