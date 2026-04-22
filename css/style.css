@@ -32374,3 +32374,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .yr-cell-sub.yr-down { text-shadow: 0 0 8px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.62・全script/linkタグ?v=24.62に更新。 */
+
+/* ============================================================
+   Sprint #859 / v24.63 — dark-mode static-glow 補完 8箇所
+   sub-summary-amount-dark-glow＋pt-summary-amount-dark-glow＋
+   ch-sum-achieved-value-dark-glow＋ch-sum-active-value-dark-glow＋
+   ch-sum-total-value-dark-glow＋wl-sum-done-value-dark-glow＋
+   hs-item-label-dark-glow＋pm-table-row-td1-dark-glow
+   ============================================================ */
+
+/* 1. .sub-summary-card.sub-monthly/.sub-yearly .sub-summary-amount → dark mode static white text-shadow glow 追加
+   サブスクリプションサマリーカードの金額テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.04）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pt-summary-amount dark glow（本スプリント②）と連動しグラデーション背景上の
+   白テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .sub-summary-card.sub-monthly .sub-summary-amount,
+[data-theme="dark"] .sub-summary-card.sub-yearly  .sub-summary-amount { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 2. .pt-summary-amount → dark mode static white text-shadow glow 追加
+   定期収支サマリーカードの合計金額テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.04）は既存。ダークモード対称の glow が欠落しており今回補完。
+   sub-summary-amount dark glow（本スプリント①）と連動しサマリーカード金額のダーク演出を完成形に統一。 */
+[data-theme="dark"] .pt-summary-amount { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 3. .ch-sum-achieved .ch-summary-value → dark mode static white text-shadow glow 追加
+   達成チャレンジサマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.20）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-sum-active/total .ch-summary-value dark glow（本スプリント④⑤）と連動し
+   チャレンジサマリー全カードの数値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-sum-achieved .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 4. .ch-sum-active .ch-summary-value → dark mode static white text-shadow glow 追加
+   進行中チャレンジサマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.20）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-sum-achieved dark glow（本スプリント③）と連動しチャレンジサマリーのダーク演出を統一。 */
+[data-theme="dark"] .ch-sum-active .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 5. .ch-sum-total .ch-summary-value → dark mode static white text-shadow glow 追加
+   合計チャレンジサマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.20）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ③④と連動しチャレンジサマリー3カード全数値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-sum-total .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 6. .wl-sum-done .wl-summary-value → dark mode static white text-shadow glow 追加
+   ウィッシュリスト達成サマリーカードの数値テキストにダークモード専用のやや強めの白 glow を追加。
+   ライトモード static glow（v24.20）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-summary-value dark glow（本スプリント③〜⑤）と同パターンでサマリーカード数値の
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .wl-sum-done .wl-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.22); }
+
+/* 7. .hs-item-label → dark mode static hs-bar-color text-shadow glow 追加
+   健全度スコアバー行のラベルテキストにダークモード専用の hs-bar-color glow を追加。
+   ライトモード static glow（v24.16）は既存。ダークモード対称の glow が欠落しており今回補完。
+   hs-item-max dark glow（v24.58）と連動しヘルスカードのラベル・最大値のダーク演出を完成形に統一。 */
+[data-theme="dark"] .hs-item-label { text-shadow: 0 0 7px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .pm-table-row td:first-child → dark mode static pm-row-color text-shadow glow 追加
+   支払方法テーブルの支払方法名セルにダークモード専用の pm-row-color glow を追加。
+   ライトモード static glow（v24.18）は既存。ダークモード対称の glow が欠落しており今回補完。
+   pm-sum-value/label/sub dark glow（v24.61）と連動し支払管理関連テキストの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .pm-table-row td:first-child { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.63・全script/linkタグ?v=24.63に更新。 */
