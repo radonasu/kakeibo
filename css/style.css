@@ -32316,3 +32316,61 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .pm-sum-sub { text-shadow: 0 0 7px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.61・全script/linkタグ?v=24.61に更新。 */
+
+/* ============================================================
+   Sprint #858 / v24.62 — dark-mode static-glow 補完 8箇所
+   nav-item-active-dark-glow＋diff-up-dark-glow＋
+   diff-down-dark-glow＋badge-active-dark-glow＋
+   budget-pct-badge-warn-dark-glow＋budget-pct-badge-over-dark-glow＋
+   yr-cell-sub-up-dark-glow＋yr-cell-sub-down-dark-glow
+   ============================================================ */
+
+/* 1. .nav-item.active → dark mode static primary-end text-shadow glow 追加
+   アクティブなサイドナビ項目テキストにダークモード専用の強めの primary-end glow を追加。
+   ライトモード static glow（v22.89）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .nav-item:not(.active) dark glow（v24.60）と連動しサイドナビ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .nav-item.active { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* 2. .diff.up → dark mode static income-end text-shadow glow 追加
+   前月比プラスバッジテキストにダークモード専用の静的 income-end glow を追加。
+   ライトモード static glow（v22.89）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .diff.down dark glow（本スプリント③）と対称に差分バッジ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .diff.up { text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* 3. .diff.down → dark mode static expense-end text-shadow glow 追加
+   前月比マイナスバッジテキストにダークモード専用の静的 expense-end glow を追加。
+   ライトモード static glow（v22.89）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .diff.up dark glow（本スプリント②）と対称に差分バッジ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .diff.down { text-shadow: 0 0 8px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* 4. .badge-active → dark mode static income-end text-shadow glow 追加
+   アクティブ状態バッジのテキストにダークモード専用の静的 income-end glow を追加。
+   ライトモード static glow（v22.91）は既存。ダークモード対称の glow が欠落しており今回補完。
+   badge-active box-shadow glow（v22.91）と連動しダークモードでも緑のバッジが常時発光する完成形に統一。 */
+[data-theme="dark"] .badge-active { text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* 5. .budget-pct-badge.warn → dark mode static warning-end text-shadow glow 追加
+   予算警告バッジテキストにダークモード専用の静的 warning-end glow を追加。
+   ライトモード static glow（v22.92）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .budget-pct-badge.over dark glow（本スプリント⑥）と連動し予算バッジ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .budget-pct-badge.warn { text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* 6. .budget-pct-badge.over → dark mode static expense-end text-shadow glow 追加
+   予算超過バッジテキストにダークモード専用の静的 expense-end glow を追加。
+   ライトモード static glow（v22.92）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .budget-pct-badge.warn dark glow（本スプリント⑤）と連動し予算バッジ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .budget-pct-badge.over { text-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* 7. .yr-cell-sub.yr-up → dark mode static income-end text-shadow glow 追加
+   年次ウィジェットのトレンドアップ表示テキストにダークモード専用の静的 income-end glow を追加。
+   ライトモード static glow（v22.94）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .yr-cell-sub.yr-down dark glow（本スプリント⑧）と対称に年次トレンド全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-sub.yr-up { text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* 8. .yr-cell-sub.yr-down → dark mode static expense-end text-shadow glow 追加
+   年次ウィジェットのトレンドダウン表示テキストにダークモード専用の静的 expense-end glow を追加。
+   ライトモード static glow（v22.94）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .yr-cell-sub.yr-up dark glow（本スプリント⑦）と対称に年次トレンド全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-sub.yr-down { text-shadow: 0 0 8px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.62・全script/linkタグ?v=24.62に更新。 */
