@@ -32190,3 +32190,69 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-card .debt-monthly-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.59・全script/linkタグ?v=24.59に更新。 */
+
+/* ============================================================
+   Sprint #856 / v24.60 — dark-mode static-glow 補完 8箇所
+   nav-item-not-active-dark-glow＋btn-account-add-dark-glow＋
+   ev-sum-count-small-dark-glow＋btn-notif-bell-dark-glow＋
+   ci-ok-btn-dark-glow＋ev-add-month-dark-glow＋
+   tx-tag-filter-chip-not-active-dark-glow＋onboarding-cta-dark-glow
+   ============================================================ */
+
+/* 1. .nav-item:not(.active) → dark mode static primary-end text-shadow glow 追加
+   非アクティブのサイドナビ項目テキストにダークモード専用の静的 primary-end glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .nav-item:not(.active):hover dark glow（既存）と連動し
+   サイドナビ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .nav-item:not(.active) { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .btn-account-add → dark mode static white text-shadow glow 追加
+   サイドバーのアカウント追加ボタン（「＋」）にダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   btn-notif-bell dark glow（本スプリント④）と連動しダーク背景上の
+   白色アイコンボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .btn-account-add { text-shadow: 0 0 8px rgba(255, 255, 255, 0.22); }
+
+/* 3. .ev-sum-card .ev-sum-count small → dark mode static white text-shadow glow 追加
+   収支予定サマリーカードの件数表示サブテキスト（小）にダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .ev-sum-card .ev-sum-count dark glow（v24.28）と連動しサマリーカード内テキスト全体の
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .ev-sum-card .ev-sum-count small { text-shadow: 0 0 8px rgba(255, 255, 255, 0.22); }
+
+/* 4. .btn-notif-bell → dark mode static white text-shadow glow 追加
+   通知ベルボタンにダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   btn-account-add dark glow（本スプリント②）と連動しダーク背景上の
+   白色アイコンボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .btn-notif-bell { text-shadow: 0 0 8px rgba(255, 255, 255, 0.22); }
+
+/* 5. .ci-ok-btn → dark mode static white text-shadow glow 追加
+   チェックインの確認ボタン（OK）にダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ev-add-month dark glow（本スプリント⑥）と連動しグラデーション背景上の
+   白色ボタンテキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ci-ok-btn { text-shadow: 0 0 9px rgba(255, 255, 255, 0.28); }
+
+/* 6. .ev-add-month → dark mode static white text-shadow glow 追加
+   収支予定の月追加ボタンにダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ci-ok-btn dark glow（本スプリント⑤）と連動しグラデーション背景上の
+   ボタンテキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ev-add-month { text-shadow: 0 0 8px rgba(255, 255, 255, 0.22); }
+
+/* 7. .tx-tag-filter-chip:not(.active) → dark mode static --tc text-shadow glow 追加
+   非アクティブのタグフィルターチップにダークモード専用の静的 --tc glow を追加。
+   ライトモード static glow（v24.51）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .tx-tag-filter-chip.active dark glow（v24.59）と連動し
+   タグフィルターチップ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .tx-tag-filter-chip:not(.active) { text-shadow: 0 0 6px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .onboarding-cta → dark mode static white text-shadow glow 追加
+   オンボーディング CTA ボタンにダークモード専用の強めの白 glow を追加。
+   ライトモード static glow（v24.50）は既存。ダークモード対称の glow が欠落しており今回補完。
+   btn-primary dark glow（既存）と同パターンでグラデーション背景上の
+   白色CTAボタンテキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .onboarding-cta { text-shadow: 0 0 10px rgba(255, 255, 255, 0.30); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.60・全script/linkタグ?v=24.60に更新。 */
