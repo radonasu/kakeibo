@@ -32567,3 +32567,60 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ch-emoji-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.65・全script/linkタグ?v=24.65に更新。 */
+
+/* ============================================================
+   スプリント#862 dark-mode static-glow 補完 最終7箇所（v24.66）
+   cat-chip-selected-dark-glow＋date-quick-btn-active-dark-glow＋
+   sb-suggested-dark-glow＋sb-row-td2-dark-glow＋
+   ch-progress-pct-dark-glow＋fc-cell-amount-dark-glow＋
+   install-banner-close-dark-glow
+   ============================================================ */
+
+/* 1. .cat-chip.selected → dark mode static cat-color text-shadow glow 追加
+   カテゴリフィルターチップ（選択中）のテキストにダークモード専用の cat-color glow を追加。
+   ライトモード static glow（v24.38）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ダークモードでは cat-color / primary-end フォールバックで少し強めに発光させ
+   選択状態の視認性をライトモードと同等に維持。 */
+[data-theme="dark"] .cat-chip.selected { text-shadow: 0 0 8px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 2. .date-quick-btn.active → dark mode static white text-shadow glow 追加
+   日付クイック選択ボタン（選択中：primary背景・白テキスト）にダークモード専用の白 glow を追加。
+   ライトモード static glow rgba(255,255,255,0.4)（v24.38）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ダークモードではやや強めの 0.55 で選択状態の輝き感をさらに際立たせる演出に。 */
+[data-theme="dark"] .date-quick-btn.active { text-shadow: 0 0 9px rgba(255, 255, 255, 0.55); }
+
+/* 3. .sb-row .sb-suggested → dark mode static sb-cat-color text-shadow glow 追加
+   節約提案テーブル行の提案テキスト（カテゴリ固有色：color:sb-cat-color）にダークモード専用の glow を追加。
+   ライトモード static glow（v24.23）は既存。ダークモード対称の glow が欠落しており今回補完。
+   sb-row td:nth-child(2) dark glow（④）と連動し提案テーブル行のカテゴリ関連テキスト全体の
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .sb-row .sb-suggested { text-shadow: 0 0 7px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .sb-row td:nth-child(2) → dark mode static sb-cat-color text-shadow glow 追加
+   節約提案テーブル行の2列目テキスト（カテゴリ名等：color:sb-cat-color）にダークモード専用の glow を追加。
+   ライトモード static glow（v24.23）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ③と連動し節約提案テーブル行のカテゴリ関連テキスト全体のダーク演出を完成形に統一。 */
+[data-theme="dark"] .sb-row td:nth-child(2) { text-shadow: 0 0 7px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .ch-card .ch-progress-pct → dark mode static ch-accent text-shadow glow 追加
+   チャレンジカードの達成率%数値（fs-2xl・fw-black・tabular-nums）にダークモード専用の ch-accent glow を追加。
+   ライトモード static glow（v24.26）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ch-card-name dark glow（v24.56）・ch-widget-label dark glow（v24.65）と連動し
+   チャレンジ関連テキスト全体のダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-card .ch-progress-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .fc-cell-amount → dark mode static fc-color text-shadow glow 追加
+   財務予測カードの金額セル数値（fc-color：収支色・fw-semi・tabular-nums）にダークモード専用の fc-color glow を追加。
+   ライトモード static glow（v24.26）は既存。ダークモード対称の glow が欠落しており今回補完。
+   fc-cell-balance dark glow（v24.35）・fc-avg-badge dark glow（v24.35）と連動し
+   財務予測カード内数値テキストのダーク演出を完成形に統一。 */
+[data-theme="dark"] .fc-cell-amount { text-shadow: 0 0 8px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .install-banner-close → dark mode static white text-shadow glow 追加
+   インストールバナーの閉じるボタンにダークモード専用の強めの白 glow を追加。
+   ライトモード static glow rgba(255,255,255,0.35)（v24.49）は既存。ダークモード対称の glow が欠落しており今回補完。
+   ios-guide-close/ci-close dark glow（v24.46）と連動しバナー・オーバーレイ系閉じるボタン全体の
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .install-banner-close { text-shadow: 0 0 9px rgba(255, 255, 255, 0.50); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.66・全script/linkタグ?v=24.66に更新。 */
