@@ -32126,3 +32126,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .hs-item-max { text-shadow: 0 0 7px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.58・全script/linkタグ?v=24.58に更新。 */
+
+/* ============================================================
+   Sprint #855 / v24.59 — dark-mode static-glow 補完 8箇所
+   tx-tag-filter-all-active-dark-glow＋tx-tag-filter-chip-active-dark-glow＋
+   adv-preset-chip-active-dark-glow＋type-btn-expense-dark-glow＋
+   type-btn-income-dark-glow＋qa-type-expense-active-dark-glow＋
+   qa-type-income-active-dark-glow＋debt-monthly-badge-dark-glow
+   ============================================================ */
+
+/* 1. .tx-tag-filter-all.active → dark mode static primary-end text-shadow glow 追加
+   「すべて」タグフィルター選択中状態のテキストにダークモード専用の静的 primary-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .tx-tag-filter-all:not(.active) dark glow（v24.52）と連動し
+   「すべて」ボタン全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .tx-tag-filter-all.active { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 2. .tx-tag-filter-chip.active → dark mode static --tc text-shadow glow 追加
+   アクティブなタグフィルターチップテキストにダークモード専用の静的 --tc glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .tx-tag-filter-chip:not(.active) dark glow（v24.51）と連動し
+   タグフィルターチップ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .tx-tag-filter-chip.active { text-shadow: 0 0 7px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .adv-preset-chip.active → dark mode static primary-end text-shadow glow 追加
+   アクティブな詳細フィルタープリセットチップテキストにダークモード専用の静的 primary-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .adv-preset-chip dark glow（v24.52）と連動しプリセットチップ全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .adv-preset-chip.active { text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 4. .type-btn.expense-btn → dark mode static expense-end text-shadow glow 追加
+   取引モーダルの支出タイプ選択中ボタンテキストにダークモード専用の静的 expense-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .type-btn.income-btn dark glow（本スプリント⑤）と対称に
+   タイプ選択ボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .type-btn.expense-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 5. .type-btn.income-btn → dark mode static income-end text-shadow glow 追加
+   取引モーダルの収入タイプ選択中ボタンテキストにダークモード専用の静的 income-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .type-btn.expense-btn dark glow（本スプリント④）と対称に
+   タイプ選択ボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .type-btn.income-btn { text-shadow: 0 0 9px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+
+/* 6. .qa-type-btn.qa-type-active[data-qa-type="expense"] → dark mode expense-end text-shadow glow 追加
+   クイック追加フォームの支出タイプ選択中ボタンテキストにダークモード専用の expense-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .qa-type-btn.qa-type-active income dark glow（本スプリント⑦）と対称に
+   QAタイプ選択ボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="expense"] { text-shadow: 0 0 9px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* 7. .qa-type-btn.qa-type-active[data-qa-type="income"] → dark mode income-end text-shadow glow 追加
+   クイック追加フォームの収入タイプ選択中ボタンテキストにダークモード専用の income-end glow を追加。
+   ライトモード static glow（v23.93）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .qa-type-btn.qa-type-active expense dark glow（本スプリント⑥）と対称に
+   QAタイプ選択ボタンのダーク演出を完成形に統一。 */
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"] { text-shadow: 0 0 9px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+
+/* 8. .debt-card .debt-monthly-badge → dark mode static debt-accent text-shadow glow 追加
+   負債カードの月額返済バッジテキストにダークモード専用の静的 debt-accent glow を追加。
+   ライトモード static glow（v24.19）は既存。ダークモード対称の glow が欠落しており今回補完。
+   .debt-rate-badge dark glow（v24.58）と連動し負債カード内バッジのダーク演出を完成形に統一。 */
+[data-theme="dark"] .debt-card .debt-monthly-badge { text-shadow: 0 0 7px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.59・全script/linkタグ?v=24.59に更新。 */
