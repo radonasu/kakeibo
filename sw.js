@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v24.83'; // v24.83: yr-cell-income/expense/savings-success/warn/danger + wk-cell 1/2/3 hover outer glow dark mode enhanced (mix-md) 8箇所
+const CACHE_NAME = 'kakeibo-v24.84'; // v24.84: summary-card income/expense/balance×4 + dow-stat-max/min + fv-stat-fixed/var hover outer glow dark mode enhanced (mix-md) 8箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

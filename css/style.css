@@ -33717,3 +33717,65 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ wk-summary-row wk-cell:nth-child(3) dark enhanced hover outer glow（income-end mix-md）＋border強化 */
 [data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--income-end) var(--mix-mid), var(--border)); }
+
+/* ============================================================
+   Sprint #880 (v24.84): summary-card-dark-hover-outer-glow×4＋dow-stat-dark-hover-outer-glow×2＋fv-stat-dark-hover-outer-glow×2
+
+   summary-card（収支サマリーカード）・dow-stat（曜日統計カード）・fv-stat（財務予測統計カード）の
+   ライトモード hover box-shadow は v22.62/v22.68/v22.70 で実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントに切替て mix-md に引き上げ、
+   ホバー時のカード存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .summary-card.income:hover → dark enhanced outer glow（income-end・mix-md・0 6px 24px）:
+     v22.62 の hover glow（income mix-sm）のダーク強化版。income-end（#34d399）に切替え mix-md に引き上げ
+     収入サマリーカードの hover 発光をダークモードで鮮明化。summary-card dark系演出のシリーズ起点。
+   ②[data-theme="dark"] .summary-card.expense:hover → dark enhanced outer glow（expense-end・mix-md・0 6px 24px）:
+     v22.62 の hover glow（expense mix-sm）のダーク強化版。expense-end（#fb7185）に切替え mix-md に引き上げ
+     支出サマリーカードの hover 警告発光をダークモードで鮮明化。①と対称に type 別カラーで統一。
+   ③[data-theme="dark"] .summary-card.balance.positive:hover → dark enhanced outer glow（primary-end・mix-md・0 6px 24px）:
+     v22.62 の hover glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     残高プラスサマリーカードの hover 達成感発光をダークモードで鮮明化。
+   ④[data-theme="dark"] .summary-card.balance.negative:hover → dark enhanced outer glow（expense-end・mix-md・0 6px 24px）:
+     ②と対称に expense-end・mix-md で残高マイナスサマリーカードの hover 警告発光をダークモードで鮮明化。
+     ①〜④で summary-card 全4バリアント（income/expense/balance-positive/negative）の
+     ダーク hover outer glow が完成形に統一。
+   ⑤[data-theme="dark"] .dow-stat-max:hover → dark enhanced outer glow（expense-end・mix-md・0 6px 20px）:
+     v22.70 の hover glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+     最多支出曜日カードの hover 警告発光をダークモードで鮮明化。
+   ⑥[data-theme="dark"] .dow-stat-min:hover → dark enhanced outer glow（income-end・mix-md・0 6px 20px）:
+     v22.70 の hover glow（income mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+     最少支出曜日カードの hover 達成感発光をダークモードで鮮明化。
+     ⑤⑥で dow-stat-max/min 全2バリアントのダーク hover outer glow が完成形に統一。
+   ⑦[data-theme="dark"] .fv-stat-fixed:hover → dark enhanced outer glow（primary-end・mix-md・0 6px 20px）:
+     v22.68 の hover glow（primary mix-md）のダーク強化版。primary-end に切替え
+     財務予測固定費統計カードの hover 発光をダークモードで鮮明化。
+   ⑧[data-theme="dark"] .fv-stat-var:hover → dark enhanced outer glow（income-end・mix-md・0 6px 20px）:
+     v22.68 の hover glow（success mix-md）のダーク強化版。income-end（success の dark variant）に切替え
+     財務予測変動費統計カードの hover 達成感発光をダークモードで鮮明化。
+     ⑦⑧で fv-stat-fixed/var のダーク hover outer glow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.84・全script/linkタグ?v=24.84に更新。
+   ============================================================ */
+
+/* ① summary-card.income dark enhanced hover outer glow（income-end mix-md 0 6px 24px） */
+[data-theme="dark"] .summary-card.income:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② summary-card.expense dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） */
+[data-theme="dark"] .summary-card.expense:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ summary-card.balance.positive dark enhanced hover outer glow（primary-end mix-md 0 6px 24px） */
+[data-theme="dark"] .summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） */
+[data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） */
+[data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ dow-stat-min dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
+[data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ fv-stat-fixed dark enhanced hover outer glow（primary-end mix-md 0 6px 20px） */
+[data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ fv-stat-var dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
+[data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
