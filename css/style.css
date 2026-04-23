@@ -33537,3 +33537,62 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑦⑧で全期限ステータスポイントカードのダーク hover inset-left glow 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.80・全script/linkタグ?v=24.80に更新。 */
 [data-theme="dark"] .pt-card.pt-soon:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-sm), transparent), inset 4px 0 14px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ========================================
+   Sprint #877  v24.81
+   insight-info-dark-hover-inset-glow＋insight-alert-dark-hover-inset-glow
+   ＋insight-success-dark-hover-inset-glow＋insight-warning-dark-hover-inset-glow
+   ＋opp-card-dark-hover-inset-glow＋ci-event-item-dark-hover-inset-glow
+   ＋pm-table-row-dark-hover-inset-glow＋sb-row-dark-hover-inset-glow
+   ホバー inset-left glow ダークモード強化版（mix-sm → mix-md）
+   ======================================== */
+
+/* 1. [data-theme="dark"] .insight-item.insight-info:hover → dark enhanced hover inset-left glow（primary-end・mix-md）
+   v24.78 の hover inset-left glow（primary mix-sm inset 4px 0 12px）のダークモード強化版。
+   ダークモードでは背景が暗く hover 時の inset glow がより映えるため
+   mix-sm → mix-md に引き上げインサイト情報アイテムの hover 奥行き演出を鮮明化。
+   primary → primary-end に切替てダーク背景で映える発光演出に統一。 */
+[data-theme="dark"] .insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* 2. [data-theme="dark"] .insight-item.insight-alert:hover → dark enhanced hover inset-left glow（danger-text・mix-md）
+   v24.78 の hover inset-left glow（danger-text mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げアラートインサイトの hover 警告発光をダークモードで鮮明化。
+   ①と対称に info/alert の hover ダーク演出を統一。 */
+[data-theme="dark"] .insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+
+/* 3. [data-theme="dark"] .insight-item.insight-success:hover → dark enhanced hover inset-left glow（success・mix-md）
+   v24.78 の hover inset-left glow（success mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げ成功インサイトの hover 達成感発光をダークモードで鮮明化。
+   ①②と連動し info/alert/success の hover ダーク演出を統一。 */
+[data-theme="dark"] .insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
+
+/* 4. [data-theme="dark"] .insight-item.insight-warning:hover → dark enhanced hover inset-left glow（warning・mix-md）
+   v24.78 の hover inset-left glow（warning mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げ警告インサイトの hover 警戒発光をダークモードで鮮明化。
+   ①〜④で insight-info/alert/success/warning 全4タイプの dark hover inset-left glow が完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* 5. [data-theme="dark"] .opp-card:hover → dark enhanced hover inset-left glow（opp-accent fallback primary-end・mix-md）
+   v24.72 の hover inset-left glow（opp-accent mix-sm inset 4px 0 14px）のダークモード強化版。
+   mix-md に引き上げオポチュニティカードの hover 奥行き演出をダークモードで鮮明化。
+   goal/wl/ch/asset/debt/ev-card dark hover glow（v24.80）と連動しカード系 hover ダーク演出に統一。 */
+[data-theme="dark"] .opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 14px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 6. [data-theme="dark"] .ci-event-item:hover → dark enhanced hover inset-left glow（ci-ev-accent fallback primary-end・mix-md）
+   v24.72 の hover inset-left glow（ci-ev-accent mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げチェックインイベントアイテムの hover 奥行き演出をダークモードで鮮明化。
+   ⑤と連動しカード・行アイテム系 hover ダーク演出シリーズに統一。 */
+[data-theme="dark"] .ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 7. [data-theme="dark"] .pm-table-row:hover → dark enhanced hover inset-left glow（pm-row-color fallback primary-end・mix-md）
+   v24.72 の hover inset-left glow（pm-row-color mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げ支払いマネージャー行の hover 奥行き演出をダークモードで鮮明化。
+   ⑥と連動し行アイテム系 hover ダーク演出シリーズに統一。 */
+[data-theme="dark"] .pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 8. [data-theme="dark"] .sb-row:hover → dark enhanced hover inset-left glow（sb-cat-color fallback primary-end・mix-md）
+   v24.72 の hover inset-left glow（sb-cat-color mix-sm inset 4px 0 12px）のダークモード強化版。
+   mix-md に引き上げサブ行の hover 奥行き演出をダークモードで鮮明化。
+   ⑤〜⑧で opp-card/ci-event-item/pm-table-row/sb-row の dark hover inset-left glow シリーズが完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.81・全script/linkタグ?v=24.81に更新。 */
+[data-theme="dark"] .sb-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-md), transparent); }
