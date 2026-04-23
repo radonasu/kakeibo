@@ -33278,3 +33278,69 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    収支予定ウィジェットアイテムのダーク演出を完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.76・全script/linkタグ?v=24.76に更新。 */
 [data-theme="dark"] .ev-widget-item { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #873  v24.77
+   tx-income-td1-dark-inset-glow＋tx-expense-td1-dark-inset-glow
+   ＋sub-card-dark-inset-glow＋forecast-card-dark-inset-top-glow
+   ＋wk-widget-card-dark-inset-top-glow
+   ＋pace-status-good-dark-inset-top-glow
+   ＋pace-status-warn-dark-inset-top-glow
+   ＋pace-status-over-dark-inset-top-glow
+   合計8箇所
+
+   v24.73 で追加した静的 inset glow（mix-xs）のダークモード強化版。
+   ダークモードでは背景が暗く glow が視覚的に映えるため mix-sm に引き上げ
+   奥行き感・発光感を強調。inset-top 系は primary-end fallback を使用。
+   ============================================================ */
+
+/* 1. .tx-table tbody tr[data-type="income"]:not(.tx-selected) td:first-child → dark mode enhanced inset-left glow（income・mix-sm）
+   ライトモード静的 inset glow（v24.73: mix-xs）のダーク強化版。
+   取引テーブル収入行の td:first-child 左バーをダークモードで income カラー mix-sm に引き上げ
+   奥行き演出を鮮明化。②と対称に income/expense 全行のダーク inset 演出が完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:not(.tx-selected) td:first-child { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
+
+/* 2. .tx-table tbody tr[data-type="expense"]:not(.tx-selected) td:first-child → dark mode enhanced inset-left glow（expense・mix-sm）
+   ライトモード静的 inset glow（v24.73: mix-xs）のダーク強化版。
+   ①と対称に取引テーブル支出行の左バーをダークモードで expense カラー mix-sm に強調。
+   income/expense 全行のダーク inset 演出が完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:not(.tx-selected) td:first-child { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 3. .sub-card → dark mode enhanced inset-left glow（sub-accent・mix-sm）
+   ライトモード静的 inset glow（v24.73: mix-xs）のダーク強化版。
+   shadow-btn-base を維持しつつダークモードで sub-accent glow を mix-sm に引き上げ
+   サブスクリプションカードの左アクセントバー奥行き演出を鮮明化。primary-end fallback を使用。 */
+[data-theme="dark"] .sub-card { box-shadow: var(--shadow-btn-base), inset 4px 0 16px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .forecast-card → dark mode enhanced inset-top glow（fc-color・mix-sm）
+   ライトモード静的 inset-top glow（v24.73: mix-xs）のダーク強化版。
+   fc-color はカテゴリ別に変化し各カードが独自カラーでダークモード時に
+   上部アクセントバーを mix-sm で鮮明に発光。primary-end fallback を使用。
+   ⑤〜⑧と連動し border-top 系静的 inset-top glow のダーク強化シリーズに統一。 */
+[data-theme="dark"] .forecast-card { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .wk-widget-card → dark mode enhanced inset-top glow（primary-end・mix-sm）
+   ライトモード静的 inset-top glow（v24.73: primary・mix-xs）のダーク強化版。
+   ダークモードでは primary-end（グラデ終端カラー）で mix-sm に引き上げ
+   週次ウィジェットカード上部の奥行き演出をより鮮明に。④と連動。 */
+[data-theme="dark"] .wk-widget-card { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 6. .pace-widget-body.pace-status-good → dark mode enhanced inset-top glow（success・mix-sm）
+   ライトモード静的 inset-top glow（v24.73: mix-xs）のダーク強化版。
+   ダークモードで success カラーを mix-sm に引き上げペースウィジェット
+   「良好」ステータスの上部発光演出を鮮明化。⑦⑧と連動し全ステータスのダーク演出が統一。 */
+[data-theme="dark"] .pace-widget-body.pace-status-good { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
+
+/* 7. .pace-widget-body.pace-status-warn → dark mode enhanced inset-top glow（warning・mix-sm）
+   ライトモード静的 inset-top glow（v24.73: mix-xs）のダーク強化版。
+   ダークモードで warning カラーを mix-sm に引き上げ「注意」ステータスの発光演出を鮮明化。
+   ⑥⑧と連動しペースウィジェット全ステータスのダーク inset 演出が完成形に統一。 */
+[data-theme="dark"] .pace-widget-body.pace-status-warn { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
+
+/* 8. .pace-widget-body.pace-status-over → dark mode enhanced inset-top glow（danger-text・mix-sm）
+   ライトモード静的 inset-top glow（v24.73: mix-xs）のダーク強化版。
+   ダークモードで danger-text カラーを mix-sm に引き上げ「超過」ステータスの発光演出を鮮明化。
+   ⑥⑦と連動しペースウィジェット全ステータス（good/warn/over）の
+   ダーク inset-top glow 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.77・全script/linkタグ?v=24.77に更新。 */
+[data-theme="dark"] .pace-widget-body.pace-status-over { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
