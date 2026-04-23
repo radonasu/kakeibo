@@ -33216,3 +33216,65 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑦と対称に期限カード全種のダーク inset 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.75・全script/linkタグ?v=24.75に更新。 */
 [data-theme="dark"] .pt-card.pt-soon { box-shadow: var(--shadow-btn-base), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #872  v24.76
+   opp-card-dark-inset-glow＋ci-event-item-dark-inset-glow
+   ＋pm-table-row-dark-inset-glow＋sb-row-dark-inset-glow
+   ＋cal-ev-item-dark-inset-glow＋dow-table-row-dark-inset-glow
+   ＋fv-cat-row-dark-inset-glow＋ev-widget-item-dark-inset-glow
+   合計8箇所
+
+   v24.72 で追加した静的 inset-left glow（mix-xs）のダークモード強化版。
+   ダークモードでは背景が暗く glow が視覚的に映えるため mix-sm に引き上げ
+   奥行き感・発光感を強調。fallback は primary-end（ダーク用グラデ終端）。
+   ============================================================ */
+
+/* 1. .opp-card → dark mode enhanced inset-left glow（opp-accent・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   opp-title dark text-shadow glow（v24.57）と連動し
+   節約機会カードのダーク演出を完成形に統一。 */
+[data-theme="dark"] .opp-card { box-shadow: inset 4px 0 14px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .ci-event-item → dark mode enhanced inset-left glow（ci-ev-accent・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   ci-event-name dark glow（v24.57）と連動し
+   チェックインイベントアイテムのダーク演出を完成形に統一。 */
+[data-theme="dark"] .ci-event-item { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .pm-table-row → dark mode enhanced inset-left glow（pm-row-color・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   pm-table-row td:first-child dark glow（v24.63）と連動し
+   支払方法テーブル行のダーク演出を完成形に統一。 */
+[data-theme="dark"] .pm-table-row { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .sb-row → dark mode enhanced inset-left glow（sb-cat-color・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   sb-suggested/sb-row td:nth-child(2) dark glow（v24.66）と連動し
+   節約提案テーブル行のダーク演出を完成形に統一。 */
+[data-theme="dark"] .sb-row { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .cal-ev-item → dark mode enhanced inset-left glow（cal-ev-color・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   cal-ev-name/cat dark glow（v24.59/v24.40）と連動し
+   カレンダーイベントアイテムのダーク演出を完成形に統一。 */
+[data-theme="dark"] .cal-ev-item { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .dow-table-row → dark mode enhanced inset-left glow（dow-row-color・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   dow-table-row 各列 dark glow（v24.42）と連動し
+   曜日別集計テーブル行のダーク演出を完成形に統一。 */
+[data-theme="dark"] .dow-table-row { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .fv-cat-table tbody tr → dark mode enhanced inset-left glow（fv-cat-color・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   fv-cat-amt/fv-pct-txt dark glow（v24.53）と連動し
+   財務予測カテゴリテーブル行のダーク演出を完成形に統一。 */
+[data-theme="dark"] .fv-cat-table tbody tr { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 8. .ev-widget-item → dark mode enhanced inset-left glow（ev-accent・mix-sm）
+   ライトモード静的 inset glow（v24.72: mix-xs）のダーク強化版。
+   ev-widget-name/amount dark glow（v24.58）と連動し
+   収支予定ウィジェットアイテムのダーク演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.76・全script/linkタグ?v=24.76に更新。 */
+[data-theme="dark"] .ev-widget-item { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
