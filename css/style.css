@@ -33966,3 +33966,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ hm-stat-card:nth-child(4) dark hover outer glow（income-end mix-sm 0 4px 14px） */
 [data-theme="dark"] .hm-stat-card:nth-child(4):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #884 (v24.88): cat-card-dark-hover-outer-glow＋pt-card-dark-hover-outer-glow＋rc-item-dark-hover-outer-glow＋ch-widget-item-dark-hover-outer-glow＋debt-widget-item-dark-hover-outer-glow＋step-card-dark-hover-outer-glow＋asset-entry-row-dark-hover-outer-glow＋section-tab-dark-hover-outer-glow
+
+   cat-card・pt-card（generic）・rc-item・ch-widget-item・debt-widget-item・
+   step-card・asset-entry-row・section-tab の
+   ライトモード hover box-shadow は実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントへ切替・mix-xs → mix-md に引き上げ、
+   ホバー時の存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .cat-card:hover → dark enhanced outer glow（cat-clr fallback primary-end・mix-md・0 4px 18px）:
+     ライトモード glow（cat-clr mix-xs v22.x）のダーク強化版。primary-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     カテゴリカードの hover 発光をダークモードで鮮明化。cat-card-name/cat-stat-val dark static glow（v24.64）と連動し
+     カテゴリカード全体のダーク演出を完成形に統一。
+   ②[data-theme="dark"] .pt-card:hover → dark enhanced outer glow（pt-accent fallback primary-end・mix-md・0 4px 18px）:
+     ライトモード glow（pt-accent mix-xs v22.x）のダーク強化版。primary-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     ポイントカード（generic）の hover 発光をダークモードで鮮明化。pt-urgent/pt-soon の dark hover glow（v24.67）は
+     より高い specificity で継続適用されるため競合なし。pt-card-name/pt-card-balance dark glow（v24.57）と連動。
+   ③[data-theme="dark"] .rc-item:hover → dark enhanced outer glow（primary-end・mix-md・0 2px 14px）:
+     ライトモード glow（primary mix-xs v22.x）のダーク強化版。primary-end に切替え mix-xs → mix-md に引き上げ
+     定期取引アイテムの hover 発光をダークモードで鮮明化。rc-item-name/rc-item-amount/rc-item-meta dark static glow
+     （v24.x）と連動し rc-item 全体のダーク演出を完成形に統一。
+   ④[data-theme="dark"] .ch-widget-item:hover → dark enhanced outer glow（ch-accent fallback primary-end・mix-md・0 2px 14px）:
+     ライトモード glow（ch-accent mix-xs v22.x）のダーク強化版。primary-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     チャレンジウィジェットアイテムの hover 発光をダークモードで鮮明化。ch-widget-name/ch-widget-pct dark glow と連動。
+   ⑤[data-theme="dark"] .debt-widget-item:hover → dark enhanced outer glow（debt-accent fallback expense-end・mix-md・0 2px 14px）:
+     ライトモード glow（debt-accent/expense mix-xs v22.x）のダーク強化版。expense-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     負債ウィジェットアイテムの hover 警告発光をダークモードで鮮明化。debt-widget-name カラー変化（v22.x）と連動。
+   ⑥[data-theme="dark"] .step-card:hover → dark enhanced outer glow（primary-end・mix-md・0 4px 20px）:
+     ライトモード glow（primary mix-xs v22.75）のダーク強化版。primary-end に切替え mix-xs → mix-md に引き上げ
+     オンボーディングステップカードの hover 発光をダークモードで鮮明化。既存 dark rule（border-color: primary-end）と
+     連動しステップカードのダーク hover 演出を完成形に統一。
+   ⑦[data-theme="dark"] .asset-entry-row:hover → dark enhanced outer glow（primary-end・mix-md・0 1px 12px）:
+     ライトモード glow（primary mix-xs v22.x）のダーク強化版。primary-end に切替え mix-xs → mix-md に引き上げ
+     資産内訳行の hover 発光をダークモードで鮮明化。asset-entry-balance/date/note カラー変化（v22.x）と連動。
+   ⑧[data-theme="dark"] .section-tab:hover → dark enhanced outer glow（primary-end・mix-md・0 2px 12px）:
+     ライトモード glow（primary mix-xs v22.x）のダーク強化版。primary-end に切替え mix-xs → mix-md に引き上げ
+     セクションタブの hover 発光をダークモードで鮮明化。既存 dark rule（background/border-bottom-color）と
+     連動しタブのダーク hover 演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.88・全script/linkタグ?v=24.88に更新。
+   ============================================================ */
+
+/* ① cat-card dark enhanced hover outer glow（cat-clr fallback primary-end mix-md 0 4px 18px） */
+[data-theme="dark"] .cat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-mid), var(--border)); }
+
+/* ② pt-card（generic）dark enhanced hover outer glow（pt-accent fallback primary-end mix-md 0 4px 18px） */
+[data-theme="dark"] .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ rc-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
+[data-theme="dark"] .rc-item:hover { box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
+
+/* ④ ch-widget-item dark enhanced hover outer glow（ch-accent fallback primary-end mix-md 0 2px 14px） */
+[data-theme="dark"] .ch-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ debt-widget-item dark enhanced hover outer glow（debt-accent fallback expense-end mix-md 0 2px 14px） */
+[data-theme="dark"] .debt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+
+/* ⑥ step-card dark enhanced hover outer glow（primary-end mix-md 0 4px 20px） */
+[data-theme="dark"] .step-card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ asset-entry-row dark enhanced hover outer glow（primary-end mix-md 0 1px 12px） */
+[data-theme="dark"] .asset-entry-row:hover { box-shadow: 0 1px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ section-tab dark enhanced hover outer glow（primary-end mix-md 0 2px 12px） */
+[data-theme="dark"] .section-tab:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
