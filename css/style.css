@@ -6208,7 +6208,7 @@ body {
 }
 .section-tab.is-active:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface));
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 -4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .section-tab .tab-icon {
   font-size: var(--fs-sm);
@@ -11562,7 +11562,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 /* v22.71: 月次ノートカードホバーglow */
-.nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .nt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .nt-card::before {
   content: '';
@@ -13431,7 +13431,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 /* v22.71: AIアドバイスカードホバーglow */
-.adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .adv-widget-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .adv-widget-card::before {
   content: '';
@@ -13821,7 +13821,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-top: var(--accent-w) solid var(--primary);
   transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce); /* v22.68 */
 }
-.yr-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); } /* v22.68 */
+.yr-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); } /* v22.68 */
 .yr-widget-card::before {
   content: '';
   position: absolute;
@@ -33098,3 +33098,59 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    border-left 系静的 inset glow シリーズの最終要素として追加しシリーズを完結。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.73・全script/linkタグ?v=24.73に更新。 */
 .sim-loan-info { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* ============================================================
+   v24.74 Sprint #870 — border-top inset-top glow 完結
+                       ＋ border-bottom inset-bottom glow 新シリーズ
+                       ＋ nav indicator bar glow
+   ============================================================ */
+
+/* 1. .qa-card → static inset-top glow（--qa-accent・mix-xs）
+   質問回答カードの border-top（accent-w・--qa-accent）に常時 qa-accent inset glow を追加（inset 0 4px 10px mix-xs）。
+   --qa-accent は data-qa-type="expense" で danger-text、"income" で income、デフォルトで primary と動的変化し
+   タイプ別カラーがホバー前から上部に奥行きを発光。forecast-card・wk-widget-card・pace-widget-body（v24.73）と連動し
+   border-top 系静的 inset-top glow シリーズに統一。qa-card は card-level hover なし（:focus-within のみ）のため hover 更新は不要。 */
+.qa-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--qa-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .nt-card → static inset-top glow（primary・mix-xs）
+   月次ノートカードの border-top（accent-w・primary）に常時 primary inset glow を追加（inset 0 4px 10px mix-xs）。
+   v22.71 の hover outer glow と連動しホバー前から border-top に奥行きを付与。
+   .nt-card:hover も inset-top mix-sm で更新し hover 強調と連動。 */
+.nt-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 3. .adv-widget-card → static inset-top glow（primary・mix-xs）
+   AIアドバイスウィジェットカードの border-top（accent-w・primary）に常時 primary inset glow を追加（inset 0 4px 10px mix-xs）。
+   v22.71 の hover outer glow と連動。.adv-widget-card:hover も inset-top mix-sm で更新し hover 強調と連動。 */
+.adv-widget-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 4. .yr-widget-card → static inset-top glow（primary・mix-xs）
+   年次ウィジェットカードの border-top（accent-w・primary）に常時 primary inset glow を追加（inset 0 4px 10px mix-xs）。
+   v22.68 の hover glow と連動。.yr-widget-card:hover も inset-top mix-sm で更新し hover 強調と連動。
+   ①〜④ で border-top accent-w を持つ全カードの静的 inset-top glow が完結。 */
+.yr-widget-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 5. .section-tab.is-active → static inset-bottom glow（primary・mix-xs）
+   セクションタブのアクティブ状態 border-bottom-color（primary）に常時 primary inset-bottom glow を追加（inset 0 -4px 10px mix-xs）。
+   border-bottom 系 inset-bottom glow 新シリーズ第1弾。
+   .section-tab.is-active:hover も inset-bottom mix-sm で更新し hover 強調と連動。 */
+.section-tab.is-active { box-shadow: inset 0 -4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 6. .tx-th-sort.tx-th-active → static inset-bottom glow（primary・mix-xs）
+   取引テーブルのアクティブソートヘッダーの border-bottom（accent-w・primary）に常時 primary inset-bottom glow を追加（inset 0 -4px 10px mix-xs）。
+   ⑤ section-tab.is-active と連動し border-bottom 系 inset-bottom glow シリーズを統一。 */
+.tx-th-sort.tx-th-active { box-shadow: inset 0 -4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 7. .nav-item.active::before → static primary glow
+   サイドナビのアクティブインジケーターバー（width: accent-w・background: primary・左側に配置）に
+   常時 primary glow を追加（2px 0 8px mix-xs）。インジケーターバー右方向に halo が広がりアクティブ状態の立体感を強化。
+   ダークモードでは primary-end glow に切替。 */
+.nav-item.active::before { box-shadow: 2px 0 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .nav-item.active::before { box-shadow: 2px 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* 8. .bottom-nav-item.active::before → static primary glow
+   ボトムナビのアクティブインジケーターバー（top: 0・background: primary・上部に配置）に
+   常時 primary glow を追加（0 2px 8px mix-xs）。インジケーターバー下方向に halo が広がりアクティブ状態の立体感を強化。
+   ダークモードでは primary-end glow に切替。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.74・全script/linkタグ?v=24.74に更新。 */
+.bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
+[data-theme="dark"] .bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
