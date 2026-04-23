@@ -33779,3 +33779,62 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ fv-stat-var dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
 [data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #881 (v24.85): yoy-summary-item-dark-hover-outer-glow＋ct-stat-card-dark-hover-outer-glow＋fv-stat-rate-dark-hover-outer-glow＋sub-widget-item-dark-hover-outer-glow×3＋pt-widget-item-dark-hover-outer-glow＋wish-widget-item-dark-hover-outer-glow
+
+   yoy-summary-item・ct-stat-card・fv-stat-rate・sub-widget-item（3バリアント）・pt-widget-item・wish-widget-item の
+   ライトモード hover box-shadow は実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントへ切替・mix-md に引き上げ、
+   ホバー時の存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .yoy-summary-item:hover → dark enhanced outer glow（primary-end・mix-md・0 4px 18px）:
+     v22.74 の hover glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     前年比較サマリーカードの hover 発光をダークモードで鮮明化。
+   ②[data-theme="dark"] .ct-stat-card:hover → dark enhanced outer glow（ct-stat-color fallback primary-end・mix-md・0 4px 18px）:
+     v22.70 の hover glow（ct-stat-color mix-xs）のダーク強化版。mix-md に引き上げ
+     カテゴリトレンド統計カードの hover 発光をダークモードで鮮明化。::before shadow も連動強化。
+   ③[data-theme="dark"] .fv-stat-rate:hover → dark enhanced outer glow（warning・mix-lg・0 6px 24px）:
+     v22.68 の hover glow（warning mix-md）のダーク強化版。mix-lg に引き上げ blur 拡大で
+     財務予測達成率カードの hover 警戒発光をダークモードで鮮明化。
+   ④[data-theme="dark"] .sub-widget-item:hover → dark enhanced outer glow（primary-end・mix-md・0 2px 14px）:
+     v5.x の hover glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     サブスクウィジェット通常アイテムの hover 発光をダークモードで鮮明化。
+   ⑤[data-theme="dark"] .sub-widget-item.sub-urgent:hover → dark enhanced outer glow（expense-end・mix-md・0 2px 14px）:
+     ④と対称に sub-urgent（期限切れ）アイテムを expense-end で警告発光強化。
+   ⑥[data-theme="dark"] .sub-widget-item.sub-soon:hover → dark enhanced outer glow（warning・mix-md・0 2px 14px）:
+     ⑤と対称に sub-soon（期限近）アイテムを warning で警戒発光強化。
+     ④⑤⑥で sub-widget-item 全3バリアントのダーク hover outer glow が完成形に統一。
+   ⑦[data-theme="dark"] .pt-widget-item:hover → dark enhanced outer glow（primary-end・mix-md・0 2px 14px）:
+     v5.x の hover glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     ポイントウィジェットアイテムの hover 発光をダークモードで鮮明化。
+   ⑧[data-theme="dark"] .wish-widget-item:hover → dark enhanced outer glow（primary-end・mix-md・0 2px 14px）:
+     v5.x の hover glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     ウィッシュリストウィジェットアイテムの hover 発光をダークモードで鮮明化。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.85・全script/linkタグ?v=24.85に更新。
+   ============================================================ */
+
+/* ① yoy-summary-item dark enhanced hover outer glow（primary-end mix-md 0 4px 18px） */
+[data-theme="dark"] .yoy-summary-item:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
+
+/* ② ct-stat-card dark enhanced hover outer glow（ct-stat-color fallback primary-end mix-md 0 4px 18px） */
+[data-theme="dark"] .ct-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ct-stat-card:hover::before { box-shadow: 0 2px 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* ③ fv-stat-rate dark enhanced hover outer glow（warning mix-lg 0 6px 24px） */
+[data-theme="dark"] .fv-stat-rate:hover { box-shadow: var(--shadow-hover-md), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
+
+/* ④ sub-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
+[data-theme="dark"] .sub-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ sub-widget-item.sub-urgent dark enhanced hover outer glow（expense-end mix-md 0 2px 14px） */
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ sub-widget-item.sub-soon dark enhanced hover outer glow（warning mix-md 0 2px 14px） */
+[data-theme="dark"] .sub-widget-item.sub-soon:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑦ pt-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
+[data-theme="dark"] .pt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ wish-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
+[data-theme="dark"] .wish-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
