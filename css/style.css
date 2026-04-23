@@ -33596,3 +33596,65 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑤〜⑧で opp-card/ci-event-item/pm-table-row/sb-row の dark hover inset-left glow シリーズが完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.81・全script/linkタグ?v=24.81に更新。 */
 [data-theme="dark"] .sb-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #878  v24.82
+   cal-ev-item-dark-hover-inset-glow＋dow-table-row-dark-hover-inset-glow
+   ＋fv-cat-row-dark-hover-inset-glow＋ev-widget-item-dark-hover-inset-glow
+   ＋tx-income-td1-dark-hover-inset-glow＋tx-expense-td1-dark-hover-inset-glow
+   ＋fc-status-alert-dark-hover-inset-glow＋sub-card-dark-hover-inset-glow
+   v24.69 シリーズの dark hover inset-left glow 強化版（mix-md）。
+   v24.80（goal/wl/ch/asset/debt/ev/pt）・v24.81（insight/opp/ci/pm/sb）に続き
+   v24.69 系の残り8要素で dark hover inset-left glow シリーズ完結。
+   ============================================================ */
+
+/* 1. [data-theme="dark"] .cal-ev-item:hover → dark enhanced hover inset-left glow（cal-ev-color fallback primary-end・mix-md・inset 4px 0 12px）
+   v24.69 の hover inset-left glow（cal-ev-color mix-sm）のダークモード強化版。
+   mix-md に引き上げカレンダーイベントアイテムの hover translateX スライド方向 inset 奥行き演出をダークモードで鮮明化。
+   cal-ev-name/cat dark glow（v24.59/v24.40）・cal-ev-item dark inset static glow（v24.76）と連動しダーク演出を完成形に統一。 */
+[data-theme="dark"] .cal-ev-item:hover { box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 2. [data-theme="dark"] .dow-table-row:hover → dark enhanced hover inset-left glow（dow-row-color fallback primary-end・mix-md・inset 4px 0 12px）
+   v24.69 の hover inset-left glow（dow-row-color mix-sm）のダークモード強化版。
+   mix-md に引き上げ曜日別集計テーブル行の hover translateY lift 方向 inset 奥行き演出をダークモードで鮮明化。
+   dow-table-row dark glow（v24.42）・dow-table-row dark inset static glow（v24.76）と連動し完成形に統一。 */
+[data-theme="dark"] .dow-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 3. [data-theme="dark"] .fv-cat-table tbody tr:hover → dark enhanced hover inset-left glow（fv-cat-color fallback primary-end・mix-md・inset 4px 0 12px）
+   v24.69 の hover inset-left glow（fv-cat-color mix-sm）のダークモード強化版。
+   mix-md に引き上げ財務予測カテゴリテーブル行の hover inset 奥行き演出をダークモードで鮮明化。
+   fv-cat-amt/fv-pct-txt dark glow（v24.53）・fv-cat-row dark inset static glow（v24.76）と連動し完成形に統一。 */
+[data-theme="dark"] .fv-cat-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 4. [data-theme="dark"] .ev-widget-item:hover → dark enhanced hover inset-left glow（ev-accent fallback primary-end・mix-md・inset 4px 0 12px）
+   v24.69 の hover inset-left glow（ev-accent mix-sm）のダークモード強化版。
+   mix-md に引き上げ収支予定ウィジェットアイテムの hover translateX 方向 inset 奥行き演出をダークモードで鮮明化。
+   ev-widget-name/amount dark glow（v24.58）・ev-widget-item dark inset static glow（v24.76）と連動し完成形に統一。 */
+[data-theme="dark"] .ev-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* 5. [data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td:first-child → dark enhanced hover inset-left glow（income・mix-md・inset 4px 0 10px）
+   v24.69 の hover inset-left glow（income mix-sm）のダークモード強化版。
+   mix-md に引き上げ取引テーブル収入行 td:first-child（border-left: income）の hover inset 奥行き演出をダークモードで鮮明化。
+   tx-income dark inset static glow（v24.77）と連動し収入行ダーク演出を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td:first-child { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--income) var(--mix-md), transparent); }
+
+/* 6. [data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td:first-child → dark enhanced hover inset-left glow（expense・mix-md・inset 4px 0 10px）
+   v24.69 の hover inset-left glow（expense mix-sm）のダークモード強化版。
+   mix-md に引き上げ取引テーブル支出行 td:first-child（border-left: expense）の hover inset 奥行き演出をダークモードで鮮明化。
+   ⑤と対称に tx-income/expense 全行タイプの dark hover inset 演出が完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td:first-child { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
+
+/* 7. [data-theme="dark"] .forecast-card.fc-status-alert:hover → dark enhanced hover inset-left glow（danger-text・mix-md・inset 4px 0 14px）
+   v24.69 の hover inset-left glow（danger-text mix-sm）のダークモード強化版。
+   mix-md に引き上げ財務予測アラートカードの hover 警告発光をダークモードで鮮明化。
+   forecast-card dark inset-top static glow（v24.77）・fc-alert-glow パルスアニメーションと連動しダーク演出を完成形に統一。 */
+[data-theme="dark"] .forecast-card.fc-status-alert:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), inset 4px 0 14px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+
+/* 8. [data-theme="dark"] .sub-card:hover → dark enhanced hover inset-left glow（sub-accent fallback primary-end・mix-md・inset 4px 0 16px）
+   v24.69 の hover inset-left glow（sub-accent mix-sm）のダークモード強化版。
+   mix-md に引き上げサブスクリプションカードの hover inset 奥行き演出をダークモードで鮮明化。
+   sub-card dark inset static glow（v24.77）・sub-card-color-bar hover outer glow と連動し左アクセントバーが内外両方向から輝くダーク完成形演出に。
+   v24.80（goal/wl/ch/asset/debt/ev/pt）・v24.81（insight/opp/ci/pm/sb）・v24.82（cal-ev/dow/fv-cat/ev-widget/tx-income/expense/fc-alert/sub）で
+   dark hover inset-left glow シリーズ全完結。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.82・全script/linkタグ?v=24.82に更新。 */
+[data-theme="dark"] .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 16px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
