@@ -33838,3 +33838,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ wish-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
 [data-theme="dark"] .wish-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #882 (v24.86): pt-widget-item-urgent/soon-dark-hover-outer-glow＋sub-summary-monthly/yearly-dark-hover-outer-glow＋pt-total/expiring-dark-hover-outer-glow＋ev-sum-this/next-dark-hover-outer-glow
+
+   pt-widget-item.pt-urgent/soon（警告バリアント）・sub-summary-card月次/年次・
+   pt-total/pt-expiring・ev-sum-card今月/来月 の
+   ライトモード hover box-shadow は実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントへ切替・mix-md→lg に引き上げ、
+   ホバー時の警告感・存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .pt-widget-item.pt-urgent:hover → dark enhanced outer glow（expense-end・mix-md・0 2px 14px）:
+     v5.x の hover glow（danger-text mix-xs）のダーク強化版。expense-end（danger-text のダーク variant）に切替え
+     mix-md に引き上げポイントウィジェット期限切れアイテムの hover 警告発光をダークモードで鮮明化。
+     pt-widget-item:hover dark glow（v24.85⑦）と連動しウィジェットアイテム全バリアントのダーク hover outer glow が完成形に統一。
+   ②[data-theme="dark"] .pt-widget-item.pt-soon:hover → dark enhanced outer glow（warning・mix-md・0 2px 14px）:
+     v5.x の hover glow（warning mix-xs）のダーク強化版。mix-md に引き上げ
+     ポイントウィジェット期限近アイテムの hover 警戒発光をダークモードで鮮明化。
+     ①と合わせて pt-widget-item 全3バリアント（base/urgent/soon）のダーク hover glow が完成形に統一。
+   ③[data-theme="dark"] .sub-summary-card.sub-monthly:hover → dark enhanced outer glow（primary-end・mix-lg・0 6px 20px）:
+     ライトモード glow（primary-end mix-md v24.x）のダーク強化版。mix-md → mix-lg に引き上げ
+     サブスク月次サマリーカード（グラデーション背景）の hover 発光をダークモードで更に鮮明化。
+   ④[data-theme="dark"] .sub-summary-card.sub-yearly:hover → dark enhanced outer glow（teal-end・mix-lg・0 6px 20px）:
+     ライトモード glow（teal-end mix-md）のダーク強化版。mix-lg に引き上げ
+     サブスク年次サマリーカード（teal グラデーション背景）の hover 発光をダークモードで更に鮮明化。
+     ③④で sub-summary-card 全2バリアントのダーク hover outer glow が完成形に統一。
+   ⑤[data-theme="dark"] .pt-total:hover → dark enhanced outer glow（primary-end・mix-lg・0 6px 20px）:
+     ライトモード glow（primary-end mix-md v21.x）のダーク強化版。mix-lg に引き上げ
+     ポイント合計サマリーカード（グラデーション背景）の hover 発光をダークモードで更に鮮明化。
+   ⑥[data-theme="dark"] .pt-expiring:hover → dark enhanced outer glow（orange・mix-lg・0 6px 20px）:
+     ライトモード glow（orange mix-md v21.x）のダーク強化版。mix-lg に引き上げ
+     ポイント失効予定サマリーカード（orange グラデーション背景）の hover 警戒発光をダークモードで更に鮮明化。
+     ⑤⑥で pt-total/pt-expiring のダーク hover outer glow が完成形に統一。
+   ⑦[data-theme="dark"] .ev-sum-card.ev-sum-this:hover → dark enhanced outer glow（primary-end・mix-lg・0 6px 20px）:
+     ライトモード glow（primary mix-md v22.x）のダーク強化版。primary-end に切替え mix-lg に引き上げ
+     今月収支予定サマリーカードの hover 発光をダークモードで鮮明化。
+   ⑧[data-theme="dark"] .ev-sum-card.ev-sum-next:hover → dark enhanced outer glow（income-end・mix-lg・0 6px 20px）:
+     ライトモード glow（income mix-md v22.x）のダーク強化版。income-end に切替え mix-lg に引き上げ
+     来月収支予定サマリーカードの hover 達成感発光をダークモードで鮮明化。
+     ⑦⑧で ev-sum-card today/next バリアントのダーク hover outer glow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.86・全script/linkタグ?v=24.86に更新。
+   ============================================================ */
+
+/* ① pt-widget-item.pt-urgent dark enhanced hover outer glow（expense-end mix-md 0 2px 14px） */
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ② pt-widget-item.pt-soon dark enhanced hover outer glow（warning mix-md 0 2px 14px） */
+[data-theme="dark"] .pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ③ sub-summary-card.sub-monthly dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ④ sub-summary-card.sub-yearly dark enhanced hover outer glow（teal-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-lg), transparent); }
+
+/* ⑤ pt-total dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .pt-total:hover    { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ pt-expiring dark enhanced hover outer glow（orange mix-lg 0 6px 20px） */
+[data-theme="dark"] .pt-expiring:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-lg), transparent); }
+
+/* ⑦ ev-sum-card.ev-sum-this dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑧ ev-sum-card.ev-sum-next dark enhanced hover outer glow（income-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent); }
