@@ -34031,3 +34031,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ section-tab dark enhanced hover outer glow（primary-end mix-md 0 2px 12px） */
 [data-theme="dark"] .section-tab:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v24.89 Sprint #885: budget-item-dark-hover-outer-glow＋
+   budget-item-over-dark-hover-outer-glow＋
+   btn-ghost-dark-hover-glow＋bottom-nav-item-dark-hover-glow＋
+   ct-table-row-dark-hover-inset-glow＋type-btn-income-dark-hover＋
+   type-btn-expense-dark-hover＋type-btn-dark-hover 8箇所
+   ============================================================
+   ①[data-theme="dark"] .budget-item:hover → dark enhanced outer glow（primary-end・mix-md・0 4px 16px）:
+     ライトモード glow（primary mix-xs v5.x）のダーク強化版。primary-end に切替え mix-xs → mix-md に引き上げ
+     予算アイテムの hover 発光をダークモードで鮮明化。budget-item dark static/text glowと連動し
+     ダーク全状態の予算アイテム演出を完成形に統一
+   ②[data-theme="dark"] .budget-item:has(.budget-fill.over):hover → dark enhanced outer glow（expense-end・mix-md・0 4px 16px）:
+     ライトモード glow（expense mix-xs v22.79）のダーク強化版。expense-end に切替え mix-md に引き上げ
+     予算超過アイテムの hover 警告発光をダークモードで鮮明化。①と連動し予算アイテム全状態のダーク hover 演出を完成形に統一
+   ③[data-theme="dark"] .btn-ghost:hover → dark enhanced box-shadow glow（primary-end・mix-md・0 2px 12px）+ text-shadow glow:
+     既存ダーク hover rule（background のみ）に box-shadow・text-shadow を追加。
+     ライトモード glow（primary mix-xs v23.87）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     ゴーストボタンの hover 発光をダークモードで鮮明化。static text-shadow（v24.x）と連動
+   ④[data-theme="dark"] .bottom-nav-item:not(.active):hover → dark enhanced outer glow（primary-end・mix-sm）:
+     ライトモード glow（primary mix-xs v5.x）のダーク強化版。primary-end に切替え mix-xs → mix-sm に引き上げ
+     ボトムナビゲーションの非アクティブアイテム hover 発光をダークモードで鮮明化。
+     active icon drop-shadow（v24.84）・label text-shadow（v24.x）と連動しナビ全状態のダーク演出を完成形に統一
+   ⑤[data-theme="dark"] .ct-table tbody tr:hover → dark enhanced hover inset-left glow（primary-end・mix-md・inset 4px 0 12px）:
+     ライトモード glow（primary mix-xs v22.x）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     カテゴリ別トレンドテーブル行の hover inset 発光をダークモードで鮮明化。
+     dow-table-row / fv-cat-table dark hover inset glow（v24.69）と同パターンでテーブル行演出を統一
+   ⑥[data-theme="dark"] .type-btn.income-btn:hover → dark背景修正（income subtly tinted surface）+ income-end enhanced glow:
+     ライトモードは income-light 背景だが暗いテーマでは過剰に明るい → surface-2ベースの控えめ tint 背景に切替え。
+     box-shadow・text-shadow を income-end mix-md に強化しダークモードで収入ボタンの hover 発光を鮮明化。
+     type-btn.income-btn static text-shadow（v24.x）と連動
+   ⑦[data-theme="dark"] .type-btn.expense-btn:hover → dark背景修正（expense subtly tinted surface）+ expense-end enhanced glow:
+     ⑥と対称に支出ボタンの hover もダーク対応。expense-end mix-md で警告感のある hover 発光をダークモードで鮮明化。
+     type-btn.expense-btn static text-shadow（v24.x）と連動し収入・支出ボタン全状態のダーク演出を完成形に統一
+   ⑧[data-theme="dark"] .type-btn:hover → dark enhanced generic hover glow（primary-end・mix-sm）:
+     既存ダーク hover rule なし → ライトモードの focus-ring のみ hover に primary-end mix-sm outer glow を追加。
+     ⑥⑦の specificity 優先で income/expense ボタンには上書きされず generic type-btn のみに適用される演出に。
+     全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.89・全script/linkタグ?v=24.89に更新
+   ============================================================ */
+
+/* ① budget-item dark enhanced hover outer glow（primary-end mix-md 0 4px 16px） */
+[data-theme="dark"] .budget-item:hover { box-shadow: var(--shadow-sm), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
+
+/* ② budget-item:has(.over) dark enhanced hover outer glow（expense-end mix-md 0 4px 16px） */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover { border-color: color-mix(in srgb, var(--expense-end) var(--mix-sm), var(--border)); box-shadow: var(--shadow-sm), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ btn-ghost dark enhanced hover glow（primary-end mix-md 0 2px 12px + text-shadow） */
+[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ④ bottom-nav-item:not(.active):hover dark enhanced outer glow（primary-end mix-sm） */
+[data-theme="dark"] .bottom-nav-item:not(.active):hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑤ ct-table tbody tr dark enhanced hover inset-left glow（primary-end mix-md inset 4px 0 12px） */
+[data-theme="dark"] .ct-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ type-btn.income-btn dark hover: tinted surface bg + income-end enhanced glow */
+[data-theme="dark"] .type-btn.income-btn:hover { background: color-mix(in srgb, var(--income) var(--mix-xs), var(--surface-2)); color: var(--income-end); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income-end) var(--mix-md), transparent), 0 4px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ type-btn.expense-btn dark hover: tinted surface bg + expense-end enhanced glow */
+[data-theme="dark"] .type-btn.expense-btn:hover { background: color-mix(in srgb, var(--expense) var(--mix-xs), var(--surface-2)); color: var(--expense-end); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 4px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ type-btn dark enhanced generic hover glow（primary-end mix-sm） */
+[data-theme="dark"] .type-btn:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
