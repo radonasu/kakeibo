@@ -34094,3 +34094,64 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ type-btn dark enhanced generic hover glow（primary-end mix-sm） */
 [data-theme="dark"] .type-btn:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #886 (v24.90): btn-primary-dark-hover-glow＋btn-danger-dark-hover-glow＋btn-success-dark-hover-glow＋modal-close-dark-hover-glow＋btn-icon-dark-hover-glow＋empty-month-btn-dark-hover-glow＋btn-inline-add-dark-hover-glow＋goal-emoji-btn-dark-hover-glow 8箇所
+
+   btn-primary・btn-danger・btn-success・modal-close・btn-icon・empty-month-btn・
+   btn-inline-add・goal-emoji-btn の
+   ライトモード hover box-shadow は実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントへ切替・強化し、
+   ボタン系ホバー時の存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .btn-primary:hover → dark enhanced box-shadow glow（primary-end・mix-4xl・0 6px 20px）:
+     ライトモード glow（primary mix-4xl 0 6px 18px）のダーク強化版。primary-end に切替え blur を 20px に拡大し
+     プライマリボタンの hover 発光をダークモードで鮮明化。white text-shadow（v23.87）と連動しボタン全状態のダーク演出を完成形に統一。
+   ②[data-theme="dark"] .btn-danger:hover → dark enhanced box-shadow glow（expense-end・mix-lg・0 4px 14px）:
+     既存ダーク hover rule（background のみ v4768）に box-shadow を追加。expense-end mix-lg で
+     危険ボタンの hover 警告発光をダークモードで鮮明化。expense-end text-shadow static（v24.x）と連動。
+   ③[data-theme="dark"] .btn-success:hover → dark enhanced box-shadow glow（income-end・mix-4xl・0 6px 20px）:
+     ライトモード glow（success mix-4xl 0 6px 18px）のダーク強化版。income-end（success のダーク variant）に切替え
+     blur を 20px に拡大し成功ボタンの hover 達成感発光をダークモードで鮮明化。
+   ④[data-theme="dark"] .modal-close:hover → dark enhanced box-shadow glow（expense-end・mix-md）+ enhanced text-shadow:
+     ライトモード glow（danger-text mix-sm box-shadow + text-shadow）のダーク強化版。expense-end mix-md に切替え
+     モーダル閉じるボタンの hover 警告発光をダークモードで鮮明化。既存 dark static text-shadow と連動。
+   ⑤[data-theme="dark"] .btn-icon:hover → dark enhanced box-shadow glow（primary-end・mix-sm・0 2px 10px）:
+     ライトモード glow（primary mix-xs 0 2px 8px）のダーク強化版。primary-end に切替え mix-sm に引き上げ
+     アイコンボタンの hover 発光をダークモードで鮮明化。primary-end text-shadow static（v24.x）と連動。
+   ⑥[data-theme="dark"] .empty-month-btn:hover → dark enhanced outer glow（primary-end・mix-lg）追加:
+     既存ダーク hover rule（background のみ v5323）に box-shadow・text-shadow を追加。primary-end mix-lg で
+     空月ボタンの hover CTA 発光をダークモードで鮮明化。empty-month-icon/text dark glow と連動。
+   ⑦[data-theme="dark"] .btn-inline-add:hover → dark enhanced box-shadow glow（primary-end・mix-sm・0 2px 8px）:
+     ライトモード glow（primary mix-sm 0 2px 5px）のダーク強化版。primary-end に切替え blur を 8px に拡大し
+     インライン追加ボタンの hover 発光をダークモードで鮮明化。primary-end text-shadow static（v24.x）と連動。
+   ⑧[data-theme="dark"] .goal-emoji-btn:hover → dark enhanced box-shadow glow（primary-end・mix-sm・0 2px 10px）:
+     ライトモード glow（primary mix-sm 0 2px 8px）のダーク強化版。primary-end に切替え blur を 10px に拡大し
+     目標絵文字選択ボタンの hover 発光をダークモードで鮮明化。primary-end text-shadow static（v24.x）と連動し
+     ⑤〜⑧でアイコン・アクション系ボタン全体のダーク hover 演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.90・全script/linkタグ?v=24.90に更新。
+   ============================================================ */
+
+/* ① btn-primary dark enhanced hover glow（primary-end mix-4xl 0 6px 20px） */
+[data-theme="dark"] .btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent); }
+
+/* ② btn-danger dark enhanced hover glow（expense-end mix-lg 0 4px 14px） */
+[data-theme="dark"] .btn-danger:hover { background: var(--danger-border); box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+
+/* ③ btn-success dark enhanced hover glow（income-end mix-4xl 0 6px 20px） */
+[data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent); }
+
+/* ④ modal-close dark enhanced hover glow（expense-end mix-md + text-shadow） */
+[data-theme="dark"] .modal-close:hover { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ btn-icon dark enhanced hover glow（primary-end mix-sm 0 2px 10px） */
+[data-theme="dark"] .btn-icon:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑥ empty-month-btn dark enhanced hover glow（primary-end mix-lg + text-shadow） */
+[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px） */
+[data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑧ goal-emoji-btn dark enhanced hover glow（primary-end mix-sm 0 2px 10px） */
+[data-theme="dark"] .goal-emoji-btn:hover { border-color: var(--primary-end); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
