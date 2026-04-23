@@ -33154,3 +33154,65 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.74・全script/linkタグ?v=24.74に更新。 */
 .bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
 [data-theme="dark"] .bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #871  v24.75
+   goal-card-dark-inset-glow＋wl-card-dark-inset-glow
+   ＋ch-card-dark-inset-glow＋asset-card-dark-inset-glow
+   ＋debt-card-dark-inset-glow＋ev-card-dark-inset-glow
+   ＋pt-urgent-dark-inset-glow＋pt-soon-dark-inset-glow
+   合計8箇所
+
+   v24.71 で追加した静的 inset-left glow（mix-xs）のダークモード強化版。
+   ダークモードでは背景が暗く glow が視覚的に映えるため mix-sm に引き上げ
+   奥行き感・発光感を強調。fallback は primary-end（ダーク用グラデ終端）。
+   ============================================================ */
+
+/* 1. .goal-card → dark mode enhanced inset-left glow（goal-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   ダークモードでは goal-accent（設定値）または primary-end で mix-sm に引き上げ
+   左アクセントバーの奥行き演出をより鮮明に。hover 時は .goal-card:hover が優先。 */
+[data-theme="dark"] .goal-card { box-shadow: inset 5px 0 14px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 2. .wl-card → dark mode enhanced inset-left glow（wl-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   wl-card-name/price/note dark text-shadow glow（v24.59）と連動し
+   ダークモードでカード全体の発光演出を完成形に統一。 */
+[data-theme="dark"] .wl-card { box-shadow: inset 5px 0 14px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 3. .ch-card → dark mode enhanced inset-left glow（ch-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   ch-card-name dark glow（v24.56）と連動しチャレンジカードの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .ch-card { box-shadow: inset 5px 0 14px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 4. .asset-card → dark mode enhanced inset-left glow（asset-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   asset-name dark glow（v24.57）と連動し資産カードの
+   ダーク演出を完成形に統一。 */
+[data-theme="dark"] .asset-card { box-shadow: inset 5px 0 14px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 5. .debt-card → dark mode enhanced inset-left glow（debt-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   debt-balance dark glow（v23.x）と連動し負債カードの
+   ダーク演出を完成形に統一。①〜⑤ で goal/wl/ch/asset/debt 全大型カードの
+   ダーク inset glow シリーズが完成形に統一。 */
+[data-theme="dark"] .debt-card { box-shadow: inset 5px 0 14px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 6. .ev-card → dark mode enhanced inset-left glow（ev-accent・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs・4px）のダーク強化版。
+   ev-card-name dark glow（v24.65）と連動し収支予定カードの
+   ダーク演出を完成形に統一。accent-w 幅に合わせ 4px 維持。 */
+[data-theme="dark"] .ev-card { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* 7. .pt-card.pt-urgent → dark mode enhanced inset-left glow（danger-border・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   pt-urgent-glow アニメーション（border-left-color のみ・box-shadow 関与なし）と競合なし。
+   shadow-btn-base を維持しつつダークモードで danger-border glow を強調。 */
+[data-theme="dark"] .pt-card.pt-urgent { box-shadow: var(--shadow-btn-base), inset 4px 0 12px color-mix(in srgb, var(--danger-border) var(--mix-sm), transparent); }
+
+/* 8. .pt-card.pt-soon → dark mode enhanced inset-left glow（warning・mix-sm）
+   ライトモード静的 inset glow（v24.71: mix-xs）のダーク強化版。
+   ⑦と対称に期限カード全種のダーク inset 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.75・全script/linkタグ?v=24.75に更新。 */
+[data-theme="dark"] .pt-card.pt-soon { box-shadow: var(--shadow-btn-base), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
