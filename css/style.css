@@ -32963,3 +32963,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑦と対称に期限カード全種の静的 inset 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.71・全script/linkタグ?v=24.71に更新。 */
 .pt-card.pt-soon { box-shadow: var(--shadow-btn-base), inset 4px 0 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+
+/* ============================================================
+   Sprint #868  v24.72
+   opp-card-static-inset-glow＋ci-event-item-static-inset-glow
+   ＋pm-table-row-static-inset-glow＋sb-row-static-inset-glow
+   ＋cal-ev-item-static-inset-glow＋dow-table-row-static-inset-glow
+   ＋fv-cat-row-static-inset-glow＋ev-widget-item-static-inset-glow
+   合計8箇所
+
+   v24.68 hover inset glow・v24.69 hover inset glow の静的補完シリーズ。
+   各要素の border-left アクセントカラーに対して常時 inset-left glow（mix-xs）を追加し、
+   ホバー前から左アクセントバーに奥行き・発光感を付与する。
+   ホバー時は v24.68/v24.69 の mix-sm inset glow が上書きして強調。
+   :active 時は box-shadow: none でリセット（既存ルールのまま）。
+   ============================================================ */
+
+/* 1. .opp-card → static inset-left glow（opp-accent・mix-xs）
+   節約機会カードの border-left（accent-w・opp-accent）に常時
+   opp-accent inset glow を追加（inset 4px 0 12px mix-xs）。
+   v24.68 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.opp-card { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .ci-event-item → static inset-left glow（ci-ev-accent・mix-xs）
+   チェックインイベントアイテムの border-left（accent-w・ci-ev-accent）に常時
+   ci-ev-accent inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.68 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.ci-event-item { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .pm-table-row → static inset-left glow（pm-row-color・mix-xs）
+   支払方法テーブル行の border-left（accent-w・pm-row-color）に常時
+   pm-row-color inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.68 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.pm-table-row { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .sb-row → static inset-left glow（sb-cat-color・mix-xs）
+   節約提案テーブル行の border-left（accent-w・sb-cat-color）に常時
+   sb-cat-color inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.68 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.sb-row { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .cal-ev-item → static inset-left glow（cal-ev-color・mix-xs）
+   カレンダーイベントアイテムの border-left（accent-w・cal-ev-color）に常時
+   cal-ev-color inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.69 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.cal-ev-item { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .dow-table-row → static inset-left glow（dow-row-color・mix-xs）
+   曜日別集計テーブル行の border-left（accent-w・dow-row-color）に常時
+   dow-row-color inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.69 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.dow-table-row { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--dow-row-color, var(--border)) var(--mix-xs), transparent); }
+
+/* 7. .fv-cat-table tbody tr → static inset-left glow（fv-cat-color・mix-xs）
+   財務予測カテゴリテーブル行の border-left（accent-w・fv-cat-color）に常時
+   fv-cat-color inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.69 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。 */
+.fv-cat-table tbody tr { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--fv-cat-color, var(--border)) var(--mix-xs), transparent); }
+
+/* 8. .ev-widget-item → static inset-left glow（ev-accent・mix-xs）
+   収支予定ウィジェットアイテムの border-left（accent-w・ev-accent）に常時
+   ev-accent inset glow を追加（inset 4px 0 10px mix-xs）。
+   v24.69 hover inset mix-sm glow と連動しホバー前から左バーに奥行きを付与。
+   goal/wl/ch/asset/debt/ev/pt-card static inset glow（v24.71）シリーズに統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.72・全script/linkタグ?v=24.72に更新。 */
+.ev-widget-item { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
