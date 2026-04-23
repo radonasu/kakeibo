@@ -32894,3 +32894,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    視覚的存在感を強化。tx-income/expense 静的 inset glow（v23.xx）と同パターン。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.70・全script/linkタグ?v=24.70に更新。 */
 .tx-table tbody tr.tx-selected td:first-child { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #867  v24.71
+   goal-card-static-inset-glow＋wl-card-static-inset-glow
+   ＋ch-card-static-inset-glow＋asset-card-static-inset-glow
+   ＋debt-card-static-inset-glow＋ev-card-static-inset-glow
+   ＋pt-urgent-static-inset-glow＋pt-soon-static-inset-glow
+   合計8箇所
+
+   ホバー依存の inset-left glow（v24.67）の静的補完シリーズ続き。
+   大型カード（goal/wl/ch/asset/debt）と行型カード（ev/pt-urgent/pt-soon）に
+   常時 inset glow を追加しホバー前からも左アクセントバーに奥行き・発光感を付与する。
+   ============================================================ */
+
+/* 1. .goal-card → static inset-left glow（goal-accent・mix-xs）
+   目標カードの border-left（size-accent-bar・goal-accent color）に対して常時
+   goal-accent inset glow を追加（inset 5px 0 12px mix-xs）。
+   hover 時の inset mix-sm glow（v24.67）と連動し未ホバー時からも
+   左アクセントバーに奥行きを持たせる。②〜⑤大型カード5種と連動し
+   goal/wl/ch/asset/debt 全カードの静的 inset 演出を完成形に統一。 */
+.goal-card { box-shadow: inset 5px 0 12px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 2. .wl-card → static inset-left glow（wl-accent・mix-xs）
+   ウィッシュリストカードの border-left（size-accent-bar・wl-accent）に常時
+   wl-accent inset glow を追加（inset 5px 0 12px mix-xs）。
+   wl-high カードは wl-urgent-glow アニメーションが box-shadow を管理するため
+   アニメーション中は静的 glow がアニメーション値に置換される（仕様通り）。 */
+.wl-card { box-shadow: inset 5px 0 12px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 3. .ch-card → static inset-left glow（ch-accent・mix-xs）
+   チャレンジカードの border-left（size-accent-bar・ch-accent）に常時
+   ch-accent inset glow を追加（inset 5px 0 12px mix-xs）。
+   ①②と連動し大型カード3種の静的演出を統一。 */
+.ch-card { box-shadow: inset 5px 0 12px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 4. .asset-card → static inset-left glow（asset-accent・mix-xs）
+   資産カードの border-left（size-accent-bar・asset-accent）に常時
+   asset-accent inset glow を追加（inset 5px 0 12px mix-xs）。
+   ①〜③と連動し大型カード4種の静的演出を統一。 */
+.asset-card { box-shadow: inset 5px 0 12px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .debt-card → static inset-left glow（debt-accent・mix-xs）
+   負債カードの border-left（size-accent-bar・debt-accent）に常時
+   debt-accent inset glow を追加（inset 5px 0 12px mix-xs）。
+   ①〜④と連動し goal/wl/ch/asset/debt 全大型カードの静的 inset 演出が完成形に統一。
+   debt-low-glow アニメーション（border-left-color のみ）との競合なし。 */
+.debt-card { box-shadow: inset 5px 0 12px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 6. .ev-card → static inset-left glow（ev-accent・mix-xs）
+   収支予定カードの border-left（accent-w・ev-accent）に常時
+   ev-accent inset glow を追加（inset 4px 0 10px mix-xs）。
+   accent-w（細め）に合わせ inset 4px/spread 10px で大型カードより控えめに設定。
+   ⑦⑧と連動し行型カード系の静的 inset 演出シリーズに統一。 */
+.ev-card { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 7. .pt-card.pt-urgent → static inset-left glow（danger-border・mix-xs）
+   期限切れ間近ポイントカードの border-left（accent-w・danger-border）に常時
+   danger-border inset glow を追加（inset 4px 0 10px mix-xs）。
+   pt-urgent-glow アニメーション（border-left-color のみアニメーション・box-shadow 関与なし）と
+   競合せず常時発光。親 .pt-card の shadow-btn-base と組み合わせる。
+   ⑧と連動し期限カード全種の静的 inset 演出が完成形に統一。 */
+.pt-card.pt-urgent { box-shadow: var(--shadow-btn-base), inset 4px 0 10px color-mix(in srgb, var(--danger-border) var(--mix-xs), transparent); }
+
+/* 8. .pt-card.pt-soon → static inset-left glow（warning・mix-xs）
+   間もなく期限のポイントカードの border-left（accent-w・warning）に常時
+   warning inset glow を追加（inset 4px 0 10px mix-xs）。
+   ⑦と対称に期限カード全種の静的 inset 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.71・全script/linkタグ?v=24.71に更新。 */
+.pt-card.pt-soon { box-shadow: var(--shadow-btn-base), inset 4px 0 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
