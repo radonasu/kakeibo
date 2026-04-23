@@ -32698,3 +32698,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .pt-card.pt-soon:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.67・全script/linkタグ?v=24.67に更新。 */
+
+/* ========================================
+   v24.68: insight-item/opp-card/ci-event-item/pm-table-row/sb-row
+   border-left hover inset-left box-shadow glow 追加
+   insight-info-inset-glow＋insight-alert-inset-glow＋
+   insight-success-inset-glow＋insight-warning-inset-glow＋
+   opp-card-inset-glow＋ci-event-item-inset-glow＋
+   pm-table-row-inset-glow＋sb-row-inset-glow
+   ======================================== */
+
+/* 1. .insight-item.insight-info:hover → inset-left box-shadow glow（primary）追加
+   インサイト「情報」アイテムの border-left（accent-w・primary）に対して
+   ホバー時に内側左面からの primary glow を追加（inset 4px 0 12px primary mix-sm）。
+   既存の outer glow（0 2px 10px primary mix-xs）と連動し左アクセントバーが内側に輝く演出に。
+   ②③④と連動しインサイトアイテム全タイプのホバー inset 演出を完成形に統一。 */
+.insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+
+/* 2. .insight-item.insight-alert:hover → inset-left box-shadow glow（danger-text）追加
+   インサイト「警告」アイテムの border-left（accent-w・danger-text）に対して
+   ホバー時に内側左面からの danger-text glow を追加（inset 4px 0 12px danger-text mix-sm）。
+   ①と対称にタイプ別カラーで内側から発光する演出に統一。 */
+.insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 3. .insight-item.insight-success:hover → inset-left box-shadow glow（success）追加
+   インサイト「成功」アイテムの border-left（accent-w・success）に対して
+   ホバー時に内側左面からの success glow を追加（inset 4px 0 12px success mix-sm）。
+   ①②と連動しインサイトアイテムの success カラー演出を統一。 */
+.insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+
+/* 4. .insight-item.insight-warning:hover → inset-left box-shadow glow（warning）追加
+   インサイト「注意」アイテムの border-left（accent-w・warning）に対して
+   ホバー時に内側左面からの warning glow を追加（inset 4px 0 12px warning mix-sm）。
+   ①〜③と連動しインサイトアイテム全4タイプの hover inset-left glow が完成形に統一。 */
+.insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* 5. .opp-card:hover → inset-left box-shadow glow（opp-accent）追加
+   節約機会カードの border-left（accent-w・opp-accent）に対して
+   ホバー時に内側左面からの opp-accent glow を追加（inset 4px 0 14px opp-accent mix-sm）。
+   既存の outer glow（0 4px 14px opp-accent mix-xs）と連動。
+   goal/wl/ch/asset/debt/ev-card hover inset glow（v24.67）シリーズに連なる演出拡張。 */
+.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. .ci-event-item:hover → inset-left box-shadow glow（ci-ev-accent）追加
+   チェックインイベントアイテムの border-left（accent-w・ci-ev-accent）に対して
+   ホバー時に内側左面からの ci-ev-accent glow を追加（inset 4px 0 12px ci-ev-accent mix-sm）。
+   translateX slide と組み合わさりスライド方向から内側が輝く演出に。
+   insight-item inset glow（①〜④）と同パターンで translateX 系行アイテムの演出を統一。 */
+.ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. .pm-table-row:hover → inset-left box-shadow glow（pm-row-color）追加
+   支払方法テーブル行の border-left（accent-w・pm-row-color）に対して
+   ホバー時に内側左面からの pm-row-color glow を追加（inset 4px 0 12px pm-row-color mix-sm）。
+   既存の outer glow（0 2px 10px pm-row-color mix-xs）と連動。
+   ⑧と連動しテーブル行の hover inset 演出を完成形に統一。 */
+.pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 8. .sb-row:hover → inset-left box-shadow glow（sb-cat-color）追加
+   節約提案テーブル行の border-left（accent-w・sb-cat-color）に対して
+   ホバー時に内側左面からの sb-cat-color glow を追加（inset 4px 0 12px sb-cat-color mix-sm）。
+   既存の outer glow（0 2px 10px sb-cat-color mix-xs）と連動。
+   ⑦と連動しテーブル行全体の hover inset-left glow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.68・全script/linkタグ?v=24.68に更新。 */
+.sb-row:hover { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
