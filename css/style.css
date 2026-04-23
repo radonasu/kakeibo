@@ -33658,3 +33658,62 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    dark hover inset-left glow シリーズ全完結。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.82・全script/linkタグ?v=24.82に更新。 */
 [data-theme="dark"] .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 16px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #879 (v24.83): yr-cell-dark-hover-outer-glow×5＋wk-cell-dark-hover-outer-glow×3
+
+   yr-cell（年次サマリーセル）と wk-cell（週間サマリーセル）のライトモード hover box-shadow は
+   v22.68/v22.71 で実装済みだが、ダークモード強化が未適用。暗背景ではカラーグローが埋もれるため
+   *-end バリアントに切替て mix-md に引き上げ、ホバー時のセル存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .yr-cell-income:hover → dark enhanced outer glow（income-end・mix-md・0 4px 16px）:
+     ライトモード glow（success mix-sm）のダーク強化版。income-end（#34d399）に切替えより鮮明な緑の発光を追加。
+     yr-cell-income dark static text-shadow glow（既存）と連動し年次収入セルのダーク演出を完成形に統一。
+   ②[data-theme="dark"] .yr-cell-expense:hover → dark enhanced outer glow（expense-end・mix-md・0 4px 16px）:
+     ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end（#fb7185）に切替えより鮮明な赤の発光を追加。
+     yr-cell-expense dark static text-shadow glow（既存）と連動し年次支出セルのダーク演出を完成形に統一。
+   ③[data-theme="dark"] .yr-cell-savings-success:hover → dark enhanced outer glow（income-end・mix-md・0 4px 16px）:
+     ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え貯蓄黒字セルのダーク hover 発光を鮮明化。
+     ①②③で yr-cell 黒字系のダーク hover outer glow が統一。
+   ④[data-theme="dark"] .yr-cell-savings-warn:hover → dark enhanced outer glow（warning・mix-md・0 4px 16px）:
+     ライトモード glow（warning mix-sm）のダーク強化版。warning を mix-md に引き上げ注意ゾーン貯蓄セルの
+     hover 警告発光をダークモードで鮮明化。
+   ⑤[data-theme="dark"] .yr-cell-savings-danger:hover → dark enhanced outer glow（expense-end・mix-md・0 4px 16px）:
+     ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え赤字貯蓄セルの
+     hover 警告発光をダークモードで鮮明化。①〜⑤で yr-cell 全5バリアントのダーク hover outer glow が完成形に統一。
+   ⑥[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover → dark enhanced outer glow（expense-end・mix-md）＋border強化:
+     ライトモード glow（expense mix-sm＋border-color）のダーク強化版。expense-end に切替え mix-md に引き上げ
+     週間支出セルの hover 警告発光をダークモードで鮮明化。border-color も expense-end ベースで強化。
+   ⑦[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover → dark enhanced outer glow（primary-end・mix-sm）＋border強化:
+     ライトモード glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-sm に引き上げ
+     週間収入セルの hover 発光をダークモードで鮮明化。border-color も primary-end ベースで強化。
+   ⑧[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover → dark enhanced outer glow（income-end・mix-md）＋border強化:
+     ライトモード glow（success mix-xs）のダーク強化版。income-end に切替え mix-md に引き上げ
+     週間残高セルの hover 発光をダークモードで鮮明化。border-color も income-end ベースで強化。
+     ⑥⑦⑧で wk-summary-row 全3セルのダーク hover outer glow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.83・全script/linkタグ?v=24.83に更新。
+   ============================================================ */
+
+/* ① yr-cell-income dark enhanced hover outer glow（income-end mix-md 0 4px 16px） */
+[data-theme="dark"] .yr-cell-income:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② yr-cell-expense dark enhanced hover outer glow（expense-end mix-md 0 4px 16px） */
+[data-theme="dark"] .yr-cell-expense:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ yr-cell-savings-success dark enhanced hover outer glow（income-end mix-md 0 4px 16px） */
+[data-theme="dark"] .yr-cell-savings-success:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ yr-cell-savings-warn dark enhanced hover outer glow（warning mix-md 0 4px 16px） */
+[data-theme="dark"] .yr-cell-savings-warn:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑤ yr-cell-savings-danger dark enhanced hover outer glow（expense-end mix-md 0 4px 16px） */
+[data-theme="dark"] .yr-cell-savings-danger:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ wk-summary-row wk-cell:nth-child(1) dark enhanced hover outer glow（expense-end mix-md）＋border強化 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--expense-end) var(--mix-mid), var(--border)); }
+
+/* ⑦ wk-summary-row wk-cell:nth-child(2) dark enhanced hover outer glow（primary-end mix-sm）＋border強化 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-mid), var(--border)); }
+
+/* ⑧ wk-summary-row wk-cell:nth-child(3) dark enhanced hover outer glow（income-end mix-md）＋border強化 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--income-end) var(--mix-mid), var(--border)); }
