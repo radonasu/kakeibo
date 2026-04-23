@@ -32624,3 +32624,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .install-banner-close { text-shadow: 0 0 9px rgba(255, 255, 255, 0.50); }
 
 /* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.66・全script/linkタグ?v=24.66に更新。 */
+
+/* ============================================================
+   スプリント#863 カード左アクセントバー ホバー内側発光 8箇所（v24.67）
+   goal-card-inset-glow＋wl-card-inset-glow＋ch-card-inset-glow＋
+   asset-card-inset-glow＋debt-card-inset-glow＋ev-card-inset-glow＋
+   pt-urgent-inset-glow＋pt-soon-inset-glow
+   ============================================================ */
+
+/* 1. .goal-card:hover → inset-left box-shadow glow（goal-accent）追加
+   目標カードの border-left（size-accent-bar 4px・goal-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加（inset 5px 0 16px）。
+   既存の outer glow（0 4px 16px goal-accent mix-xs）と連動し
+   ホバー時に左アクセントバーが内側に向けて輝く演出に。
+   border-left-color を transition に追加し変化もスムーズに。 */
+.goal-card { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
+.goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. .wl-card:hover → inset-left box-shadow glow（wl-accent）追加
+   ウィッシュリストカードの border-left（size-accent-bar・wl-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加。
+   既存の outer glow（0 4px 16px wl-accent mix-xs）と連動し
+   ホバー時に左アクセントバーが内側に向けて輝く演出に。
+   goal-card-inset-glow（①）と同パターン。 */
+.wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 3. .ch-card:hover → inset-left box-shadow glow（ch-accent）追加
+   チャレンジカードの border-left（size-accent-bar・ch-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加。
+   既存の outer glow（0 4px 16px ch-accent mix-xs）と連動し
+   ホバー時に左アクセントバーが内側に向けて輝く演出に。
+   ①②と同パターンでアクセントバー付きカード全体の内側発光演出を統一。 */
+.ch-card { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
+.ch-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 4. .asset-card:hover → inset-left box-shadow glow（asset-accent）追加
+   資産カードの border-left（size-accent-bar・asset-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加。
+   既存の outer glow（0 4px 14px asset-accent mix-xs）と連動し
+   ホバー時に左アクセントバーが内側に向けて輝く演出に。①②③と同パターン。 */
+.asset-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. .debt-card:hover → inset-left box-shadow glow（debt-accent）追加
+   負債カードの border-left（size-accent-bar・debt-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加。
+   既存の outer glow（0 4px 16px debt-accent mix-xs）と連動し
+   ホバー時に左アクセントバーが内側に向けて輝く演出に。①〜④と同パターン。 */
+.debt-card { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
+.debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 6. .ev-card:hover → inset-left box-shadow glow（ev-accent）追加
+   収支予定カードの border-left（accent-w 3px・ev-accent color）に対して
+   ホバー時に内側左面からの accent glow を追加。
+   border-left 幅が size-accent-bar(4px)より1px薄い accent-w(3px)のため
+   inset を 4px に調整し細いバーに合わせた発光強度に。
+   既存の outer glow（0 4px 14px ev-accent mix-xs）と連動。 */
+.ev-card { transition: opacity var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
+.ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 7. .pt-card.pt-urgent:hover → inset-left box-shadow glow（danger-border）追加
+   期限切れ間近ポイントカードの border-left（accent-w・danger-border color）に対して
+   ホバー時に内側左面からの danger glow を追加。
+   pt-urgent-glow アニメーション（pulse）と連動し警告感のある発光演出に。
+   pt-card.pt-soon:hover inset-glow（⑧）と対称に期限カード全状態のホバー演出を完成形に統一。 */
+.pt-card.pt-urgent:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--danger-border) var(--mix-sm), transparent); }
+
+/* 8. .pt-card.pt-soon:hover → inset-left box-shadow glow（warning）追加
+   間もなく期限のポイントカードの border-left（accent-w・warning color）に対して
+   ホバー時に内側左面からの warning glow を追加。
+   ⑦と対称に期限カード全状態のホバー演出を完成形に統一。
+   これにより border-left アクセントバー付き全カードの
+   hover inset-left glow シリーズ（#863）完了。 */
+.pt-card.pt-soon:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+
+/* 全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.67・全script/linkタグ?v=24.67に更新。 */
