@@ -32761,3 +32761,71 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑦と連動しテーブル行全体の hover inset-left glow が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.68・全script/linkタグ?v=24.68に更新。 */
 .sb-row:hover { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* ========================================
+   v24.69: cal-ev-item/dow-table-row/fv-cat-table/ev-widget-item/
+   tx-table(income/expense)/fc-status-alert/sub-card
+   border-left hover inset-left box-shadow glow 追加
+   cal-ev-item-inset-glow＋dow-table-row-inset-glow＋
+   fv-cat-row-inset-glow＋ev-widget-item-inset-glow＋
+   tx-income-td1-inset-glow＋tx-expense-td1-inset-glow＋
+   fc-alert-inset-glow＋sub-card-inset-glow
+   ======================================== */
+
+/* 1. .cal-ev-item:hover → inset-left box-shadow glow（cal-ev-color）追加
+   カレンダーイベントアイテムの border-left（accent-w・cal-ev-color）に対して
+   ホバー時に内側左面からの cal-ev-color glow を追加（inset 4px 0 12px mix-sm）。
+   既存の outer shadow（shadow-row-hover のみ）と連動し translateX スライド方向から
+   内側が輝く演出に。pm-table-row/sb-row inset glow（v24.68）と同パターン。
+   ②〜④と連動し行アイテム系 inset-left glow シリーズ（#865）完成形へ。 */
+.cal-ev-item:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent); }
+
+/* 2. .dow-table-row:hover → inset-left box-shadow glow（dow-row-color）追加
+   曜日別集計テーブル行の border-left（accent-w・dow-row-color）に対して
+   ホバー時に内側左面からの dow-row-color glow を追加（inset 4px 0 12px mix-sm）。
+   既存の outer glow（0 2px 10px expense mix-nano）と連動。translateY lift と合わせ
+   行が浮き上がりながら左から内側に輝く演出に。 */
+.dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--border)) var(--mix-sm), transparent); position: relative; z-index: var(--z-raise); }
+
+/* 3. .fv-cat-table tbody tr:hover → inset-left box-shadow glow（fv-cat-color）追加
+   財務予測カテゴリテーブル行の border-left（accent-w・fv-cat-color）に対して
+   ホバー時に内側左面からの fv-cat-color glow を追加（inset 4px 0 12px mix-sm）。
+   既存の outer glow（0 2px 10px primary mix-xs）と連動。②と同パターンで
+   テーブル行の hover inset 演出を統一。 */
+.fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--border)) var(--mix-sm), transparent); position: relative; z-index: var(--z-raise); }
+
+/* 4. .ev-widget-item:hover → inset-left box-shadow glow（ev-accent）追加
+   収支予定ウィジェットアイテムの border-left（accent-w・ev-accent）に対して
+   ホバー時に内側左面からの ev-accent glow を追加（inset 4px 0 12px mix-sm）。
+   既存の outer glow（0 2px 10px ev-accent mix-xs）と連動。
+   ci-event-item inset glow（v24.68）と同パターンで translateX 系行アイテムの演出を統一。 */
+.ev-widget-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+
+/* 5. .tx-table tbody tr[data-type="income"]:hover td:first-child → inset-left glow（income）追加
+   取引テーブルの収入行において td:first-child（border-left: income color）に対して
+   ホバー時に内側左面からの income glow を追加。tr ではなく border-left が存在する
+   td に直接 inset を設定することで正確に左面から輝く演出に。
+   ⑥と連動し取引テーブル income/expense 行の hover inset 演出を完成形に統一。 */
+.tx-table tbody tr[data-type="income"]:hover td:first-child { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
+
+/* 6. .tx-table tbody tr[data-type="expense"]:hover td:first-child → inset-left glow（expense）追加
+   取引テーブルの支出行において td:first-child（border-left: expense color）に対して
+   ホバー時に内側左面からの expense glow を追加。
+   ⑤と対称に取引テーブルの income/expense 全状態の hover inset 演出を完成形に統一。 */
+.tx-table tbody tr[data-type="expense"]:hover td:first-child { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+
+/* 7. .forecast-card.fc-status-alert:hover → inset-left box-shadow glow（danger-text）追加
+   財務予測アラートカードの border-left（accent-w・danger-text）に対して
+   ホバー時に内側左面からの danger-text glow を追加（inset 4px 0 14px mix-sm）。
+   fc-alert-glow パルスアニメーションと連動し警告感のある hover 演出に。
+   .forecast-card:hover の outer glow を danger-text カラーで上書きしアラート状態を強調。 */
+.forecast-card.fc-status-alert:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* 8. .sub-card:hover → inset-left box-shadow glow（sub-accent）追加
+   サブスクリプションカードの .sub-card-color-bar（左アクセントバー・sub-accent color）と
+   連動してカード内側左面からの sub-accent glow を追加（inset 4px 0 14px mix-sm）。
+   .sub-card-color-bar の hover 外向き glow（2px 0 10px mix-md、v22.67）と対になり
+   左アクセントバーが内外両方向から輝くより立体的な hover 演出に。
+   goal/wl/ch/asset/debt/ev-card inset glow（v24.67）シリーズに統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.69・全script/linkタグ?v=24.69に更新。 */
+.sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
