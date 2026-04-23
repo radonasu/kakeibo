@@ -33344,3 +33344,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダーク inset-top glow 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.77・全script/linkタグ?v=24.77に更新。 */
 [data-theme="dark"] .pace-widget-body.pace-status-over { box-shadow: inset 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #874  v24.78
+   insight-info-dark-inset-glow＋insight-alert-dark-inset-glow
+   ＋insight-success-dark-inset-glow＋insight-warning-dark-inset-glow
+   ＋adv-section1-dark-inset-glow＋adv-section2-dark-inset-glow
+   ＋adv-section3-dark-inset-glow＋tx-selected-td1-dark-inset-glow
+   合計8箇所
+
+   v24.70 で追加した静的 inset-left glow（mix-xs）のダークモード強化版。
+   ダークモードでは背景が暗く glow が視覚的に映えるため mix-sm に引き上げ
+   奥行き感・発光感を強調。primary 系は primary-end に切替。
+   ============================================================ */
+
+/* 1. .insight-item.insight-info → dark mode enhanced inset-left glow（primary-end・mix-sm）
+   ライトモード静的 inset glow（v24.70: primary mix-xs inset 4px 0 8px）のダーク強化版。
+   ダークモードでは primary-end（グラデ終端）で mix-sm に引き上げ
+   insight-info 左アクセントバーの奥行き演出をより鮮明に。
+   insight-info title/desc dark text-shadow glow（v24.53）と連動しダーク演出を統一。 */
+[data-theme="dark"] .insight-item.insight-info    { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 2. .insight-item.insight-alert → dark mode enhanced inset-left glow（danger-text・mix-sm）
+   v24.70 の insight-alert 静的 inset glow（danger-text mix-xs）のダーク強化版。
+   danger-text をそのまま mix-sm に引き上げ「警告」インサイト左バーの
+   danger 色発光をダークモードで鮮明化。②と連動し info/alert 全パターンが統一。 */
+[data-theme="dark"] .insight-item.insight-alert   { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text)   var(--mix-sm), transparent); }
+
+/* 3. .insight-item.insight-success → dark mode enhanced inset-left glow（success・mix-sm）
+   v24.70 の insight-success 静的 inset glow（success mix-xs）のダーク強化版。
+   success カラーを mix-sm に引き上げ「達成」インサイト左バーの
+   緑色発光をダークモードで鮮明化。①②③と連動し全4タイプ統一へ。 */
+[data-theme="dark"] .insight-item.insight-success { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--success)       var(--mix-sm), transparent); }
+
+/* 4. .insight-item.insight-warning → dark mode enhanced inset-left glow（warning・mix-sm）
+   v24.70 の insight-warning 静的 inset glow（warning mix-xs）のダーク強化版。
+   warning カラーを mix-sm に引き上げ「注意」インサイト左バーの
+   警告色発光をダークモードで鮮明化。①〜④で insight 全4タイプの
+   ダーク inset-left glow 演出が完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-warning { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--warning)       var(--mix-sm), transparent); }
+
+/* 5. .adv-section → dark mode enhanced inset-left glow（primary-end・mix-sm）
+   ライトモード静的 inset glow（v24.70: primary mix-xs inset 4px 0 10px）のダーク強化版。
+   AIアドバイスセクション1番目の border-left（primary）に対し
+   ダークモードでは primary-end で mix-sm に引き上げ奥行き演出を鮮明化。
+   ⑥⑦と連動し全3セクションのダーク inset 演出を完成形に統一。 */
+[data-theme="dark"] .adv-section              { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--primary-end)   var(--mix-sm), transparent); }
+
+/* 6. .adv-section:nth-child(2) → dark mode enhanced inset-left glow（success・mix-sm）
+   v24.70 の adv-section 2番目静的 inset glow（success mix-xs）のダーク強化版。
+   success カラーを mix-sm に引き上げ2番目アドバイスセクション左バーの
+   緑色発光をダークモードで鮮明化。⑤と対称に1・2番目が統一。 */
+[data-theme="dark"] .adv-section:nth-child(2) { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--success)       var(--mix-sm), transparent); }
+
+/* 7. .adv-section:nth-child(3) → dark mode enhanced inset-left glow（warning・mix-sm）
+   v24.70 の adv-section 3番目静的 inset glow（warning mix-xs）のダーク強化版。
+   warning カラーを mix-sm に引き上げ3番目アドバイスセクション左バーの
+   警告色発光をダークモードで鮮明化。⑤⑥⑦で全3アドバイスセクションの
+   ダーク inset-left glow 演出が完成形に統一。 */
+[data-theme="dark"] .adv-section:nth-child(3) { box-shadow: inset 4px 0 12px color-mix(in srgb, var(--warning)       var(--mix-sm), transparent); }
+
+/* 8. .tx-table tbody tr.tx-selected td:first-child → dark mode enhanced inset-left glow（primary-end・mix-sm）
+   ライトモード静的 inset glow（v24.70: primary mix-sm inset 4px 0 8px）のダーク強化版。
+   選択行は既に mix-sm を使用しているが、ダークモードでは primary → primary-end に切替て
+   暗背景上での primary-end 発光で選択状態の存在感をより鮮明に演出。
+   tx-income/expense td:first-child dark glow（v24.77）と連動し取引テーブル全行タイプの
+   ダーク inset-left 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.78・全script/linkタグ?v=24.78に更新。 */
+[data-theme="dark"] .tx-table tbody tr.tx-selected td:first-child { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
