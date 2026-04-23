@@ -32829,3 +32829,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    goal/wl/ch/asset/debt/ev-card inset glow（v24.67）シリーズに統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.69・全script/linkタグ?v=24.69に更新。 */
 .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
+
+/* ============================================================
+   Sprint #866  v24.70
+   insight-item(info/alert/success/warning)-static-inset-glow
+   ＋adv-section(1/2/3)-static-inset-glow
+   ＋tx-selected-td1-static-inset-glow  合計8箇所
+
+   ホバー依存の inset-left glow（v24.67〜v24.69）の静的補完シリーズ。
+   accent border-left を持つ要素に常時 inset glow を追加し
+   ホバー前からも左アクセントバーに奥行き・発光感を付与する。
+   ============================================================ */
+
+/* 1. .insight-item.insight-info → static inset-left glow（primary・mix-xs）
+   インサイト「情報」アイテムの border-left-color（primary）に対して常時
+   primary inset glow を追加（inset 4px 0 8px mix-xs）。
+   hover 時の inset mix-sm glow（v24.68）と連動し未ホバー時からも
+   左アクセントバーに奥行きを持たせる。②〜④と連動し全4タイプの
+   静的 inset 演出を完成形に統一。 */
+.insight-item.insight-info    { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 2. .insight-item.insight-alert → static inset-left glow（danger-text・mix-xs）
+   インサイト「警告」アイテムの border-left-color（danger-text）に常時
+   danger-text inset glow を追加。①と対称にタイプ別カラーで静的に発光。 */
+.insight-item.insight-alert   { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
+
+/* 3. .insight-item.insight-success → static inset-left glow（success・mix-xs）
+   インサイト「成功」アイテムの border-left-color（success）に常時
+   success inset glow を追加。①②と連動し静的 inset 演出を統一。 */
+.insight-item.insight-success { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+
+/* 4. .insight-item.insight-warning → static inset-left glow（warning・mix-xs）
+   インサイト「注意」アイテムの border-left-color（warning）に常時
+   warning inset glow を追加。①〜③と連動し全4タイプの静的演出が完成形に統一。
+   :active 時は押下フィードバックを優先して box-shadow をリセット。 */
+.insight-item.insight-warning { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+.insight-item.insight-info:active,
+.insight-item.insight-alert:active,
+.insight-item.insight-success:active,
+.insight-item.insight-warning:active { box-shadow: none; }
+
+/* 5. .adv-section → static inset-left glow（primary・mix-xs）
+   AIアドバイスセクション（1番目・デフォルト）の border-left（primary）に
+   常時 primary inset glow を追加（inset 4px 0 10px mix-xs）。
+   テキストコンテンツブロックの左アクセントバーに奥行きを付与する。
+   ⑥⑦と連動しアドバイス全セクションの静的 inset 演出を完成形に統一。 */
+.adv-section              { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 6. .adv-section:nth-child(2) → static inset-left glow（success・mix-xs）
+   AIアドバイスセクション（2番目・success border）に常時
+   success inset glow を追加。⑤と対称にタイプ別カラーで静的に発光。 */
+.adv-section:nth-child(2) { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+
+/* 7. .adv-section:nth-child(3) → static inset-left glow（warning・mix-xs）
+   AIアドバイスセクション（3番目・warning border）に常時
+   warning inset glow を追加。⑤⑥と連動しアドバイス全3セクションの
+   静的 inset 演出を完成形に統一。 */
+.adv-section:nth-child(3) { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+
+/* 8. .tx-table tbody tr.tx-selected td:first-child → static inset-left glow（primary・mix-sm）
+   選択中の取引行の td:first-child（border-left: primary !important）に
+   常時 primary inset glow を追加（inset 4px 0 8px mix-sm）。
+   選択ハイライト背景（primary mix-faint）と連動し選択状態の
+   視覚的存在感を強化。tx-income/expense 静的 inset glow（v23.xx）と同パターン。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.70・全script/linkタグ?v=24.70に更新。 */
+.tx-table tbody tr.tx-selected td:first-child { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
