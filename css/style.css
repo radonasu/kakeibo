@@ -33903,3 +33903,66 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ ev-sum-card.ev-sum-next dark enhanced hover outer glow（income-end mix-lg 0 6px 20px） */
 [data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent); }
+
+/* ============================================================
+   Sprint #883 (v24.87): ev-sum-year-dark-hover-outer-glow＋forecast-card-dark-hover-outer-glow＋goal-dash-item-dark-hover-outer-glow＋ev-month-col-dark-hover-outer-glow＋hm-stat-card-nth1/2/3/4-dark-hover-outer-glow
+
+   ev-sum-year（warning グラデ）・forecast-card（fc-color アクセント）・goal-dash-item・
+   ev-month-col・hm-stat-card nth-child(1〜4) の
+   ライトモード hover box-shadow は実装済みだが、ダークモード強化が未適用。
+   暗背景ではカラーグローが埋もれるため *-end バリアントへ切替・mix-xs/2xs → mix-sm/md に引き上げ、
+   ホバー時の存在感をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .ev-sum-card.ev-sum-year:hover → dark enhanced outer glow（warning-end・mix-lg・0 6px 20px）:
+     ライトモード glow（warning mix-md v22.x）のダーク強化版。warning-end に切替え mix-lg に引き上げ
+     年間収支予定サマリーカード（warning グラデ背景）の hover 警戒発光をダークモードで更に鮮明化。
+     ev-sum-this（v24.86⑦）・ev-sum-next（v24.86⑧）と合わせ ev-sum-card 全3バリアントのダーク hover outer glow が完成形に統一。
+   ②[data-theme="dark"] .forecast-card:hover → dark enhanced outer glow（fc-color fallback primary-end・mix-md・0 4px 18px）:
+     ライトモード glow（fc-color mix-xs v22.76）のダーク強化版。primary-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     財務予測カード（generic）の hover 発光をダークモードで鮮明化。fc-status-alert dark hover inset-left glow（v24.82⑦）と連動し
+     全ステータスの forecast-card ダーク hover 演出を完成形に統一。
+   ③[data-theme="dark"] .goal-dash-item:hover → dark enhanced outer glow（goal-accent fallback primary-end・mix-md・0 2px 10px）:
+     ライトモード glow（goal-accent mix-xs v22.x）のダーク強化版。primary-end へ fallback 切替・mix-xs → mix-md に引き上げ
+     目標ダッシュボードアイテムの hover translateX 方向に合わせた outer glow をダークモードで鮮明化。
+     goal-dash-item:hover .goal-dash-emoji drop-shadow（v22.x）・.goal-dash-bar-fill glow（v22.x）と連動。
+   ④[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover → dark enhanced outer glow（primary-end・mix-md・0 4px 14px）:
+     ライトモード glow（primary mix-2xs v23.40）のダーク強化版。primary-end に切替え mix-2xs → mix-md に大きく引き上げ
+     月別収支予定カラムの hover translateY lift 方向 outer glow をダークモードで鮮明化。
+     現在月（.ev-month-current）は除外しホバー対象月のみ強調。
+   ⑤[data-theme="dark"] .hm-stat-card:nth-child(1):hover → dark hover outer glow（primary-end・mix-sm・0 4px 14px）:
+     ヒートマップ統計カード①（収入タイプ・background primary グラデ）のホバー時に primary-end outer glow 追加。
+     ライトモードには box-shadow glow なし（transform のみ）だが、暗背景ではカードが浮き上がる視覚効果を
+     static text-shadow glow（v24.x）と連動させ dark hover 時の存在感を演出。
+   ⑥[data-theme="dark"] .hm-stat-card:nth-child(2):hover → dark hover outer glow（expense-end・mix-sm・0 4px 14px）:
+     ヒートマップ統計カード②（支出タイプ）のホバー時に expense-end outer glow 追加。⑤と同パターン。
+   ⑦[data-theme="dark"] .hm-stat-card:nth-child(3):hover → dark hover outer glow（warning・mix-sm・0 4px 14px）:
+     ヒートマップ統計カード③（警告タイプ）のホバー時に warning outer glow 追加。⑤⑥と同パターン。
+   ⑧[data-theme="dark"] .hm-stat-card:nth-child(4):hover → dark hover outer glow（income-end・mix-sm・0 4px 14px）:
+     ヒートマップ統計カード④（達成タイプ）のホバー時に income-end outer glow 追加。
+     ⑤〜⑧で hm-stat-card 全4タイプのダーク hover outer glow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.87・全script/linkタグ?v=24.87に更新。
+   ============================================================ */
+
+/* ① ev-sum-card.ev-sum-year dark enhanced hover outer glow（warning-end mix-lg 0 6px 20px） */
+[data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent); }
+
+/* ② forecast-card dark enhanced hover outer glow（fc-color fallback primary-end mix-md 0 4px 18px） */
+[data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
+
+/* ③ goal-dash-item dark enhanced hover outer glow（goal-accent fallback primary-end mix-md 0 2px 10px） */
+[data-theme="dark"] .goal-dash-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ ev-month-col dark enhanced hover outer glow（primary-end mix-md 0 4px 14px） */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border)); }
+
+/* ⑤ hm-stat-card:nth-child(1) dark hover outer glow（primary-end mix-sm 0 4px 14px） */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑥ hm-stat-card:nth-child(2) dark hover outer glow（expense-end mix-sm 0 4px 14px） */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* ⑦ hm-stat-card:nth-child(3) dark hover outer glow（warning mix-sm 0 4px 14px） */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--warning)    var(--mix-sm), transparent); }
+
+/* ⑧ hm-stat-card:nth-child(4) dark hover outer glow（income-end mix-sm 0 4px 14px） */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
