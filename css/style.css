@@ -9422,8 +9422,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* alertパルスグロー */
 @keyframes fc-alert-glow {
-  0%, 100% { box-shadow: 0 0 0 0 transparent; border-left-color: var(--danger-text); }
-  50%       { box-shadow: -3px 0 10px -2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); border-left-color: color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
+  0%, 100% { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); border-left-color: var(--danger-text); }
+  50%       { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), -3px 0 10px -2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); border-left-color: color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
 }
 /* スパークライン描画アニメーション */
 @keyframes fc-spark-draw {
@@ -33028,3 +33028,73 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    goal/wl/ch/asset/debt/ev/pt-card static inset glow（v24.71）シリーズに統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.72・全script/linkタグ?v=24.72に更新。 */
 .ev-widget-item { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* ============================================================
+   Sprint #869  v24.73
+   tx-income-td1-static-inset-glow＋tx-expense-td1-static-inset-glow
+   ＋fc-status-alert-animation-inset-glow更新＋sub-card-static-inset-glow
+   ＋forecast-card-static-inset-top-glow＋wk-widget-card-static-inset-top-glow
+   ＋pace-status(good/warn/over)-static-inset-top-glow＋sim-loan-info-static-inset-glow
+   合計8箇所
+
+   border-left 静的 inset glow シリーズ完結（①〜④⑧ 5箇所）＋
+   border-top 静的 inset-top glow 新シリーズ開始（⑤〜⑦ 3箇所・pace は3バリアント）。
+   ④ fc-alert-glow アニメーションを直接更新し 0%/100% フレームに常時 inset glow を組み込み。
+   ============================================================ */
+
+/* 1. .tx-table tbody tr[data-type="income"]:not(.tx-selected) td:first-child → static inset-left glow（income・mix-xs）
+   収入行の td:first-child（border-left: income color）に常時 income inset glow を追加（inset 4px 0 8px mix-xs）。
+   v24.69 hover inset mix-sm と連動しホバー前から左バーに奥行きを付与。
+   :not(.tx-selected) で tx-selected の primary static glow（v24.70）と競合しないようスコープ限定。
+   ②と対称に取引テーブル income/expense 全行の静的 inset 演出が完成形に統一。 */
+.tx-table tbody tr[data-type="income"]:not(.tx-selected) td:first-child { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
+
+/* 2. .tx-table tbody tr[data-type="expense"]:not(.tx-selected) td:first-child → static inset-left glow（expense・mix-xs）
+   支出行の td:first-child（border-left: expense color）に常時 expense inset glow を追加（inset 4px 0 8px mix-xs）。
+   ①と対称に取引テーブル income/expense 全行の静的 inset 演出が完成形に統一。
+   hover 時は v24.69 の inset mix-sm（expense）が上書きして強調。 */
+.tx-table tbody tr[data-type="expense"]:not(.tx-selected) td:first-child { box-shadow: inset 4px 0 8px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+
+/* 3. @keyframes fc-alert-glow 更新 → 静的 inset-left glow（danger-text・mix-xs）を全フレームに組み込み
+   財務予測アラートカードの border-left（accent-w・danger-text）に対し常時 danger-text inset glow を付与。
+   0%/100%: inset 4px 0 10px danger-text-mix-xs のみ（静的奥行き発光）
+   50%: 同上 + expense outer pulse glow（アラート点滅強調）
+   パルス中も常時 inset 奥行きが維持されホバー前から左バーが静かに輝く。
+   ※ fc-alert-glow は本ファイル先頭部（line 9424）にて直接更新済み。 */
+
+/* 4. .sub-card → static inset-left glow（sub-accent・mix-xs）
+   サブスクリプションカードの .sub-card-color-bar（左アクセントバー・sub-accent color）と
+   連動してカード内側左面からの常時 sub-accent inset glow を追加（inset 4px 0 14px mix-xs）。
+   shadow-btn-base と組み合わせてベース shadow を保持しつつ inset 奥行きを追加。
+   v24.69 hover inset mix-sm と連動しホバー前から静かに発光。border-left 系静的 inset シリーズに統一。 */
+.sub-card { box-shadow: var(--shadow-btn-base), inset 4px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); }
+
+/* 5. .forecast-card → static inset-top glow（fc-color・mix-xs）
+   財務予測カードの border-top（accent-w・fc-color）に対して常時 fc-color inset glow を追加（inset 0 4px 10px mix-xs）。
+   border-left 系の静的 inset シリーズに対応した border-top 系 inset-top glow 新シリーズ。
+   fc-color はカテゴリ別に変化し各カードが独自カラーでホバー前から上部に奥行きを発光。
+   ⑥⑦と連動し border-top accent 系カード全体の静的 inset-top 演出を統一。 */
+.forecast-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent); }
+.forecast-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border)); }
+
+/* 6. .wk-widget-card → static inset-top glow（primary・mix-xs）
+   週次ウィジェットカードの border-top（accent-w・primary）に常時 primary inset glow を追加（inset 0 4px 10px mix-xs）。
+   ⑤ forecast-card inset-top glow と同パターンで border-top アクセントカードの
+   静的 inset-top 演出シリーズを統一。ウィジェットカード上部に常時奥行きを付与。 */
+.wk-widget-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+
+/* 7. .pace-widget-body.pace-status-{good/warn/over} → static inset-top glow（タイプ別カラー・mix-xs）
+   ペースウィジェットボディの border-top（accent-w・タイプ別カラー）に常時 inset glow を追加（inset 0 4px 10px mix-xs）。
+   good → success / warn → warning / over → danger-text の各カラーで静的に発光し
+   ステータス種別をホバー前から上部の発光色で視覚的に強調。
+   ⑤⑥と連動し border-top 系静的 inset-top glow シリーズに統一。 */
+.pace-widget-body.pace-status-good { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--success)      var(--mix-xs), transparent); }
+.pace-widget-body.pace-status-warn { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--warning)      var(--mix-xs), transparent); }
+.pace-widget-body.pace-status-over { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent); }
+
+/* 8. .sim-loan-info → static inset-left glow（primary・mix-xs）
+   ローンシミュレーター情報バーの border-left（accent-w・primary）に常時 primary inset glow を追加（inset 4px 0 10px mix-xs）。
+   静的表示要素（ホバーなし）に常時 inset 奥行きを付与し左アクセントバーに立体感を加える。
+   border-left 系静的 inset glow シリーズの最終要素として追加しシリーズを完結。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.73・全script/linkタグ?v=24.73に更新。 */
+.sim-loan-info { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
