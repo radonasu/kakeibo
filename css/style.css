@@ -34293,3 +34293,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ dup-tx dark enhanced hover text-shadow（warning-end mix-md） */
 [data-theme="dark"] .dup-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #889 v24.93 — シェア・継続・絵文字選択・フィルター要素
+   ダークモード hover text-shadow 強化 8箇所
+
+   各要素のライトモード hover text-shadow は var(--primary) を使用しているが、
+   ダークモード背景では輝度不足でグロー演出が埋もれる。
+   *-end バリアントへ切替え・強化し、シェア/絵文字選択/フィルター系ホバー時の
+   視認性をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .btn-share:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.87）のダーク強化版。primary-end に切替え
+     mix-md に引き上げシェアボタンの hover 発光をダークモードで鮮明化。
+     btn-share static dark glow（primary-end v24.50）と連動しダーク全状態の演出を完成形に統一。
+   ②[data-theme="dark"] .btn-continue:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.87）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ続けるボタンの hover 発光をダークモードで鮮明化。
+     btn-continue static dark glow（primary-end v24.50）と連動しダーク全状態の演出を完成形に統一。
+   ③[data-theme="dark"] .goal-emoji-btn:hover → dark enhanced text-shadow glow（primary-end・mix-lg）追加:
+     Sprint #886 にて box-shadow・border-color は追加済み。
+     text-shadow を追加し primary-end mix-lg でゴール絵文字選択ボタンの
+     hover 発光演出をダークモードで完全化。goal-emoji-btn static dark glow（v24.45）と連動。
+   ④[data-theme="dark"] .ev-emoji-chip:hover → dark enhanced text-shadow glow（primary-end・mix-lg）:
+     ライトモード glow（primary mix-md v23.90）のダーク強化版。primary-end に切替え
+     mix-md → mix-lg に引き上げ収支予定絵文字チップの hover 発光をダークモードで更に鮮明化。
+     ev-emoji-chip static dark glow（v24.45）と連動し絵文字選択系ダーク全状態演出を統一。
+   ⑤[data-theme="dark"] .pt-emoji-btn:hover → dark enhanced text-shadow glow（primary-end・mix-lg）:
+     ライトモード glow（primary mix-md v23.90）のダーク強化版。primary-end に切替え
+     mix-lg に引き上げポイント絵文字ボタンの hover 発光をダークモードで更に鮮明化。
+     pt-emoji-btn static dark glow（v24.45）と連動。
+   ⑥[data-theme="dark"] .ch-emoji-btn:hover → dark enhanced text-shadow glow（primary-end・mix-lg）:
+     ライトモード glow（primary mix-md v23.90）のダーク強化版。primary-end に切替え
+     mix-lg に引き上げ節約チャレンジ絵文字ボタンの hover 発光をダークモードで更に鮮明化。
+     ch-emoji-btn static dark glow（v24.45）と連動し③〜⑥で絵文字選択系ダーク演出を完成形に統一。
+   ⑦[data-theme="dark"] .adv-filter-toggle:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.x）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ詳細フィルタートグルボタンの hover 発光をダークモードで鮮明化。
+   ⑧[data-theme="dark"] .stp-config-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.x）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ設定コンフィグサマリーの hover 発光をダークモードで鮮明化。
+     ⑦⑧でフィルター/設定系 hover ダーク演出を統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.93・全script/linkタグ?v=24.93に更新。
+   ============================================================ */
+
+/* ① btn-share dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .btn-share:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② btn-continue dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .btn-continue:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ goal-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg）追加 */
+[data-theme="dark"] .goal-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ④ ev-emoji-chip dark enhanced hover text-shadow（primary-end mix-lg） */
+[data-theme="dark"] .ev-emoji-chip:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑤ pt-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
+[data-theme="dark"] .pt-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ ch-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
+[data-theme="dark"] .ch-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑦ adv-filter-toggle dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .adv-filter-toggle:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ stp-config-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .stp-config-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
