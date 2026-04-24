@@ -34155,3 +34155,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ goal-emoji-btn dark enhanced hover glow（primary-end mix-sm 0 2px 10px） */
 [data-theme="dark"] .goal-emoji-btn:hover { border-color: var(--primary-end); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #887 v24.91 — 折りたたみ・アーカイブ・フィルタークリア要素
+   ダークモード hover text-shadow 強化 8箇所
+
+   各要素のライトモード hover text-shadow は var(--primary) または
+   var(--danger-text) を使用しているが、ダークモード背景では輝度不足で
+   グロー演出が埋もれる。*-end バリアントへ切替え・強化し、
+   折りたたみ/アーカイブ系ホバー時の視認性をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .wl-archive-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-sm → mix-md に引き上げ
+     ウィッシュリストアーカイブセクション折りたたみトリガーの hover 発光をダークモードで鮮明化。
+     ch-archive-summary（②）・debt-archive-summary（③）と対称にアーカイブ系 summary hover 演出を統一。
+   ②[data-theme="dark"] .ch-archive-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     チャレンジアーカイブセクション折りたたみトリガーの hover 発光をダークモードで鮮明化。
+   ③[data-theme="dark"] .debt-archive-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     負債アーカイブセクション折りたたみトリガーの hover 発光をダークモードで鮮明化。
+     ①〜③で wl/ch/debt アーカイブ summary hover ダーク演出が完成形に統一。
+   ④[data-theme="dark"] .sub-inactive-section summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     休止中サブスクセクション折りたたみトリガーの hover 発光をダークモードで鮮明化。
+   ⑤[data-theme="dark"] .goal-achieved-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     達成済みゴールセクション折りたたみトリガーの hover 発光をダークモードで鮮明化。
+   ⑥[data-theme="dark"] .modal-details summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     詳細設定モーダル内折りたたみトリガーの hover 発光をダークモードで鮮明化。
+   ⑦[data-theme="dark"] .stp-help-summary:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+     ステップヘルプアコーディオントリガーの hover 発光をダークモードで鮮明化。
+     ④〜⑦で各種 summary/アコーディオン hover ダーク演出が完成形に統一。
+   ⑧[data-theme="dark"] .adv-filter-clear:hover → dark enhanced text-shadow glow（expense-end・mix-md）:
+     ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end（danger-text のダーク vivid variant）に
+     切替え mix-md に引き上げ詳細フィルタークリアボタンの hover 警告発光をダークモードで鮮明化。
+     delete-tx:hover dark glow（v23.x）・adv-filter-clear static danger glow と連動し
+     削除・クリア系操作の警告演出をダークモードで統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.91・全script/linkタグ?v=24.91に更新。
+   ============================================================ */
+
+/* ① wl-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .wl-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② ch-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .ch-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ debt-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .debt-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ sub-inactive-section summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .sub-inactive-section summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ goal-achieved-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .goal-achieved-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ modal-details summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .modal-details summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ stp-help-summary dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .stp-help-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ adv-filter-clear dark enhanced hover text-shadow（expense-end mix-md） */
+[data-theme="dark"] .adv-filter-clear:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
