@@ -34580,3 +34580,54 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑥〜⑧で pm-table-row の全 td 種別のダーク hover text-shadow 演出が完成形に統一。
    pm-table-row td.text-muted static dark glow（primary-end mix-sm v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
 [data-theme="dark"] .pm-table-row:hover td.text-muted { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v24.98: UI操作要素 dark hover text-shadow glow 8箇所
+   adv-filter-toggle-dark-hover-glow＋type-btn-expense-dark-hover-glow＋
+   type-btn-income-dark-hover-glow＋modal-close-dark-hover-glow＋
+   stp-config-summary-dark-hover-glow＋notif-toggle-label-dark-hover-glow＋
+   recurring-toggle-label-dark-hover-glow＋sb-select-all-wrap-dark-hover-glow
+   ============================================================ */
+
+/* ① adv-filter-toggle:hover dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ詳細フィルタトグルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .adv-filter-toggle:hover { border-color: var(--primary-end); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② type-btn.expense-btn:hover dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ支出タイプボタンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .type-btn.expense-btn:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ type-btn.income-btn:hover dark enhanced hover text-shadow（income-end mix-md）
+   ライトモード glow（income mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げ収入タイプボタンの hover 発光をダークモードで鮮明化。
+   ②③でタイプボタン両種のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .type-btn.income-btn:hover { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ modal-close:hover dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げモーダル閉じるボタンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .modal-close:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ stp-config-summary:hover dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ設定サマリーの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .stp-config-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ notif-toggle-label:hover dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ通知トグルラベルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .notif-toggle-label:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ recurring-toggle-label:hover dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ繰返しトグルラベルの hover 発光をダークモードで鮮明化。
+   ⑥⑦でトグルラベル系のダーク hover text-shadow 演出が統一。 */
+[data-theme="dark"] .recurring-toggle-label:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ sb-select-all-wrap:hover dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ「すべて選択」ラベルの hover 発光をダークモードで鮮明化。
+   ①〜⑧で UI 操作要素の全ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .sb-select-all-wrap:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
