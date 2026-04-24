@@ -35731,3 +35731,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑪⑫で pt-total/pt-expiring の .pt-summary-amount ダーク hover text-shadow 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.12・全script/linkタグ?v=25.12に更新 */
 [data-theme="dark"] .pt-expiring:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* =====================================================================
+   v25.13 dark hover text-shadow
+   fv-stat-card-value/label/sub×3 + ev-sum-card-count/label/small/inc/exp×5
+   wl-sum-done-value/label/unit×3 + sub-summary-card-amount/label/sub×3
+   計14箇所 dark hover enhanced white text-shadow
+   ===================================================================== */
+
+/* ① fv-stat-card:hover .fv-stat-value dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景上の白数値テキストに
+   rgba(255,255,255,0.5) の強めホワイトグローを追加。fv-stat-value static dark glow（0.18）より
+   大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+
+/* ② fv-stat-card:hover .fv-stat-label dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景上の白ラベルテキストに
+   rgba(255,255,255,0.5) の強めホワイトグローを追加。fv-stat-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ③ fv-stat-card:hover .fv-stat-sub dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.45）のダーク強化版。①〜③で fv-stat-card 内テキスト全種別の
+   ダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ④ ev-sum-card:hover .ev-sum-count dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（this:primary/next:income/year:warning）上の
+   白カウントテキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。ev-sum-count static dark glow（0.18）
+   より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑤ ev-sum-card:hover .ev-sum-label dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.45）のダーク強化版。ev-sum-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑥ ev-sum-card:hover .ev-sum-count small dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.45）のダーク強化版。ev-sum-count small static dark glow（0.22）より引き上げ。 */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count small { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ⑦ ev-sum-card:hover .ev-sum-inc dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.5）のダーク強化版。ev-sum-inc static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-inc { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑧ ev-sum-card:hover .ev-sum-exp dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.5）のダーク強化版。ev-sum-exp static dark glow（0.18）より引き上げ。
+   ④〜⑧で ev-sum-card 内テキスト全種別（count/label/small/inc/exp）のダーク hover 演出が統一。 */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-exp { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ⑨ wl-sum-done:hover .wl-summary-value dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（income-deep→income-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   wl-sum-done .wl-summary-value static dark glow（0.22）より大幅に引き上げ。 */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+
+/* ⑩ wl-sum-done:hover .wl-summary-label dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.45）のダーク強化版。wl-sum-done .wl-summary-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑪ wl-sum-done:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.4）のダーク強化版。⑨〜⑪で wl-sum-done 内テキスト全種別の
+   ダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ⑫ sub-summary-card:hover .sub-summary-amount dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景（monthly:primary-dark→primary-end /
+   yearly:teal→teal-end）上の白金額テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   sub-summary-amount static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑬ sub-summary-card:hover .sub-summary-label dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.45）のダーク強化版。sub-summary-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑭ sub-summary-card:hover .sub-summary-sub dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.4）のダーク強化版。⑫〜⑭で sub-summary-card 内テキスト全種別の
+   ダーク hover 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.13・全script/linkタグ?v=25.13に更新 */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
