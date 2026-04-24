@@ -34475,3 +34475,53 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary-end に切替え mix-md に引き上げカテゴリ比較テーブル行合計の hover 発光をダークモードで鮮明化。
    ct-row-total static dark glow（primary-end）と連動しダーク全状態の演出を完成形に統一 */
 [data-theme="dark"] .ct-table tbody tr:hover .ct-row-total { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v24.96: テーブル金額セル dark hover text-shadow glow 8箇所
+   tx-table-amount-income-dark-hover-glow＋tx-table-amount-expense-dark-hover-glow＋
+   dd-tx-amount-income-dark-hover-glow＋dd-tx-amount-expense-dark-hover-glow＋
+   tg-table-expense-dark-hover-glow＋tg-table-income-dark-hover-glow＋
+   rpt-month-income-dark-hover-glow＋rpt-month-expense-dark-hover-glow
+   ============================================================ */
+
+/* ① tx-table tbody tr[data-type="income"]:hover td.amount dark enhanced hover text-shadow（income-end mix-md）
+   ライトモード glow（success mix-sm v22.84）のダーク強化版。
+   income-end に切替え mix-md に引き上げ取引テーブルの収入行金額セルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  td.amount { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② tx-table tbody tr[data-type="expense"]:hover td.amount dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（danger-text mix-sm v22.84）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ取引テーブルの支出行金額セルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ dd-tx-row:hover .dd-tx-amount.income dark enhanced hover text-shadow（income-end mix-md）
+   ライトモード glow（success mix-sm v22.84）のダーク強化版。
+   income-end に切替え mix-md に引き上げドリルダウンモーダルの収入金額の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ④ dd-tx-row:hover .dd-tx-amount.expense dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（danger-text mix-sm v22.84）のダーク強化版。
+   expense-end に切替え mix-md に引き上げドリルダウンモーダルの支出金額の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ tg-table tbody tr:hover td.expense dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（expense mix-sm v23.09）のダーク強化版。
+   expense-end に切替え mix-md に引き上げタグ分析テーブルの支出金額セルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tg-table tbody tr:hover td.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ tg-table tbody tr:hover td.income dark enhanced hover text-shadow（income-end mix-md）
+   ライトモード glow（success mix-sm v23.20）のダーク強化版。
+   income-end に切替え mix-md に引き上げタグ分析テーブルの収入金額セルの hover 発光をダークモードで鮮明化。
+   ⑤と対称形でタグテーブルの収入・支出両セルのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .tg-table tbody tr:hover td.income { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ rpt-month-row.is-clickable:hover td.income dark enhanced hover text-shadow（income-end mix-md）
+   ライトモード glow（success mix-sm v22.99）のダーク強化版。
+   income-end に切替え mix-md に引き上げレポート月別テーブルの収入セルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover td.income  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑧ rpt-month-row.is-clickable:hover td.expense dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（expense mix-sm v22.99）のダーク強化版。
+   expense-end に切替え mix-md に引き上げレポート月別テーブルの支出セルの hover 発光をダークモードで鮮明化。
+   ⑦と対称形でレポートテーブルの収入・支出両セルのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover td.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
