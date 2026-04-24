@@ -35056,3 +35056,87 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑧〜⑫で sub-card:hover 配下のテキスト全要素（金額・メモ・月額換算・サイクルタグ・次回請求日）のダーク hover 演出が完成形に統一。
    cat-card子テキスト×7＋sub-card子テキスト×5 で dark hover text-shadow glow 12箇所を一括完成。 */
 [data-theme="dark"] .sub-card:hover .sub-next-billing { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v25.05: tx-col-pay・pt-exp-expired・budget-over-msg・yi-diff×2・
+   ev-month-label・cal-amount×2・cal-sum-value×2・yr-cell-value×2
+   dark hover text-shadow glow 12箇所
+   ①〜② 取引テーブル・ポイントカード関連
+   ③    予算テーブル 超過メッセージ
+   ④〜⑤ 年間収支 diff テキスト
+   ⑥    収支予定 月ラベル
+   ⑦〜⑩ カレンダー金額・月次合計
+   ⑪〜⑫ 年間テーブル 収入/支出セル値
+   ============================================================ */
+
+/* ① tx-table tr[data-type]:hover td.tx-col-pay dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   取引テーブル支払方法列の hover 発光をダークモードで鮮明化。
+   tx-col-pay static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr:hover td.tx-col-pay { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② pt-card:hover .pt-exp-expired dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-md）のダーク強化版。expense-end に切替え mix-md 維持で
+   ポイントカードの期限切れバッジの hover 発光をダークモードで鮮明化。
+   pt-exp-expired static dark glow（expense-end mix-md）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-exp-expired { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ budget-item:has(.budget-fill.over):hover .budget-over-msg dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   予算超過メッセージの hover 発光をダークモードで鮮明化。
+   budget-over-msg static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-over-msg { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ④ yi-card:hover .yi-diff-up dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text 40%）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   年間収支カードの増加差分テキストの hover 発光をダークモードで鮮明化。
+   yi-diff-up static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-diff-up { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ yi-card:hover .yi-diff-down dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（income 40%）のダーク強化版。income-end に切替え mix-md に引き上げ
+   年間収支カードの減少差分テキストの hover 発光をダークモードで鮮明化。
+   yi-diff-down static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ④⑤で yi-diff 全バリアント（up/down）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-diff-down { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑥ ev-month-col:not(.ev-month-current):hover .ev-month-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   収支予定カレンダー月ラベルの hover 発光をダークモードで鮮明化。
+   dark outer box-shadow hover（primary-end mix-md v24.xx）と連動しダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-month-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ cal-cell:hover:not(.cal-empty) .cal-amount.inc dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   カレンダーセルの収入金額の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.inc { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑧ cal-cell:hover:not(.cal-empty) .cal-amount.exp dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   カレンダーセルの支出金額の hover 発光をダークモードで鮮明化。
+   ⑦⑧でカレンダーセル金額（inc/exp）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.exp { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑨ cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   カレンダー月次合計（収入）の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑩ cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   カレンダー月次合計（支出）の hover 発光をダークモードで鮮明化。
+   ⑨⑩で cal-sum-value 全タイプ（income/expense）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑪ yr-cell-income:hover .yr-cell-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   年間テーブル収入セルの金額値の hover 発光をダークモードで鮮明化。
+   yr-cell-income dark outer glow hover（income-end mix-md v24.xx）と連動しダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-income:hover .yr-cell-value { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑫ yr-cell-expense:hover .yr-cell-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   年間テーブル支出セルの金額値の hover 発光をダークモードで鮮明化。
+   yr-cell-expense dark outer glow hover（expense-end mix-md v24.xx）と連動しダーク hover 演出を完成形に統一。
+   ⑪⑫で yr-cell-value（income/expense）のダーク hover text-shadow 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.05・全script/linkタグ?v=25.05に更新 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
