@@ -34415,3 +34415,63 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-accent fallback primary-end に切替え mix-md に引き上げサブスクカード名称の hover 発光をダークモードで鮮明化。
    sub-card dark hover outer glow（v24.xx）と連動しダーク全状態の演出を完成形に統一 */
 [data-theme="dark"] .sub-card:hover .sub-card-name { color: var(--sub-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #891 v24.95
+   dark hover text-shadow 8箇所:
+   ci-event-name・opp-title・ch-card-name・
+   pt-urgent-badge・pt-soon-badge・ch-status・yoy-diff・ct-row-total
+   ============================================================ */
+
+/* ① ci-event-item:hover .ci-event-name dark enhanced hover text-shadow（ci-ev-accent/primary-end mix-md）
+   ライトモード glow（ci-ev-accent/primary mix-sm v22.94）のダーク強化版。
+   ci-ev-accent fallback primary-end に切替え mix-md に引き上げカレンダーイベント名称の hover 発光をダークモードで鮮明化。
+   ci-event-name static dark glow（ci-ev-accent/primary-end v32.x）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .ci-event-item:hover .ci-event-name { color: var(--ci-ev-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ② opp-card:hover .opp-title dark enhanced hover text-shadow（opp-accent/primary-end mix-md）
+   ライトモード glow（opp-accent/primary mix-sm v22.64）のダーク強化版。
+   opp-accent fallback primary-end に切替え mix-md に引き上げ節約機会カードタイトルの hover 発光をダークモードで鮮明化。
+   opp-title static dark glow（opp-accent/primary-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .opp-card:hover .opp-title { color: var(--opp-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ ch-card:hover .ch-card-name dark enhanced hover text-shadow（ch-accent/primary-end mix-md）
+   ライトモード glow（ch-accent/primary mix-sm v22.99）のダーク強化版。
+   ch-accent fallback primary-end に切替え mix-md に引き上げチャレンジカード名称の hover 発光をダークモードで鮮明化。
+   ch-card-name static dark glow（ch-accent/primary-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .ch-card:hover .ch-card-name { color: var(--ch-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ pt-card:hover .pt-urgent-badge dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（danger-text mix-md v23.12）のダーク強化版。
+   expense-end に切替え mix-md を維持し緊急ポイントバッジの hover 発光をダークモードで鮮明化。
+   pt-urgent-badge static dark glow（expense-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .pt-card:hover .pt-urgent-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ pt-card:hover .pt-soon-badge dark enhanced hover text-shadow（warning mix-md）
+   ライトモード glow（warning mix-md v23.12）のダーク強化版。
+   warning カラーを維持しもうすぐ期限バッジの hover 発光をダークモードで鮮明化。
+   pt-soon-badge static dark glow（warning）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .pt-card:hover .pt-soon-badge { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑥ ch-card:hover .ch-status dark enhanced hover text-shadow（タイプ別: income-end/expense-end/warning/primary-end mix-md）
+   ライトモード glow（success/danger-text/warning mix-md v22.99）のダーク強化版。
+   done=income-end / fail=expense-end / over=warning / active=primary-end に切替え mix-md に引き上げ
+   チャレンジステータスバッジの hover 発光をダークモードで鮮明化。
+   ch-status static dark glow（各 v24.xx）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .ch-card:hover .ch-status-done   { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .ch-card:hover .ch-status-fail   { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-card:hover .ch-status-over   { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+[data-theme="dark"] .ch-card:hover .ch-status-active { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ yoy-summary-item:hover .yoy-diff dark enhanced hover text-shadow（タイプ別: expense-end/income-end mix-md）
+   ライトモード glow（danger-text/success mix-md v23.09）のダーク強化版。
+   up=expense-end / down=income-end に切替え mix-md に引き上げ前年比較差分テキストの hover 発光をダークモードで鮮明化。
+   yoy-diff static dark glow（expense-end/income-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-up   { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-down { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑧ ct-table tbody tr:hover .ct-row-total dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm v23.09）のダーク強化版。
+   primary-end に切替え mix-md に引き上げカテゴリ比較テーブル行合計の hover 発光をダークモードで鮮明化。
+   ct-row-total static dark glow（primary-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .ct-table tbody tr:hover .ct-row-total { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
