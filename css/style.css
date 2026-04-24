@@ -34974,3 +34974,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    asset-name dark hover glow（v24.88）と連動し資産カードの名前・残高がダーク hover で一体的に発光する完成形に統一。
    ⑩〜⑫で主要カード（負債・ポイント・資産）の残高テキスト dark hover text-shadow 演出が完成形に統一。 */
 [data-theme="dark"] .asset-card:hover .asset-balance { color: var(--asset-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ===================================================================
+   v25.04: cat-card子テキスト×7＋sub-card子テキスト×5 dark hover text-shadow glow 12箇所
+   ①〜⑦ カテゴリ管理カード（cat-card）内テキストの dark hover glow 完成形
+   ⑧〜⑫ サブスクカード（sub-card）内テキストの dark hover glow 完成形
+   =================================================================== */
+
+/* ① cat-card:hover .cat-card-name dark enhanced hover text-shadow（cat-clr/primary-end・mix-md）
+   ライトモード glow（cat-clr/primary mix-sm）のダーク強化版。
+   cat-clr fallback primary-end に切替え mix-md に引き上げカテゴリカード名称テキストの hover 発光をダークモードで鮮明化。
+   cat-card-name static dark glow（cat-clr/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-card-name { color: var(--cat-clr, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ② cat-card:hover .cat-stat-val dark enhanced hover text-shadow（cat-clr/primary-end・mix-md）
+   ライトモード glow（cat-clr/primary mix-sm）のダーク強化版。
+   cat-clr fallback primary-end に切替え mix-md に引き上げカテゴリカード統計値テキストの hover 発光をダークモードで鮮明化。
+   cat-stat-val static dark glow（cat-clr/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-stat-val { color: var(--cat-clr, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ cat-card:hover .cat-stat-lbl dark enhanced hover text-shadow（cat-clr/primary-end・mix-md）
+   ライトモード glow（cat-clr/primary mix-sm）のダーク強化版。
+   cat-clr fallback primary-end に切替え mix-md に引き上げカテゴリカード統計ラベルテキストの hover 発光をダークモードで鮮明化。
+   cat-stat-lbl static dark glow（cat-clr/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①〜③で cat-card 内の主要テキスト（名称・統計値・統計ラベル）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-stat-lbl { color: var(--cat-clr, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ cat-card:hover .cat-budget-pct dark enhanced hover text-shadow（cat-clr/primary-end・mix-md）
+   ライトモード glow（cat-clr/primary mix-sm）のダーク強化版。
+   cat-clr fallback primary-end に切替え mix-md に引き上げカテゴリカード予算達成率テキストの hover 発光をダークモードで鮮明化。
+   cat-budget-pct static dark glow（cat-clr/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-budget-pct { color: var(--cat-clr, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ cat-card:hover .cat-yayoi-tag dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げカテゴリカードの弥生タグテキストの hover 発光をダークモードで鮮明化。
+   cat-yayoi-tag static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-yayoi-tag { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ cat-card:hover .cat-fixed-badge.is-fixed dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げカテゴリカードの固定費バッジテキストの hover 発光をダークモードで鮮明化。
+   cat-fixed-badge.is-fixed static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-fixed-badge.is-fixed { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ cat-card:hover .cat-fixed-badge.is-var dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げカテゴリカードの変動費バッジテキストの hover 発光をダークモードで鮮明化。
+   cat-fixed-badge.is-var static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑥⑦で cat-fixed-badge 全バリアント（is-fixed/is-var）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .cat-card:hover .cat-fixed-badge.is-var { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑧ sub-card:hover .sub-card-amount dark enhanced hover text-shadow（sub-accent/primary-end・mix-md）
+   ライトモード glow（sub-accent/primary mix-sm）のダーク強化版。
+   sub-accent fallback primary-end に切替え mix-md に引き上げサブスクカード金額テキストの hover 発光をダークモードで鮮明化。
+   sub-card-amount static dark glow（sub-accent/primary-end mix-sm）・sub-card-name dark hover glow と連動し
+   サブスクカード名称・金額がダーク hover で一体的に発光する完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-card-amount { color: var(--sub-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑨ sub-card:hover .sub-card-memo dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げサブスクカードのメモテキストの hover 発光をダークモードで鮮明化。
+   sub-card-memo static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-card-memo { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ sub-card:hover .sub-monthly-equiv dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げサブスクカードの月額換算テキストの hover 発光をダークモードで鮮明化。
+   sub-monthly-equiv static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-monthly-equiv { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ sub-card:hover .sub-cycle-tag dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げサブスクカードの支払いサイクルタグの hover 発光をダークモードで鮮明化。
+   sub-cycle-tag static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-cycle-tag { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ sub-card:hover .sub-next-billing dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げサブスクカードの次回請求日テキストの hover 発光をダークモードで鮮明化。
+   ⑧〜⑫で sub-card:hover 配下のテキスト全要素（金額・メモ・月額換算・サイクルタグ・次回請求日）のダーク hover 演出が完成形に統一。
+   cat-card子テキスト×7＋sub-card子テキスト×5 で dark hover text-shadow glow 12箇所を一括完成。 */
+[data-theme="dark"] .sub-card:hover .sub-next-billing { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
