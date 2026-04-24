@@ -35225,3 +35225,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    yr-cell-savings-success static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.06・全script/linkタグ?v=25.06に更新 */
 [data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-label { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v25.07: yr-cell-savings-warn/danger .yr-cell-label×2・
+           yr-cell-savings .yr-unit×3・yr-cell-savings .yr-cell-sub×3・
+           yr-cell-savings .yr-prev-badge×3
+   dark hover text-shadow glow 11箇所
+   ① 年間貯蓄セル（注意）ラベル dark hover
+   ② 年間貯蓄セル（赤字）ラベル dark hover
+   ③〜⑤ 年間貯蓄セル 単位テキスト（success/warn/danger）dark hover
+   ⑥〜⑧ 年間貯蓄セル サブテキスト（success/warn/danger）dark hover
+   ⑨〜⑪ 年間貯蓄セル 前月バッジ（success/warn/danger）dark hover
+   ============================================================ */
+
+/* ① yr-cell-savings-warn:hover .yr-cell-label dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。warning カラー維持・mix-md に引き上げ
+   年間貯蓄セル（注意）のラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-warn static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-label { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ② yr-cell-savings-danger:hover .yr-cell-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   年間貯蓄セル（赤字）のラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-danger static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①②で yr-cell-savings 全バリアント（success/warn/danger）の .yr-cell-label ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ yr-cell-savings-success:hover .yr-unit dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード filter+glow（success mix-sm）のダーク強化版。income-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（黒字）の単位テキスト（円）の hover 発光をダークモードで鮮明化。
+   yr-cell-savings-success .yr-unit static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-unit { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ yr-cell-savings-warn:hover .yr-unit dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード filter+glow（warning mix-sm）のダーク強化版。warning color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（注意）の単位テキストの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-warn .yr-unit static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-unit { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑤ yr-cell-savings-danger:hover .yr-unit dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード filter+glow（danger-text mix-sm）のダーク強化版。expense-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（赤字）の単位テキストの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-danger .yr-unit static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ③〜⑤で yr-cell-savings 全バリアント（success/warn/danger）の .yr-unit ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-unit { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ yr-cell-savings-success:hover .yr-cell-sub dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード filter+glow（success mix-sm）のダーク強化版。income-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（黒字）のサブテキスト（前年比等）の hover 発光をダークモードで鮮明化。
+   yr-cell-sub.yr-up static dark glow（income-end mix-md）と連動しダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-sub { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ yr-cell-savings-warn:hover .yr-cell-sub dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード filter+glow（warning mix-sm）のダーク強化版。warning color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（注意）のサブテキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-sub { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑧ yr-cell-savings-danger:hover .yr-cell-sub dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード filter+glow（danger-text mix-sm）のダーク強化版。expense-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（赤字）のサブテキストの hover 発光をダークモードで鮮明化。
+   yr-cell-sub.yr-down static dark glow（expense-end mix-md）と連動しダーク hover 演出を完成形に統一。
+   ⑥〜⑧で yr-cell-savings 全バリアント（success/warn/danger）の .yr-cell-sub ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-sub { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑨ yr-cell-savings-success:hover .yr-prev-badge dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード scale+filter+glow（success mix-sm）のダーク強化版。income-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（黒字）の前月バッジの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-success .yr-prev-badge static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-prev-badge { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑩ yr-cell-savings-warn:hover .yr-prev-badge dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード scale+filter+glow（warning mix-sm）のダーク強化版。warning color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（注意）の前月バッジの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-warn .yr-prev-badge static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-prev-badge { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑪ yr-cell-savings-danger:hover .yr-prev-badge dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード scale+filter+glow（danger-text mix-sm）のダーク強化版。expense-end color + mix-md text-shadow に引き上げ
+   年間貯蓄セル（赤字）の前月バッジの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-danger .yr-prev-badge static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑨〜⑪で yr-cell-savings 全バリアント（success/warn/danger）の .yr-prev-badge ダーク hover text-shadow 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.07・全script/linkタグ?v=25.07に更新 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-prev-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
