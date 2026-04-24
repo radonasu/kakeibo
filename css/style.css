@@ -34220,3 +34220,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ adv-filter-clear dark enhanced hover text-shadow（expense-end mix-md） */
 [data-theme="dark"] .adv-filter-clear:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #888 v24.92 — ボタン・操作要素
+   ダークモード hover text-shadow 強化 8箇所
+
+   各要素のライトモード hover text-shadow は var(--primary) /
+   var(--danger-text) / var(--warning) を使用しているが、
+   ダークモード背景では輝度不足でグロー演出が埋もれる。
+   *-end バリアントへ切替え・強化し、操作ボタン系ホバー時の
+   視認性をダークモードでも鮮明化する。
+
+   ①[data-theme="dark"] .qa-type-btn:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.85）のダーク強化版。primary-end に切替え
+     mix-sm → mix-md に引き上げクイック追加フォームのタイプ選択ボタンの
+     hover 発光をダークモードで鮮明化。qa-type-btn static dark glow（v24.xx）と連動し
+     ダーク全状態の演出を完成形に統一。
+   ②[data-theme="dark"] .md-nav-btn:hover:not(:disabled) → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.85）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ月詳細ナビゲーションボタンの hover 発光をダークモードで鮮明化。
+     md-nav-btn static dark glow（v24.47）と連動しダーク全状態の演出を完成形に統一。
+   ③[data-theme="dark"] .btn-preset:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.87）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ金額プリセットボタンの hover 発光をダークモードで鮮明化。
+     btn-preset static dark glow（v24.48）と連動しダーク全状態の演出を完成形に統一。
+   ④[data-theme="dark"] .card-collapse-btn:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.87）のダーク強化版。primary-end に切替え
+     mix-md に引き上げカード折りたたみボタンの hover 発光をダークモードで鮮明化。
+     card-collapse-btn static dark glow（v24.48）と連動しダーク全状態の演出を完成形に統一。
+   ⑤[data-theme="dark"] .sub-emoji-btn:hover → dark enhanced text-shadow glow（primary-end・mix-lg）:
+     ライトモード glow（primary mix-md v23.90）のダーク強化版。primary-end に切替え
+     mix-md → mix-lg に引き上げサブスクリプション絵文字ボタンの hover 発光を
+     ダークモードで更に鮮明化。sub-emoji-btn static dark glow（v24.49）と連動し
+     絵文字選択ボタンのダーク全状態演出を完成形に統一。
+   ⑥[data-theme="dark"] .edit-tx:hover → dark enhanced text-shadow glow（primary-end・mix-md）:
+     ライトモード glow（primary mix-sm v23.88）のダーク強化版。primary-end に切替え
+     mix-md に引き上げ取引編集ボタンの hover 発光をダークモードで鮮明化。
+     既存 dark:hover rule（background・box-shadow）に text-shadow を追加し
+     edit-tx のダーク hover 演出を完成形に統一。
+   ⑦[data-theme="dark"] .delete-tx:hover → dark enhanced text-shadow glow（expense-end・mix-md）:
+     ライトモード glow（danger-text mix-sm v23.88）のダーク強化版。expense-end
+     （danger-text のダーク vivid variant）に切替え mix-md に引き上げ取引削除ボタンの
+     hover 警告発光をダークモードで鮮明化。delete-tx static dark glow（expense-end v24.xx）
+     と連動しダーク全状態の演出を完成形に統一。
+   ⑧[data-theme="dark"] .dup-tx:hover → dark enhanced text-shadow glow（warning-end・mix-md）:
+     ライトモード glow（warning mix-sm v23.88）のダーク強化版。warning-end に切替え
+     mix-md に引き上げ取引複製ボタンの hover 警戒発光をダークモードで鮮明化。
+     dup-tx static dark glow（warning v24.xx）と連動しダーク全状態の演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.92・全script/linkタグ?v=24.92に更新。
+   ============================================================ */
+
+/* ① qa-type-btn dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .qa-type-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② md-nav-btn dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .md-nav-btn:hover:not(:disabled) { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ btn-preset dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .btn-preset:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ card-collapse-btn dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .card-collapse-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ sub-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
+[data-theme="dark"] .sub-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ edit-tx dark enhanced hover text-shadow（primary-end mix-md） */
+[data-theme="dark"] .edit-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ delete-tx dark enhanced hover text-shadow（expense-end mix-md） */
+[data-theme="dark"] .delete-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ dup-tx dark enhanced hover text-shadow（warning-end mix-md） */
+[data-theme="dark"] .dup-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
