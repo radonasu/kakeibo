@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.07'; // v25.07: yr-cell-savings-warn/danger label×2・yr-cell-savings unit×3・yr-cell-savings sub×3・yr-cell-savings prev-badge×3 dark hover text-shadow 11箇所
+const CACHE_NAME = 'kakeibo-v25.08'; // v25.08: yr-widget-card progress/topcat/avg-label×3・yi-card half-val/card-value/card-label/half-label×4・step-title×1・ct-stat-value×1・tg-stat-value×1・sub-cycle-unit×1・hm-stat-unit×1 dark hover text-shadow 12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

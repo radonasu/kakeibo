@@ -35307,3 +35307,88 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑨〜⑪で yr-cell-savings 全バリアント（success/warn/danger）の .yr-prev-badge ダーク hover text-shadow 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.07・全script/linkタグ?v=25.07に更新 */
 [data-theme="dark"] .yr-cell-savings-danger:hover .yr-prev-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #904 v25.08 dark enhanced hover text-shadow 12箇所
+   yr-widget-card×3・yi-card×4・step-title×1・ct-stat-value×1・tg-stat-value×1・sub-cycle-unit×1・hm-stat-unit×1
+   ============================================================ */
+
+/* ① yr-widget-card:hover .yr-progress-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間ウィジェットカードの進捗ラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-progress-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-widget-card:hover .yr-progress-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② yr-widget-card:hover .yr-topcat-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間ウィジェットカードのトップカテゴリラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-topcat-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-widget-card:hover .yr-topcat-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ yr-widget-card:hover .yr-avg-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間ウィジェットカードの平均ラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-avg-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①〜③で yr-widget-card:hover 配下のラベル系テキスト（progress/topcat/avg）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .yr-widget-card:hover .yr-avg-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ yi-card:hover .yi-half-val dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード filter+glow（expense mix-sm）のダーク強化版。expense-end color + mix-md text-shadow に引き上げ
+   年間収支カードの半期値テキストの hover 発光をダークモードで鮮明化。
+   yi-half-val static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-half-val { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ yi-card:hover .yi-card-value dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間収支カードのメイン値テキストの hover 発光をダークモードで鮮明化。
+   yi-card-value static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-card-value { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ yi-card:hover .yi-card-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間収支カードのラベルテキストの hover 発光をダークモードで鮮明化。
+   yi-card-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-card-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ yi-card:hover .yi-half-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   年間収支カードの半期ラベルテキストの hover 発光をダークモードで鮮明化。
+   yi-half-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ④〜⑦で yi-card:hover 配下の主要テキスト（half-val/card-value/card-label/half-label）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .yi-card:hover .yi-half-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ step-card:hover .step-title dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ステップカードのタイトルテキストの hover 発光をダークモードで鮮明化。
+   step-title static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   step-card:hover .step-action dark hover glow（v25.02）と連動しステップカード内テキストのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .step-card:hover .step-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ ct-stat-card:hover .ct-stat-value dark enhanced hover text-shadow（ct-stat-color/primary-end・mix-md）
+   ライトモード glow（ct-stat-color/primary mix-sm）のダーク強化版。ct-stat-color fallback primary-end に切替え mix-md に引き上げ
+   カテゴリトレンド統計カードの統計値テキストの hover 発光をダークモードで鮮明化。
+   ct-stat-value static dark glow（ct-stat-color/primary mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-value { color: var(--ct-stat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑩ tg-stat-card:hover .tg-stat-value dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   トレンドグラフ統計カードの統計値テキストの hover 発光をダークモードで鮮明化。
+   tg-stat-value static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-value { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ sub-card:hover .sub-cycle-unit dark enhanced hover text-shadow（sub-accent/primary-end・mix-md）
+   ライトモード glow（sub-accent/primary mix-sm）のダーク強化版。sub-accent fallback primary-end に切替え mix-md に引き上げ
+   サブスクカードのサイクル単位テキストの hover 発光をダークモードで鮮明化。
+   sub-cycle-unit static dark glow（sub-accent/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   sub-card:hover 配下のテキスト（name/amount/memo/monthly-equiv/cycle-tag/next-billing/cycle-unit）の
+   ダーク hover 演出がこれで完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-cycle-unit { color: var(--sub-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑫ hm-stat-card:hover .hm-stat-unit dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm・全4枚共通）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ヒートマップ統計カードの単位テキスト（「円」等）の hover 発光をダークモードで鮮明化。
+   hm-stat-unit static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   hm-stat-value/label ダーク hover glow（v25.06）と連動しヒートマップ統計カード内の
+   主要テキスト（value/label/unit）のダーク hover 演出がこれで完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.08・全script/linkタグ?v=25.08に更新 */
+[data-theme="dark"] .hm-stat-card:hover .hm-stat-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
