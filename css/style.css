@@ -35140,3 +35140,88 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    yr-cell-expense dark outer glow hover（expense-end mix-md v24.xx）と連動しダーク hover 演出を完成形に統一。
    ⑪⑫で yr-cell-value（income/expense）のダーク hover text-shadow 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.05・全script/linkタグ?v=25.05に更新 */
 [data-theme="dark"] .yr-cell-expense:hover .yr-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v25.06: hm-stat-value×4・hm-stat-label×4・yr-cell-savings-value×3・yr-cell-savings-label×1
+   dark hover text-shadow glow 12箇所
+   ①〜④ ヒートマップ統計カード 値テキスト（nth-child 1-4）
+   ⑤〜⑧ ヒートマップ統計カード ラベルテキスト（nth-child 1-4）
+   ⑨〜⑪ 年間貯蓄セル 金額値（success/warn/danger）
+   ⑫    年間貯蓄セル ラベル（success）
+   ============================================================ */
+
+/* ① hm-stat-card:nth-child(1):hover .hm-stat-value dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ヒートマップ統計1枚目（総支出日数等）の金額値の hover 発光をダークモードで鮮明化。
+   hm-stat-value static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-value { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② hm-stat-card:nth-child(2):hover .hm-stat-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   ヒートマップ統計2枚目（最高支出額等）の金額値の hover 発光をダークモードで鮮明化。
+   hm-stat-value static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ hm-stat-card:nth-child(3):hover .hm-stat-value dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。warning カラー維持・mix-md に引き上げ
+   ヒートマップ統計3枚目（平均支出額等）の金額値の hover 発光をダークモードで鮮明化。
+   hm-stat-value static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-value { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ④ hm-stat-card:nth-child(4):hover .hm-stat-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   ヒートマップ統計4枚目（無支出日数等）の金額値の hover 発光をダークモードで鮮明化。
+   hm-stat-value static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①〜④で hm-stat-value 全4枚のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-value { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑤ hm-stat-card:nth-child(1):hover .hm-stat-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ヒートマップ統計1枚目のラベルテキストの hover 発光をダークモードで鮮明化。
+   hm-stat-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ hm-stat-card:nth-child(2):hover .hm-stat-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   ヒートマップ統計2枚目のラベルテキストの hover 発光をダークモードで鮮明化。
+   hm-stat-label static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ hm-stat-card:nth-child(3):hover .hm-stat-label dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。warning カラー維持・mix-md に引き上げ
+   ヒートマップ統計3枚目のラベルテキストの hover 発光をダークモードで鮮明化。
+   hm-stat-label static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-label { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑧ hm-stat-card:nth-child(4):hover .hm-stat-label dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   ヒートマップ統計4枚目のラベルテキストの hover 発光をダークモードで鮮明化。
+   hm-stat-label static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑤〜⑧で hm-stat-label 全4枚のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-label { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑨ yr-cell-savings-success:hover .yr-cell-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   年間貯蓄セル（黒字）の金額値の hover 発光をダークモードで鮮明化。
+   yr-cell-savings-success static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-value { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑩ yr-cell-savings-warn:hover .yr-cell-value dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。warning カラー維持・mix-md に引き上げ
+   年間貯蓄セル（注意）の金額値の hover 発光をダークモードで鮮明化。
+   yr-cell-savings-warn static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-value { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑪ yr-cell-savings-danger:hover .yr-cell-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   年間貯蓄セル（赤字）の金額値の hover 発光をダークモードで鮮明化。
+   yr-cell-savings-danger static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑨〜⑪で yr-cell-savings 全バリアント（success/warn/danger）の .yr-cell-value ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑫ yr-cell-savings-success:hover .yr-cell-label dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   年間貯蓄セル（黒字）のラベルテキストの hover 発光をダークモードで鮮明化。
+   yr-cell-savings-success static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.06・全script/linkタグ?v=25.06に更新 */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-label { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
