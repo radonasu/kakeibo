@@ -35392,3 +35392,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    主要テキスト（value/label/unit）のダーク hover 演出がこれで完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.08・全script/linkタグ?v=25.08に更新 */
 [data-theme="dark"] .hm-stat-card:hover .hm-stat-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #905 v25.09 dark enhanced hover text-shadow 13箇所
+   sub-widget-amount×3・wk-cell-sub×3・wk-unit×3・notif-item-title×4
+   ============================================================ */
+
+/* ① sub-widget-item:hover .sub-widget-amount dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   サブスクウィジェット通常アイテムの金額テキストの hover 発光をダークモードで鮮明化。
+   sub-widget-amount static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-widget-item:hover            .sub-widget-amount { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ② sub-widget-item.sub-urgent:hover .sub-widget-amount dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   サブスク緊急アイテムの金額テキストの hover 発光をダークモードで鮮明化。
+   sub-widget-amount static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ sub-widget-item.sub-soon:hover .sub-widget-amount dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。mix-md に引き上げ
+   サブスク近日アイテムの金額テキストの hover 発光をダークモードで鮮明化。
+   sub-widget-amount static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①〜③で sub-widget-item:hover 配下の .sub-widget-amount（通常/緊急/近日）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-amount { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ④ wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   週間サマリー支出セルの補足テキストの hover 発光をダークモードで鮮明化。
+   wk-cell-sub static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   週間サマリー総計セルの補足テキストの hover 発光をダークモードで鮮明化。
+   wk-cell-sub static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   週間サマリー収入セルの補足テキストの hover 発光をダークモードで鮮明化。
+   wk-cell-sub static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ④〜⑥で wk-summary-row の全3セル hover 時の .wk-cell-sub のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑦ wk-summary-row .wk-cell:nth-child(1):hover .wk-unit dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   週間サマリー支出セルの単位テキストの hover 発光をダークモードで鮮明化。
+   wk-unit static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-unit { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ wk-summary-row .wk-cell:nth-child(2):hover .wk-unit dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   週間サマリー総計セルの単位テキストの hover 発光をダークモードで鮮明化。
+   wk-unit static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ wk-summary-row .wk-cell:nth-child(3):hover .wk-unit dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   週間サマリー収入セルの単位テキストの hover 発光をダークモードで鮮明化。
+   wk-unit static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑦〜⑨で wk-summary-row の全3セル hover 時の .wk-unit のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-unit { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑩ notif-item.notif-type-danger:hover .notif-item-title dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   危険通知アイテムのタイトルテキストの hover 発光をダークモードで鮮明化。
+   notif-item-title static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .notif-item.notif-type-danger:hover  .notif-item-title { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑪ notif-item.notif-type-warning:hover .notif-item-title dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。mix-md に引き上げ
+   警告通知アイテムのタイトルテキストの hover 発光をダークモードで鮮明化。
+   notif-item-title static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .notif-item.notif-type-warning:hover .notif-item-title { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑫ notif-item.notif-type-success:hover .notif-item-title dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   成功通知アイテムのタイトルテキストの hover 発光をダークモードで鮮明化。
+   notif-item-title static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-title { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑬ notif-item.notif-type-info:hover .notif-item-title dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   情報通知アイテムのタイトルテキストの hover 発光をダークモードで鮮明化。
+   notif-item-title static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑩〜⑬で notif-item:hover 配下の .notif-item-title（danger/warning/success/info全4タイプ）の
+   ダーク hover 演出がこれで完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.09・全script/linkタグ?v=25.09に更新 */
+[data-theme="dark"] .notif-item.notif-type-info:hover    .notif-item-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
