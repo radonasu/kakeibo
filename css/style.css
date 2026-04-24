@@ -35641,3 +35641,93 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑪⑫で ch-widget-pct（ok/over）ダーク hover 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.11・全script/linkタグ?v=25.11に更新 */
 [data-theme="dark"] .ch-widget-item:hover .ch-widget-pct.ch-pct-over { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #908 / v25.12 — dark hover text-shadow glow 12箇所
+   summary-card-income-amount-dark-hover-glow＋
+   summary-card-expense-amount-dark-hover-glow＋
+   summary-card-balance-positive-amount-dark-hover-glow＋
+   summary-card-balance-negative-amount-dark-hover-glow＋
+   md-cell-balance-pos-value-dark-hover-glow＋
+   md-cell-balance-neg-value-dark-hover-glow＋
+   ch-sum-achieved-summary-value-dark-hover-glow＋
+   ch-sum-active-summary-value-dark-hover-glow＋
+   ch-sum-total-summary-value-dark-hover-glow＋
+   debt-summary-monthly-amount-dark-hover-glow＋
+   pt-total-summary-amount-dark-hover-glow＋
+   pt-expiring-summary-amount-dark-hover-glow
+   ============================================================ */
+
+/* ① summary-card.income:hover .summary-amount dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   収入サマリーカードの金額大数値の hover 発光をダークモードで鮮明化。
+   summary-card.income static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .summary-card.income:hover           .summary-amount { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ② summary-card.expense:hover .summary-amount dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   支出サマリーカードの金額大数値の hover 発光をダークモードで鮮明化。
+   summary-card.expense static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .summary-card.expense:hover          .summary-amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ summary-card.balance.positive:hover .summary-amount dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   残高プラスサマリーカードの金額大数値の hover 発光をダークモードで鮮明化。
+   summary-card.balance.positive static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .summary-card.balance.positive:hover .summary-amount { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ④ summary-card.balance.negative:hover .summary-amount dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   残高マイナスサマリーカードの金額大数値の hover 発光をダークモードで鮮明化。
+   ①〜④でダッシュボード最上段サマリーカード全タイプのダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .summary-card.balance.negative:hover .summary-amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ md-cell-balance-pos:hover .md-cell-value dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   月次詳細テーブルの黒字残高金額セルの hover 発光をダークモードで鮮明化。
+   md-cell-balance-pos:hover .md-cell-label dark glow（primary-end mix-md）と連動し
+   月次詳細黒字セルのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .md-cell-balance-pos:hover .md-cell-value { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ⑥ md-cell-balance-neg:hover .md-cell-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   月次詳細テーブルの赤字残高金額セルの hover 発光をダークモードで鮮明化。
+   ⑤⑥で md-cell-balance-pos/neg の .md-cell-value ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .md-cell-balance-neg:hover .md-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ ch-sum-achieved:hover .ch-summary-value dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（income→income-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   ch-sum-achieved static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-value { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑧ ch-sum-active:hover .ch-summary-value dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（primary-dark→primary）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   ch-sum-active static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-value { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑨ ch-sum-total:hover .ch-summary-value dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（teal→teal-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   ⑦⑧⑨で ch-sum 全バリアント（achieved/active/total）の .ch-summary-value ダーク hover 演出が統一。 */
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-value { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑩ debt-summary-monthly:hover .summary-amount dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（expense→expense-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   debt-summary-monthly static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .debt-summary-monthly:hover .summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑪ pt-total:hover .pt-summary-amount dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（primary→primary-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   pt-summary-amount static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .pt-total:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑫ pt-expiring:hover .pt-summary-amount dark enhanced hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（warning→orange）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   ⑪⑫で pt-total/pt-expiring の .pt-summary-amount ダーク hover text-shadow 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.12・全script/linkタグ?v=25.12に更新 */
+[data-theme="dark"] .pt-expiring:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }

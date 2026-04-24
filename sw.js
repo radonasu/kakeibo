@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.11'; // v25.11: debt-rate-badge×1・debt-monthly-badge×1・hs-spark-label-now×1・hs-score-unit×1・step-num×1・qa-card-title×1・tx-tag-filter-chip-not-active×1・tx-tag-filter-all-active×1・tx-tag-filter-chip-active×1・tx-tag-chip-row×1・ch-widget-pct-ok×1・ch-widget-pct-over×1 dark hover text-shadow 12箇所
+const CACHE_NAME = 'kakeibo-v25.12'; // v25.12: summary-card-income/expense/balance-pos/neg-amount×4・md-cell-balance-pos/neg-value×2・ch-sum-achieved/active/total-value×3・debt-summary-monthly-amount×1・pt-total/expiring-amount×2 dark hover text-shadow 12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
