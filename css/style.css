@@ -35559,3 +35559,85 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    asset-entry-row dark outer glow と連動し資産履歴行のダーク hover 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.10・全script/linkタグ?v=25.10に更新 */
 [data-theme="dark"] .asset-entry-row:hover .asset-entry-balance { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #907 / v25.11 — dark hover text-shadow glow 12箇所
+   debt-rate-badge-dark-hover-glow＋debt-monthly-badge-dark-hover-glow＋
+   hs-spark-label-now-dark-hover-glow＋hs-score-unit-dark-hover-glow＋
+   step-num-dark-hover-glow＋qa-card-title-dark-hover-glow＋
+   tx-tag-filter-chip-not-active-dark-hover-glow＋tx-tag-filter-all-active-dark-hover-glow＋
+   tx-tag-filter-chip-active-dark-hover-glow＋tx-tag-chip-row-dark-hover-glow＋
+   ch-widget-pct-ok-dark-hover-glow＋ch-widget-pct-over-dark-hover-glow
+   ============================================================ */
+
+/* ① debt-card:hover .debt-rate-badge dark enhanced hover text-shadow（debt-accent/expense-end・mix-md）
+   ライトモード glow（debt-accent/primary mix-sm）のダーク強化版。debt-accent fallback expense-end に
+   切替え mix-md に引き上げ負債カードの年利バッジテキストの hover 発光をダークモードで鮮明化。
+   debt-rate-badge static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-rate-badge { color: var(--debt-accent, var(--expense-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+
+/* ② debt-card:hover .debt-monthly-badge dark enhanced hover text-shadow（debt-accent/expense-end・mix-md）
+   ライトモード glow（debt-accent/primary mix-sm）のダーク強化版。debt-accent fallback expense-end に
+   切替え mix-md に引き上げ負債カードの月返済バッジテキストの hover 発光をダークモードで鮮明化。
+   ①②で debt-rate-badge/debt-monthly-badge ペアのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-monthly-badge { color: var(--debt-accent, var(--expense-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+
+/* ③ health-score-card:hover .hs-spark-label-now dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ヘルスチェックカードのスパークライン「現在」ラベルの hover 発光をダークモードで鮮明化。
+   hs-spark-label-now static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .health-score-card:hover .hs-spark-label-now { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ health-score-card:hover .hs-score-unit dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ヘルスチェックカードのスコア単位テキスト（「点」等）の hover 発光をダークモードで鮮明化。
+   hs-score-unit static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .health-score-card:hover .hs-score-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ step-card:hover .step-num dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   オンボーディングステップカードのステップ番号テキストの hover 発光をダークモードで鮮明化。
+   step-num static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .step-card:hover .step-num { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ qa-toggle-btn:hover .qa-card-title dark enhanced hover text-shadow（qa-accent/primary-end・mix-md）
+   ライトモード glow（qa-accent/primary mix-sm）のダーク強化版。qa-accent fallback primary-end に
+   切替え mix-md に引き上げクイック追加フォームのカードタイトルの hover 発光をダークモードで鮮明化。
+   qa-card-title static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .qa-toggle-btn:hover .qa-card-title { color: var(--qa-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ tx-tag-filter-chip:hover:not(.active) dark enhanced hover text-shadow（tc/primary-end・mix-md）
+   ライトモード glow（tc/primary mix-sm）のダーク強化版。tc fallback primary-end に切替え
+   mix-md に引き上げ非アクティブタグフィルターチップの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-tag-filter-chip:hover:not(.active) { color: var(--tc, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ tx-tag-filter-all.active:hover dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   「すべて」タグフィルターのアクティブ状態 hover 発光をダークモードで鮮明化。
+   ⑦⑧でタグフィルター非アクティブ/アクティブ両パターンのダーク hover 演出が統一。 */
+[data-theme="dark"] .tx-tag-filter-all.active:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ tx-tag-filter-chip.active:hover dark enhanced hover text-shadow（tc/primary-end・mix-md）
+   ライトモード glow（tc/primary mix-sm）のダーク強化版。tc fallback primary-end に切替え
+   mix-md に引き上げアクティブタグフィルターチップの hover 発光をダークモードで鮮明化。
+   ⑦⑧⑨でタグフィルター全状態（非アクティブ/全選択アクティブ/チップアクティブ）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .tx-tag-filter-chip.active:hover { color: var(--tc, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑩ tx-table tbody tr:hover .tx-tag-chip dark enhanced hover text-shadow（tc/primary-end・mix-md）
+   ライトモード glow（tc/primary mix-sm）のダーク強化版。tc fallback primary-end に切替え
+   mix-md に引き上げ取引テーブル行 hover 時のインラインタグチップの発光をダークモードで鮮明化。
+   タグフィルターチップのダーク hover 演出（⑦⑨）と連動しタグ関連 hover 演出を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr:hover .tx-tag-chip { color: var(--tc, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑪ ch-widget-item:hover .ch-widget-pct.ch-pct-ok dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（income/success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   チャレンジウィジェットの達成率テキスト（達成）の hover 発光をダークモードで鮮明化。
+   ch-widget-pct.ch-pct-ok static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-pct.ch-pct-ok { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑫ ch-widget-item:hover .ch-widget-pct.ch-pct-over dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   チャレンジウィジェットの達成率テキスト（超過）の hover 発光をダークモードで鮮明化。
+   ⑪⑫で ch-widget-pct（ok/over）ダーク hover 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.11・全script/linkタグ?v=25.11に更新 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-pct.ch-pct-over { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
