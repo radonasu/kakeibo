@@ -34525,3 +34525,58 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    expense-end に切替え mix-md に引き上げレポート月別テーブルの支出セルの hover 発光をダークモードで鮮明化。
    ⑦と対称形でレポートテーブルの収入・支出両セルのダーク hover 演出が完成形に統一。 */
 [data-theme="dark"] .rpt-month-row.is-clickable:hover td.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v24.97: ウィジェット・バッジ・予算テーブル dark hover text-shadow glow 8箇所
+   pt-widget-exp-dark-hover-glow（3種）＋goal-achieved-badge-dark-hover-glow＋
+   ci-score-badge-dark-hover-glow＋pm-table-row-td1-dark-hover-glow＋
+   pm-table-row-td-expense-dark-hover-glow＋pm-table-row-td-text-muted-dark-hover-glow
+   ============================================================ */
+
+/* ① pt-widget-item:hover .pt-widget-exp dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm v23.55）のダーク強化版。
+   primary-end に切替え mix-md に引き上げポイントウィジェット行の有効期限テキストの hover 発光をダークモードで鮮明化。
+   pt-widget-exp static dark glow（primary-end mix-sm v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-widget-item:hover             .pt-widget-exp { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ② pt-widget-item.pt-urgent:hover .pt-widget-exp dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（danger-text mix-sm v23.55）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ緊急ポイント行の有効期限テキストの hover 発光をダークモードで鮮明化。
+   ①〜③でポイントウィジェット行 3 ステータスのダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover   .pt-widget-exp { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ pt-widget-item.pt-soon:hover .pt-widget-exp dark enhanced hover text-shadow（warning mix-md）
+   ライトモード glow（warning mix-sm v23.55）のダーク強化版。
+   warning カラー維持・mix-md に引き上げもうすぐ期限ポイント行の有効期限テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .pt-widget-item.pt-soon:hover     .pt-widget-exp { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ④ goal-card:hover .goal-achieved-badge dark enhanced hover text-shadow（income-end mix-lg）
+   ライトモード glow（success mix-md v23.12）のダーク強化版。
+   income-end に切替え mix-lg に引き上げ達成ゴールバッジの hover 発光をダークモードで更に鮮明化。
+   goal-achieved-badge static dark glow（income-end mix-md v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-achieved-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+
+/* ⑤ ci-score-row:hover .ci-score-badge dark enhanced hover text-shadow（primary-end mix-lg）
+   ライトモード glow（primary mix-md v23.xx）のダーク強化版。
+   primary-end に切替え mix-lg に引き上げチェックアップスコアバッジの hover 発光をダークモードで更に鮮明化。
+   ci-score-badge static dark glow（primary-end mix-sm v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ci-score-row:hover .ci-score-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ pm-table-row:hover td:first-child dark enhanced hover text-shadow（pm-row-color/primary-end mix-md）
+   ライトモード glow（pm-row-color/primary mix-sm v23.23）のダーク強化版。
+   primary-end へ fallback 切替・mix-md に引き上げ予算テーブル行名称セルの hover 発光をダークモードで鮮明化。
+   pm-table-row td:first-child static dark glow（v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pm-table-row:hover td:first-child { color: var(--pm-row-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ pm-table-row:hover td.expense dark enhanced hover text-shadow（expense-end mix-md）
+   ライトモード glow（expense mix-sm v23.23）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ予算テーブル行支出セルの hover 発光をダークモードで鮮明化。
+   pm-table-row td.expense static dark glow（expense-end mix-sm v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pm-table-row:hover td.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ pm-table-row:hover td.text-muted dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm v24.xx）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ予算テーブル行補足テキストの hover 発光をダークモードで鮮明化。
+   ⑥〜⑧で pm-table-row の全 td 種別のダーク hover text-shadow 演出が完成形に統一。
+   pm-table-row td.text-muted static dark glow（primary-end mix-sm v24.xx）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pm-table-row:hover td.text-muted { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
