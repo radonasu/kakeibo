@@ -34631,3 +34631,54 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary-end に切替え mix-md に引き上げ「すべて選択」ラベルの hover 発光をダークモードで鮮明化。
    ①〜⑧で UI 操作要素の全ダーク hover text-shadow 演出が完成形に統一。 */
 [data-theme="dark"] .sb-select-all-wrap:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* =====================================================================
+   Sprint #895 (v24.99): goal-card + budget-item dark hover text-shadow 8箇所
+   ライトモード hover text-shadow（mix-sm）のダーク強化版。
+   -end カラーに切替え mix-md に引き上げ各要素の hover 発光をダークモードで鮮明化。
+   ===================================================================== */
+
+/* ① goal-card:hover .goal-saved dark enhanced hover text-shadow（goal-accent fallback primary-end・mix-md）
+   ライトモード glow（goal-accent fallback primary mix-sm）のダーク強化版。
+   goal-accent→primary-end フォールバックに切替え mix-md に引き上げ貯蓄額テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .goal-card:hover .goal-saved { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ② goal-card:hover .goal-name dark enhanced hover text-shadow（goal-accent fallback primary-end・mix-md）
+   ライトモード glow（goal-accent fallback primary mix-sm）のダーク強化版。
+   goal-accent→primary-end フォールバックに切替え mix-md に引き上げ目標名テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .goal-card:hover .goal-name { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ goal-card:hover .goal-remaining dark enhanced hover text-shadow（goal-accent fallback primary-end・mix-md）
+   ライトモード glow（goal-accent fallback primary mix-sm）のダーク強化版。
+   goal-accent→primary-end フォールバックに切替え mix-md に引き上げ残り金額テキストの hover 発光をダークモードで鮮明化。
+   ①②③で goal-card のメインテキスト群（貯蓄額・目標名・残り金額）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-remaining:not(.goal-done-hint) { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ goal-card:hover .goal-target dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ目標金額テキストの hover 発光をダークモードで鮮明化。
+   ①〜④で goal-card 全テキスト要素のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-target { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ budget-item:hover .budget-nums dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ予算数値テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .budget-item:hover .budget-nums { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ budget-item:has(.budget-fill.over):hover .budget-nums dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ超過予算数値テキストの hover 発光をダークモードで鮮明化。
+   ⑤⑥で budget-nums の通常・超過両バリアントのダーク hover text-shadow 演出が統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-nums { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ budget-item:hover .budget-cat-name dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ予算カテゴリ名テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .budget-item:hover .budget-cat-name { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ budget-item:has(.budget-fill.over):hover .budget-cat-name dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ超過予算カテゴリ名テキストの hover 発光をダークモードで鮮明化。
+   ⑤〜⑧で budget-item の通常・超過バリアントの budget-nums・budget-cat-name 全テキストの
+   ダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-cat-name { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
