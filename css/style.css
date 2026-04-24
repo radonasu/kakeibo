@@ -35481,3 +35481,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダーク hover 演出がこれで完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.09・全script/linkタグ?v=25.09に更新 */
 [data-theme="dark"] .notif-item.notif-type-info:hover    .notif-item-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #906 v25.10 dark enhanced hover text-shadow 12箇所
+   wl-card-price×1・wl-card-note×1・smi-amount×2・
+   smi-label×2・pm-sum-label×1・yr-cell-label×2・
+   dd-summary-label×1・ev-widget-amount×1・asset-entry-balance×1
+   ============================================================ */
+
+/* ① wl-card:hover .wl-card-price dark enhanced hover text-shadow（wl-accent/primary-end・mix-md）
+   ライトモード glow（wl-accent/primary mix-sm）のダーク強化版。wl-accent fallback primary-end に切替え
+   mix-md に引き上げウィッシュリストカードの価格テキストの hover 発光をダークモードで鮮明化。
+   wl-card:hover .wl-card-name dark hover と連動しウィッシュリストカード内テキストのダーク hover 演出を統一。 */
+[data-theme="dark"] .wl-card:hover .wl-card-price { color: var(--wl-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ② wl-card:hover .wl-card-note dark enhanced hover text-shadow（wl-accent/primary-end・mix-md）
+   ライトモード glow（wl-accent/primary mix-sm）のダーク強化版。wl-accent fallback primary-end に切替え
+   mix-md に引き上げウィッシュリストカードのメモテキストの hover 発光をダークモードで鮮明化。
+   ①と連動しウィッシュリストカード内全テキスト（name/price/note）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .wl-card:hover .wl-card-note { color: var(--wl-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ smi-income:hover .smi-amount dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   収支ミニサマリー収入行の金額テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .smi-income:hover  .smi-amount { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ④ smi-expense:hover .smi-amount dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   収支ミニサマリー支出行の金額テキストの hover 発光をダークモードで鮮明化。③④で smi-amount のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .smi-expense:hover .smi-amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ smi-income:hover .smi-label dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   収支ミニサマリー収入行のラベルテキストの hover 発光をダークモードで鮮明化。
+   smi-amount dark hover（③）と連動しラベル・金額が一体的に輝くダーク演出に統一。 */
+[data-theme="dark"] .smi-income:hover  .smi-label { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑥ smi-expense:hover .smi-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   収支ミニサマリー支出行のラベルテキストの hover 発光をダークモードで鮮明化。
+   ③〜⑥で smi 全テキスト（income/expense × amount/label）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .smi-expense:hover .smi-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ pm-sum-card:hover .pm-sum-label dark enhanced hover text-shadow（pm-sum-color/primary-end・mix-md）
+   ライトモード glow（pm-sum-color/primary mix-sm）のダーク強化版。pm-sum-color fallback primary-end に
+   切替え mix-md に引き上げ支払方法サマリーカードのラベルテキストの hover 発光をダークモードで鮮明化。
+   pm-sum-label static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pm-sum-card:hover .pm-sum-label { color: var(--pm-sum-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ yr-cell-income:hover .yr-cell-label dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。income-end に切替え mix-md に引き上げ
+   年次ウィジェット収入セルの月名ラベルの hover 発光をダークモードで鮮明化。
+   yr-cell-income:hover .yr-cell-value dark hover と連動し収入セル内全テキストのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-income:hover  .yr-cell-label { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑨ yr-cell-expense:hover .yr-cell-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ
+   年次ウィジェット支出セルの月名ラベルの hover 発光をダークモードで鮮明化。
+   ⑧⑨で yr-cell-income/expense のラベルテキストのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑩ dd-summary-item:hover .dd-summary-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   デイリーダッシュサマリーアイテムのラベルテキストの hover 発光をダークモードで鮮明化。
+   dd-summary-label static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .dd-summary-item:hover .dd-summary-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ ev-widget-item:hover .ev-widget-amount dark enhanced hover text-shadow（ev-accent/primary-end・mix-md）
+   ライトモード glow（ev-accent/primary mix-sm）のダーク強化版。ev-accent fallback primary-end に切替え
+   mix-md に引き上げイベントウィジェットアイテムの金額テキストの hover 発光をダークモードで鮮明化。
+   ev-widget-item dark inset-glow と連動しイベントウィジェットのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .ev-widget-item:hover .ev-widget-amount { color: var(--ev-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑫ asset-entry-row:hover .asset-entry-balance dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   資産履歴行の残高数値テキストの hover 発光をダークモードで鮮明化。
+   asset-entry-row dark outer glow と連動し資産履歴行のダーク hover 演出が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.10・全script/linkタグ?v=25.10に更新 */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-balance { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
