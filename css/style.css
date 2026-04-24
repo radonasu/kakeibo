@@ -34898,3 +34898,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    insight-title×4 + insight-desc×4 + step-action + wl-card-meta + debt-progress-hdr + debt-progress-detail で
    テキスト発光系ダーク hover 演出 12箇所を一括完成。 */
 [data-theme="dark"] .debt-card:hover .debt-progress-detail { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ===================================================================
+   v25.03: md-cell-label×4＋md-cell-value×2＋wk-cell-value×3＋debt-balance＋pt-card-balance＋asset-balance dark hover text-shadow glow 12箇所
+   ①〜⑥ 月次ダッシュボード md-cell 系（収入・支出・残高ポジ・残高ネガ）のラベル・値テキストの dark hover glow 完成形
+   ⑦〜⑨ 週間サマリーウィジェット wk-cell-value（今日支出・今週支出・無支出日）の dark hover glow 完成形
+   ⑩〜⑫ 主要カード残高テキスト（debt-balance・pt-card-balance・asset-balance）の dark hover glow 完成形
+   =================================================================== */
+
+/* ① md-cell-income:hover .md-cell-label dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げ月次ダッシュボード収入セルのラベルテキストの hover 発光をダークモードで鮮明化。
+   md-cell-income:hover color（success）と連動しラベル・値の両テキストがダーク hover で一体的に収入カラーで発光する完成形に統一。 */
+[data-theme="dark"] .md-cell-income:hover  .md-cell-label { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ② md-cell-expense:hover .md-cell-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ月次ダッシュボード支出セルのラベルテキストの hover 発光をダークモードで鮮明化。
+   ①②で income/expense md-cell-label の dark hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .md-cell-expense:hover .md-cell-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ md-cell-balance-pos:hover .md-cell-label dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ月次ダッシュボード残高（黒字）セルのラベルテキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cell-balance-pos:hover .md-cell-label { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ④ md-cell-balance-neg:hover .md-cell-label dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ月次ダッシュボード残高（赤字）セルのラベルテキストの hover 発光をダークモードで鮮明化。
+   ③④で balance-pos/neg md-cell-label の dark hover text-shadow 演出が完成形に統一。①〜④で md-cell 全タイプのラベルが統一。 */
+[data-theme="dark"] .md-cell-balance-neg:hover .md-cell-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ md-cell-income:hover .md-cell-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。static dark glow（income-end mix-sm）の :hover 強化形。
+   income-end を維持し mix-md に引き上げ月次ダッシュボード収入セルの金額値テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cell-income:hover  .md-cell-value { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑥ md-cell-expense:hover .md-cell-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。static dark glow（expense-end mix-sm）の :hover 強化形。
+   expense-end を維持し mix-md に引き上げ月次ダッシュボード支出セルの金額値テキストの hover 発光をダークモードで鮮明化。
+   ⑤⑥で md-cell-value income/expense の dark hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .md-cell-expense:hover .md-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-value dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。wk-cell:nth-child(1) dark outer glow（expense-end）と連動。
+   expense-end に切替え mix-md に引き上げ週間サマリー1列目（今日の支出）の金額値の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-value dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。wk-cell:nth-child(2) dark outer glow（primary-end）と連動。
+   primary-end に切替え mix-md に引き上げ週間サマリー2列目（今週の支出）の金額値の hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-value { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-value dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。wk-cell:nth-child(3) dark outer glow（income-end）と連動。
+   income-end に切替え mix-md に引き上げ週間サマリー3列目（無支出日）の金額値の hover 発光をダークモードで鮮明化。
+   ⑦〜⑨で wk-summary-row 全 3 セルの .wk-cell-value dark hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-value { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑩ debt-card:hover .debt-balance dark enhanced hover text-shadow（debt-accent fallback expense-end・mix-md）
+   ライトモード glow（debt-accent/expense mix-sm）のダーク強化版。
+   expense-end fallback に切替え mix-md に引き上げ負債カードの残高テキストの hover 発光をダークモードで鮮明化。
+   debt-name dark hover glow（v24.88）と連動し負債カードの主要テキスト（名前・残高）がダーク hover で一体的に発光する完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-balance { color: var(--debt-accent, var(--expense-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+
+/* ⑪ pt-card:hover .pt-card-balance dark enhanced hover text-shadow（pt-accent fallback primary-end・mix-md）
+   ライトモード glow（pt-accent/primary mix-sm）のダーク強化版。static dark glow（pt-accent/primary-end mix-sm）の :hover 強化形。
+   primary-end fallback に切替え mix-md に引き上げポイントカードの残高テキストの hover 発光をダークモードで鮮明化。
+   pt-card-name dark hover glow（v24.88）と連動しポイントカードの名前・残高がダーク hover で一体的に発光する完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-card-balance { color: var(--pt-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑫ asset-card:hover .asset-balance dark enhanced hover text-shadow（asset-accent fallback primary-end・mix-md）
+   ライトモード glow（asset-accent/primary mix-sm）のダーク強化版。
+   primary-end fallback に切替え mix-md に引き上げ資産カードの残高テキストの hover 発光をダークモードで鮮明化。
+   asset-name dark hover glow（v24.88）と連動し資産カードの名前・残高がダーク hover で一体的に発光する完成形に統一。
+   ⑩〜⑫で主要カード（負債・ポイント・資産）の残高テキスト dark hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .asset-card:hover .asset-balance { color: var(--asset-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
