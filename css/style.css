@@ -34360,3 +34360,58 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ stp-config-summary dark enhanced hover text-shadow（primary-end mix-md） */
 [data-theme="dark"] .stp-config-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #890 v24.94
+   dark hover text-shadow 8箇所:
+   notif-toggle-label・recurring-toggle-label・sb-select-all-wrap・
+   rc-item-name・debt-name・asset-name・pt-card-name・sub-card-name
+   ============================================================ */
+
+/* ① notif-toggle-label dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm v24.xx）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ通知トグルラベルの hover 発光をダークモードで鮮明化。
+   notif-toggle-label static dark glow（primary-end v24.93）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .notif-toggle-label:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② recurring-toggle-label dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ定期取引トグルラベルの hover 発光をダークモードで鮮明化。
+   recurring-toggle-label static dark glow（primary-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .recurring-toggle-label:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ sb-select-all-wrap dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ支出提案全選択ラップの hover 発光をダークモードで鮮明化。
+   sb-select-all-wrap static dark glow（primary-end）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .sb-select-all-wrap:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ rc-item:hover .rc-item-name dark enhanced hover text-shadow（primary-end mix-md）
+   ライトモード glow（primary mix-sm v22.94）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ定期取引アイテム名称の hover 発光をダークモードで鮮明化。
+   rc-item-name static dark glow（primary-end v24.xx）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .rc-item:hover .rc-item-name { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ debt-card:hover .debt-name dark enhanced hover text-shadow（debt-accent/primary-end mix-md）
+   ライトモード glow（debt-accent/primary mix-sm）のダーク強化版。
+   debt-accent fallback primary-end に切替え mix-md に引き上げ負債カード名称の hover 発光をダークモードで鮮明化。
+   debt-card dark hover outer glow（v24.xx）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .debt-card:hover .debt-name { color: var(--debt-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑥ asset-card:hover .asset-name dark enhanced hover text-shadow（asset-accent/primary-end mix-md）
+   ライトモード glow（asset-accent/primary mix-sm）のダーク強化版。
+   asset-accent fallback primary-end に切替え mix-md に引き上げ資産カード名称の hover 発光をダークモードで鮮明化。
+   asset-card dark hover outer glow と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .asset-card:hover .asset-name { color: var(--asset-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ pt-card:hover .pt-card-name dark enhanced hover text-shadow（pt-accent/primary-end mix-md）
+   ライトモード glow（pt-accent/primary mix-sm）のダーク強化版。
+   pt-accent fallback primary-end に切替え mix-md に引き上げポイントカード名称の hover 発光をダークモードで鮮明化。
+   pt-card dark hover outer glow と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .pt-card:hover .pt-card-name { color: var(--pt-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ sub-card:hover .sub-card-name dark enhanced hover text-shadow（sub-accent/primary-end mix-md）
+   ライトモード glow（sub-accent/primary mix-sm）のダーク強化版。
+   sub-accent fallback primary-end に切替え mix-md に引き上げサブスクカード名称の hover 発光をダークモードで鮮明化。
+   sub-card dark hover outer glow（v24.xx）と連動しダーク全状態の演出を完成形に統一 */
+[data-theme="dark"] .sub-card:hover .sub-card-name { color: var(--sub-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
