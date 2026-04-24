@@ -34682,3 +34682,58 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑤〜⑧で budget-item の通常・超過バリアントの budget-nums・budget-cat-name 全テキストの
    ダーク hover text-shadow 演出が完成形に統一。 */
 [data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-cat-name { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* =====================================================================
+   Sprint #896 (v25.00): ci-cell-value×4 + pace-daily-val×3 + rc-item-meta dark hover text-shadow 8箇所
+   ライトモード hover text-shadow（mix-sm）のダーク強化版。
+   -end カラーに切替え mix-md に引き上げ各要素の hover 発光をダークモードで鮮明化。
+   ===================================================================== */
+
+/* ① ci-cell:hover .ci-cell-value.income dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（income mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げ収支インサイトカードの収入金額値の hover 発光をダークモードで鮮明化。
+   ci-cell-value.income static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② ci-cell:hover .ci-cell-value.expense dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（expense mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ収支インサイトカードの支出金額値の hover 発光をダークモードで鮮明化。
+   ci-cell-value.expense static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ ci-cell:hover .ci-cell-value.positive dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げ収支インサイトカードのポジティブ値の hover 発光をダークモードで鮮明化。
+   ci-cell-value.positive static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.positive { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ ci-cell:hover .ci-cell-value.negative dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ収支インサイトカードのネガティブ値の hover 発光をダークモードで鮮明化。
+   ①〜④で ci-cell-value 全 4 タイプ（income/expense/positive/negative）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.negative { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げ日次ペースセル（良好状態）の金額値の hover 発光をダークモードで鮮明化。
+   pace-daily-val.pace-good static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑥ pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。
+   warning カラーを維持し mix-md に引き上げ日次ペースセル（警告状態）の金額値の hover 発光をダークモードで鮮明化。
+   pace-daily-val.pace-warn static dark glow（warning mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑦ pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げ日次ペースセル（超過状態）の金額値の hover 発光をダークモードで鮮明化。
+   ⑤〜⑦で pace-daily-val 全 3 ステータス（good/warn/over）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ rc-item:hover .rc-item-meta dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ繰り返し取引リスト行のメタ情報テキストの hover 発光をダークモードで鮮明化。
+   rc-item-meta static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   rc-item:hover .rc-item-name dark hover（v24.88）・rc-item dark outer glow（v24.88）と連動しrc-item全体のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .rc-item:hover .rc-item-meta { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
