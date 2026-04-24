@@ -35807,3 +35807,80 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード glow（rgba 0.4）のダーク強化版。⑫〜⑭で sub-summary-card 内テキスト全種別の
    ダーク hover 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.13・全script/linkタグ?v=25.13に更新 */
 [data-theme="dark"] .sub-summary-card:hover .sub-summary-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ============================================================
+   Sprint #910 — v25.14 dark hover text-shadow 12箇所
+   wl-sum-count(value/label/unit)×3・wl-sum-budget(value/label/unit)×3・
+   pt-card(yen/note/unit)×3・debt-card(balance-meta/progress-label/end-pill)×3
+   ============================================================ */
+
+/* ① wl-sum-count:hover .wl-summary-value dark hover text-shadow（白グロー強化）
+   ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（primary-dark→primary-end）上の
+   白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
+   wl-sum-count .wl-summary-value static dark glow（0.22）より大幅に引き上げ。
+   wl-sum-done:hover dark glow（v25.13⑨）と同パターンで全3種ウィッシュリストサマリーの
+   ダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+
+/* ② wl-sum-count:hover .wl-summary-label dark hover text-shadow（白グロー強化）
+   wl-sum-count .wl-summary-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ③ wl-sum-count:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
+   wl-sum-count .wl-summary-unit static dark glow（0.15）より引き上げ。
+   ①〜③で wl-sum-count 内テキスト全種別のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ④ wl-sum-budget:hover .wl-summary-value dark hover text-shadow（白グロー強化）
+   グラデーション背景（teal→teal-end）上の白数値テキストに強めホワイトグローを追加。
+   wl-sum-budget .wl-summary-value static dark glow（0.22）より大幅に引き上げ。 */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+
+/* ⑤ wl-sum-budget:hover .wl-summary-label dark hover text-shadow（白グロー強化）
+   wl-sum-budget .wl-summary-label static dark glow（0.18）より引き上げ。 */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑥ wl-sum-budget:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
+   wl-sum-budget .wl-summary-unit static dark glow（0.15）より引き上げ。
+   ④〜⑥で wl-sum-budget 内テキスト全種別のダーク hover 演出が完成形に統一。
+   ①〜⑥で wl-sum-count/budget/done 全3種の value/label/unit ダーク hover が完成形に統一。 */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+
+/* ⑦ pt-card:hover .pt-card-yen dark hover text-shadow（pt-accent glow強化）
+   ライトモード glow（pt-accent mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ポイントカード円換算テキストのホバー発光をダークモードで鮮明化。
+   pt-card-yen static dark glow（mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-card-yen { color: var(--pt-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ pt-card:hover .pt-note dark hover text-shadow（pt-accent glow強化）
+   ライトモード glow（pt-accent mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ポイントカードメモテキストのホバー発光をダークモードで鮮明化。
+   pt-note static dark glow（mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-note { color: var(--pt-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑨ pt-card:hover .pt-unit dark hover text-shadow（primary-end glow強化）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   ポイントカード単位テキストのホバー発光をダークモードで鮮明化。
+   pt-unit static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑦〜⑨で pt-card の yen/note/unit ダーク hover が完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ debt-card:hover .debt-balance-meta dark hover text-shadow（primary-end glow強化）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   負債カード残高補足テキストのホバー発光をダークモードで鮮明化。
+   debt-balance-meta static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-balance-meta { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ debt-card:hover .debt-progress-label dark hover text-shadow（primary-end glow強化）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   負債カード進捗ラベルのホバー発光をダークモードで鮮明化。
+   debt-progress-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-progress-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ debt-card:hover .debt-end-pill dark hover text-shadow（primary-end glow強化）
+   ライトモード glow（primary mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
+   負債カード完済予定バッジのホバー発光をダークモードで鮮明化。
+   debt-end-pill static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑩〜⑫で debt-card の balance-meta/progress-label/end-pill ダーク hover が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.14・全script/linkタグ?v=25.14に更新 */
+[data-theme="dark"] .debt-card:hover .debt-end-pill { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
