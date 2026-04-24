@@ -34819,3 +34819,82 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑩〜⑫で pace-daily-label 全ステータス（good/warn/over）のダーク hover text-shadow 演出が完成形に統一。
    sb-row-hover×7 + rc-item-amount-type×2 + pace-daily-label-status×3 で関連ダーク hover text-shadow シリーズ全完了。 */
 [data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   v25.02 スプリント#898
+   insight-title-info-dark-hover-glow＋insight-title-alert-dark-hover-glow＋insight-title-success-dark-hover-glow＋insight-title-warning-dark-hover-glow＋insight-desc-info-dark-hover-glow＋insight-desc-alert-dark-hover-glow＋insight-desc-success-dark-hover-glow＋insight-desc-warning-dark-hover-glow＋step-action-dark-hover-glow＋wl-card-meta-dark-hover-glow＋debt-progress-hdr-dark-hover-glow＋debt-progress-detail-dark-hover-glow 12箇所（v25.02）
+   ============================================================ */
+
+/* ① insight-item.insight-info:hover .insight-title dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げインサイトアイテム（情報）タイトルの hover 発光をダークモードで鮮明化。
+   insight-title static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-info:hover    .insight-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ② insight-item.insight-alert:hover .insight-title dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げインサイトアイテム（警告）タイトルの hover 発光をダークモードで鮮明化。
+   insight-title static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-alert:hover   .insight-title { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ insight-item.insight-success:hover .insight-title dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げインサイトアイテム（成功）タイトルの hover 発光をダークモードで鮮明化。
+   insight-title static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-success:hover .insight-title { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ④ insight-item.insight-warning:hover .insight-title dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。
+   warning カラーを維持し mix-md に引き上げインサイトアイテム（注意）タイトルの hover 発光をダークモードで鮮明化。
+   ①〜④で insight-title 全タイプ（info/alert/success/warning）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-warning:hover .insight-title { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑤ insight-item.insight-info:hover .insight-desc dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げインサイトアイテム（情報）説明文の hover 発光をダークモードで鮮明化。
+   insight-desc static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-info:hover    .insight-desc { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+
+/* ⑥ insight-item.insight-alert:hover .insight-desc dark enhanced hover text-shadow（expense-end・mix-md）
+   ライトモード glow（danger-text mix-sm）のダーク強化版。
+   expense-end に切替え mix-md に引き上げインサイトアイテム（警告）説明文の hover 発光をダークモードで鮮明化。
+   insight-desc static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-alert:hover   .insight-desc { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ insight-item.insight-success:hover .insight-desc dark enhanced hover text-shadow（income-end・mix-md）
+   ライトモード glow（success mix-sm）のダーク強化版。
+   income-end に切替え mix-md に引き上げインサイトアイテム（成功）説明文の hover 発光をダークモードで鮮明化。
+   insight-desc static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-success:hover .insight-desc { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑧ insight-item.insight-warning:hover .insight-desc dark enhanced hover text-shadow（warning・mix-md）
+   ライトモード glow（warning mix-sm）のダーク強化版。
+   warning カラーを維持し mix-md に引き上げインサイトアイテム（注意）説明文の hover 発光をダークモードで鮮明化。
+   ⑤〜⑧で insight-desc 全タイプ（info/alert/success/warning）のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .insight-item.insight-warning:hover .insight-desc { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑨ step-card:hover .step-action dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げステップカードのアクションテキストの hover 発光をダークモードで鮮明化。
+   step-action static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .step-card:hover .step-action { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ wl-card:hover .wl-card-meta dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げウィッシュリストカードのメタ情報テキストの hover 発光をダークモードで鮮明化。
+   wl-card-meta static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wl-card:hover .wl-card-meta { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ debt-card:hover .debt-progress-hdr dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ負債カードの返済進捗ヘッダーテキストの hover 発光をダークモードで鮮明化。
+   debt-progress-hdr static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-progress-hdr { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ debt-card:hover .debt-progress-detail dark enhanced hover text-shadow（primary-end・mix-md）
+   ライトモード glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ負債カードの返済進捗詳細テキストの hover 発光をダークモードで鮮明化。
+   ⑪⑫で debt-card:hover 内の返済進捗テキスト（hdr/detail）のダーク hover text-shadow 演出が完成形に統一。
+   insight-title×4 + insight-desc×4 + step-action + wl-card-meta + debt-progress-hdr + debt-progress-detail で
+   テキスト発光系ダーク hover 演出 12箇所を一括完成。 */
+[data-theme="dark"] .debt-card:hover .debt-progress-detail { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
