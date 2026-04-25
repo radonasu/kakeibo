@@ -37436,3 +37436,81 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑧〜⑪と連動しメモカードのダーク hover 演出（バー+文字数）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.33・全script/linkタグ?v=25.33に更新 */
 [data-theme="dark"] .nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ===== Sprint #930 (v25.34) dark hover 補完 12箇所 =====
+   md-cat-row-dark-hover×1・md-cat-bar-dark-hover×1・md-cat-bar-wrap-dark-hover×1・
+   md-cat-amount-dark-hover×2・md-cat-text-dark-hover×1・md-cat-pct-dark-hover×1・
+   md-cat-dot-dark-hover×1・fv-rate-badge-high-dark-hover×1・fv-rate-badge-mid-dark-hover×1・
+   fv-rate-badge-low-dark-hover×1・qa-submit-btn-dark-hover×1 */
+
+/* ① [data-theme="dark"] .md-cat-row:hover → dark enhanced box-shadow（md-cat-color/primary-end・mix-xs）
+   ライトモード background:mix-nano+inset box-shadow mix-2xs+outer mix-nanoのダーク強化版。
+   inset glow を primary-end/md-cat-color mix-xs に引き上げダークモードでカテゴリ行の枠 glow を鮮明化。
+   md-cat-row:hover 配下の子要素 dark hover（②〜⑧）と連動し月次ダッシュボードカテゴリ行全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .md-cat-row:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-xs), transparent), 0 1px 8px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-xs), transparent); }
+
+/* ② [data-theme="dark"] .md-cat-row:hover .md-cat-bar → dark enhanced brightness(1.18) + box-shadow（md-cat-color/primary-end・mix-lg・0 1px 8px）
+   ライトモード brightness(1.1)+box-shadow（md-cat-color/primary mix-sm 0 1px 6px）のダーク強化版。
+   primary-end（md-cat-color fallback）に切替え brightness 1.1→1.18 + mix-sm→mix-lg + blur 6→8px に引き上げ
+   月次カテゴリ行の進捗バーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-bar { filter: brightness(1.18); box-shadow: 0 1px 8px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* ③ [data-theme="dark"] .md-cat-row:hover .md-cat-bar-wrap → dark enhanced brightness（1.08）
+   ライトモード brightness(1.05)のダーク強化版。1.05→1.08 に引き上げ
+   月次カテゴリ行のバー全体ラッパーの hover 輝きをダークモードで鮮明化。②と連動しバー+ラッパー双方が揃って輝く演出に統一。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-bar-wrap { filter: brightness(1.08); }
+
+/* ④ [data-theme="dark"] .md-cat-row:hover .md-cat-amount → dark enhanced color+text-shadow glow（md-cat-color/primary-end・mix-md）
+   ライトモード color:md-cat-color/primary+text-shadow glow（mix-sm）のダーク強化版。
+   primary-end（md-cat-color fallback）に切替え mix-md に引き上げ
+   月次カテゴリ行の金額テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-amount { color: var(--md-cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .md-cat-row:hover .md-cat-amount.md-cat-amount-income → dark enhanced color+text-shadow glow（income-end・mix-md）
+   ライトモード color:success+text-shadow glow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-md に引き上げ
+   月次カテゴリ行の収入金額テキストの hover 発光をダークモードで鮮明化。④⑤で md-cat-amount 全バリアントのダーク hover が完成形に統一。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-amount.md-cat-amount-income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .md-cat-row:hover .md-cat-text → dark enhanced color+text-shadow glow（md-cat-color/primary-end・mix-md）
+   ライトモード color:md-cat-color/primary+text-shadow glow（mix-sm）のダーク強化版。
+   primary-end（md-cat-color fallback）に切替え mix-md に引き上げ
+   月次カテゴリ行の名称テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-text { color: var(--md-cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .md-cat-row:hover .md-cat-pct → dark enhanced color+text-shadow glow（md-cat-color/primary-end・mix-md）
+   ライトモード color:md-cat-color/primary+text-shadow glow（mix-sm）のダーク強化版。
+   primary-end（md-cat-color fallback）に切替え mix-md に引き上げ
+   月次カテゴリ行のパーセントテキストの hover 発光をダークモードで鮮明化。④〜⑦で md-cat-row 配下テキスト全体のダーク hover が完成形に統一。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-pct { color: var(--md-cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .md-cat-row:hover .md-cat-dot → dark enhanced box-shadow（md-cat-color/primary-end・mix-sm）
+   ライトモード scale(1.25)+box-shadow（md-cat-color/primary mix-xs）のダーク強化版。
+   primary-end（md-cat-color fallback）に切替え mix-xs→mix-sm に引き上げ
+   月次カテゴリ行のカラードットの hover glow をダークモードで鮮明化。①〜⑧で md-cat-row 全要素のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--md-cat-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* ⑨ [data-theme="dark"] .fv-rate-badge.high:hover → dark enhanced brightness(1.18) + drop-shadow（primary-end・mix-lg・0 1px 8px）
+   ライトモード brightness(1.1)+drop-shadow（primary mix-md 0 1px 6px）のダーク強化版。
+   primary → primary-end に切替え brightness 1.1→1.18 + mix-md→mix-lg + blur 6→8px に引き上げ
+   将来費達成率バッジ「高」の単独 hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .fv-rate-badge.high:hover { filter: brightness(1.18) drop-shadow(0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+
+/* ⑩ [data-theme="dark"] .fv-rate-badge.mid:hover → dark enhanced brightness(1.18) + drop-shadow（warning-end・mix-lg・0 1px 8px）
+   ライトモード brightness(1.1)+drop-shadow（warning mix-md 0 1px 6px）のダーク強化版。
+   warning → warning-end に切替え brightness 1.1→1.18 + mix-md→mix-lg + blur 6→8px に引き上げ
+   将来費達成率バッジ「中」の単独 hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .fv-rate-badge.mid:hover { filter: brightness(1.18) drop-shadow(0 1px 8px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent)); }
+
+/* ⑪ [data-theme="dark"] .fv-rate-badge.low:hover → dark enhanced brightness(1.18) + drop-shadow（income-end・mix-lg・0 1px 8px）
+   ライトモード brightness(1.1)+drop-shadow（success mix-md 0 1px 6px）のダーク強化版。
+   success → income-end に切替え brightness 1.1→1.18 + mix-md→mix-lg + blur 6→8px に引き上げ
+   将来費達成率バッジ「低」の単独 hover 発光をダークモードで鮮明化。⑨〜⑪で fv-rate-badge 全バリアント（high/mid/low）単独ダーク hover が完成形に統一。 */
+[data-theme="dark"] .fv-rate-badge.low:hover { filter: brightness(1.18) drop-shadow(0 1px 8px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent)); }
+
+/* ⑫ [data-theme="dark"] .qa-card .qa-submit-btn:hover → dark enhanced box-shadow（qa-accent/primary-end・mix-lg・0 4px 16px）
+   ライトモード brightness(--brightness-hover=1.12)+box-shadow（qa-accent mix-xl 0 4px 12px）のダーク強化版。
+   mix-xl → mix-lg（ダーク向けに最適化）+ blur 12 → 16px に引き上げ
+   クイック入力フォームの送信ボタンの hover 発光をダークモードで鮮明化。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.34・全script/linkタグ?v=25.34に更新 */
+[data-theme="dark"] .qa-card .qa-submit-btn:hover { box-shadow: 0 4px 16px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-lg), transparent); }
