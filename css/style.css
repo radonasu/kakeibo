@@ -35884,3 +35884,91 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑩〜⑫で debt-card の balance-meta/progress-label/end-pill ダーク hover が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.14・全script/linkタグ?v=25.14に更新 */
 [data-theme="dark"] .debt-card:hover .debt-end-pill { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #911 — v25.15 dark hover drop-shadow/text-shadow 12箇所
+   pt-card(icon/exp-badge)×2・debt-card(type-icon-wrap/type-badge/history-title/bar-fill)×4・
+   sub-card/ch-card/ev-card/tg-stat-card/yi-card/dw-item icon×6
+   ============================================================ */
+
+/* ① pt-card:hover .pt-card-icon dark hover drop-shadow強化（pt-accent/primary-end・mix-md）
+   ライトモード drop-shadow（pt-accent/primary mix-sm）のダーク強化版。
+   pt-accent fallback primary-end に切替え mix-md に引き上げ
+   ポイントカードアイコンの hover 発光をダークモードで鮮明化。
+   pt-card:hover .pt-card-icon scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ② pt-card:hover .pt-exp-badge dark hover text-shadow強化（primary-end・mix-md）
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ
+   ポイントカード有効期限バッジの hover 発光をダークモードで鮮明化。
+   pt-exp-badge static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-exp-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ debt-card:hover .debt-type-icon-wrap dark hover drop-shadow強化（debt-accent/expense-end・mix-md）
+   ライトモード drop-shadow（debt-accent/primary mix-sm）のダーク強化版。
+   debt-accent fallback expense-end に切替え mix-md に引き上げ
+   負債カードタイプアイコンの hover 発光をダークモードで鮮明化。
+   debt-card:hover .debt-type-icon-wrap scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-type-icon-wrap { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent)); }
+
+/* ④ debt-card:hover .debt-type-badge dark hover text-shadow強化（debt-accent/expense-end・mix-md）
+   ライトモード text-shadow glow（debt-accent/primary mix-sm）のダーク強化版。
+   debt-accent fallback expense-end に切替え mix-md に引き上げ
+   負債カードタイプバッジの hover 発光をダークモードで鮮明化。
+   debt-type-badge static dark glow（debt-accent/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-type-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+
+/* ⑤ debt-card:hover .debt-history-title dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ
+   負債カード返済履歴タイトルの hover 発光をダークモードで鮮明化。
+   debt-history-title static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-history-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ debt-card:hover .debt-bar-fill dark hover box-shadow強化（debt-accent/expense-end・mix-lg）
+   ライトモード box-shadow glow（debt-accent/primary mix-md）のダーク強化版。
+   debt-accent fallback expense-end に切替え mix-lg に引き上げ
+   負債カード返済プログレスバーの hover 発光をダークモードで鮮明化。
+   debt-card:hover .debt-bar-fill brightness+glow（ライト）と連動しダーク全状態の演出を完成形に統一。
+   ①〜⑥で pt-card(icon/exp-badge)・debt-card(type-icon-wrap/type-badge/history-title/bar-fill)のダーク hover が完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-bar-fill { box-shadow: 0 1px 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-lg), transparent); }
+
+/* ⑦ sub-card:hover .sub-card-icon dark hover drop-shadow強化（sub-accent/primary-end・mix-md）
+   ライトモード drop-shadow（sub-accent/primary mix-sm）のダーク強化版。
+   sub-accent fallback primary-end に切替え mix-md に引き上げ
+   サブスクカードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .sub-card:hover .sub-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑧ ch-card:hover .ch-card-icon dark hover drop-shadow強化（ch-accent/primary-end・mix-md）
+   ライトモード drop-shadow（ch-accent/primary mix-sm）のダーク強化版。
+   ch-accent fallback primary-end に切替え mix-md に引き上げ
+   チャレンジカードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-card:hover .ch-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑨ ev-card:hover .ev-card-icon-wrap dark hover drop-shadow強化（ev-accent/primary-end・mix-md）
+   ライトモード drop-shadow（ev-accent/primary mix-sm）のダーク強化版。
+   ev-accent fallback primary-end に切替え mix-md に引き上げ
+   収支予定カードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ev-card:hover .ev-card-icon-wrap { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑩ tg-stat-card:hover .tg-stat-icon dark hover drop-shadow強化（primary-end・mix-md）
+   ライトモード drop-shadow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ
+   タグ統計カードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ⑪ yi-card:hover .yi-card-icon dark hover drop-shadow強化（primary-end・mix-md）
+   ライトモード drop-shadow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ
+   年次インサイトカードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .yi-card:hover .yi-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ⑫ dw-item:hover .dw-item-icon dark hover drop-shadow強化（primary-end・mix-md）
+   ライトモード drop-shadow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ
+   デイリーウィジェット行アイコンの hover 発光をダークモードで鮮明化。
+   ⑦〜⑫で sub-card/ch-card/ev-card/tg-stat-card/yi-card/dw-item アイコンの
+   ダーク hover drop-shadow が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.15・全script/linkタグ?v=25.15に更新 */
+[data-theme="dark"] .dw-item:hover .dw-item-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
