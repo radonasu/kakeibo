@@ -37689,3 +37689,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.36・全script/linkタグ?v=25.36に更新 */
 [data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 [data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-badge { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ① [data-theme="dark"] .sb-banner:hover .sb-banner-num → dark enhanced white glow（0 0 14px rgba 0.6）:
+   ライトモード brightness(1.1) + text-shadow 白グロー（rgba 0.55 12px）のダーク強化版。
+   blur 12→14px + rgba 0.55→0.6 に引き上げ支出提案バナーの数値テキストの
+   hover 発光をダークモードで鮮明化。fv-stat-card:hover .fv-stat-value dark hover（v25.x）と連動し統一。 */
+[data-theme="dark"] .sb-banner:hover .sb-banner-num { text-shadow: 0 0 14px rgba(255, 255, 255, 0.6); }
+
+/* ② [data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .income → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード brightness(1.08)+text-shadow glow（success mix-sm）のダーク強化版。
+   success→income-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   取引月グループ見出し行の収入合計テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .income { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .expense → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード brightness(1.08)+text-shadow glow（expense mix-sm）のダーク強化版。
+   expense→expense-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   ②と対称で取引月グループ見出し行の支出合計テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .tx-month-group-row:hover .tx-month-group-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   ②③と連動し取引月グループ行の月ラベルのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .tx-month-group-row:hover .tx-month-group-count → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   ④と連動し取引月グループ行の件数テキストのダーク hover 演出を完成形に統一。
+   ②〜⑤で tx-month-group-row dark hover 全要素（income/expense/label/count）が完成形に統一。 */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-count { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat → dark enhanced color:cal-ev-color/primary-end+text-shadow glow（mix-md）:
+   ライトモード text-shadow glow（cal-ev-color/primary mix-sm）のダーク強化版。
+   primary→primary-end フォールバック切替え + mix-sm→mix-md に引き上げ color 変色を追加。
+   cal-ev-name/cal-ev-amount dark hover と連動しカレンダーイベントのカテゴリテキストの
+   ダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat { color: var(--cal-ev-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .ct-stat-card:hover .ct-stat-value-sub → dark enhanced color:ct-stat-color/primary-end+text-shadow glow（mix-md）:
+   ライトモード text-shadow glow（ct-stat-color/primary mix-sm）のダーク強化版。
+   primary→primary-end フォールバック切替え + mix-sm→mix-md に引き上げ color 変色を追加。
+   ct-stat-value/ct-stat-label dark hover と連動しカテゴリトレンド統計カードの
+   サブ値テキストのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-value-sub { color: var(--ct-stat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .adv-widget-card:hover .adv-widget-desc → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   AIアドバイスウィジェットカードの説明文テキストのダーク hover 演出を鮮明化。 */
+[data-theme="dark"] .adv-widget-card:hover .adv-widget-desc { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .adv-widget-card:hover .adv-widget-hint → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   ⑧と同手法でAIアドバイスウィジェットカードのヒントテキストのダーク hover 演出を鮮明化。 */
+[data-theme="dark"] .adv-widget-card:hover .adv-widget-hint { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .adv-widget-card:hover .adv-month-badge → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   ⑧⑨と同手法でAIアドバイスウィジェットカードの月バッジのダーク hover 演出を鮮明化。
+   ⑧〜⑩で adv-widget-card dark hover（desc/hint/month-badge）が完成形に統一。 */
+[data-theme="dark"] .adv-widget-card:hover .adv-month-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .yr-cell-income:hover .yr-unit → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード text-shadow glow（success mix-sm）のダーク強化版。
+   success→income-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   yr-cell-savings-success:hover .yr-unit dark hover（v25.x）と連動し統一。 */
+[data-theme="dark"] .yr-cell-income:hover  .yr-unit { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .yr-cell-expense:hover .yr-unit → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text→expense-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   ⑪と対称で yr-cell-savings-danger:hover .yr-unit dark hover と連動し統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.37・全script/linkタグ?v=25.37に更新 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-unit { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
