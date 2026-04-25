@@ -36958,3 +36958,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-card-color-bar dark hover（v25.25）と同手法でpt-card版の対称演出を実現。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.27・全script/linkタグ?v=25.27に更新 */
 [data-theme="dark"] .pt-card:hover .pt-card-color-bar { filter: brightness(1.18); box-shadow: 2px 0 14px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* ============================================================
+   v25.28 dark hover 12箇所
+   ① ci-event-amount-dark-hover×1
+   ② insight-icon-dark-hover×4（base/alert/success/warning）
+   ③ fc-progress-fill-dark-hover×1
+   ④ fc-cell-amount-dark-hover×1
+   ⑤ fc-cell-label-dark-hover×1
+   ⑥ cal-ev-name-dark-hover×1
+   ⑦ cal-ev-icon-dark-hover×1
+   ⑧ cal-ev-amount-inc/exp-dark-hover×2
+   ============================================================ */
+
+/* ① ci-event-item:hover .ci-event-amount dark enhanced color:ci-ev-accent/primary-end+brightness(1.1)+text-shadow(mix-md・0 0 10px)
+   ライトモード color:ci-ev-accent/primary+brightness(1.06)のダーク強化版。
+   primary-end（ci-ev-accent fallback）カラー変色+brightness(1.06→1.1)+text-shadow(mix-md 0 0 10px)追加
+   月次レビュー収支イベント行の金額テキストの hover 発光をダークモードで鮮明化。
+   ci-event-icon dark hover（v25.x）と連動しイベント行全要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ci-event-item:hover .ci-event-amount { color: var(--ci-ev-accent, var(--primary-end)); filter: brightness(1.1); text-shadow: 0 0 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ② insight-item:hover .insight-icon dark enhanced drop-shadow×4（base/alert/success/warning）
+   ライトモード drop-shadow(0 2px 5px タイプ別カラー mix-sm)のダーク強化版。
+   同カラー（success→income-end）+mix-sm→mix-md+blur 5→10px引き上げ
+   インサイト項目アイコンの hover 発光をダークモードで鮮明化。
+   insight-title dark hover（v25.x）と連動しインサイト行全要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .insight-item:hover             .insight-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent)); }
+[data-theme="dark"] .insight-item.insight-alert:hover   .insight-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent)); }
+[data-theme="dark"] .insight-item.insight-success:hover .insight-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent)); }
+[data-theme="dark"] .insight-item.insight-warning:hover .insight-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent)); }
+
+/* ③ forecast-card:hover .fc-progress-fill dark enhanced brightness(1.12)+box-shadow(fc-color/primary-end・mix-md・0 0 10px)
+   ライトモード brightness(1.08)+box-shadow(fc-color/primary mix-sm 0 0 8px)のダーク強化版。
+   primary-end（fc-color fallback）+brightness 1.08→1.12+mix-sm→mix-md+blur 8→10px引き上げ
+   財務予測カードのプログレスバーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .forecast-card:hover .fc-progress-fill { filter: brightness(1.12); box-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ forecast-card:hover .fc-cell-amount dark enhanced brightness(1.12)+text-shadow(fc-color/primary-end・mix-md・0 0 10px)
+   ライトモード brightness(1.08)のダーク強化版。
+   primary-end（fc-color fallback）カラー変色+brightness 1.08→1.12+text-shadow(mix-md 0 0 10px)追加
+   財務予測カードの金額セルテキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .forecast-card:hover .fc-cell-amount { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ forecast-card:hover .fc-cell-label dark enhanced color:fc-color/primary-end+text-shadow(mix-md・0 0 10px)
+   ライトモード color:primaryのダーク強化版。
+   primary-end（fc-color fallback）カラー変色+text-shadow(mix-md 0 0 10px)追加
+   財務予測カードのラベルセルテキスト（「現金残高」等）の hover 発光をダークモードで鮮明化。
+   ③〜⑤で forecast-card dark hover（fc-progress-fill/fc-cell-amount/fc-cell-label）が完成形に統一。 */
+[data-theme="dark"] .forecast-card:hover .fc-cell-label { color: var(--fc-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑥ cal-ev-item:hover .cal-ev-name dark enhanced color:cal-ev-color/primary-end+text-shadow(mix-md・0 0 10px)
+   ライトモード color:cal-ev-color/primaryのダーク強化版。
+   primary-end（cal-ev-color fallback）カラーへ切替え+text-shadow(mix-md 0 0 10px)追加
+   カレンダーイベントリスト行の名称テキストの hover 発光をダークモードで鮮明化。
+   cal-ev-done:hover は text-muted カラーのまま変更しない。 */
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-name { color: var(--cal-ev-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ cal-ev-item:hover .cal-ev-icon dark enhanced drop-shadow(cal-ev-color/primary-end・mix-md・0 2px 10px)
+   ライトモード drop-shadow(0 2px 4px cal-ev-color/primary mix-sm)のダーク強化版。
+   primary-end（cal-ev-color fallback）+mix-sm→mix-md+blur 4→10px引き上げ
+   カレンダーイベントアイコンの hover 発光をダークモードで鮮明化。
+   ⑥⑦で cal-ev-item dark hover（cal-ev-name/cal-ev-icon）が完成形に統一。 */
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑧ cal-ev-item:hover .cal-ev-amount inc/exp dark enhanced brightness(1.12)+text-shadow(タイプ別end・mix-md・0 0 10px)
+   ライトモード brightness(1.1)+text-shadow(success/expense mix-sm 0 0 8px)のダーク強化版。
+   inc: success→income-end / exp: expense→expense-end カラーへ切替え
+   +brightness 1.1→1.12+mix-sm→mix-md+blur 8→10px引き上げ
+   カレンダーイベント行の収入・支出金額テキストの hover 発光をダークモードで鮮明化。
+   ⑥〜⑧で cal-ev-item dark hover（name/icon/amount-inc/amount-exp）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.28・全script/linkタグ?v=25.28に更新 */
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.inc { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.exp { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
