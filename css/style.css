@@ -37284,6 +37284,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ [data-theme="dark"] .pt-card:hover .pt-exp-bar → dark enhanced brightness（1.08）
    ライトモード brightness(1.05)のダーク強化版。1.05 → 1.08 に引き上げ
    ポイントカード有効期限バー背景トラックの hover 輝きをダークモードで鮮明化。
-   pt-card:hover .pt-exp-bar-fill dark hover（v25.27）と連動しポイントカードバー全要素のダーク hover 演出を完成形に統一。
-   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.31・全script/linkタグ?v=25.31に更新 */
+   pt-card:hover .pt-exp-bar-fill dark hover（v25.27）と連動しポイントカードバー全要素のダーク hover 演出を完成形に統一。 */
 [data-theme="dark"] .pt-card:hover .pt-exp-bar { filter: brightness(1.08); }
+
+/* ===== Sprint #928 (v25.32) dark hover 補完 12箇所 =====
+   hs-gauge-fill×1・hs-score-num×1・notif-item-icon×1・sub-card-progress-fill×3・
+   dow-stat-icon×1・dow-stat-amount×1・dow-stat-label×1・ch-bar-ok/warn/over×3 */
+
+/* ① [data-theme="dark"] .health-score-card:hover .hs-gauge-fill → dark enhanced brightness(1.2) + drop-shadow(primary-end mix-lg 0 0 10px)
+   ライトモード brightness(1.12) + drop-shadow(primary mix-md 0 0 6px)のダーク強化版。
+   brightness 1.12 → 1.2 + primary → primary-end + mix-md → mix-lg + blur 6 → 10px に引き上げ
+   家計スコアゲージ円弧フィルの hover 発光をダークモードで鮮明化。
+   hs-item:hover .hs-bar-fill dark hover（v25.31⑥）と連動しヘルススコア全バー要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .health-score-card:hover .hs-gauge-fill { filter: brightness(1.2) drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+
+/* ② [data-theme="dark"] .health-score-card:hover .hs-score-num → dark enhanced brightness(1.12)
+   ライトモード brightness(1.06)のダーク強化版。1.06 → 1.12 に引き上げ
+   家計スコアカード中央スコア数値の hover 輝きをダークモードで鮮明化。
+   ①と連動しゲージ円弧とスコア数値が同時にダーク hover で際立つ完成形演出に統一。 */
+[data-theme="dark"] .health-score-card:hover .hs-score-num { filter: brightness(1.12); }
+
+/* ③ [data-theme="dark"] .notif-item:hover .notif-item-icon → dark enhanced brightness(1.2)
+   ライトモード scale(1.08) + brightness(1.12)のダーク強化版。brightness 1.12 → 1.2 に引き上げ
+   通知アイテムアイコンの hover 輝きをダークモードで鮮明化。
+   notif-item:hover dark hover（v25.x）と連動し通知アイテム全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .notif-item:hover .notif-item-icon { filter: brightness(1.2); }
+
+/* ④ [data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-normal → dark enhanced brightness(1.14) + box-shadow(primary-end mix-lg 0 1px 10px)
+   ライトモード brightness(1.08) + box-shadow(primary mix-md 0 1px 8px)のダーク強化版。
+   brightness 1.08 → 1.14 + primary → primary-end + mix-md → mix-lg + blur 8 → 10px に引き上げ
+   サブスクカード通常進捗バーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-normal { filter: brightness(1.14); box-shadow: 0 1px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑤ [data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-soon → dark enhanced brightness(1.14) + box-shadow(warning-end mix-lg 0 1px 10px)
+   ライトモード brightness(1.08) + box-shadow(warning mix-md 0 1px 8px)のダーク強化版。
+   brightness 1.08 → 1.14 + warning → warning-end + mix-md → mix-lg + blur 8 → 10px に引き上げ
+   サブスクカード期限近い進捗バーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-soon { filter: brightness(1.14); box-shadow: 0 1px 10px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent); }
+
+/* ⑥ [data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-urgent → dark enhanced brightness(1.14) + box-shadow(expense-end mix-lg 0 1px 10px)
+   ライトモード brightness(1.08) + box-shadow(danger-text mix-md 0 1px 8px)のダーク強化版。
+   brightness 1.08 → 1.14 + danger-text → expense-end + mix-md → mix-lg + blur 8 → 10px に引き上げ
+   サブスクカード期限切迫進捗バーフィルの hover 発光をダークモードで鮮明化。
+   ④〜⑥で sub-card dark hover progress-fill（normal/soon/urgent）が完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-card-progress-fill.prog-urgent { filter: brightness(1.14); box-shadow: 0 1px 10px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+
+/* ⑦ [data-theme="dark"] .dow-stat-card:hover .dow-stat-icon → dark enhanced drop-shadow(rgba 0.5)
+   ライトモード drop-shadow(rgba 0.35)のダーク強化版。0.35 → 0.5 に引き上げ
+   曜日別統計カードのグラデ背景アイコンの hover 白色 glow をダークモードでより鮮明化。 */
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-icon { filter: drop-shadow(0 3px 10px rgba(255, 255, 255, 0.5)); }
+
+/* ⑧ [data-theme="dark"] .dow-stat-card:hover .dow-stat-amount → dark enhanced brightness(1.18) + white glow
+   ライトモード brightness(1.1)のダーク強化版。1.1 → 1.18 に引き上げ + white text-shadow glow 追加
+   曜日別統計カードのグラデ背景金額テキストの hover 発光をダークモードで鮮明化。
+   dow-stat-amount static dark glow（rgba 0.22）との連動でダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-amount { filter: brightness(1.18); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+/* ⑨ [data-theme="dark"] .dow-stat-card:hover .dow-stat-label → dark enhanced brightness(1.18) + white glow
+   ライトモード brightness(1.1)のダーク強化版。1.1 → 1.18 に引き上げ + white text-shadow glow 追加
+   曜日別統計カードのグラデ背景ラベルテキストの hover 発光をダークモードで鮮明化。
+   ⑦⑧⑨で dow-stat-card dark hover（icon/amount/label）が完成形に統一。 */
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-label { filter: brightness(1.18); text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+
+/* ⑩ [data-theme="dark"] .ch-card:hover .ch-bar-ok → dark enhanced + brightness(1.14)
+   ライトモード brightness(1.08) + box-shadow（income mix-md）に対し dark 版の box-shadow（income-end mix-lg）は既存だが
+   brightness が未設定だった点を補完。brightness(1.14) に設定しライトモード比較で確実に強化。 */
+[data-theme="dark"] .ch-card:hover .ch-bar-ok { filter: brightness(1.14); }
+
+/* ⑪ [data-theme="dark"] .ch-card:hover .ch-bar-warn → dark enhanced + brightness(1.14)
+   ライトモード brightness(1.08)のダーク強化版。box-shadow は既存。brightness(1.14) を追加補完。 */
+[data-theme="dark"] .ch-card:hover .ch-bar-warn { filter: brightness(1.14); }
+
+/* ⑫ [data-theme="dark"] .ch-card:hover .ch-bar-over → dark enhanced + brightness(1.14)
+   ライトモード brightness(1.08)のダーク強化版。box-shadow は既存。brightness(1.14) を追加補完。
+   ⑩〜⑫で ch-card dark hover bar-fill（ok/warn/over）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.32・全script/linkタグ?v=25.32に更新 */
+[data-theme="dark"] .ch-card:hover .ch-bar-over { filter: brightness(1.14); }
