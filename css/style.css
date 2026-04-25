@@ -37133,3 +37133,68 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑪⑫で ct-table dark hover（ct-month-cell/td.text-muted）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.29・全script/linkタグ?v=25.29に更新 */
 [data-theme="dark"] .ct-table tbody tr:hover td.text-muted { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* v25.30: nt-card/yr-widget-card/health-score-card/ch-sum-achieved/ch-sum-active/ch-sum-total/tg-stat-card/hs-grade-s/hs-grade-a/hs-grade-b/hs-grade-c/hs-grade-d dark hover box-shadow 12箇所
+   ライトモード box-shadow hover（primary/income/teal/warning mix-xs〜mix-lg）のダーク強化版。
+   -end カラー切替え+mix レベル引き上げで各カードの hover 発光をダークモードで鮮明化。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.30・全script/linkタグ?v=25.30に更新 */
+
+/* ① [data-theme="dark"] .nt-card:hover → dark enhanced box-shadow（primary-end・mix-sm/mix-md）:
+   ライトモード glow（primary mix-xs/mix-sm）のダーク強化版。primary-end に切替え mix-sm/mix-md に引き上げ
+   ノートカードの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .nt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .yr-widget-card:hover → dark enhanced box-shadow（primary-end・mix-sm/mix-md）:
+   ライトモード glow（primary mix-xs/mix-sm）のダーク強化版。primary-end に切替え mix-sm/mix-md に引き上げ
+   年間ウィジェットカードの hover 発光をダークモードで鮮明化。①②で pri系カード hover 発光統一。 */
+[data-theme="dark"] .yr-widget-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .health-score-card:hover → dark enhanced box-shadow（hs-grade-color/primary-end・mix-sm）:
+   ライトモード glow（hs-grade-color/primary mix-xs）のダーク強化版。primary-end フォールバックに切替え mix-sm に引き上げ
+   ヘルススコアカードの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .health-score-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 24px color-mix(in srgb, var(--hs-grade-color, var(--primary-end)) var(--mix-sm), transparent); }
+
+/* ④ [data-theme="dark"] .ch-sum-achieved:hover → dark enhanced box-shadow（income-end・mix-lg）:
+   ライトモード glow（income mix-md）のダーク強化版。income-end に切替え mix-lg に引き上げ
+   チャレンジ達成サマリーカードの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-sum-achieved:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+
+/* ⑤ [data-theme="dark"] .ch-sum-active:hover → dark enhanced box-shadow（primary-end・mix-lg）:
+   ライトモード glow（primary mix-md）のダーク強化版。primary-end に切替え mix-lg に引き上げ
+   チャレンジアクティブサマリーカードの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-sum-active:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ [data-theme="dark"] .ch-sum-total:hover → dark enhanced box-shadow（teal-end・mix-lg）:
+   ライトモード glow（teal-end mix-md）のダーク強化版。mix-md を mix-lg に引き上げ
+   チャレンジ合計サマリーカードの hover 発光をダークモードで鮮明化。④⑤⑥で ch-sum全3タイプ統一。 */
+[data-theme="dark"] .ch-sum-total:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent); }
+
+/* ⑦ [data-theme="dark"] .tg-stat-card:hover → dark enhanced box-shadow+border（primary-end・mix-sm/mix-md）:
+   ライトモード glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-sm に引き上げ、border も強化
+   タグ統計カードの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tg-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)); }
+
+/* ⑧ [data-theme="dark"] .hs-grade-s:hover → dark enhanced box-shadow（primary-end・mix-xl）:
+   ライトモード glow（primary mix-lg）のダーク強化版。primary-end に切替え mix-xl に引き上げ
+   ヘルススコアSグレードバッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .hs-grade-s:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
+
+/* ⑨ [data-theme="dark"] .hs-grade-a:hover → dark enhanced box-shadow（income-end・mix-xl）:
+   ライトモード glow（success mix-lg）のダーク強化版。income-end（緑系）に切替え mix-xl に引き上げ
+   ヘルススコアAグレードバッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .hs-grade-a:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--income-end) var(--mix-xl), transparent); }
+
+/* ⑩ [data-theme="dark"] .hs-grade-b:hover → dark enhanced box-shadow（primary-end・mix-xl）:
+   ライトモード glow（info-text mix-lg）のダーク強化版。primary-end（青系）に切替え mix-xl に引き上げ
+   ヘルススコアBグレードバッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .hs-grade-b:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
+
+/* ⑪ [data-theme="dark"] .hs-grade-c:hover → dark enhanced box-shadow（warning・mix-xl）:
+   ライトモード glow（warning mix-lg）のダーク強化版。mix-lg を mix-xl に引き上げ
+   ヘルススコアCグレードバッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .hs-grade-c:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xl), transparent); }
+
+/* ⑫ [data-theme="dark"] .hs-grade-d:hover → dark enhanced box-shadow（expense-end・mix-xl）:
+   ライトモード glow（danger-text mix-lg）のダーク強化版。expense-end に切替え mix-xl に引き上げ
+   ヘルススコアDグレードバッジの hover 発光をダークモードで鮮明化。⑧〜⑫で hs-grade全5段階の hover 発光統一。 */
+[data-theme="dark"] .hs-grade-d:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent); }
