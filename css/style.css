@@ -36605,3 +36605,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-widget-item:hover            .sub-widget-next { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
 [data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-next { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 [data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-next { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ===================================================================
+   v25.24 Sprint #920: budget-item内部×9 + opp-card内部×3 dark hover 12箇所
+   budget-track / budget-fill / budget-fill.over / color-dot×2 /
+   budget-pct-badge×2 / budget-sep×2 + opp-saving / opp-saving strong / opp-desc
+   =================================================================== */
+
+/* ① budget-item:hover .budget-track dark enhanced hover（primary-end・mix-sm）
+   ライトモード box-shadow: 0 0 0 2px primary mix-xs のダーク強化版。
+   primary-end カラー変色 + mix-xs → mix-sm に引き上げ
+   予算バートラックの hover リング発光をダークモードで鮮明化。
+   budget-item dark hover outer glow（primary-end mix-md）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:hover .budget-track { box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ② budget-item:hover .budget-fill dark enhanced hover（brightness 1.12）
+   ライトモード filter: brightness(1.08) のダーク強化版。brightness を 1.12 に引き上げ。
+   予算バーフィルの hover 輝きをダークモードで鮮明化。
+   budget-item dark hover outer glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:hover .budget-fill { filter: brightness(1.12); }
+
+/* ③ budget-item:hover .budget-fill.over dark enhanced hover（expense-end glow + brightness 1.14）
+   ライトモード box-shadow expense mix-sm + brightness(1.1) のダーク強化版。
+   expense-end カラー変色 + mix-sm → mix-md + brightness 1.14 に引き上げ
+   超過状態のバーフィルの hover 発光をダークモードで鮮明化。
+   budget-item:has(.over) dark hover outer glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:hover .budget-fill.over { box-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); filter: brightness(1.14); }
+
+/* ④ budget-item:hover .color-dot dark enhanced hover（primary-end ring glow mix-sm）
+   ライトモード transform:scale(1.25) + box-shadow 0 0 0 2px primary mix-xs のダーク強化版。
+   primary-end カラー変色 + mix-xs → mix-sm に引き上げ
+   予算カテゴリカラードットの hover リング発光をダークモードで鮮明化。 */
+[data-theme="dark"] .budget-item:hover .color-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑤ budget-item:has(.budget-fill.over):hover .color-dot dark enhanced hover（expense-end ring glow mix-sm）
+   ライトモード box-shadow 0 0 0 2px expense mix-xs のダーク強化版。
+   expense-end カラー変色 + mix-xs → mix-sm に引き上げ
+   超過状態の予算カテゴリカラードットの hover リング発光をダークモードで鮮明化。
+   ④⑤で budget-item:hover .color-dot（normal/over）が完成形に統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .color-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+
+/* ⑥ budget-item:hover .budget-pct-badge dark enhanced hover（primary-end brightness + text-shadow mix-md）
+   ライトモード filter: brightness(1.1) のダーク強化版。brightness(1.12) + text-shadow(primary-end mix-md) 追加。
+   予算パーセントバッジの hover 発光をダークモードで鮮明化。
+   budget-pct-badge static dark glow（primary-end mix-xs）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:hover .budget-pct-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ budget-item:has(.budget-fill.over):hover .budget-pct-badge dark enhanced hover（expense-end mix-md）
+   ライトモード filter: brightness(1.12) のダーク強化版。brightness(1.14) + text-shadow(expense-end mix-md) 追加。
+   超過状態の予算パーセントバッジの hover 発光をダークモードで鮮明化。
+   budget-pct-badge.over static dark glow（expense-end mix-md）と連動しダーク全状態の演出を完成形に統一。
+   ⑥⑦で budget-item:hover .budget-pct-badge（normal/over）が完成形に統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-pct-badge { filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ budget-item:hover .budget-sep dark enhanced hover（primary-end color + text-shadow mix-md）
+   ライトモード color: primary のダーク強化版。primary-end カラー変色 + text-shadow(primary-end mix-md) 追加。
+   予算セパレータテキストの hover 発光をダークモードで鮮明化。
+   budget-sep static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .budget-item:hover .budget-sep { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ budget-item:has(.budget-fill.over):hover .budget-sep dark enhanced hover（expense-end color + text-shadow mix-md）
+   ライトモード color: expense のダーク強化版。expense-end カラー変色 + text-shadow(expense-end mix-md) 追加。
+   超過状態の予算セパレータテキストの hover 発光をダークモードで鮮明化。
+   budget-item:has(.budget-fill.over) .budget-sep static dark glow（expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑧⑨で budget-item:hover .budget-sep（normal/over）が完成形に統一。 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-sep { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑩ opp-card:hover .opp-saving dark enhanced hover（income-end brightness + text-shadow mix-md）
+   ライトモード filter: brightness(1.06) のダーク強化版。brightness(1.1) + text-shadow(income-end mix-md) 追加。
+   節約機会カードの節約金額テキストの hover 発光をダークモードで鮮明化。
+   opp-saving static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .opp-card:hover .opp-saving { filter: brightness(1.1); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑪ opp-card:hover .opp-saving strong dark enhanced hover（income-end brightness 1.14 + text-shadow mix-md）
+   ライトモード filter: brightness(1.1) + text-shadow success mix-sm のダーク強化版。
+   income-end カラー変色 + mix-sm → mix-md に引き上げ + brightness(1.14) に引き上げ
+   節約機会カードの節約金額強調テキストの hover 発光をダークモードで鮮明化。
+   opp-saving strong static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .opp-card:hover .opp-saving strong { filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑫ opp-card:hover .opp-desc dark enhanced hover（primary-end brightness 1.08 + text-shadow mix-md）
+   ライトモード filter: brightness(1.05) + text-shadow primary mix-sm のダーク強化版。
+   primary-end カラー変色 + mix-sm → mix-md + brightness(1.08) に引き上げ
+   節約機会カードの説明テキストの hover 発光をダークモードで鮮明化。
+   opp-desc static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑩〜⑫で opp-card dark hover（saving/saving-strong/desc）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.24・全script/linkタグ?v=25.24に更新 */
+[data-theme="dark"] .opp-card:hover .opp-desc { filter: brightness(1.08); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }

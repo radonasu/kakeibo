@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.23'; // v25.23: wk-bar-amount×1+wk-bar-label×1+hs-item-label×1+hs-item-max×1+hs-item-score×1+pt-widget-name×1+pt-widget-balance×3+pt-unit×1+sub-widget-name×3+sub-widget-next×3 dark hover 10箇所
+const CACHE_NAME = 'kakeibo-v25.24'; // v25.24: budget-track×1+budget-fill×1+budget-fill.over×1+color-dot×2+budget-pct-badge×2+budget-sep×2+opp-saving×1+opp-saving-strong×1+opp-desc×1 dark hover 12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
