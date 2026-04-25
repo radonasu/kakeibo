@@ -36476,3 +36476,43 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-pct { color: var(--income-end);   text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
 [data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-pct { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
 [data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-pct { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #918 v25.22 dark enhanced hover 9箇所
+   pace-bar-label×3・pace-bar-value×3・rc-type-badge×2・rc-cat-dot×1
+   ============================================================ */
+
+/* ① pace-bar-row:hover → .pace-bar-label dark enhanced hover（ステータス別 color + text-shadow glow）
+   ライトモード color:success/warning/danger-text + text-shadow(mix-sm)のダーク強化版。
+   end カラー変色 + mix-sm → mix-md に引き上げ
+   ペース管理バーカテゴリラベルの hover 発光をダークモードで鮮明化。
+   pace-bar-label static dark glow（income-end/warning/expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-label { color: var(--income-end);   text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-label { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ② pace-bar-row:hover → .pace-bar-value dark enhanced hover（ステータス別 color + text-shadow glow）
+   ライトモード color:success/warning/danger-text + filter:brightness(1.08) + text-shadow(mix-sm)のダーク強化版。
+   end カラー変色 + mix-md に引き上げ
+   ペース管理バー金額値テキストの hover 発光をダークモードで鮮明化。
+   pace-bar-value static dark glow（income-end/warning/expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①②で pace-bar-row dark hover（label/value）が完成形に統一。 */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value { color: var(--income-end);   text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ rc-item:hover → .rc-type-badge dark enhanced hover（タイプ別 color + text-shadow glow）
+   ライトモード text-shadow(success/danger-text mix-sm)のダーク強化版。
+   income-end/expense-end カラー変色 + mix-sm → mix-md に引き上げ
+   定期収支バッジの hover 発光をダークモードで鮮明化。
+   rc-type-badge static dark glow（income-end/expense-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .rc-item:hover:has(.rc-type-inc) .rc-type-badge { color: var(--income-end);   text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+[data-theme="dark"] .rc-item:hover:has(.rc-type-exp) .rc-type-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ④ rc-item:hover → .rc-cat-dot dark enhanced hover（primary-end ring box-shadow）
+   ライトモード box-shadow(0 0 0 2px primary mix-xs)のダーク強化版。
+   primary-end + mix-xs → mix-sm に引き上げ
+   定期収支カテゴリドットの hover リング発光をダークモードで鮮明化。
+   ③④で rc-item dark hover（rc-type-badge/rc-cat-dot）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.22・全script/linkタグ?v=25.22に更新 */
+[data-theme="dark"] .rc-item:hover .rc-cat-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
