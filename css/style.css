@@ -36059,3 +36059,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑨〜⑫で opp-card/wl-card/cat-card/goal-dash-item アイコン dark hover が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.16・全script/linkタグ?v=25.16に更新 */
 [data-theme="dark"] .goal-dash-item:hover .goal-dash-emoji { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ============================================================
+   Sprint #913 — v25.17 dark hover 12箇所
+   goal-card×7（ring-fill/emoji/deadline/note/pct/sep/progress-bar-fill）
+   wl-card×5（name/priority-badge/pri-high/pri-medium/pri-low）
+   ============================================================ */
+
+/* ① goal-card:hover .goal-ring-fill dark hover drop-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード drop-shadow(0 0 8px goal-accent/primary mix-md)のダーク強化版。
+   goal-accent fallback primary-end に切替えゴールリング塗りの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .goal-card:hover .goal-ring-fill { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ② goal-card:hover .goal-emoji dark hover drop-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 8px goal-accent/primary mix-md)のダーク強化版。
+   goal-accent fallback primary-end に切替えゴールカード絵文字の hover 発光をダークモードで鮮明化。
+   ①②で goal-ring-fill/goal-emoji ダーク hover drop-shadow が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-emoji { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ③ goal-card:hover .goal-deadline:not(.over) dark hover color+text-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード color:goal-accent + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   goal-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ゴールカード期限テキストの hover 発光をダークモードで鮮明化。
+   goal-card:hover .goal-deadline static dark glow（v24.59）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-deadline:not(.over) { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ goal-card:hover .goal-note dark hover color+text-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード color:goal-accent + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   goal-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ゴールカードメモテキストの hover 発光をダークモードで鮮明化。
+   goal-card:hover .goal-note static dark glow（v24.59）と連動しダーク全状態の演出を完成形に統一。
+   ③④で goal-deadline/goal-note ダーク hover が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-note { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ goal-card:hover .goal-pct dark hover color+text-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード brightness(1.1) + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   goal-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ゴールカード達成率%テキストの hover 発光をダークモードで鮮明化。
+   goal-dash-pct static dark glow（v24.59）と同パターン。 */
+[data-theme="dark"] .goal-card:hover .goal-pct { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑥ goal-card:hover .goal-sep dark hover text-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード brightness(1.2) + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   goal-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ゴールカードセパレータの hover 発光をダークモードで鮮明化。
+   goal-sep static dark glow（v24.59）と連動しダーク全状態の演出を完成形に統一。
+   ③〜⑥で goal-deadline/note/pct/sep ダーク hover が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-sep { text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑦ goal-card:hover .goal-progress-bar-fill dark hover brightness+box-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード brightness(1.08) + box-shadow(0 1px 8px mix-md)のダーク強化版。
+   goal-accent fallback primary-end に切替え brightness(1.12) + box-shadow(0 1px 10px)に引き上げ
+   ゴールカードプログレスバーの hover 発光をダークモードで鮮明化。
+   ①〜⑦で goal-card dark hover（ring-fill/emoji/deadline/note/pct/sep/progress-bar-fill）が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-progress-bar-fill { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ wl-card:hover .wl-card-name dark hover color+text-shadow強化（wl-accent/primary-end・mix-md）
+   ライトモード color:wl-accent + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   wl-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカード名称テキストの hover 発光をダークモードで鮮明化。
+   wl-card:hover .wl-card-price/note dark hover（v25.10）と連動しカード内全テキストのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .wl-card:hover .wl-card-name { color: var(--wl-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑨ wl-card:hover .wl-priority-badge dark hover text-shadow強化（wl-accent/primary-end・mix-md）
+   ライトモード brightness(1.08) + text-shadow(0 0 8px mix-sm)のダーク強化版。
+   wl-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカード優先度バッジの hover 発光をダークモードで鮮明化。
+   wl-priority-badge static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wl-card:hover .wl-priority-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑩ wl-card:hover .wl-pri-high dark hover box-shadow強化（expense-end・mix-md）
+   ライトモード box-shadow(0 0 8px danger-text mix-sm)のダーク強化版。
+   danger-text → expense-end（danger のダーク vivid variant）に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカード高優先度バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wl-card:hover .wl-pri-high { box-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑪ wl-card:hover .wl-pri-medium dark hover box-shadow強化（warning-end・mix-md）
+   ライトモード box-shadow(0 0 8px warning mix-sm)のダーク強化版。
+   warning → warning-end に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカード中優先度バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wl-card:hover .wl-pri-medium { box-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑫ wl-card:hover .wl-pri-low dark hover box-shadow強化（income-end・mix-md）
+   ライトモード box-shadow(0 0 8px success mix-sm)のダーク強化版。
+   success → income-end（success のダーク vivid variant）に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカード低優先度バッジの hover 発光をダークモードで鮮明化。
+   ⑩〜⑫で wl-pri-high/medium/low ダーク hover box-shadow が完成形に統一。
+   ⑧〜⑫で wl-card dark hover（name/priority-badge/pri-high/medium/low）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.17・全script/linkタグ?v=25.17に更新 */
+[data-theme="dark"] .wl-card:hover .wl-pri-low { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
