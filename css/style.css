@@ -37597,3 +37597,95 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑩〜⑫で notif-item dark hover body（danger/warning/success）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.35・全script/linkタグ?v=25.35に更新 */
 [data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-body { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #932 — v25.36 dark hover (12 items)
+   yr-cell-income/expense-yr-cell-sub-dark-hover×2
+   ch-sum-achieved-ch-summary-unit/label-dark-hover×2
+   dow-stat-unit-dark-hover×1
+   wk-today-label-dark-hover×1
+   hs-spark-label-dark-hover×1
+   ev-type-badge-dark-hover×2
+   step-desc-dark-hover×1
+   sub-paused-badge-dark-hover×1
+   cc-badge-dark-hover×1（up+down 2ルール）
+   ============================================================ */
+
+/* ① [data-theme="dark"] .yr-cell-income:hover .yr-cell-sub → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード text-shadow glow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-md に引き上げ color 変色を追加。
+   yr-cell-income:hover .yr-cell-value dark glow（income-end）と連動し
+   年次収入セルのダーク hover 演出（value+sub）を完成形に統一。 */
+[data-theme="dark"] .yr-cell-income:hover  .yr-cell-sub { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .yr-cell-expense:hover .yr-cell-sub → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text → expense-end に切替え mix-md に引き上げ color 変色を追加。
+   yr-cell-expense:hover .yr-cell-value dark glow（expense-end）と連動し
+   年次支出セルのダーク hover 演出（value+sub）を完成形に統一。①②で yr-cell-income/expense 全テキストが統一。 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-sub { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .ch-sum-achieved:hover .ch-summary-unit → dark enhanced white glow（0 0 12px rgba 0.5）:
+   ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
+   blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
+   チャレンジ達成サマリーカード（グラデーション背景）の単位テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ④ [data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label → dark enhanced white glow（0 0 12px rgba 0.5）:
+   ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
+   blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
+   チャレンジ達成サマリーカード（グラデーション背景）のラベルテキストの hover 発光をダークモードで鮮明化。
+   ③④で ch-sum-achieved dark hover（unit+label）が完成形に統一。 */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑤ [data-theme="dark"] .dow-stat-card:hover .dow-stat-unit → dark enhanced white glow（0 0 12px rgba 0.5）:
+   ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
+   blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
+   曜日別統計カード（グラデーション背景）の単位テキストの hover 発光をダークモードで鮮明化。
+   dow-stat-amount/label dark hover（v25.32）と連動し曜日別統計カード全テキストのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑥ [data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-today-label → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text → expense-end に切替え mix-md に引き上げ color 変色を追加。
+   wk-bar-label:not(.wk-today-label) dark hover（primary-end）と連動し
+   週別バーチャート今日ラベルのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-today-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .health-score-card:hover .hs-spark-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ color 変色を追加。
+   hs-spark-label-now dark hover（primary-end）と連動し
+   家計スコアカードのスパークラベルテキストのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .health-score-card:hover .hs-spark-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .ev-card:hover .ev-type-badge.ev-income → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード text-shadow glow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-md に引き上げ color 変色を追加。 */
+[data-theme="dark"] .ev-card:hover .ev-type-badge.ev-income  { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .ev-card:hover .ev-type-badge.ev-expense → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text → expense-end に切替え mix-md に引き上げ color 変色を追加。
+   ⑧⑨で ev-card dark hover ev-type-badge（income/expense）が完成形に統一。 */
+[data-theme="dark"] .ev-card:hover .ev-type-badge.ev-expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .step-card:hover .step-desc → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ color 変色を追加。
+   step-num dark hover（primary-end）と連動しステップカードのダーク hover 演出（num+desc）を完成形に統一。 */
+[data-theme="dark"] .step-card:hover .step-desc { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .sub-card:hover .sub-paused-badge → dark enhanced color:warning-end+text-shadow glow（warning-end・mix-md）:
+   ライトモード text-shadow glow（warning mix-sm）のダーク強化版。
+   warning → warning-end に切替え mix-md に引き上げ color 変色を追加。
+   sub-card-name/icon dark hover と連動しサブスクカードの一時停止バッジのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-paused-badge { color: var(--warning-end); text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .cc-col .cc-item:hover .cc-badge → dark enhanced type-based color+text-shadow glow:
+   ライトモード expense glow（up）/ success glow（down）のダーク強化版。
+   expense → expense-end / success → income-end に切替え mix-sm → mix-md に引き上げ color 変色を追加。
+   cc-dot dark hover と連動しコスト比較アイテムバッジのダーク hover 演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.36・全script/linkタグ?v=25.36に更新 */
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-badge { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
