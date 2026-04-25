@@ -36873,3 +36873,88 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ch-card:hover .ch-bar-ok dark hover（v25.x）のウィジェット版として対称演出を実現。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.26・全script/linkタグ?v=25.26に更新 */
 [data-theme="dark"] .ch-widget-item:hover .ch-bar-ok { filter: brightness(1.1); box-shadow: 0 1px 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ===== Sprint #923 (v25.27) =====
+   ch-bar-warn/over/bg-widget-dark-hover×3＋wl-pri-widget-dark-hover×3＋pm-sum-value/sub-dark-hover×2＋pt-exp-bar-fill-dark-hover×3＋pt-card-color-bar-dark-hover×1 12箇所
+
+① ch-widget-item:hover .ch-bar-warn dark enhanced brightness+box-shadow（warning-end・mix-md）
+   ライトモード brightness(1.06) + box-shadow(warning mix-sm 0 1px 6px)のダーク強化版（ウィジェット文脈）。
+   warning → warning-end + brightness 1.06 → 1.1 + mix-sm → mix-md + blur 6px → 10px に引き上げ
+   チャレンジウィジェット行の警告バーの hover 発光をダークモードで鮮明化。
+   ch-card:hover .ch-bar-warn dark hover（v25.x）のウィジェット版として対称演出を実現。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-bar-warn { filter: brightness(1.1); box-shadow: 0 1px 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ② ch-widget-item:hover .ch-bar-over dark enhanced brightness+box-shadow（expense-end・mix-md）
+   ライトモード brightness(1.06) + box-shadow(expense mix-sm 0 1px 6px)のダーク強化版（ウィジェット文脈）。
+   expense → expense-end + brightness 1.06 → 1.1 + mix-sm → mix-md + blur 6px → 10px に引き上げ
+   チャレンジウィジェット行の超過バーの hover 発光をダークモードで鮮明化。
+   ch-card:hover .ch-bar-over dark hover（v25.x）のウィジェット版として対称演出を実現。
+   ①②で ch-widget-item dark hover bar-warn/bar-over が完成形に統一。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-bar-over { filter: brightness(1.1); box-shadow: 0 1px 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ ch-widget-item:hover .ch-bar-bg dark enhanced brightness（1.08）
+   ライトモード brightness(1.05)のダーク強化版。1.05 → 1.08 に引き上げ
+   チャレンジウィジェット行のバー背景トラックの hover 輝きをダークモードで鮮明化。
+   ①〜③で ch-widget-item dark hover bar（warn/over/bg）が完成形に統一。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-bar-bg { filter: brightness(1.08); }
+
+/* ④ wish-widget-item:hover .wl-pri-high dark enhanced box-shadow（expense-end・mix-md）
+   wl-card:hover .wl-pri-high dark hover（v25.13）のウィジェット版として対称演出を実現。
+   expense-end + blur 8px → 10px + mix-sm → mix-md に引き上げ
+   ウィッシュリストウィジェット行の高優先度バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wish-widget-item:hover .wl-pri-high { box-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑤ wish-widget-item:hover .wl-pri-medium dark enhanced box-shadow（warning-end・mix-md）
+   wl-card:hover .wl-pri-medium dark hover（v25.13）のウィジェット版として対称演出を実現。
+   warning-end + blur 8px → 10px + mix-sm → mix-md に引き上げ
+   ウィッシュリストウィジェット行の中優先度バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wish-widget-item:hover .wl-pri-medium { box-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑥ wish-widget-item:hover .wl-pri-low dark enhanced box-shadow（income-end・mix-md）
+   wl-card:hover .wl-pri-low dark hover（v25.13）のウィジェット版として対称演出を実現。
+   income-end + blur 8px → 10px + mix-sm → mix-md に引き上げ
+   ウィッシュリストウィジェット行の低優先度バッジの hover 発光をダークモードで鮮明化。
+   ④〜⑥で wish-widget-item dark hover wl-pri-high/medium/low が完成形に統一。 */
+[data-theme="dark"] .wish-widget-item:hover .wl-pri-low { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ pm-sum-card:hover .pm-sum-value dark enhanced color+brightness+text-shadow（pm-sum-color/primary-end・mix-md）
+   ライトモード brightness(1.06) + text-shadow(pm-sum-color/primary mix-sm)のダーク強化版。
+   pm-sum-color/primary-end カラー変色追加 + brightness 1.06 → 1.1 引き上げ + mix-sm → mix-md + blur 8px → 10px
+   支払管理サマリーカードの金額テキストの hover 発光をダークモードで鮮明化。
+   pm-sum-value static dark glow と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pm-sum-card:hover .pm-sum-value { color: var(--pm-sum-color, var(--primary-end)); filter: brightness(1.1); text-shadow: 0 0 10px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ pm-sum-card:hover .pm-sum-sub dark enhanced color+text-shadow（pm-sum-color/primary-end・mix-md）
+   ライトモード color:pm-sum-color/primary + text-shadow(mix-sm)のダーク強化版。
+   primary-end カラーへ切替え + mix-sm → mix-md + blur 8px → 10px に引き上げ
+   支払管理サマリーカードの補足テキスト（○件）の hover 発光をダークモードで鮮明化。
+   pm-sum-sub static dark glow と連動しダーク全状態の演出を完成形に統一。
+   ⑦⑧で pm-sum-card dark hover（value/sub）が完成形に統一。 */
+[data-theme="dark"] .pm-sum-card:hover .pm-sum-sub { color: var(--pm-sum-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑨ pt-card:hover .pt-exp-bar-fill.prog-normal dark enhanced brightness+box-shadow（pt-accent/primary-end・mix-md）
+   ライトモード brightness(1.08) + box-shadow(pt-accent/primary mix-md 0 1px 6px)のダーク強化版。
+   primary-end（pt-accent fallback）+ brightness 1.08 → 1.12 + blur 6px → 10px に引き上げ
+   ポイントカードの通常期限プログレスバーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .pt-card:hover .pt-exp-bar-fill.prog-normal { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑩ pt-card:hover .pt-exp-bar-fill.prog-soon dark enhanced brightness+box-shadow（warning-end・mix-md）
+   ライトモード brightness(1.08) + box-shadow(warning mix-md 0 1px 6px)のダーク強化版。
+   warning → warning-end + brightness 1.08 → 1.12 + blur 6px → 10px に引き上げ
+   ポイントカードのまもなく期限プログレスバーフィルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .pt-card:hover .pt-exp-bar-fill.prog-soon { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑪ pt-card:hover .pt-exp-bar-fill.prog-urgent dark enhanced brightness+box-shadow（expense-end・mix-md）
+   ライトモード brightness(1.08) + box-shadow(danger-text mix-md 0 1px 6px)のダーク強化版。
+   danger-text → expense-end + brightness 1.08 → 1.12 + blur 6px → 10px に引き上げ
+   ポイントカードの緊急期限プログレスバーフィルの hover 発光をダークモードで鮮明化。
+   ⑨〜⑪で pt-card:hover .pt-exp-bar-fill（prog-normal/soon/urgent）dark hover が完成形に統一。 */
+[data-theme="dark"] .pt-card:hover .pt-exp-bar-fill.prog-urgent { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑫ pt-card:hover .pt-card-color-bar dark enhanced brightness+box-shadow（pt-accent/primary-end・mix-lg）
+   ライトモード brightness(1.1) + box-shadow(2px 0 10px pt-accent/primary mix-md)のダーク強化版。
+   primary-end（pt-accent fallback）+ brightness 1.1 → 1.18 + mix-md → mix-lg + blur 10px → 14px に引き上げ
+   ポイントカード左アクセントバーの hover 外向き glow をダークモードで鮮明化。
+   sub-card-color-bar dark hover（v25.25）と同手法でpt-card版の対称演出を実現。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.27・全script/linkタグ?v=25.27に更新 */
+[data-theme="dark"] .pt-card:hover .pt-card-color-bar { filter: brightness(1.18); box-shadow: 2px 0 14px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-lg), transparent); }
