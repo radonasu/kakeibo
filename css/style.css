@@ -35972,3 +35972,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダーク hover drop-shadow が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.15・全script/linkタグ?v=25.15に更新 */
 [data-theme="dark"] .dw-item:hover .dw-item-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ============================================================
+   Sprint #912 — v25.16 dark hover drop-shadow 12箇所
+   cat-chip/ct-chip/ci-event icon×3・wl-archive-emoji×1・
+   rpt-row-chevron×1・fv-rate-badge(high/mid/low)×3・
+   opp-icon/wl-card-icon/cat-card-icon/goal-dash-emoji×4
+   ============================================================ */
+
+/* ① cat-chip:hover .cat-chip-icon dark hover drop-shadow強化（cat-color/primary-end・mix-md）
+   ライトモード drop-shadow（cat-color/primary mix-sm）のダーク強化版。
+   cat-color fallback primary-end に切替え mix-md に引き上げ
+   カテゴリチップアイコンの hover 発光をダークモードで鮮明化。
+   cat-chip:hover .cat-chip-icon scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .cat-chip:hover .cat-chip-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ② ct-chip:hover .ct-chip-icon dark hover drop-shadow強化（ct-color/primary-end・mix-md）
+   ライトモード drop-shadow（ct-color/primary mix-sm）のダーク強化版。
+   ct-color fallback primary-end に切替え mix-md に引き上げ
+   カスタムタグチップアイコンの hover 発光をダークモードで鮮明化。
+   ct-chip:hover .ct-chip-icon scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ct-chip:hover .ct-chip-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ct-color, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ③ ci-event-item:hover .ci-event-icon dark hover drop-shadow強化（ci-ev-accent/primary-end・mix-md）
+   ライトモード drop-shadow（ci-ev-accent/primary mix-sm）のダーク強化版。
+   ci-ev-accent fallback primary-end に切替え mix-md に引き上げ
+   収支予定イベントアイコンの hover 発光をダークモードで鮮明化。
+   ci-event-item:hover .ci-event-icon scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。
+   ①〜③で cat-chip/ct-chip/ci-event-item のアイコン dark hover が完成形に統一。 */
+[data-theme="dark"] .ci-event-item:hover .ci-event-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ④ wl-archive-item:hover .wl-archive-emoji dark hover drop-shadow強化（income-end・mix-md）
+   ライトモード drop-shadow（success mix-md）のダーク強化版。
+   success → income-end（success のダーク vivid variant）に切替え
+   ウィッシュリストアーカイブ絵文字アイコンの hover 発光をダークモードで鮮明化。
+   wl-archive-item:hover .wl-archive-emoji scale+glow（ライト）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wl-archive-item:hover .wl-archive-emoji { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent)); }
+
+/* ⑤ rpt-month-row.is-clickable:hover .rpt-row-chevron dark hover color+drop-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + drop-shadow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-sm → mix-md に引き上げ
+   レポート月行の展開シェブロンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover .rpt-row-chevron { color: var(--primary-end); filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ⑥ fv-month-table tbody tr:hover .fv-rate-badge.high dark hover drop-shadow強化（primary-end・mix-md）
+   ライトモード drop-shadow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-sm → mix-md に引き上げ
+   将来費月別テーブル「高」達成率バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-rate-badge.high { filter: brightness(1.1) drop-shadow(0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ⑦ fv-month-table tbody tr:hover .fv-rate-badge.mid dark hover drop-shadow強化（warning-end・mix-md）
+   ライトモード drop-shadow（warning mix-sm）のダーク強化版。
+   warning → warning-end に切替え mix-sm → mix-md に引き上げ
+   将来費月別テーブル「中」達成率バッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-rate-badge.mid { filter: brightness(1.1) drop-shadow(0 1px 8px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent)); }
+
+/* ⑧ fv-month-table tbody tr:hover .fv-rate-badge.low dark hover drop-shadow強化（income-end・mix-md）
+   ライトモード drop-shadow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-sm → mix-md に引き上げ
+   将来費月別テーブル「低」達成率バッジの hover 発光をダークモードで鮮明化。
+   ⑥〜⑧で fv-rate-badge high/mid/low ダーク hover drop-shadow が完成形に統一。 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-rate-badge.low { filter: brightness(1.1) drop-shadow(0 1px 8px color-mix(in srgb, var(--income-end) var(--mix-md), transparent)); }
+
+/* ⑨ opp-card:hover .opp-icon dark hover drop-shadow強化（opp-accent/primary-end・mix-md）
+   ライトモード drop-shadow（opp-accent/primary mix-md）のダーク強化版。
+   opp-accent fallback primary-end に切替え mix-md は維持
+   機会カードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .opp-card:hover .opp-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑩ wl-card:hover .wl-card-icon dark hover drop-shadow強化（wl-accent/primary-end・mix-md）
+   ライトモード drop-shadow（wl-accent/primary mix-sm）のダーク強化版。
+   wl-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ウィッシュリストカードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wl-card:hover .wl-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑪ cat-card:hover .cat-card-icon dark hover drop-shadow強化（cat-clr/primary-end・mix-md）
+   ライトモード drop-shadow（cat-clr/primary mix-sm）のダーク強化版。
+   cat-clr fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   カテゴリカードアイコンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .cat-card:hover .cat-card-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑫ goal-dash-item:hover .goal-dash-emoji dark hover drop-shadow強化（goal-accent/primary-end・mix-md）
+   ライトモード drop-shadow（goal-accent/primary mix-sm）のダーク強化版。
+   goal-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
+   ゴールダッシュボード絵文字アイコンの hover 発光をダークモードで鮮明化。
+   ⑨〜⑫で opp-card/wl-card/cat-card/goal-dash-item アイコン dark hover が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.16・全script/linkタグ?v=25.16に更新 */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-emoji { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent)); }
