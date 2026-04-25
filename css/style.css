@@ -36333,3 +36333,57 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑧〜⑫で asset-card dark hover（type-icon/type-badge/balance-delta-up/balance-delta-down/date-label）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.19・全script/linkタグ?v=25.19に更新 */
 [data-theme="dark"] .asset-card:hover .asset-date-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ==========================================================================
+   v25.20: asset-card×7（balance-jpy/currency-badge/fx-rate/foreign-hint/
+   sparkline-wrap/sparkline-label/history-title） dark hover 7箇所
+   ========================================================================== */
+
+/* ① asset-card:hover .asset-balance-jpy dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード brightness(1.06) + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end に切替え color 追加・mix-sm → mix-md に引き上げ
+   資産カード円換算残高テキストの hover 発光をダークモードで鮮明化。
+   asset-balance-jpy static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .asset-card:hover .asset-balance-jpy { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② asset-card:hover .asset-currency-badge dark hover text-shadow強化（asset-accent/primary-end・mix-md）
+   ライトモード scale(1.05) + brightness(1.08) + text-shadow(0 0 8px asset-accent/primary mix-sm)のダーク強化版。
+   asset-accent fallback primary-end に切替え brightness(1.15) + mix-sm → mix-md に引き上げ
+   資産カード通貨バッジの hover 発光をダークモードで鮮明化。
+   asset-currency-badge の transform/scale はライトと共通のため重複させない。 */
+[data-theme="dark"] .asset-card:hover .asset-currency-badge { filter: brightness(1.15); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ asset-card:hover .asset-fx-rate dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end に切替え mix-sm → mix-md に引き上げ
+   資産カード為替レートテキストの hover 発光をダークモードで鮮明化。
+   asset-fx-rate static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .asset-card:hover .asset-fx-rate { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ asset-card:hover .asset-foreign-hint dark hover text-shadow強化（primary-end・mix-md）
+   ライトモード brightness(1.06) + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end に切替え brightness(1.12) + mix-sm → mix-md に引き上げ
+   資産カード外貨ヒントテキストの hover 発光をダークモードで鮮明化。
+   asset-foreign-hint static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .asset-card:hover .asset-foreign-hint { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ asset-card:hover .asset-sparkline-wrap dark hover brightness強化
+   ライトモード brightness(1.05) のダーク強化版。
+   brightness(1.1) に引き上げ資産カードスパークラインラッパーの hover 輝きをダークモードで強調。 */
+[data-theme="dark"] .asset-card:hover .asset-sparkline-wrap { filter: brightness(1.1); }
+
+/* ⑥ asset-card:hover .asset-sparkline-label dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end に切替え mix-sm → mix-md に引き上げ
+   資産カードスパークラインラベルの hover 発光をダークモードで鮮明化。
+   asset-sparkline-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .asset-card:hover .asset-sparkline-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ asset-card:hover .asset-history-title dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end に切替え mix-sm → mix-md に引き上げ
+   資産カード履歴タイトルテキストの hover 発光をダークモードで鮮明化。
+   asset-history-title static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①〜⑦で asset-card dark hover（balance-jpy/currency-badge/fx-rate/foreign-hint/sparkline-wrap/sparkline-label/history-title）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.20・全script/linkタグ?v=25.20に更新 */
+[data-theme="dark"] .asset-card:hover .asset-history-title { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
