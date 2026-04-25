@@ -37360,3 +37360,79 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑩〜⑫で ch-card dark hover bar-fill（ok/warn/over）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.32・全script/linkタグ?v=25.32に更新 */
 [data-theme="dark"] .ch-card:hover .ch-bar-over { filter: brightness(1.14); }
+
+/* =====================================================================
+   Sprint #929 (v25.33): yoy-summary-value-dark-hover×2＋goal-dash-bar-dark-hover×2＋
+   ct-stat-label-dark-hover×1＋ci-score-label-dark-hover×1＋ch-bar-bg-dark-hover×1＋
+   nt-progress-fill-dark-hover×3＋nt-progress-bar-dark-hover×1＋nt-char-count-dark-hover×1 12箇所
+   ===================================================================== */
+
+/* ① [data-theme="dark"] .yoy-summary-item:hover .yoy-summary-value → dark enhanced color+brightness+text-shadow glow（primary-end・mix-md）:
+   ライトモード brightness(1.08)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ brightness(1.12) に強化。
+   yoy-summary-value static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .yoy-summary-item:hover .yoy-summary-value { color: var(--primary-end); filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .yoy-summary-item:hover .yoy-summary-label → dark enhanced color+brightness+text-shadow glow（primary-end・mix-md）:
+   ライトモード brightness(1.1)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ brightness(1.15) に強化。
+   yoy-summary-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①②で yoy-summary-item hover 配下の value+label が dark mode で完成形に統一。 */
+[data-theme="dark"] .yoy-summary-item:hover .yoy-summary-label { color: var(--primary-end); filter: brightness(1.15); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .goal-dash-item:hover .goal-dash-bar-fill → dark enhanced brightness(1.12) + goal-accent glow（mix-md・0 1px 10px）:
+   ライトモード brightness(1.08)+goal-accent box-shadow glow（mix-md）のダーク強化版。
+   brightness を 1.08→1.12 に引き上げ glow の blur 半径を 8px→10px に拡大。
+   goal-dash-item:hover dark outer glow（primary-end mix-md）と連動し goal-dash カードのダークホバー演出を強化。 */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-bar-fill { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .goal-dash-item:hover .goal-dash-bar-bg → dark enhanced brightness（1.14）:
+   ライトモード brightness(1.1)のダーク強化版。brightness を 1.1→1.14 に引き上げ。
+   ③と連動し goal-dash バートラック+フィル双方がダークモードで鮮明に輝く完成形演出に統一。 */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-bar-bg { filter: brightness(1.14); }
+
+/* ⑤ [data-theme="dark"] .ct-stat-card:hover .ct-stat-label → dark enhanced color+text-shadow glow（ct-stat-color fallback primary-end・mix-md）:
+   ライトモード brightness(1.1)+ct-stat-color text-shadow glow（mix-sm）のダーク強化版。
+   ct-stat-color に切替え mix-md に引き上げ ct-stat-card:hover .ct-stat-value dark glow（primary-end mix-md）と連動し
+   カテゴリ統計カードの value+label ダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-label { color: var(--ct-stat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .ci-score-row:hover .ci-score-label → dark enhanced color+text-shadow glow（primary-end・mix-md）:
+   ライトモード color(primary)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ。
+   ci-score-row:hover .ci-score-badge dark glow（primary-end mix-lg）と連動しチェックイン採点行のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ci-score-row:hover .ci-score-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .ch-card:hover .ch-bar-bg → dark enhanced brightness（1.08）:
+   ライトモード brightness(1.05)のダーク強化版。brightness を 1.05→1.08 に引き上げ。
+   ch-card:hover .ch-bar-ok/warn/over dark glow（⑩〜⑫・v25.32）と連動し
+   チャレンジカードのバートラック+フィル全体がダークモードで揃って輝く完成形演出に統一。 */
+[data-theme="dark"] .ch-card:hover .ch-bar-bg { filter: brightness(1.08); }
+
+/* ⑧ [data-theme="dark"] .nt-card:hover .nt-progress-fill → dark enhanced brightness(1.12) + primary-end glow（mix-md・0 1px 8px）:
+   ライトモード brightness(1.08)+primary box-shadow glow（mix-sm・0 1px 6px）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ brightness を 1.08→1.12 に強化。
+   nt-card:hover dark outer glow（primary-end mix-sm/mix-md）と連動しメモカードのダーク hover 演出を強化。 */
+[data-theme="dark"] .nt-card:hover .nt-progress-fill { filter: brightness(1.12); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .nt-card:hover .nt-progress-fill.nt-prog-warn → dark enhanced brightness(1.12) + warning-end glow（mix-md・0 1px 8px）:
+   ライトモード brightness(1.08)+warning box-shadow glow（mix-sm）のダーク強化版。warning-end に切替え mix-md に引き上げ。
+   ⑧と連動し警告状態フィルのダークカラーが鮮明化。 */
+[data-theme="dark"] .nt-card:hover .nt-progress-fill.nt-prog-warn { filter: brightness(1.12); box-shadow: 0 1px 8px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .nt-card:hover .nt-progress-fill.nt-prog-danger → dark enhanced brightness(1.12) + expense-end glow（mix-md・0 1px 8px）:
+   ライトモード brightness(1.08)+danger-text box-shadow glow（mix-sm）のダーク強化版。expense-end に切替え mix-md に引き上げ。
+   ⑧⑨と連動し nt-progress-fill 全3状態（normal/warn/danger）のダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .nt-card:hover .nt-progress-fill.nt-prog-danger { filter: brightness(1.12); box-shadow: 0 1px 8px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .nt-card:hover .nt-progress-bar → dark enhanced brightness（1.08）:
+   ライトモード brightness(1.05)のダーク強化版。brightness を 1.05→1.08 に引き上げ。
+   ⑧〜⑩と連動し nt-progress-bar（トラック）+fill（フィル）双方がダークモードで揃って輝く完成形演出に統一。 */
+[data-theme="dark"] .nt-card:hover .nt-progress-bar { filter: brightness(1.08); }
+
+/* ⑫ [data-theme="dark"] .nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) → dark enhanced color+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary-end に切替え mix-md に引き上げ color も primary-end に変色追加。
+   ⑧〜⑪と連動しメモカードのダーク hover 演出（バー+文字数）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.33・全script/linkタグ?v=25.33に更新 */
+[data-theme="dark"] .nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
