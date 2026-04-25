@@ -36689,6 +36689,87 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary-end カラー変色 + mix-sm → mix-md + brightness(1.08) に引き上げ
    節約機会カードの説明テキストの hover 発光をダークモードで鮮明化。
    opp-desc static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
-   ⑩〜⑫で opp-card dark hover（saving/saving-strong/desc）が完成形に統一。
-   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.24・全script/linkタグ?v=25.24に更新 */
+   ⑩〜⑫で opp-card dark hover（saving/saving-strong/desc）が完成形に統一。 */
 [data-theme="dark"] .opp-card:hover .opp-desc { filter: brightness(1.08); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #921 (v25.25): widget-icon-dark-hover×6＋wish-widget-text-dark-hover×2＋ch-widget-text-dark-hover×2＋sub-card-color-bar-dark-hover×1＋pm-sum-icon-dark-hover×1
+   ============================================================ */
+
+/* ① sub-widget-item:hover .sub-widget-icon dark enhanced drop-shadow（primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px primary mix-sm)のダーク強化版。
+   primary-end カラーへ切替え + mix-sm → mix-md + blur 6px → 10px に引き上げ
+   サブスクウィジェット行のアイコン hover 発光をダークモードで鮮明化。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.25・全script/linkタグ?v=25.25に更新 */
+[data-theme="dark"] .sub-widget-item:hover .sub-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ② pt-widget-item:hover .pt-widget-icon dark enhanced drop-shadow（primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px primary mix-sm)のダーク強化版。
+   primary-end カラーへ切替え + mix-sm → mix-md + blur 6px → 10px に引き上げ
+   支払予定ウィジェット行のアイコン hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .pt-widget-item:hover .pt-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ③ wish-widget-item:hover .wish-widget-icon dark enhanced drop-shadow（primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px primary mix-sm)のダーク強化版。
+   primary-end カラーへ切替え + mix-sm → mix-md + blur 6px → 10px に引き上げ
+   ウィッシュリストウィジェット行のアイコン hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wish-widget-item:hover .wish-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ④ ch-widget-item:hover .ch-widget-icon dark enhanced drop-shadow（ch-accent fallback primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px ch-accent/primary mix-sm)のダーク強化版。
+   primary → primary-end（ch-accent fallback）+ mix-sm → mix-md + blur 6px → 10px に引き上げ
+   チャレンジウィジェット行のアイコン hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑤ debt-widget-item:hover .debt-widget-icon dark enhanced drop-shadow（debt-accent fallback expense-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px debt-accent/expense mix-sm)のダーク強化版。
+   expense → expense-end（debt-accent fallback）+ mix-sm → mix-md + blur 6px → 10px に引き上げ
+   負債ウィジェット行のアイコン hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .debt-widget-item:hover .debt-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent)); }
+
+/* ⑥ ev-widget-item:hover .ev-widget-icon dark enhanced drop-shadow（ev-accent fallback primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 6px ev-accent/primary mix-sm)のダーク強化版。
+   primary → primary-end（ev-accent fallback）+ mix-sm → mix-md + blur 6px → 10px に引き上げ
+   収支予定ウィジェット行のアイコン hover 発光をダークモードで鮮明化。
+   ①〜⑥で 6種ウィジェット行アイコン dark hover が完成形に統一。 */
+[data-theme="dark"] .ev-widget-item:hover .ev-widget-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent)); }
+
+/* ⑦ wish-widget-item:hover .wish-widget-name dark enhanced color+text-shadow（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(primary mix-sm)のダーク強化版。
+   primary → primary-end + mix-sm → mix-md に引き上げ
+   ウィッシュリストウィジェット行の商品名テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .wish-widget-item:hover .wish-widget-name { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ wish-widget-item:hover .wish-widget-price dark enhanced color+text-shadow（primary-end・mix-md）
+   ライトモード color:primary + brightness(1.06) + text-shadow(primary mix-sm)のダーク強化版。
+   primary → primary-end + mix-sm → mix-md に引き上げ
+   ウィッシュリストウィジェット行の価格テキストの hover 発光をダークモードで鮮明化。
+   ⑦⑧で wish-widget dark hover テキスト演出が完成形に統一。 */
+[data-theme="dark"] .wish-widget-item:hover .wish-widget-price { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ ch-widget-item:hover .ch-widget-name dark enhanced color+text-shadow（ch-accent fallback primary-end・mix-md）
+   ライトモード color:ch-accent/primary + text-shadow(ch-accent/primary mix-sm)のダーク強化版。
+   primary → primary-end（ch-accent fallback）+ mix-sm → mix-md に引き上げ
+   チャレンジウィジェット行の名称テキストの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-name { color: var(--ch-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑩ ch-widget-item:hover .ch-widget-label dark enhanced color+text-shadow（ch-accent fallback primary-end・mix-md）
+   ライトモード color:ch-accent/primary + text-shadow(ch-accent/primary mix-sm)のダーク強化版。
+   primary → primary-end（ch-accent fallback）+ mix-sm → mix-md に引き上げ
+   チャレンジウィジェット行のラベルテキストの hover 発光をダークモードで鮮明化。
+   ⑨⑩で ch-widget dark hover テキスト演出が完成形に統一。 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-label { color: var(--ch-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑪ sub-card:hover .sub-card-color-bar dark enhanced box-shadow+brightness（sub-accent fallback primary-end・mix-lg）
+   ライトモード box-shadow(2px 0 10px sub-accent/primary mix-md) + brightness(1.1)のダーク強化版。
+   primary → primary-end（sub-accent fallback）+ mix-md → mix-lg + blur 10px → 14px + brightness 1.1 → 1.18 に引き上げ
+   サブスクリプションカードの左アクセントカラーバーの hover 外向き glow をダークモードで鮮明化。
+   sub-card dark inset static glow と連動し左アクセントバーが内外両方向から輝くダーク完成形演出に統一。 */
+[data-theme="dark"] .sub-card:hover .sub-card-color-bar { box-shadow: 2px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-lg), transparent); filter: brightness(1.18); }
+
+/* ⑫ pm-sum-card:hover .pm-sum-icon dark enhanced drop-shadow（pm-sum-color fallback primary-end・mix-md）
+   ライトモード drop-shadow(0 2px 5px pm-sum-color/primary mix-sm)のダーク強化版。
+   primary → primary-end（pm-sum-color fallback）+ mix-sm → mix-md + blur 5px → 10px に引き上げ
+   支払方法サマリーカードのアイコン hover 発光をダークモードで鮮明化。
+   ①〜⑥ widget-icon×6・⑦⑧ wish-widget-text×2・⑨⑩ ch-widget-text×2・⑪ sub-card-color-bar×1・⑫ pm-sum-icon×1 12箇所完成。 */
+[data-theme="dark"] .pm-sum-card:hover .pm-sum-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-md), transparent)); }
