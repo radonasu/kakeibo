@@ -37514,3 +37514,86 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    クイック入力フォームの送信ボタンの hover 発光をダークモードで鮮明化。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.34・全script/linkタグ?v=25.34に更新 */
 [data-theme="dark"] .qa-card .qa-submit-btn:hover { box-shadow: 0 4px 16px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* =====================================================================
+   Sprint #931 (v25.35): smi-count-dark-hover×2＋ci-cell-label-dark-hover×1＋
+   debt-entry-date-dark-hover×1＋debt-entry-note-dark-hover×1＋debt-entry-balance-dark-hover×1＋
+   ci-challenge-name-dark-hover×1＋ci-badge-dark-hover×1＋fv-stat-icon-dark-hover×1＋
+   notif-body-dark-hover×3 12箇所
+   ===================================================================== */
+
+/* ① [data-theme="dark"] .smi-income:hover .smi-count → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード color:success+text-shadow glow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-md に引き上げ。
+   smi-income:hover .smi-amount/label dark glow（v25.x）と連動し収入サマリー行のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .smi-income:hover  .smi-count { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .smi-expense:hover .smi-count → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード color:danger-text+text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text → expense-end に切替え mix-md に引き上げ。
+   smi-expense:hover .smi-amount/label dark glow と連動し支出サマリー行のダーク hover 演出を完成形に統一。
+   ①②で smi-income/expense:hover 配下 amount+label+count の dark hover が完成形に統一。 */
+[data-theme="dark"] .smi-expense:hover .smi-count { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .ci-cell:hover .ci-cell-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ color 変色を追加。
+   ci-cell:hover .ci-cell-value dark glow（income-end/expense-end）と連動し
+   マンスリーチェックインセルのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .debt-entry-row:hover .debt-entry-date → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ。
+   debt-entry-row:hover の slide+shadow と連動し負債返済履歴行のダーク hover 演出を強化。 */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-date { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .debt-entry-row:hover .debt-entry-note → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ。④と連動し日付+メモのダーク hover 演出が統一。 */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-note { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .debt-entry-row:hover .debt-entry-balance → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード brightness(1.12)+text-shadow glow（expense mix-sm）のダーク強化版。
+   expense → expense-end に切替え mix-md に引き上げ color 変色を追加。
+   ④⑤⑥で debt-entry-row dark hover（date/note/balance）が完成形に統一。 */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-balance { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .ci-challenge-item:hover .ci-challenge-name → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary → primary-end に切替え mix-md に引き上げ。
+   ci-challenge-item:hover の slide+shadow と連動しチャレンジアイテム行のダーク hover 演出を強化。 */
+[data-theme="dark"] .ci-challenge-item:hover .ci-challenge-name { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .ci-challenge-item:hover .ci-badge → dark enhanced filter:brightness(1.2):
+   ライトモード brightness(1.1)のダーク強化版。1.1 → 1.2 に引き上げ
+   チャレンジアイテムのバッジの hover 輝きをダークモードでより鮮明化。
+   ⑦と連動しチャレンジアイテム行のダーク hover 演出（name+badge）を完成形に統一。 */
+[data-theme="dark"] .ci-challenge-item:hover .ci-badge { filter: brightness(1.2); }
+
+/* ⑨ [data-theme="dark"] .fv-stat-card:hover .fv-stat-icon → dark enhanced filter:drop-shadow（白グロー強化・0 2px 10px rgba 0.6）:
+   ライトモード drop-shadow（rgba 0.4・0 2px 6px）のダーク強化版。
+   rgba 0.4 → 0.6 に引き上げ blur 6 → 10px に拡大。
+   fv-stat-card:hover .fv-stat-value/label/sub dark glow と連動し
+   将来費統計カードのダーク hover 演出（icon+text）を完成形に統一。 */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-icon { filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.6)); }
+
+/* ⑩ [data-theme="dark"] .notif-item.notif-type-danger:hover .notif-item-body → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード color:danger-text+text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text → expense-end に切替え mix-md に引き上げ
+   通知アイテム（danger）の本文テキストのダーク hover 発光を鮮明化。 */
+[data-theme="dark"] .notif-item.notif-type-danger:hover  .notif-item-body { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .notif-item.notif-type-warning:hover .notif-item-body → dark enhanced color:warning+text-shadow glow（warning・mix-md）:
+   ライトモード color:warning+text-shadow glow（warning mix-sm）のダーク強化版。
+   mix-sm → mix-md に引き上げ
+   通知アイテム（warning）の本文テキストのダーク hover 発光を鮮明化。 */
+[data-theme="dark"] .notif-item.notif-type-warning:hover .notif-item-body { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-body → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード color:success+text-shadow glow（success mix-sm）のダーク強化版。
+   success → income-end に切替え mix-md に引き上げ
+   通知アイテム（success）の本文テキストのダーク hover 発光を鮮明化。
+   ⑩〜⑫で notif-item dark hover body（danger/warning/success）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.35・全script/linkタグ?v=25.35に更新 */
+[data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-body { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
