@@ -36147,4 +36147,99 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ⑩〜⑫で wl-pri-high/medium/low ダーク hover box-shadow が完成形に統一。
    ⑧〜⑫で wl-card dark hover（name/priority-badge/pri-high/medium/low）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.17・全script/linkタグ?v=25.17に更新 */
+
+/* ==========================================================================
+   Sprint #914 (v25.18): goal-card×4(progress-bar-bg/ring-bg/achieved-date/monthly-target)
+   + tg-stat-card×2(tg-stat-label/tg-stat-unit) + ev-card×6(name/amount/memo/done-label/prog-fill/prog-pct)
+   dark hover 12箇所
+   ========================================================================== */
+
+/* ① goal-card:hover .goal-progress-bar-bg dark hover brightness強化
+   ライトモード brightness(1.06) のダーク強化版。
+   ダークモードではコントラストが低いため brightness(1.14) に引き上げ
+   ゴールカードプログレスバー背景の hover 明度変化をダークモードで鮮明化。
+   goal-progress-bar-fill dark hover（v25.17⑦）と連動しバー全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-progress-bar-bg { filter: brightness(1.14); }
+
+/* ② goal-card:hover .goal-ring-bg dark hover brightness強化
+   ライトモード brightness(1.12) のダーク強化版。
+   ダークモードではコントラストが低いため brightness(1.22) に引き上げ
+   ゴールカードリング背景の hover 明度変化をダークモードで鮮明化。
+   goal-ring-fill dark hover（v25.17①）と連動しリング全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-ring-bg { filter: brightness(1.22); }
+
+/* ③ goal-card:hover .goal-achieved-date dark hover color+text-shadow強化（income-end・mix-md）
+   ライトモード brightness(1.1) のダーク強化版。
+   income-end カラーに変色 + text-shadow(0 0 10px mix-md) を追加し
+   達成日テキストの hover 発光をダークモードで鮮明化。
+   goal-achieved-date static dark glow（income-end mix-sm 0 0 7px）のホバー強化版。
+   goal-achieved-badge dark hover（v24.89）と連動し達成状態全要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-achieved-date { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ goal-card:hover .goal-monthly-target dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード brightness(1.08) のダーク強化版。
+   primary-end カラーに変色 + text-shadow(0 0 10px mix-md) を追加し
+   月次目標テキストの hover 発光をダークモードで鮮明化。
+   goal-monthly-target static dark glow（primary-end mix-sm 0 0 7px）のホバー強化版。
+   ①〜④で goal-card dark hover（progress-bar-bg/ring-bg/achieved-date/monthly-target）が完成形に統一。 */
+[data-theme="dark"] .goal-card:hover .goal-monthly-target { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ tg-stat-card:hover .tg-stat-label dark hover brightness強化
+   ライトモード brightness(1.1) のダーク強化版。
+   ダークモードではコントラストが低いため brightness(1.2) に引き上げ
+   タグ統計カードラベルテキストの hover 明度変化をダークモードで鮮明化。
+   tg-stat-value dark hover（v25.7）と連動しカード内テキスト全種別のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-label { filter: brightness(1.2); }
+
+/* ⑥ tg-stat-card:hover .tg-stat-unit dark hover color+text-shadow強化（primary-end・mix-sm）
+   ライトモード color:primary のダーク強化版。
+   primary-end カラーに変色 + text-shadow(0 0 8px mix-sm) glow を追加し
+   タグ統計カード単位テキストの hover 発光をダークモードで鮮明化。
+   tg-stat-value/tg-stat-label dark hover と連動しカード内全テキストのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-unit { color: var(--primary-end); text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ⑦ ev-card:hover .ev-card-name dark hover color+text-shadow強化（ev-accent/primary-end・mix-md）
+   ライトモード color:ev-accent(primary) のダーク強化版。
+   ev-accent fallback primary-end に切替え + text-shadow(0 0 10px mix-md) glow を追加し
+   収支予定カード名称テキストの hover 発光をダークモードで鮮明化。
+   ev-card-name static dark glow（ev-accent/primary-end mix-sm 0 0 7px）のホバー強化版。 */
+[data-theme="dark"] .ev-card:hover .ev-card-name { color: var(--ev-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑧ ev-card:hover .ev-card-amount dark hover color+text-shadow強化（ev-accent/primary-end・mix-md）
+   ライトモード color:ev-accent(primary) + brightness(1.06) のダーク強化版。
+   ev-accent fallback primary-end に切替え + text-shadow(0 0 10px mix-md) glow を追加し
+   収支予定カード金額テキストの hover 発光をダークモードで鮮明化。
+   ev-card-amount static dark glow（ev-accent/primary-end mix-sm 0 0 7px）のホバー強化版。 */
+[data-theme="dark"] .ev-card:hover .ev-card-amount { color: var(--ev-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑨ ev-card:hover .ev-card-memo dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary のダーク強化版。
+   primary-end カラーに変色 + text-shadow(0 0 10px mix-md) に引き上げ
+   収支予定カードメモテキストの hover 発光をダークモードで鮮明化。
+   ev-card-memo static dark glow（primary-end mix-sm 0 0 7px）のホバー強化版。 */
+[data-theme="dark"] .ev-card:hover .ev-card-memo { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ ev-card:hover .ev-done-label dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px mix-md) のダーク強化版。
+   primary-end カラーに変色 + text-shadow(0 0 10px mix-md) に引き上げ
+   収支予定カード完了ラベルの hover 発光をダークモードで鮮明化。
+   ev-done-label static dark glow（primary-end mix-sm 0 0 7px）のホバー強化版。 */
+[data-theme="dark"] .ev-card:hover .ev-done-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ ev-card:hover .ev-prog-fill dark hover brightness+box-shadow強化（バリアント別）
+   ライトモード brightness(1.1)+box-shadow のダーク強化版。
+   brightness(1.15) に引き上げ・blur を 10px に拡大しプログレスバーの hover 発光をダークモードで鮮明化。
+   デフォルト: primary-end / done: income-end / mid: warning-end */
+[data-theme="dark"] .ev-card:hover .ev-prog-fill                                        { filter: brightness(1.15); box-shadow: 0 1px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .ev-card:hover .ev-month-progress.ev-pm-done .ev-prog-fill          { filter: brightness(1.15); box-shadow: 0 1px 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .ev-card:hover .ev-month-progress.ev-pm-mid  .ev-prog-fill          { filter: brightness(1.15); box-shadow: 0 1px 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+
+/* ⑫ ev-card:hover .ev-prog-pct dark hover color+text-shadow強化（primary-end・mix-md）
+   ライトモード brightness(1.1) + color:primary のダーク強化版。
+   primary-end カラーに変色 + text-shadow(0 0 10px mix-md) glow を追加し
+   収支予定カード進捗%テキストの hover 発光をダークモードで鮮明化。
+   ev-prog-pct static dark glow（primary-end mix-sm 0 0 7px）のホバー強化版。
+   ⑦〜⑫で ev-card dark hover（name/amount/memo/done-label/prog-fill/prog-pct）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.18・全script/linkタグ?v=25.18に更新 */
+[data-theme="dark"] .ev-card:hover .ev-prog-pct { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 [data-theme="dark"] .wl-card:hover .wl-pri-low { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
