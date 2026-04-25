@@ -37030,3 +37030,106 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.28・全script/linkタグ?v=25.28に更新 */
 [data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.inc { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
 [data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.exp { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #925 — v25.29 dark hover text-shadow glow (12 items)
+   tx-table-memo-cell-dark-hover×1＋tx-table-td-first-dark-hover×1＋
+   tx-table-tx-col-mem-dark-hover×1＋tx-table-cat-badge-dark-hover×1＋
+   rpt-month-label-dark-hover×1＋fv-cat-amt-dark-hover×1＋
+   fv-cat-td-first-dark-hover×1＋fv-pct-txt-dark-hover×1＋
+   tg-td-first-dark-hover×1＋tg-text-muted-dark-hover×1＋
+   ct-month-cell-dark-hover×1＋ct-text-muted-dark-hover×1
+   ============================================================ */
+
+/* v25.29: ①〜⑫ テーブル系 dark hover text-shadow glow 12箇所
+   各ライトモード hover glow（v23.x系）のダーク強化版。
+   primary → primary-end へ切替え、mix-sm → mix-md へ引き上げ、blur 8 → 10px。
+   color 変色もライト同様に primary-end を設定し、ダーク全状態（static + hover）の
+   発光演出を完成形に統一する。 */
+
+/* ① [data-theme="dark"] .tx-table tbody tr:hover td.memo-cell → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v19.x/v23.90）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   取引テーブルメモセルの hover 発光をダークモードで鮮明化。
+   .tx-table td.memo-cell static dark glow（v24.x）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr:hover td.memo-cell { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .tx-table tbody tr:hover td:first-child → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v21.x/v23.57）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   取引テーブル日付列の hover 発光をダークモードで鮮明化。
+   .tx-table td:first-child static dark glow（v23.57）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr:hover td:first-child { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .tx-table tbody tr:hover td.tx-col-mem → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v21.x/v23.57）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   取引テーブル担当者列の hover 発光をダークモードで鮮明化。
+   .tx-table td.tx-col-mem static dark glow（v23.57）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .tx-table tbody tr:hover td.tx-col-mem { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .tx-table tbody tr:hover .cat-badge → dark enhanced text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード glow（v23.83）のダーク強化版。
+   primary-end に切替え+mix-sm→mix-md+blur 8→10px引き上げ
+   取引テーブルカテゴリバッジの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .tx-table tbody tr:hover .cat-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .rpt-month-row.is-clickable:hover .rpt-month-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v22.x/v23.59）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   レポート月ラベルの hover 発光をダークモードで鮮明化。
+   .rpt-month-label static dark glow（v23.x）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover .rpt-month-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .fv-cat-table tbody tr:hover .fv-cat-amt → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード glow（v23.77）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   財務予測カテゴリ金額の hover 発光をダークモードで鮮明化。
+   .fv-cat-amt static dark glow（v23.x）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .fv-cat-table tbody tr:hover .fv-cat-amt { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .fv-cat-table tbody tr:hover td:first-child → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v21.x/v23.58）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   財務予測カテゴリ名列の hover 発光をダークモードで鮮明化。
+   .fv-cat-table tbody tr td:first-child static dark glow（v23.58）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .fv-cat-table tbody tr:hover td:first-child { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .fv-cat-table tbody tr:hover .fv-pct-txt → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v23.10/v23.77）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   財務予測カテゴリ達成率テキストの hover 発光をダークモードで鮮明化。
+   .fv-pct-txt static dark glow（v23.x）と連動しダーク全状態を完成形に統一。
+   ⑥⑦⑧で fv-cat-table dark hover（fv-cat-amt/td:first-child/fv-pct-txt）が完成形に統一。 */
+[data-theme="dark"] .fv-cat-table tbody tr:hover .fv-pct-txt { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .tg-table tbody tr:hover td:first-child → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v22.x/v23.53）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   目標テーブル日付列の hover 発光をダークモードで鮮明化。
+   .tg-table tbody tr td:first-child static dark glow（v23.x）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .tg-table tbody tr:hover td:first-child { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .tg-table tbody tr:hover td.text-muted → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v23.09/v23.70）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   目標テーブルtext-muted列の hover 発光をダークモードで鮮明化。
+   .tg-table tbody tr td.text-muted static dark glow（v23.x）と連動しダーク全状態を完成形に統一。
+   ⑨⑩で tg-table dark hover（td:first-child/td.text-muted）が完成形に統一。 */
+[data-theme="dark"] .tg-table tbody tr:hover td.text-muted { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .ct-table tbody tr:hover .ct-month-cell → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary+glow（v23.0/v23.69）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   カテゴリ推移テーブル月名セルの hover 発光をダークモードで鮮明化。
+   .ct-table tbody tr .ct-month-cell static dark glow（v23.69）と連動しダーク全状態を完成形に統一。 */
+[data-theme="dark"] .ct-table tbody tr:hover .ct-month-cell { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .ct-table tbody tr:hover td.text-muted → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
+   ライトモード glow（v23.83）のダーク強化版。
+   primary-end カラー変色+mix-sm→mix-md+blur 8→10px引き上げ
+   カテゴリ推移テーブルtext-muted列の hover 発光をダークモードで鮮明化。
+   .ct-table tbody tr td.text-muted static dark glow（v23.83）と連動しダーク全状態を完成形に統一。
+   ⑪⑫で ct-table dark hover（ct-month-cell/td.text-muted）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.29・全script/linkタグ?v=25.29に更新 */
+[data-theme="dark"] .ct-table tbody tr:hover td.text-muted { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
