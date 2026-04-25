@@ -36516,3 +36516,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ③④で rc-item dark hover（rc-type-badge/rc-cat-dot）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.22・全script/linkタグ?v=25.22に更新 */
 [data-theme="dark"] .rc-item:hover .rc-cat-dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* ============================================================
+   Sprint #919 v25.23 dark enhanced hover 10箇所
+   wk-bar-amount×1・wk-bar-label×1
+   hs-item-label×1・hs-item-max×1・hs-item-score×1
+   pt-widget-name×1・pt-widget-balance×3・pt-unit×1
+   sub-widget-name×3・sub-widget-next×3
+   ============================================================ */
+
+/* ① wk-bar-col:hover .wk-bar-amount dark enhanced hover（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end カラー変色 + mix-sm → mix-md に引き上げ
+   週次支出バーカラムの金額テキストの hover 発光をダークモードで鮮明化。
+   wk-bar-amount static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .wk-bar-col:hover .wk-bar-amount { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② wk-bar-col:hover .wk-bar-label dark enhanced hover（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end カラー変色 + mix-sm → mix-md に引き上げ
+   週次支出バーカラムの曜日ラベルテキストの hover 発光をダークモードで鮮明化。
+   wk-bar-label static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ①②で wk-bar-col dark hover（amount/label）が完成形に統一。 */
+[data-theme="dark"] .wk-bar-col:hover .wk-bar-label:not(.wk-today-label) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ hs-item:hover .hs-item-label dark enhanced hover（hs-bar-color/primary-end・brightness(1.18)・mix-md）
+   ライトモード filter:brightness(1.1) + text-shadow(0 0 8px hs-bar-color/primary mix-sm)のダーク強化版。
+   hs-bar-color fallback primary-end カラー変色 + brightness(1.18) + mix-md に引き上げ
+   家計スコア項目カテゴリラベルの hover 発光をダークモードで鮮明化。
+   hs-item-label static dark glow（hs-bar-color/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hs-item:hover .hs-item-label { color: var(--hs-bar-color, var(--primary-end)); filter: brightness(1.18); text-shadow: 0 0 10px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ hs-item:hover .hs-item-max dark enhanced hover（hs-bar-color/primary-end・brightness(1.14)・mix-md）
+   ライトモード filter:brightness(1.06) + text-shadow(0 0 8px hs-bar-color/primary mix-sm)のダーク強化版。
+   hs-bar-color fallback primary-end カラー変色 + brightness(1.14) + mix-md に引き上げ
+   家計スコア項目上限テキストの hover 発光をダークモードで鮮明化。
+   hs-item-max static dark glow（hs-bar-color/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .hs-item:hover .hs-item-max { color: var(--hs-bar-color, var(--primary-end)); filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ hs-item:hover .hs-item-score dark enhanced hover（hs-bar-color/primary-end・brightness(1.14)・mix-md）
+   ライトモード color:hs-bar-color/primary + filter:brightness(1.06)のダーク強化版。
+   hs-bar-color fallback primary-end カラー強化 + brightness(1.14) + text-shadow(mix-md)追加
+   家計スコア項目スコア値テキストの hover 発光をダークモードで鮮明化。
+   hs-item-score static dark glow（hs-bar-color/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ③〜⑤で hs-item dark hover（label/max/score）が完成形に統一。 */
+[data-theme="dark"] .hs-item:hover .hs-item-score { color: var(--hs-bar-color, var(--primary-end)); filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑥ pt-widget-item:hover .pt-widget-name dark enhanced hover（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end カラー変色 + mix-sm → mix-md に引き上げ
+   ポイントウィジェット行のポイント名テキストの hover 発光をダークモードで鮮明化。
+   pt-widget-name static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-widget-item:hover .pt-widget-name { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ pt-widget-item:hover .pt-widget-balance dark enhanced hover（タイプ別 color + mix-md）
+   ライトモード color:primary/danger-text/warning + text-shadow(mix-sm)のダーク強化版。
+   end カラー変色 + mix-sm → mix-md に引き上げ
+   ポイントウィジェット行の残高テキストの hover 発光をダークモードで鮮明化。
+   pt-widget-balance static dark glow（タイプ別 mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .pt-widget-item:hover             .pt-widget-balance { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover   .pt-widget-balance { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-soon:hover     .pt-widget-balance { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑧ pt-widget-item:hover .pt-unit dark enhanced hover（primary-end・mix-md）
+   ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
+   primary-end カラー変色 + mix-sm → mix-md に引き上げ
+   ポイントウィジェット行の単位テキストの hover 発光をダークモードで鮮明化。
+   pt-widget-item .pt-unit static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑥〜⑧で pt-widget-item dark hover（name/balance/unit）が完成形に統一。 */
+[data-theme="dark"] .pt-widget-item:hover .pt-unit { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ sub-widget-item:hover .sub-widget-name dark enhanced hover（タイプ別 color + mix-md）
+   ライトモード color:primary/danger-text/warning + text-shadow(mix-sm)のダーク強化版。
+   end カラー変色 + mix-sm → mix-md に引き上げ
+   サブスクウィジェット行のサービス名テキストの hover 発光をダークモードで鮮明化。
+   sub-widget-name static dark glow（タイプ別 mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .sub-widget-item:hover            .sub-widget-name { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-name { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-name { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑩ sub-widget-item:hover .sub-widget-next dark enhanced hover（タイプ別 color + mix-md）
+   ライトモード color:primary/danger-text/warning + text-shadow(mix-sm)のダーク強化版。
+   end カラー変色 + mix-sm → mix-md に引き上げ
+   サブスクウィジェット行の次回支払日テキストの hover 発光をダークモードで鮮明化。
+   sub-widget-next static dark glow（タイプ別 mix-sm）と連動しダーク全状態の演出を完成形に統一。
+   ⑨⑩で sub-widget-item dark hover（name/next）が完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.23・全script/linkタグ?v=25.23に更新 */
+[data-theme="dark"] .sub-widget-item:hover            .sub-widget-next { color: var(--primary-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-next { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-next { color: var(--warning);     text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
