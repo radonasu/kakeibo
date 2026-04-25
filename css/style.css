@@ -37198,3 +37198,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード glow（danger-text mix-lg）のダーク強化版。expense-end に切替え mix-xl に引き上げ
    ヘルススコアDグレードバッジの hover 発光をダークモードで鮮明化。⑧〜⑫で hs-grade全5段階の hover 発光統一。 */
 [data-theme="dark"] .hs-grade-d:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent); }
+
+/* ============================================================
+   Sprint #927 — v25.31 dark hover 12箇所
+   ev-month-col-ev-mtot-income-dark-hover×1＋ev-month-col-ev-mtot-expense-dark-hover×1＋
+   ev-month-col-ev-prog-pct-dark-hover×1＋wk-bar-fill-dark-hover×2＋
+   hs-bar-fill-dark-hover×1＋debt-summary-total-amount-dark-hover×1＋
+   debt-bar-track-dark-hover×1＋ev-add-month-dark-hover×1＋
+   sim-preset-dark-hover×1＋md-cell-count-dark-hover×1＋pt-exp-bar-dark-hover×1
+   ============================================================ */
+
+/* ① [data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot
+   → dark enhanced color:income-end + text-shadow（income-end・mix-md・0 0 12px）
+   ライトモード color:success + text-shadow（success mix-sm 0 0 8px）のダーク強化版。
+   income-end に切替え mix-sm → mix-md + blur 8 → 12px に引き上げ
+   収支予定月次列の収入合計テキストの hover 発光をダークモードで鮮明化。
+   ev-income.ev-mtot static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot { color: var(--income-end); text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot
+   → dark enhanced color:expense-end + text-shadow（expense-end・mix-md・0 0 12px）
+   ライトモード color:danger-text + text-shadow（danger-text mix-sm 0 0 8px）のダーク強化版。
+   expense-end に切替え mix-sm → mix-md + blur 8 → 12px に引き上げ
+   収支予定月次列の支出合計テキストの hover 発光をダークモードで鮮明化。
+   ①②で ev-month-col dark hover ev-income/ev-expense.ev-mtot が完成形に統一。 */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot { color: var(--expense-end); text-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-prog-pct
+   → dark enhanced color:primary-end + brightness(1.15) + text-shadow（primary-end・mix-md・0 0 10px）
+   ライトモード color:primary + brightness(1.1) + text-shadow（primary mix-sm 0 0 8px）のダーク強化版。
+   primary-end に切替え brightness 1.1 → 1.15 + mix-sm → mix-md + blur 8 → 10px に引き上げ
+   収支予定月次列の達成率%テキストの hover 発光をダークモードで鮮明化。
+   ①〜③で ev-month-col dark hover テキスト演出（ev-income/ev-expense.ev-mtot/ev-prog-pct）が完成形に統一。 */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-prog-pct { color: var(--primary-end); filter: brightness(1.15); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .wk-bar-col:hover .wk-bar-fill → dark enhanced brightness（1.15）
+   ライトモード brightness(1.08)のダーク強化版。1.08 → 1.15 に大幅引き上げ
+   週別バーチャートの通常列フィルの hover 輝きをダークモードで鮮明化。 */
+[data-theme="dark"] .wk-bar-col:hover .wk-bar-fill { filter: brightness(1.15); }
+
+/* ⑤ [data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-bar-fill → dark enhanced brightness（1.2）
+   ライトモード brightness(1.1)のダーク強化版。1.1 → 1.2 に引き上げ
+   週別バーチャートの今日列フィルの hover 輝きをダークモードで鮮明化。
+   ④⑤で wk-bar-col dark hover bar-fill（通常/今日）が完成形に統一。 */
+[data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-bar-fill { filter: brightness(1.2); }
+
+/* ⑥ [data-theme="dark"] .hs-item:hover .hs-bar-fill → dark enhanced brightness(1.15) + box-shadow（hs-bar-color/primary-end・mix-lg・0 1px 10px）
+   ライトモード brightness(1.1) + box-shadow（hs-bar-color/primary mix-md 0 1px 6px）のダーク強化版。
+   primary-end（hs-bar-color fallback）に切替え + brightness 1.1 → 1.15 + mix-md → mix-lg + blur 6 → 10px に引き上げ
+   ヘルススコア項目バーフィルの hover 発光をダークモードで鮮明化。
+   hs-item:hover .hs-item-label/max/score dark hover（v25.x）と連動しヘルススコア項目全要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .hs-item:hover .hs-bar-fill { filter: brightness(1.15); box-shadow: 0 1px 10px color-mix(in srgb, var(--hs-bar-color, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* ⑦ [data-theme="dark"] .debt-summary-total:hover .summary-amount → dark enhanced text-shadow（白グロー強化・0 0 16px rgba 0.5）
+   debt-summary-monthly:hover .summary-amount dark hover（v25.22）と対称で統一。
+   static dark glow（0.22）から大幅引き上げ 負債合計サマリーカードの金額テキストの hover 発光をダークモードで鮮明化。
+   monthly/total 両カードの dark hover text-shadow が完成形に統一。 */
+[data-theme="dark"] .debt-summary-total:hover .summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+/* ⑧ [data-theme="dark"] .debt-card:hover .debt-bar-track → dark enhanced brightness（1.08）
+   ライトモード brightness(1.05)のダーク強化版。1.05 → 1.08 に引き上げ
+   負債カード返済進捗バー背景トラックの hover 輝きをダークモードで鮮明化。
+   debt-card:hover .debt-bar-fill dark hover（v25.x）と連動し負債バー全要素のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .debt-card:hover .debt-bar-track { filter: brightness(1.08); }
+
+/* ⑨ [data-theme="dark"] .ev-add-month:hover → dark enhanced text-shadow（白グロー強化・0 0 12px rgba 0.6）
+   ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
+   ev-add-month static dark glow（rgba 0.22）から大幅引き上げ + blur 8 → 12px に強化
+   収支予定月追加ボタンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .ev-add-month:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
+
+/* ⑩ [data-theme="dark"] .sim-preset:hover → dark enhanced text-shadow（白グロー強化・0 0 10px rgba 0.6）
+   ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
+   sim-preset static dark glow（rgba 0.15）から大幅引き上げ + blur 8 → 10px に強化
+   シミュレーションプリセットチップの hover 発光をダークモードで鮮明化。
+   sim-preset-active dark（rgba 0.45/0.20）と連動しシミュレーション全状態のダーク演出を完成形に統一。 */
+[data-theme="dark"] .sim-preset:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+
+/* ⑪ [data-theme="dark"] .md-cell-count:hover → dark enhanced box-shadow（primary-end・mix-sm・0 4px 14px）+ brightness(1.06)
+   ライトモード box-shadow(border-strong mix-lg 0 4px 12px) + brightness(1.04)のダーク強化版。
+   border-strong → primary-end（カラーを明確化）+ mix-lg → mix-sm（ダーク向けに最適化）+ blur 12 → 14px に引き上げ
+   + brightness 1.04 → 1.06 に引き上げ。月次ダッシュボードの件数セルの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] .md-cell-count:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); filter: brightness(1.06); }
+
+/* ⑫ [data-theme="dark"] .pt-card:hover .pt-exp-bar → dark enhanced brightness（1.08）
+   ライトモード brightness(1.05)のダーク強化版。1.05 → 1.08 に引き上げ
+   ポイントカード有効期限バー背景トラックの hover 輝きをダークモードで鮮明化。
+   pt-card:hover .pt-exp-bar-fill dark hover（v25.27）と連動しポイントカードバー全要素のダーク hover 演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.31・全script/linkタグ?v=25.31に更新 */
+[data-theme="dark"] .pt-card:hover .pt-exp-bar { filter: brightness(1.08); }
