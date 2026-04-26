@@ -37950,4 +37950,111 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    btn-notif-bell dark static glow（rgba 0.22・8px）のホバー強化版。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.39・全script/linkタグ?v=25.39に更新 */
 [data-theme="dark"] .btn-notif-bell:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.60); }
-[data-theme="dark"] .cat-chip:hover .cat-chip-name { color: var(--cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #936 / v25.40
+   btn-dark-toggle-dark-hover×1＋rc-close-dark-hover×1＋
+   ios-guide-close-dark-hover×1＋cal-panel-close-dark-hover×1＋
+   ci-close-dark-hover×1＋onboarding-cta-dark-hover×1＋
+   cat-chip-selected-dark-hover×1＋notif-mark-read-dark-hover×1＋
+   delete-cat-dark-hover×1＋opp-challenge-btn-dark-hover×1＋
+   wl-archive-item-wl-archive-name-dark-hover×1＋yr-widget-card-yr-avg-val-dark-hover×1
+   12箇所（v25.40）
+   ============================================================ */
+
+/* ① [data-theme="dark"] .btn-dark-toggle:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-lg）:
+   ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
+   primary-end color 変色を追加し mix-md→mix-lg に引き上げ blur 10→12px に強化。
+   サイドバーのダークモード切替ボタンの hover 発光をダークモードで鮮明化。
+   btn-dark-toggle dark static glow（primary-end mix-xs）のホバー強化版。
+   nav-item.active dark hover（primary-end mix-lg）と同パターンでサイドバー操作ボタン全体のダーク hover 演出を統一。 */
+[data-theme="dark"] .btn-dark-toggle:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ② [data-theme="dark"] .rc-close:hover → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text→expense-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   定期収支モーダルの閉じるボタンの hover 発光をダークモードで鮮明化。
+   rc-close dark static glow（expense-end mix-sm）のホバー強化版。
+   modal-close / delete-tx dark hover（expense-end mix-md）と同パターンで危険系閉じるボタンのダーク演出を統一。 */
+[data-theme="dark"] .rc-close:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .ios-guide-close:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.65）:
+   ライトモード white glow（rgba 0.5・10px）のダーク強化版。
+   blur 10→12px+rgba 0.5→0.65 に引き上げ。
+   iOSガイドモーダルの閉じるボタンの hover 発光をダークモードで鮮明化。
+   ios-guide-close dark static glow（rgba 0.18・8px）のホバー強化版。
+   install-banner-close dark hover（rgba 0.65・12px）と同パターンで白ボタン系ダーク hover を統一。 */
+[data-theme="dark"] .ios-guide-close:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+
+/* ④ [data-theme="dark"] .cal-panel-close:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   カレンダーパネルの閉じるボタンの hover 発光をダークモードで鮮明化。
+   cal-panel-close dark static glow（primary-end mix-sm）のホバー強化版。
+   ci-close dark hover（rgba・⑤）と連動しモーダル系閉じるボタンのダーク hover 演出を統一。 */
+[data-theme="dark"] .cal-panel-close:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .ci-close:hover → dark enhanced white text-shadow glow（0 0 10px rgba 0.65）:
+   ライトモード white glow（rgba 0.5・8px）のダーク強化版。
+   blur 8→10px+rgba 0.5→0.65 に引き上げ。
+   チェックインモーダルの閉じるボタンの hover 発光をダークモードで鮮明化。
+   ci-close dark static glow（rgba 0.18・8px）のホバー強化版。
+   ③ios-guide-close dark hover と同手法で白系閉じるボタンのダーク演出を統一。 */
+[data-theme="dark"] .ci-close:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.65); }
+
+/* ⑥ [data-theme="dark"] .onboarding-cta:hover → dark enhanced white text-shadow glow（0 0 14px rgba 0.70）:
+   ライトモード white glow（rgba 0.5・12px）のダーク強化版。
+   blur 12→14px+rgba 0.5→0.70 に引き上げ。
+   オンボーディングCTAボタンの hover 発光をダークモードで鮮明化。
+   onboarding-cta dark static glow（rgba 0.22・8px）のホバー強化版。
+   btn-primary dark hover（white glow）と連動しグラデ背景ボタンのダーク hover 演出を統一。 */
+[data-theme="dark"] .onboarding-cta:hover { text-shadow: 0 0 14px rgba(255, 255, 255, 0.70); }
+
+/* ⑦ [data-theme="dark"] .cat-chip.selected:hover → dark enhanced color:cat-color/primary-end+text-shadow glow（mix-lg・12px）:
+   ライトモード text-shadow glow（cat-color/primary mix-md）のダーク強化版。
+   cat-color fallback primary-end color 変色を追加し mix-md→mix-lg+blur 10→12px に引き上げ。
+   選択中カテゴリチップの hover 発光をダークモードで鮮明化。
+   cat-chip.selected dark static glow（cat-color primary-end mix-md）のホバー強化版。
+   cat-chip:hover .cat-chip-name dark hover（mix-md）より強化し選択状態 hover を鮮明に差別化。 */
+[data-theme="dark"] .cat-chip.selected:hover { color: var(--cat-color, var(--primary-end)); text-shadow: 0 0 12px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-lg), transparent); }
+
+/* ⑧ [data-theme="dark"] .notif-mark-read:hover → dark enhanced text-shadow glow（primary-end・mix-md）追加:
+   既存 dark hover rule（background/color:primary-end/border-color）に text-shadow を追加し hover 演出を強化。
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end に切替え mix-sm→mix-md に引き上げ。
+   通知「既読にする」ボタンの hover 発光をダークモードで完成形に統一。
+   notif-mark-read dark static glow（primary-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .notif-mark-read:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .delete-cat:hover → dark enhanced text-shadow glow（expense-end・mix-md）追加:
+   既存 dark hover rule（background:danger-bg/box-shadow）に text-shadow を追加し hover 演出を強化。
+   ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
+   danger-text→expense-end に切替え mix-sm→mix-md に引き上げ color 変色を追加。
+   カテゴリ削除ボタンの hover 発光をダークモードで完成形に統一。
+   delete-cat dark static glow（expense-end mix-sm）のホバー強化版。
+   delete-tx / rc-close dark hover（expense-end mix-md）と同パターンで破壊的操作ボタンのダーク hover を統一。 */
+[data-theme="dark"] .delete-cat:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .opp-challenge-btn:hover → dark enhanced color:opp-accent/primary-end+text-shadow glow（mix-md）:
+   ライトモード text-shadow glow（opp-accent/primary mix-sm）のダーク強化版。
+   opp-accent fallback primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   節約オポチュニティのチャレンジ追加ボタンの hover 発光をダークモードで鮮明化。
+   opp-challenge-btn dark static glow（opp-accent primary-end mix-sm）のホバー強化版。
+   opp-title/opp-desc dark hover と連動しオポチュニティカード内ボタンのダーク hover 演出を統一。 */
+[data-theme="dark"] .opp-challenge-btn:hover { color: var(--opp-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .wl-archive-item:hover .wl-archive-name → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
+   ライトモード text-shadow glow（success mix-sm）のダーク強化版。
+   success→income-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   ウィッシュリスト達成済みアーカイブの商品名テキストの hover 発光をダークモードで鮮明化。
+   wl-archive-item:hover .wl-archive-emoji dark drop-shadow（income-end）と連動し
+   アーカイブアイテム hover 全要素のダーク演出を完成形に統一。 */
+[data-theme="dark"] .wl-archive-item:hover .wl-archive-name { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .yr-widget-card:hover .yr-avg-val → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   年間ウィジェットカードの平均値テキストの hover 発光をダークモードで鮮明化。
+   yr-avg-label dark hover（primary-end）と連動し yr-widget-card 内テキスト hover のダーク演出を統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.40・全script/linkタグ?v=25.40に更新 */
+[data-theme="dark"] .yr-widget-card:hover .yr-avg-val { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
