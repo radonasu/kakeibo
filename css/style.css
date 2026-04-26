@@ -38622,3 +38622,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .btn-icon:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 /* ⑫ tx-th-sort:hover dark hover color追加（既存 text-shadow 強化） */
 [data-theme="dark"] .tx-th-sort:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #948 (v25.52): sim-savings-value・sim-savings-label・section-tab-active・auth-tab・empty-month-btn・btn-share・tx-table-income-amount・tx-table-expense-amount・dd-tx-income・dd-tx-expense・tg-table-expense・tg-table-income dark hover color追加 12箇所
+   Approach A継続: 既存 text-shadow のみの dark hover rule に color を追加し
+   hover 演出をフルセット（color + text-shadow）に強化。CSS-only実装・JS変更なし。
+   ============================================================ */
+/* ① sim-savings-banner:hover .sim-savings-value dark hover color追加（income-end mix-lg） */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { color: var(--income-end); text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+/* ② sim-savings-banner:hover .sim-savings-label dark hover color追加（income-end mix-sm） */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { color: var(--income-end); text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+/* ③ section-tab.is-active:hover dark hover color追加（primary-end mix-xl） */
+[data-theme="dark"] .section-tab.is-active:hover { color: var(--primary-end); text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
+/* ④ auth-tab:not(.active):hover dark hover color追加（primary-end mix-xs） */
+[data-theme="dark"] .auth-tab:not(.active):hover { color: var(--primary-end); text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+/* ⑤ empty-month-btn:hover dark hover color追加（primary-end mix-sm） */
+[data-theme="dark"] .empty-month-btn:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+/* ⑥ btn-share:hover dark hover color追加（primary-end mix-md） */
+[data-theme="dark"] .btn-share:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* ⑦ tx-table tbody tr[data-type="income"]:hover td.amount dark hover color追加（income-end mix-md） */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td.amount { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+/* ⑧ tx-table tbody tr[data-type="expense"]:hover td.amount dark hover color追加（expense-end mix-md） */
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ⑨ dd-tx-row:hover .dd-tx-amount.income dark hover color追加（income-end mix-md） */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+/* ⑩ dd-tx-row:hover .dd-tx-amount.expense dark hover color追加（expense-end mix-md） */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ⑪ tg-table tbody tr:hover td.expense dark hover color追加（expense-end mix-md） */
+[data-theme="dark"] .tg-table tbody tr:hover td.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ⑫ tg-table tbody tr:hover td.income dark hover color追加（income-end mix-md） */
+[data-theme="dark"] .tg-table tbody tr:hover td.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
