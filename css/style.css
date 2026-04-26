@@ -38260,3 +38260,55 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ev-card-name/amount dark hover（ev-accent/primary-end・v25.36）と連動し収支予定カード内テキスト全体のダーク hover 演出を完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.42・全script/linkタグ?v=25.42に更新 */
 [data-theme="dark"] .ev-card:hover .ev-cat-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* Sprint #939 (v25.43): wk-cell-label-dark-hover×3＋yr-prev-badge-dark-hover×2＋dow-td3-dark-hover×1＋dow-pct-badge-dark-hover×3＋dow-mini-bar-fill-dark-hover×1＋hs-grade-b/c-dark-hover-text×2 12箇所
+   ①wk-cell-label nth-child(1): 週間サマリー支出セルのラベルテキストにダークモード hover 発光追加。ライトモード color:danger-text（v23.x）の dark enhanced 版。expense-end に変色+mix-md glow でセル内ラベル・値・sub・unit のダーク hover 演出を統一
+   ②wk-cell-label nth-child(2): 週間サマリー残高セルのラベルテキストにダークモード hover 発光追加。primary-end に変色+mix-md glow
+   ③wk-cell-label nth-child(3): 週間サマリー収入セルのラベルテキストにダークモード hover 発光追加。income-end に変色+mix-md glow。①〜③で wk-cell-label の dark hover 演出が wk-cell-value/sub/unit（v25.xx）と連動し完成形に統一
+   ④yr-cell-income:hover .yr-prev-badge: 年間収入セルの前年比バッジにダークモード hover 発光追加。ライトモード text-shadow（v23.83）の dark enhanced 版。income-end 変色+mix-md glow。yr-cell-income hover の value/label/sub/unit dark glow（各v25.xx）と連動し収入セル全テキストのダーク hover 演出を完成形に統一
+   ⑤yr-cell-expense:hover .yr-prev-badge: 年間支出セルの前年比バッジにダークモード hover 発光追加。expense-end 変色+mix-md glow。④⑤で yr-cell-income/expense の yr-prev-badge dark hover が完成形に統一。yr-cell-savings-* の yr-prev-badge dark hover（v25.xx）と連動し全年次セルの前年比バッジ演出が統一
+   ⑥dow-table-row:hover td:nth-child(3): 曜日別統計テーブルの支出額列（3列目）にダークモード hover 発光追加。ライトモード text-shadow expense mix-sm（v23.xx）の dark enhanced 版。expense-end 変色+mix-md glow。td2/td4 dark hover（v25.36）と連動し曜日行全数値列のダーク hover 演出を完成形に統一
+   ⑦dow-table-row:hover .dow-pct-high: 曜日別統計の「高」率バッジにダークモード hover 発光追加。ライトモード text-shadow danger-text mix-sm（v23.xx）の dark enhanced 版。expense-end で mix-md に引き上げ
+   ⑧dow-table-row:hover .dow-pct-mid: 「中」率バッジにダークモード hover 発光追加。warning mix-md glow
+   ⑨dow-table-row:hover .dow-pct-low: 「低」率バッジにダークモード hover 発光追加。income-end mix-md glow。⑦〜⑨で dow-pct-badge 全バリアントのダーク hover 演出が完成形に統一
+   ⑩dow-table-row:hover .dow-mini-bar-fill: 曜日別ミニバーのダークモード hover 強化。ライトモード brightness(1.1)+box-shadow（v23.xx）の dark enhanced 版。brightness(1.18)+box-shadow(mix-md)に引き上げ。dow-row-color に追従しバー色でホバー時に輝く演出
+   ⑪hs-grade-b:hover text-shadow enhanced: ヘルススコアBグレードバッジのダークモード hover text-shadow 強化。static dark glow（info-text mix-md 0 0 7px）のホバー強化版。0 0 12px mix-lg に引き上げ。box-shadow dark hover（v25.37）と連動しバッジ全演出がダーク hover で完成形に統一
+   ⑫hs-grade-c:hover text-shadow enhanced: CグレードバッジのダークモードHover text-shadow 強化。warning mix-lg 0 0 12px。⑪⑫で hs-grade B/C のダーク hover text-shadow が完成形に統一
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.43・全script/linkタグ?v=25.43に更新 */
+
+/* ① wk-cell-label nth-child(1) dark enhanced hover color:expense-end+text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ② wk-cell-label nth-child(2) dark enhanced hover color:primary-end+text-shadow（primary-end・mix-md・0 0 10px） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ③ wk-cell-label nth-child(3) dark enhanced hover color:income-end+text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-label { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ④ yr-cell-income:hover .yr-prev-badge dark enhanced color:income-end+text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .yr-cell-income:hover  .yr-prev-badge { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑤ yr-cell-expense:hover .yr-prev-badge dark enhanced color:expense-end+text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .yr-cell-expense:hover .yr-prev-badge { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ dow-table-row:hover td:nth-child(3) dark enhanced color:expense-end+text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .dow-table-row:hover td:nth-child(3) { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑦ dow-table-row:hover .dow-pct-high dark enhanced text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-high { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑧ dow-table-row:hover .dow-pct-mid dark enhanced text-shadow（warning・mix-md・0 0 10px） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-mid  { text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+
+/* ⑨ dow-table-row:hover .dow-pct-low dark enhanced text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-low  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑩ dow-table-row:hover .dow-mini-bar-fill dark enhanced brightness(1.18)+box-shadow（dow-row-color/primary-end・mix-md・0 1px 10px） */
+[data-theme="dark"] .dow-table-row:hover .dow-mini-bar-fill { filter: brightness(1.18); box-shadow: 0 1px 10px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑪ hs-grade-b:hover dark enhanced text-shadow（info-text・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
+[data-theme="dark"] .hs-grade-b:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--info-text) var(--mix-lg), transparent); }
+
+/* ⑫ hs-grade-c:hover dark enhanced text-shadow（warning・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版
+   ⑪⑫で hs-grade B/C のダーク hover text-shadow 演出が完成形に統一。 */
+[data-theme="dark"] .hs-grade-c:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
