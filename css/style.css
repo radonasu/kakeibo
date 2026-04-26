@@ -38434,3 +38434,53 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ cal-sum-item:hover .cal-sum-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
    ライトモード text-shadow（primary mix-sm v23.68）のダーク強化版。カレンダー月次合計行ホバー時のラベルテキストにダーク発光演出を追加 */
 [data-theme="dark"] .cal-sum-item:hover .cal-sum-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* Sprint #942 (v25.46): cal-sum-label-income-dark-hover×1＋cal-sum-label-expense-dark-hover×1＋dow-label-cell-dark-hover×1＋hs-prev-badge-up-dark-hover×1＋hs-prev-badge-down-dark-hover×1＋ct-stat-sub-dark-hover×1＋ch-sum-active-label-dark-hover×1＋ch-sum-total-label-dark-hover×1＋step-icon-dark-hover×1＋fv-fixed-val-dark-hover×1＋fv-var-val-dark-hover×1＋fv-month-nth4-dark-hover×1 12箇所
+   ①cal-sum-item:has(.income):hover .cal-sum-label: カレンダー収入合計行ホバー時ラベルにタイプ別ダーク発光。ライトモード glow（success mix-sm v23.xx）の dark enhanced 版。income-end 変色+mix-md glow。cal-sum-label generic dark hover（v25.45⑫）の収入バリアント
+   ②cal-sum-item:has(.expense):hover .cal-sum-label: カレンダー支出合計行ホバー時ラベルにタイプ別ダーク発光。expense-end 変色+mix-md glow。①②で cal-sum-label 全バリアントのダーク hover 演出が完成形に統一
+   ③dow-table-row:hover .dow-label-cell: 曜日別集計テーブル行ホバー時の曜日ラベルにダーク発光。ライトモード glow（primary mix-sm v23.xx）の dark enhanced 版。primary-end 変色+mix-md glow
+   ④health-score-card:hover .hs-prev-badge.hs-trend-up: 健康スコアカードホバー時の前回比上昇バッジにダーク発光。ライトモード glow（success mix-sm v23.xx）の dark enhanced 版。income-end 変色+mix-md glow
+   ⑤health-score-card:hover .hs-prev-badge.hs-trend-down: 前回比下降バッジにダーク発光。expense-end 変色+mix-md glow。④⑤で hs-prev-badge 全バリアントのダーク hover 演出が完成形に統一
+   ⑥ct-stat-card:hover .ct-stat-sub: カテゴリ傾向統計カードホバー時のサブテキストにダーク発光。ライトモード glow（primary mix-sm v23.xx）の dark enhanced 版。primary-end 変色+mix-md glow
+   ⑦ch-sum-active:hover .ch-summary-label: チャレンジ進行中サマリーカードホバー時のラベルにダーク白グロー強化。ch-sum-achieved dark hover（v25.38④）と同パターン。0 0 12px rgba(255,255,255,0.5)
+   ⑧ch-sum-total:hover .ch-summary-label: チャレンジ合計サマリーカードホバー時のラベルにダーク白グロー強化。⑦⑧で ch-sum-active/total label dark hover が完成形に統一
+   ⑨step-card:hover .step-icon: ステップカードホバー時のアイコン絵文字にダーク drop-shadow強化。ライトモード primary mix-md drop-shadow（v22.x）の dark enhanced 版。primary-end mix-md に引き上げ
+   ⑩fv-month-table tbody tr:hover .fv-fixed-val: 財務予測月別テーブル行ホバー時の固定費値にダーク発光。ライトモード glow（primary mix-sm v23.75）の dark enhanced 版。primary-end 変色+mix-md glow
+   ⑪fv-month-table tbody tr:hover .fv-var-val: 変動費値にダーク発光。income-end 変色+mix-md glow。fv-var-val static dark（income-end mix-sm）のホバー強化版
+   ⑫fv-month-table tbody tr:hover td:nth-child(4): 合計列セルにダーク発光。primary-end 変色+mix-md glow。⑩〜⑫で fv-month-table dark hover（fixed-val/var-val/合計列）が完成形に統一 */
+
+/* ① cal-sum-item:has(.income):hover .cal-sum-label dark enhanced color:income-end+text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .cal-sum-item:has(.income):hover .cal-sum-label { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ② cal-sum-item:has(.expense):hover .cal-sum-label dark enhanced color:expense-end+text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .cal-sum-item:has(.expense):hover .cal-sum-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ③ dow-table-row:hover .dow-label-cell dark enhanced color:primary-end+text-shadow（primary-end・mix-md・0 0 10px） */
+[data-theme="dark"] .dow-table-row:hover .dow-label-cell { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ④ health-score-card:hover .hs-prev-badge.hs-trend-up dark enhanced color:income-end+text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .health-score-card:hover .hs-prev-badge.hs-trend-up { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑤ health-score-card:hover .hs-prev-badge.hs-trend-down dark enhanced color:expense-end+text-shadow（expense-end・mix-md・0 0 10px） */
+[data-theme="dark"] .health-score-card:hover .hs-prev-badge.hs-trend-down { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ ct-stat-card:hover .ct-stat-sub dark enhanced color:primary-end+text-shadow（primary-end・mix-md・0 0 10px） */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-sub { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ ch-sum-active:hover .ch-summary-label dark enhanced white glow（0 0 12px rgba(255,255,255,0.5)） */
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑧ ch-sum-total:hover .ch-summary-label dark enhanced white glow（0 0 12px rgba(255,255,255,0.5)） */
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+
+/* ⑨ step-card:hover .step-icon dark enhanced drop-shadow（primary-end・mix-md・0 2px 10px） */
+[data-theme="dark"] .step-card:hover .step-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+
+/* ⑩ fv-month-table tbody tr:hover .fv-fixed-val dark enhanced color:primary-end+text-shadow（primary-end・mix-md・0 0 10px） */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-fixed-val { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ fv-month-table tbody tr:hover .fv-var-val dark enhanced color:income-end+text-shadow（income-end・mix-md・0 0 10px） */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-var-val { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑫ fv-month-table tbody tr:hover td:nth-child(4) dark enhanced color:primary-end+text-shadow（primary-end・mix-md・0 0 10px） */
+[data-theme="dark"] .fv-month-table tbody tr:hover td:nth-child(4) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
