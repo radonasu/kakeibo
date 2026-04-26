@@ -37856,3 +37856,98 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カテゴリチップ hover のアイコン・名称が一体的にカテゴリカラーで輝くダーク完成形演出に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.38・全script/linkタグ?v=25.38に更新 */
 [data-theme="dark"] .cat-chip:hover .cat-chip-name { color: var(--cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #935 / v25.39
+   nav-item-not-active-dark-hover×1＋nav-item-active-dark-hover×1＋
+   btn-sidebar-logout-dark-hover×1＋btn-account-add-dark-hover×1＋
+   hamburger-dark-hover×1＋ci-ok-btn-dark-hover×1＋
+   install-banner-close-dark-hover×1＋btn-primary-dark-hover×1＋
+   tx-sort-badge-dark-hover×1＋notif-info-body-dark-hover×1＋
+   btn-link-dark-hover×1＋btn-notif-bell-dark-hover×1
+   12箇所（v25.39）
+   ============================================================ */
+
+/* ① [data-theme="dark"] .nav-item:not(.active):hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary-end mix-sm）のダーク強化版。
+   primary-end color 変色を追加し mix-sm→mix-md に引き上げ
+   サイドバー非アクティブナビ項目の hover 発光をダークモードで鮮明化。
+   nav-item:not(.active) dark static glow（primary-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .nav-item:not(.active):hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .nav-item.active:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-lg）:
+   ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
+   primary-end color 変色を追加し mix-md→mix-lg に引き上げ
+   サイドバーアクティブナビ項目の hover 発光をダークモードでさらに鮮明化。
+   nav-item.active dark static glow（primary-end mix-lg）のホバー強化版。①②でサイドバーナビ全状態のダーク hover 完成。 */
+[data-theme="dark"] .nav-item.active:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ③ [data-theme="dark"] .btn-sidebar-logout:hover → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
+   ライトモード text-shadow glow（expense mix-sm）のダーク強化版。
+   expense→expense-end color 変色を追加し mix-sm→mix-md に引き上げ
+   サイドバーログアウトボタンの hover 発光をダークモードで鮮明化。
+   btn-sidebar-logout dark static glow（expense-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .btn-sidebar-logout:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .btn-account-add:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.65）:
+   ライトモード white glow（rgba 0.5・8px）のダーク強化版。
+   blur 8→12px+rgba 0.5→0.65 に引き上げ
+   サイドバーアカウント追加「＋」ボタンの hover 発光をダークモードで鮮明化。
+   btn-account-add dark static glow（rgba 0.22・8px）のホバー強化版。 */
+[data-theme="dark"] .btn-account-add:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+
+/* ⑤ [data-theme="dark"] #hamburger:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-lg）:
+   ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
+   primary-end color 変色を追加し mix-md→mix-lg に引き上げ
+   モバイルヘッダーのハンバーガーメニューボタンの hover 発光をダークモードで鮮明化。 */
+[data-theme="dark"] #hamburger:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ⑥ [data-theme="dark"] .ci-ok-btn:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.75）:
+   ライトモード white glow（rgba 0.6・10px）のダーク強化版。
+   blur 10→12px+rgba 0.6→0.75 に引き上げ
+   チェックインOKボタンの hover 発光をダークモードで鮮明化。
+   ci-ok-btn dark static glow（rgba 0.28・9px）のホバー強化版。 */
+[data-theme="dark"] .ci-ok-btn:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.75); }
+
+/* ⑦ [data-theme="dark"] .install-banner-close:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.65）:
+   ライトモード white glow（rgba 0.55・10px）のダーク強化版。
+   blur 10→12px+rgba 0.55→0.65 に引き上げ
+   PWAインストールバナー閉じるボタンの hover 発光をダークモードで鮮明化。
+   install-banner-close dark static glow（rgba 0.50・9px）のホバー強化版。 */
+[data-theme="dark"] .install-banner-close:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+
+/* ⑧ [data-theme="dark"] .btn-primary:hover → dark enhanced white text-shadow glow（dual-layer 強化）:
+   ライトモード text-shadow（0 1px 6px rgba 0.45 + 0 0 20px rgba 0.18）のダーク強化版。
+   両レイヤーの rgba 値を引き上げ（0.55+0.28）プライマリボタンの hover 白グローをダークモードで鮮明化。
+   btn-primary:hover dark box-shadow（v25.0x）と連動しボタン全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .btn-primary:hover { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28); }
+
+/* ⑨ [data-theme="dark"] .tx-sort-badge:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ
+   取引ソートバッジの hover 発光をダークモードで鮮明化。
+   tx-sort-badge dark hover background（既存）と連動しバッジ全体のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .tx-sort-badge:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .notif-item.notif-type-info:hover .notif-item-body → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ
+   通知アイテム（info タイプ）本文テキストの hover 発光をダークモードで鮮明化。
+   notif-type-danger/warning/success body dark hover（v25.37）と連動し notif-item-body 全バリアントのダーク hover 完成。 */
+[data-theme="dark"] .notif-item.notif-type-info:hover .notif-item-body { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .btn-link:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ
+   汎用テキストリンクボタンの hover 発光をダークモードで鮮明化。
+   btn-link dark static glow（primary-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .btn-link:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .btn-notif-bell:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.60）:
+   ライトモード white glow（rgba 0.5・8px）のダーク強化版。
+   blur 8→12px+rgba 0.5→0.60 に引き上げ
+   通知ベルボタンの hover 発光をダークモードで鮮明化。
+   btn-notif-bell dark static glow（rgba 0.22・8px）のホバー強化版。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.39・全script/linkタグ?v=25.39に更新 */
+[data-theme="dark"] .btn-notif-bell:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.60); }
+[data-theme="dark"] .cat-chip:hover .cat-chip-name { color: var(--cat-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--primary-end)) var(--mix-md), transparent); }
