@@ -38738,3 +38738,42 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { filter: brightness(1.12); }
 /* ⑫ pt-summary-card:hover .pt-summary-amount dark brightness(1.12) — white color+text-shadow（v25.48）と連動しダーク hover 輝度強化 */
 [data-theme="dark"] .pt-summary-card:hover .pt-summary-amount { filter: brightness(1.12); }
+
+/* ============================================================
+   Sprint #954 (v25.58): Approach C継続 — dark hover に filter:brightness 追加
+   sim-savings-value×1・sim-savings-label×1・pt-urgent-badge×1・pt-soon-badge×1・
+   ct-row-total×1・tg-table td.expense×1・tg-table td.income×1・
+   rpt-month-row td.income×1・rpt-month-row td.expense×1・
+   goal-achieved-badge×1・ci-score-badge×1・pm-table-row td.expense×1
+   dark hover 既存ルールに filter:brightness(1.08/1.1) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   transition が filter を含まない要素は transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition に filter を追加（pt-urgent-badge / pt-soon-badge） */
+.pt-urgent-badge { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-soon-badge   { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* ① sim-savings-banner:hover .sim-savings-value dark brightness(1.1) — income-end color+text-shadow（v25.55）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { filter: brightness(1.1); }
+/* ② sim-savings-banner:hover .sim-savings-label dark brightness(1.1) — income-end color+text-shadow（v25.55）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); }
+/* ③ pt-card:hover .pt-urgent-badge dark brightness(1.08) — expense-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pt-card:hover .pt-urgent-badge { filter: brightness(1.08); }
+/* ④ pt-card:hover .pt-soon-badge dark brightness(1.08) — warning color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pt-card:hover .pt-soon-badge { filter: brightness(1.08); }
+/* ⑤ ct-table tbody tr:hover .ct-row-total dark brightness(1.1) — primary-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ct-table tbody tr:hover .ct-row-total { filter: brightness(1.1); }
+/* ⑥ tg-table tbody tr:hover td.expense dark brightness(1.08) — expense-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .tg-table tbody tr:hover td.expense { filter: brightness(1.08); }
+/* ⑦ tg-table tbody tr:hover td.income dark brightness(1.08) — income-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .tg-table tbody tr:hover td.income { filter: brightness(1.08); }
+/* ⑧ rpt-month-row.is-clickable:hover td.income dark brightness(1.08) — income-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover td.income { filter: brightness(1.08); }
+/* ⑨ rpt-month-row.is-clickable:hover td.expense dark brightness(1.08) — expense-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rpt-month-row.is-clickable:hover td.expense { filter: brightness(1.08); }
+/* ⑩ goal-card:hover .goal-achieved-badge dark brightness(1.08) — income-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .goal-card:hover .goal-achieved-badge { filter: brightness(1.08); }
+/* ⑪ ci-score-row:hover .ci-score-badge dark brightness(1.08) — primary-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ci-score-row:hover .ci-score-badge { filter: brightness(1.08); }
+/* ⑫ pm-table-row:hover td.expense dark brightness(1.08) — expense-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pm-table-row:hover td.expense { filter: brightness(1.08); }
