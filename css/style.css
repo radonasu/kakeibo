@@ -38885,3 +38885,49 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ch-emoji-btn:hover { filter: brightness(1.1); }
 /* ⑫ adv-filter-toggle:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
 [data-theme="dark"] .adv-filter-toggle:hover { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #958 (v25.62): Approach C継続 — dark hover に filter:brightness 追加
+   stp-config-summary×1・notif-toggle-label×1・recurring-toggle-label×1・
+   sb-select-all-wrap×1・stp-help-summary×1・modal-details summary×1・
+   goal-achieved-summary×1・sub-inactive-section summary×1・
+   wl-archive-summary×1・ch-archive-summary×1・debt-archive-summary×1・
+   adv-filter-clear×1
+   dark hover 既存ルールに filter:brightness(1.1) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   modal-details summary / goal-achieved-summary / sub-inactive-section summary /
+   wl-archive-summary / ch-archive-summary / debt-archive-summary の6要素は
+   transition に filter 未含有のため transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition に filter を追加（modal-details summary / goal-achieved-summary / sub-inactive-section summary / wl-archive-summary / ch-archive-summary / debt-archive-summary） */
+.modal-details summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-achieved-summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-inactive-section summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wl-archive-summary { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-archive-summary { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-archive-summary { transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* ① stp-config-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .stp-config-summary:hover { filter: brightness(1.1); }
+/* ② notif-toggle-label:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .notif-toggle-label:hover { filter: brightness(1.1); }
+/* ③ recurring-toggle-label:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化。②③で notif/recurring-toggle-label のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .recurring-toggle-label:hover { filter: brightness(1.1); }
+/* ④ sb-select-all-wrap:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sb-select-all-wrap:hover { filter: brightness(1.1); }
+/* ⑤ stp-help-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化。①⑤で stp-config/help-summary のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .stp-help-summary:hover { filter: brightness(1.1); }
+/* ⑥ modal-details summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.87）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .modal-details summary:hover { filter: brightness(1.1); }
+/* ⑦ goal-achieved-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.87）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .goal-achieved-summary:hover { filter: brightness(1.1); }
+/* ⑧ sub-inactive-section summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.87）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sub-inactive-section summary:hover { filter: brightness(1.1); }
+/* ⑨ wl-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.85）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .wl-archive-summary:hover { filter: brightness(1.1); }
+/* ⑩ ch-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.85）と連動しダーク hover 輝度強化。⑨⑩で wl/ch-archive-summary のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-archive-summary:hover { filter: brightness(1.1); }
+/* ⑪ debt-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（v23.89）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .debt-archive-summary:hover { filter: brightness(1.1); }
+/* ⑫ adv-filter-clear:hover dark brightness(1.1) — expense-end color+text-shadow（v23.85）と連動しダーク hover 輝度強化。⑥〜⑫で summary系要素（modal-details/goal-achieved/sub-inactive/wl-archive/ch-archive/debt-archive）とadv-filter-clearのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .adv-filter-clear:hover { filter: brightness(1.1); }
