@@ -38652,3 +38652,44 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tg-table tbody tr:hover td.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 /* ⑫ tg-table tbody tr:hover td.income dark hover color追加（income-end mix-md） */
 [data-theme="dark"] .tg-table tbody tr:hover td.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ============================================================
+   Sprint #952 (v25.56): Approach C — dark hover に filter:brightness 追加
+   wl-card-name×1・wl-card-price×1・goal-saved×1・goal-name×1・
+   rc-item-name×1・rc-item-meta×1・rc-item-amount×2（inc/exp）・
+   budget-cat-name×2（normal/over）・sub-widget-amount×1・ev-widget-amount×1
+   dark hover text-shadow 既存ルールに filter:brightness(1.1/1.12) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   transition が filter を含まない要素は transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition に filter を追加（wl-card-name / goal-name / rc-item-name / rc-item-meta / budget-cat-name） */
+.wl-card-name  { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-name     { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item-name  { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.rc-item-meta  { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.budget-cat-name { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* ① wl-card:hover .wl-card-name dark brightness(1.1) — wl-accent/primary-end color+text-shadow（v25.11）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .wl-card:hover .wl-card-name { filter: brightness(1.1); }
+/* ② wl-card:hover .wl-card-price dark brightness(1.1) — wl-accent/primary-end color+text-shadow（v25.10）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .wl-card:hover .wl-card-price { filter: brightness(1.1); }
+/* ③ goal-card:hover .goal-saved dark brightness(1.12) — goal-accent/primary-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .goal-card:hover .goal-saved { filter: brightness(1.12); }
+/* ④ goal-card:hover .goal-name dark brightness(1.1) — goal-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .goal-card:hover .goal-name { filter: brightness(1.1); }
+/* ⑤ rc-item:hover .rc-item-name dark brightness(1.1) — primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rc-item:hover .rc-item-name { filter: brightness(1.1); }
+/* ⑥ rc-item:hover .rc-item-meta dark brightness(1.1) — primary-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rc-item:hover .rc-item-meta { filter: brightness(1.1); }
+/* ⑦ rc-item:hover:has(.rc-type-inc) .rc-item-amount dark brightness(1.12) — income-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rc-item:hover:has(.rc-type-inc) .rc-item-amount { filter: brightness(1.12); }
+/* ⑧ rc-item:hover:has(.rc-type-exp) .rc-item-amount dark brightness(1.12) — expense-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .rc-item:hover:has(.rc-type-exp) .rc-item-amount { filter: brightness(1.12); }
+/* ⑨ budget-item:hover .budget-cat-name dark brightness(1.1) — primary-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .budget-item:hover .budget-cat-name { filter: brightness(1.1); }
+/* ⑩ budget-item:has(.budget-fill.over):hover .budget-cat-name dark brightness(1.1) — expense-end color+text-shadow（v25.01）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-cat-name { filter: brightness(1.1); }
+/* ⑪ sub-widget-item:hover .sub-widget-amount dark brightness(1.1) — primary-end color+text-shadow（v25.07）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sub-widget-item:hover .sub-widget-amount { filter: brightness(1.1); }
+/* ⑫ ev-widget-item:hover .ev-widget-amount dark brightness(1.1) — ev-accent/primary-end color+text-shadow（v25.10）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ev-widget-item:hover .ev-widget-amount { filter: brightness(1.1); }

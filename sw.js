@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.55'; // v25.55: 全128箇所 dark hover text-shadow rule に color 一括追加完了（Approach A 完結）
+const CACHE_NAME = 'kakeibo-v25.56'; // v25.56: Approach C — dark hover に filter:brightness 追加（wl-card-name/price・goal-saved/name・rc-item-name/meta/amount×2・budget-cat-name×2・sub-widget-amount・ev-widget-amount 12箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
