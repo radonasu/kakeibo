@@ -38312,3 +38312,63 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ hs-grade-c:hover dark enhanced text-shadow（warning・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版
    ⑪⑫で hs-grade B/C のダーク hover text-shadow 演出が完成形に統一。 */
 [data-theme="dark"] .hs-grade-c:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
+
+/* Sprint #940 (v25.44): hs-grade-s-dark-hover×1＋hs-grade-a-dark-hover×1＋hs-grade-d-dark-hover×1＋tx-th-sort-dark-hover×1＋hs-trend-label-dark-hover×1＋wl-archive-date-dark-hover×1＋sf-chip-dark-hover×1＋fv-month-cell-dark-hover×1＋date-quick-btn-dark-hover×1＋smi-balance-smi-label-dark-hover×2＋smi-balance-smi-amount-income-dark-hover×1 12箇所
+   ①hs-grade-s:hover text-shadow enhanced: SグレードバッジのダークHover text-shadow 強化。static dark glow（primary-end mix-md 0 0 7px）のホバー強化版。0 0 12px mix-lg に引き上げ。hs-grade-b/c dark hover（v25.43）と連動しSグレードのダーク hover 演出を完成形に統一
+   ②hs-grade-a:hover text-shadow enhanced: AグレードバッジのダークHover text-shadow 強化。static dark glow（income-end mix-md 0 0 7px）のホバー強化版。0 0 12px mix-lg に引き上げ。①②でhs-grade S/A の text-shadow dark hover が完成形
+   ③hs-grade-d:hover text-shadow enhanced: DグレードバッジのダークHover text-shadow 強化。static dark glow（expense-end mix-md 0 0 7px）のホバー強化版。0 0 12px mix-lg に引き上げ。①〜③でhs-grade全バリアント（S/A/B/C/D）のダーク hover text-shadow 演出が完成形に統一
+   ④tx-th-sort:hover dark text-shadow: 取引テーブルソートヘッダのダークモード hover text-shadow 追加。ライトモード glow（primary mix-sm v23.86）の dark enhanced 版。primary-end に変色+mix-md に引き上げ。tx-th-sort static dark glow（v25.22）と連動しヘッダ全状態のダーク演出が完成形に統一
+   ⑤health-score-card:hover .hs-trend-label dark text-shadow: ヘルスチェックカードのトレンドラベルにダーク hover 発光追加。primary-end 変色+mix-md glow。hs-spark-label/hs-spark-label-now/hs-score-unit dark hover（v25.11）と連動しカード内ラベル全体のダーク hover 演出が完成形に統一
+   ⑥wl-archive-item:hover .wl-archive-date dark text-shadow: ウィッシュリストアーカイブアイテムの日付テキストにダーク hover 発光追加。ライトモード glow（success mix-sm v23.xx）の dark enhanced 版。income-end 変色+mix-md glow。wl-archive-name/price dark hover（v25.40/41）と連動しアーカイブアイテム全テキストのダーク hover 演出が完成形に統一
+   ⑦sf-chip:hover dark text-shadow: サブスクフィルターチップのダーク hover text-shadow 追加。ライトモード glow（primary mix-sm v23.xx）の dark enhanced 版。primary-end 変色+mix-md glow
+   ⑧fv-month-table tbody tr:hover .fv-month-cell dark text-shadow: 月別固定費テーブルの行ホバー時セルテキストにダーク hover 発光追加。ライトモード glow（primary mix-sm v23.xx）の dark enhanced 版。primary-end mix-md に引き上げ。fv-month-cell static dark glow（v25.22）のホバー強化版
+   ⑨date-quick-btn:hover dark text-shadow: 日付クイックボタンのダーク hover に text-shadow を追加。既存 dark hover rule（border-color/color:primary）に text-shadow glow（primary-end mix-md）を追加し hover 演出を強化
+   ⑩smi-balance:hover .smi-label dark text-shadow: 家計簿サマリー残高行のラベルにダーク hover 発光追加。ライトモード glow（primary mix-sm v23.xx）の dark enhanced 版。primary-end 変色+mix-md glow。smi-balance static dark glow（v25.22）のホバー強化版
+   ⑪smi-balance:has(.smi-amount.expense):hover .smi-label dark text-shadow: 支出型残高行のラベルにダーク hover 発光追加。expense-end 変色+mix-md glow。⑩⑪で smi-label 全バリアントのダーク hover 演出が完成形に統一
+   ⑫smi-balance:hover .smi-amount.income dark text-shadow: 残高行の収入金額テキストにダーク hover 発光追加。income-end 変色+mix-md glow。smi-income/expense hover（v25.xx）と連動し残高行内全テキストのダーク hover 演出が完成形に統一
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.44・全script/linkタグ?v=25.44に更新 */
+
+/* ① hs-grade-s:hover dark enhanced text-shadow（primary-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
+[data-theme="dark"] .hs-grade-s:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+
+/* ② hs-grade-a:hover dark enhanced text-shadow（income-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
+[data-theme="dark"] .hs-grade-a:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+
+/* ③ hs-grade-d:hover dark enhanced text-shadow（expense-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版
+   ①〜③で hs-grade S/A/D のダーク hover text-shadow が完成形に統一。B/C（v25.43）と合わせ全グレードのダーク hover 演出が完成形に統一。 */
+[data-theme="dark"] .hs-grade-d:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+
+/* ④ tx-th-sort:hover dark enhanced text-shadow（primary-end・mix-md・0 0 10px）: ライトモード glow（primary mix-sm v23.86）のダーク強化版 */
+[data-theme="dark"] .tx-th-sort:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑤ health-score-card:hover .hs-trend-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   hs-spark-label/hs-spark-label-now/hs-score-unit dark hover（v25.11）と連動しヘルスチェックカード内ラベル全体のダーク hover 演出を完成形に統一 */
+[data-theme="dark"] .health-score-card:hover .hs-trend-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ wl-archive-item:hover .wl-archive-date dark enhanced color:income-end+text-shadow glow（income-end・mix-md・0 0 10px）:
+   ライトモード glow（success mix-sm v23.xx）のダーク強化版。wl-archive-name/price dark hover（v25.40/41）と連動し完成形に統一 */
+[data-theme="dark"] .wl-archive-item:hover .wl-archive-date { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* ⑦ sf-chip:hover dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード glow（primary mix-sm v23.xx）のダーク強化版 */
+[data-theme="dark"] .sf-chip:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ fv-month-table tbody tr:hover .fv-month-cell dark enhanced text-shadow（primary-end・mix-md・0 0 10px）:
+   ライトモード glow（primary mix-sm v23.xx）のダーク強化版。fv-month-cell static dark glow（v25.22）のホバー強化版 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-month-cell { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ date-quick-btn:hover dark enhanced text-shadow（primary-end・mix-md・0 0 10px）:
+   既存 dark hover rule（border-color/color:primary・line 15049）に text-shadow glow を追加 */
+[data-theme="dark"] .date-quick-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ smi-balance:hover .smi-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード glow（primary mix-sm v23.xx）のダーク強化版。smi-balance static dark glow（v25.22）のホバー強化版 */
+[data-theme="dark"] .smi-balance:hover .smi-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ smi-balance:has(.smi-amount.expense):hover .smi-label dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md・0 0 10px）:
+   ライトモード glow（danger-text mix-sm v23.xx）のダーク強化版。⑩⑪で smi-label 全バリアントのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense):hover .smi-label { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑫ smi-balance:hover .smi-amount.income dark enhanced color:income-end+text-shadow glow（income-end・mix-md・0 0 10px）:
+   ライトモード glow（success mix-sm v23.xx）のダーク強化版。smi-income/expense dark hover（v25.xx）と連動し残高行内全テキストのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .smi-balance:hover .smi-amount.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
