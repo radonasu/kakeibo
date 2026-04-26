@@ -38777,3 +38777,40 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ci-score-row:hover .ci-score-badge { filter: brightness(1.08); }
 /* ⑫ pm-table-row:hover td.expense dark brightness(1.08) — expense-end color+text-shadow（v24.50）と連動しダーク hover 輝度強化 */
 [data-theme="dark"] .pm-table-row:hover td.expense { filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #955 (v25.59): Approach C継続 — dark hover に filter:brightness 追加
+   md-cell-label×1・md-cell-value×1・cal-sum-label×2（income/expense）・
+   hm-stat-sub×4（nth1〜4）・hs-msg×1・hs-score-num×1・
+   tg-stat-label×1・cal-ev-badge×1
+   dark hover 既存ルールに filter:brightness(1.08/1.1/1.12) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   transition が filter を含まない要素は transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition に filter を追加（md-cell-label） */
+.md-cell-label { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* ① md-cell-count:hover .md-cell-label dark brightness(1.1) — primary-end color+text-shadow（v25.46）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .md-cell-count:hover .md-cell-label { filter: brightness(1.1); }
+/* ② md-cell-count:hover .md-cell-value dark brightness(1.1) — primary-end color+text-shadow（v25.46）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .md-cell-count:hover .md-cell-value { filter: brightness(1.1); }
+/* ③ cal-sum-item:has(.income):hover .cal-sum-label dark brightness(1.1) — income-end color+text-shadow（v25.46）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .cal-sum-item:has(.income):hover .cal-sum-label { filter: brightness(1.1); }
+/* ④ cal-sum-item:has(.expense):hover .cal-sum-label dark brightness(1.1) — expense-end color+text-shadow（v25.46）と連動しダーク hover 輝度強化。③④で cal-sum-label income/expense 両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cal-sum-item:has(.expense):hover .cal-sum-label { filter: brightness(1.1); }
+/* ⑤ hm-stat-card:nth-child(1):hover .hm-stat-sub dark brightness(1.1) — primary-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-sub { filter: brightness(1.1); }
+/* ⑥ hm-stat-card:nth-child(2):hover .hm-stat-sub dark brightness(1.1) — expense-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-sub { filter: brightness(1.1); }
+/* ⑦ hm-stat-card:nth-child(3):hover .hm-stat-sub dark brightness(1.1) — warning color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-sub { filter: brightness(1.1); }
+/* ⑧ hm-stat-card:nth-child(4):hover .hm-stat-sub dark brightness(1.1) — income-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化。⑤〜⑧で hm-stat-sub 全4バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-sub { filter: brightness(1.1); }
+/* ⑨ health-score-card:hover .hs-msg dark brightness(1.1) — primary-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .health-score-card:hover .hs-msg { filter: brightness(1.1); }
+/* ⑩ health-score-card:hover .hs-score-num dark brightness(1.12) — primary-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化（メイン数値のため1.12） */
+[data-theme="dark"] .health-score-card:hover .hs-score-num { filter: brightness(1.12); }
+/* ⑪ tg-stat-card:hover .tg-stat-label dark brightness(1.1) — primary-end color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-label { filter: brightness(1.1); }
+/* ⑫ cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge dark brightness(1.08) — cal-ev-color color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge { filter: brightness(1.08); }
