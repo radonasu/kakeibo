@@ -38814,3 +38814,39 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tg-stat-card:hover .tg-stat-label { filter: brightness(1.1); }
 /* ⑫ cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge dark brightness(1.08) — cal-ev-color color+text-shadow（v25.47）と連動しダーク hover 輝度強化 */
 [data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge { filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #956 (v25.60): Approach C継続 — dark hover に filter:brightness 追加
+   section-tab.is-active×1・type-btn.income-btn×1・type-btn.expense-btn×1・
+   edit-tx×1・delete-tx×1・dup-tx×1・
+   ch-status-done×1・ch-status-fail×1・ch-status-over×1・ch-status-active×1・
+   yoy-diff.yoy-up×1・yoy-diff.yoy-down×1
+   dark hover 既存ルールに filter:brightness(1.08/1.1) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   全要素 transition に filter 含有済みのため transition 追加不要。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① section-tab.is-active:hover dark brightness(1.1) — primary-end color+text-shadow（v25.44）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .section-tab.is-active:hover { filter: brightness(1.1); }
+/* ② type-btn.income-btn:hover dark brightness(1.1) — income-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .type-btn.income-btn:hover { filter: brightness(1.1); }
+/* ③ type-btn.expense-btn:hover dark brightness(1.1) — expense-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化。②③で type-btn income/expense 両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .type-btn.expense-btn:hover { filter: brightness(1.1); }
+/* ④ edit-tx:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .edit-tx:hover { filter: brightness(1.1); }
+/* ⑤ delete-tx:hover dark brightness(1.1) — expense-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .delete-tx:hover { filter: brightness(1.1); }
+/* ⑥ dup-tx:hover dark brightness(1.1) — warning-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化。④〜⑥で取引アクションボタン（edit/delete/dup）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .dup-tx:hover { filter: brightness(1.1); }
+/* ⑦ ch-card:hover .ch-status-done dark brightness(1.08) — income-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ch-card:hover .ch-status-done { filter: brightness(1.08); }
+/* ⑧ ch-card:hover .ch-status-fail dark brightness(1.08) — expense-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ch-card:hover .ch-status-fail { filter: brightness(1.08); }
+/* ⑨ ch-card:hover .ch-status-over dark brightness(1.08) — warning color+text-shadow（v24.xx）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ch-card:hover .ch-status-over { filter: brightness(1.08); }
+/* ⑩ ch-card:hover .ch-status-active dark brightness(1.08) — primary-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化。⑦〜⑩でチャレンジカードステータスバッジ全4バリアント（done/fail/over/active）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-card:hover .ch-status-active { filter: brightness(1.08); }
+/* ⑪ yoy-summary-item:hover .yoy-diff.yoy-up dark brightness(1.08) — expense-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-up { filter: brightness(1.08); }
+/* ⑫ yoy-summary-item:hover .yoy-diff.yoy-down dark brightness(1.08) — income-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化。⑪⑫で yoy-diff up/down 両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-down { filter: brightness(1.08); }
