@@ -38693,3 +38693,48 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-widget-item:hover .sub-widget-amount { filter: brightness(1.1); }
 /* ⑫ ev-widget-item:hover .ev-widget-amount dark brightness(1.1) — ev-accent/primary-end color+text-shadow（v25.10）と連動しダーク hover 輝度強化 */
 [data-theme="dark"] .ev-widget-item:hover .ev-widget-amount { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #953 (v25.57): Approach C継続 — dark hover に filter:brightness 追加
+   debt-name×1・asset-name×1・pt-card-name×1・sub-card-name×1・
+   ci-event-name×1・opp-title×1・ch-card-name×1・
+   tx-table amount×2（income/expense）・dd-tx-amount×2（income/expense）・
+   pt-summary-amount×1
+   dark hover 既存ルールに filter:brightness(1.1/1.12) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   transition が filter を含まない要素は transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition に filter を追加（debt-name / asset-name / pt-card-name / sub-card-name / ci-event-name / opp-title / ch-card-name / pt-summary-amount） */
+.debt-name         { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-name        { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-card-name      { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card-name     { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-event-name     { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.opp-title         { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-card-name      { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-summary-amount { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* ① debt-card:hover .debt-name dark brightness(1.1) — debt-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .debt-card:hover .debt-name { filter: brightness(1.1); }
+/* ② asset-card:hover .asset-name dark brightness(1.1) — asset-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .asset-card:hover .asset-name { filter: brightness(1.1); }
+/* ③ pt-card:hover .pt-card-name dark brightness(1.1) — pt-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pt-card:hover .pt-card-name { filter: brightness(1.1); }
+/* ④ sub-card:hover .sub-card-name dark brightness(1.1) — sub-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sub-card:hover .sub-card-name { filter: brightness(1.1); }
+/* ⑤ ci-event-item:hover .ci-event-name dark brightness(1.1) — ci-ev-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ci-event-item:hover .ci-event-name { filter: brightness(1.1); }
+/* ⑥ opp-card:hover .opp-title dark brightness(1.1) — opp-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .opp-card:hover .opp-title { filter: brightness(1.1); }
+/* ⑦ ch-card:hover .ch-card-name dark brightness(1.1) — ch-accent/primary-end color+text-shadow（v24.88）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ch-card:hover .ch-card-name { filter: brightness(1.1); }
+/* ⑧ tx-table tbody tr[data-type="income"]:hover td.amount dark brightness(1.12) — income-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td.amount { filter: brightness(1.12); }
+/* ⑨ tx-table tbody tr[data-type="expense"]:hover td.amount dark brightness(1.12) — expense-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount { filter: brightness(1.12); }
+/* ⑩ dd-tx-row:hover .dd-tx-amount.income dark brightness(1.12) — income-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income { filter: brightness(1.12); }
+/* ⑪ dd-tx-row:hover .dd-tx-amount.expense dark brightness(1.12) — expense-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { filter: brightness(1.12); }
+/* ⑫ pt-summary-card:hover .pt-summary-amount dark brightness(1.12) — white color+text-shadow（v25.48）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-amount { filter: brightness(1.12); }
