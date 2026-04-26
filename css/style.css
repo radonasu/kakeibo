@@ -38372,3 +38372,65 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ smi-balance:hover .smi-amount.income dark enhanced color:income-end+text-shadow glow（income-end・mix-md・0 0 10px）:
    ライトモード glow（success mix-sm v23.xx）のダーク強化版。smi-income/expense dark hover（v25.xx）と連動し残高行内全テキストのダーク hover 演出が完成形に統一 */
 [data-theme="dark"] .smi-balance:hover .smi-amount.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+
+/* Sprint #941 (v25.45): smi-balance-smi-amount-expense-dark-hover×1＋budget-pct-badge-warn-dark-hover×1＋cc-name-dark-hover×2＋cc-amount-dark-hover×2＋asset-entry-date-dark-hover×1＋asset-entry-note-dark-hover×1＋md-cell-count-label-dark-hover×1＋md-cell-count-value-dark-hover×1＋cal-date-num-dark-hover×1＋cal-sum-label-dark-hover×1 12箇所
+   ①smi-balance:hover .smi-amount.expense dark text-shadow: 残高行の支出金額テキストにダーク hover 発光追加。expense-end 変色+mix-md glow。smi-amount.income dark hover（v25.44）と連動し残高行内金額テキスト全バリアントのダーク hover 演出が完成形に統一
+   ②budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge dark: ライトモード warning mix-sm のダーク強化版。warning mix-md+brightness(1.12)。budget-pct-badge 通常/over dark hover（v25.24）と連動し予算達成率バッジ全バリアントのダーク hover 演出が完成形に統一
+   ③cc-col:has(.cc-col-up) .cc-item:hover .cc-name dark: 上昇カラムのコスト名テキストにダーク hover 発光追加。expense-end 変色+mix-md glow。cc-col-up cc-name static dark glow（v24.xx）のホバー強化版
+   ④cc-col:has(.cc-col-down) .cc-item:hover .cc-name dark: 下降カラムのコスト名テキストにダーク hover 発光追加。income-end 変色+mix-md glow。③④で cc-name 全バリアントのダーク hover 演出が完成形に統一
+   ⑤cc-col:has(.cc-col-up) .cc-item:hover .cc-amount dark: 上昇カラムの金額テキストにダーク hover 発光追加。expense-end 変色+mix-md glow。cc-col-up cc-amount static dark glow（v24.xx）のホバー強化版
+   ⑥cc-col:has(.cc-col-down) .cc-item:hover .cc-amount dark: 下降カラムの金額テキストにダーク hover 発光追加。income-end 変色+mix-md glow。⑤⑥で cc-amount 全バリアントのダーク hover 演出が完成形に統一
+   ⑦asset-entry-row:hover .asset-entry-date dark: 資産記録行ホバー時の日付テキストにダーク hover 発光追加。primary-end 変色+mix-md glow。asset-entry-date static dark glow（v25.xx）のホバー強化版。asset-entry-balance dark hover（v25.xx）と連動し行内テキスト全体のダーク hover 演出を統一
+   ⑧asset-entry-row:hover .asset-entry-note dark: 資産記録行ホバー時のメモテキストにダーク hover 発光追加。primary-end 変色+mix-md glow。⑦⑧で asset-entry-row 内テキストのダーク hover 演出が完成形に統一
+   ⑨md-cell-count:hover .md-cell-label dark: 件数月次セルホバー時のラベルテキストにダーク hover 発光追加。primary-end 変色+mix-md glow。md-cell-count .md-cell-label static dark glow（v25.xx）のホバー強化版
+   ⑩md-cell-count:hover .md-cell-value dark: 件数月次セルホバー時の数値テキストにダーク hover 発光追加。primary-end 変色+mix-md glow。⑨⑩で md-cell-count 内テキストのダーク hover 演出が完成形に統一
+   ⑪cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) dark: カレンダー日付セルホバー時の日付番号テキストにダーク hover 発光追加。primary-end 変色+mix-md glow。ライトモード primary mix-sm（v23.xx）のダーク強化版
+   ⑫cal-sum-item:hover .cal-sum-label dark: カレンダー月次合計行ホバー時のラベルテキストにダーク hover 発光追加。primary-end 変色+mix-md glow。ライトモード primary mix-sm（v23.xx）のダーク強化版。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.45・全script/linkタグ?v=25.45に更新 */
+
+/* ① smi-balance:hover .smi-amount.expense dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md・0 0 10px）:
+   ライトモード glow（danger-text mix-sm v23.xx）のダーク強化版。smi-amount.income dark hover（v25.44）と連動し残高行内金額テキスト全バリアントのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .smi-balance:hover .smi-amount.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ② budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge dark enhanced brightness(1.12)+text-shadow glow（warning・mix-md・0 0 10px）:
+   ライトモード text-shadow（warning mix-sm v23.61）のダーク強化版。budget-pct-badge 通常/over dark hover（v25.24）と連動し予算達成率バッジ全バリアントのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+
+/* ③ cc-col:has(.cc-col-up) .cc-item:hover .cc-name dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（danger-text mix-sm v23.62）のダーク強化版。cc-col-up cc-name static dark glow（expense-end mix-sm）のホバー強化版 */
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-name { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ④ cc-col:has(.cc-col-down) .cc-item:hover .cc-name dark enhanced color:income-end+text-shadow glow（income-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（success mix-sm v23.62）のダーク強化版。③④で cc-name 上昇/下降全バリアントのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-name { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑤ cc-col:has(.cc-col-up) .cc-item:hover .cc-amount dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（danger-text mix-sm v23.66）のダーク強化版。cc-col-up cc-amount static dark glow（expense-end mix-sm）のホバー強化版 */
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+
+/* ⑥ cc-col:has(.cc-col-down) .cc-item:hover .cc-amount dark enhanced color:income-end+text-shadow glow（income-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（success mix-sm v23.66）のダーク強化版。⑤⑥で cc-amount 上昇/下降全バリアントのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-amount { color: var(--income-end);  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+
+/* ⑦ asset-entry-row:hover .asset-entry-date dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.71）のダーク強化版。asset-entry-date static dark glow（primary-end mix-sm）のホバー強化版。asset-entry-balance dark hover と連動 */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-date { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ asset-entry-row:hover .asset-entry-note dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.71）のダーク強化版。⑦⑧で asset-entry-row 内テキストのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-note { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ md-cell-count:hover .md-cell-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.75）のダーク強化版。md-cell-count .md-cell-label static dark glow（primary-end mix-sm）のホバー強化版 */
+[data-theme="dark"] .md-cell-count:hover .md-cell-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ md-cell-count:hover .md-cell-value dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.75）のダーク強化版。⑨⑩で md-cell-count 内テキストのダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .md-cell-count:hover .md-cell-value { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.67）のダーク強化版。カレンダー日付セルホバー時の日付番号にダーク発光演出を追加 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ cal-sum-item:hover .cal-sum-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
+   ライトモード text-shadow（primary mix-sm v23.68）のダーク強化版。カレンダー月次合計行ホバー時のラベルテキストにダーク発光演出を追加 */
+[data-theme="dark"] .cal-sum-item:hover .cal-sum-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
