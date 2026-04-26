@@ -38155,3 +38155,108 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    nt-char-count dark hover（primary-end mix-md・v25.34）と連動しメモカード内テキスト全体のダーク hover 演出を完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.41・全script/linkタグ?v=25.41に更新 */
 [data-theme="dark"] .nt-card:hover .nt-saved-at { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* =====================================================================
+   Sprint #938 / v25.42
+   fc-progress-label-dark-hover×1＋fc-status-badge-dark-hover×1＋
+   fc-avg-badge-dark-hover×1＋fc-cell-balance-dark-hover×1＋
+   fc-low-conf-dark-hover×1＋yr-topcat-amt-dark-hover×1＋
+   yr-cat-badge-dark-hover×1＋ci-badge-failed-dark-hover×1＋
+   dd-tx-date-dark-hover×1＋dd-tx-memo-dark-hover×1＋
+   dw-item-label-dark-hover×1＋ev-cat-badge-dark-hover×1
+   12箇所（v25.42）
+   ============================================================ */
+
+/* ① [data-theme="dark"] .forecast-card:hover .fc-progress-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   予測カードの進捗ラベルテキストの hover 発光をダークモードで鮮明化。
+   fc-progress-label dark static glow（primary-end mix-sm）のホバー強化版。
+   fc-cell-label dark hover（fc-color/primary-end・v25.35）と連動し予測カード内ラベルテキスト全体のダーク hover 演出を統一。 */
+[data-theme="dark"] .forecast-card:hover .fc-progress-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ② [data-theme="dark"] .forecast-card:hover .fc-status-badge → dark enhanced brightness(1.2)+text-shadow glow（fc-color/primary-end・mix-md）:
+   ライトモード scale(1.04)+brightness(1.1)+text-shadow glow（fc-color/primary mix-sm）のダーク強化版。
+   primary→fc-color fallback primary-end に切替え brightness 1.1→1.2 + mix-sm→mix-md に引き上げ。
+   予測カードのステータスバッジの hover 発光をダークモードで鮮明化。
+   fc-status-badge dark static glow（fc-color/primary-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .forecast-card:hover .fc-status-badge { filter: brightness(1.2); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ③ [data-theme="dark"] .forecast-card:hover .fc-avg-badge → dark enhanced brightness(1.18)+text-shadow glow（fc-color/primary-end・mix-md）:
+   ライトモード scale(1.04)+brightness(1.08)+text-shadow glow（fc-color/primary mix-sm）のダーク強化版。
+   primary→fc-color fallback primary-end に切替え brightness 1.08→1.18 + mix-sm→mix-md に引き上げ。
+   予測カードの平均比較バッジの hover 発光をダークモードで鮮明化。
+   fc-avg-badge dark static glow（fc-color/primary-end mix-sm）のホバー強化版。②③で fc-badge 系 dark hover が完成形に統一。 */
+[data-theme="dark"] .forecast-card:hover .fc-avg-badge { filter: brightness(1.18); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ④ [data-theme="dark"] .forecast-card:hover .fc-cell-balance → dark enhanced brightness(1.12)+text-shadow glow（fc-color/primary-end・mix-md）:
+   ライトモード brightness(1.08)+text-shadow glow（fc-color/primary mix-sm）+box-shadow のダーク強化版。
+   primary→fc-color fallback primary-end に切替え brightness 1.08→1.12 + mix-sm→mix-md に引き上げ。
+   予測カードのセル残高テキストの hover 発光をダークモードで鮮明化。
+   fc-cell-balance dark static glow（fc-color/primary-end mix-sm）のホバー強化版。
+   fc-cell-amount dark hover（v25.35）と連動し予測カードセル数値全体のダーク hover 演出を統一。 */
+[data-theme="dark"] .forecast-card:hover .fc-cell-balance { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* ⑤ [data-theme="dark"] .forecast-card:hover .fc-low-conf → dark enhanced color:primary-end+brightness(1.1)+text-shadow glow（primary-end・mix-md）:
+   ライトモード brightness(1.06)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し brightness 1.06→1.1 + mix-sm→mix-md に引き上げ。
+   予測カードの低信頼度テキストの hover 発光をダークモードで鮮明化。
+   fc-low-conf dark static glow（primary-end mix-sm）のホバー強化版。
+   ①〜⑤で forecast-card 残 dark hover（fc-progress-label/fc-status-badge/fc-avg-badge/fc-cell-balance/fc-low-conf）が完成形に統一。 */
+[data-theme="dark"] .forecast-card:hover .fc-low-conf { color: var(--primary-end); filter: brightness(1.1); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑥ [data-theme="dark"] .yr-widget-card:hover .yr-topcat-amt → dark enhanced color:primary-end+brightness(1.14)+text-shadow glow（primary-end・mix-md）:
+   ライトモード brightness(1.1)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し brightness 1.1→1.14 + mix-sm→mix-md に引き上げ。
+   年間ウィジェットカードのトップカテゴリ金額テキストの hover 発光をダークモードで鮮明化。
+   yr-topcat-amt dark static glow（primary-end mix-sm）のホバー強化版。
+   yr-topcat-label dark hover（v25.x）と連動し yr-widget-card トップカテゴリエリアのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .yr-widget-card:hover .yr-topcat-amt { color: var(--primary-end); filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑦ [data-theme="dark"] .yr-widget-card:hover .cat-badge → dark enhanced brightness(1.12)+text-shadow glow（primary-end・mix-md）:
+   ライトモード scale(1.04)+brightness(1.08)+text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end に切替え brightness 1.08→1.12 + mix-sm→mix-md に引き上げ。
+   年間ウィジェットカードのカテゴリバッジの hover 発光をダークモードで鮮明化。
+   cat-badge dark static glow（primary-end mix-sm）のホバー強化版（yr-widget-card 文脈）。
+   tx-table cat-badge dark hover（primary-end・v25.36）と連動し cat-badge のダーク hover 演出を統一。 */
+[data-theme="dark"] .yr-widget-card:hover .cat-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑧ [data-theme="dark"] .ci-challenge-item:hover .ci-badge.failed → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   チェックイン失敗バッジの hover 発光をダークモードで鮮明化。
+   ci-badge.failed dark static glow（primary-end mix-sm）のホバー強化版。
+   ci-badge.achieved dark hover（income-end・v25.41）と連動しチャレンジバッジ全バリアントのダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .ci-challenge-item:hover .ci-badge.failed { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑨ [data-theme="dark"] .dd-tx-row:hover .dd-tx-date → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   デイリーダッシュボード取引行の日付テキストの hover 発光をダークモードで鮮明化。
+   dd-tx-date dark static glow（primary-end mix-sm）のホバー強化版。 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-date { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑩ [data-theme="dark"] .dd-tx-row:hover .dd-tx-memo → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   デイリーダッシュボード取引行のメモテキストの hover 発光をダークモードで鮮明化。
+   dd-tx-memo dark static glow（primary-end mix-sm）のホバー強化版。
+   ⑨⑩で dd-tx-row dark hover（dd-tx-date/dd-tx-memo）が完成形に統一。 */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-memo { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑪ [data-theme="dark"] .dw-item:hover .dw-item-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   ウィジェット設定トグル行の名称テキストの hover 発光をダークモードで鮮明化。
+   dw-item-label dark static glow（primary-end mix-sm）のホバー強化版。
+   dw-item-icon dark hover drop-shadow（primary-end・v25.35）と連動しウィジェット設定行のダーク hover 演出を完成形に統一。 */
+[data-theme="dark"] .dw-item:hover .dw-item-label { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+
+/* ⑫ [data-theme="dark"] .ev-card:hover .ev-cat-badge → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
+   ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
+   primary→primary-end color 変色を追加し mix-sm→mix-md に引き上げ。
+   収支予定カードのカテゴリバッジの hover 発光をダークモードで鮮明化。
+   ev-cat-badge dark static glow（primary-end mix-sm）のホバー強化版。
+   ev-card-name/amount dark hover（ev-accent/primary-end・v25.36）と連動し収支予定カード内テキスト全体のダーク hover 演出を完成形に統一。
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.42・全script/linkタグ?v=25.42に更新 */
+[data-theme="dark"] .ev-card:hover .ev-cat-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
