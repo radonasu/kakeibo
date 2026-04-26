@@ -21942,7 +21942,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    節約バナーの主要数値にもホバー輝き演出を追加。 */
 .sim-savings-value { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sim-savings-banner:hover .sim-savings-value { filter: brightness(1.1); text-shadow: 0 0 12px color-mix(in srgb, var(--success) var(--mix-lg), transparent); }
-[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { color: var(--income-end); text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
 
 /* 4. sim-savings-banner:hover → .sim-savings-label brightness(1.1)
    節約バナーのホバー時に .sim-savings-label（「利息節約額」等の
@@ -21953,7 +21953,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    バナー内ラベルにもホバー強調を追加。 */
 .sim-savings-label { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
-[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { color: var(--income-end); text-shadow: 0 0 8px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
 
 /* 5. sim-savings-banner:hover → .sim-savings-divider brightness(1.4)
    節約バナーのホバー時に .sim-savings-divider（区切り線：
@@ -25943,7 +25943,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存 section-tab.is-active 静的 glow（v22.84）・section-tab:not(.is-active):hover glow（v23.x）
    と合わせてホバー時に一段階輝きが増す演出に。.section-tab の transition には text-shadow を含む（v23.x）。 */
 .section-tab.is-active:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
-[data-theme="dark"] .section-tab.is-active:hover { text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
+[data-theme="dark"] .section-tab.is-active:hover { color: var(--primary-end); text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
 
 /* ============================================================
    Sprint #782 / v23.86 — ホバーglow 8箇所
@@ -26006,7 +26006,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    auth-tab transition に text-shadow を追加。 */
 .auth-tab { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .auth-tab:not(.active):hover { text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-[data-theme="dark"] .auth-tab:not(.active):hover { text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+[data-theme="dark"] .auth-tab:not(.active):hover { color: var(--primary-end); text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
 
 /* 8. auth-tab.active → static primary text-shadow glow
    認証画面のアクティブタブに静的 primary text-shadow glow 追加。
@@ -34078,7 +34078,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .budget-item:has(.budget-fill.over):hover { border-color: color-mix(in srgb, var(--expense-end) var(--mix-sm), var(--border)); box-shadow: var(--shadow-sm), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ③ btn-ghost dark enhanced hover glow（primary-end mix-md 0 2px 12px + text-shadow） */
-[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ④ bottom-nav-item:not(.active):hover dark enhanced outer glow（primary-end mix-sm） */
 [data-theme="dark"] .bottom-nav-item:not(.active):hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
@@ -34142,13 +34142,13 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent); }
 
 /* ④ modal-close dark enhanced hover glow（expense-end mix-md + text-shadow） */
-[data-theme="dark"] .modal-close:hover { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .modal-close:hover { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑤ btn-icon dark enhanced hover glow（primary-end mix-sm 0 2px 10px） */
 [data-theme="dark"] .btn-icon:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ⑥ empty-month-btn dark enhanced hover glow（primary-end mix-lg + text-shadow） */
-[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
@@ -34198,28 +34198,28 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ============================================================ */
 
 /* ① wl-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .wl-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .wl-archive-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ② ch-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .ch-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-archive-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ③ debt-archive-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .debt-archive-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .debt-archive-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ④ sub-inactive-section summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .sub-inactive-section summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-inactive-section summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ goal-achieved-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .goal-achieved-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .goal-achieved-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑥ modal-details summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .modal-details summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .modal-details summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑦ stp-help-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .stp-help-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .stp-help-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑧ adv-filter-clear dark enhanced hover text-shadow（expense-end mix-md） */
-[data-theme="dark"] .adv-filter-clear:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .adv-filter-clear:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ============================================================
    Sprint #888 v24.92 — ボタン・操作要素
@@ -34271,28 +34271,28 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ============================================================ */
 
 /* ① qa-type-btn dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .qa-type-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .qa-type-btn:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ② md-nav-btn dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .md-nav-btn:hover:not(:disabled) { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .md-nav-btn:hover:not(:disabled) { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ③ btn-preset dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .btn-preset:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-preset:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ④ card-collapse-btn dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .card-collapse-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .card-collapse-btn:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ sub-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
-[data-theme="dark"] .sub-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .sub-emoji-btn:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ⑥ edit-tx dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .edit-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .edit-tx:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑦ delete-tx dark enhanced hover text-shadow（expense-end mix-md） */
-[data-theme="dark"] .delete-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .delete-tx:hover { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑧ dup-tx dark enhanced hover text-shadow（warning-end mix-md） */
-[data-theme="dark"] .dup-tx:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
+[data-theme="dark"] .dup-tx:hover { color: var(--warning-end); text-shadow: 0 0 10px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent); }
 
 /* ============================================================
    Sprint #889 v24.93 — シェア・継続・絵文字選択・フィルター要素
@@ -34338,28 +34338,28 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ============================================================ */
 
 /* ① btn-share dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .btn-share:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-share:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ② btn-continue dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .btn-continue:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-continue:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ③ goal-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg）追加 */
-[data-theme="dark"] .goal-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .goal-emoji-btn:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ④ ev-emoji-chip dark enhanced hover text-shadow（primary-end mix-lg） */
-[data-theme="dark"] .ev-emoji-chip:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .ev-emoji-chip:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ⑤ pt-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
-[data-theme="dark"] .pt-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .pt-emoji-btn:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ⑥ ch-emoji-btn dark enhanced hover text-shadow（primary-end mix-lg） */
-[data-theme="dark"] .ch-emoji-btn:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .ch-emoji-btn:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ⑦ adv-filter-toggle dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .adv-filter-toggle:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .adv-filter-toggle:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑧ stp-config-summary dark enhanced hover text-shadow（primary-end mix-md） */
-[data-theme="dark"] .stp-config-summary:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .stp-config-summary:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ============================================================
    Sprint #890 v24.94
@@ -34487,33 +34487,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ① tx-table tbody tr[data-type="income"]:hover td.amount dark enhanced hover text-shadow（income-end mix-md）
    ライトモード glow（success mix-sm v22.84）のダーク強化版。
    income-end に切替え mix-md に引き上げ取引テーブルの収入行金額セルの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  td.amount { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  td.amount { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
 
 /* ② tx-table tbody tr[data-type="expense"]:hover td.amount dark enhanced hover text-shadow（expense-end mix-md）
    ライトモード glow（danger-text mix-sm v22.84）のダーク強化版。
    expense-end に切替え mix-md に引き上げ取引テーブルの支出行金額セルの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ③ dd-tx-row:hover .dd-tx-amount.income dark enhanced hover text-shadow（income-end mix-md）
    ライトモード glow（success mix-sm v22.84）のダーク強化版。
    income-end に切替え mix-md に引き上げドリルダウンモーダルの収入金額の hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income  { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
 
 /* ④ dd-tx-row:hover .dd-tx-amount.expense dark enhanced hover text-shadow（expense-end mix-md）
    ライトモード glow（danger-text mix-sm v22.84）のダーク強化版。
    expense-end に切替え mix-md に引き上げドリルダウンモーダルの支出金額の hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑤ tg-table tbody tr:hover td.expense dark enhanced hover text-shadow（expense-end mix-md）
    ライトモード glow（expense mix-sm v23.09）のダーク強化版。
    expense-end に切替え mix-md に引き上げタグ分析テーブルの支出金額セルの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .tg-table tbody tr:hover td.expense { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tg-table tbody tr:hover td.expense { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑥ tg-table tbody tr:hover td.income dark enhanced hover text-shadow（income-end mix-md）
    ライトモード glow（success mix-sm v23.20）のダーク強化版。
    income-end に切替え mix-md に引き上げタグ分析テーブルの収入金額セルの hover 発光をダークモードで鮮明化。
    ⑤と対称形でタグテーブルの収入・支出両セルのダーク hover 演出が完成形に統一。 */
-[data-theme="dark"] .tg-table tbody tr:hover td.income { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tg-table tbody tr:hover td.income { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
 
 /* ⑦ rpt-month-row.is-clickable:hover td.income dark enhanced hover text-shadow（income-end mix-md）
    ライトモード glow（success mix-sm v22.99）のダーク強化版。
@@ -35711,26 +35711,26 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（teal→teal-end）上の
    白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    ⑦⑧⑨で ch-sum 全バリアント（achieved/active/total）の .ch-summary-value ダーク hover 演出が統一。 */
-[data-theme="dark"] .ch-sum-total:hover .ch-summary-value { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-value { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑩ debt-summary-monthly:hover .summary-amount dark enhanced hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（expense→expense-end）上の
    白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    debt-summary-monthly static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .debt-summary-monthly:hover .summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .debt-summary-monthly:hover .summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑪ pt-total:hover .pt-summary-amount dark enhanced hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（primary→primary-end）上の
    白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    pt-summary-amount static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .pt-total:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-total:hover .pt-summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑫ pt-expiring:hover .pt-summary-amount dark enhanced hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（warning→orange）上の
    白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    ⑪⑫で pt-total/pt-expiring の .pt-summary-amount ダーク hover text-shadow 演出が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.12・全script/linkタグ?v=25.12に更新 */
-[data-theme="dark"] .pt-expiring:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-expiring:hover .pt-summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* =====================================================================
    v25.13 dark hover text-shadow
@@ -35743,70 +35743,70 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景上の白数値テキストに
    rgba(255,255,255,0.5) の強めホワイトグローを追加。fv-stat-value static dark glow（0.18）より
    大幅に引き上げ hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .fv-stat-card:hover .fv-stat-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-value { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
 
 /* ② fv-stat-card:hover .fv-stat-label dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景上の白ラベルテキストに
    rgba(255,255,255,0.5) の強めホワイトグローを追加。fv-stat-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .fv-stat-card:hover .fv-stat-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ③ fv-stat-card:hover .fv-stat-sub dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.45）のダーク強化版。①〜③で fv-stat-card 内テキスト全種別の
    ダーク hover 演出が完成形に統一。 */
-[data-theme="dark"] .fv-stat-card:hover .fv-stat-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-sub { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ④ ev-sum-card:hover .ev-sum-count dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（this:primary/next:income/year:warning）上の
    白カウントテキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。ev-sum-count static dark glow（0.18）
    より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ev-sum-card:hover .ev-sum-count { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑤ ev-sum-card:hover .ev-sum-label dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.45）のダーク強化版。ev-sum-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .ev-sum-card:hover .ev-sum-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑥ ev-sum-card:hover .ev-sum-count small dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.45）のダーク強化版。ev-sum-count small static dark glow（0.22）より引き上げ。 */
-[data-theme="dark"] .ev-sum-card:hover .ev-sum-count small { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count small { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ⑦ ev-sum-card:hover .ev-sum-inc dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.5）のダーク強化版。ev-sum-inc static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .ev-sum-card:hover .ev-sum-inc { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-inc { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑧ ev-sum-card:hover .ev-sum-exp dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.5）のダーク強化版。ev-sum-exp static dark glow（0.18）より引き上げ。
    ④〜⑧で ev-sum-card 内テキスト全種別（count/label/small/inc/exp）のダーク hover 演出が統一。 */
-[data-theme="dark"] .ev-sum-card:hover .ev-sum-exp { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-exp { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ⑨ wl-sum-done:hover .wl-summary-value dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.55）のダーク強化版。グラデーション背景（income-deep→income-end）上の
    白数値テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    wl-sum-done .wl-summary-value static dark glow（0.22）より大幅に引き上げ。 */
-[data-theme="dark"] .wl-sum-done:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-value { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
 
 /* ⑩ wl-sum-done:hover .wl-summary-label dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.45）のダーク強化版。wl-sum-done .wl-summary-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .wl-sum-done:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑪ wl-sum-done:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.4）のダーク強化版。⑨〜⑪で wl-sum-done 内テキスト全種別の
    ダーク hover 演出が完成形に統一。 */
-[data-theme="dark"] .wl-sum-done:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ⑫ sub-summary-card:hover .sub-summary-amount dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.5）のダーク強化版。グラデーション背景（monthly:primary-dark→primary-end /
    yearly:teal→teal-end）上の白金額テキストに rgba(255,255,255,0.5) の強めホワイトグローを追加。
    sub-summary-amount static dark glow（0.22）より大幅に引き上げ hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .sub-summary-card:hover .sub-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑬ sub-summary-card:hover .sub-summary-label dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.45）のダーク強化版。sub-summary-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .sub-summary-card:hover .sub-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑭ sub-summary-card:hover .sub-summary-sub dark hover text-shadow（白グロー強化）
    ライトモード glow（rgba 0.4）のダーク強化版。⑫〜⑭で sub-summary-card 内テキスト全種別の
    ダーク hover 演出が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.13・全script/linkタグ?v=25.13に更新 */
-[data-theme="dark"] .sub-summary-card:hover .sub-summary-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-sub { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ============================================================
    Sprint #910 — v25.14 dark hover text-shadow 12箇所
@@ -35820,31 +35820,31 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    wl-sum-count .wl-summary-value static dark glow（0.22）より大幅に引き上げ。
    wl-sum-done:hover dark glow（v25.13⑨）と同パターンで全3種ウィッシュリストサマリーの
    ダーク hover 演出を完成形に統一。 */
-[data-theme="dark"] .wl-sum-count:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-value { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
 
 /* ② wl-sum-count:hover .wl-summary-label dark hover text-shadow（白グロー強化）
    wl-sum-count .wl-summary-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .wl-sum-count:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ③ wl-sum-count:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
    wl-sum-count .wl-summary-unit static dark glow（0.15）より引き上げ。
    ①〜③で wl-sum-count 内テキスト全種別のダーク hover 演出が完成形に統一。 */
-[data-theme="dark"] .wl-sum-count:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ④ wl-sum-budget:hover .wl-summary-value dark hover text-shadow（白グロー強化）
    グラデーション背景（teal→teal-end）上の白数値テキストに強めホワイトグローを追加。
    wl-sum-budget .wl-summary-value static dark glow（0.22）より大幅に引き上げ。 */
-[data-theme="dark"] .wl-sum-budget:hover .wl-summary-value { text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-value { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.5); }
 
 /* ⑤ wl-sum-budget:hover .wl-summary-label dark hover text-shadow（白グロー強化）
    wl-sum-budget .wl-summary-label static dark glow（0.18）より引き上げ。 */
-[data-theme="dark"] .wl-sum-budget:hover .wl-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑥ wl-sum-budget:hover .wl-summary-unit dark hover text-shadow（白グロー強化）
    wl-sum-budget .wl-summary-unit static dark glow（0.15）より引き上げ。
    ④〜⑥で wl-sum-budget 内テキスト全種別のダーク hover 演出が完成形に統一。
    ①〜⑥で wl-sum-count/budget/done 全3種の value/label/unit ダーク hover が完成形に統一。 */
-[data-theme="dark"] .wl-sum-budget:hover .wl-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.45); }
 
 /* ⑦ pt-card:hover .pt-card-yen dark hover text-shadow（pt-accent glow強化）
    ライトモード glow（pt-accent mix-sm）のダーク強化版。primary-end に切替え mix-md に引き上げ
@@ -35903,7 +35903,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary-end に切替え mix-md に引き上げ
    ポイントカード有効期限バッジの hover 発光をダークモードで鮮明化。
    pt-exp-badge static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .pt-card:hover .pt-exp-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .pt-card:hover .pt-exp-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ③ debt-card:hover .debt-type-icon-wrap dark hover drop-shadow強化（debt-accent/expense-end・mix-md）
    ライトモード drop-shadow（debt-accent/primary mix-sm）のダーク強化版。
@@ -35917,7 +35917,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    debt-accent fallback expense-end に切替え mix-md に引き上げ
    負債カードタイプバッジの hover 発光をダークモードで鮮明化。
    debt-type-badge static dark glow（debt-accent/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .debt-card:hover .debt-type-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .debt-card:hover .debt-type-badge { color: var(--debt-accent, var(--expense-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
 
 /* ⑤ debt-card:hover .debt-history-title dark hover color+text-shadow強化（primary-end・mix-md）
    ライトモード color:primary + text-shadow glow（primary mix-sm）のダーク強化版。
@@ -36105,7 +36105,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ゴールカードセパレータの hover 発光をダークモードで鮮明化。
    goal-sep static dark glow（v24.59）と連動しダーク全状態の演出を完成形に統一。
    ③〜⑥で goal-deadline/note/pct/sep ダーク hover が完成形に統一。 */
-[data-theme="dark"] .goal-card:hover .goal-sep { text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .goal-card:hover .goal-sep { color: var(--goal-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑦ goal-card:hover .goal-progress-bar-fill dark hover brightness+box-shadow強化（goal-accent/primary-end・mix-md）
    ライトモード brightness(1.08) + box-shadow(0 1px 8px mix-md)のダーク強化版。
@@ -36126,7 +36126,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    wl-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
    ウィッシュリストカード優先度バッジの hover 発光をダークモードで鮮明化。
    wl-priority-badge static dark glow と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .wl-card:hover .wl-priority-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .wl-card:hover .wl-priority-badge { color: var(--wl-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑩ wl-card:hover .wl-pri-high dark hover box-shadow強化（expense-end・mix-md）
    ライトモード box-shadow(0 0 8px danger-text mix-sm)のダーク強化版。
@@ -36276,7 +36276,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ch-accent fallback primary-end に切替え brightness(1.2) + mix-sm → mix-md に引き上げ
    チャレンジカードタイプバッジの hover 発光をダークモードで鮮明化。
    ①〜④で ch-card dark hover（card-meta/progress-label/progress-pct/type-badge）が完成形に統一。 */
-[data-theme="dark"] .ch-card:hover .ch-type-badge { filter: brightness(1.2); text-shadow: 0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-card:hover .ch-type-badge { filter: brightness(1.2); color: var(--ch-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑤ ch-card:hover .ch-bar-ok dark hover box-shadow強化（income-end・mix-lg）
    ライトモード brightness(1.08) + box-shadow(0 1px 8px income mix-md)のダーク強化版。
@@ -36309,7 +36309,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    asset-accent fallback primary-end に切替え mix-sm → mix-md に引き上げ
    資産カードタイプバッジの hover 発光をダークモードで鮮明化。
    asset-type-badge static dark glow（asset-accent/primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .asset-card:hover .asset-type-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .asset-card:hover .asset-type-badge { color: var(--asset-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑩ asset-card:hover .asset-balance-delta.up dark hover color+text-shadow強化（income-end・mix-md）
    ライトモード brightness(1.1) + text-shadow(0 0 8px success mix-sm)のダーク強化版。
@@ -36351,7 +36351,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    asset-accent fallback primary-end に切替え brightness(1.15) + mix-sm → mix-md に引き上げ
    資産カード通貨バッジの hover 発光をダークモードで鮮明化。
    asset-currency-badge の transform/scale はライトと共通のため重複させない。 */
-[data-theme="dark"] .asset-card:hover .asset-currency-badge { filter: brightness(1.15); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .asset-card:hover .asset-currency-badge { filter: brightness(1.15); color: var(--asset-accent, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ③ asset-card:hover .asset-fx-rate dark hover color+text-shadow強化（primary-end・mix-md）
    ライトモード color:primary + text-shadow(0 0 8px primary mix-sm)のダーク強化版。
@@ -36365,7 +36365,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary-end に切替え brightness(1.12) + mix-sm → mix-md に引き上げ
    資産カード外貨ヒントテキストの hover 発光をダークモードで鮮明化。
    asset-foreign-hint static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .asset-card:hover .asset-foreign-hint { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .asset-card:hover .asset-foreign-hint { filter: brightness(1.12); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ asset-card:hover .asset-sparkline-wrap dark hover brightness強化
    ライトモード brightness(1.05) のダーク強化版。
@@ -36421,7 +36421,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    brightness(1.2) + white glow rgba(255,255,255,0.65) に引き上げ
    年間収支カードのグレードバッジの hover 発光をダークモードで鮮明化。
    yi-grade-badge static dark glow（white multi-layer）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .yi-card:hover .yi-grade-badge { filter: brightness(1.2); text-shadow: 0 0 10px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .yi-card:hover .yi-grade-badge { filter: brightness(1.2); color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.65); }
 
 /* ⑤ yi-card:hover .yi-card-value-cat dark enhanced hover text-shadow（yi-cat-color/primary-end・mix-md）
    ライトモード brightness(1.06) + text-shadow(yi-cat-color/primary mix-sm)のダーク強化版。
@@ -36649,14 +36649,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード filter: brightness(1.1) のダーク強化版。brightness(1.12) + text-shadow(primary-end mix-md) 追加。
    予算パーセントバッジの hover 発光をダークモードで鮮明化。
    budget-pct-badge static dark glow（primary-end mix-xs）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .budget-item:hover .budget-pct-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .budget-item:hover .budget-pct-badge { filter: brightness(1.12); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑦ budget-item:has(.budget-fill.over):hover .budget-pct-badge dark enhanced hover（expense-end mix-md）
    ライトモード filter: brightness(1.12) のダーク強化版。brightness(1.14) + text-shadow(expense-end mix-md) 追加。
    超過状態の予算パーセントバッジの hover 発光をダークモードで鮮明化。
    budget-pct-badge.over static dark glow（expense-end mix-md）と連動しダーク全状態の演出を完成形に統一。
    ⑥⑦で budget-item:hover .budget-pct-badge（normal/over）が完成形に統一。 */
-[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-pct-badge { filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-pct-badge { filter: brightness(1.14); color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑧ budget-item:hover .budget-sep dark enhanced hover（primary-end color + text-shadow mix-md）
    ライトモード color: primary のダーク強化版。primary-end カラー変色 + text-shadow(primary-end mix-md) 追加。
@@ -36675,14 +36675,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード filter: brightness(1.06) のダーク強化版。brightness(1.1) + text-shadow(income-end mix-md) 追加。
    節約機会カードの節約金額テキストの hover 発光をダークモードで鮮明化。
    opp-saving static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .opp-card:hover .opp-saving { filter: brightness(1.1); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+[data-theme="dark"] .opp-card:hover .opp-saving { filter: brightness(1.1); color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
 
 /* ⑪ opp-card:hover .opp-saving strong dark enhanced hover（income-end brightness 1.14 + text-shadow mix-md）
    ライトモード filter: brightness(1.1) + text-shadow success mix-sm のダーク強化版。
    income-end カラー変色 + mix-sm → mix-md に引き上げ + brightness(1.14) に引き上げ
    節約機会カードの節約金額強調テキストの hover 発光をダークモードで鮮明化。
    opp-saving strong static dark glow（income-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .opp-card:hover .opp-saving strong { filter: brightness(1.14); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+[data-theme="dark"] .opp-card:hover .opp-saving strong { filter: brightness(1.14); color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
 
 /* ⑫ opp-card:hover .opp-desc dark enhanced hover（primary-end brightness 1.08 + text-shadow mix-md）
    ライトモード filter: brightness(1.05) + text-shadow primary mix-sm のダーク強化版。
@@ -36690,7 +36690,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    節約機会カードの説明テキストの hover 発光をダークモードで鮮明化。
    opp-desc static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。
    ⑩〜⑫で opp-card dark hover（saving/saving-strong/desc）が完成形に統一。 */
-[data-theme="dark"] .opp-card:hover .opp-desc { filter: brightness(1.08); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .opp-card:hover .opp-desc { filter: brightness(1.08); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ============================================================
    Sprint #921 (v25.25): widget-icon-dark-hover×6＋wish-widget-text-dark-hover×2＋ch-widget-text-dark-hover×2＋sub-card-color-bar-dark-hover×1＋pm-sum-icon-dark-hover×1
@@ -36857,7 +36857,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    mix-sm → mix-md + blur 8px → 10px に引き上げ
    ウィッシュリストウィジェット行の優先度バッジの hover 発光をダークモードで鮮明化。
    wl-priority-badge static dark glow（primary-end mix-sm）と連動しダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .wish-widget-item:hover .wl-priority-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .wish-widget-item:hover .wl-priority-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑪ ch-widget-item:hover .ch-widget-pct dark enhanced color+text-shadow（primary-end・mix-md・デフォルト状態）
    ライトモード brightness(1.08) + text-shadow(primary mix-sm)のダーク強化版（デフォルト状態）。
@@ -36998,7 +36998,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード brightness(1.08)のダーク強化版。
    primary-end（fc-color fallback）カラー変色+brightness 1.08→1.12+text-shadow(mix-md 0 0 10px)追加
    財務予測カードの金額セルテキストの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .forecast-card:hover .fc-cell-amount { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .forecast-card:hover .fc-cell-amount { filter: brightness(1.12); color: var(--fc-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑤ forecast-card:hover .fc-cell-label dark enhanced color:fc-color/primary-end+text-shadow(mix-md・0 0 10px)
    ライトモード color:primaryのダーク強化版。
@@ -37028,8 +37028,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カレンダーイベント行の収入・支出金額テキストの hover 発光をダークモードで鮮明化。
    ⑥〜⑧で cal-ev-item dark hover（name/icon/amount-inc/amount-exp）が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.28・全script/linkタグ?v=25.28に更新 */
-[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.inc { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
-[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.exp { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.inc { filter: brightness(1.12); color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-amount.exp { filter: brightness(1.12); color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ============================================================
    Sprint #925 — v25.29 dark hover text-shadow glow (12 items)
@@ -37072,7 +37072,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード glow（v23.83）のダーク強化版。
    primary-end に切替え+mix-sm→mix-md+blur 8→10px引き上げ
    取引テーブルカテゴリバッジの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .tx-table tbody tr:hover .cat-badge { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tx-table tbody tr:hover .cat-badge { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ [data-theme="dark"] .rpt-month-row.is-clickable:hover .rpt-month-label → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）
    ライトモード color:primary+glow（v22.x/v23.59）のダーク強化版。
@@ -37254,7 +37254,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    debt-summary-monthly:hover .summary-amount dark hover（v25.22）と対称で統一。
    static dark glow（0.22）から大幅引き上げ 負債合計サマリーカードの金額テキストの hover 発光をダークモードで鮮明化。
    monthly/total 両カードの dark hover text-shadow が完成形に統一。 */
-[data-theme="dark"] .debt-summary-total:hover .summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .debt-summary-total:hover .summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
 /* ⑧ [data-theme="dark"] .debt-card:hover .debt-bar-track → dark enhanced brightness（1.08）
    ライトモード brightness(1.05)のダーク強化版。1.05 → 1.08 に引き上げ
@@ -37266,14 +37266,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
    ev-add-month static dark glow（rgba 0.22）から大幅引き上げ + blur 8 → 12px に強化
    収支予定月追加ボタンの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ev-add-month:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
+[data-theme="dark"] .ev-add-month:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
 
 /* ⑩ [data-theme="dark"] .sim-preset:hover → dark enhanced text-shadow（白グロー強化・0 0 10px rgba 0.6）
    ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
    sim-preset static dark glow（rgba 0.15）から大幅引き上げ + blur 8 → 10px に強化
    シミュレーションプリセットチップの hover 発光をダークモードで鮮明化。
    sim-preset-active dark（rgba 0.45/0.20）と連動しシミュレーション全状態のダーク演出を完成形に統一。 */
-[data-theme="dark"] .sim-preset:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+[data-theme="dark"] .sim-preset:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
 
 /* ⑪ [data-theme="dark"] .md-cell-count:hover → dark enhanced box-shadow（primary-end・mix-sm・0 4px 14px）+ brightness(1.06)
    ライトモード box-shadow(border-strong mix-lg 0 4px 12px) + brightness(1.04)のダーク強化版。
@@ -37338,13 +37338,13 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード brightness(1.1)のダーク強化版。1.1 → 1.18 に引き上げ + white text-shadow glow 追加
    曜日別統計カードのグラデ背景金額テキストの hover 発光をダークモードで鮮明化。
    dow-stat-amount static dark glow（rgba 0.22）との連動でダーク全状態の演出を完成形に統一。 */
-[data-theme="dark"] .dow-stat-card:hover .dow-stat-amount { filter: brightness(1.18); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-amount { filter: brightness(1.18); color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
 
 /* ⑨ [data-theme="dark"] .dow-stat-card:hover .dow-stat-label → dark enhanced brightness(1.18) + white glow
    ライトモード brightness(1.1)のダーク強化版。1.1 → 1.18 に引き上げ + white text-shadow glow 追加
    曜日別統計カードのグラデ背景ラベルテキストの hover 発光をダークモードで鮮明化。
    ⑦⑧⑨で dow-stat-card dark hover（icon/amount/label）が完成形に統一。 */
-[data-theme="dark"] .dow-stat-card:hover .dow-stat-label { filter: brightness(1.18); text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-label { filter: brightness(1.18); color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
 
 /* ⑩ [data-theme="dark"] .ch-card:hover .ch-bar-ok → dark enhanced + brightness(1.14)
    ライトモード brightness(1.08) + box-shadow（income mix-md）に対し dark 版の box-shadow（income-end mix-lg）は既存だが
@@ -37629,21 +37629,21 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
    blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
    チャレンジ達成サマリーカード（グラデーション背景）の単位テキストの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ④ [data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label → dark enhanced white glow（0 0 12px rgba 0.5）:
    ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
    blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
    チャレンジ達成サマリーカード（グラデーション背景）のラベルテキストの hover 発光をダークモードで鮮明化。
    ③④で ch-sum-achieved dark hover（unit+label）が完成形に統一。 */
-[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑤ [data-theme="dark"] .dow-stat-card:hover .dow-stat-unit → dark enhanced white glow（0 0 12px rgba 0.5）:
    ライトモード white glow（0 0 10px rgba 0.45）のダーク強化版。
    blur 10 → 12px + rgba 0.45 → 0.5 に引き上げ
    曜日別統計カード（グラデーション背景）の単位テキストの hover 発光をダークモードで鮮明化。
    dow-stat-amount/label dark hover（v25.32）と連動し曜日別統計カード全テキストのダーク hover 演出を完成形に統一。 */
-[data-theme="dark"] .dow-stat-card:hover .dow-stat-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑥ [data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-today-label → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
    ライトモード text-shadow glow（danger-text mix-sm）のダーク強化版。
@@ -37694,7 +37694,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード brightness(1.1) + text-shadow 白グロー（rgba 0.55 12px）のダーク強化版。
    blur 12→14px + rgba 0.55→0.6 に引き上げ支出提案バナーの数値テキストの
    hover 発光をダークモードで鮮明化。fv-stat-card:hover .fv-stat-value dark hover（v25.x）と連動し統一。 */
-[data-theme="dark"] .sb-banner:hover .sb-banner-num { text-shadow: 0 0 14px rgba(255, 255, 255, 0.6); }
+[data-theme="dark"] .sb-banner:hover .sb-banner-num { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.6); }
 
 /* ② [data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .income → dark enhanced color:income-end+text-shadow glow（income-end・mix-md）:
    ライトモード brightness(1.08)+text-shadow glow（success mix-sm）のダーク強化版。
@@ -37894,7 +37894,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    blur 8→12px+rgba 0.5→0.65 に引き上げ
    サイドバーアカウント追加「＋」ボタンの hover 発光をダークモードで鮮明化。
    btn-account-add dark static glow（rgba 0.22・8px）のホバー強化版。 */
-[data-theme="dark"] .btn-account-add:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .btn-account-add:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
 
 /* ⑤ [data-theme="dark"] #hamburger:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-lg）:
    ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
@@ -37907,20 +37907,20 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    blur 10→12px+rgba 0.6→0.75 に引き上げ
    チェックインOKボタンの hover 発光をダークモードで鮮明化。
    ci-ok-btn dark static glow（rgba 0.28・9px）のホバー強化版。 */
-[data-theme="dark"] .ci-ok-btn:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.75); }
+[data-theme="dark"] .ci-ok-btn:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.75); }
 
 /* ⑦ [data-theme="dark"] .install-banner-close:hover → dark enhanced white text-shadow glow（0 0 12px rgba 0.65）:
    ライトモード white glow（rgba 0.55・10px）のダーク強化版。
    blur 10→12px+rgba 0.55→0.65 に引き上げ
    PWAインストールバナー閉じるボタンの hover 発光をダークモードで鮮明化。
    install-banner-close dark static glow（rgba 0.50・9px）のホバー強化版。 */
-[data-theme="dark"] .install-banner-close:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .install-banner-close:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
 
 /* ⑧ [data-theme="dark"] .btn-primary:hover → dark enhanced white text-shadow glow（dual-layer 強化）:
    ライトモード text-shadow（0 1px 6px rgba 0.45 + 0 0 20px rgba 0.18）のダーク強化版。
    両レイヤーの rgba 値を引き上げ（0.55+0.28）プライマリボタンの hover 白グローをダークモードで鮮明化。
    btn-primary:hover dark box-shadow（v25.0x）と連動しボタン全体のダーク hover 演出を完成形に統一。 */
-[data-theme="dark"] .btn-primary:hover { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28); }
+[data-theme="dark"] .btn-primary:hover { color: #fff; text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28); }
 
 /* ⑨ [data-theme="dark"] .tx-sort-badge:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
    ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
@@ -37949,7 +37949,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    通知ベルボタンの hover 発光をダークモードで鮮明化。
    btn-notif-bell dark static glow（rgba 0.22・8px）のホバー強化版。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.39・全script/linkタグ?v=25.39に更新 */
-[data-theme="dark"] .btn-notif-bell:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.60); }
+[data-theme="dark"] .btn-notif-bell:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.60); }
 
 /* ============================================================
    Sprint #936 / v25.40
@@ -37984,7 +37984,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    iOSガイドモーダルの閉じるボタンの hover 発光をダークモードで鮮明化。
    ios-guide-close dark static glow（rgba 0.18・8px）のホバー強化版。
    install-banner-close dark hover（rgba 0.65・12px）と同パターンで白ボタン系ダーク hover を統一。 */
-[data-theme="dark"] .ios-guide-close:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .ios-guide-close:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
 
 /* ④ [data-theme="dark"] .cal-panel-close:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
    ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
@@ -38000,7 +38000,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    チェックインモーダルの閉じるボタンの hover 発光をダークモードで鮮明化。
    ci-close dark static glow（rgba 0.18・8px）のホバー強化版。
    ③ios-guide-close dark hover と同手法で白系閉じるボタンのダーク演出を統一。 */
-[data-theme="dark"] .ci-close:hover { text-shadow: 0 0 10px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .ci-close:hover { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.65); }
 
 /* ⑥ [data-theme="dark"] .onboarding-cta:hover → dark enhanced white text-shadow glow（0 0 14px rgba 0.70）:
    ライトモード white glow（rgba 0.5・12px）のダーク強化版。
@@ -38008,7 +38008,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    オンボーディングCTAボタンの hover 発光をダークモードで鮮明化。
    onboarding-cta dark static glow（rgba 0.22・8px）のホバー強化版。
    btn-primary dark hover（white glow）と連動しグラデ背景ボタンのダーク hover 演出を統一。 */
-[data-theme="dark"] .onboarding-cta:hover { text-shadow: 0 0 14px rgba(255, 255, 255, 0.70); }
+[data-theme="dark"] .onboarding-cta:hover { color: #fff; text-shadow: 0 0 14px rgba(255, 255, 255, 0.70); }
 
 /* ⑦ [data-theme="dark"] .cat-chip.selected:hover → dark enhanced color:cat-color/primary-end+text-shadow glow（mix-lg・12px）:
    ライトモード text-shadow glow（cat-color/primary mix-md）のダーク強化版。
@@ -38024,7 +38024,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary→primary-end に切替え mix-sm→mix-md に引き上げ。
    通知「既読にする」ボタンの hover 発光をダークモードで完成形に統一。
    notif-mark-read dark static glow（primary-end mix-sm）のホバー強化版。 */
-[data-theme="dark"] .notif-mark-read:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .notif-mark-read:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑨ [data-theme="dark"] .delete-cat:hover → dark enhanced text-shadow glow（expense-end・mix-md）追加:
    既存 dark hover rule（background:danger-bg/box-shadow）に text-shadow を追加し hover 演出を強化。
@@ -38083,7 +38083,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存 dark hover rule（box-shadow: focus-ring + 0 2px 10px primary-end mix-sm）に text-shadow を追加し hover 演出を強化。
    primary→primary-end に切替え mix-sm→mix-md に引き上げ。
    汎用アイコンボタン（編集・削除・複製等）の hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .btn-icon:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-icon:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ③ [data-theme="dark"] .section-tab:hover .tab-icon → dark enhanced drop-shadow glow（primary-end・mix-md）:
    ライトモード drop-shadow glow（primary mix-sm・4px）のダーク強化版。
@@ -38180,14 +38180,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary→fc-color fallback primary-end に切替え brightness 1.1→1.2 + mix-sm→mix-md に引き上げ。
    予測カードのステータスバッジの hover 発光をダークモードで鮮明化。
    fc-status-badge dark static glow（fc-color/primary-end mix-sm）のホバー強化版。 */
-[data-theme="dark"] .forecast-card:hover .fc-status-badge { filter: brightness(1.2); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .forecast-card:hover .fc-status-badge { filter: brightness(1.2); color: var(--fc-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ③ [data-theme="dark"] .forecast-card:hover .fc-avg-badge → dark enhanced brightness(1.18)+text-shadow glow（fc-color/primary-end・mix-md）:
    ライトモード scale(1.04)+brightness(1.08)+text-shadow glow（fc-color/primary mix-sm）のダーク強化版。
    primary→fc-color fallback primary-end に切替え brightness 1.08→1.18 + mix-sm→mix-md に引き上げ。
    予測カードの平均比較バッジの hover 発光をダークモードで鮮明化。
    fc-avg-badge dark static glow（fc-color/primary-end mix-sm）のホバー強化版。②③で fc-badge 系 dark hover が完成形に統一。 */
-[data-theme="dark"] .forecast-card:hover .fc-avg-badge { filter: brightness(1.18); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .forecast-card:hover .fc-avg-badge { filter: brightness(1.18); color: var(--fc-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ④ [data-theme="dark"] .forecast-card:hover .fc-cell-balance → dark enhanced brightness(1.12)+text-shadow glow（fc-color/primary-end・mix-md）:
    ライトモード brightness(1.08)+text-shadow glow（fc-color/primary mix-sm）+box-shadow のダーク強化版。
@@ -38195,7 +38195,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    予測カードのセル残高テキストの hover 発光をダークモードで鮮明化。
    fc-cell-balance dark static glow（fc-color/primary-end mix-sm）のホバー強化版。
    fc-cell-amount dark hover（v25.35）と連動し予測カードセル数値全体のダーク hover 演出を統一。 */
-[data-theme="dark"] .forecast-card:hover .fc-cell-balance { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .forecast-card:hover .fc-cell-balance { filter: brightness(1.12); color: var(--fc-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑤ [data-theme="dark"] .forecast-card:hover .fc-low-conf → dark enhanced color:primary-end+brightness(1.1)+text-shadow glow（primary-end・mix-md）:
    ライトモード brightness(1.06)+text-shadow glow（primary mix-sm）のダーク強化版。
@@ -38219,7 +38219,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    年間ウィジェットカードのカテゴリバッジの hover 発光をダークモードで鮮明化。
    cat-badge dark static glow（primary-end mix-sm）のホバー強化版（yr-widget-card 文脈）。
    tx-table cat-badge dark hover（primary-end・v25.36）と連動し cat-badge のダーク hover 演出を統一。 */
-[data-theme="dark"] .yr-widget-card:hover .cat-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .yr-widget-card:hover .cat-badge { filter: brightness(1.12); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑧ [data-theme="dark"] .ci-challenge-item:hover .ci-badge.failed → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
    ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
@@ -38295,23 +38295,23 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .dow-table-row:hover td:nth-child(3) { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑦ dow-table-row:hover .dow-pct-high dark enhanced text-shadow（expense-end・mix-md・0 0 10px） */
-[data-theme="dark"] .dow-table-row:hover .dow-pct-high { text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .dow-table-row:hover .dow-pct-high { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ⑧ dow-table-row:hover .dow-pct-mid dark enhanced text-shadow（warning・mix-md・0 0 10px） */
-[data-theme="dark"] .dow-table-row:hover .dow-pct-mid  { text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+[data-theme="dark"] .dow-table-row:hover .dow-pct-mid  { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
 
 /* ⑨ dow-table-row:hover .dow-pct-low dark enhanced text-shadow（income-end・mix-md・0 0 10px） */
-[data-theme="dark"] .dow-table-row:hover .dow-pct-low  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
+[data-theme="dark"] .dow-table-row:hover .dow-pct-low  { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent); }
 
 /* ⑩ dow-table-row:hover .dow-mini-bar-fill dark enhanced brightness(1.18)+box-shadow（dow-row-color/primary-end・mix-md・0 1px 10px） */
 [data-theme="dark"] .dow-table-row:hover .dow-mini-bar-fill { filter: brightness(1.18); box-shadow: 0 1px 10px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑪ hs-grade-b:hover dark enhanced text-shadow（info-text・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
-[data-theme="dark"] .hs-grade-b:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--info-text) var(--mix-lg), transparent); }
+[data-theme="dark"] .hs-grade-b:hover { color: var(--info-text); text-shadow: 0 0 12px color-mix(in srgb, var(--info-text) var(--mix-lg), transparent); }
 
 /* ⑫ hs-grade-c:hover dark enhanced text-shadow（warning・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版
    ⑪⑫で hs-grade B/C のダーク hover text-shadow 演出が完成形に統一。 */
-[data-theme="dark"] .hs-grade-c:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
+[data-theme="dark"] .hs-grade-c:hover { color: var(--warning); text-shadow: 0 0 12px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
 
 /* Sprint #940 (v25.44): hs-grade-s-dark-hover×1＋hs-grade-a-dark-hover×1＋hs-grade-d-dark-hover×1＋tx-th-sort-dark-hover×1＋hs-trend-label-dark-hover×1＋wl-archive-date-dark-hover×1＋sf-chip-dark-hover×1＋fv-month-cell-dark-hover×1＋date-quick-btn-dark-hover×1＋smi-balance-smi-label-dark-hover×2＋smi-balance-smi-amount-income-dark-hover×1 12箇所
    ①hs-grade-s:hover text-shadow enhanced: SグレードバッジのダークHover text-shadow 強化。static dark glow（primary-end mix-md 0 0 7px）のホバー強化版。0 0 12px mix-lg に引き上げ。hs-grade-b/c dark hover（v25.43）と連動しSグレードのダーク hover 演出を完成形に統一
@@ -38329,17 +38329,17 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.44・全script/linkタグ?v=25.44に更新 */
 
 /* ① hs-grade-s:hover dark enhanced text-shadow（primary-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
-[data-theme="dark"] .hs-grade-s:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .hs-grade-s:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ② hs-grade-a:hover dark enhanced text-shadow（income-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版 */
-[data-theme="dark"] .hs-grade-a:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .hs-grade-a:hover { color: var(--income-end); text-shadow: 0 0 12px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
 
 /* ③ hs-grade-d:hover dark enhanced text-shadow（expense-end・mix-lg・0 0 12px）: static dark glow（0 0 7px mix-md）のホバー強化版
    ①〜③で hs-grade S/A/D のダーク hover text-shadow が完成形に統一。B/C（v25.43）と合わせ全グレードのダーク hover 演出が完成形に統一。 */
-[data-theme="dark"] .hs-grade-d:hover { text-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+[data-theme="dark"] .hs-grade-d:hover { color: var(--expense-end); text-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
 
 /* ④ tx-th-sort:hover dark enhanced text-shadow（primary-end・mix-md・0 0 10px）: ライトモード glow（primary mix-sm v23.86）のダーク強化版 */
-[data-theme="dark"] .tx-th-sort:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tx-th-sort:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ health-score-card:hover .hs-trend-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
    hs-spark-label/hs-spark-label-now/hs-score-unit dark hover（v25.11）と連動しヘルスチェックカード内ラベル全体のダーク hover 演出を完成形に統一 */
@@ -38355,11 +38355,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑧ fv-month-table tbody tr:hover .fv-month-cell dark enhanced text-shadow（primary-end・mix-md・0 0 10px）:
    ライトモード glow（primary mix-sm v23.xx）のダーク強化版。fv-month-cell static dark glow（v25.22）のホバー強化版 */
-[data-theme="dark"] .fv-month-table tbody tr:hover .fv-month-cell { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-month-cell { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑨ date-quick-btn:hover dark enhanced text-shadow（primary-end・mix-md・0 0 10px）:
    既存 dark hover rule（border-color/color:primary・line 15049）に text-shadow glow を追加 */
-[data-theme="dark"] .date-quick-btn:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .date-quick-btn:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑩ smi-balance:hover .smi-label dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md・0 0 10px）:
    ライトモード glow（primary mix-sm v23.xx）のダーク強化版。smi-balance static dark glow（v25.22）のホバー強化版 */
@@ -38393,7 +38393,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ② budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge dark enhanced brightness(1.12)+text-shadow glow（warning・mix-md・0 0 10px）:
    ライトモード text-shadow（warning mix-sm v23.61）のダーク強化版。budget-pct-badge 通常/over dark hover（v25.24）と連動し予算達成率バッジ全バリアントのダーク hover 演出が完成形に統一 */
-[data-theme="dark"] .budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge { filter: brightness(1.12); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+[data-theme="dark"] .budget-item:has(.budget-pct-badge.warn):hover .budget-pct-badge { filter: brightness(1.12); color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
 
 /* ③ cc-col:has(.cc-col-up) .cc-item:hover .cc-name dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md・0 0 10px）:
    ライトモード text-shadow（danger-text mix-sm v23.62）のダーク強化版。cc-col-up cc-name static dark glow（expense-end mix-sm）のホバー強化版 */
@@ -38468,10 +38468,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ct-stat-card:hover .ct-stat-sub { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑦ ch-sum-active:hover .ch-summary-label dark enhanced white glow（0 0 12px rgba(255,255,255,0.5)） */
-[data-theme="dark"] .ch-sum-active:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑧ ch-sum-total:hover .ch-summary-label dark enhanced white glow（0 0 12px rgba(255,255,255,0.5)） */
-[data-theme="dark"] .ch-sum-total:hover .ch-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* ⑨ step-card:hover .step-icon dark enhanced drop-shadow（primary-end・mix-md・0 2px 10px） */
 [data-theme="dark"] .step-card:hover .step-icon { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
@@ -38503,7 +38503,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑧ cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge dark hover text-shadow（mix-md） */
 [data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-badge { color: var(--cal-ev-color, var(--primary-end)); text-shadow: 0 0 10px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent); }
 /* ⑨ dow-stat-card:hover .dow-stat-day dark hover brightness(1.18)+white glow */
-[data-theme="dark"] .dow-stat-card:hover .dow-stat-day { filter: brightness(1.18); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-day { filter: brightness(1.18); color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
 /* ⑩ hm-stat-card:nth-child(2):hover .hm-stat-unit dark hover color:expense-end+text-shadow */
 [data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-unit { color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 /* ⑪ hm-stat-card:nth-child(3):hover .hm-stat-unit dark hover color:warning+text-shadow */
@@ -38523,19 +38523,19 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑤ sb-banner:hover .sb-banner-lbl dark hover white glow強化 */
 [data-theme="dark"] .sb-banner:hover .sb-banner-lbl { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
 /* ⑥ ch-sum-active:hover .ch-summary-unit dark hover white glow強化 */
-[data-theme="dark"] .ch-sum-active:hover .ch-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 /* ⑦ ch-sum-total:hover .ch-summary-unit dark hover white glow強化 */
-[data-theme="dark"] .ch-sum-total:hover .ch-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 /* ⑧ pt-summary-card:hover .pt-summary-amount dark hover white glow強化 */
-[data-theme="dark"] .pt-summary-card:hover .pt-summary-amount { text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-amount { color: #fff; text-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 /* ⑨ pt-summary-card:hover .pt-summary-sub dark hover white glow強化 */
-[data-theme="dark"] .pt-summary-card:hover .pt-summary-sub { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-sub { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 /* ⑩ pt-summary-card:hover .pt-summary-unit dark hover white glow強化 */
-[data-theme="dark"] .pt-summary-card:hover .pt-summary-unit { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-unit { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 /* ⑪ pt-total:hover .pt-summary-label dark hover white glow強化 */
-[data-theme="dark"] .pt-total:hover    .pt-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-total:hover    .pt-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 /* ⑫ pt-expiring:hover .pt-summary-label dark hover white glow強化 */
-[data-theme="dark"] .pt-expiring:hover .pt-summary-label { text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
+[data-theme="dark"] .pt-expiring:hover .pt-summary-label { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.5); }
 
 /* Sprint #945 (v25.49): adv-preset-chip・memo-hist-chip・amt-hist-chip・summary-card label・btn-danger・btn-inline-add・type-btn・fv-rate-badge×3・rc-item-amount・summary-card amount dark hover 12箇所 */
 /* ① adv-preset-chip:hover dark hover color+text-shadow追加 */
@@ -38555,13 +38555,13 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑧ fv-rate-badge.high:hover dark hover text-shadow追加 */
 [data-theme="dark"] .fv-rate-badge.high:hover { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end)  var(--mix-md), transparent); }
 /* ⑨ fv-rate-badge.mid:hover dark hover text-shadow追加 */
-[data-theme="dark"] .fv-rate-badge.mid:hover  { text-shadow: 0 0 10px color-mix(in srgb, var(--warning)      var(--mix-md), transparent); }
+[data-theme="dark"] .fv-rate-badge.mid:hover  { color: var(--warning); text-shadow: 0 0 10px color-mix(in srgb, var(--warning)      var(--mix-md), transparent); }
 /* ⑩ fv-rate-badge.low:hover dark hover text-shadow追加 */
-[data-theme="dark"] .fv-rate-badge.low:hover  { text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
+[data-theme="dark"] .fv-rate-badge.low:hover  { color: var(--income-end); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end)   var(--mix-md), transparent); }
 /* ⑪ rc-item:hover .rc-item-amount dark hover color+text-shadow追加（generic） */
 [data-theme="dark"] .rc-item:hover .rc-item-amount { color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 /* ⑫ summary-card:hover .summary-amount dark hover white glow強化（generic） */
-[data-theme="dark"] .summary-card:hover .summary-amount { text-shadow: 0 0 20px rgba(255, 255, 255, 0.70), 0 2px 14px rgba(255, 255, 255, 0.45); }
+[data-theme="dark"] .summary-card:hover .summary-amount { color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.70), 0 2px 14px rgba(255, 255, 255, 0.45); }
 
 /* ============================================================
    Sprint #946 (v25.50): wl-archive-summary・ch-archive-summary・debt-archive-summary・sub-inactive summary・goal-achieved-summary・modal-details summary・stp-help-summary・stp-config-summary・qa-type-btn・btn-preset・card-collapse-btn・notif-mark-read dark hover color追加 12箇所
