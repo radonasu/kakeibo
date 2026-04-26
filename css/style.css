@@ -38850,3 +38850,38 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-up { filter: brightness(1.08); }
 /* ⑫ yoy-summary-item:hover .yoy-diff.yoy-down dark brightness(1.08) — income-end color+text-shadow（v24.xx）と連動しダーク hover 輝度強化。⑪⑫で yoy-diff up/down 両バリアントのダーク hover 輝度強化が完成形に統一 */
 [data-theme="dark"] .yoy-summary-item:hover .yoy-diff.yoy-down { filter: brightness(1.08); }
+
+/* ============================================================
+   Sprint #957 (v25.61): Approach C継続 — dark hover に filter:brightness 追加
+   qa-type-btn×1・md-nav-btn×1・btn-preset×1・card-collapse-btn×1・sub-emoji-btn×1・
+   btn-share×1・btn-continue×1・goal-emoji-btn×1・ev-emoji-chip×1・
+   pt-emoji-btn×1・ch-emoji-btn×1・adv-filter-toggle×1
+   dark hover 既存ルールに filter:brightness(1.1) を追加し
+   ダーク hover 演出をライトモード同等の輝度強化（color+brightness+text-shadow）に統一。
+   全要素 transition に filter 含有済みのため transition 追加不要。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① qa-type-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .qa-type-btn:hover { filter: brightness(1.1); }
+/* ② md-nav-btn:hover:not(:disabled) dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .md-nav-btn:hover:not(:disabled) { filter: brightness(1.1); }
+/* ③ btn-preset:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .btn-preset:hover { filter: brightness(1.1); }
+/* ④ card-collapse-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化。①〜④で v24.92 sprint ボタン系要素のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .card-collapse-btn:hover { filter: brightness(1.1); }
+/* ⑤ sub-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.92）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .sub-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑥ btn-share:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .btn-share:hover { filter: brightness(1.1); }
+/* ⑦ btn-continue:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化。⑥⑦で btn-share/continue のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .btn-continue:hover { filter: brightness(1.1); }
+/* ⑧ goal-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .goal-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑨ ev-emoji-chip:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .ev-emoji-chip:hover { filter: brightness(1.1); }
+/* ⑩ pt-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pt-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑪ ch-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化。⑧〜⑪で goal/ev/pt/ch 絵文字ボタン全4種のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑫ adv-filter-toggle:hover dark brightness(1.1) — primary-end color+text-shadow（v24.93）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .adv-filter-toggle:hover { filter: brightness(1.1); }
