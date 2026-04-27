@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.62'; // v25.62: Approach C継続 — dark hover に filter:brightness 追加（stp-config-summary・notif-toggle-label・recurring-toggle-label・sb-select-all-wrap・stp-help-summary・modal-details summary・goal-achieved-summary・sub-inactive-section summary・wl-archive-summary・ch-archive-summary・debt-archive-summary・adv-filter-clear 計12箇所）
+const CACHE_NAME = 'kakeibo-v25.63'; // v25.63: Approach C継続 — dark hover に filter:brightness 追加（smi-income・smi-expense・pt-total・pt-expiring・wl-sum-count・wl-sum-budget・wl-sum-done・ch-sum-active・ch-sum-achieved・ch-sum-total・sub-monthly・sub-yearly 計12箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',

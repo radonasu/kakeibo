@@ -38931,3 +38931,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-archive-summary:hover { filter: brightness(1.1); }
 /* ⑫ adv-filter-clear:hover dark brightness(1.1) — expense-end color+text-shadow（v23.85）と連動しダーク hover 輝度強化。⑥〜⑫で summary系要素（modal-details/goal-achieved/sub-inactive/wl-archive/ch-archive/debt-archive）とadv-filter-clearのダーク hover 輝度強化が完成形に統一 */
 [data-theme="dark"] .adv-filter-clear:hover { filter: brightness(1.1); }
+
+/* ── v25.63: Approach C継続 — smi-income/expense・pt-total/expiring・wl-sum-count/budget/done・ch-sum-active/achieved/total・sub-summary-card monthly/yearly dark hover filter:brightness 追加 12箇所 ── */
+/* ① smi-income:hover dark brightness(1.08) — ライトモード brightness(1.04) + box-shadow のダーク強化版。brightness 1.04 → 1.08 に引き上げ収入ミニサマリーカードの hover 輝きをダークモードで鮮明化。smi-item transition:filter 含有済み */
+[data-theme="dark"] .smi-income:hover  { filter: brightness(1.08); }
+/* ② smi-expense:hover dark brightness(1.08) — ライトモード brightness(1.04) + box-shadow のダーク強化版。支出ミニサマリーカードの hover 輝きをダークモードで鮮明化。①②で smi-income/expense のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .smi-expense:hover { filter: brightness(1.08); }
+/* ③ pt-total:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。pt-summary-card transition:filter 含有済み */
+[data-theme="dark"] .pt-total:hover    { filter: brightness(1.1); }
+/* ④ pt-expiring:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。③④で pt-total/expiring のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pt-expiring:hover { filter: brightness(1.1); }
+/* ⑤ wl-sum-count:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。wl-summary-card transition:filter 含有済み */
+[data-theme="dark"] .wl-sum-count:hover  { filter: brightness(1.1); }
+/* ⑥ wl-sum-budget:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版 */
+[data-theme="dark"] .wl-sum-budget:hover { filter: brightness(1.1); }
+/* ⑦ wl-sum-done:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。⑤〜⑦で wl-sum-count/budget/done のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .wl-sum-done:hover   { filter: brightness(1.1); }
+/* ⑧ ch-sum-active:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。ch-summary-card transition:filter 含有済み */
+[data-theme="dark"] .ch-sum-active:hover   { filter: brightness(1.1); }
+/* ⑨ ch-sum-achieved:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版 */
+[data-theme="dark"] .ch-sum-achieved:hover { filter: brightness(1.1); }
+/* ⑩ ch-sum-total:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。⑧〜⑩で ch-sum-active/achieved/total のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-sum-total:hover    { filter: brightness(1.1); }
+/* ⑪ sub-summary-card.sub-monthly:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。sub-summary-card transition:filter 含有済み */
+[data-theme="dark"] .sub-summary-card.sub-monthly:hover { filter: brightness(1.1); }
+/* ⑫ sub-summary-card.sub-yearly:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。⑪⑫で sub-monthly/yearly のダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.63・全script/linkタグ?v=25.63に更新 */
+[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { filter: brightness(1.1); }
