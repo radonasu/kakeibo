@@ -38983,3 +38983,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .md-cell-balance-pos:hover .md-cell-value { filter: brightness(1.12); }
 /* ⑫ md-cell-balance-neg:hover .md-cell-value dark brightness(1.12) — ⑨と同パターン。⑨〜⑫で md-cell-value 全4バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.64・全script/linkタグ?v=25.64に更新 */
 [data-theme="dark"] .md-cell-balance-neg:hover .md-cell-value { filter: brightness(1.12); }
+
+/* v25.65: Approach C継続 — ci-cell・ci-score-row・ci-cell-value・summary-amount・hm-stat-value・ct-stat-value・tg-stat-value・asset-balance dark hover filter:brightness 追加 12箇所 */
+/* ① ci-cell:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。ci-cell transition:filter 含有済み（line 14211） */
+[data-theme="dark"] .ci-cell:hover { filter: brightness(1.1); }
+/* ② ci-score-row:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。ci-score-row transition:filter 含有済み（line 14330）。①②でチェックインモーダルの主要インタラクティブ要素ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ci-score-row:hover { filter: brightness(1.1); }
+/* ③ ci-cell:hover .ci-cell-value dark brightness(1.1) — ライトモード brightness(1.1) のダーク強化版。ci-cell-value transition:filter 含有済み（line 18474）。①〜③でci-cell hover 演出3点セットが完成形に統一 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value { filter: brightness(1.1); }
+/* ④ summary-card.income:hover .summary-amount dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。summary-amount transition:filter 含有済み（line 18281） */
+[data-theme="dark"] .summary-card.income:hover .summary-amount { filter: brightness(1.08); }
+/* ⑤ summary-card.expense:hover .summary-amount dark brightness(1.08) — ④と同パターン */
+[data-theme="dark"] .summary-card.expense:hover .summary-amount { filter: brightness(1.08); }
+/* ⑥ summary-card.balance.positive:hover .summary-amount dark brightness(1.08) — ④と同パターン */
+[data-theme="dark"] .summary-card.balance.positive:hover .summary-amount { filter: brightness(1.08); }
+/* ⑦ summary-card.balance.negative:hover .summary-amount dark brightness(1.08) — ④と同パターン。④〜⑦で summary-card 全4バリアント（income/expense/balance.positive/balance.negative）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .summary-card.balance.negative:hover .summary-amount { filter: brightness(1.08); }
+/* ⑧ hm-stat-card:nth-child(1):hover .hm-stat-value dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。hm-stat-value transition:filter 含有済み（line 18291） */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-value { filter: brightness(1.08); }
+/* ⑨ hm-stat-card:nth-child(2):hover .hm-stat-value dark brightness(1.08) — ⑧と同パターン。⑧⑨で月次ヒートマップ統計値のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-value { filter: brightness(1.08); }
+/* ⑩ ct-stat-card:hover .ct-stat-value dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。ct-stat-value transition:filter 含有済み（line 18258） */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-value { filter: brightness(1.08); }
+/* ⑪ tg-stat-card:hover .tg-stat-value dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。tg-stat-value transition:filter 含有済み（line 18272） */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-value { filter: brightness(1.08); }
+/* ⑫ asset-card:hover .asset-balance dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。asset-balance transition:filter 含有済み（line 18252）。⑩〜⑫で各種統計カード値・資産残高のダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.65・全script/linkタグ?v=25.65に更新 */
+[data-theme="dark"] .asset-card:hover .asset-balance { filter: brightness(1.08); }

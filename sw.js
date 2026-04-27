@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.64'; // v25.64: Approach C継続 — dark hover に filter:brightness 追加（cal-cell.heat-1/2/3/4・md-cell-income/expense/balance-pos/balance-neg .md-cell-label/.md-cell-value 計12箇所）
+const CACHE_NAME = 'kakeibo-v25.65'; // v25.65: Approach C継続 — dark hover に filter:brightness 追加（ci-cell・ci-score-row・ci-cell-value・summary-amount×4・hm-stat-value×2・ct-stat-value・tg-stat-value・asset-balance 計12箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',
