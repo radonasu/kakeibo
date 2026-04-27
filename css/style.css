@@ -39039,3 +39039,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ dow-table-row:hover td:nth-child(4) dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 37843）に color+text-shadow あり。最終 transition ルール（line 23883）に filter 未含有のため transition も同時追加。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.66・全script/linkタグ?v=25.66に更新 */
 .dow-table-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 [data-theme="dark"] .dow-table-row:hover td:nth-child(4) { filter: brightness(1.1); }
+
+/* ── v25.67: Approach C継続 — yr-progress-track/fill・hs-gauge-track・cat-budget-bar-wrap・dw-slider・fc-progress-track・pace-bar-track・ev-prog-bar・fv-mini-bar・wk-bar-wrap・dow-mini-bar-track・fv-seg-bar dark hover filter:brightness 追加 12箇所 ── */
+/* ① yr-widget-card:hover .yr-progress-track dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。yr-progress-track transition:filter 含有済み（line 22513） */
+[data-theme="dark"] .yr-widget-card:hover .yr-progress-track { filter: brightness(1.08); }
+/* ② yr-widget-card:hover .yr-progress-fill dark brightness(1.12) — ライトモード brightness(1.1) + box-shadow のダーク強化版。yr-progress-fill transition:filter 含有済み（line 21700）。①②でyr-widget-card進捗バー（track+fill）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-widget-card:hover .yr-progress-fill { filter: brightness(1.12); }
+/* ③ health-score-card:hover .hs-gauge-track dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。hs-gauge-track transition:filter 含有済み（line 22540） */
+[data-theme="dark"] .health-score-card:hover .hs-gauge-track { filter: brightness(1.1); }
+/* ④ cat-card:hover .cat-budget-bar-wrap dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。cat-budget-bar-wrap transition:filter 含有済み（line 22549） */
+[data-theme="dark"] .cat-card:hover .cat-budget-bar-wrap { filter: brightness(1.08); }
+/* ⑤ dw-item:hover .dw-slider dark brightness(1.15) — ライトモード brightness(1.12) のダーク強化版。dw-slider transition:filter 含有済み（line 22559） */
+[data-theme="dark"] .dw-item:hover .dw-slider { filter: brightness(1.15); }
+/* ⑥ forecast-card:hover .fc-progress-track dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。fc-progress-track transition:filter 含有済み（line 22632） */
+[data-theme="dark"] .forecast-card:hover .fc-progress-track { filter: brightness(1.08); }
+/* ⑦ pace-bar-row:hover .pace-bar-track dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。pace-bar-track transition:filter 含有済み（line 22656） */
+[data-theme="dark"] .pace-bar-row:hover .pace-bar-track { filter: brightness(1.08); }
+/* ⑧ ev-month-col:not(.ev-month-current):hover .ev-prog-bar dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。ev-prog-bar transition:filter 含有済み（line 22665） */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-prog-bar { filter: brightness(1.08); }
+/* ⑨ fv-cat-table tbody tr:hover .fv-mini-bar dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。fv-mini-bar transition:filter 含有済み（line 22699） */
+[data-theme="dark"] .fv-cat-table tbody tr:hover .fv-mini-bar { filter: brightness(1.1); }
+/* ⑩ wk-bar-col:hover .wk-bar-wrap dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。wk-bar-wrap transition:filter 含有済み（line 22716） */
+[data-theme="dark"] .wk-bar-col:hover .wk-bar-wrap { filter: brightness(1.08); }
+/* ⑪ dow-table-row:hover .dow-mini-bar-track dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。dow-mini-bar-track transition:filter 含有済み（line 22730）。⑩⑪でwk-bar/dow-mini-bar 系のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .dow-table-row:hover .dow-mini-bar-track { filter: brightness(1.08); }
+/* ⑫ fv-month-table tbody tr:hover .fv-seg-bar dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。fv-seg-bar transition:filter 含有済み（line 22750）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.67・全script/linkタグ?v=25.67に更新 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-seg-bar { filter: brightness(1.08); }
