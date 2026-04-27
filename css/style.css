@@ -39427,3 +39427,50 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-unit { filter: brightness(1.1); }
 /* ⑫ wk-summary-row .wk-cell:nth-child(3):hover .wk-unit dark brightness(1.1) — income-end color+text-shadow（line 35456）と連動しダーク hover 輝度強化。⑩〜⑫で wk-unit 全3バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.79・全script/linkタグ?v=25.79に更新 */
 [data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-unit { filter: brightness(1.1); }
+
+/* ── v25.80: Approach C継続 — wl-card-note×1・pm-sum-label×1・dd-summary-label×1・asset-entry-balance×1・debt-rate-badge×1・debt-monthly-badge×1・hs-spark-label-now×1・hs-score-unit×1・step-num×1・qa-card-title×1・tx-tag-filter-chip(not.active)×1・tx-tag-filter-all.active×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   wl-card-note / pm-sum-label / dd-summary-label / asset-entry-balance / debt-rate-badge / debt-monthly-badge / hs-spark-label-now / step-num / qa-card-title の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* wl-card-note transition に filter 追加（既存は color + text-shadow のみ、line 23073） */
+.wl-card-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* pm-sum-label transition に filter 追加（既存は color + text-shadow のみ、line 23195） */
+.pm-sum-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* dd-summary-label transition に filter 追加（既存は color + text-shadow のみ、line 23930） */
+.dd-summary-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* asset-entry-balance transition に filter 追加（既存は color + text-shadow のみ、line 19283） */
+.asset-entry-balance { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* debt-rate-badge / debt-monthly-badge transition に filter 追加（既存は box-shadow + text-shadow のみ、line 25826） */
+.debt-rate-badge,
+.debt-monthly-badge { transition: box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* hs-spark-label-now transition に filter 追加（既存は text-shadow のみ、line 25818） */
+.hs-spark-label-now { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* step-num transition に filter 追加（既存は transform + box-shadow + text-shadow のみ、line 25851） */
+.step-num { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* qa-card-title transition に filter 追加（既存は color + text-shadow のみ、line 25937） */
+.qa-card-title { transition: color var(--dur-mid) var(--ease-out), text-shadow var(--dur-mid) var(--ease-out), filter var(--dur-mid) var(--ease-out); }
+/* ① wl-card:hover .wl-card-note dark brightness(1.1) — wl-accent/primary-end color+text-shadow（line 35502）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。wl-card-note transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .wl-card:hover .wl-card-note { filter: brightness(1.1); }
+/* ② pm-sum-card:hover .pm-sum-label dark brightness(1.1) — pm-sum-color/primary-end color+text-shadow（line 35530）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。pm-sum-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pm-sum-card:hover .pm-sum-label { filter: brightness(1.1); }
+/* ③ dd-summary-item:hover .dd-summary-label dark brightness(1.1) — primary-end color+text-shadow（line 35548）と連動しダーク hover 輝度強化。dd-summary-item:hover dark brightness(1.06)（line 17939）と連動しダーク hover 演出を強化。dd-summary-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dd-summary-item:hover .dd-summary-label { filter: brightness(1.1); }
+/* ④ asset-entry-row:hover .asset-entry-balance dark brightness(1.1) — primary-end color+text-shadow（line 35561）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。asset-entry-balance transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-balance { filter: brightness(1.1); }
+/* ⑤ debt-card:hover .debt-rate-badge dark brightness(1.1) — debt-accent/expense-end color+text-shadow（line 35577）と連動しダーク hover 輝度強化。ライトモード box-shadow glow のみ（line 19276）。debt-rate-badge transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-card:hover .debt-rate-badge { filter: brightness(1.1); }
+/* ⑥ debt-card:hover .debt-monthly-badge dark brightness(1.1) — debt-accent/expense-end color+text-shadow（line 35583）と連動しダーク hover 輝度強化。⑤と同パターン。⑤⑥で debt-rate-badge/debt-monthly-badge ペアのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-card:hover .debt-monthly-badge { filter: brightness(1.1); }
+/* ⑦ health-score-card:hover .hs-spark-label-now dark brightness(1.1) — primary-end color+text-shadow（line 35589）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。hs-spark-label-now transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .health-score-card:hover .hs-spark-label-now { filter: brightness(1.1); }
+/* ⑧ health-score-card:hover .hs-score-unit dark brightness(1.1) — primary-end color+text-shadow（line 35595）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20661）のダーク対称版。hs-score-unit transition:filter 含有済み（line 20660） */
+[data-theme="dark"] .health-score-card:hover .hs-score-unit { filter: brightness(1.1); }
+/* ⑨ step-card:hover .step-num dark brightness(1.1) — primary-end color+text-shadow（line 35601）と連動しダーク hover 輝度強化。ライトモードは transform+box-shadow のみ（no brightness）。step-num transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .step-card:hover .step-num { filter: brightness(1.1); }
+/* ⑩ qa-toggle-btn:hover .qa-card-title dark brightness(1.1) — qa-accent/primary-end color+text-shadow（line 35607）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。qa-card-title transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .qa-toggle-btn:hover .qa-card-title { filter: brightness(1.1); }
+/* ⑪ tx-tag-filter-chip:hover:not(.active) dark brightness(1.1) — tc/primary-end color+text-shadow（line 35612）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。tx-tag-filter-chip transition:filter 含有済み（line 25864） */
+[data-theme="dark"] .tx-tag-filter-chip:hover:not(.active) { filter: brightness(1.1); }
+/* ⑫ tx-tag-filter-all.active:hover dark brightness(1.1) — primary-end color+text-shadow（line 35618）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。⑪⑫で tx-tag-filter chip/all ペアのダーク hover 輝度強化が完成形に統一。tx-tag-filter-all transition:filter 含有済み（line 25864）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.80・全script/linkタグ?v=25.80に更新 */
+[data-theme="dark"] .tx-tag-filter-all.active:hover { filter: brightness(1.1); }
