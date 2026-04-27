@@ -39149,3 +39149,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-label { filter: brightness(1.1); }
 /* ⑫ wk-cell-label nth-child(2) dark brightness(1.1) — ⑪と同パターン。既存ダーク hover ルール（line 38283）に color+text-shadow あり。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.70・全script/linkタグ?v=25.70に更新 */
 [data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-label { filter: brightness(1.1); }
+
+/* ── v25.71: Approach C継続 — wk-cell-label nth-child(3)×1・auth-tab×1・empty-month-btn×1・btn-icon×1・tx-th-sort×1・btn-ghost×1・modal-close×1・adv-preset-chip×1・memo-hist-chip×1・amt-hist-chip×1・btn-danger×1・btn-inline-add×1 dark hover filter:brightness 追加 12箇所 ── */
+/* ① wk-cell-label nth-child(3) dark brightness(1.1) — ライトモード text-shadow のみのダーク強化版。既存ダーク hover ルール（line 38286）に color:income-end + text-shadow あり。wk-cell-label transition:filter 追加済み（v25.70）。⑪⑫（v25.70）と合わせ wk-cell 全3バリアントの .wk-cell-label ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-label { filter: brightness(1.1); }
+/* ② auth-tab:not(.active):hover dark brightness(1.1) — primary-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化。auth-tab transition:filter 含有済み（line 26007） */
+[data-theme="dark"] .auth-tab:not(.active):hover { filter: brightness(1.1); }
+/* ③ empty-month-btn:hover dark brightness(1.1) — primary-end color+text-shadow（v25.52）と連動しダーク hover 輝度強化。empty-month-btn transition:filter 含有済み（line 5312） */
+[data-theme="dark"] .empty-month-btn:hover { filter: brightness(1.1); }
+/* ④ btn-icon:hover dark brightness(1.1) — primary-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。btn-icon transition:filter 含有済み（line 26053） */
+[data-theme="dark"] .btn-icon:hover { filter: brightness(1.1); }
+/* ⑤ tx-th-sort:hover dark brightness(1.1) — primary-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。tx-th-sort transition:filter 含有済み（line 25841） */
+[data-theme="dark"] .tx-th-sort:hover { filter: brightness(1.1); }
+/* ⑥ btn-ghost:hover dark brightness(1.1) — primary-end color+text-shadow+box-shadow（v24.x）と連動しダーク hover 輝度強化。btn-ghost transition:filter 含有済み（line 26029） */
+[data-theme="dark"] .btn-ghost:hover { filter: brightness(1.1); }
+/* ⑦ modal-close:hover dark brightness(1.1) — expense-end color+text-shadow（v24.x）と連動しダーク hover 輝度強化。modal-close transition:filter 含有済み（line 3100） */
+[data-theme="dark"] .modal-close:hover { filter: brightness(1.1); }
+/* ⑧ adv-preset-chip:hover dark brightness(1.1) — primary-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。adv-preset-chip transition:filter 含有済み（line 25623） */
+[data-theme="dark"] .adv-preset-chip:hover { filter: brightness(1.1); }
+/* ⑨ memo-hist-chip:hover dark brightness(1.1) — memo-chip-color color+text-shadow（v25.51）と連動しダーク hover 輝度強化。memo-hist-chip transition:filter 含有済み（line 25603） */
+[data-theme="dark"] .memo-hist-chip:hover { filter: brightness(1.1); }
+/* ⑩ amt-hist-chip:hover dark brightness(1.1) — amt-chip-color color+text-shadow（v25.51）と連動しダーク hover 輝度強化。amt-hist-chip transition:filter 含有済み（line 25595）。⑧〜⑩でチップ系3バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .amt-hist-chip:hover { filter: brightness(1.1); }
+/* ⑪ btn-danger:hover dark brightness(1.1) — expense-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。btn-danger transition:filter 含有済み（line 26037） */
+[data-theme="dark"] .btn-danger:hover { filter: brightness(1.1); }
+/* ⑫ btn-inline-add:hover dark brightness(1.1) — primary-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。btn-inline-add transition:filter 含有済み（line 25999）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.71・全script/linkタグ?v=25.71に更新 */
+[data-theme="dark"] .btn-inline-add:hover { filter: brightness(1.1); }

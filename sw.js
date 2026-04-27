@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.70'; // v25.70: Approach C継続 — yr-cell-savings-danger .yr-prev-badge×1・yr-cell-label×5・yr-unit×2・yr-prev-badge×2・wk-cell-label×2 計12箇所
+const CACHE_NAME = 'kakeibo-v25.71'; // v25.71: Approach C継続 — wk-cell-label nth-child(3)×1・auth-tab×1・empty-month-btn×1・btn-icon×1・tx-th-sort×1・btn-ghost×1・modal-close×1・adv-preset-chip×1・memo-hist-chip×1・amt-hist-chip×1・btn-danger×1・btn-inline-add×1 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
