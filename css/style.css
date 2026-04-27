@@ -19823,7 +19823,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .sub-card:hover 時に .sub-next-billing（次回請求日テキスト）を
    primary カラーへ変色。sub-cycle-tag 変色（本スプリント）・sub-card-name 変色
    （v23.00）と連動しメタ情報も含めたカード全体のホバー演出を統一。 */
-.sub-next-billing { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-next-billing { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-next-billing { color: var(--primary); }
 
 /* 8. sub-card:hover → .sub-card-memo カラー変化
@@ -20679,7 +20679,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ポイントウィジェット行ホバー時に .pt-widget-name（ポイント名称テキスト：color:text・fs-sm・fw-semi）を
    primary カラーへ変色。pt-widget-icon scale+glow（v22.x）と連動しアイコン・名称が
    一体的にホバーで反応する演出に。 */
-.pt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .pt-widget-item:hover .pt-widget-name { color: var(--primary); }
 
 /* 2. pt-widget-item:hover → .pt-widget-balance brightness(1.08) + タイプ別カラー変化
@@ -20696,7 +20696,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    タイプ別変色（urgent=danger-text / soon=warning / normal=primary）。
    pt-widget-name・pt-widget-balance 変色（本スプリント）と連動し行内全テキストが
    一体的にホバーで反応する完成形に。 */
-.pt-widget-exp { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pt-widget-exp { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .pt-widget-item:hover             .pt-widget-exp { color: var(--primary); }
 .pt-widget-item.pt-urgent:hover   .pt-widget-exp { color: var(--danger-text); }
 .pt-widget-item.pt-soon:hover     .pt-widget-exp { color: var(--warning); }
@@ -23688,7 +23688,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存の color:primary 変色（v23.02）と連動しサイクルタグがprimaryカラーで
    輝くホバー演出に。sub-card-amount 変色・sub-cycle-unit glow（v23.41）と
    合わせてサブスクカード内の情報エリアが一体的に輝く完成形。 */
-.sub-cycle-tag { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-cycle-tag { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-cycle-tag { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 6. sub-card:hover → .sub-card-memo primary text-shadow glow
@@ -23697,7 +23697,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存の color:primary 変色（v23.x）と連動しメモテキストがprimaryカラーで
    輝くホバー演出に。sub-cycle-tag glow（本スプリント⑤）・sub-next-billing 変色と
    合わせてサブスクカード詳細情報が一体的に輝く完成形。 */
-.sub-card-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-card-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-card-memo { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. cat-chip:hover → .cat-chip-name cat-color text-shadow glow
@@ -23955,7 +23955,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    サブスクカードホバー時にサイクル単位テキスト（「月」「年」等）にsub-accent text-shadow glow追加。
    既存color:sub-accent変色（v23.x）と連動しsub-cycle-tag glow（v23.54）・
    sub-monthly-equiv glow（v23.55）と合わせてカード金額エリア全テキストが輝く完成形。 */
-.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-cycle-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-card:hover .sub-cycle-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* ============================================================
@@ -39288,3 +39288,30 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .cat-card:hover .cat-yayoi-tag { filter: brightness(1.08); }
 /* ⑫ sub-card:hover .sub-card-amount dark brightness(1.1) — sub-accent/primary-end color+text-shadow（v25.04⑧/line 35033）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18501）のダーク強化版。sub-card-amount transition:filter 含有済み（line 18500）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.75・全script/linkタグ?v=25.75に更新 */
 [data-theme="dark"] .sub-card:hover .sub-card-amount { filter: brightness(1.1); }
+/* ── v25.76: Approach C継続 — sub-card-memo×1・sub-monthly-equiv×1・sub-cycle-tag×1・sub-next-billing×1・sub-cycle-unit×1・sub-paused-badge×1・pt-widget-name×1・pt-widget-exp×3・debt-summary-total .debt-summary-sub×1・debt-summary-monthly .debt-summary-sub×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   sub-card-memo/sub-cycle-tag/sub-next-billing/sub-cycle-unit/pt-widget-name/pt-widget-exp transition に filter を追加（本スプリント）。 */
+/* ① sub-card:hover .sub-card-memo dark brightness(1.1) — primary-end color+text-shadow（v25.04⑨/line 35039）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。sub-card-memo transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-card:hover .sub-card-memo { filter: brightness(1.1); }
+/* ② sub-card:hover .sub-monthly-equiv dark brightness(1.1) — primary-end color+text-shadow（v25.04⑩/line 35045）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 20617）のダーク強化版。sub-monthly-equiv transition:filter 含有済み（line 20616） */
+[data-theme="dark"] .sub-card:hover .sub-monthly-equiv { filter: brightness(1.1); }
+/* ③ sub-card:hover .sub-cycle-tag dark brightness(1.1) — primary-end color+text-shadow（v25.04⑪/line 35051）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。sub-cycle-tag transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-card:hover .sub-cycle-tag { filter: brightness(1.1); }
+/* ④ sub-card:hover .sub-next-billing dark brightness(1.1) — primary-end color+text-shadow（v25.04⑫/line 35058）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。sub-next-billing transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-card:hover .sub-next-billing { filter: brightness(1.1); }
+/* ⑤ sub-card:hover .sub-cycle-unit dark brightness(1.1) — sub-accent/primary-end color+text-shadow（v25.04⑬/line 35385）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。sub-cycle-unit transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-card:hover .sub-cycle-unit { filter: brightness(1.1); }
+/* ⑥ sub-card:hover .sub-paused-badge dark brightness(1.1) — warning-end color+text-shadow（v25.05⑪/line 37683）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 21436）のダーク強化版。sub-paused-badge transition:filter 含有済み（line 25702） */
+[data-theme="dark"] .sub-card:hover .sub-paused-badge { filter: brightness(1.1); }
+/* ⑦ pt-widget-item:hover .pt-widget-name dark brightness(1.1) — primary-end color+text-shadow（v25.05⑥/line 36570）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。pt-widget-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pt-widget-item:hover .pt-widget-name { filter: brightness(1.1); }
+/* ⑧ pt-widget-item:hover .pt-widget-exp dark brightness(1.1) — primary-end color+text-shadow（v24.97①/line 34540）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。pt-widget-exp transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pt-widget-item:hover             .pt-widget-exp { filter: brightness(1.1); }
+/* ⑨ pt-widget-item.pt-urgent:hover .pt-widget-exp dark brightness(1.08) — expense-end color+text-shadow（v24.97②/line 34546）と連動しダーク hover 輝度強化。⑧のダーク urgent バリアント */
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover   .pt-widget-exp { filter: brightness(1.08); }
+/* ⑩ pt-widget-item.pt-soon:hover .pt-widget-exp dark brightness(1.08) — warning color+text-shadow（v24.97③/line 34551）と連動しダーク hover 輝度強化。⑦〜⑩でポイントウィジェット行全バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pt-widget-item.pt-soon:hover     .pt-widget-exp { filter: brightness(1.08); }
+/* ⑪ debt-summary-total:hover .debt-summary-sub dark brightness(1.1) — color:#fff+text-shadow（v25.49/line 38516）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 21664）のダーク対称版。debt-summary-sub transition:filter 含有済み（line 25235） */
+[data-theme="dark"] .debt-summary-total:hover   .debt-summary-sub { filter: brightness(1.1); }
+/* ⑫ debt-summary-monthly:hover .debt-summary-sub dark brightness(1.1) — color:#fff+text-shadow（v25.49/line 38518）と連動しダーク hover 輝度強化。⑪⑫でdebt-summary 全2バリアントの .debt-summary-sub ダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.76・全script/linkタグ?v=25.76に更新 */
+[data-theme="dark"] .debt-summary-monthly:hover .debt-summary-sub { filter: brightness(1.1); }
