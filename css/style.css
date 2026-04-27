@@ -39474,3 +39474,47 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tx-tag-filter-chip:hover:not(.active) { filter: brightness(1.1); }
 /* ⑫ tx-tag-filter-all.active:hover dark brightness(1.1) — primary-end color+text-shadow（line 35618）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。⑪⑫で tx-tag-filter chip/all ペアのダーク hover 輝度強化が完成形に統一。tx-tag-filter-all transition:filter 含有済み（line 25864）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.80・全script/linkタグ?v=25.80に更新 */
 [data-theme="dark"] .tx-tag-filter-all.active:hover { filter: brightness(1.1); }
+
+/* ── v25.81: Approach C継続 — tx-table-memo-cell×1・tx-table-td-first×1・tx-table-tx-col-mem×1・tx-table-tx-col-pay×1・tx-table-cat-badge×1・tx-table-tx-tag-chip×1・tg-table-td-first×1・tg-table-td-text-muted×1・ch-widget-pct×1・ch-widget-pct-ok×1・ch-widget-pct-over×1・wl-archive-date×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   tx-table td.memo-cell / tx-table td:first-child / tx-table td.tx-col-mem / tx-table td.tx-col-pay / tg-table td:first-child / tg-table td.text-muted / wl-archive-date の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* tx-table td.memo-cell transition に filter 追加（既存は color + text-shadow のみ、line 23717） */
+.tx-table td.memo-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* tx-table td:first-child transition に filter 追加（既存は color + text-shadow のみ、line 23834） */
+.tx-table td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* tx-table td.tx-col-mem transition に filter 追加（既存は color + text-shadow のみ、line 23841） */
+.tx-table td.tx-col-mem { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* tx-table td.tx-col-pay transition に filter 追加（既存は color + text-shadow のみ、line 21382） */
+.tx-table td.tx-col-pay { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* tg-table td:first-child transition に filter 追加（既存は color + text-shadow のみ、line 23639） */
+.tg-table td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* tg-table td.text-muted transition に filter 追加（既存は color + text-shadow のみ、line 24494） */
+.tg-table td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* wl-archive-date transition に filter 追加（既存は color + text-shadow のみ、line 23424） */
+.wl-archive-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① tx-table tbody tr:hover td.memo-cell dark brightness(1.1) — primary-end color+text-shadow（line 37055）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tx-table td.memo-cell transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-table tbody tr:hover td.memo-cell { filter: brightness(1.1); }
+/* ② tx-table tbody tr:hover td:first-child dark brightness(1.1) — primary-end color+text-shadow（line 37062）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tx-table td:first-child transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-table tbody tr:hover td:first-child { filter: brightness(1.1); }
+/* ③ tx-table tbody tr:hover td.tx-col-mem dark brightness(1.1) — primary-end color+text-shadow（line 37069）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tx-table td.tx-col-mem transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-table tbody tr:hover td.tx-col-mem { filter: brightness(1.1); }
+/* ④ tx-table tbody tr:hover td.tx-col-pay dark brightness(1.1) — primary-end color+text-shadow（line 35076）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tx-table td.tx-col-pay transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-table tbody tr:hover td.tx-col-pay { filter: brightness(1.1); }
+/* ⑤ tx-table tbody tr:hover .cat-badge dark brightness(1.08) — primary-end color+text-shadow（line 37075）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20795）のダーク対称版。cat-badge transition:filter 含有済み（line 25750） */
+[data-theme="dark"] .tx-table tbody tr:hover .cat-badge { filter: brightness(1.08); }
+/* ⑥ tx-table tbody tr:hover .tx-tag-chip dark brightness(1.1) — tc/primary-end color+text-shadow（line 35630）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 21375）のダーク対称版。tx-table .tx-tag-chip transition:filter 含有済み（line 25879） */
+[data-theme="dark"] .tx-table tbody tr:hover .tx-tag-chip { filter: brightness(1.1); }
+/* ⑦ tg-table tbody tr:hover td:first-child dark brightness(1.1) — primary-end color+text-shadow（line 37111）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tg-table td:first-child transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tg-table tbody tr:hover td:first-child { filter: brightness(1.1); }
+/* ⑧ tg-table tbody tr:hover td.text-muted dark brightness(1.1) — primary-end color+text-shadow（line 37119）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。tg-table td.text-muted transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tg-table tbody tr:hover td.text-muted { filter: brightness(1.1); }
+/* ⑨ ch-widget-item:hover .ch-widget-pct dark brightness(1.08) — primary-end color+text-shadow（line 36867）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 19997）のダーク対称版。ch-widget-pct transition:filter 含有済み（line 36791） */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-pct { filter: brightness(1.08); }
+/* ⑩ ch-widget-item:hover .ch-widget-pct.ch-pct-ok dark brightness(1.1) — income-end color+text-shadow（line 35636）と連動しダーク hover 輝度強化。ライトモード text-shadow のみ（line 23768）。ch-widget-pct transition:filter 含有済み（line 36791） */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-pct.ch-pct-ok { filter: brightness(1.1); }
+/* ⑪ ch-widget-item:hover .ch-widget-pct.ch-pct-over dark brightness(1.1) — expense-end color+text-shadow（line 35643）と連動しダーク hover 輝度強化。⑩と同パターン。⑨〜⑪で ch-widget-pct（default/ok/over）ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-pct.ch-pct-over { filter: brightness(1.1); }
+/* ⑫ wl-archive-item:hover .wl-archive-date dark brightness(1.1) — income-end color+text-shadow（line 38350）と連動しダーク hover 輝度強化。ライトモード color+text-shadow のみ（no brightness）。wl-archive-date transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.81・全script/linkタグ?v=25.81に更新 */
+[data-theme="dark"] .wl-archive-item:hover .wl-archive-date { filter: brightness(1.1); }
