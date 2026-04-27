@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.69'; // v25.69: Approach C継続 — dark hover に filter:brightness 追加（yr-cell-savings .yr-cell-sub×3・yr-unit×3・hm-stat-unit×4・yr-prev-badge×2 計12箇所）
+const CACHE_NAME = 'kakeibo-v25.70'; // v25.70: Approach C継続 — yr-cell-savings-danger .yr-prev-badge×1・yr-cell-label×5・yr-unit×2・yr-prev-badge×2・wk-cell-label×2 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

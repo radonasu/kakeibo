@@ -39119,3 +39119,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .yr-cell-savings-success:hover .yr-prev-badge { filter: brightness(1.12); }
 /* ⑫ yr-cell-savings-warn:hover .yr-prev-badge dark brightness(1.12) — ⑪と同パターン。既存ダーク hover ルール（line 35301）に color+text-shadow あり。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.69・全script/linkタグ?v=25.69に更新 */
 [data-theme="dark"] .yr-cell-savings-warn:hover .yr-prev-badge { filter: brightness(1.12); }
+
+/* ── v25.70: Approach C継続 — yr-cell-savings-danger .yr-prev-badge×1・yr-cell-savings .yr-cell-label×3・yr-cell-income/expense .yr-cell-label×2・yr-cell-income/expense .yr-unit×2・yr-cell-income/expense .yr-prev-badge×2・wk-cell-label×2 dark hover filter:brightness 追加 12箇所 ── */
+/* yr-cell-label transition に filter 追加（既存は color + text-shadow のみ、line 23203） */
+.yr-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* wk-cell-label transition に filter 追加（既存は color + text-shadow のみ、line 24238） */
+.wk-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① yr-cell-savings-danger:hover .yr-prev-badge dark brightness(1.12) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 35309）に color+text-shadow あり、brightness を追加。yr-prev-badge transition:filter 含有済み（line 21974） */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-prev-badge { filter: brightness(1.12); }
+/* ② yr-cell-savings-success:hover .yr-cell-label dark brightness(1.1) — ライトモード text-shadow のみ（brightness 未設定）のダーク強化版。既存ダーク hover ルール（line 35227）に color+text-shadow あり、brightness を追加。yr-cell-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-label { filter: brightness(1.1); }
+/* ③ yr-cell-savings-warn:hover .yr-cell-label dark brightness(1.1) — ②と同パターン。既存ダーク hover ルール（line 35245）に color+text-shadow あり */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-label { filter: brightness(1.1); }
+/* ④ yr-cell-savings-danger:hover .yr-cell-label dark brightness(1.1) — ②と同パターン。既存ダーク hover ルール（line 35252）に color+text-shadow あり。②〜④で yr-cell-savings 全3バリアント（success/warn/danger）の .yr-cell-label ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-label { filter: brightness(1.1); }
+/* ⑤ yr-cell-income:hover .yr-cell-label dark brightness(1.1) — ライトモード text-shadow のみのダーク強化版。既存ダーク hover ルール（line 35536）に color+text-shadow あり */
+[data-theme="dark"] .yr-cell-income:hover .yr-cell-label { filter: brightness(1.1); }
+/* ⑥ yr-cell-expense:hover .yr-cell-label dark brightness(1.1) — ⑤と同パターン。既存ダーク hover ルール（line 35542）に color+text-shadow あり。⑤⑥で yr-cell-income/expense の .yr-cell-label ダーク hover 輝度強化が完成形に統一。②〜⑥で yr-cell 全5バリアントの yr-cell-label ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-label { filter: brightness(1.1); }
+/* ⑦ yr-cell-income:hover .yr-unit dark brightness(1.12) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 37759）に color+text-shadow あり、brightness を追加。yr-unit transition:filter 含有済み（line 21214） */
+[data-theme="dark"] .yr-cell-income:hover .yr-unit { filter: brightness(1.12); }
+/* ⑧ yr-cell-expense:hover .yr-unit dark brightness(1.12) — ⑦と同パターン。既存ダーク hover ルール（line 37766）に color+text-shadow あり。⑦⑧で yr-cell-income/expense の .yr-unit ダーク hover 輝度強化が完成形に統一。yr-cell-savings 系（v25.69④〜⑥）と合わせ yr-cell 全5バリアントの yr-unit ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-unit { filter: brightness(1.12); }
+/* ⑨ yr-cell-income:hover .yr-prev-badge dark brightness(1.12) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 38289）に color+text-shadow あり、brightness を追加。yr-prev-badge transition:filter 含有済み（line 21974） */
+[data-theme="dark"] .yr-cell-income:hover .yr-prev-badge { filter: brightness(1.12); }
+/* ⑩ yr-cell-expense:hover .yr-prev-badge dark brightness(1.12) — ⑨と同パターン。既存ダーク hover ルール（line 38292）に color+text-shadow あり。⑨⑩で yr-cell-income/expense の .yr-prev-badge ダーク hover 輝度強化が完成形に統一。yr-cell-savings 系（v25.69⑪⑫・本スプリント①）と合わせ yr-cell 全5バリアントの yr-prev-badge ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-prev-badge { filter: brightness(1.12); }
+/* ⑪ wk-cell-label nth-child(1) dark brightness(1.1) — ライトモード text-shadow のみのダーク強化版。既存ダーク hover ルール（line 38280）に color+text-shadow あり、brightness を追加。wk-cell-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-label { filter: brightness(1.1); }
+/* ⑫ wk-cell-label nth-child(2) dark brightness(1.1) — ⑪と同パターン。既存ダーク hover ルール（line 38283）に color+text-shadow あり。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.70・全script/linkタグ?v=25.70に更新 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-label { filter: brightness(1.1); }
