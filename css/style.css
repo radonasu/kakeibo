@@ -20423,7 +20423,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    タイプ別カラーへ変色。通常=primary / sub-urgent=danger-text / sub-soon=warning。
    sub-widget-name 変色（v22.x）・sub-widget-amount 変色+brightness（v22.x）・
    sub-widget-icon scale（v22.x）と連動し次回日付も含めたアイテム全体がホバーで揃って反応する完成形に。 */
-.sub-widget-next { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-next { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-widget-item:hover            .sub-widget-next { color: var(--primary); }
 .sub-widget-item.sub-urgent:hover .sub-widget-next { color: var(--danger-text); }
 .sub-widget-item.sub-soon:hover   .sub-widget-next { color: var(--warning); }
@@ -23661,7 +23661,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fs-sm・fw-medium）にステータス別 text-shadow glow を追加。
    既存の color タイプ別変色（通常=primary/urgent=danger-text/soon=warning）と連動し、
    sub-widget-amount glow（v23.46）と合わせて名前・金額が揃って輝く完成形。 */
-.sub-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sub-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sub-widget-item:hover            .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent); }
 .sub-widget-item.sub-urgent:hover .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 .sub-widget-item.sub-soon:hover   .sub-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
@@ -39315,3 +39315,34 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-summary-total:hover   .debt-summary-sub { filter: brightness(1.1); }
 /* ⑫ debt-summary-monthly:hover .debt-summary-sub dark brightness(1.1) — color:#fff+text-shadow（v25.49/line 38518）と連動しダーク hover 輝度強化。⑪⑫でdebt-summary 全2バリアントの .debt-summary-sub ダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.76・全script/linkタグ?v=25.76に更新 */
 [data-theme="dark"] .debt-summary-monthly:hover .debt-summary-sub { filter: brightness(1.1); }
+
+/* ── v25.77: Approach C継続 — sub-widget-name×3（generic/urgent/soon）・sub-widget-amount×2（urgent/soon）・sub-widget-next×3（generic/urgent/soon）・pt-widget-balance×3（generic/urgent/soon）・sub-cycle-badge×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた
+   サブスクウィジェット行テキスト・ポイントウィジェット残高に brightness を追加しダーク hover 輝度強化を統一。
+   sub-widget-name / sub-widget-next の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① sub-widget-item:hover .sub-widget-name dark brightness(1.1) — primary-end color+text-shadow（line 36594）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。sub-widget-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-widget-item:hover            .sub-widget-name { filter: brightness(1.1); }
+/* ② sub-widget-item.sub-urgent:hover .sub-widget-name dark brightness(1.1) — expense-end color+text-shadow（line 36595）と連動しダーク hover 輝度強化。①と同パターン */
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-name { filter: brightness(1.1); }
+/* ③ sub-widget-item.sub-soon:hover .sub-widget-name dark brightness(1.1) — warning color+text-shadow（line 36596）と連動しダーク hover 輝度強化。①〜③でsub-widget-name全3バリアント（generic/urgent/soon）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-name { filter: brightness(1.1); }
+/* ④ sub-widget-item.sub-urgent:hover .sub-widget-amount dark brightness(1.1) — expense-end color+text-shadow（line 35411）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 18386）のダーク強化版。sub-widget-amount generic dark hover brightness（line 38693）と連動 */
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-amount { filter: brightness(1.1); }
+/* ⑤ sub-widget-item.sub-soon:hover .sub-widget-amount dark brightness(1.1) — warning color+text-shadow（line 35418）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 18387）のダーク強化版。④⑤でsub-widget-amount urgent/soon バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-amount { filter: brightness(1.1); }
+/* ⑥ sub-widget-item:hover .sub-widget-next dark brightness(1.1) — primary-end color+text-shadow（line 36605）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。sub-widget-next transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-widget-item:hover            .sub-widget-next { filter: brightness(1.1); }
+/* ⑦ sub-widget-item.sub-urgent:hover .sub-widget-next dark brightness(1.1) — expense-end color+text-shadow（line 36606）と連動しダーク hover 輝度強化。⑥と同パターン */
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-next { filter: brightness(1.1); }
+/* ⑧ sub-widget-item.sub-soon:hover .sub-widget-next dark brightness(1.1) — warning color+text-shadow（line 36607）と連動しダーク hover 輝度強化。⑥〜⑧でsub-widget-next全3バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .sub-widget-item.sub-soon:hover   .sub-widget-next { filter: brightness(1.1); }
+/* ⑨ pt-widget-item:hover .pt-widget-balance dark brightness(1.1) — primary-end color+text-shadow（line 36577）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20690）のダーク強化版。pt-widget-balance transition:filter 含有済み（line 20689） */
+[data-theme="dark"] .pt-widget-item:hover             .pt-widget-balance { filter: brightness(1.1); }
+/* ⑩ pt-widget-item.pt-urgent:hover .pt-widget-balance dark brightness(1.1) — expense-end color+text-shadow（line 36578）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20691）のダーク強化版 */
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover   .pt-widget-balance { filter: brightness(1.1); }
+/* ⑪ pt-widget-item.pt-soon:hover .pt-widget-balance dark brightness(1.1) — warning color+text-shadow（line 36579）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20692）のダーク強化版。⑨〜⑪でpt-widget-balance全3バリアント（generic/urgent/soon）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pt-widget-item.pt-soon:hover     .pt-widget-balance { filter: brightness(1.1); }
+/* ⑫ sub-widget-item:hover .sub-cycle-badge dark brightness(1.1) — primary-end color+text-shadow（line 36853）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20436）のダーク対称版。sub-cycle-badge transition:filter 含有済み（line 36790）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.77・全script/linkタグ?v=25.77に更新 */
+[data-theme="dark"] .sub-widget-item:hover .sub-cycle-badge { filter: brightness(1.1); }
