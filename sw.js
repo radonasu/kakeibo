@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.82'; // v25.82: Approach C継続 — stp-help-summary×1・stp-config-summary×1・qa-type-btn×1・btn-preset×1・card-collapse-btn×1・edit-tx×1・delete-tx×1・dup-tx×1・btn-continue×1・adv-filter-clear×1・md-nav-btn×1・sub-emoji-btn×1 計12箇所
+const CACHE_NAME = 'kakeibo-v25.83'; // v25.83: Approach C継続 — hs-grade-b×1・hs-grade-c×1・hs-grade-s×1・hs-grade-a×1・hs-grade-d×1・hs-trend-label×1・dow-label-cell×1・hs-prev-badge.hs-trend-up×1・hs-prev-badge.hs-trend-down×1・ct-stat-sub×1・fv-fixed-val×1・fv-var-val×1 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',

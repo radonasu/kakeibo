@@ -39547,3 +39547,34 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .md-nav-btn:hover:not(:disabled) { filter: brightness(1.1); }
 /* ⑫ sub-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（line 38614）と連動しダーク hover 輝度強化。sub-emoji-btn transition:filter 含有済み（line 26140）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.82・全script/linkタグ?v=25.82に更新 */
 [data-theme="dark"] .sub-emoji-btn:hover { filter: brightness(1.1); }
+
+/* ── v25.83: Approach C継続 — hs-grade-b×1・hs-grade-c×1・hs-grade-s×1・hs-grade-a×1・hs-grade-d×1・hs-trend-label×1・dow-label-cell×1・hs-prev-badge.hs-trend-up×1・hs-prev-badge.hs-trend-down×1・ct-stat-sub×1・fv-fixed-val×1・fv-var-val×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   hs-trend-label の transition に filter を追加（本スプリント）。CSS-only実装（JS変更なし）
+   ============================================================ */
+/* hs-trend-label transition に filter 追加（既存は color + text-shadow のみ、line 23399） */
+.hs-trend-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① hs-grade-b:hover dark brightness(1.1) — info-text color+text-shadow（line 38310）と連動しダーク hover 輝度強化。hs-grade-badge transition:filter 含有済み（line 25800） */
+[data-theme="dark"] .hs-grade-b:hover { filter: brightness(1.1); }
+/* ② hs-grade-c:hover dark brightness(1.1) — warning color+text-shadow（line 38314）と連動しダーク hover 輝度強化。hs-grade-badge transition:filter 含有済み（line 25800） */
+[data-theme="dark"] .hs-grade-c:hover { filter: brightness(1.1); }
+/* ③ hs-grade-s:hover dark brightness(1.1) — primary-end color+text-shadow（line 38332）と連動しダーク hover 輝度強化。hs-grade-badge transition:filter 含有済み（line 25800） */
+[data-theme="dark"] .hs-grade-s:hover { filter: brightness(1.1); }
+/* ④ hs-grade-a:hover dark brightness(1.1) — income-end color+text-shadow（line 38335）と連動しダーク hover 輝度強化。hs-grade-badge transition:filter 含有済み（line 25800） */
+[data-theme="dark"] .hs-grade-a:hover { filter: brightness(1.1); }
+/* ⑤ hs-grade-d:hover dark brightness(1.1) — expense-end color+text-shadow（line 38339）と連動。①〜⑤でhs-grade S/A/B/C/D 全バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .hs-grade-d:hover { filter: brightness(1.1); }
+/* ⑥ health-score-card:hover .hs-trend-label dark brightness(1.1) — primary-end color+text-shadow（line 38346）と連動。hs-trend-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .health-score-card:hover .hs-trend-label { filter: brightness(1.1); }
+/* ⑦ dow-table-row:hover .dow-label-cell dark brightness(1.1) — primary-end color+text-shadow（line 38459）と連動。dow-label-cell transition:filter 含有済み（line 20497） */
+[data-theme="dark"] .dow-table-row:hover .dow-label-cell { filter: brightness(1.1); }
+/* ⑧ health-score-card:hover .hs-prev-badge.hs-trend-up dark brightness(1.1) — income-end color+text-shadow（line 38462）と連動。hs-prev-badge transition:filter 含有済み（line 24993） */
+[data-theme="dark"] .health-score-card:hover .hs-prev-badge.hs-trend-up { filter: brightness(1.1); }
+/* ⑨ health-score-card:hover .hs-prev-badge.hs-trend-down dark brightness(1.1) — expense-end color+text-shadow（line 38465）と連動。⑧⑨でhs-prev-badge両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .health-score-card:hover .hs-prev-badge.hs-trend-down { filter: brightness(1.1); }
+/* ⑩ ct-stat-card:hover .ct-stat-sub dark brightness(1.1) — primary-end color+text-shadow（line 38468）と連動。ct-stat-sub transition:filter 含有済み（line 24386） */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-sub { filter: brightness(1.1); }
+/* ⑪ fv-month-table tbody tr:hover .fv-fixed-val dark brightness(1.1) — primary-end color+text-shadow（line 38480）と連動。fv-fixed-val transition:filter 含有済み（line 25015） */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-fixed-val { filter: brightness(1.1); }
+/* ⑫ fv-month-table tbody tr:hover .fv-var-val dark brightness(1.1) — income-end color+text-shadow（line 38483）と連動。⑪⑫でfv-fixed-val/fv-var-val ペアのダーク hover 輝度強化が完成形に統一。fv-var-val transition:filter 含有済み（line 25023）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.83・全script/linkタグ?v=25.83に更新 */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-var-val { filter: brightness(1.1); }
