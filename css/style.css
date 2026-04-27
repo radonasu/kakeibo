@@ -39636,3 +39636,32 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-inactive-section summary:hover { filter: brightness(1.1); }
 /* ⑫ goal-achieved-summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34213）と連動。goal-achieved-summary transition:filter 含有済み（line 38905）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.85・全script/linkタグ?v=25.85に更新 */
 [data-theme="dark"] .goal-achieved-summary:hover { filter: brightness(1.1); }
+
+/* ── v25.86: Approach C継続 — btn-share×1・goal-emoji-btn×1・ev-emoji-chip×1・pt-emoji-btn×1・ch-emoji-btn×1・adv-filter-toggle×1・notif-toggle-label×1・recurring-toggle-label×1・sb-select-all-wrap×1・rc-item-name×1・debt-name×1・asset-name×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   全要素 transition:filter 含有済み（既存ルール）。CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① btn-share:hover dark brightness(1.1) — primary-end color+text-shadow（line 34341）と連動しダーク hover 輝度強化。btn-share transition:filter 含有済み（line 26077） */
+[data-theme="dark"] .btn-share:hover { filter: brightness(1.1); }
+/* ② goal-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（line 34347）と連動しダーク hover 輝度強化。goal-emoji-btn transition:filter 含有済み（line 6609） */
+[data-theme="dark"] .goal-emoji-btn:hover { filter: brightness(1.1); }
+/* ③ ev-emoji-chip:hover dark brightness(1.1) — primary-end color+text-shadow（line 34350）と連動しダーク hover 輝度強化。ev-emoji-chip transition:filter 含有済み（line 13155） */
+[data-theme="dark"] .ev-emoji-chip:hover { filter: brightness(1.1); }
+/* ④ pt-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（line 34353）と連動しダーク hover 輝度強化。pt-emoji-btn transition:filter 含有済み（line 8500） */
+[data-theme="dark"] .pt-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑤ ch-emoji-btn:hover dark brightness(1.1) — primary-end color+text-shadow（line 34356）と連動しダーク hover 輝度強化。②〜⑤で goal/ev/pt/ch 絵文字選択ボタン全バリアントのダーク hover 輝度強化が完成形に統一。ch-emoji-btn transition:filter 含有済み（line 10281） */
+[data-theme="dark"] .ch-emoji-btn:hover { filter: brightness(1.1); }
+/* ⑥ adv-filter-toggle:hover dark brightness(1.1) — primary-end color+text-shadow（line 34359/34595）と連動しダーク hover 輝度強化。adv-filter-toggle transition:filter 含有済み（line 2628） */
+[data-theme="dark"] .adv-filter-toggle:hover { filter: brightness(1.1); }
+/* ⑦ notif-toggle-label:hover dark brightness(1.1) — primary-end color+text-shadow（line 34375/34621）と連動しダーク hover 輝度強化。notif-toggle-label transition:filter 含有済み（line 4990） */
+[data-theme="dark"] .notif-toggle-label:hover { filter: brightness(1.1); }
+/* ⑧ recurring-toggle-label:hover dark brightness(1.1) — primary-end color+text-shadow（line 34381/34627）と連動しダーク hover 輝度強化。recurring-toggle-label transition:filter 含有済み（line 5047） */
+[data-theme="dark"] .recurring-toggle-label:hover { filter: brightness(1.1); }
+/* ⑨ sb-select-all-wrap:hover dark brightness(1.1) — primary-end color+text-shadow（line 34387/34633）と連動しダーク hover 輝度強化。⑦〜⑨で notif/recurring/sb-select 通知系トグル全バリアントのダーク hover 輝度強化が完成形に統一。sb-select-all-wrap transition:filter 含有済み（line 12629） */
+[data-theme="dark"] .sb-select-all-wrap:hover { filter: brightness(1.1); }
+/* ⑩ rc-item:hover .rc-item-name dark brightness(1.1) — primary-end color+text-shadow（line 34393）と連動しダーク hover 輝度強化。rc-item-name transition:filter 含有済み（line 38669） */
+[data-theme="dark"] .rc-item:hover .rc-item-name { filter: brightness(1.1); }
+/* ⑪ debt-card:hover .debt-name dark brightness(1.1) — debt-accent/primary-end color+text-shadow（line 34399）と連動しダーク hover 輝度強化。debt-name transition:filter 含有済み（line 38709） */
+[data-theme="dark"] .debt-card:hover .debt-name { filter: brightness(1.1); }
+/* ⑫ asset-card:hover .asset-name dark brightness(1.1) — asset-accent/primary-end color+text-shadow（line 34405）と連動しダーク hover 輝度強化。⑪⑫で debt/asset カード名称ペアのダーク hover 輝度強化が完成形に統一。asset-name transition:filter 含有済み（line 38710）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.86・全script/linkタグ?v=25.86に更新 */
+[data-theme="dark"] .asset-card:hover .asset-name { filter: brightness(1.1); }
