@@ -39345,4 +39345,49 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑪ pt-widget-item.pt-soon:hover .pt-widget-balance dark brightness(1.1) — warning color+text-shadow（line 36579）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20692）のダーク強化版。⑨〜⑪でpt-widget-balance全3バリアント（generic/urgent/soon）のダーク hover 輝度強化が完成形に統一 */
 [data-theme="dark"] .pt-widget-item.pt-soon:hover     .pt-widget-balance { filter: brightness(1.1); }
 /* ⑫ sub-widget-item:hover .sub-cycle-badge dark brightness(1.1) — primary-end color+text-shadow（line 36853）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20436）のダーク対称版。sub-cycle-badge transition:filter 含有済み（line 36790）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.77・全script/linkタグ?v=25.77に更新 */
+
+/* ── v25.78: Approach C継続 — notif-item-title×4（danger/warning/success/info）・yr-widget-card labels×3（progress-label/topcat-label/avg-label）・yi-card elements×4（card-value/card-label/half-val/half-label）・step-title×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた
+   通知タイトル・年間ウィジェットラベル・年間レビューカード要素・ステップタイトルに brightness を追加しダーク hover 輝度強化を統一。
+   step-title / notif-item-title / yr-progress-label / yr-topcat-label / yr-avg-label / yi-card-label / yi-half-label の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* step-title transition に filter 追加（既存は color + text-shadow のみ、line 18538） */
+.step-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* notif-item-title transition に filter 追加（既存は color + text-shadow のみ、line 19297） */
+.notif-item-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* yr-progress-label transition に filter 追加（既存は color + text-shadow のみ、line 21690） */
+.yr-progress-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* yr-topcat-label transition に filter 追加（既存は color + text-shadow のみ、line 23222） */
+.yr-topcat-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* yr-avg-label transition に filter 追加（既存は color + text-shadow のみ、line 23581） */
+.yr-avg-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* yi-card-label transition に filter 追加（既存は color + text-shadow のみ、line 25110） */
+.yi-card-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* yi-half-label transition に filter 追加（既存は color + text-shadow のみ、line 23460） */
+.yi-half-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① notif-item.notif-type-danger:hover .notif-item-title dark brightness(1.1) — expense-end color+text-shadow（line 35462）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18521）のダーク強化版。notif-item-title transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .notif-item.notif-type-danger:hover  .notif-item-title { filter: brightness(1.1); }
+/* ② notif-item.notif-type-warning:hover .notif-item-title dark brightness(1.1) — warning color+text-shadow（line 35468）と連動しダーク hover 輝度強化。①と同パターン */
+[data-theme="dark"] .notif-item.notif-type-warning:hover .notif-item-title { filter: brightness(1.1); }
+/* ③ notif-item.notif-type-success:hover .notif-item-title dark brightness(1.1) — income-end color+text-shadow（line 35474）と連動しダーク hover 輝度強化。①と同パターン */
+[data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-title { filter: brightness(1.1); }
+/* ④ notif-item.notif-type-info:hover .notif-item-title dark brightness(1.1) — primary-end color+text-shadow（line 35483）と連動しダーク hover 輝度強化。①〜④で notif-item-title 全4タイプ（danger/warning/success/info）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .notif-item.notif-type-info:hover    .notif-item-title { filter: brightness(1.1); }
+/* ⑤ yr-widget-card:hover .yr-progress-label dark brightness(1.1) — primary-end color+text-shadow（line 35320）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。yr-progress-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .yr-widget-card:hover .yr-progress-label { filter: brightness(1.1); }
+/* ⑥ yr-widget-card:hover .yr-topcat-label dark brightness(1.1) — primary-end color+text-shadow（line 35326）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。yr-topcat-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .yr-widget-card:hover .yr-topcat-label { filter: brightness(1.1); }
+/* ⑦ yr-widget-card:hover .yr-avg-label dark brightness(1.1) — primary-end color+text-shadow（line 35333）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。yr-avg-label transition:filter 追加済み（本スプリント）。⑤〜⑦で yr-widget-card 3ラベル（progress-label/topcat-label/avg-label）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-widget-card:hover .yr-avg-label { filter: brightness(1.1); }
+/* ⑧ yi-card:hover .yi-card-value dark brightness(1.08) — primary-end color+text-shadow（line 35345）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18493）のダーク強化版。yi-card-value transition:filter 含有済み（line 23171） */
+[data-theme="dark"] .yi-card:hover .yi-card-value { filter: brightness(1.08); }
+/* ⑨ yi-card:hover .yi-card-label dark brightness(1.1) — primary-end color+text-shadow（line 35351）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。yi-card-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .yi-card:hover .yi-card-label { filter: brightness(1.1); }
+/* ⑩ yi-card:hover .yi-half-val dark brightness(1.1) — expense-end color+text-shadow（line 35339）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 21718）のダーク強化版。yi-half-val transition:filter 含有済み（line 21717） */
+[data-theme="dark"] .yi-card:hover .yi-half-val { filter: brightness(1.1); }
+/* ⑪ yi-card:hover .yi-half-label dark brightness(1.1) — primary-end color+text-shadow（line 35358）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。yi-half-label transition:filter 追加済み（本スプリント）。⑧〜⑪で yi-card 4要素（card-value/card-label/half-val/half-label）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yi-card:hover .yi-half-label { filter: brightness(1.1); }
+/* ⑫ step-card:hover .step-title dark brightness(1.1) — primary-end color+text-shadow（line 35365）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。step-title transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.78・全script/linkタグ?v=25.78に更新 */
+[data-theme="dark"] .step-card:hover .step-title { filter: brightness(1.1); }
 [data-theme="dark"] .sub-widget-item:hover .sub-cycle-badge { filter: brightness(1.1); }
