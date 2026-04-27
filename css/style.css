@@ -39235,3 +39235,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label { filter: brightness(1.1); }
 /* ⑫ pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label dark brightness(1.1) — warning color+text-shadow（v25.01⑫）と連動しダーク hover 輝度強化。⑪⑫で pace-daily-label の good/warn バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.73・全script/linkタグ?v=25.73に更新 */
 [data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label { filter: brightness(1.1); }
+
+/* ── v25.74: Approach C継続 — pace-daily-label.pace-over×1・insight-title×4（info/alert/success/warning）・insight-desc×4（info/alert/success/warning）・step-action×1・wl-card-meta×1・debt-progress-hdr×1 dark hover filter:brightness 追加 12箇所 ── */
+/* ① pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label dark brightness(1.1) — expense-end color+text-shadow（v25.01⑫/line 34821）と連動しダーク hover 輝度強化。⑪⑫（v25.73）と合わせ pace-daily-label 全ステータス（good/warn/over）のダーク hover 輝度強化が完成形に統一。pace-daily-label transition:filter 含有済み（v25.73） */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label { filter: brightness(1.1); }
+/* ② insight-item.insight-info:hover .insight-title dark brightness(1.1) — primary-end color+text-shadow（v25.02②/line 34832）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 19425）のダーク強化版。insight-title transition:filter 含有済み（line 22073） */
+[data-theme="dark"] .insight-item.insight-info:hover    .insight-title { filter: brightness(1.1); }
+/* ③ insight-item.insight-alert:hover .insight-title dark brightness(1.1) — expense-end color+text-shadow（v25.02/line 34838）と連動しダーク hover 輝度強化。②と同パターン */
+[data-theme="dark"] .insight-item.insight-alert:hover   .insight-title { filter: brightness(1.1); }
+/* ④ insight-item.insight-success:hover .insight-title dark brightness(1.1) — income-end color+text-shadow（v25.02/line 34844）と連動しダーク hover 輝度強化。②と同パターン */
+[data-theme="dark"] .insight-item.insight-success:hover .insight-title { filter: brightness(1.1); }
+/* ⑤ insight-item.insight-warning:hover .insight-title dark brightness(1.1) — warning color+text-shadow（v25.02/line 34850）と連動しダーク hover 輝度強化。②〜⑤で insight-title 全4タイプ（info/alert/success/warning）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .insight-item.insight-warning:hover .insight-title { filter: brightness(1.1); }
+/* ⑥ insight-item.insight-info:hover .insight-desc dark brightness(1.1) — primary-end color+text-shadow（v25.02/line 34856）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20908）のダーク強化版。insight-desc transition:filter 含有済み（line 22280） */
+[data-theme="dark"] .insight-item.insight-info:hover    .insight-desc { filter: brightness(1.1); }
+/* ⑦ insight-item.insight-alert:hover .insight-desc dark brightness(1.1) — expense-end color+text-shadow（v25.02/line 34862）と連動しダーク hover 輝度強化。⑥と同パターン */
+[data-theme="dark"] .insight-item.insight-alert:hover   .insight-desc { filter: brightness(1.1); }
+/* ⑧ insight-item.insight-success:hover .insight-desc dark brightness(1.1) — income-end color+text-shadow（v25.02/line 34868）と連動しダーク hover 輝度強化。⑥と同パターン */
+[data-theme="dark"] .insight-item.insight-success:hover .insight-desc { filter: brightness(1.1); }
+/* ⑨ insight-item.insight-warning:hover .insight-desc dark brightness(1.1) — warning color+text-shadow（v25.02/line 34874）と連動しダーク hover 輝度強化。⑥〜⑨で insight-desc 全4タイプ（info/alert/success/warning）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .insight-item.insight-warning:hover .insight-desc { filter: brightness(1.1); }
+/* ⑩ step-card:hover .step-action dark brightness(1.1) — primary-end color+text-shadow（v25.02/line 34880）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 22137）のダーク強化版。step-action transition:filter 含有済み（line 22136） */
+[data-theme="dark"] .step-card:hover .step-action { filter: brightness(1.1); }
+/* ⑪ wl-card:hover .wl-card-meta dark brightness(1.1) — primary-end color+text-shadow（v25.02/line 34886）と連動しダーク hover 輝度強化。ライトモード brightness(1.05)（line 22161）のダーク強化版。wl-card-meta transition:filter 含有済み（line 22160） */
+[data-theme="dark"] .wl-card:hover .wl-card-meta { filter: brightness(1.1); }
+/* ⑫ debt-card:hover .debt-progress-hdr dark brightness(1.1) — primary-end color+text-shadow（v25.02/line 34892）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 22379）のダーク強化版。debt-progress-hdr transition:filter 含有済み（line 22378）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.74・全script/linkタグ?v=25.74に更新 */
+[data-theme="dark"] .debt-card:hover .debt-progress-hdr { filter: brightness(1.1); }
