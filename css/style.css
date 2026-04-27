@@ -23586,7 +23586,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow を追加。既存の color:primary 変色と連動し、
    fv-fixed-val/fv-var-val brightness・fv-seg-bar brightness（v23.x）・
    td:nth-child(4) brightness（v23.40）と合わせて行全体のホバー演出の完成形に。 */
-.fv-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.fv-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .fv-month-table tbody tr:hover .fv-month-cell { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 3. budget-item:hover → .budget-sep タイプ別 text-shadow glow
@@ -23911,7 +23911,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    収支サマリー残高行ホバー時にラベルテキスト（「残高」等）にタイプ別text-shadow glow追加。
    収入残=primary/支出超過=danger-text。既存color タイプ別変色（v23.x）と連動し
    smi-amount glow（本スプリント③）と合わせて残高行全テキストが一体的に輝く完成形。 */
-.smi-balance .smi-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.smi-balance .smi-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .smi-balance:hover                           .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary)      var(--mix-sm), transparent); }
 .smi-balance:has(.smi-amount.expense):hover  .smi-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text)  var(--mix-sm), transparent); }
 
@@ -24226,7 +24226,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カテゴリ比較ウィジェット行ホバー時にカテゴリ名テキストにタイプ別text-shadow glow追加。
    上昇列=danger-text / 下降列=success。既存タイプ別color変色（v23.x）と連動し
    cc-amount brightness（v22.x）と合わせてカテゴリ名・金額が一体的に輝く完成形演出。 */
-.cc-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cc-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .cc-col:has(.cc-col-up)   .cc-item:hover .cc-name { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 .cc-col:has(.cc-col-down) .cc-item:hover .cc-name { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 
@@ -24589,7 +24589,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow を追加（.today バッジは白リング演出を維持）。
    既存 color:primary 変色（v23.x）と連動し
    cal-amount glow（v23.42）と合わせてセル内全テキストがホバーで一体的に輝く演出に。 */
-.cal-date-num { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-date-num { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* ── v23.67 ホバー子要素テキストへの text-shadow glow 追加（8箇所）────────────────────────────
@@ -24965,7 +24965,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow を追加。既存 primary 変色と連動し
    asset-entry-balance glow・asset-entry-row translateX+box-shadow と合わせて
    エントリ行全体がホバーで一体的に primary 色で輝く完成形演出に。 */
-.asset-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .asset-entry-row:hover .asset-entry-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 2. asset-entry-row:hover → .asset-entry-note primary text-shadow glow
@@ -24973,7 +24973,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow を追加。asset-entry-date glow（本スプリント①）・
    asset-entry-balance glow と連動しエントリ行内テキスト全要素が
    ホバーで一体的に primary 色で輝く完成形演出に。 */
-.asset-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .asset-entry-row:hover .asset-entry-note { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 3. ev-widget-item:hover → .ev-widget-month primary text-shadow glow
@@ -39578,3 +39578,32 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .fv-month-table tbody tr:hover .fv-fixed-val { filter: brightness(1.1); }
 /* ⑫ fv-month-table tbody tr:hover .fv-var-val dark brightness(1.1) — income-end color+text-shadow（line 38483）と連動。⑪⑫でfv-fixed-val/fv-var-val ペアのダーク hover 輝度強化が完成形に統一。fv-var-val transition:filter 含有済み（line 25023）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.83・全script/linkタグ?v=25.83に更新 */
 [data-theme="dark"] .fv-month-table tbody tr:hover .fv-var-val { filter: brightness(1.1); }
+
+/* ── v25.84: Approach C継続 — sf-chip×1・date-quick-btn×1・fv-month-cell×1・fv-month-td-nth4×1・smi-balance-smi-label×2・smi-balance-smi-amount×2・asset-entry-date×1・asset-entry-note×1・cal-date-num×1・cc-name-up×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   fv-month-cell / smi-balance .smi-label / cc-name / cal-date-num / asset-entry-date / asset-entry-note の transition に filter を追加（本スプリント）。CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① sf-chip:hover dark brightness(1.1) — primary-end color+text-shadow（line 38354）と連動。sf-chip transition:filter 含有済み（line 23531） */
+[data-theme="dark"] .sf-chip:hover { filter: brightness(1.1); }
+/* ② date-quick-btn:hover dark brightness(1.1) — primary-end color+text-shadow（line 38362）と連動。date-quick-btn transition:filter 含有済み（line 23539） */
+[data-theme="dark"] .date-quick-btn:hover { filter: brightness(1.1); }
+/* ③ fv-month-table tbody tr:hover .fv-month-cell dark brightness(1.1) — primary-end color+text-shadow（line 38358）と連動。fv-month-cell transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .fv-month-table tbody tr:hover .fv-month-cell { filter: brightness(1.1); }
+/* ④ fv-month-table tbody tr:hover td:nth-child(4) dark brightness(1.1) — primary-end color+text-shadow（line 38486）と連動。③④でfv-month-cell/td:nth-child(4)ペアのダーク hover 輝度強化が完成形に統一。fv-month-table td:nth-child(4) transition:filter 含有済み（line 22770） */
+[data-theme="dark"] .fv-month-table tbody tr:hover td:nth-child(4) { filter: brightness(1.1); }
+/* ⑤ smi-balance:hover .smi-label dark brightness(1.1) — primary-end color+text-shadow（line 38366）と連動。smi-balance .smi-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .smi-balance:hover .smi-label { filter: brightness(1.1); }
+/* ⑥ smi-balance:has(.smi-amount.expense):hover .smi-label dark brightness(1.1) — expense-end color+text-shadow（line 38370）と連動。⑤⑥でsmi-label全バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense):hover .smi-label { filter: brightness(1.1); }
+/* ⑦ smi-balance:hover .smi-amount.income dark brightness(1.1) — income-end color+text-shadow（line 38374）と連動。smi-balance .smi-amount transition:filter 含有済み（line 23922） */
+[data-theme="dark"] .smi-balance:hover .smi-amount.income { filter: brightness(1.1); }
+/* ⑧ smi-balance:hover .smi-amount.expense dark brightness(1.1) — expense-end color+text-shadow（line 38392）と連動。⑦⑧でsmi-amount全バリアントのダーク hover 輝度強化が完成形に統一。⑤〜⑧でsmi-balance内テキスト全要素のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .smi-balance:hover .smi-amount.expense { filter: brightness(1.1); }
+/* ⑨ asset-entry-row:hover .asset-entry-date dark brightness(1.1) — primary-end color+text-shadow（line 38416）と連動。asset-entry-date transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-date { filter: brightness(1.1); }
+/* ⑩ asset-entry-row:hover .asset-entry-note dark brightness(1.1) — primary-end color+text-shadow（line 38420）と連動。⑨⑩でasset-entry-row内テキストのダーク hover 輝度強化が完成形に統一。asset-entry-note transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-entry-row:hover .asset-entry-note { filter: brightness(1.1); }
+/* ⑪ cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) dark brightness(1.1) — primary-end color+text-shadow（line 38432）と連動。cal-date-num transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { filter: brightness(1.1); }
+/* ⑫ cc-col:has(.cc-col-up) .cc-item:hover .cc-name dark brightness(1.1) — expense-end color+text-shadow（line 38400）と連動。cc-name transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.84・全script/linkタグ?v=25.84に更新 */
+[data-theme="dark"] .cc-col:has(.cc-col-up) .cc-item:hover .cc-name { filter: brightness(1.1); }
