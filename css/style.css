@@ -39175,3 +39175,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .btn-danger:hover { filter: brightness(1.1); }
 /* ⑫ btn-inline-add:hover dark brightness(1.1) — primary-end color+text-shadow（v25.51）と連動しダーク hover 輝度強化。btn-inline-add transition:filter 含有済み（line 25999）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.71・全script/linkタグ?v=25.71に更新 */
 [data-theme="dark"] .btn-inline-add:hover { filter: brightness(1.1); }
+
+/* ── v25.72: Approach C継続 — notif-mark-read×1・debt-summary-total .summary-label×1・debt-summary-monthly .summary-label×1・sb-banner .sb-banner-lbl×1・ch-sum-active .ch-summary-unit×1・ch-sum-total .ch-summary-unit×1・pt-summary-card .pt-summary-amount×1・pt-summary-card .pt-summary-sub×1・pt-summary-card .pt-summary-unit×1・pt-total .pt-summary-label×1・pt-expiring .pt-summary-label×1・summary-card .summary-label×1 dark hover filter:brightness 追加 12箇所 ── */
+/* summary-label transition に filter 追加（既存は opacity + text-shadow のみ、line 23565） */
+.summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* pt-summary-label transition に filter 追加（既存は opacity + text-shadow のみ、line 25563） */
+.pt-summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① notif-mark-read:hover dark brightness(1.1) — primary-end color+text-shadow（v25.x）と連動しダーク hover 輝度強化。notif-mark-read transition:filter 含有済み（line 25908） */
+[data-theme="dark"] .notif-mark-read:hover { filter: brightness(1.1); }
+/* ② debt-summary-total:hover .summary-label dark brightness(1.1) — color:#fff+text-shadow（v25.48③）と連動しダーク hover 輝度強化。.debt-summary-total .summary-label transition:filter 含有済み（line 25246） */
+[data-theme="dark"] .debt-summary-total:hover .summary-label { filter: brightness(1.1); }
+/* ③ debt-summary-monthly:hover .summary-label dark brightness(1.1) — ②と同パターン。.debt-summary-monthly .summary-label transition:filter 含有済み（line 25246）。②③でdebt-summary 全2バリアントの .summary-label ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-summary-monthly:hover .summary-label { filter: brightness(1.1); }
+/* ④ sb-banner:hover .sb-banner-lbl dark brightness(1.1) — color:#fff+text-shadow（v25.48⑤）と連動しダーク hover 輝度強化。sb-banner-lbl transition:filter 含有済み（line 25298） */
+[data-theme="dark"] .sb-banner:hover .sb-banner-lbl { filter: brightness(1.1); }
+/* ⑤ ch-sum-active:hover .ch-summary-unit dark brightness(1.1) — color:#fff+text-shadow（v25.48⑥）と連動しダーク hover 輝度強化。ch-summary-unit transition:filter 含有済み（line 25479） */
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-unit { filter: brightness(1.1); }
+/* ⑥ ch-sum-total:hover .ch-summary-unit dark brightness(1.1) — ⑤と同パターン。⑤⑥でch-sum 全2バリアントの .ch-summary-unit ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-unit { filter: brightness(1.1); }
+/* ⑦ pt-summary-card:hover .pt-summary-amount dark brightness(1.1) — color:#fff+text-shadow（v25.48⑧）と連動しダーク hover 輝度強化。pt-summary-amount transition:filter 含有済み（line 38716） */
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-amount { filter: brightness(1.1); }
+/* ⑧ pt-summary-card:hover .pt-summary-sub dark brightness(1.1) — color:#fff+text-shadow（v25.48⑨）と連動しダーク hover 輝度強化。pt-summary-sub transition:filter 含有済み（line 25499） */
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-sub { filter: brightness(1.1); }
+/* ⑨ pt-summary-card:hover .pt-summary-unit dark brightness(1.1) — color:#fff+text-shadow（v25.48⑩）と連動しダーク hover 輝度強化。pt-summary-unit transition:filter 含有済み（line 25508）。⑦〜⑨でpt-summary-card 3要素のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-unit { filter: brightness(1.1); }
+/* ⑩ pt-total:hover .pt-summary-label dark brightness(1.1) — color:#fff+text-shadow（v25.48⑪）と連動しダーク hover 輝度強化。pt-summary-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pt-total:hover .pt-summary-label { filter: brightness(1.1); }
+/* ⑪ pt-expiring:hover .pt-summary-label dark brightness(1.1) — ⑩と同パターン。⑩⑪でpt-total/expiring の .pt-summary-label ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pt-expiring:hover .pt-summary-label { filter: brightness(1.1); }
+/* ⑫ summary-card:hover .summary-label dark brightness(1.1) — color:#fff+text-shadow（v25.49④）と連動しダーク hover 輝度強化。summary-label transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.72・全script/linkタグ?v=25.72に更新 */
+[data-theme="dark"] .summary-card:hover .summary-label { filter: brightness(1.1); }
