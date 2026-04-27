@@ -38957,3 +38957,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-summary-card.sub-monthly:hover { filter: brightness(1.1); }
 /* ⑫ sub-summary-card.sub-yearly:hover dark brightness(1.1) — ライトモード brightness(var(--brightness-hover-sm)) + box-shadow のダーク強化版。⑪⑫で sub-monthly/yearly のダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.63・全script/linkタグ?v=25.63に更新 */
 [data-theme="dark"] .sub-summary-card.sub-yearly:hover  { filter: brightness(1.1); }
+
+/* v25.64: Approach C継続 — cal-cell.heat-1/2/3/4・md-cell-income/expense/balance-pos/balance-neg dark hover filter:brightness 追加 12箇所 */
+/* ① cal-cell.heat-1:hover dark brightness(1.1) — ライトモード brightness(1.07) + box-shadow のダーク強化版。cal-cell transition:filter 含有済み */
+[data-theme="dark"] .cal-cell.heat-1:hover { filter: brightness(1.1); }
+/* ② cal-cell.heat-2:hover dark brightness(1.1) — ライトモード brightness(1.07) のダーク強化版 */
+[data-theme="dark"] .cal-cell.heat-2:hover { filter: brightness(1.1); }
+/* ③ cal-cell.heat-3:hover dark brightness(1.1) — ライトモード brightness(1.07) のダーク強化版 */
+[data-theme="dark"] .cal-cell.heat-3:hover { filter: brightness(1.1); }
+/* ④ cal-cell.heat-4:hover dark brightness(1.1) — ライトモード brightness(1.07) のダーク強化版。①〜④で cal-cell.heat-1/2/3/4 のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cal-cell.heat-4:hover { filter: brightness(1.1); }
+/* ⑤ md-cell-income:hover .md-cell-label dark brightness(1.1) — ライトモード label は text-shadow のみ、ダーク側に brightness 追加。md-cell-label transition:filter 含有済み（v25.64 追加） */
+[data-theme="dark"] .md-cell-income:hover  .md-cell-label { filter: brightness(1.1); }
+/* ⑥ md-cell-expense:hover .md-cell-label dark brightness(1.1) — ⑤と同パターン */
+[data-theme="dark"] .md-cell-expense:hover .md-cell-label { filter: brightness(1.1); }
+/* ⑦ md-cell-balance-pos:hover .md-cell-label dark brightness(1.1) — ⑤と同パターン */
+[data-theme="dark"] .md-cell-balance-pos:hover .md-cell-label { filter: brightness(1.1); }
+/* ⑧ md-cell-balance-neg:hover .md-cell-label dark brightness(1.1) — ⑤と同パターン。⑤〜⑧で md-cell-label 全4バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .md-cell-balance-neg:hover .md-cell-label { filter: brightness(1.1); }
+/* ⑨ md-cell-income:hover .md-cell-value dark brightness(1.12) — ライトモード brightness(1.06) のダーク強化版（メイン数値のため1.12）。md-cell-value transition:filter 含有済み */
+[data-theme="dark"] .md-cell-income:hover  .md-cell-value { filter: brightness(1.12); }
+/* ⑩ md-cell-expense:hover .md-cell-value dark brightness(1.12) — ⑨と同パターン */
+[data-theme="dark"] .md-cell-expense:hover .md-cell-value { filter: brightness(1.12); }
+/* ⑪ md-cell-balance-pos:hover .md-cell-value dark brightness(1.12) — ⑨と同パターン */
+[data-theme="dark"] .md-cell-balance-pos:hover .md-cell-value { filter: brightness(1.12); }
+/* ⑫ md-cell-balance-neg:hover .md-cell-value dark brightness(1.12) — ⑨と同パターン。⑨〜⑫で md-cell-value 全4バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.64・全script/linkタグ?v=25.64に更新 */
+[data-theme="dark"] .md-cell-balance-neg:hover .md-cell-value { filter: brightness(1.12); }
