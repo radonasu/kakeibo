@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.67'; // v25.67: Approach C継続 — dark hover に filter:brightness 追加（yr-progress-track/fill・hs-gauge-track・cat-budget-bar-wrap・dw-slider・fc-progress-track・pace-bar-track・ev-prog-bar・fv-mini-bar・wk-bar-wrap・dow-mini-bar-track・fv-seg-bar 計12箇所）
+const CACHE_NAME = 'kakeibo-v25.68'; // v25.68: Approach C継続 — dark hover に filter:brightness 追加（cat-budget-bar-fill・debt-bar-fill・yr-cell-value×5・hm-stat-value(nth-child3/4)・hm-stat-label・yr-cell-sub(income/expense) 計12箇所）
 const ASSETS = [
   './index.html',
   './css/style.css',

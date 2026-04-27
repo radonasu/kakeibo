@@ -39065,3 +39065,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .dow-table-row:hover .dow-mini-bar-track { filter: brightness(1.08); }
 /* ⑫ fv-month-table tbody tr:hover .fv-seg-bar dark brightness(1.08) — ライトモード brightness(1.05) のダーク強化版。fv-seg-bar transition:filter 含有済み（line 22750）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.67・全script/linkタグ?v=25.67に更新 */
 [data-theme="dark"] .fv-month-table tbody tr:hover .fv-seg-bar { filter: brightness(1.08); }
+
+/* ── v25.68: Approach C継続 — cat-budget-bar-fill・debt-bar-fill・yr-cell-value×5・hm-stat-value(nth-child3/4)・hm-stat-label・yr-cell-sub(income/expense) dark hover filter:brightness 追加 12箇所 ── */
+/* ① cat-card:hover .cat-budget-bar-fill dark brightness(1.12)+box-shadow（cat-bar-clr/primary-end・mix-md）— ライトモード brightness(1.08)+mix-sm glow のダーク強化版。cat-budget-bar-fill transition:filter 含有済み（line 20291）。cat-budget-bar-wrap dark hover（v25.67④）と連動しカテゴリ予算バー全要素のダーク hover 演出を完成形に統一 */
+[data-theme="dark"] .cat-card:hover .cat-budget-bar-fill { filter: brightness(1.12); box-shadow: 0 1px 10px color-mix(in srgb, var(--cat-bar-clr, var(--primary-end)) var(--mix-md), transparent); }
+/* ② debt-card:hover .debt-bar-fill dark brightness(1.15) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 35935）に box-shadow あり、brightness を追加。debt-bar-fill transition:filter 含有済み（line 18209） */
+[data-theme="dark"] .debt-card:hover .debt-bar-fill { filter: brightness(1.15); }
+/* ③ yr-cell-income:hover .yr-cell-value dark brightness(1.15) — ライトモード brightness(1.12) のダーク強化版。既存ダーク hover ルール（line 35135）に color+text-shadow あり、brightness を追加。yr-cell-value transition:filter 含有済み（line 22906） */
+[data-theme="dark"] .yr-cell-income:hover .yr-cell-value { filter: brightness(1.15); }
+/* ④ yr-cell-expense:hover .yr-cell-value dark brightness(1.15) — ③と同パターン。既存ダーク hover ルール（line 35142）に color+text-shadow あり */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-value { filter: brightness(1.15); }
+/* ⑤ yr-cell-savings-success:hover .yr-cell-value dark brightness(1.15) — ③と同パターン。既存ダーク hover ルール（line 35207）に color+text-shadow あり */
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-value { filter: brightness(1.15); }
+/* ⑥ yr-cell-savings-warn:hover .yr-cell-value dark brightness(1.15) — ③と同パターン。既存ダーク hover ルール（line 35213）に color+text-shadow あり */
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-value { filter: brightness(1.15); }
+/* ⑦ yr-cell-savings-danger:hover .yr-cell-value dark brightness(1.15) — ③と同パターン。既存ダーク hover ルール（line 35220）に color+text-shadow あり。③〜⑦で yr-cell-value 全5バリアント（income/expense/savings-success/warn/danger）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-value { filter: brightness(1.15); }
+/* ⑧ hm-stat-card:nth-child(3):hover .hm-stat-value dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。既存ダーク hover ルール（line 35169）に color+text-shadow あり、brightness を追加。hm-stat-value transition:filter 含有済み（line 18291）。v25.65⑧⑨（nth-child1/2）と連動 */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-value { filter: brightness(1.08); }
+/* ⑨ hm-stat-card:nth-child(4):hover .hm-stat-value dark brightness(1.08) — ⑧と同パターン。既存ダーク hover ルール（line 35176）に color+text-shadow あり。⑧⑨で hm-stat-value 全4バリアント（nth-child1〜4）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-value { filter: brightness(1.08); }
+/* ⑩ hm-stat-card:hover .hm-stat-label dark brightness(1.12) — ライトモード brightness(1.1) のダーク強化版。hm-stat-label transition:filter 含有済み（line 22168）。各nth-child の color+text-shadow dark hover（line 35182〜35201）と連動し月次ヒートマップ全テキストのダーク hover 演出を完成形に統一 */
+[data-theme="dark"] .hm-stat-card:hover .hm-stat-label { filter: brightness(1.12); }
+/* ⑪ yr-cell-income:hover .yr-cell-sub dark brightness(1.15) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 37619）に color+text-shadow あり、brightness を追加。yr-cell-sub transition:filter 含有済み（line 20325） */
+[data-theme="dark"] .yr-cell-income:hover .yr-cell-sub { filter: brightness(1.15); }
+/* ⑫ yr-cell-expense:hover .yr-cell-sub dark brightness(1.15) — ⑪と同パターン。既存ダーク hover ルール（line 37626）に color+text-shadow あり。⑪⑫で yr-cell-sub（income/expense）のダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.68・全script/linkタグ?v=25.68に更新 */
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-sub { filter: brightness(1.15); }
