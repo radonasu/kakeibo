@@ -39009,3 +39009,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tg-stat-card:hover .tg-stat-value { filter: brightness(1.08); }
 /* ⑫ asset-card:hover .asset-balance dark brightness(1.08) — ライトモード brightness(1.06) のダーク強化版。asset-balance transition:filter 含有済み（line 18252）。⑩〜⑫で各種統計カード値・資産残高のダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.65・全script/linkタグ?v=25.65に更新 */
 [data-theme="dark"] .asset-card:hover .asset-balance { filter: brightness(1.08); }
+
+/* ── v25.66: Approach C継続 — debt-summary-total/monthly・wl-priority-badge（wl-card/wish-widget）・goal-achieved-date・ev-prog-pct・ev-mtot income/expense・cat-fixed-badge・tx-month-group income/expense・dow td:nth-child(4) dark hover filter:brightness 追加 12箇所 ──
+   ライトモード hover は filter:brightness + box-shadow/text-shadow の演出だが、ダークモード hover は color + text-shadow のみだった要素に filter:brightness を追加しダーク hover 輝度強化を統一。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① debt-summary-total:hover dark brightness(1.08) — ライトモード brightness(1.06) + box-shadow のダーク強化版。カード自体（child要素ではなく）の hover 輝度。debt-summary-total/monthly transition:filter 含有済み（line 17967） */
+[data-theme="dark"] .debt-summary-total:hover   { filter: brightness(1.08); }
+/* ② debt-summary-monthly:hover dark brightness(1.08) — ①と同パターン。①②で debt-summary-total/monthly カードレベルのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-summary-monthly:hover { filter: brightness(1.08); }
+/* ③ wl-card:hover .wl-priority-badge dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 36129）に color+text-shadow あり、brightness を追加。wl-priority-badge transition:filter 含有済み（line 24778） */
+[data-theme="dark"] .wl-card:hover .wl-priority-badge { filter: brightness(1.1); }
+/* ④ wish-widget-item:hover .wl-priority-badge dark brightness(1.1) — ③と同パターン。既存ダーク hover ルール（line 36860）に color+text-shadow あり。③④で wl-priority-badge の全コンテキスト（wl-card/wish-widget）ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .wish-widget-item:hover .wl-priority-badge { filter: brightness(1.1); }
+/* ⑤ goal-card:hover .goal-achieved-date dark brightness(1.12) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 36177）に color+text-shadow あり。goal-achieved-date transition:filter 含有済み（line 22467） */
+[data-theme="dark"] .goal-card:hover .goal-achieved-date { filter: brightness(1.12); }
+/* ⑥ ev-card:hover .ev-prog-pct dark brightness(1.12) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 36244）に color+text-shadow あり、brightness を追加。ev-prog-pct transition:filter 含有済み（line 22611） */
+[data-theme="dark"] .ev-card:hover .ev-prog-pct { filter: brightness(1.12); }
+/* ⑦ ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot dark brightness(1.12) — ライトモード brightness(1.1) のダーク強化版。既存ダーク hover ルール（line 37217）に color+text-shadow あり。ev-income.ev-mtot transition:filter 含有済み（line 23489） */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-income.ev-mtot  { filter: brightness(1.12); }
+/* ⑧ ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot dark brightness(1.12) — ⑦と同パターン。⑦⑧で ev-mtot income/expense のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-expense.ev-mtot { filter: brightness(1.12); }
+/* ⑨ cat-card:hover .cat-fixed-badge dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 35019/35026）に .is-fixed/.is-var 別の color+text-shadow あり、brightness を統合ルールで追加。cat-fixed-badge transition:filter 含有済み（line 24932） */
+[data-theme="dark"] .cat-card:hover .cat-fixed-badge { filter: brightness(1.1); }
+/* ⑩ tx-month-group-row:hover .tx-month-group-summary .income dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 37703）に color+text-shadow あり。tx-month-group-summary .income transition:filter 含有済み（line 22996） */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .income  { filter: brightness(1.1); }
+/* ⑪ tx-month-group-row:hover .tx-month-group-summary .expense dark brightness(1.1) — ⑩と同パターン。⑩⑪で tx-month-group income/expense のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-summary .expense { filter: brightness(1.1); }
+/* ⑫ dow-table-row:hover td:nth-child(4) dark brightness(1.1) — ライトモード brightness(1.08) のダーク強化版。既存ダーク hover ルール（line 37843）に color+text-shadow あり。最終 transition ルール（line 23883）に filter 未含有のため transition も同時追加。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.66・全script/linkタグ?v=25.66に更新 */
+.dow-table-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+[data-theme="dark"] .dow-table-row:hover td:nth-child(4) { filter: brightness(1.1); }
