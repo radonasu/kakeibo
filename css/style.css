@@ -39391,3 +39391,39 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑫ step-card:hover .step-title dark brightness(1.1) — primary-end color+text-shadow（line 35365）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。step-title transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.78・全script/linkタグ?v=25.78に更新 */
 [data-theme="dark"] .step-card:hover .step-title { filter: brightness(1.1); }
 [data-theme="dark"] .sub-widget-item:hover .sub-cycle-badge { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.79: Approach C継続 — yi-diff-down×1・ev-month-label×1・cal-amount×2（inc/exp）・cal-sum-value×2（income/expense）・wk-cell-sub×3（nth1〜3）・wk-unit×3（nth1〜3） dark hover filter:brightness 追加 12箇所
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた
+   年間インジケーター差分テキスト・月次予定ラベル・カレンダー金額・カレンダー合計値・ウィークリーサブ・ウィークリー単位に brightness を追加しダーク hover 輝度強化を統一。
+   ev-month-label / wk-unit の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ev-month-label transition に filter 追加（既存は color + text-shadow のみ、line 22580） */
+.ev-month-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* wk-unit transition に filter 追加（既存は color + text-shadow のみ、line 23468） */
+.wk-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+/* ① yi-card:hover .yi-diff-down dark brightness(1.1) — income-end color+text-shadow（line 35101）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 21590）のダーク強化版。yi-diff-down transition:filter 含有済み（line 21589） */
+[data-theme="dark"] .yi-card:hover .yi-diff-down { filter: brightness(1.1); }
+/* ② ev-month-col:not(.ev-month-current):hover .ev-month-label dark brightness(1.1) — primary-end color+text-shadow（line 35107）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。ev-month-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-month-col:not(.ev-month-current):hover .ev-month-label { filter: brightness(1.1); }
+/* ③ cal-cell:hover:not(.cal-empty) .cal-amount.inc dark brightness(1.1) — income-end color+text-shadow（line 35112）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20152）のダーク対称版。cal-amount transition:filter 含有済み（line 22860） */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.inc { filter: brightness(1.1); }
+/* ④ cal-cell:hover:not(.cal-empty) .cal-amount.exp dark brightness(1.1) — expense-end color+text-shadow（line 35118）と連動しダーク hover 輝度強化。③と同パターン。③④で cal-amount inc/exp 両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.exp { filter: brightness(1.1); }
+/* ⑤ cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value dark brightness(1.1) — income-end color+text-shadow（line 35123）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 19743）のダーク強化版。cal-sum-value transition:filter 含有済み（line 22889） */
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.income):hover  .cal-sum-value { filter: brightness(1.1); }
+/* ⑥ cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value dark brightness(1.1) — expense-end color+text-shadow（line 35129）と連動しダーク hover 輝度強化。⑤と同パターン。⑤⑥で cal-sum-value income/expense 両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value { filter: brightness(1.1); }
+/* ⑦ wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub dark brightness(1.1) — expense-end color+text-shadow（line 35424）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20925）のダーク強化版。wk-cell-sub transition:filter 含有済み（line 23354） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-sub { filter: brightness(1.1); }
+/* ⑧ wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub dark brightness(1.1) — primary-end color+text-shadow（line 35430）と連動しダーク hover 輝度強化。⑦と同パターン */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-sub { filter: brightness(1.1); }
+/* ⑨ wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub dark brightness(1.1) — income-end color+text-shadow（line 35437）と連動しダーク hover 輝度強化。⑦〜⑨で wk-cell-sub 全3バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-sub { filter: brightness(1.1); }
+/* ⑩ wk-summary-row .wk-cell:nth-child(1):hover .wk-unit dark brightness(1.1) — expense-end color+text-shadow（line 35443）と連動しダーク hover 輝度強化。ライトモードは color のみ（no brightness）。wk-unit transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-unit { filter: brightness(1.1); }
+/* ⑪ wk-summary-row .wk-cell:nth-child(2):hover .wk-unit dark brightness(1.1) — primary-end color+text-shadow（line 35449）と連動しダーク hover 輝度強化。⑩と同パターン */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-unit { filter: brightness(1.1); }
+/* ⑫ wk-summary-row .wk-cell:nth-child(3):hover .wk-unit dark brightness(1.1) — income-end color+text-shadow（line 35456）と連動しダーク hover 輝度強化。⑩〜⑫で wk-unit 全3バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.79・全script/linkタグ?v=25.79に更新 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-unit { filter: brightness(1.1); }

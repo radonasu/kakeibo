@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.78'; // v25.78: Approach C継続 — notif-item-title×4・yr-widget-card labels×3・yi-card elements×4・step-title×1 計12箇所
+const CACHE_NAME = 'kakeibo-v25.79'; // v25.79: Approach C継続 — yi-diff-down×1・ev-month-label×1・cal-amount×2・cal-sum-value×2・wk-cell-sub×3・wk-unit×3 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
