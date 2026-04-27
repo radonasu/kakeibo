@@ -21346,7 +21346,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    pm-row-color に変色。pm-row-color はJS側で各行に設定される支払方法固有カラー。
    .color-dot scale+glow（本スプリント①）と連動しアイコン・名称が
    一体的に反応するホバー演出の完成形に。 */
-.pm-table-row td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pm-table-row td:first-child { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .pm-table-row:hover td:first-child { color: var(--pm-row-color, var(--primary)); }
 .pm-table-row:hover td:first-child { text-shadow: 0 0 8px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-sm), transparent); }
 
@@ -23084,14 +23084,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    目標カードのホバー時に .goal-remaining（残り金額テキスト）に
    goal-accent text-shadow glow を追加。既存の color:goal-accent 変色（v23.x）と連動し、
    goal-name glow（本スプリント）・goal-saved glow（v23.42）と連動してカード内全テキスト演出を統一。 */
-.goal-remaining:not(.goal-done-hint) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-remaining:not(.goal-done-hint) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-remaining:not(.goal-done-hint) { text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 6. goal-card:hover → .goal-target primary text-shadow glow
    目標カードのホバー時に .goal-target（目標金額テキスト）に
    primary text-shadow glow を追加。既存の color:primary 変色（v23.x）と連動し、
    goal-name glow・goal-remaining glow（本スプリント）と合わせて目標カードホバー演出の完成形に。 */
-.goal-target { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.goal-target { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .goal-card:hover .goal-target { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. budget-item:hover → .budget-nums タイプ別 text-shadow glow
@@ -23436,7 +23436,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ペース管理1日グリッドセルのホバー時に .pace-daily-label（日付テキスト）に
    ステータス別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
    良好=success / 注意=warning / 超過=danger-text のカラーで輝く演出を完成させる。 */
-.pace-daily-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pace-daily-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
 .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-label { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
@@ -23866,7 +23866,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    支出提案テーブル行ホバー時に補足テキスト（件数・割合等）にprimary text-shadow glow追加。
    既存color:primary変色（v23.x）と連動しsb-suggested glow（v23.x）・td:nth-child(2) glow（v23.x）と
    合わせてテーブル行ホバー演出の完成形。 */
-.sb-row td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sb-row:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. sb-row:hover → td:nth-child(4) primary text-shadow glow
@@ -39205,3 +39205,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .pt-expiring:hover .pt-summary-label { filter: brightness(1.1); }
 /* ⑫ summary-card:hover .summary-label dark brightness(1.1) — color:#fff+text-shadow（v25.49④）と連動しダーク hover 輝度強化。summary-label transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.72・全script/linkタグ?v=25.72に更新 */
 [data-theme="dark"] .summary-card:hover .summary-label { filter: brightness(1.1); }
+
+/* ── v25.73: Approach C継続 — pm-table-row td:first-child×1・pm-table-row td.text-muted×1・goal-remaining×1・goal-target×1・budget-nums×2・pace-daily-val×3・sb-row td.text-muted×1・pace-daily-label×2 dark hover filter:brightness 追加 12箇所 ──
+   ライトモード hover は color + text-shadow の演出だが、ダークモード hover は color + text-shadow のみで brightness が欠落していた要素に filter:brightness を追加しダーク hover 輝度強化を統一。
+   goal-remaining・goal-target・pm-table-row td:first-child・pace-daily-label・sb-row td.text-muted の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① pm-table-row:hover td:first-child dark brightness(1.1) — pm-row-color/primary-end color+text-shadow（v25.00⑥）と連動しダーク hover 輝度強化。pm-table-row td:first-child transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pm-table-row:hover td:first-child { filter: brightness(1.1); }
+/* ② pm-table-row:hover td.text-muted dark brightness(1.1) — primary-end color+text-shadow（v24.98⑧）と連動しダーク hover 輝度強化。pm-table-row td.text-muted transition:filter 含有済み（line 21365） */
+[data-theme="dark"] .pm-table-row:hover td.text-muted { filter: brightness(1.1); }
+/* ③ goal-card:hover .goal-remaining:not(.goal-done-hint) dark brightness(1.1) — goal-accent/primary-end color+text-shadow（v24.99③）と連動しダーク hover 輝度強化。goal-remaining transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .goal-card:hover .goal-remaining:not(.goal-done-hint) { filter: brightness(1.1); }
+/* ④ goal-card:hover .goal-target dark brightness(1.1) — primary-end color+text-shadow（v24.99④）と連動しダーク hover 輝度強化。goal-target transition:filter 追加済み（本スプリント）。③④で goal-card の残り金額・目標金額テキストのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .goal-card:hover .goal-target { filter: brightness(1.1); }
+/* ⑤ budget-item:hover .budget-nums dark brightness(1.1) — primary-end color+text-shadow（v24.99⑤）と連動しダーク hover 輝度強化。budget-nums transition:filter 含有済み（line 23101） */
+[data-theme="dark"] .budget-item:hover .budget-nums { filter: brightness(1.1); }
+/* ⑥ budget-item:has(.budget-fill.over):hover .budget-nums dark brightness(1.1) — expense-end color+text-shadow（v24.99⑥）と連動しダーク hover 輝度強化。⑤⑥で budget-nums 通常・超過両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-nums { filter: brightness(1.1); }
+/* ⑦ pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val dark brightness(1.12) — income-end color+text-shadow（v25.00⑤）と連動しダーク hover 輝度強化。pace-daily-val transition:filter 含有済み（line 22877） */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-val { filter: brightness(1.12); }
+/* ⑧ pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val dark brightness(1.12) — warning color+text-shadow（v25.00⑥）と連動しダーク hover 輝度強化 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-val { filter: brightness(1.12); }
+/* ⑨ pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val dark brightness(1.12) — expense-end color+text-shadow（v25.00⑦）と連動しダーク hover 輝度強化。⑦〜⑨で pace-daily-val 全3ステータス（good/warn/over）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-over):hover .pace-daily-val { filter: brightness(1.12); }
+/* ⑩ sb-row:hover td.text-muted dark brightness(1.1) — primary-end color+text-shadow（v25.01①）と連動しダーク hover 輝度強化。sb-row td.text-muted transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sb-row:hover td.text-muted { filter: brightness(1.1); }
+/* ⑪ pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label dark brightness(1.1) — income-end color+text-shadow（v25.01⑪）と連動しダーク hover 輝度強化。pace-daily-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-good):hover .pace-daily-label { filter: brightness(1.1); }
+/* ⑫ pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label dark brightness(1.1) — warning color+text-shadow（v25.01⑫）と連動しダーク hover 輝度強化。⑪⑫で pace-daily-label の good/warn バリアントのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.73・全script/linkタグ?v=25.73に更新 */
+[data-theme="dark"] .pace-daily-cell:has(.pace-daily-val.pace-warn):hover .pace-daily-label { filter: brightness(1.1); }
