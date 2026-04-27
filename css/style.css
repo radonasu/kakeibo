@@ -39607,3 +39607,32 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num:not(.today) { filter: brightness(1.1); }
 /* ⑫ cc-col:has(.cc-col-up) .cc-item:hover .cc-name dark brightness(1.1) — expense-end color+text-shadow（line 38400）と連動。cc-name transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.84・全script/linkタグ?v=25.84に更新 */
 [data-theme="dark"] .cc-col:has(.cc-col-up) .cc-item:hover .cc-name { filter: brightness(1.1); }
+
+/* ── v25.85: Approach C継続 — cc-name-down×1・cc-amount-up×1・cc-amount-down×1・sim-savings-value×1・sim-savings-label×1・section-tab-is-active×1・auth-tab×1・wl-archive-summary×1・ch-archive-summary×1・debt-archive-summary×1・sub-inactive-summary×1・goal-achieved-summary×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   全要素 transition:filter 含有済み（既存ルール）。CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① cc-col:has(.cc-col-down) .cc-item:hover .cc-name dark brightness(1.1) — income-end color+text-shadow（line 38404）と連動。cc-name transition:filter 含有済み（line 24229）。①②でcc-name上昇/下降全バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-name { filter: brightness(1.1); }
+/* ② cc-col:has(.cc-col-up) .cc-item:hover .cc-amount dark brightness(1.1) — expense-end color+text-shadow（line 38408）と連動。cc-amount transition:filter 含有済み（line 20488） */
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-amount { filter: brightness(1.1); }
+/* ③ cc-col:has(.cc-col-down) .cc-item:hover .cc-amount dark brightness(1.1) — income-end color+text-shadow（line 38412）と連動。②③でcc-amount上昇/下降全バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-amount { filter: brightness(1.1); }
+/* ④ sim-savings-banner:hover .sim-savings-value dark brightness(1.1) — income-end color+text-shadow（line 21945）と連動。sim-savings-value transition:filter 含有済み（line 21943） */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-value { filter: brightness(1.1); }
+/* ⑤ sim-savings-banner:hover .sim-savings-label dark brightness(1.1) — income-end color+text-shadow（line 21956）と連動。sim-savings-label transition:filter 含有済み（line 21954）。④⑤でsim-savings-banner内テキスト全要素のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .sim-savings-banner:hover .sim-savings-label { filter: brightness(1.1); }
+/* ⑥ section-tab.is-active:hover dark brightness(1.1) — primary-end color+text-shadow（line 25946）と連動。section-tab transition:filter 含有済み（line 23951） */
+[data-theme="dark"] .section-tab.is-active:hover { filter: brightness(1.1); }
+/* ⑦ auth-tab:not(.active):hover dark brightness(1.1) — primary-end color+text-shadow（line 26009）と連動。auth-tab transition:filter 含有済み（line 26007） */
+[data-theme="dark"] .auth-tab:not(.active):hover { filter: brightness(1.1); }
+/* ⑧ wl-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34201）と連動。wl-archive-summary transition:filter 含有済み（line 38907） */
+[data-theme="dark"] .wl-archive-summary:hover { filter: brightness(1.1); }
+/* ⑨ ch-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34204）と連動。ch-archive-summary transition:filter 含有済み（line 38908） */
+[data-theme="dark"] .ch-archive-summary:hover { filter: brightness(1.1); }
+/* ⑩ debt-archive-summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34207）と連動。debt-archive-summary transition:filter 含有済み（line 38909）。⑧〜⑩でwl/ch/debtアーカイブsummaryのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-archive-summary:hover { filter: brightness(1.1); }
+/* ⑪ sub-inactive-section summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34210）と連動。sub-inactive-section summary transition:filter 含有済み（line 38906） */
+[data-theme="dark"] .sub-inactive-section summary:hover { filter: brightness(1.1); }
+/* ⑫ goal-achieved-summary:hover dark brightness(1.1) — primary-end color+text-shadow（line 34213）と連動。goal-achieved-summary transition:filter 含有済み（line 38905）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.85・全script/linkタグ?v=25.85に更新 */
+[data-theme="dark"] .goal-achieved-summary:hover { filter: brightness(1.1); }
