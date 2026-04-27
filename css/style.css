@@ -22406,7 +22406,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    color:text-muted）を primary カラーへ変色。debt-progress-label 変色（v23.x）・
    debt-progress-hdr brightness（v23.35 #4）と連動し
    プログレス行の両テキストが揃ってホバーに反応する完成形に。 */
-.debt-progress-detail { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-progress-detail { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-card:hover .debt-progress-detail { color: var(--primary); }
 .debt-card:hover .debt-progress-detail { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
@@ -39261,3 +39261,30 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .wl-card:hover .wl-card-meta { filter: brightness(1.1); }
 /* ⑫ debt-card:hover .debt-progress-hdr dark brightness(1.1) — primary-end color+text-shadow（v25.02/line 34892）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 22379）のダーク強化版。debt-progress-hdr transition:filter 含有済み（line 22378）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.74・全script/linkタグ?v=25.74に更新 */
 [data-theme="dark"] .debt-card:hover .debt-progress-hdr { filter: brightness(1.1); }
+/* ── v25.75: Approach C継続 — debt-progress-detail×1・wk-cell-value×3・debt-balance×1・pt-card-balance×1・cat-card-name×1・cat-stat-val×1・cat-stat-lbl×1・cat-budget-pct×1・cat-yayoi-tag×1・sub-card-amount×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   debt-progress-detail transition に filter を追加（本スプリント）。 */
+/* ① debt-card:hover .debt-progress-detail dark brightness(1.1) — primary-end color+text-shadow（v25.02⑫/line 34900）と連動しダーク hover 輝度強化。ライトモードは color+text-shadow のみ（no brightness）。debt-progress-hdr dark hover（v25.74⑫）と連動し返済進捗テキスト両要素のダーク hover 輝度強化が完成形に統一。debt-progress-detail transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-card:hover .debt-progress-detail { filter: brightness(1.1); }
+/* ② wk-cell:nth-child(1):hover .wk-cell-value dark brightness(1.12) — expense-end color+text-shadow（v25.03⑦/line 34946）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20523）のダーク強化版。wk-cell-value transition:filter 含有済み（line 20522） */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(1):hover .wk-cell-value { filter: brightness(1.12); }
+/* ③ wk-cell:nth-child(2):hover .wk-cell-value dark brightness(1.12) — primary-end color+text-shadow（v25.03⑧/line 34951）と連動しダーク hover 輝度強化。②と同パターン */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(2):hover .wk-cell-value { filter: brightness(1.12); }
+/* ④ wk-cell:nth-child(3):hover .wk-cell-value dark brightness(1.12) — income-end color+text-shadow（v25.03⑨/line 34957）と連動しダーク hover 輝度強化。②〜④で wk-cell-value 全3バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .wk-summary-row .wk-cell:nth-child(3):hover .wk-cell-value { filter: brightness(1.12); }
+/* ⑤ debt-card:hover .debt-balance dark brightness(1.12) — debt-accent/expense-end color+text-shadow（v25.03⑩/line 34963）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 18362）のダーク強化版。debt-balance transition:filter 含有済み（line 22923） */
+[data-theme="dark"] .debt-card:hover .debt-balance { filter: brightness(1.12); }
+/* ⑥ pt-card:hover .pt-card-balance dark brightness(1.1) — pt-accent/primary-end color+text-shadow（v25.03⑪/line 34969）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18339）のダーク強化版。pt-card-balance transition:filter 含有済み（line 18338） */
+[data-theme="dark"] .pt-card:hover .pt-card-balance { filter: brightness(1.1); }
+/* ⑦ cat-card:hover .cat-card-name dark brightness(1.1) — cat-clr/primary-end color+text-shadow（v25.04①/line 34988）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18568）のダーク強化版。cat-card-name transition:filter 含有済み（line 23017） */
+[data-theme="dark"] .cat-card:hover .cat-card-name { filter: brightness(1.1); }
+/* ⑧ cat-card:hover .cat-stat-val dark brightness(1.12) — cat-clr/primary-end color+text-shadow（v25.04②/line 34994）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 18575）のダーク強化版。cat-stat-val transition:filter 含有済み（line 23024） */
+[data-theme="dark"] .cat-card:hover .cat-stat-val { filter: brightness(1.12); }
+/* ⑨ cat-card:hover .cat-stat-lbl dark brightness(1.1) — cat-clr/primary-end color+text-shadow（v25.04③/line 35001）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20284）のダーク強化版。cat-stat-lbl transition:filter 含有済み（line 20283） */
+[data-theme="dark"] .cat-card:hover .cat-stat-lbl { filter: brightness(1.1); }
+/* ⑩ cat-card:hover .cat-budget-pct dark brightness(1.1) — cat-clr/primary-end color+text-shadow（v25.04④/line 35007）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18614）のダーク強化版。cat-budget-pct transition:filter 含有済み（line 23045） */
+[data-theme="dark"] .cat-card:hover .cat-budget-pct { filter: brightness(1.1); }
+/* ⑪ cat-card:hover .cat-yayoi-tag dark brightness(1.08) — primary-end color+text-shadow（v25.04⑤/line 35013）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 22144）のダーク強化版。cat-yayoi-tag transition:filter 含有済み（line 24768） */
+[data-theme="dark"] .cat-card:hover .cat-yayoi-tag { filter: brightness(1.08); }
+/* ⑫ sub-card:hover .sub-card-amount dark brightness(1.1) — sub-accent/primary-end color+text-shadow（v25.04⑧/line 35033）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18501）のダーク強化版。sub-card-amount transition:filter 含有済み（line 18500）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.75・全script/linkタグ?v=25.75に更新 */
+[data-theme="dark"] .sub-card:hover .sub-card-amount { filter: brightness(1.1); }
