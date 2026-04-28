@@ -40321,3 +40321,39 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑫ wl-archive-item:hover .wl-archive-price dark brightness(1.1) — income-end color+text-shadow glow（line 38120）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20533）のダーク強化版。ウィッシュリスト達成済みアーカイブの価格テキスト。wl-archive-price transition:filter 含有済み（line 20533）。既存 wl-archive-name dark hover（v25.40）と連動しアーカイブアイテム内テキスト name/price 両要素のダーク hover 輝度強化が完成形に統一。①〜⑫で計12箇所のダーク hover 輝度強化が完成形に統一。次候補: Approach C 継続（残るカード・サマリー系の text-shadow only ダーク hover に brightness を補完・新たに発見した未対応グロー要素）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.03・全script/linkタグ?v=26.03に更新 */
 [data-theme="dark"] .wl-archive-item:hover .wl-archive-price { filter: brightness(1.1); }
+
+/* ============================================================
+   v26.04: Approach C 継続 — dark hover filter:brightness 追加 10箇所（最終ラウンド）
+   ダーク hover に color+text-shadow グローはあるが filter:brightness が欠落していた
+   グローバルナビ/タブ/ボタン系・サマリー・統計カードラベルに brightness を補完。
+   ============================================================ */
+
+/* ① nav-item:not(.active):hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37876）と連動しダーク hover 輝度強化。サイドバー非アクティブナビアイテム本体テキスト。nav-item transition:filter 含有済み（line 25961） */
+[data-theme="dark"] .nav-item:not(.active):hover { filter: brightness(1.1); }
+
+/* ② section-tab:not(.is-active):hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37850）と連動しダーク hover 輝度強化。セクションタブ（取引ページなど）の非アクティブタブ。section-tab transition:filter 含有済み（line 23951） */
+[data-theme="dark"] .section-tab:not(.is-active):hover { filter: brightness(1.1); }
+
+/* ③ type-btn:hover dark brightness(1.1) — primary-end color+text-shadow glow（line 38554）と連動しダーク hover 輝度強化。クイック追加モーダルの収入/支出タイプ選択ボタン（未選択ベース）。type-btn transition:filter 含有済み（line 3033） */
+[data-theme="dark"] .type-btn:hover { filter: brightness(1.1); }
+
+/* ④ rc-item:hover .rc-item-amount dark brightness(1.1) — primary-end color+text-shadow glow（line 38562）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 22246）のダーク強化版。繰り返し収支アイテム行の金額テキスト（収入/支出タイプ未確定時のベース）。rc-item-amount transition:filter 含有済み（line 18368/22245/23139/23944） */
+[data-theme="dark"] .rc-item:hover .rc-item-amount { filter: brightness(1.1); }
+
+/* ⑤ sb-banner:hover .sb-banner-num dark brightness(1.1) — color:#fff+白グロー text-shadow（line 37697）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 22035）のダーク対称版。スマート予算バナー（グラデ背景）の数値テキスト。sb-banner-num transition:filter 含有済み（line 22034） */
+[data-theme="dark"] .sb-banner:hover .sb-banner-num { filter: brightness(1.1); }
+
+/* ⑥ summary-card:hover .summary-amount dark brightness(1.1) — color:#fff+白グロー text-shadow（line 38564）と連動しダーク hover 輝度強化。サマリーカード金額（generic 白グロー）。既存 summary-card.income/expense/balance.positive/balance.negative:hover .summary-amount dark brightness(1.08)（line 38995-39001）と連携し、未分類サマリーカードもダーク hover 輝度強化対象に。summary-amount transition:filter 含有済み（line 18281/21653/24619/25057） */
+[data-theme="dark"] .summary-card:hover .summary-amount { filter: brightness(1.1); }
+
+/* ⑦ hm-stat-card:nth-child(1):hover .hm-stat-label dark brightness(1.1) — primary-end color+text-shadow glow（line 35182）と連動しダーク hover 輝度強化。月次ヒートマップ統計カード1枚目（収入色）のラベル。既存 .hm-stat-card:hover .hm-stat-label dark brightness(1.12)（line 39089）の generic より具体的に nth-child 別のブライトネスを適用し、hm-stat-sub の nth-child 別 brightness パターン（line 38802-38808）と整合。hm-stat-label transition:filter 含有済み（line 22168） */
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-label { filter: brightness(1.1); }
+
+/* ⑧ hm-stat-card:nth-child(2):hover .hm-stat-label dark brightness(1.1) — expense-end color+text-shadow glow（line 35188）と連動しダーク hover 輝度強化。月次ヒートマップ統計カード2枚目（支出色）のラベル */
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-label { filter: brightness(1.1); }
+
+/* ⑨ hm-stat-card:nth-child(3):hover .hm-stat-label dark brightness(1.1) — warning color+text-shadow glow（line 35194）と連動しダーク hover 輝度強化。月次ヒートマップ統計カード3枚目（警告色）のラベル */
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-label { filter: brightness(1.1); }
+
+/* ⑩ hm-stat-card:nth-child(4):hover .hm-stat-label dark brightness(1.1) — income-end color+text-shadow glow（line 35201）と連動しダーク hover 輝度強化。月次ヒートマップ統計カード4枚目（成功色）のラベル。⑦〜⑩で hm-stat-card 全4 nth-child variant の hm-stat-label のダーク hover 輝度強化が完成形に統一（既存 hm-stat-value/sub/unit の nth-child 別 brightness と合わせ統計カード4種×4テキスト要素 全揃いの完成形へ） */
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-label { filter: brightness(1.1); }
