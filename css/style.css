@@ -20895,7 +20895,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary テーマに染まり存在感を増す演出。nt-char-count 変色（本スプリント）・
    nt-progress-fill glow（v23.15）と連動しメモフッター全体がホバーで
    一体的に反応する完成形に。 */
-.nt-saved-at { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.nt-saved-at { transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .nt-card:hover .nt-saved-at { color: var(--primary); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 8. insight-item:hover → .insight-desc brightness(1.1)
@@ -23375,7 +23375,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ウィッシュリストウィジェットアイテムのホバー時に .wish-widget-name（商品名）に
    primary text-shadow glow を追加。既存の color:primary 変色と連動し、
    wish-widget-price glow（本スプリント⑤）と合わせて名称・価格が揃って輝く。 */
-.wish-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.wish-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .wish-widget-item:hover .wish-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. wish-widget-item:hover → .wish-widget-price primary text-shadow glow
@@ -23403,7 +23403,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ペース管理バー行のホバー時に .pace-unit（「円/日」等の単位テキスト）に
    タイプ別 text-shadow glow を追加。既存の color タイプ別変色と連動し、
    良好=success / 注意=warning / 超過=danger-text のカラーで輝く演出を完成させる。 */
-.pace-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.pace-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--success)     var(--mix-sm), transparent); }
 .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--warning)     var(--mix-sm), transparent); }
 .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit { text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
@@ -40279,3 +40279,45 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑫ sim-preset:hover dark brightness(1.1) — 白グロー color+text-shadow glow（line 37276）と連動しダーク hover 輝度強化。繰上返済シミュレーションプリセットボタン。sim-preset transition:filter 含有済み（line 23555）。①〜⑫で step-desc/tx-tag-chip/rpt-month-label/pace-pct全3/pace-bar-label全3/wk-bar-amount/wk-bar-label/sim-preset 計12箇所のダーク hover 輝度強化が完成形に統一。次候補: Approach C 継続（残るカード・サマリー系の text-shadow only ダーク hover に brightness を補完・新たに発見した未対応グロー要素）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.02・全script/linkタグ?v=26.02に更新 */
 [data-theme="dark"] .sim-preset:hover { filter: brightness(1.1); }
+
+/* ============================================================
+   Sprint #999 v26.03 — Approach C 継続: dark hover filter:brightness 追加 12箇所
+   pace-bar-value×3 / pace-unit×3 / wish-widget-name / wish-widget-price /
+   wk-today-label / yi-sub-muted / nt-saved-at / wl-archive-price 計12箇所のダーク hover 輝度強化
+   ============================================================ */
+
+/* ① pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value dark brightness(1.1) — income-end color+text-shadow glow（line 36500）と連動しダーク hover 輝度強化。ペース管理バー良好ステータスの金額値テキスト。pace-bar-value transition:filter 含有済み（line 19487） */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-bar-value { filter: brightness(1.1); }
+
+/* ② pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value dark brightness(1.1) — warning color+text-shadow glow（line 36501）と連動しダーク hover 輝度強化。ペース管理バー警告ステータスの金額値テキスト */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-bar-value { filter: brightness(1.1); }
+
+/* ③ pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value dark brightness(1.1) — expense-end color+text-shadow glow（line 36502）と連動しダーク hover 輝度強化。ペース管理バー超過ステータスの金額値テキスト。①②③で pace-bar-value 全3ステータス（good/warn/over）のダーク hover 輝度強化が完成形に統一（v26.02 pace-pct/pace-bar-label 各3ステータスと合わせ pace-bar-row 内テキスト全要素 value/pct/label 揃って完成形） */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-bar-value { filter: brightness(1.1); }
+
+/* ④ pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit dark brightness(1.1) — income-end color+text-shadow glow（line 37789）と連動しダーク hover 輝度強化。ペース管理バー良好ステータスの単位テキスト（「円/日」等）。pace-unit transition:filter 追加済み（本スプリント・line 23406） */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-good):hover .pace-unit { filter: brightness(1.1); }
+
+/* ⑤ pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit dark brightness(1.1) — warning color+text-shadow glow（line 37796）と連動しダーク hover 輝度強化。ペース管理バー警告ステータスの単位テキスト */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-warn):hover .pace-unit { filter: brightness(1.1); }
+
+/* ⑥ pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit dark brightness(1.1) — expense-end color+text-shadow glow（line 37803）と連動しダーク hover 輝度強化。ペース管理バー超過ステータスの単位テキスト。④⑤⑥で pace-unit 全3ステータス（good/warn/over）のダーク hover 輝度強化が完成形に統一（①〜⑥と既存 pace-pct/pace-bar-label 全3ステータスdark filter（v26.02）が pace-bar-row 内 4テキスト要素 value/pct/label/unit 全状態で揃って完成形） */
+[data-theme="dark"] .pace-bar-row:has(.pace-bar-expense.pace-over):hover .pace-unit { filter: brightness(1.1); }
+
+/* ⑦ wish-widget-item:hover .wish-widget-name dark brightness(1.1) — primary-end color+text-shadow glow（line 36741）と連動しダーク hover 輝度強化。ウィッシュリストウィジェット行の商品名テキスト。wish-widget-name transition:filter 追加済み（本スプリント・line 23378） */
+[data-theme="dark"] .wish-widget-item:hover .wish-widget-name { filter: brightness(1.1); }
+
+/* ⑧ wish-widget-item:hover .wish-widget-price dark brightness(1.1) — primary-end color+text-shadow glow（line 36748）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 21032）のダーク強化版。ウィッシュリストウィジェット行の価格テキスト。⑦⑧で wish-widget 内テキスト name/price 両要素のダーク hover 輝度強化が完成形に統一。wish-widget-price transition:filter 含有済み（line 21032） */
+[data-theme="dark"] .wish-widget-item:hover .wish-widget-price { filter: brightness(1.1); }
+
+/* ⑨ wk-bar-col.wk-bar-today:hover .wk-today-label dark brightness(1.1) — expense-end color+text-shadow glow（line 37653）と連動しダーク hover 輝度強化。週別バーチャート今日ラベル。wk-today-label transition:filter 含有済み（line 20391）。v26.02 wk-bar-label:not(.wk-today-label) dark filter と対称配置で wk-bar-col 内ラベル（today/今日除外）両バリアント揃って完成形 */
+[data-theme="dark"] .wk-bar-col.wk-bar-today:hover .wk-today-label { filter: brightness(1.1); }
+
+/* ⑩ yi-card:hover .yi-sub-muted dark brightness(1.1) — primary-end color+text-shadow glow（line 36410）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 21566）のダーク強化版。年間収支カードの補助テキスト（最高/最低貯蓄月の月名・利用月記録の数値・前年データなし表示等）。yi-sub-muted transition:filter 含有済み（line 21566）。v25.99⑪⑫ yi-card-sub/yi-card-unit dark filter・既存 yi-card 内 dark filter 群（yi-card-value/label/diff-down等）と連携し yi-card 内テキスト全要素のダーク hover 輝度強化が広範囲に揃う */
+[data-theme="dark"] .yi-card:hover .yi-sub-muted { filter: brightness(1.1); }
+
+/* ⑪ nt-card:hover .nt-saved-at dark brightness(1.1) — primary-end color+text-shadow glow（line 38157）と連動しダーク hover 輝度強化。メモカードの保存日時ピル（「保存：HH:MM」等）。nt-saved-at transition:filter 追加済み（本スプリント・line 20898）。既存 nt-card hover dark filter 群（nt-progress-fill/nt-progress-bar/nt-char-count・v26.01⑦）と連携しメモカードフッター全体のダーク hover 演出が完成形に統一 */
+[data-theme="dark"] .nt-card:hover .nt-saved-at { filter: brightness(1.1); }
+
+/* ⑫ wl-archive-item:hover .wl-archive-price dark brightness(1.1) — income-end color+text-shadow glow（line 38120）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20533）のダーク強化版。ウィッシュリスト達成済みアーカイブの価格テキスト。wl-archive-price transition:filter 含有済み（line 20533）。既存 wl-archive-name dark hover（v25.40）と連動しアーカイブアイテム内テキスト name/price 両要素のダーク hover 輝度強化が完成形に統一。①〜⑫で計12箇所のダーク hover 輝度強化が完成形に統一。次候補: Approach C 継続（残るカード・サマリー系の text-shadow only ダーク hover に brightness を補完・新たに発見した未対応グロー要素）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.03・全script/linkタグ?v=26.03に更新 */
+[data-theme="dark"] .wl-archive-item:hover .wl-archive-price { filter: brightness(1.1); }
