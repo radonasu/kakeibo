@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.06'; // v26.06: マイクロインタラクション統合強化（btn:hover に scale(1.03) 追加で全ボタン弾力アップ + ボトムナビアクティブインジケーターを単色→primary-end→primary→primary-end 3点グラデ + drop-shadow グロー + slide-in に60%=scaleX(1.15) オーバーシュート + アクティブナビアイコン svg に primary drop-shadow グロー追加 + .card:hover プライマリグロー強化 mix-2xs→mix-xs / dark mix-xs→mix-sm + skeleton shimmer 1.6s→1.4s 高速化）
+const CACHE_NAME = 'kakeibo-v26.07'; // v26.07: フォーカスリング洗練 + 全面ホバー強化（グローバル :focus-visible にプライマリグローハロー追加 + .btn-ghost:hover glow mix-xs→mix-sm + blur 10→14px + .btn-icon:hover glow mix-xs→mix-sm + blur 8→12px + .bottom-nav-item:not(.active):hover glow mix-xs→mix-sm + blur 10→14px + #global-fab:hover に filter brightness(1.06) 追加 + .card:active に scale(--scale-card-active=0.98) 追加でタクタイル強化）
 const ASSETS = [
   './index.html',
   './css/style.css',
