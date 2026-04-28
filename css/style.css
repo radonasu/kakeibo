@@ -5271,8 +5271,8 @@ body {
   to   { opacity: 1; transform: none; }
 }
 @keyframes empty-icon-float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(var(--enter-y-neg-base)); }
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(var(--enter-y-neg-base)) scale(1.06); }
 }
 
 /* ── 今月データなし（既存データあり） ───────────────────── */
@@ -18895,14 +18895,22 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .empty-month-icon,
 .empty-goal-icon,
 .empty-asset-icon,
-.empty-debt-icon {
-  filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+.empty-debt-icon,
+.sub-empty-icon,
+.pt-empty-icon,
+.wl-empty-icon,
+.ch-empty-icon {
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent));
 }
 [data-theme="dark"] .empty-month-icon,
 [data-theme="dark"] .empty-goal-icon,
 [data-theme="dark"] .empty-asset-icon,
-[data-theme="dark"] .empty-debt-icon {
-  filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+[data-theme="dark"] .empty-debt-icon,
+[data-theme="dark"] .sub-empty-icon,
+[data-theme="dark"] .pt-empty-icon,
+[data-theme="dark"] .wl-empty-icon,
+[data-theme="dark"] .ch-empty-icon {
+  filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
 }
 
 /* ============================================================

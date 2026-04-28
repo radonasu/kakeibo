@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.04'; // v26.04: Approach C継続最終ラウンド — nav-item:not(.active)・section-tab:not(.is-active)・type-btn・rc-item .rc-item-amount・sb-banner .sb-banner-num・summary-card .summary-amount・hm-stat-card:nth-child(1-4) .hm-stat-label dark hover filter:brightness 追加 計10箇所
+const CACHE_NAME = 'kakeibo-v26.05'; // v26.05: 空状態アイコン浮遊アニメ「呼吸」化（@keyframes empty-icon-float に scale(1.06) 追加）+ ドロップシャドウ強化（mix-sm→mix-md・mix-md→mix-lg）+ 4種拡張（sub/pt/wl/ch）= 9種の空状態アイコンが揺れながら拡縮する生き生きしたマイクロインタラクションに
 const ASSETS = [
   './index.html',
   './css/style.css',
