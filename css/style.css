@@ -40060,3 +40060,52 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-entry-row:hover .debt-entry-balance { filter: brightness(1.1); }
 /* ⑫ sb-row:hover td:nth-child(2) dark brightness(1.1) — sb-cat-color/primary-end color+text-shadow glow（line 34757）と連動しダーク hover 輝度強化。スマート予算行のカテゴリ名セル。既存の sb-row:hover .sb-suggested dark filter（line 39986）・td.text-muted dark filter（line 39233）と連携し sb-row 内テキスト要素のダーク hover 輝度強化が広範囲に整う。sb-row td:nth-child(2) transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.97・全script/linkタグ?v=25.97に更新 */
 [data-theme="dark"] .sb-row:hover td:nth-child(2) { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.98: dark hover filter:brightness 追加 12箇所（Approach C継続）
+   budget-item hover内 budget-sep（通常+過超バリアント）・
+   ci-cell hover内 ci-cell-label・
+   debt-summary-monthly/total hover内 summary-amount・
+   dow-stat-card hover内 dow-stat-unit・
+   forecast-card hover内 fc-cell-hint/fc-cell-label/fc-progress-label・
+   sb-row hover内 sb-low-data/td:nth-child(4)・
+   smi-income hover内 smi-amount に
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v23-25 系）と連動。
+   budget-sep / ci-cell-label / fc-cell-hint / fc-cell-label / fc-progress-label /
+   sb-low-data / sb-row td:nth-child(4) は本スプリントで transition に filter を同時追加。
+   summary-amount / dow-stat-unit / smi-amount は transition:filter 含有済み。
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.budget-sep { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ci-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.fc-cell-hint { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.fc-cell-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.fc-progress-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.sb-low-data { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.sb-row td:nth-child(4) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① budget-item:hover .budget-sep dark brightness(1.1) — primary-end color+text-shadow glow（line 36665）と連動しダーク hover 輝度強化。予算カード内の数値セパレータ（「/」）。budget-sep transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .budget-item:hover .budget-sep { filter: brightness(1.1); }
+/* ② budget-item:has(.budget-fill.over):hover .budget-sep dark brightness(1.1) — expense-end color+text-shadow glow（line 36672）と連動しダーク hover 輝度強化。予算超過バリアントのセパレータ。①②で budget-sep 全2バリアント（通常/過超）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-sep { filter: brightness(1.1); }
+/* ③ ci-cell:hover .ci-cell-label dark brightness(1.1) — primary-end color+text-shadow glow（line 37543）と連動しダーク hover 輝度強化。チェックインモーダル収支セルのラベルテキスト。既存の ci-cell-value 全4バリアント dark filter（v25.96⑧〜⑪）と連携し ci-cell 内テキスト要素のダーク hover 輝度強化が広範囲に整う。ci-cell-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ci-cell:hover .ci-cell-label { filter: brightness(1.1); }
+/* ④ debt-summary-monthly:hover .summary-amount dark brightness(1.1) — 白グロー color+text-shadow（line 35720）と連動しダーク hover 輝度強化。月次返済額サマリーカード（グラデ背景上）の金額。summary-amount transition:filter 含有済み（line 21653/24619/25057） */
+[data-theme="dark"] .debt-summary-monthly:hover .summary-amount { filter: brightness(1.1); }
+/* ⑤ debt-summary-total:hover .summary-amount dark brightness(1.1) — 白グロー color+text-shadow（line 37257）と連動しダーク hover 輝度強化。負債合計サマリーカード（グラデ背景上）の金額。④⑤で debt-summary monthly/total 両バリアントの summary-amount ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-summary-total:hover .summary-amount { filter: brightness(1.1); }
+/* ⑥ dow-stat-card:hover .dow-stat-unit dark brightness(1.1) — 白グロー color+text-shadow（line 37646）と連動しダーク hover 輝度強化。曜日別統計カード（グラデ背景上）の単位テキスト。dow-stat-unit transition:filter 含有済み（line 25490） */
+[data-theme="dark"] .dow-stat-card:hover .dow-stat-unit { filter: brightness(1.1); }
+/* ⑦ forecast-card:hover .fc-cell-hint dark brightness(1.1) — primary-end color+text-shadow glow（line 38127）と連動しダーク hover 輝度強化。予測カードのヒントテキスト。fc-cell-hint transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .forecast-card:hover .fc-cell-hint { filter: brightness(1.1); }
+/* ⑧ forecast-card:hover .fc-cell-label dark brightness(1.1) — fc-color/primary-end color+text-shadow glow（line 37008）と連動しダーク hover 輝度強化。予測カードのセルラベルテキスト。fc-cell-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .forecast-card:hover .fc-cell-label { filter: brightness(1.1); }
+/* ⑨ forecast-card:hover .fc-progress-label dark brightness(1.1) — primary-end color+text-shadow glow（line 38176）と連動しダーク hover 輝度強化。予測カードの進捗ラベルテキスト。⑦⑧⑨で forecast-card 内テキスト fc-cell-hint/fc-cell-label/fc-progress-label 計3要素のダーク hover 輝度強化が完成形に統一。fc-progress-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .forecast-card:hover .fc-progress-label { filter: brightness(1.1); }
+/* ⑩ sb-row:hover .sb-low-data dark brightness(1.1) — warning color+text-shadow glow（line 34790）と連動しダーク hover 輝度強化。スマート予算行のデータ不足バッジ（黄）。sb-low-data transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sb-row:hover .sb-low-data { filter: brightness(1.1); }
+/* ⑪ sb-row:hover td:nth-child(4) dark brightness(1.1) — primary-end color+text-shadow glow（line 34769）と連動しダーク hover 輝度強化。スマート予算行の前月比セル。⑩⑪と既存 sb-row 内 dark filter 群（td:nth-child(2)/td.text-muted/.sb-suggested/.sb-diff-pill）と連携し sb-row 全主要セルのダーク hover 輝度強化が広範囲に整う。sb-row td:nth-child(4) transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sb-row:hover td:nth-child(4) { filter: brightness(1.1); }
+/* ⑫ smi-income:hover .smi-amount dark brightness(1.1) — income-end color+text-shadow glow（line 35507）と連動しダーク hover 輝度強化。給与明細収入行（収支ミニ表示）の金額テキスト。既存 smi-expense:hover .smi-amount dark filter（v25.95⑪・line 39984）と対称配置で smi-amount 全バリアント（income/expense）のダーク hover 輝度強化が完成形に統一。smi-amount transition:filter 含有済み（line 25092）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.98・全script/linkタグ?v=25.98に更新 */
+[data-theme="dark"] .smi-income:hover .smi-amount { filter: brightness(1.1); }
