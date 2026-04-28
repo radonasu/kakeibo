@@ -40153,3 +40153,45 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .yi-card:hover .yi-card-sub { filter: brightness(1.1); }
 /* ⑫ yi-card:hover .yi-card-unit dark brightness(1.1) — primary-end color+text-shadow glow（line 36417）と連動しダーク hover 輝度強化。前年同月比カードの単位テキスト。⑪⑫と既存 yi-card 内 dark filter 群（yi-card-value/label/diff-down/yi-sub-muted等）と連携し yi-card 内テキスト要素のダーク hover 輝度強化が広範囲に整う。yi-card-unit transition:filter 含有済み（line 20550）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.99・全script/linkタグ?v=25.99に更新 */
 [data-theme="dark"] .yi-card:hover .yi-card-unit { filter: brightness(1.1); }
+
+/* ============================================================
+   v26.00: dark hover filter:brightness 追加 12箇所（Approach C継続）
+   fv-cat-table tbody tr hover内 fv-cat-amt/fv-pct-txt/td:first-child・
+   goal-dash-item hover内 goal-dash-name/goal-dash-pct/goal-dash-amount・
+   md-cat-row hover内 md-cat-amount(default)/md-cat-amount.md-cat-amount-income/md-cat-text/md-cat-pct・
+   rc-item hover内 rc-type-badge(inc/exp バリアント) に
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v24-25 系）と連動。
+   fv-pct-txt / goal-dash-name / goal-dash-amount / md-cat-text は本スプリントで transition に filter を同時追加。
+   fv-cat-amt / fv-cat-table td:first-child / goal-dash-pct / md-cat-amount / md-cat-pct / rc-type-badge は transition:filter 含有済み。
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.fv-pct-txt { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-dash-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-dash-amount { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.md-cat-text { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① fv-cat-table tbody tr:hover .fv-cat-amt dark brightness(1.1) — primary-end color+text-shadow glow（line 37089）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 20375）のダーク強化版。財務予測カテゴリテーブルのカテゴリ別金額テキスト。fv-cat-amt transition:filter 含有済み（line 24462） */
+[data-theme="dark"] .fv-cat-table tbody tr:hover .fv-cat-amt { filter: brightness(1.1); }
+/* ② fv-cat-table tbody tr:hover .fv-pct-txt dark brightness(1.1) — primary-end color+text-shadow glow（line 37104）と連動しダーク hover 輝度強化。財務予測カテゴリテーブルの達成率%テキスト。fv-pct-txt transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .fv-cat-table tbody tr:hover .fv-pct-txt { filter: brightness(1.1); }
+/* ③ fv-cat-table tbody tr:hover td:first-child dark brightness(1.1) — primary-end color+text-shadow glow（line 37096）と連動しダーク hover 輝度強化。財務予測カテゴリテーブルのカテゴリ名セル。①②③で fv-cat-table tbody tr 内 fv-cat-amt/fv-pct-txt/td:first-child 全3要素のダーク hover 輝度強化が完成形に統一（既存 fv-cat-amt/fv-pct-txt static dark glow と連動し財務予測カテゴリテーブル内テキスト全要素統一）。fv-cat-table td:first-child transition:filter 含有済み（line 21349） */
+[data-theme="dark"] .fv-cat-table tbody tr:hover td:first-child { filter: brightness(1.1); }
+/* ④ goal-dash-item:hover .goal-dash-name dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 37817）と連動しダーク hover 輝度強化。目標ダッシュボード行の目標名テキスト。goal-dash-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-name { filter: brightness(1.1); }
+/* ⑤ goal-dash-item:hover .goal-dash-pct dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 37823）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 19960）のダーク強化版。目標ダッシュボード行の達成率%テキスト。goal-dash-pct transition:filter 含有済み（line 23796） */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-pct { filter: brightness(1.1); }
+/* ⑥ goal-dash-item:hover .goal-dash-amount dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 37829）と連動しダーク hover 輝度強化。目標ダッシュボード行の目標貯蓄進捗金額テキスト。④⑤⑥で goal-dash-item 内 goal-dash-name/pct/amount 全3要素のダーク hover 輝度強化が完成形に統一（既存 goal-dash-name/amount/pct static dark glow（v24.55/v24.59）と連動しダッシュ行全テキスト要素統一）。goal-dash-amount transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .goal-dash-item:hover .goal-dash-amount { filter: brightness(1.1); }
+/* ⑦ md-cat-row:hover .md-cat-amount dark brightness(1.1) — md-cat-color/primary-end color+text-shadow glow（line 37467）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 18466）のダーク強化版。月次詳細カテゴリ行のカテゴリ支出金額テキスト。md-cat-amount transition:filter 含有済み（line 24714） */
+[data-theme="dark"] .md-cat-row:hover .md-cat-amount { filter: brightness(1.1); }
+/* ⑧ md-cat-row:hover .md-cat-amount.md-cat-amount-income dark brightness(1.1) — income-end color+text-shadow glow（line 37473）と連動しダーク hover 輝度強化。月次詳細カテゴリ行の収入金額テキスト。⑦⑧で md-cat-amount 全2バリアント（default/md-cat-amount-income）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .md-cat-row:hover .md-cat-amount.md-cat-amount-income { filter: brightness(1.1); }
+/* ⑨ md-cat-row:hover .md-cat-text dark brightness(1.1) — md-cat-color/primary-end color+text-shadow glow（line 37479）と連動しダーク hover 輝度強化。月次詳細カテゴリ行のカテゴリ名テキスト。md-cat-text transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .md-cat-row:hover .md-cat-text { filter: brightness(1.1); }
+/* ⑩ md-cat-row:hover .md-cat-pct dark brightness(1.1) — md-cat-color/primary-end color+text-shadow glow（line 37485）と連動しダーク hover 輝度強化。ライトモード brightness(1.06)（line 20183）のダーク強化版。月次詳細カテゴリ行のカテゴリ割合%テキスト。⑦〜⑩で md-cat-row 内 md-cat-amount(default/income)/md-cat-text/md-cat-pct 全4要素のダーク hover 輝度強化が完成形に統一（既存 md-cat-amount/text/pct static dark glow と連動し月次詳細カテゴリ行内テキスト全要素統一）。md-cat-pct transition:filter 含有済み（line 24723） */
+[data-theme="dark"] .md-cat-row:hover .md-cat-pct { filter: brightness(1.1); }
+/* ⑪ rc-item:hover:has(.rc-type-inc) .rc-type-badge dark brightness(1.1) — income-end color+text-shadow glow（line 36509）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 19813・全タイプ共通）のダーク強化版。繰り返し取引アイテムの収入タイプバッジ。rc-type-badge transition:filter 含有済み（line 24168） */
+[data-theme="dark"] .rc-item:hover:has(.rc-type-inc) .rc-type-badge { filter: brightness(1.1); }
+/* ⑫ rc-item:hover:has(.rc-type-exp) .rc-type-badge dark brightness(1.1) — expense-end color+text-shadow glow（line 36510）と連動しダーク hover 輝度強化。繰り返し取引アイテムの支出タイプバッジ。⑪⑫で rc-type-badge 全2バリアント（inc/exp）のダーク hover 輝度強化が完成形に統一（既存 rc-item 内 rc-item-name/meta/amount dark filter 群と連携し rc-item 内 hover 演出全要素揃う）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.00・全script/linkタグ?v=26.00に更新 */
+[data-theme="dark"] .rc-item:hover:has(.rc-type-exp) .rc-type-badge { filter: brightness(1.1); }

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.99'; // v25.99: Approach C継続 — sb-diff-pill.sb-diff-up/down×2・smi-income/expense smi-count×2・smi-income/expense smi-label×2・pt-total/pt-expiring pt-summary-amount×2・pt-widget-item pt-unit×1・pm-sum-card pm-sum-sub×1・yi-card yi-card-sub×1・yi-card yi-card-unit×1 dark hover filter:brightness 追加 計12箇所
+const CACHE_NAME = 'kakeibo-v26.00'; // v26.00: Approach C継続 — fv-cat-table tbody tr内 fv-cat-amt/fv-pct-txt/td:first-child×3・goal-dash-item内 goal-dash-name/pct/amount×3・md-cat-row内 md-cat-amount(default/income)/md-cat-text/md-cat-pct×4・rc-item内 rc-type-badge(inc/exp)×2 dark hover filter:brightness 追加 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
