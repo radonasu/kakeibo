@@ -39695,3 +39695,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .cal-ev-item:hover .cal-ev-name { filter: brightness(1.1); }
 /* ⑫ cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat dark brightness(1.1) — cal-ev-color/primary-end color+text-shadow（line 37729）と連動しダーク hover 輝度強化。⑪⑫で cal-ev-item 内テキスト（name/cat）ペアのダーク hover 輝度強化が完成形に統一。cal-ev-cat transition:filter 含有済み（line 24750）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.87・全script/linkタグ?v=25.87に更新 */
 [data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat { filter: brightness(1.1); }
+
+/* ── v25.88: Approach C継続 — btn-account-add×1・btn-dark-toggle×1・btn-link×1・btn-notif-bell×1・btn-primary×1・btn-sidebar-logout×1・#hamburger×1・ci-ok-btn×1・install-banner-close×1・tx-sort-badge×1・rc-close×1・ios-guide-close×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していたボタン系要素に brightness を追加しダーク hover 輝度強化を統一。
+   全12要素 transition:filter 含有済み（既存ルール）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① btn-account-add:hover dark brightness(1.1) — white text-shadow glow（line 37897）と連動しダーク hover 輝度強化。btn-account-add transition:filter 含有済み（line 25983） */
+[data-theme="dark"] .btn-account-add:hover { filter: brightness(1.1); }
+/* ② btn-dark-toggle:hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37971）と連動しダーク hover 輝度強化。btn-dark-toggle transition:filter 含有済み（line 26045） */
+[data-theme="dark"] .btn-dark-toggle:hover { filter: brightness(1.1); }
+/* ③ btn-link:hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37944）と連動しダーク hover 輝度強化。btn-link transition:filter 含有済み（line 25857） */
+[data-theme="dark"] .btn-link:hover { filter: brightness(1.1); }
+/* ④ btn-notif-bell:hover dark brightness(1.1) — white text-shadow glow（line 37952）と連動しダーク hover 輝度強化。btn-notif-bell transition:filter 含有済み（line 25915） */
+[data-theme="dark"] .btn-notif-bell:hover { filter: brightness(1.1); }
+/* ⑤ btn-primary:hover dark brightness(1.1) — white text-shadow dual-layer glow（line 37923）と連動しダーク hover 輝度強化。btn-primary transition:filter 含有済み（line 26100） */
+[data-theme="dark"] .btn-primary:hover { filter: brightness(1.1); }
+/* ⑥ btn-sidebar-logout:hover dark brightness(1.1) — expense-end color+text-shadow glow（line 37890）と連動しダーク hover 輝度強化。btn-sidebar-logout transition:filter 含有済み（line 25975） */
+[data-theme="dark"] .btn-sidebar-logout:hover { filter: brightness(1.1); }
+/* ⑦ #hamburger:hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37903）と連動しダーク hover 輝度強化。#hamburger transition:filter 含有済み（line 26108） */
+[data-theme="dark"] #hamburger:hover { filter: brightness(1.1); }
+/* ⑧ ci-ok-btn:hover dark brightness(1.1) — white text-shadow glow（line 37910）と連動しダーク hover 輝度強化。ci-ok-btn transition:filter 含有済み（line 25922） */
+[data-theme="dark"] .ci-ok-btn:hover { filter: brightness(1.1); }
+/* ⑨ install-banner-close:hover dark brightness(1.1) — white text-shadow glow（line 37917）と連動しダーク hover 輝度強化。install-banner-close transition:filter 含有済み（line 26156） */
+[data-theme="dark"] .install-banner-close:hover { filter: brightness(1.1); }
+/* ⑩ tx-sort-badge:hover dark brightness(1.1) — primary-end color+text-shadow glow（line 37930）と連動しダーク hover 輝度強化。tx-sort-badge transition:filter 含有済み（line 25991） */
+[data-theme="dark"] .tx-sort-badge:hover { filter: brightness(1.1); }
+/* ⑪ rc-close:hover dark brightness(1.1) — expense-end color+text-shadow glow（line 37979）と連動しダーク hover 輝度強化。rc-close transition:filter 含有済み（line 15368） */
+[data-theme="dark"] .rc-close:hover { filter: brightness(1.1); }
+/* ⑫ ios-guide-close:hover dark brightness(1.1) — white text-shadow glow（line 37987）と連動しダーク hover 輝度強化。①〜⑫でサイドバー/ヘッダー/モーダル系ボタンのダーク hover 輝度強化が完成形に統一。ios-guide-close transition:filter 含有済み（line 4292）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.88・全script/linkタグ?v=25.88に更新 */
+[data-theme="dark"] .ios-guide-close:hover { filter: brightness(1.1); }
