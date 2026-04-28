@@ -39826,3 +39826,40 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ci-score-row:hover .ci-score-label { filter: brightness(1.1); }
 /* ⑫ tg-stat-card:hover .tg-stat-unit dark brightness(1.1) — primary-end color+text-shadow glow（line 36199）と連動しダーク hover 輝度強化。トレンド統計カードの単位テキスト。tg-stat-unit transition:filter 追加済み（本スプリント）。tg-stat-value/tg-stat-label dark brightness と合わせtg-stat-card内テキスト3要素全て統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.91・全script/linkタグ?v=25.91に更新 */
 [data-theme="dark"] .tg-stat-card:hover .tg-stat-unit { filter: brightness(1.1); }
+
+/* ── v25.92: Approach C継続 — asset-balance-delta.up×1・asset-balance-delta.down×1・debt-balance-meta×1・debt-progress-label×1・debt-end-pill×1・debt-type-badge×1・debt-history-title×1・goal-deadline:not(.over)×1・goal-note×1・goal-pct×1・goal-sep×1・goal-monthly-target×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた資産カード残高増減デルタテキスト・負債カード内テキスト要素（balance-meta/progress-label/end-pill/type-badge/history-title）・ゴールカード内テキスト要素（deadline/note/pct/sep/monthly-target）に brightness を追加しダーク hover 輝度強化を統一。
+   debt-balance-meta / debt-progress-label / debt-history-title / goal-deadline / goal-note の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.debt-balance-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.debt-progress-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.debt-history-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-deadline { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.goal-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① asset-card:hover .asset-balance-delta.up dark brightness(1.1) — income-end color+text-shadow glow（line 36319）と連動しダーク hover 輝度強化。資産カード残高増加デルタテキスト。asset-balance-delta transition:filter 含有済み（line 25337） */
+[data-theme="dark"] .asset-card:hover .asset-balance-delta.up { filter: brightness(1.1); }
+/* ② asset-card:hover .asset-balance-delta.down dark brightness(1.1) — expense-end color+text-shadow glow（line 36326）と連動しダーク hover 輝度強化。資産カード残高減少デルタテキスト。①②でasset-balance-delta上昇/下降両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .asset-card:hover .asset-balance-delta.down { filter: brightness(1.1); }
+/* ③ debt-card:hover .debt-balance-meta dark brightness(1.1) — primary-end color+text-shadow glow（line 35872）と連動しダーク hover 輝度強化。負債カード残高補足テキスト。debt-balance-meta transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-card:hover .debt-balance-meta { filter: brightness(1.1); }
+/* ④ debt-card:hover .debt-progress-label dark brightness(1.1) — primary-end color+text-shadow glow（line 35878）と連動しダーク hover 輝度強化。負債カード進捗ラベルテキスト。debt-progress-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-card:hover .debt-progress-label { filter: brightness(1.1); }
+/* ⑤ debt-card:hover .debt-end-pill dark brightness(1.1) — primary-end color+text-shadow glow（line 35886）と連動しダーク hover 輝度強化。負債カード完済予定バッジ。debt-end-pill transition:filter 含有済み（line 24153） */
+[data-theme="dark"] .debt-card:hover .debt-end-pill { filter: brightness(1.1); }
+/* ⑥ debt-card:hover .debt-type-badge dark brightness(1.1) — debt-accent/expense-end color+text-shadow glow（line 35920）と連動しダーク hover 輝度強化。負債カードタイプバッジ。debt-type-badge transition:filter 含有済み（line 24160） */
+[data-theme="dark"] .debt-card:hover .debt-type-badge { filter: brightness(1.1); }
+/* ⑦ debt-card:hover .debt-history-title dark brightness(1.1) — primary-end color+text-shadow glow（line 35927）と連動しダーク hover 輝度強化。負債カード返済履歴タイトル。③〜⑦でdebt-card内テキスト balance-meta/progress-label/end-pill/type-badge/history-title 計5要素のダーク hover 輝度強化が完成形に統一（既存のdebt-name/balance/rate-badge/monthly-badge等と合わせカード内テキスト全要素統一）。debt-history-title transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-card:hover .debt-history-title { filter: brightness(1.1); }
+/* ⑧ goal-card:hover .goal-deadline:not(.over) dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 36085）と連動しダーク hover 輝度強化。ゴールカード期限テキスト。goal-deadline transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .goal-card:hover .goal-deadline:not(.over) { filter: brightness(1.1); }
+/* ⑨ goal-card:hover .goal-note dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 36093）と連動しダーク hover 輝度強化。ゴールカードメモテキスト。goal-note transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .goal-card:hover .goal-note { filter: brightness(1.1); }
+/* ⑩ goal-card:hover .goal-pct dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 36100）と連動しダーク hover 輝度強化。ゴールカード達成率%テキスト。goal-pct transition:filter 含有済み（line 25408） */
+[data-theme="dark"] .goal-card:hover .goal-pct { filter: brightness(1.1); }
+/* ⑪ goal-card:hover .goal-sep dark brightness(1.1) — goal-accent/primary-end color+text-shadow glow（line 36108）と連動しダーク hover 輝度強化。ゴールカードセパレータ。goal-sep transition:filter 含有済み（line 25471） */
+[data-theme="dark"] .goal-card:hover .goal-sep { filter: brightness(1.1); }
+/* ⑫ goal-card:hover .goal-monthly-target dark brightness(1.1) — primary-end color+text-shadow glow（line 36185）と連動しダーク hover 輝度強化。ゴールカード月次目標テキスト。⑧〜⑫でgoal-card内テキスト deadline/note/pct/sep/monthly-target 計5要素のダーク hover 輝度強化が完成形に統一（既存のgoal-name/saved/target/remaining/achieved-date等と合わせカード内テキスト全要素統一）。goal-monthly-target transition:filter 含有済み（line 24676）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.92・全script/linkタグ?v=25.92に更新 */
+[data-theme="dark"] .goal-card:hover .goal-monthly-target { filter: brightness(1.1); }
