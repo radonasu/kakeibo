@@ -19240,7 +19240,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    .ci-challenge-item:hover 時に .ci-challenge-name（チャレンジ名称）を
    primary カラーに変色。ci-event-name の変色（v22.94）と対になり
    チャレンジ・イベント両リストのホバーで名称テキストが揃って反応する。 */
-.ci-challenge-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ci-challenge-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ci-challenge-item:hover .ci-challenge-name { color: var(--primary); }
 
 /* 5. ci-event-item:hover → .ci-event-amount カラー変化
@@ -20202,7 +20202,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fw-semi・color:text）を primary カラーへ変色。
    ct-table tr:hover の translateY+shadow（既存）と連動し
    月ラベルがホバーを視覚的に強調する起点になる。 */
-.ct-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-month-cell { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ct-table tbody tr:hover .ct-month-cell { color: var(--primary); }
 
 /* 2. ct-table tbody tr:hover → .ct-cell-val brightness(1.08)
@@ -23429,7 +23429,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ct-color/primary text-shadow glow を追加。既存の color:ct-color 変色と連動し、
    ct-chip-icon ct-color drop-shadow と合わせてアイコン・名称が一体的に
    カテゴリテーマ色で輝く演出を完成させる。 */
-.ct-chip-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-chip-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ct-chip:hover .ct-chip-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-sm), transparent); }
 
 /* 3. pace-daily-cell:hover → .pace-daily-label ステータス別 text-shadow glow
@@ -23520,7 +23520,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sb-cat-color text-shadow glow を追加。既存の color:sb-cat-color 変色（v23.34）と
    連動しカテゴリ名がカテゴリカラーで輝く演出に。sb-suggested glow（本スプリント②）と
    合わせてカテゴリ名・提案金額が揃って同カラーで輝く完成形。 */
-.sb-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.sb-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .sb-row:hover td:nth-child(2) { text-shadow: 0 0 8px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
 
 /* 4. sf-chip:hover → self primary text-shadow glow
@@ -23852,14 +23852,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    デイリーダッシュボード取引行ホバー時に日付テキストにprimary text-shadow glow追加。
    既存color:primary変色（v23.09）と連動しdd-tx-amount brightness+glow（v22.x）・dd-tx-memo glow（本スプリント）と
    合わせてダッシュボード取引行の日付・メモ・金額が一体的に輝く完成形。 */
-.dd-tx-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-tx-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .dd-tx-row:hover .dd-tx-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. dd-tx-row:hover → .dd-tx-memo primary text-shadow glow
    デイリーダッシュボード取引行ホバー時にメモ・名称テキストにprimary text-shadow glow追加。
    既存color:primary変色（v23.09）と連動しdd-tx-date glow（本スプリント）・dd-tx-amount brightness+glow（v22.x）と
    合わせてダッシュボード取引行全テキストが一体的に輝く完成形。 */
-.dd-tx-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.dd-tx-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .dd-tx-row:hover .dd-tx-memo { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 6. sb-row:hover → td.text-muted primary text-shadow glow
@@ -24313,14 +24313,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    負債返済履歴行ホバー時に記録日テキストにprimary text-shadow glow追加。
    既存color:primary変色（v23.x）と連動しdebt-entry-balance brightness（v22.x）・
    debt-entry-note glow（本スプリント）と合わせてエントリ行全テキストが輝く完成形演出。 */
-.debt-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-entry-date { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-entry-row:hover .debt-entry-date { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. debt-entry-row:hover → .debt-entry-note primary text-shadow glow
    負債返済履歴行ホバー時にメモテキストにprimary text-shadow glow追加。
    既存color:primary変色（v23.x）と連動しdebt-entry-date glow（本スプリント）・
    debt-entry-balance brightness（v22.x）と合わせて履歴行の全テキストが輝く完成形演出。 */
-.debt-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-entry-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-entry-row:hover .debt-entry-note { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 6. ci-cell:hover → .ci-cell-label primary text-shadow glow
@@ -25777,7 +25777,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カテゴリ推移テーブル行ホバー時に text-muted セルに primary text-shadow glow を追加。
    tg-table・sb-row・pm-table-row の同パターン（各v23.x）と統一し
    テーブル系全体で td.text-muted glow が揃う完成形演出。 */
-.ct-table td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ct-table td.text-muted { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ct-table tbody tr:hover td.text-muted { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 3. wk-bar-col.wk-bar-today:hover → .wk-today-label danger-text text-shadow glow
@@ -40021,3 +40021,42 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ci-cell:hover .ci-cell-value.negative { filter: brightness(1.1); }
 /* ⑫ ci-challenge-item:hover .ci-badge.achieved dark brightness(1.1) — income-end color+text-shadow glow（line 38141）と連動しダーク hover 輝度強化。チェックインモーダルのチャレンジ達成バッジ。ci-badge transition:filter 含有済み（line 20645/24631）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.96・全script/linkタグ?v=25.96に更新 */
 [data-theme="dark"] .ci-challenge-item:hover .ci-badge.achieved { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.97: dark hover filter:brightness 追加 12箇所（Approach C継続）
+   ci-challenge-item hover内 ci-challenge-name/ci-badge.failed・
+   ct-chip hover内 ct-chip-name・
+   ct-table tbody tr hover内 ct-month-cell/ct-cell-val/td.text-muted・
+   dd-tx-row hover内 dd-tx-date/dd-tx-memo・
+   debt-entry-row hover内 debt-entry-date/note/balance・
+   sb-row hover内 td:nth-child(2) に
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v23-25 系）と連動。
+   ct-cell-val/ci-badge/debt-entry-balance は transition:filter 含有済み、
+   他9要素は本スプリントで transition に filter を同時追加。
+   ============================================================ */
+
+/* ① ci-challenge-item:hover .ci-challenge-name dark brightness(1.1) — primary-end color+text-shadow glow（line 37566）と連動しダーク hover 輝度強化。チェックインモーダルのチャレンジ名テキスト。ci-challenge-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ci-challenge-item:hover .ci-challenge-name { filter: brightness(1.1); }
+/* ② ci-challenge-item:hover .ci-badge.failed dark brightness(1.1) — primary-end color+text-shadow glow（line 38230）と連動しダーク hover 輝度強化。チェックインモーダルのチャレンジ失敗バッジ。①②で ci-challenge-item 内 ci-challenge-name/ci-badge.failed のダーク hover 輝度強化。ci-badge transition:filter 含有済み（line 20645/24631） */
+[data-theme="dark"] .ci-challenge-item:hover .ci-badge.failed { filter: brightness(1.1); }
+/* ③ ct-chip:hover .ct-chip-name dark brightness(1.1) — ct-color/primary-end color+text-shadow glow（line 37782）と連動しダーク hover 輝度強化。カテゴリトレンドチップの名称テキスト。ct-chip-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ct-chip:hover .ct-chip-name { filter: brightness(1.1); }
+/* ④ ct-table tbody tr:hover .ct-month-cell dark brightness(1.1) — primary-end color+text-shadow glow（line 37126）と連動しダーク hover 輝度強化。カテゴリ比較テーブルの月ラベルセル。ct-month-cell transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ct-table tbody tr:hover .ct-month-cell { filter: brightness(1.1); }
+/* ⑤ ct-table tbody tr:hover .ct-cell-val dark brightness(1.1) — primary-end color+text-shadow glow（line 38134）と連動しダーク hover 輝度強化。カテゴリ比較テーブルの各月金額セル。ct-cell-val transition:filter 含有済み（line 20212） */
+[data-theme="dark"] .ct-table tbody tr:hover .ct-cell-val { filter: brightness(1.1); }
+/* ⑥ ct-table tbody tr:hover td.text-muted dark brightness(1.1) — primary-end color+text-shadow glow（line 37135）と連動しダーク hover 輝度強化。カテゴリ比較テーブルの補足テキスト列。④⑤⑥で ct-table tbody tr 内 ct-month-cell/ct-cell-val/td.text-muted の3要素のダーク hover 輝度強化が完成形に統一（既存の ct-row-total dark filter line 38765 と連携しテーブル全テキスト要素で揃う）。ct-table td.text-muted transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ct-table tbody tr:hover td.text-muted { filter: brightness(1.1); }
+/* ⑦ dd-tx-row:hover .dd-tx-date dark brightness(1.1) — primary-end color+text-shadow glow（line 38237）と連動しダーク hover 輝度強化。デイリーダッシュボード取引行の日付。dd-tx-date transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-date { filter: brightness(1.1); }
+/* ⑧ dd-tx-row:hover .dd-tx-memo dark brightness(1.1) — primary-end color+text-shadow glow（line 38245）と連動しダーク hover 輝度強化。デイリーダッシュボード取引行のメモ。⑦⑧で dd-tx-row 内 date/memo のダーク hover 輝度強化（既存の dd-tx-amount.income/expense dark filter line 38736/38738 と連携し dd-tx-row 内全テキスト要素で揃う）。dd-tx-memo transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-memo { filter: brightness(1.1); }
+/* ⑨ debt-entry-row:hover .debt-entry-date dark brightness(1.1) — primary-end color+text-shadow glow（line 37549）と連動しダーク hover 輝度強化。負債返済履歴行の日付。debt-entry-date transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-date { filter: brightness(1.1); }
+/* ⑩ debt-entry-row:hover .debt-entry-note dark brightness(1.1) — primary-end color+text-shadow glow（line 37554）と連動しダーク hover 輝度強化。負債返済履歴行のメモ。debt-entry-note transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-note { filter: brightness(1.1); }
+/* ⑪ debt-entry-row:hover .debt-entry-balance dark brightness(1.1) — expense-end color+text-shadow glow（line 37560）と連動しダーク hover 輝度強化。負債返済履歴行の残高（赤）。⑨⑩⑪で debt-entry-row 内 date/note/balance 全3要素のダーク hover 輝度強化が完成形に統一。debt-entry-balance transition:filter 含有済み（line 18531） */
+[data-theme="dark"] .debt-entry-row:hover .debt-entry-balance { filter: brightness(1.1); }
+/* ⑫ sb-row:hover td:nth-child(2) dark brightness(1.1) — sb-cat-color/primary-end color+text-shadow glow（line 34757）と連動しダーク hover 輝度強化。スマート予算行のカテゴリ名セル。既存の sb-row:hover .sb-suggested dark filter（line 39986）・td.text-muted dark filter（line 39233）と連携し sb-row 内テキスト要素のダーク hover 輝度強化が広範囲に整う。sb-row td:nth-child(2) transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.97・全script/linkタグ?v=25.97に更新 */
+[data-theme="dark"] .sb-row:hover td:nth-child(2) { filter: brightness(1.1); }
