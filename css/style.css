@@ -40195,3 +40195,45 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .rc-item:hover:has(.rc-type-inc) .rc-type-badge { filter: brightness(1.1); }
 /* ⑫ rc-item:hover:has(.rc-type-exp) .rc-type-badge dark brightness(1.1) — expense-end color+text-shadow glow（line 36510）と連動しダーク hover 輝度強化。繰り返し取引アイテムの支出タイプバッジ。⑪⑫で rc-type-badge 全2バリアント（inc/exp）のダーク hover 輝度強化が完成形に統一（既存 rc-item 内 rc-item-name/meta/amount dark filter 群と連携し rc-item 内 hover 演出全要素揃う）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.00・全script/linkタグ?v=26.00に更新 */
 [data-theme="dark"] .rc-item:hover:has(.rc-type-exp) .rc-type-badge { filter: brightness(1.1); }
+
+/* ============================================================
+   v26.01: dark hover filter:brightness 追加 12箇所（Approach C継続）
+   wl-sum-(done/count/budget):hover内 wl-summary-value×3・
+   sub-summary-card:hover内 sub-summary-amount/sub-summary-label/sub-summary-sub×3・
+   nt-card:hover内 nt-char-count（warn/danger除外）・
+   yr-widget-card:hover内 yr-elapsed-badge・
+   notif-item.notif-type-(danger/warning/success/info):hover内 notif-item-body×4
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v23-25 系）と連動。
+   wl-summary-value / sub-summary-amount / notif-item-body は本スプリントで transition に filter を同時追加。
+   sub-summary-label / sub-summary-sub / nt-char-count / yr-elapsed-badge は transition:filter 含有済み。
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.wl-summary-value { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.sub-summary-amount { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.notif-item-body { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① wl-sum-done:hover .wl-summary-value dark brightness(1.1) — color:#fff+text-shadow（line 35785）と連動しダーク hover 輝度強化。ウィッシュリスト達成済みサマリーカード（グラデ背景上）の数値。wl-summary-value transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-value { filter: brightness(1.1); }
+/* ② wl-sum-count:hover .wl-summary-value dark brightness(1.1) — color:#fff+text-shadow（line 35823）と連動しダーク hover 輝度強化。ウィッシュリスト件数サマリーカード（グラデ背景上）の数値。 */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-value { filter: brightness(1.1); }
+/* ③ wl-sum-budget:hover .wl-summary-value dark brightness(1.1) — color:#fff+text-shadow（line 35837）と連動しダーク hover 輝度強化。ウィッシュリスト予算サマリーカード（グラデ背景上）の数値。①②③で wl-summary-value 全3バリアント（done/count/budget）のダーク hover 輝度強化が完成形に統一（既存 wl-sum-done/count/budget hover .wl-summary-label/unit dark filter（line 39968-39978）と連携しウィッシュリストサマリーカード3種内テキスト要素統一） */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-value { filter: brightness(1.1); }
+/* ④ sub-summary-card:hover .sub-summary-amount dark brightness(1.1) — color:#fff+text-shadow（line 35800）と連動しダーク hover 輝度強化。サブスクリプション月次・年次サマリーカード（グラデ背景上）の金額。sub-summary-amount transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-amount { filter: brightness(1.1); }
+/* ⑤ sub-summary-card:hover .sub-summary-label dark brightness(1.1) — color:#fff+text-shadow（line 35804）と連動しダーク hover 輝度強化。ライトモード brightness(1.2)（line 21069）のダーク強化版。sub-summary-label transition:filter 含有済み（line 21068/25426） */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-label { filter: brightness(1.1); }
+/* ⑥ sub-summary-card:hover .sub-summary-sub dark brightness(1.1) — color:#fff+text-shadow（line 35809）と連動しダーク hover 輝度強化。ライトモード brightness(1.1)（line 20779）のダーク対称版。④⑤⑥で sub-summary-card 内 amount/label/sub 全3要素のダーク hover 輝度強化が完成形に統一。sub-summary-sub transition:filter 含有済み（line 20778/25417） */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-sub { filter: brightness(1.1); }
+/* ⑦ nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) dark brightness(1.1) — primary-end color+text-shadow glow（line 37438）と連動しダーク hover 輝度強化。メモカードの文字数カウンター（warn/danger除外で通常状態のみ強化）。nt-char-count transition:filter 含有済み（line 20889/24741） */
+[data-theme="dark"] .nt-card:hover .nt-char-count:not(.nt-cnt-warn):not(.nt-cnt-danger) { filter: brightness(1.1); }
+/* ⑧ yr-widget-card:hover .yr-elapsed-badge dark brightness(1.1) — primary-end color+text-shadow glow（line 38149）と連動しダーク hover 輝度強化。ライトモード brightness(1.08)（line 21683）のダーク強化版。年次レビュー経過バッジ。yr-elapsed-badge transition:filter 含有済み（line 21682/24733） */
+[data-theme="dark"] .yr-widget-card:hover .yr-elapsed-badge { filter: brightness(1.1); }
+/* ⑨ notif-item.notif-type-danger:hover .notif-item-body dark brightness(1.1) — expense-end color+text-shadow glow（line 37585）と連動しダーク hover 輝度強化。通知アイテム危険タイプの本文テキスト。notif-item-body transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .notif-item.notif-type-danger:hover .notif-item-body { filter: brightness(1.1); }
+/* ⑩ notif-item.notif-type-warning:hover .notif-item-body dark brightness(1.1) — warning color+text-shadow glow（line 37591）と連動しダーク hover 輝度強化。通知アイテム警告タイプの本文テキスト。 */
+[data-theme="dark"] .notif-item.notif-type-warning:hover .notif-item-body { filter: brightness(1.1); }
+/* ⑪ notif-item.notif-type-success:hover .notif-item-body dark brightness(1.1) — income-end color+text-shadow glow（line 37599）と連動しダーク hover 輝度強化。通知アイテム成功タイプの本文テキスト。 */
+[data-theme="dark"] .notif-item.notif-type-success:hover .notif-item-body { filter: brightness(1.1); }
+/* ⑫ notif-item.notif-type-info:hover .notif-item-body dark brightness(1.1) — primary-end color+text-shadow glow（line 37937）と連動しダーク hover 輝度強化。通知アイテム情報タイプの本文テキスト。⑨⑩⑪⑫で notif-item-body 全4タイプ（danger/warning/success/info）のダーク hover 輝度強化が完成形に統一（既存 notif-item-title 全4タイプ dark filter（line 39370-39376）と連携し通知アイテム本文・タイトル全要素統一）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v26.01・全script/linkタグ?v=26.01に更新 */
+[data-theme="dark"] .notif-item.notif-type-info:hover .notif-item-body { filter: brightness(1.1); }
