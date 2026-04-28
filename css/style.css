@@ -39984,3 +39984,40 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .smi-expense:hover .smi-amount { filter: brightness(1.1); }
 /* ⑫ sb-row:hover .sb-suggested dark brightness(1.1) — sb-cat-color/primary-end color+text-shadow glow（line 34751）と連動しダーク hover 輝度強化。スマート予算行の提案金額テキスト。sb-suggested transition:filter 含有済み（line 18605/23515）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.95・全script/linkタグ?v=25.95に更新 */
 [data-theme="dark"] .sb-row:hover .sb-suggested { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.96: dark hover filter:brightness 追加 12箇所（Approach C継続）
+   budget-item:has(.budget-fill.over) hover内 budget-over-msg・
+   cal-sum-item hover内 cal-sum-label・
+   cat-card hover内 cat-fixed-badge.is-fixed/.is-var・
+   ch-sum-achieved/active hover内 ch-summary-value/unit・
+   ci-cell hover内 ci-cell-value.income/expense/positive/negative・
+   ci-challenge-item hover内 ci-badge.achieved に
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v23-25 系）と連動。
+   ============================================================ */
+
+/* ① budget-item:has(.budget-fill.over):hover .budget-over-msg dark brightness(1.1) — expense-end color+text-shadow glow（line 35088）と連動しダーク hover 輝度強化。予算超過警告メッセージテキスト。budget-over-msg transition:filter 含有済み（line 21506） */
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-over-msg { filter: brightness(1.1); }
+/* ② cal-sum-item:hover .cal-sum-label dark brightness(1.1) — primary-end color+text-shadow glow（line 38436）と連動しダーク hover 輝度強化。カレンダーサマリー行のラベルテキスト。cal-sum-label transition:filter 含有済み（line 19735/24426） */
+[data-theme="dark"] .cal-sum-item:hover .cal-sum-label { filter: brightness(1.1); }
+/* ③ cat-card:hover .cat-fixed-badge.is-fixed dark brightness(1.1) — primary-end color+text-shadow glow（line 35019）と連動しダーク hover 輝度強化。カテゴリカードの固定費バッジ。cat-fixed-badge transition:filter 含有済み（line 22800/24932） */
+[data-theme="dark"] .cat-card:hover .cat-fixed-badge.is-fixed { filter: brightness(1.1); }
+/* ④ cat-card:hover .cat-fixed-badge.is-var dark brightness(1.1) — income-end color+text-shadow glow（line 35026）と連動しダーク hover 輝度強化。カテゴリカードの変動費バッジ。③④で cat-fixed-badge 全2バリアント（is-fixed/is-var）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cat-card:hover .cat-fixed-badge.is-var { filter: brightness(1.1); }
+/* ⑤ ch-sum-achieved:hover .ch-summary-value dark brightness(1.1) — 白グロー color+text-shadow（line 35702）と連動しダーク hover 輝度強化。チャレンジ達成数サマリーカード（グラデ背景上）の大型数値。既存 ch-sum-total:hover .ch-summary-value dark filter（line 39771）と対称配置。ch-summary-value transition:filter 含有済み（line 20737） */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-value { filter: brightness(1.1); }
+/* ⑥ ch-sum-active:hover .ch-summary-value dark brightness(1.1) — 白グロー color+text-shadow（line 35708）と連動しダーク hover 輝度強化。チャレンジ進行中サマリーカード（グラデ背景上）の大型数値。⑤⑥で ch-sum-achieved/active/total 全3バリアントの ch-summary-value ダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-value { filter: brightness(1.1); }
+/* ⑦ ch-sum-achieved:hover .ch-summary-unit dark brightness(1.1) — 白グロー color+text-shadow（line 37632）と連動しダーク hover 輝度強化。チャレンジ達成数サマリーカードの単位テキスト（「件」等）。既存 ch-sum-active/total:hover .ch-summary-unit dark filter（line 39193/39195）と対称配置で⑦により ch-sum 全3バリアントの ch-summary-unit ダーク hover 輝度強化が完成形に統一。ch-summary-unit transition:filter 含有済み（line 21111/25479） */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-unit { filter: brightness(1.1); }
+/* ⑧ ci-cell:hover .ci-cell-value.income dark brightness(1.1) — income-end color+text-shadow glow（line 34696）と連動しダーク hover 輝度強化。チェックインモーダル収支セルの収入値（緑）。ci-cell-value transition:filter 含有済み（line 18474/23178） */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.income { filter: brightness(1.1); }
+/* ⑨ ci-cell:hover .ci-cell-value.expense dark brightness(1.1) — expense-end color+text-shadow glow（line 34702）と連動しダーク hover 輝度強化。チェックインモーダル収支セルの支出値（赤） */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.expense { filter: brightness(1.1); }
+/* ⑩ ci-cell:hover .ci-cell-value.positive dark brightness(1.1) — income-end color+text-shadow glow（line 34708）と連動しダーク hover 輝度強化。チェックインモーダル収支セルの黒字値（緑） */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.positive { filter: brightness(1.1); }
+/* ⑪ ci-cell:hover .ci-cell-value.negative dark brightness(1.1) — expense-end color+text-shadow glow（line 34714）と連動しダーク hover 輝度強化。チェックインモーダル収支セルの赤字値（赤）。⑧〜⑪で ci-cell-value 全4バリアント（income/expense/positive/negative）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ci-cell:hover .ci-cell-value.negative { filter: brightness(1.1); }
+/* ⑫ ci-challenge-item:hover .ci-badge.achieved dark brightness(1.1) — income-end color+text-shadow glow（line 38141）と連動しダーク hover 輝度強化。チェックインモーダルのチャレンジ達成バッジ。ci-badge transition:filter 含有済み（line 20645/24631）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.96・全script/linkタグ?v=25.96に更新 */
+[data-theme="dark"] .ci-challenge-item:hover .ci-badge.achieved { filter: brightness(1.1); }
