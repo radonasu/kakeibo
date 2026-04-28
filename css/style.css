@@ -39905,3 +39905,47 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ev-card:hover .ev-card-memo { filter: brightness(1.1); }
 /* ⑫ ev-card:hover .ev-done-label dark brightness(1.1) — primary-end color+text-shadow glow（line 36227）と連動しダーク hover 輝度強化。収支予定カードの完了ラベルテキスト。⑨〜⑫でev-card内テキスト card-name/card-amount/card-memo/done-label 計4要素のダーク hover 輝度強化が完成形に統一（既存のev-prog-pct/ev-type-badge.income/expense/ev-cat-badge等は次スプリントで追加予定）。ev-done-label transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.93・全script/linkタグ?v=25.93に更新 */
 [data-theme="dark"] .ev-card:hover .ev-done-label { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.94: Approach C継続 — ev-type-badge.ev-income×1・ev-type-badge.ev-expense×1・ev-cat-badge×1・ev-widget-name×1・ev-widget-cat×1・ev-sum-count×1・ev-sum-count small×1・ev-sum-label×1・ev-sum-inc×1・ev-sum-exp×1・ev-add-month×1・fv-stat-value×1 dark hover filter:brightness 追加 12箇所
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた
+   収支予定カード内バッジ要素（ev-type-badge.ev-income/expense・ev-cat-badge）・
+   収支予定ウィジェット行要素（ev-widget-name/cat）・
+   収支予定サマリーカード内テキスト要素（ev-sum-count/count small/label/inc/exp）・
+   月次列追加ボタン（ev-add-month）・
+   家族価値統計カード値テキスト（fv-stat-value）
+   に brightness を追加しダーク hover 輝度強化を統一。
+   ev-cat-badge / ev-widget-name / ev-widget-cat / ev-sum-count / ev-sum-label の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.ev-cat-badge { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-widget-cat { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-sum-card .ev-sum-count { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-sum-card .ev-sum-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① ev-card:hover .ev-type-badge.ev-income dark brightness(1.1) — income-end color+text-shadow glow（line 37665）と連動しダーク hover 輝度強化。収支予定カードの「収入」タイプバッジ。ev-type-badge transition:filter 含有済み（line 25586） */
+[data-theme="dark"] .ev-card:hover .ev-type-badge.ev-income { filter: brightness(1.1); }
+/* ② ev-card:hover .ev-type-badge.ev-expense dark brightness(1.1) — expense-end color+text-shadow glow（line 37671）と連動しダーク hover 輝度強化。収支予定カードの「支出」タイプバッジ。①②でev-type-badge全バリアント（income/expense）のダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ev-card:hover .ev-type-badge.ev-expense { filter: brightness(1.1); }
+/* ③ ev-card:hover .ev-cat-badge dark brightness(1.1) — primary-end color+text-shadow glow（line 38262）と連動しダーク hover 輝度強化。収支予定カードのカテゴリバッジ。①〜③でev-card内バッジ要素 type-badge.income/expense/cat-badge 計3要素のダーク hover 輝度強化が完成形に統一（v25.93のcard-name/amount/memo/done-label・既存ev-prog-pctと合わせev-card内全テキスト要素統一）。ev-cat-badge transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-card:hover .ev-cat-badge { filter: brightness(1.1); }
+/* ④ ev-widget-item:hover .ev-widget-name dark brightness(1.1) — ev-accent/primary-end color+text-shadow glow（line 36798）と連動しダーク hover 輝度強化。収支予定ウィジェット行の名称テキスト。ev-widget-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-widget-item:hover .ev-widget-name { filter: brightness(1.1); }
+/* ⑤ ev-widget-item:hover .ev-widget-cat dark brightness(1.1) — primary-end color+text-shadow glow（line 36805）と連動しダーク hover 輝度強化。収支予定ウィジェット行のカテゴリテキスト。④⑤でev-widget-item内テキスト name/cat 計2要素のダーク hover 輝度強化が完成形に統一（既存のev-widget-amount/month と合わせウィジェット行内全テキスト要素統一）。ev-widget-cat transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-widget-item:hover .ev-widget-cat { filter: brightness(1.1); }
+/* ⑥ ev-sum-card:hover .ev-sum-count dark brightness(1.1) — 白グロー color+text-shadow（line 35762）と連動しダーク hover 輝度強化。収支予定サマリーカードのカウント数値テキスト。ev-sum-count transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count { filter: brightness(1.1); }
+/* ⑦ ev-sum-card:hover .ev-sum-count small dark brightness(1.1) — 白グロー color+text-shadow（line 35770）と連動しダーク hover 輝度強化。収支予定サマリーカードのカウント単位テキスト。ev-sum-count small transition:filter 含有済み（line 25643） */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count small { filter: brightness(1.1); }
+/* ⑧ ev-sum-card:hover .ev-sum-label dark brightness(1.1) — 白グロー color+text-shadow（line 35766）と連動しダーク hover 輝度強化。収支予定サマリーカードのラベルテキスト。ev-sum-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-label { filter: brightness(1.1); }
+/* ⑨ ev-sum-card:hover .ev-sum-inc dark brightness(1.1) — 白グロー color+text-shadow（line 35774）と連動しダーク hover 輝度強化。収支予定サマリーカードの収入額テキスト。ev-sum-inc transition:filter 含有済み（line 24639/24647） */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-inc { filter: brightness(1.1); }
+/* ⑩ ev-sum-card:hover .ev-sum-exp dark brightness(1.1) — 白グロー color+text-shadow（line 35779）と連動しダーク hover 輝度強化。収支予定サマリーカードの支出額テキスト。⑥〜⑩でev-sum-card内テキスト count/count small/label/inc/exp 計5要素のダーク hover 輝度強化が完成形に統一。ev-sum-exp transition:filter 含有済み（line 24647） */
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-exp { filter: brightness(1.1); }
+/* ⑪ ev-add-month:hover dark brightness(1.1) — 白グロー color+text-shadow（line 37269）と連動しダーク hover 輝度強化。月次列追加ボタンテキスト。ev-add-month transition:filter 含有済み（line 25929） */
+[data-theme="dark"] .ev-add-month:hover { filter: brightness(1.1); }
+/* ⑫ fv-stat-card:hover .fv-stat-value dark brightness(1.1) — 白グロー color+text-shadow（line 35746）と連動しダーク hover 輝度強化。家族価値統計カードの数値テキスト（グラデ背景上）。fv-stat-icon dark hover filter（line 37579）と連動しfv-stat-card内主要要素のダーク hover 演出統一の足掛かり。fv-stat-value transition:filter 含有済み（line 18325/24878 相当）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.94・全script/linkタグ?v=25.94に更新 */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-value { filter: brightness(1.1); }
