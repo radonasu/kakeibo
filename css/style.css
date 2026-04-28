@@ -19339,7 +19339,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    cal-ev-color（primary）カラーに変色。
    cal-ev-icon の scale+drop-shadow（v22.77）と連動し
    アイコン・名称が一体的に反応するホバー体験に統一。 */
-.cal-ev-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.cal-ev-name { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .cal-ev-item:hover .cal-ev-name { color: var(--cal-ev-color, var(--primary)); }
 .cal-ev-done:hover .cal-ev-name { color: var(--text-muted); } /* 完了済みは変色しない */
 
@@ -23389,7 +23389,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    資産カードのホバー時に .asset-fx-rate（為替レート表示）に
    primary text-shadow glow を追加。既存の color:primary 変色と連動し、
    asset-name glow（v23.48）と合わせてカードホバー演出のテキスト要素を統一する。 */
-.asset-fx-rate { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-fx-rate { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-fx-rate { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. health-score-card:hover → .hs-trend-label primary text-shadow glow
@@ -23629,7 +23629,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow を追加。既存の color:primary 変色と連動し、
    debt-history-title glow（本スプリント#6）と同パターンで資産カードにも展開。
    asset-name 変色（v22.x）・asset-sparkline brightness（v23.35）と合わせた完成形に。 */
-.asset-history-title { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-history-title { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-history-title { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 8. tg-table tbody tr:hover → td:first-child primary text-shadow glow
@@ -23653,7 +23653,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存の color:primary 変色（v23.x）と連動しラベルテキストが
    primaryカラーで輝くホバー演出に。bottom-nav-icon scale（v22.x）と
    合わせてアイコン・ラベルが一体的に反応するボトムナビの完成形。 */
-.bottom-nav-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.bottom-nav-label { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .bottom-nav-item:not(.active):hover .bottom-nav-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 2. sub-widget-item:hover → .sub-widget-name ステータス別 text-shadow glow
@@ -24253,7 +24253,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow追加。既存color:primary変色（v23.x）と連動し
    asset-name変色（v22.x）・asset-balance brightness（v22.x）・asset-fx-rate glow（v23.x）・
    asset-history-title glow（v23.x）と合わせてカード内全テキストが輝く完成形演出。 */
-.asset-sparkline-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-sparkline-label { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-sparkline-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 8. ch-widget-item:hover → .ch-widget-label ch-accent text-shadow glow
@@ -24475,7 +24475,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    primary text-shadow glow追加。既存color:primary変色（v23.14）と連動し
    asset-name glow（v23.x）・asset-balance glow（v22.x）・asset-sparkline-label glow（v23.62）と
    合わせてカード内全テキストがホバーで一体的に輝く完成形演出。 */
-.asset-date-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.asset-date-label { transition: color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 .asset-card:hover .asset-date-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. asset-card:hover → .asset-balance-jpy primary text-shadow glow
@@ -39665,3 +39665,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-card:hover .debt-name { filter: brightness(1.1); }
 /* ⑫ asset-card:hover .asset-name dark brightness(1.1) — asset-accent/primary-end color+text-shadow（line 34405）と連動しダーク hover 輝度強化。⑪⑫で debt/asset カード名称ペアのダーク hover 輝度強化が完成形に統一。asset-name transition:filter 含有済み（line 38710）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.86・全script/linkタグ?v=25.86に更新 */
 [data-theme="dark"] .asset-card:hover .asset-name { filter: brightness(1.1); }
+
+/* ── v25.87: Approach C継続 — adv-month-badge×1・adv-widget-desc×1・adv-widget-hint×1・asset-balance-jpy×1・asset-date-label×1・asset-fx-rate×1・asset-history-title×1・asset-sparkline-label×1・asset-type-badge×1・bottom-nav-label×1・cal-ev-name×1・cal-ev-cat×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた要素に brightness を追加しダーク hover 輝度強化を統一。
+   asset-date-label / asset-fx-rate / asset-history-title / asset-sparkline-label / bottom-nav-label / cal-ev-name の6要素は transition に filter 未含有のため transition も同時追加。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① adv-widget-card:hover .adv-month-badge dark brightness(1.1) — primary-end color+text-shadow（line 37753）と連動しダーク hover 輝度強化。adv-month-badge transition:filter 含有済み（line 24915） */
+[data-theme="dark"] .adv-widget-card:hover .adv-month-badge { filter: brightness(1.1); }
+/* ② adv-widget-card:hover .adv-widget-desc dark brightness(1.1) — primary-end color+text-shadow（line 37742）と連動しダーク hover 輝度強化。adv-widget-desc transition:filter 含有済み（line 24897） */
+[data-theme="dark"] .adv-widget-card:hover .adv-widget-desc { filter: brightness(1.1); }
+/* ③ adv-widget-card:hover .adv-widget-hint dark brightness(1.1) — primary-end color+text-shadow（line 37747）と連動しダーク hover 輝度強化。①〜③で adv-widget-card 内テキスト全要素（month-badge/desc/hint）のダーク hover 輝度強化が完成形に統一。adv-widget-hint transition:filter 含有済み（line 24906） */
+[data-theme="dark"] .adv-widget-card:hover .adv-widget-hint { filter: brightness(1.1); }
+/* ④ asset-card:hover .asset-balance-jpy dark brightness(1.1) — primary-end color+text-shadow（line 36347）と連動しダーク hover 輝度強化。asset-balance-jpy transition:filter 含有済み（line 24486） */
+[data-theme="dark"] .asset-card:hover .asset-balance-jpy { filter: brightness(1.1); }
+/* ⑤ asset-card:hover .asset-date-label dark brightness(1.1) — primary-end color+text-shadow（line 36335）と連動しダーク hover 輝度強化。asset-date-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-card:hover .asset-date-label { filter: brightness(1.1); }
+/* ⑥ asset-card:hover .asset-fx-rate dark brightness(1.1) — primary-end color+text-shadow（line 36361）と連動しダーク hover 輝度強化。asset-fx-rate transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-card:hover .asset-fx-rate { filter: brightness(1.1); }
+/* ⑦ asset-card:hover .asset-history-title dark brightness(1.1) — primary-end color+text-shadow（line 36389）と連動しダーク hover 輝度強化。asset-history-title transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-card:hover .asset-history-title { filter: brightness(1.1); }
+/* ⑧ asset-card:hover .asset-sparkline-label dark brightness(1.1) — primary-end color+text-shadow（line 36380）と連動しダーク hover 輝度強化。asset-sparkline-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .asset-card:hover .asset-sparkline-label { filter: brightness(1.1); }
+/* ⑨ asset-card:hover .asset-type-badge dark brightness(1.1) — asset-accent/primary-end color+text-shadow（line 36312）と連動しダーク hover 輝度強化。④〜⑨で asset-card 内テキスト全要素（balance-jpy/date-label/fx-rate/history-title/sparkline-label/type-badge）のダーク hover 輝度強化が完成形に統一。asset-type-badge transition:filter 含有済み（line 24667） */
+[data-theme="dark"] .asset-card:hover .asset-type-badge { filter: brightness(1.1); }
+/* ⑩ bottom-nav-item:not(.active):hover .bottom-nav-label dark brightness(1.1) — primary-end color+text-shadow（line 37810）と連動しダーク hover 輝度強化。bottom-nav-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .bottom-nav-item:not(.active):hover .bottom-nav-label { filter: brightness(1.1); }
+/* ⑪ cal-ev-item:hover .cal-ev-name dark brightness(1.1) — cal-ev-color/primary-end color+text-shadow（line 37015）と連動しダーク hover 輝度強化。cal-ev-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .cal-ev-item:hover .cal-ev-name { filter: brightness(1.1); }
+/* ⑫ cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat dark brightness(1.1) — cal-ev-color/primary-end color+text-shadow（line 37729）と連動しダーク hover 輝度強化。⑪⑫で cal-ev-item 内テキスト（name/cat）ペアのダーク hover 輝度強化が完成形に統一。cal-ev-cat transition:filter 含有済み（line 24750）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.87・全script/linkタグ?v=25.87に更新 */
+[data-theme="dark"] .cal-ev-item:not(.cal-ev-done):hover .cal-ev-cat { filter: brightness(1.1); }
