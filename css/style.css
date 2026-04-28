@@ -20734,7 +20734,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    チャレンジ達成数サマリーカードのホバー時に .ch-summary-value（大型数値：white・fs-3xl）に
    白い text-shadow glow を追加して数値を際立たせる。ch-sum-achieved container の
    filter:brightness（v22.x）と連動し、カード全体が明るくなる中で数値が特に輝く演出に。 */
-.ch-summary-value { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.ch-summary-value { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ch-sum-achieved:hover .ch-summary-value { text-shadow: 0 0 12px rgba(255, 255, 255, 0.55); }
 
 /* 8. ch-sum-achieved:hover → .ch-summary-label opacity: 1
@@ -23755,7 +23755,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    チャレンジウィジェット行ホバー時にチャレンジ名テキストにch-accent text-shadow glow追加。
    既存color:ch-accent変色（v23.04）と連動しch-widget-icon scale+drop-shadow（v22.81）と
    合わせてアイコン・名称が一体的に輝くウィジェット行ホバー演出の完成形。 */
-.ch-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ch-widget-item:hover .ch-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* 2. ch-widget-item:hover → .ch-widget-pct タイプ別 text-shadow glow
@@ -23772,14 +23772,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    負債ウィジェット行ホバー時に負債名テキストにdebt-accent text-shadow glow追加。
    既存color:debt-accent変色（v23.04）と連動しdebt-widget-icon scale+drop-shadow（v22.81）と
    合わせてアイコン・名称が一体的に輝くウィジェット行ホバー演出の完成形。 */
-.debt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-widget-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-widget-item:hover .debt-widget-name { text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent); }
 
 /* 4. debt-widget-item:hover → .debt-widget-pct primary text-shadow glow
    負債ウィジェット返済進捗%テキストにprimary text-shadow glow追加。
    既存color:primary変色（v23.04）と連動しdebt-widget-name glow（本スプリント）・
    debt-widget-bar-fill glow（v23.04）と合わせてバー・%・名称が一体的に輝く完成形。 */
-.debt-widget-pct { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.debt-widget-pct { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .debt-widget-item:hover .debt-widget-pct { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 5. goal-dash-item:hover → .goal-dash-name goal-accent text-shadow glow
@@ -24261,7 +24261,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ch-accent text-shadow glow追加。既存color:ch-accent変色（v23.x）と連動し
    ch-widget-name glow（v23.x）・ch-widget-pct brightness（v22.x）と
    合わせて行内テキスト全体がホバーで一体的に輝くウィジェット行完成形演出。 */
-.ch-widget-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-widget-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ch-widget-item:hover .ch-widget-label { text-shadow: 0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); }
 
 /* ============================================================
@@ -25572,7 +25572,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    カード内全テキストがホバーで一体的に白く輝く完成形演出。 */
 .ch-sum-achieved .ch-summary-label,
 .ch-sum-active   .ch-summary-label,
-.ch-sum-total    .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+.ch-sum-total    .ch-summary-label { transition: opacity var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .ch-sum-achieved:hover .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
 .ch-sum-active:hover   .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
 .ch-sum-total:hover    .ch-summary-label { text-shadow: 0 0 10px rgba(255, 255, 255, 0.45); }
@@ -25808,7 +25808,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ヘルスチェックカードホバー時にスパークラインラベル（月名テキスト：fs-2xs・fw-bold）に
    primary text-shadow glow を追加。既存 hs-spark-svg brightness(1.05)（v22.x）と連動し
    ラベルと図が一体的に輝く完成形演出。 */
-.hs-spark-label { transition: text-shadow var(--dur-fast) var(--ease-out); }
+.hs-spark-label { transition: text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
 .health-score-card:hover .hs-spark-label { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 /* 7. health-score-card:hover → .hs-spark-label-now primary text-shadow glow
@@ -39755,3 +39755,33 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tx-tag-filter-chip.active:hover { filter: brightness(1.1); }
 /* ⑫ cat-chip:hover .cat-chip-name dark brightness(1.1) — cat-color/primary-end color+text-shadow glow（line 37858）と連動しダーク hover 輝度強化。①〜⑫でモーダル/ナビ系ボタン・チップ系要素・カード内テキスト要素のダーク hover 輝度強化が完成形に統一。cat-chip-name transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.89・全script/linkタグ?v=25.89に更新 */
 [data-theme="dark"] .cat-chip:hover .cat-chip-name { filter: brightness(1.1); }
+
+/* ── v25.90: Approach C継続 — ch-sum-achieved/active/total summary-label×3・ch-sum-total summary-value×1・cc-col-up/down cc-badge×2・hs-spark-label×1・ch-widget-name/label×2・debt-widget-name/pct×2・dd-summary-value×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していたチャレンジサマリーラベル/値・月次比較バッジ・スパークラインラベル・ウィジェット行テキスト・引き落としサマリー値要素に brightness を追加しダーク hover 輝度強化を統一。
+   ch-summary-label/value・hs-spark-label・ch-widget-name/label・debt-widget-name/pct の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* ① ch-sum-achieved:hover .ch-summary-label dark brightness(1.1) — white text-shadow glow（line 37639）と連動しダーク hover 輝度強化。チャレンジ達成数サマリーカード（グラデ背景）のラベル。ch-summary-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label { filter: brightness(1.1); }
+/* ② ch-sum-active:hover .ch-summary-label dark brightness(1.1) — white text-shadow glow（line 38471）と連動しダーク hover 輝度強化。チャレンジ進行中サマリーカード（グラデ背景）のラベル。 */
+[data-theme="dark"] .ch-sum-active:hover .ch-summary-label { filter: brightness(1.1); }
+/* ③ ch-sum-total:hover .ch-summary-label dark brightness(1.1) — white text-shadow glow（line 38474）と連動しダーク hover 輝度強化。チャレンジ合計サマリーカード（グラデ背景）のラベル。①〜③でch-sum 3バリアント全ラベルのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-label { filter: brightness(1.1); }
+/* ④ ch-sum-total:hover .ch-summary-value dark brightness(1.1) — white text-shadow glow（line 35714）と連動しダーク hover 輝度強化。チャレンジ合計サマリーカード（グラデ背景）の値。ch-summary-value transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ch-sum-total:hover .ch-summary-value { filter: brightness(1.1); }
+/* ⑤ cc-col:has(.cc-col-up) .cc-item:hover .cc-badge dark brightness(1.1) — expense-end color+text-shadow glow（line 37690）と連動しダーク hover 輝度強化。月次先月比較ウィジェットの増加列バッジ。cc-badge transition:filter 含有済み（line 25710） */
+[data-theme="dark"] .cc-col:has(.cc-col-up)   .cc-item:hover .cc-badge { filter: brightness(1.1); }
+/* ⑥ cc-col:has(.cc-col-down) .cc-item:hover .cc-badge dark brightness(1.1) — income-end color+text-shadow glow（line 37691）と連動しダーク hover 輝度強化。月次先月比較ウィジェットの節約列バッジ。⑤⑥でcc-badge上昇/下降両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .cc-col:has(.cc-col-down) .cc-item:hover .cc-badge { filter: brightness(1.1); }
+/* ⑦ health-score-card:hover .hs-spark-label dark brightness(1.1) — primary-end color+text-shadow glow（line 37660）と連動しダーク hover 輝度強化。家計スコアカードのスパークライン軸ラベル。hs-spark-label transition:filter 追加済み（本スプリント）。hs-spark-label-now dark brightness（v25.80⑦）と対称で hs-spark系ラベル両バリアントのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .health-score-card:hover .hs-spark-label { filter: brightness(1.1); }
+/* ⑧ ch-widget-item:hover .ch-widget-name dark brightness(1.1) — ch-accent/primary-end color+text-shadow glow（line 36754）と連動しダーク hover 輝度強化。チャレンジウィジェット行の名称テキスト。ch-widget-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-name { filter: brightness(1.1); }
+/* ⑨ ch-widget-item:hover .ch-widget-label dark brightness(1.1) — ch-accent/primary-end color+text-shadow glow（line 36761）と連動しダーク hover 輝度強化。チャレンジウィジェット行のラベルテキスト。ch-widget-label transition:filter 追加済み（本スプリント）。⑧⑨でch-widget-item内テキスト名称・ラベルペアのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .ch-widget-item:hover .ch-widget-label { filter: brightness(1.1); }
+/* ⑩ debt-widget-item:hover .debt-widget-name dark brightness(1.1) — debt-accent/expense-end color+text-shadow glow（line 36820）と連動しダーク hover 輝度強化。負債ウィジェット行の名称テキスト。debt-widget-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .debt-widget-item:hover .debt-widget-name { filter: brightness(1.1); }
+/* ⑪ debt-widget-item:hover .debt-widget-pct dark brightness(1.1) — primary-end color+text-shadow glow（line 36834）と連動しダーク hover 輝度強化。負債ウィジェット行の進捗%テキスト。debt-widget-pct transition:filter 追加済み（本スプリント）。⑩⑪でdebt-widget-item内テキスト名称・進捗%ペアのダーク hover 輝度強化が完成形に統一 */
+[data-theme="dark"] .debt-widget-item:hover .debt-widget-pct { filter: brightness(1.1); }
+/* ⑫ dd-summary-item:hover .dd-summary-value dark brightness(1.1) — primary-end color+text-shadow glow（line 36440）と連動しダーク hover 輝度強化。引き落とし日サマリー行の値テキスト。dd-summary-value transition:filter 含有済み（line 23031）。dd-summary-label dark brightness（v25.80③）と対称で dd-summary 内テキスト ラベル・値ペアのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.90・全script/linkタグ?v=25.90に更新 */
+[data-theme="dark"] .dd-summary-item:hover .dd-summary-value { filter: brightness(1.1); }
