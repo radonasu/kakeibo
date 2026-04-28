@@ -39949,3 +39949,38 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ev-add-month:hover { filter: brightness(1.1); }
 /* ⑫ fv-stat-card:hover .fv-stat-value dark brightness(1.1) — 白グロー color+text-shadow（line 35746）と連動しダーク hover 輝度強化。家族価値統計カードの数値テキスト（グラデ背景上）。fv-stat-icon dark hover filter（line 37579）と連動しfv-stat-card内主要要素のダーク hover 演出統一の足掛かり。fv-stat-value transition:filter 含有済み（line 18325/24878 相当）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.94・全script/linkタグ?v=25.94に更新 */
 [data-theme="dark"] .fv-stat-card:hover .fv-stat-value { filter: brightness(1.1); }
+
+/* ============================================================
+   v25.95: Approach C継続 — fv-stat-card内テキスト要素（label/sub）・
+   wl-summary 全バリアント（done/count/budget × label/unit）・
+   yi-card hover内未対応テキスト要素（yi-diff-up・yi-card-value-cat）・
+   smi-expense hover内未対応テキスト要素（smi-amount）・
+   sb-row hover内未対応テキスト要素（sb-suggested）に
+   filter:brightness(1.1) を追加しダーク hover 輝度強化を統一。
+   既存の dark color+text-shadow（v23-25 系）と連動。
+   ============================================================ */
+
+/* ① fv-stat-card:hover .fv-stat-label dark brightness(1.1) — 白グロー color+text-shadow（line 35751）と連動しダーク hover 輝度強化。家族価値統計カードのラベルテキスト（グラデ背景上）。fv-stat-value dark filter（v25.94⑫）に続きfv-stat-card内テキスト3要素（value/label/sub）統一の中核。fv-stat-label transition:filter 含有済み（line 19569/24879） */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-label { filter: brightness(1.1); }
+/* ② fv-stat-card:hover .fv-stat-sub dark brightness(1.1) — 白グロー color+text-shadow（line 35756）と連動しダーク hover 輝度強化。家族価値統計カードの補足テキスト（「固定費 42%」等）。①②でfv-stat-card内テキスト value/label/sub 計3要素のダーク hover 輝度強化が完成形に統一（既存fv-stat-icon dark filter line 37579 と合わせfv-stat-card内ダーク hover 演出全要素統一）。fv-stat-sub transition:filter 含有済み（line 20712/24888） */
+[data-theme="dark"] .fv-stat-card:hover .fv-stat-sub { filter: brightness(1.1); }
+/* ③ wl-sum-done:hover .wl-summary-label dark brightness(1.1) — 白グロー color+text-shadow（line 35789）と連動しダーク hover 輝度強化。ウィッシュリスト達成済みサマリーカード（グラデ背景上）のラベル。wl-summary-label transition:filter 含有済み（line 20849/25435） */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-label { filter: brightness(1.1); }
+/* ④ wl-sum-done:hover .wl-summary-unit dark brightness(1.1) — 白グロー color+text-shadow（line 35794）と連動しダーク hover 輝度強化。ウィッシュリスト達成済みサマリーカード（グラデ背景上）の単位テキスト。wl-summary-unit transition:filter 含有済み（line 20860/25445） */
+[data-theme="dark"] .wl-sum-done:hover .wl-summary-unit { filter: brightness(1.1); }
+/* ⑤ wl-sum-count:hover .wl-summary-label dark brightness(1.1) — 白グロー color+text-shadow（line 35827）と連動しダーク hover 輝度強化。ウィッシュリスト件数サマリーカード（グラデ背景上）のラベル */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-label { filter: brightness(1.1); }
+/* ⑥ wl-sum-count:hover .wl-summary-unit dark brightness(1.1) — 白グロー color+text-shadow（line 35832）と連動しダーク hover 輝度強化。ウィッシュリスト件数サマリーカード（グラデ背景上）の単位テキスト */
+[data-theme="dark"] .wl-sum-count:hover .wl-summary-unit { filter: brightness(1.1); }
+/* ⑦ wl-sum-budget:hover .wl-summary-label dark brightness(1.1) — 白グロー color+text-shadow（line 35841）と連動しダーク hover 輝度強化。ウィッシュリスト予算サマリーカード（グラデ背景上）のラベル */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-label { filter: brightness(1.1); }
+/* ⑧ wl-sum-budget:hover .wl-summary-unit dark brightness(1.1) — 白グロー color+text-shadow（line 35847）と連動しダーク hover 輝度強化。ウィッシュリスト予算サマリーカード（グラデ背景上）の単位テキスト。③〜⑧でwl-sum-done/count/budget × wl-summary-label/unit 計6要素のダーク hover 輝度強化が完成形に統一（wl-summary-value は静的 white text-shadow のみで filter 無しのため除外） */
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-unit { filter: brightness(1.1); }
+/* ⑨ yi-card:hover .yi-diff-up dark brightness(1.1) — expense-end color+text-shadow glow（line 35094）と連動しダーク hover 輝度強化。前年同月比カードの増加（赤）差分テキスト。yi-card内 yi-diff-down（line 39407）と対称配置でyi-diff バリアント全揃い。yi-diff-up transition:filter 含有済み（line 21581） */
+[data-theme="dark"] .yi-card:hover .yi-diff-up { filter: brightness(1.1); }
+/* ⑩ yi-card:hover .yi-card-value-cat dark brightness(1.1) — yi-cat-color/primary-end color+text-shadow glow（line 36432）と連動しダーク hover 輝度強化。前年同月比カードのカテゴリ値テキスト。既存の yi-card-value/label/half-val/half-label/diff-down dark filter（line 39384-39390/39407）と連携しyi-card内テキスト要素強化。yi-card-value-cat transition:filter 含有済み（line 25375） */
+[data-theme="dark"] .yi-card:hover .yi-card-value-cat { filter: brightness(1.1); }
+/* ⑪ smi-expense:hover .smi-amount dark brightness(1.1) — expense-end color+text-shadow glow（line 35512）と連動しダーク hover 輝度強化。給与明細支出行（収支ミニ表示）の金額テキスト。smi-amount transition:filter 含有済み（line 19142/23163/25092 相当） */
+[data-theme="dark"] .smi-expense:hover .smi-amount { filter: brightness(1.1); }
+/* ⑫ sb-row:hover .sb-suggested dark brightness(1.1) — sb-cat-color/primary-end color+text-shadow glow（line 34751）と連動しダーク hover 輝度強化。スマート予算行の提案金額テキスト。sb-suggested transition:filter 含有済み（line 18605/23515）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.95・全script/linkタグ?v=25.95に更新 */
+[data-theme="dark"] .sb-row:hover .sb-suggested { filter: brightness(1.1); }
