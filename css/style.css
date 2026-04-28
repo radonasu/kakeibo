@@ -39863,3 +39863,45 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .goal-card:hover .goal-sep { filter: brightness(1.1); }
 /* ⑫ goal-card:hover .goal-monthly-target dark brightness(1.1) — primary-end color+text-shadow glow（line 36185）と連動しダーク hover 輝度強化。ゴールカード月次目標テキスト。⑧〜⑫でgoal-card内テキスト deadline/note/pct/sep/monthly-target 計5要素のダーク hover 輝度強化が完成形に統一（既存のgoal-name/saved/target/remaining/achieved-date等と合わせカード内テキスト全要素統一）。goal-monthly-target transition:filter 含有済み（line 24676）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.92・全script/linkタグ?v=25.92に更新 */
 [data-theme="dark"] .goal-card:hover .goal-monthly-target { filter: brightness(1.1); }
+
+/* ── v25.93: Approach C継続 — ch-card-meta×1・ch-progress-label×1・ch-progress-pct×1・pt-exp-expired×1・pt-card-yen×1・pt-note×1・pt-unit×1・pt-exp-badge×1・ev-card-name×1・ev-card-amount×1・ev-card-memo×1・ev-done-label×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していた
+   チャレンジカード内テキスト要素（card-meta/progress-label/progress-pct）・
+   ポイントカード内テキスト要素（exp-expired/card-yen/note/unit/exp-badge）・
+   収支予定カード内テキスト要素（card-name/card-amount/card-memo/done-label）
+   に brightness を追加しダーク hover 輝度強化を統一。
+   ch-card-meta / pt-note / pt-unit / ev-card-name / ev-card-memo / ev-done-label の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.ch-card-meta { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pt-note { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.pt-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-card-name { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-card-memo { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ev-done-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① ch-card:hover .ch-card-meta dark brightness(1.1) — primary-end color+text-shadow glow（line 36258）と連動しダーク hover 輝度強化。チャレンジカードのメタテキスト（残日数等）。ch-card-meta transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ch-card:hover .ch-card-meta { filter: brightness(1.1); }
+/* ② ch-card:hover .ch-progress-label dark brightness(1.1) — ch-accent/primary-end color+text-shadow glow（line 36265）と連動しダーク hover 輝度強化。チャレンジカードの進捗ラベルテキスト（「¥X,XXX / ¥X,XXX」等）。ch-progress-label transition:filter 含有済み（line 25526） */
+[data-theme="dark"] .ch-card:hover .ch-progress-label { filter: brightness(1.1); }
+/* ③ ch-card:hover .ch-progress-pct dark brightness(1.1) — ch-accent/primary-end color+text-shadow glow（line 36272）と連動しダーク hover 輝度強化。チャレンジカードの進捗パーセンテージテキスト。①〜③でch-card内テキスト card-meta/progress-label/progress-pct 計3要素のダーク hover 輝度強化が完成形に統一（既存のch-card-name/status-done/fail/over/active等と合わせカード内テキスト全要素統一）。ch-progress-pct transition:filter 含有済み（line 18507） */
+[data-theme="dark"] .ch-card:hover .ch-progress-pct { filter: brightness(1.1); }
+/* ④ pt-card:hover .pt-exp-expired dark brightness(1.1) — expense-end color+text-shadow glow（line 35082）と連動しダーク hover 輝度強化。ポイントカードの期限切れテキスト。pt-exp-expired transition:filter 含有済み（line 21461） */
+[data-theme="dark"] .pt-card:hover .pt-exp-expired { filter: brightness(1.1); }
+/* ⑤ pt-card:hover .pt-card-yen dark brightness(1.1) — pt-accent/primary-end color+text-shadow glow（line 35853）と連動しダーク hover 輝度強化。ポイントカードの円換算金額テキスト。pt-card-yen transition:filter 含有済み（line 20039） */
+[data-theme="dark"] .pt-card:hover .pt-card-yen { filter: brightness(1.1); }
+/* ⑥ pt-card:hover .pt-note dark brightness(1.1) — pt-accent/primary-end color+text-shadow glow（line 35859）と連動しダーク hover 輝度強化。ポイントカードのメモテキスト。pt-note transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pt-card:hover .pt-note { filter: brightness(1.1); }
+/* ⑦ pt-card:hover .pt-unit dark brightness(1.1) — primary-end color+text-shadow glow（line 35866）と連動しダーク hover 輝度強化。ポイントカードの単位テキスト（「pt」等）。pt-unit transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .pt-card:hover .pt-unit { filter: brightness(1.1); }
+/* ⑧ pt-card:hover .pt-exp-badge dark brightness(1.1) — primary-end color+text-shadow glow（line 35906）と連動しダーク hover 輝度強化。ポイントカードの期限バッジ。④〜⑧でpt-card内テキスト exp-expired/card-yen/note/unit/exp-badge 計5要素のダーク hover 輝度強化が完成形に統一（既存のpt-card-name/balance/urgent-badge/soon-badge等と合わせカード内テキスト全要素統一）。pt-exp-badge transition:filter 含有済み（line 19765） */
+[data-theme="dark"] .pt-card:hover .pt-exp-badge { filter: brightness(1.1); }
+/* ⑨ ev-card:hover .ev-card-name dark brightness(1.1) — ev-accent/primary-end color+text-shadow glow（line 36206）と連動しダーク hover 輝度強化。収支予定カードの名称テキスト。ev-card-name transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-card:hover .ev-card-name { filter: brightness(1.1); }
+/* ⑩ ev-card:hover .ev-card-amount dark brightness(1.1) — ev-accent/primary-end color+text-shadow glow（line 36213）と連動しダーク hover 輝度強化。収支予定カードの金額テキスト。ev-card-amount transition:filter 含有済み（line 19856） */
+[data-theme="dark"] .ev-card:hover .ev-card-amount { filter: brightness(1.1); }
+/* ⑪ ev-card:hover .ev-card-memo dark brightness(1.1) — primary-end color+text-shadow glow（line 36220）と連動しダーク hover 輝度強化。収支予定カードのメモテキスト。ev-card-memo transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ev-card:hover .ev-card-memo { filter: brightness(1.1); }
+/* ⑫ ev-card:hover .ev-done-label dark brightness(1.1) — primary-end color+text-shadow glow（line 36227）と連動しダーク hover 輝度強化。収支予定カードの完了ラベルテキスト。⑨〜⑫でev-card内テキスト card-name/card-amount/card-memo/done-label 計4要素のダーク hover 輝度強化が完成形に統一（既存のev-prog-pct/ev-type-badge.income/expense/ev-cat-badge等は次スプリントで追加予定）。ev-done-label transition:filter 追加済み（本スプリント）。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.93・全script/linkタグ?v=25.93に更新 */
+[data-theme="dark"] .ev-card:hover .ev-done-label { filter: brightness(1.1); }

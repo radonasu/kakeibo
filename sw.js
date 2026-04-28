@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v25.92'; // v25.92: Approach C継続 — asset-balance-delta.up×1・asset-balance-delta.down×1・debt-balance-meta×1・debt-progress-label×1・debt-end-pill×1・debt-type-badge×1・debt-history-title×1・goal-deadline:not(.over)×1・goal-note×1・goal-pct×1・goal-sep×1・goal-monthly-target×1 計12箇所
+const CACHE_NAME = 'kakeibo-v25.93'; // v25.93: Approach C継続 — ch-card-meta×1・ch-progress-label×1・ch-progress-pct×1・pt-exp-expired×1・pt-card-yen×1・pt-note×1・pt-unit×1・pt-exp-badge×1・ev-card-name×1・ev-card-amount×1・ev-card-memo×1・ev-done-label×1 計12箇所
 const ASSETS = [
   './index.html',
   './css/style.css',
