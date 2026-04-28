@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.07'; // v26.07: フォーカスリング洗練 + 全面ホバー強化（グローバル :focus-visible にプライマリグローハロー追加 + .btn-ghost:hover glow mix-xs→mix-sm + blur 10→14px + .btn-icon:hover glow mix-xs→mix-sm + blur 8→12px + .bottom-nav-item:not(.active):hover glow mix-xs→mix-sm + blur 10→14px + #global-fab:hover に filter brightness(1.06) 追加 + .card:active に scale(--scale-card-active=0.98) 追加でタクタイル強化）
+const CACHE_NAME = 'kakeibo-v26.08'; // v26.08: モーダル/トースト出現演出洗練（.modal-overlay backdrop-filter blur(0)→blur-sm 入場アニメで「フォーカスプル」演出 + .modal-overlay .modal box-shadow shadow-md→shadow-lg 入場アニメで奥行き感 + .modal-close:hover に rotate(90deg) 追加で「閉じる」予感 + .kk-toast-progress を 単色→3点グラデ(primary→primary-end→primary) + box-shadow 6px グロー + success/error/warning progress bar に同色 box-shadow グロー + .kk-toast-success/error/warning タイプ別 glow を mix-xs→mix-sm 強化）
 const ASSETS = [
   './index.html',
   './css/style.css',

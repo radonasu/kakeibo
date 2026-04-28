@@ -3103,7 +3103,7 @@ mark.tx-hl {
   flex-shrink: 0;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
-.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)) rotate(90deg); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
 .modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -3964,7 +3964,8 @@ mark.tx-hl {
   position: fixed;
   bottom: var(--sp-7);
   left: 50%;
-  transform: translateX(-50%) translateY(var(--translate-popup-hide));
+  transform: translateX(-50%) translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init));
+  transform-origin: bottom center;
   background: color-mix(in srgb, var(--surface) var(--mix-glass), transparent);
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
@@ -3978,14 +3979,15 @@ mark.tx-hl {
   line-height: var(--lh-tighter);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-enter);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-bounce), box-shadow var(--dur-slow) var(--ease-out);
   z-index: var(--z-toast);
   white-space: nowrap;
   box-shadow: var(--shadow-md);
 }
 .sync-toast.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(0) scale(var(--scale-rest));
+  box-shadow: var(--shadow-lg);
 }
 
 /* ヘッダーの同期インジケーター */
@@ -4803,16 +4805,30 @@ body {
 .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 
 /* ── モーダルアニメーション ── */
-.modal-overlay { opacity: 0; pointer-events: none; transition: opacity var(--dur-faster) var(--ease-out); }
-.modal-overlay.modal-is-open { opacity: 1; pointer-events: auto; }
+/* v26.08: backdrop-filter blur(0)→blur-sm 遷移でフォーカスプル演出 */
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0) saturate(1);
+  -webkit-backdrop-filter: blur(0) saturate(1);
+  transition: opacity var(--dur-faster) var(--ease-out), backdrop-filter var(--dur-gentle) var(--ease-out), -webkit-backdrop-filter var(--dur-gentle) var(--ease-out);
+}
+.modal-overlay.modal-is-open {
+  opacity: 1;
+  pointer-events: auto;
+  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+}
 .modal-overlay .modal {
   transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init));
   opacity: 0;
-  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out), box-shadow var(--dur-gentle) var(--ease-out);
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(var(--scale-rest));
   opacity: 1;
+  box-shadow: var(--shadow-lg);
 }
 @media (max-width: 480px) {
   .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)); }
@@ -5439,7 +5455,8 @@ body {
   position: fixed;
   bottom: calc(var(--size-mobile-bar) + var(--sp-3-5) + var(--sp-2) + env(safe-area-inset-bottom, 0px));
   left: 50%;
-  transform: translateX(-50%) translateY(var(--translate-popup-hide-sm));
+  transform: translateX(-50%) translateY(var(--translate-popup-hide-sm)) scale(var(--scale-popup-init));
+  transform-origin: bottom center;
   max-width: min(360px, calc(100vw - var(--sp-8)));
   background: var(--surface);
   color: var(--text);
@@ -5452,7 +5469,7 @@ body {
   line-height: var(--lh-tighter);
   box-shadow: var(--shadow-md);
   opacity: 0;
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-enter);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-bounce), box-shadow var(--dur-slow) var(--ease-out);
   z-index: var(--z-toast);
   white-space: nowrap;
   pointer-events: none;
@@ -5463,7 +5480,8 @@ body {
 }
 .kk-toast-show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(0) scale(var(--scale-rest));
+  box-shadow: var(--shadow-lg);
 }
 
 /* アイコンバッジ */
@@ -5492,6 +5510,7 @@ body {
 }
 
 /* プログレスバー */
+/* v26.08: 単色 → 3点グラデーション + box-shadow グロー */
 .kk-toast-progress {
   position: absolute;
   bottom: 0;
@@ -5499,7 +5518,8 @@ body {
   height: var(--accent-w);
   width: 100%;
   border-radius: 0 0 var(--radius) var(--radius);
-  background: var(--primary);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-end) 50%, var(--primary) 100%);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   transform-origin: left;
   animation: kk-toast-shrink var(--toast-dur, 3s) linear forwards;
 }
@@ -5511,17 +5531,26 @@ body {
 /* タイプ: 成功 */
 .kk-toast-success { border-color: var(--success-border); background: var(--success-bg); }
 .kk-toast-success .kk-toast-icon     { background: var(--success); }
-.kk-toast-success .kk-toast-progress { background: var(--success); }
+.kk-toast-success .kk-toast-progress {
+  background: var(--success);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-md), transparent);
+}
 
 /* タイプ: エラー */
 .kk-toast-error { border-color: var(--danger-border); background: var(--danger-bg); }
 .kk-toast-error .kk-toast-icon     { background: var(--danger-text); }
-.kk-toast-error .kk-toast-progress { background: var(--danger-text); }
+.kk-toast-error .kk-toast-progress {
+  background: var(--danger-text);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
 
 /* タイプ: 警告 */
 .kk-toast-warning { border-color: var(--warning-border); background: var(--warning-bg); }
 .kk-toast-warning .kk-toast-icon     { background: var(--warning); }
-.kk-toast-warning .kk-toast-progress { background: var(--warning); }
+.kk-toast-warning .kk-toast-progress {
+  background: var(--warning);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--warning) var(--mix-md), transparent);
+}
 
 @media (min-width: 769px) {
   .kk-toast { bottom: var(--sp-6); }
@@ -18950,14 +18979,15 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    success / error / warning トーストに対応する色の外周グローを追加。
    既存のフラットな shadow-md に加え、タイプカラーの拡散グローが
    通知の種類を視覚的に強調し一目で分かるようになる。 */
+/* v26.08: タイプ別 glow を mix-xs → mix-sm に強化しタイプカラーの存在感UP */
 .kk-toast-success {
-  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
 }
 .kk-toast-error {
-  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
 }
 .kk-toast-warning {
-  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--warning) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--warning) var(--mix-sm), transparent);
 }
 
 /* 3. カレンダー 今日セル パルスアニメーション
