@@ -39785,3 +39785,44 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .debt-widget-item:hover .debt-widget-pct { filter: brightness(1.1); }
 /* ⑫ dd-summary-item:hover .dd-summary-value dark brightness(1.1) — primary-end color+text-shadow glow（line 36440）と連動しダーク hover 輝度強化。引き落とし日サマリー行の値テキスト。dd-summary-value transition:filter 含有済み（line 23031）。dd-summary-label dark brightness（v25.80③）と対称で dd-summary 内テキスト ラベル・値ペアのダーク hover 輝度強化が完成形に統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.90・全script/linkタグ?v=25.90に更新 */
 [data-theme="dark"] .dd-summary-item:hover .dd-summary-value { filter: brightness(1.1); }
+
+/* ── v25.91: Approach C継続 — ct-stat-label×1・ct-stat-value-sub×1・dow-table-row td:nth-child(2)×1・dow-table-row td:nth-child(3)×1・dow-pct-high×1・dow-pct-mid×1・dow-pct-low×1・dw-item-label×1・tx-month-group-label×1・tx-month-group-count×1・ci-score-label×1・tg-stat-unit×1 dark hover filter:brightness 追加 12箇所 ──
+   ダークモード hover に color+text-shadow はあるが filter:brightness が欠落していたカテゴリトレンド統計カード内テキスト（label/value-sub）・曜日別テーブル行内テキスト（td:nth-child(2)/(3)・dow-pct-high/mid/low）・ウィジェット設定トグルラベル・取引月グループ行テキスト（label/count）・チェックイン採点行ラベル・トレンド統計カード単位テキストに brightness を追加しダーク hover 輝度強化を統一。
+   dow-table-row td:nth-child(2) / dow-pct-high/mid/low / dw-item-label / tx-month-group-label / tx-month-group-count / ci-score-label / tg-stat-unit の transition に filter を追加（本スプリント）。
+   CSS-only実装（JS変更なし）
+   ============================================================ */
+/* transition:filter 追加（本スプリント） */
+.dow-table-row td:nth-child(2) { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.dow-pct-high { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.dow-pct-mid  { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.dow-pct-low  { transition: filter var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.dw-item-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.tx-month-group-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.tx-month-group-count { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.ci-score-label { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.tg-stat-unit { transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+
+/* ① ct-stat-card:hover .ct-stat-label dark brightness(1.1) — ct-stat-color/primary-end color+text-shadow glow（line 37398）と連動しダーク hover 輝度強化。カテゴリトレンド統計カードのラベルテキスト。ct-stat-label transition:filter 含有済み（line 24378） */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-label { filter: brightness(1.1); }
+/* ② ct-stat-card:hover .ct-stat-value-sub dark brightness(1.1) — ct-stat-color/primary-end color+text-shadow glow（line 37736）と連動しダーク hover 輝度強化。カテゴリトレンド統計カードのサブ値テキスト。ct-stat-value-sub transition:filter 含有済み（line 24759）。①②でct-stat-card内テキスト label/value-sub ペアのダーク hover 輝度強化が完成形に統一（既存のct-stat-value/ct-stat-subと合わせ4テキスト要素全て統一） */
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-value-sub { filter: brightness(1.1); }
+/* ③ dow-table-row:hover td:nth-child(2) dark brightness(1.1) — primary-end color+text-shadow glow（line 37836）と連動しダーク hover 輝度強化。曜日別テーブル行のカテゴリ名列。dow-table-row td:nth-child(2) transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dow-table-row:hover td:nth-child(2) { filter: brightness(1.1); }
+/* ④ dow-table-row:hover td:nth-child(3) dark brightness(1.1) — expense-end color+text-shadow glow（line 38295）と連動しダーク hover 輝度強化。曜日別テーブル行の支出列。dow-table-row td:nth-child(3) transition:filter 含有済み（line 25031） */
+[data-theme="dark"] .dow-table-row:hover td:nth-child(3) { filter: brightness(1.1); }
+/* ⑤ dow-table-row:hover .dow-pct-high dark brightness(1.1) — expense-end color+text-shadow glow（line 38298）と連動しダーク hover 輝度強化。曜日別テーブル行の高率バッジ。dow-pct-high transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-high { filter: brightness(1.1); }
+/* ⑥ dow-table-row:hover .dow-pct-mid dark brightness(1.1) — warning color+text-shadow glow（line 38301）と連動しダーク hover 輝度強化。曜日別テーブル行の中率バッジ。dow-pct-mid transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-mid { filter: brightness(1.1); }
+/* ⑦ dow-table-row:hover .dow-pct-low dark brightness(1.1) — income-end color+text-shadow glow（line 38304）と連動しダーク hover 輝度強化。曜日別テーブル行の低率バッジ。⑤〜⑦でdow-pct-high/mid/low 全3バリアントのダーク hover 輝度強化が完成形に統一。dow-pct-low transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dow-table-row:hover .dow-pct-low { filter: brightness(1.1); }
+/* ⑧ dw-item:hover .dw-item-label dark brightness(1.1) — primary-end color+text-shadow glow（line 38253）と連動しダーク hover 輝度強化。ウィジェット設定トグルのラベル名称テキスト。dw-item-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .dw-item:hover .dw-item-label { filter: brightness(1.1); }
+/* ⑨ tx-month-group-row:hover .tx-month-group-label dark brightness(1.1) — primary-end color+text-shadow glow（line 37715）と連動しダーク hover 輝度強化。取引月グループ行のラベル（年月）テキスト。tx-month-group-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-label { filter: brightness(1.1); }
+/* ⑩ tx-month-group-row:hover .tx-month-group-count dark brightness(1.1) — primary-end color+text-shadow glow（line 37722）と連動しダーク hover 輝度強化。取引月グループ行の件数テキスト。⑨⑩でtx-month-group-row 内テキスト ラベル/件数ペアのダーク hover 輝度強化が完成形に統一（既存のincome/expenseバッジと合わせ4テキスト要素全て統一）。tx-month-group-count transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .tx-month-group-row:hover .tx-month-group-count { filter: brightness(1.1); }
+/* ⑪ ci-score-row:hover .ci-score-label dark brightness(1.1) — primary-end color+text-shadow glow（line 37404）と連動しダーク hover 輝度強化。チェックイン採点行のラベルテキスト。ci-score-row:hover .ci-score-badge dark brightness（line 38777）と対称で ci-score-row内テキスト ラベル/バッジペアのダーク hover 輝度強化が完成形に統一。ci-score-label transition:filter 追加済み（本スプリント） */
+[data-theme="dark"] .ci-score-row:hover .ci-score-label { filter: brightness(1.1); }
+/* ⑫ tg-stat-card:hover .tg-stat-unit dark brightness(1.1) — primary-end color+text-shadow glow（line 36199）と連動しダーク hover 輝度強化。トレンド統計カードの単位テキスト。tg-stat-unit transition:filter 追加済み（本スプリント）。tg-stat-value/tg-stat-label dark brightness と合わせtg-stat-card内テキスト3要素全て統一。全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v25.91・全script/linkタグ?v=25.91に更新 */
+[data-theme="dark"] .tg-stat-card:hover .tg-stat-unit { filter: brightness(1.1); }
