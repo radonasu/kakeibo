@@ -40980,3 +40980,108 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .kk-toast-warning .kk-toast-body {
   text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v26.19: 認証画面リッチ化 + サマリーカード sheen 強化
+   - .auth-overlay: 既存 linear-gradient diagonal の上に
+     subtle radial-gradient（中央放射 white tint）を重ね、
+     画面中央のカードに視線を集める「光のヴィネット」を獲得。
+   - .auth-card: hover/focus-within 時に微小 lift + primary glow box-shadow
+     強化でログイン直前の「持ち上がる」フィードバック。
+   - .auth-title: auth-card hover 時に primary tint text-shadow で
+     微発光しタイトル文字に注目を集める。
+   - .auth-logo-icon: 常時 pulse glow animation を追加。
+     既存の box-shadow（mix-2xl 24px）を baseline として、
+     0% mix-2xl → 50% mix-3xl へ呼吸する pulse で、
+     ロゴアイコンが「ふわっと光って息をする」リッチ演出に。
+     auth-card hover 時はさらに pulse 振幅を強化。
+   - .summary-card::before/::after: 既存の sheen 球体（左下大円 + 右上小円）の
+     hover 時の background opacity を mix-base/mix-dim → mix-sm/mix-base に強化 +
+     subtle scale(1.06) で「ぷっくり膨らむ」立体感を追加。
+     transition も追加（rest→hover で滑らかに）。
+   - これでログイン画面 4 要素（背景・カード・タイトル・ロゴアイコン）が
+     hover/focus に呼応する一体型演出に進化。サマリーカードは
+     hover 時の sheen 強化で「光が増す」感が明確に。
+   - ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .auth-overlay 背景に radial-gradient 重ね塗り（中央放射 white tint） */
+.auth-overlay {
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(var(--grad-diagonal), var(--primary-deepest) 0%, var(--primary-deep) 40%, var(--primary-darker) 100%);
+}
+
+/* ② .auth-card hover/focus-within lift + primary glow */
+.auth-card {
+  transition: transform var(--dur-medium) var(--ease-bounce), box-shadow var(--dur-medium) var(--ease-out);
+}
+.auth-card:hover,
+.auth-card:focus-within {
+  transform: translateY(var(--translate-lift-md));
+  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+[data-theme="dark"] .auth-card:hover,
+[data-theme="dark"] .auth-card:focus-within {
+  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ③ .auth-title: auth-card hover 時に primary tint text-shadow */
+.auth-title {
+  transition: text-shadow var(--dur-medium) var(--ease-out);
+}
+.auth-card:hover .auth-title,
+.auth-card:focus-within .auth-title {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-title,
+[data-theme="dark"] .auth-card:focus-within .auth-title {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ④ .auth-logo-icon 常時 pulse glow animation */
+@keyframes auth-logo-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 10px 32px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent);
+    transform: scale(1.03);
+  }
+}
+.auth-logo-icon {
+  animation: auth-logo-pulse 3.2s ease-in-out infinite;
+  transition: transform var(--dur-medium) var(--ease-bounce);
+}
+.auth-card:hover .auth-logo-icon,
+.auth-card:focus-within .auth-logo-icon {
+  animation-duration: 2.0s;
+}
+[data-theme="dark"] .auth-logo-icon {
+  animation-name: auth-logo-pulse-dark;
+}
+@keyframes auth-logo-pulse-dark {
+  0%, 100% {
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-3xl), transparent);
+    transform: scale(1.03);
+  }
+}
+
+/* ⑤ .summary-card::before / ::after: sheen 球体に transition + hover 強化 */
+.summary-card::before,
+.summary-card::after {
+  transition: background var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-bounce);
+}
+.summary-card:hover::before {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.06);
+}
+.summary-card:hover::after {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.06);
+}
