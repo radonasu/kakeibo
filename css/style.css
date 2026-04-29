@@ -1393,7 +1393,8 @@ select:focus:not(:focus-visible) {
   box-shadow: none;
 }
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 8→12px でアイコンボタンのプライマリ光を視認可能レベルに */
-.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v26.12: glow さらに強化 mix-sm→mix-md でアイコンボタン hover 時のアクション可能性視認性をクッキリ向上 */
+.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .btn-icon:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -1406,7 +1407,8 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--bg)) !important;
   color: var(--primary);
   transform: scale(var(--scale-icon-hover));
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  /* v26.12: ring 強化 mix-md→mix-lg で編集ボタン hover 時の primary ring を視認しやすく。btn-icon hover の primary glow 強化（v26.12）と整合 */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
   opacity: 1;
 }
 .edit-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -1425,7 +1427,8 @@ select:focus:not(:focus-visible) {
   background: var(--danger-bg) !important;
   color: var(--danger-text);
   transform: scale(var(--scale-icon-hover));
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+  /* v26.12: ring 強化 mix-md→mix-lg で削除ボタン hover 時の danger ring を視認しやすく。edit-tx hover ring 強化（v26.12）と対称配置で破壊的アクションの視認性も向上 */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent);
   opacity: 1;
 }
 .delete-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -1599,7 +1602,8 @@ select:focus:not(:focus-visible) {
 }
 .amount-input-wrap:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v26.12: 既存 primary ring に 0 2px 8px black-08 のドロップシャドウを追加し form-group input/select/textarea:hover（v26.11）と整合。金額入力ラッパーも hover 時に微小 lift 立体感を獲得 */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 8px var(--black-08);
 }
 .amount-input-wrap:focus-within {
   border-color: var(--primary);
@@ -3083,8 +3087,9 @@ mark.tx-hl {
   position: fixed;
   inset: 0;
   background: color-mix(in srgb, var(--sidebar-bg) var(--mix-3xl), transparent);
-  backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
-  -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
+  /* v26.12: blur-sm(8px) → blur-md(10px) でモーダル開閉時の背景フォーカスプル深度増。v26.09 のサイドナビ/PWAバナー出現演出（blur-sm→blur-md）と統合。被写界深度がより明確になりモーダルへ視線誘導が強化される */
+  backdrop-filter: blur(var(--blur-md)) saturate(var(--saturate-subtle));
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(var(--saturate-subtle));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18985,7 +18990,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .sub-empty-icon,
 .pt-empty-icon,
 .wl-empty-icon,
-.ch-empty-icon {
+.ch-empty-icon,
+.tx-empty-icon {
   filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent));
 }
 [data-theme="dark"] .empty-month-icon,
@@ -18995,7 +19001,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sub-empty-icon,
 [data-theme="dark"] .pt-empty-icon,
 [data-theme="dark"] .wl-empty-icon,
-[data-theme="dark"] .ch-empty-icon {
+[data-theme="dark"] .ch-empty-icon,
+[data-theme="dark"] .tx-empty-icon {
   filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
 }
 
@@ -34237,7 +34244,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
 
 /* ③ btn-success dark enhanced hover glow（income-end mix-4xl 0 6px 20px） */
-[data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent); }
+/* v26.12: inset 0 1px 0 rgba(255,255,255,0.22) を追加し v26.11 ライト btn-success:hover inset（line 6877）と整合。Solid green 背景上の上端白光沢が hover 時も維持され btn-primary/btn-ghost/btn-danger ダーク hover inset 統合パターン（v26.10/v26.11）と完成形に揃う */
+[data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ④ modal-close dark enhanced hover glow（expense-end mix-md + text-shadow） */
 [data-theme="dark"] .modal-close:hover { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
@@ -40473,13 +40481,23 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .empty-month-msg,
 .empty-asset-msg,
 .empty-goal-msg,
-.empty-debt-msg {
+.empty-debt-msg,
+.tx-empty-msg,
+.wl-empty p,
+.ch-empty p,
+.sub-empty p,
+.pt-empty p {
   text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 [data-theme="dark"] .empty-month-msg,
 [data-theme="dark"] .empty-asset-msg,
 [data-theme="dark"] .empty-goal-msg,
-[data-theme="dark"] .empty-debt-msg {
+[data-theme="dark"] .empty-debt-msg,
+[data-theme="dark"] .tx-empty-msg,
+[data-theme="dark"] .wl-empty p,
+[data-theme="dark"] .ch-empty p,
+[data-theme="dark"] .sub-empty p,
+[data-theme="dark"] .pt-empty p {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
@@ -40548,3 +40566,16 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   background: var(--danger-border);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
+
+/* ============================================================
+   v26.12: 金額入力ラッパー hover lift 統合 + モーダルオーバーレイ blur 強化 +
+   空状態アイコン/メッセージ glow 統一（tx-empty/wl-empty/ch-empty/sub-empty/pt-empty）+
+   ダーク btn-success:hover inset 補完 + アイコンボタン群 hover ring 強化（btn-icon/edit-tx/delete-tx）
+   （①〜⑨は既存ルール直接編集済み — line 1396（btn-icon hover ring mix-sm→mix-md）/
+    line 1409（edit-tx hover ring mix-md→mix-lg）/ line 1428（delete-tx hover ring mix-md→mix-lg）/
+    line 1602（amount-input-wrap hover lift drop-shadow 統合）/ line 3086-3087（modal-overlay blur-sm→blur-md）/
+    line 18988-18999（空状態アイコン list に tx-empty-icon 追加）/
+    line 40473-40484（空状態メッセージ list に tx-empty-msg/wl-empty p/ch-empty p/sub-empty p/pt-empty p 追加）/
+    line 34240（ダーク btn-success:hover inset 補完））
+   本ブロックは概要記録のみ。
+   ============================================================ */

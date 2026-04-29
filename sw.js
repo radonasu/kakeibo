@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.11'; // v26.11: ボタン inset 白ハイライト統合（success/danger） + サマリーカード装飾円ホバー強化 + フォーム入力ホバー立体化 + btn-link hover プライマリ glow + ダーク btn-danger inset 補完（btn-primary v26.10 と同パターンで .btn-success に inset 0 1px 0 rgba(255,255,255,0.2) 追加（hover 0.22）+ .btn-danger ライトに inset 0 1px 0 rgba(255,255,255,0.5) 追加（hover 0.55）/ ダークは 0.06 で別宣言（hover 0.08）+ .summary-card:hover::after scale 1.2→1.28 + 白halo 24px + 白透過度 10%→18% / ::before scale 1.15→1.22 + 白halo 28px + 白透過度 6%→14% でカード hover 時に装飾円ペアが躍動的に膨張・発光 + .form-group input/select/textarea:hover に 0 2px 8px black-08 ドロップシャドウ追加で hover lift 立体感 + .btn-link:hover に primary text-shadow glow 追加（ライト mix-sm / ダーク primary-end mix-mid））
+const CACHE_NAME = 'kakeibo-v26.12'; // v26.12: 金額入力ラッパー hover lift 統合 + モーダルオーバーレイ blur 強化 + 空状態アイコン/メッセージ glow 統一 + ダーク btn-success:hover inset 補完 + アイコンボタン群 hover ring 強化（amount-input-wrap:hover に 0 2px 8px black-08 lift ドロップシャドウ追加で form-group input hover lift（v26.11）と整合 + modal-overlay backdrop blur-sm(8px)→blur-md(10px) でモーダル背景フォーカスプル深度増 + tx-empty-icon を v22.91 8種 drop-shadow primary glow リストに追加 + tx-empty-msg/wl-empty p/ch-empty p/sub-empty p/pt-empty p を v26.10① 4種 text-shadow primary glow リストに追加で空状態9種ビジュアル統一 + ダーク btn-success:hover に inset 0 1px 0 rgba(255,255,255,0.22) 補完で v24.90③ override に v26.11 ライト inset を統合（btn-primary/ghost/danger ダーク hover inset 統合パターンと完成形に） + btn-icon:hover primary glow 強化 mix-sm→mix-md + edit-tx:hover primary ring 強化 mix-md→mix-lg + delete-tx:hover danger ring 強化 mix-md→mix-lg でアイコンボタン群 hover アクション可能性視認性向上）
 const ASSETS = [
   './index.html',
   './css/style.css',
