@@ -83,6 +83,12 @@ function destroyChart(id) {
 }
 
 // ─── ドーナツグラフ中央テキストプラグイン ────────────────────
+// v26.28: 中央テキストにテーマ追従 glow を追加。
+//   ① ライト: ラベル「合計」に primary alpha 0.16 / blur 6 の subtle 紫 glow（視認可能だが背景に溶け込む静かな発光）
+//   ② ライト: 金額テキストに primary alpha 0.18 / blur 8 の紫 glow + ctx.fillStyle は --text のまま（コントラスト保持）
+//   ③ ダーク: primary-end (lavender) で同等パラメータの glow に差し替え（ダーク側のブランドアクセントカラー追従）
+//   全ドーナツチャート（renderDonutChart / renderPaymentMethodChart / renderTagChart 等）で
+//   中央テキストが薄く発光し、v26.27 の hover arc halo（外周）とドーナツ中心の glow が呼応する完成形演出に。
 const centerTextPlugin = {
   id: 'centerText',
   afterDraw(chart) {
@@ -101,21 +107,30 @@ const centerTextPlugin = {
     const ctx = chart.ctx;
     ctx.save();
 
-    const { text: textColor, fs3xs, fsMd } = getThemeColors();
+    const { text: textColor, fs3xs, fsMd, isDark } = getThemeColors();
     const formatted = total >= 10000
       ? '¥' + (total / 10000).toFixed(1) + '万'
       : formatMoney(total);
 
-    // ラベル
+    // v26.28: テーマ追従 glow 色（ライト: primary / ダーク: primary-end）
+    const glowSrc = isDark
+      ? (getCSSVar('--primary-end') || '#a78bfa')
+      : (getCSSVar('--primary') || '#7c3aed');
+
+    // ラベル「合計」: subtle 紫 glow blur 6 / alpha 0.16
     ctx.font = '500 ' + fs3xs + 'px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    ctx.shadowColor = hexToRgba(glowSrc, 0.16);
+    ctx.shadowBlur = 6;
     ctx.fillText('合計', cx, cy - 12);
 
-    // 金額
+    // 金額: 紫 glow blur 8 / alpha 0.18（ラベルより少し強め）
     ctx.font = '700 ' + fsMd + 'px ' + CHART_FONT_FAMILY;
     ctx.fillStyle = getCSSVar('--text') || '#0f172a';
+    ctx.shadowColor = hexToRgba(glowSrc, 0.18);
+    ctx.shadowBlur = 8;
     ctx.fillText(formatted, cx, cy + 6);
 
     ctx.restore();

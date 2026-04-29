@@ -7087,21 +7087,24 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-lg), var(--surface)); }
 .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-2xl), var(--surface)); }
 
-.cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v26.28: カレンダーセル hover 強化 — inset 1px/mix-sm → 1.5px/mix-md（リング線が立つ）+ 外側グロー 0 2px 14px primary mix-sm 追加（ライト primary tint で「指で触れた感」が付く） */
+.cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .cal-cell:active:not(.cal-empty)        { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); box-shadow: none; }
 .cal-cell:focus-visible:not(.cal-empty) { outline: none; box-shadow: inset 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-/* v22.66: ヒートマップセル ホバー時に元の熱色を保持しbrightnessで強調 */
-.cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-faint), var(--surface)); filter: brightness(1.07); box-shadow: none; }
-.cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-base),  var(--surface)); filter: brightness(1.07); box-shadow: none; }
-.cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-lg),    var(--surface)); filter: brightness(1.07); box-shadow: none; }
-.cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-2xl),   var(--surface)); filter: brightness(1.07); box-shadow: none; }
+/* v22.66: ヒートマップセル ホバー時に元の熱色を保持しbrightnessで強調
+   v26.28: brightness のみだったのに加え 0 2px 12px expense mix-2xs 外側グロー追加（赤味でアクションフィードバック獲得） */
+.cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-faint), var(--surface)); filter: brightness(1.07); box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) var(--mix-2xs), transparent); }
+.cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-base),  var(--surface)); filter: brightness(1.07); box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) var(--mix-xs),  transparent); }
+.cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-lg),    var(--surface)); filter: brightness(1.07); box-shadow: 0 2px 14px color-mix(in srgb, var(--expense) var(--mix-sm),  transparent); }
+.cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-2xl),   var(--surface)); filter: brightness(1.07); box-shadow: 0 2px 14px color-mix(in srgb, var(--expense) var(--mix-md),  transparent); }
 .cal-cell.selected {
   background: var(--primary-light);
   outline: var(--bw-select) solid var(--primary);
   outline-offset: var(--outline-offset-inner);
 }
-/* v22.66: 選択セルホバーグロー強化 */
-.cal-cell.selected:hover { background: var(--primary-light); box-shadow: inset 0 0 0 2px var(--primary), 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v22.66: 選択セルホバーグロー強化
+   v26.28: outer glow blur 8→14px / mix-sm→mix-md でリッチ化、押下感が強い演出に */
+.cal-cell.selected:hover { background: var(--primary-light); box-shadow: inset 0 0 0 2px var(--primary), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 
 .cal-date-num {
   font-size: var(--fs-sm);
@@ -7117,13 +7120,17 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   justify-content: center;
   white-space: nowrap;
 }
+/* v26.28: 「今日」バッジ強化 — ring を 2 段重ね（mix-md→mix-lg + 外側 0 0 10px）にして「今日」の存在感を1段増し、 transition で hover 時のリング拡張に追従できるように */
 .cal-date-num.today {
   background: var(--primary);
   color: var(--white);
   border-radius: var(--radius-circle);
   font-weight: var(--fw-bold);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent), 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  transition: box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
+/* v26.28: 親セル hover で today バッジの外側 glow を強化（焦点が合った時に「今日」のシンボルが脈動する印象） */
+.cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xl), transparent), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .cal-date-num.sun:not(.today) { color: var(--expense); }
 .cal-date-num.sat:not(.today) { color: var(--primary); }
 
@@ -7294,14 +7301,23 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .cal-cell.heat-2 { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); }
 [data-theme="dark"] .cal-cell.heat-3 { background: color-mix(in srgb, var(--expense) var(--mix-xl),   var(--surface)); }
 [data-theme="dark"] .cal-cell.heat-4 { background: color-mix(in srgb, var(--expense) var(--mix-4xl),  var(--surface)); }
-/* v22.66: ダークモード ヒートマップホバー色保持 */
-[data-theme="dark"] .cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-xs),   var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-xl),   var(--surface)); }
-[data-theme="dark"] .cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-4xl),  var(--surface)); }
+/* v22.66: ダークモード ヒートマップホバー色保持
+   v26.28: ライト同様 expense mix の外側グロー追加（ダークでは expense-end 等は無いため expense を流用）+ filter:brightness 1.10 でダーク側を少し強めに */
+[data-theme="dark"] .cal-cell.heat-1:hover { background: color-mix(in srgb, var(--expense) var(--mix-xs),   var(--surface)); filter: brightness(1.10); box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) var(--mix-xs),  transparent); }
+[data-theme="dark"] .cal-cell.heat-2:hover { background: color-mix(in srgb, var(--expense) var(--mix-soft), var(--surface)); filter: brightness(1.10); box-shadow: 0 2px 12px color-mix(in srgb, var(--expense) var(--mix-sm),  transparent); }
+[data-theme="dark"] .cal-cell.heat-3:hover { background: color-mix(in srgb, var(--expense) var(--mix-xl),   var(--surface)); filter: brightness(1.10); box-shadow: 0 2px 14px color-mix(in srgb, var(--expense) var(--mix-md),  transparent); }
+[data-theme="dark"] .cal-cell.heat-4:hover { background: color-mix(in srgb, var(--expense) var(--mix-4xl),  var(--surface)); filter: brightness(1.10); box-shadow: 0 2px 16px color-mix(in srgb, var(--expense) var(--mix-lg),  transparent); }
 [data-theme="dark"] .cal-cell.selected {
   background: color-mix(in srgb, var(--primary) var(--mix-mid), var(--surface));
 }
+/* v26.28: ダーク .cal-cell:hover — primary → primary-end に切替（ダーク側のブランドアクセント色で統一） */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+/* v26.28: ダーク .cal-cell.selected:hover — primary-end で統一、外側 glow を blur 14px / mix-md に強化 */
+[data-theme="dark"] .cal-cell.selected:hover { box-shadow: inset 0 0 0 2px var(--primary-end), 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* v26.28: ダーク 今日バッジ — primary-end ring + 外側 glow（背景は light 同様 var(--primary) を継承し色の連続性を保つ） */
+[data-theme="dark"] .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* v26.28: ダーク 親セル hover で 今日バッジ glow 強化 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent), 0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* モバイル */
 @media (max-width: 768px) {
