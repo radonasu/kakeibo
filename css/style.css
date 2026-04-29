@@ -1559,8 +1559,8 @@ select:focus:not(:focus-visible) {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  /* v22.66: 外周拡散グロー追加 */
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v22.66: 外周拡散グロー追加 / v26.13: drop-shadow を 0 1px 3px black-05 → 0 4px 12px black-12 に強化し rest（無）→hover（0 2px 8px black-08, v26.11）→focus（0 4px 12px black-12）の浮上深度ラダーを完成。フォーム入力中に最も「持ち上がっている」立体感を獲得 */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 12px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 /* ── フォームプレースホルダー・キャレット統一 v15.2 ── */
 .form-group input,
@@ -1607,8 +1607,8 @@ select:focus:not(:focus-visible) {
 }
 .amount-input-wrap:focus-within {
   border-color: var(--primary);
-  /* v22.74: 外周拡散グロー追加（通常input:focus v22.66と統一） */
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 1px 3px var(--black-05), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v22.74: 外周拡散グロー追加（通常input:focus v22.66と統一） / v26.13: drop-shadow を 0 1px 3px black-05 → 0 4px 14px black-12 に強化し rest（無）→hover（0 2px 8px black-08, v26.12）→focus-within（0 4px 14px black-12）の浮上深度ラダーを完成。金額入力中に最も「持ち上がっている」立体感を獲得し form-group input:focus（v26.13）と整合 */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 .amount-prefix {
   padding: 0 var(--sp-2) 0 var(--sp-3);
@@ -40579,3 +40579,36 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
     line 34240（ダーク btn-success:hover inset 補完））
    本ブロックは概要記録のみ。
    ============================================================ */
+
+/* ============================================================
+   v26.13: 空状態サブテキスト glow 5種統合 + フォーム入力 focus 浮上深度強化（form-group / amount-input-wrap）
+   - ① 空状態 sub-text 5種（empty-asset-sub / empty-goal-sub / empty-debt-sub / wl-empty-sub / ch-empty-sub）に
+        primary text-shadow glow 追加（ライト mix-3xs / ダーク primary-end mix-2xs）。
+        v26.05 のアイコン glow + v26.12 のメッセージ glow に続き、サブ補足テキストにも常時の弱い primary 発光を加え
+        「アイコン + メッセージ + サブ」3層が全て静かに発光する完成形空状態演出に進化。
+        sub-text は color: text-muted / text-faint で元から弱いトーンのため、glow 強度はメッセージより一段下げる（mix-3xs / mix-2xs）。
+   - ② .form-group input/select/textarea:focus drop-shadow 強化（line 1563）：
+        従来 0 1px 3px black-05 → 0 4px 12px black-12。rest（無）→ hover（0 2px 8px black-08, v26.11）→
+        focus（0 4px 12px black-12）の浮上深度ラダーを完成。フォーム入力中に最も「持ち上がっている」立体感を獲得。
+   - ③ .amount-input-wrap:focus-within drop-shadow 強化（line 1611）：
+        従来 0 1px 3px black-05 → 0 4px 14px black-12。rest（無）→ hover（0 2px 8px black-08, v26.12）→
+        focus-within（0 4px 14px black-12）の浮上深度ラダーを完成。② form-group focus と整合し金額入力体験も最も持ち上がる。
+   ============================================================ */
+
+/* ① 空状態サブテキスト 5種に primary text-shadow glow 追加（ライト/ダーク）
+   ライト：mix-nano (5%) — メッセージ glow（mix-2xs 10%, v26.12）の半分の控えめなトーン
+   ダーク：primary-end mix-2xs (10%) — メッセージ glow（mix-xs 12%, v26.12）より一段弱いトーン */
+.empty-asset-sub,
+.empty-goal-sub,
+.empty-debt-sub,
+.wl-empty-sub,
+.ch-empty-sub {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+}
+[data-theme="dark"] .empty-asset-sub,
+[data-theme="dark"] .empty-goal-sub,
+[data-theme="dark"] .empty-debt-sub,
+[data-theme="dark"] .wl-empty-sub,
+[data-theme="dark"] .ch-empty-sub {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}

@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.12'; // v26.12: 金額入力ラッパー hover lift 統合 + モーダルオーバーレイ blur 強化 + 空状態アイコン/メッセージ glow 統一 + ダーク btn-success:hover inset 補完 + アイコンボタン群 hover ring 強化（amount-input-wrap:hover に 0 2px 8px black-08 lift ドロップシャドウ追加で form-group input hover lift（v26.11）と整合 + modal-overlay backdrop blur-sm(8px)→blur-md(10px) でモーダル背景フォーカスプル深度増 + tx-empty-icon を v22.91 8種 drop-shadow primary glow リストに追加 + tx-empty-msg/wl-empty p/ch-empty p/sub-empty p/pt-empty p を v26.10① 4種 text-shadow primary glow リストに追加で空状態9種ビジュアル統一 + ダーク btn-success:hover に inset 0 1px 0 rgba(255,255,255,0.22) 補完で v24.90③ override に v26.11 ライト inset を統合（btn-primary/ghost/danger ダーク hover inset 統合パターンと完成形に） + btn-icon:hover primary glow 強化 mix-sm→mix-md + edit-tx:hover primary ring 強化 mix-md→mix-lg + delete-tx:hover danger ring 強化 mix-md→mix-lg でアイコンボタン群 hover アクション可能性視認性向上）
+const CACHE_NAME = 'kakeibo-v26.13'; // v26.13: 空状態サブテキスト glow 5種統合 + フォーム入力 focus 浮上深度ラダー完成（form-group / amount-input-wrap）— empty-asset-sub/empty-goal-sub/empty-debt-sub/wl-empty-sub/ch-empty-sub に primary text-shadow glow 追加（ライト mix-nano / ダーク primary-end mix-2xs）でアイコン+メッセージ+サブの3層空状態演出に進化 + form-group input/select/textarea:focus drop-shadow を 0 1px 3px black-05 → 0 4px 12px black-12 に強化（rest→hover(v26.11)→focus 深度ラダー完成）+ amount-input-wrap:focus-within drop-shadow を 0 1px 3px black-05 → 0 4px 14px black-12 に強化（rest→hover(v26.12)→focus-within 深度ラダー完成）でフォーム入力中の最大持ち上がり立体感を獲得
 const ASSETS = [
   './index.html',
   './css/style.css',
