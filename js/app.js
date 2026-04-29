@@ -10867,52 +10867,65 @@ function renderDebtSimChart(base, accel, extra) {
     if (m === 0 && y > 0) return `${y}年後`;
     return '';
   });
-  const muted = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim();
-  const border = getComputedStyle(document.documentElement).getPropertyValue('--border').trim();
-  const primaryClr = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
-  const successClr = getComputedStyle(document.documentElement).getPropertyValue('--success').trim();
-  const grad1 = ctx.createLinearGradient(0, 0, 0, 200);
-  grad1.addColorStop(0, primaryClr + '40');
-  grad1.addColorStop(1, primaryClr + '05');
+  // v26.23: charts.js のヘルパーシステム（getThemeColors/makeGradient/commonTooltip/commonAnimation）に統合。
+  // makeGradient(canvas.height ベース 3-stop richer fade) と commonTooltip(v26.22 の borderColor 0xcc /
+  // padding 14,10 / cornerRadius 10 / titleFont 700 / usePointStyle 円形 / caretSize 7 / 背景 0.95-0.98 等)
+  // を共通化。borderWidth 2→2.5, tension 0.35→0.4, pointHoverRadius 4→7, point枠線(surface色) 追加で他の
+  // ライン系チャート（renderBalanceLineChart / renderNetWorthChart）と完全対称な見た目に。
+  const { text: textColor, grid: gridColor, surface, fs2xs } = getThemeColors();
+  const primaryClr = getCSSVar('--primary');
+  const successClr = getCSSVar('--success');
   const datasets = [{
     label: '現在の計画',
     data: baseData.map(p => p.balance),
     borderColor: primaryClr,
-    backgroundColor: grad1,
-    fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+    backgroundColor: makeGradient(ctx, canvas, primaryClr, 0.32, 0.02),
+    fill: true,
+    tension: 0.4,
+    borderWidth: 2.5,
+    pointRadius: 0,
+    pointHoverRadius: 7,
+    pointBackgroundColor: primaryClr,
+    pointBorderColor: surface,
+    pointBorderWidth: 2,
+    pointHoverBorderWidth: 3,
   }];
   if (accel) {
     const accelData = downsample(accel.schedule, 60);
-    const grad2 = ctx.createLinearGradient(0, 0, 0, 200);
-    grad2.addColorStop(0, successClr + '33');
-    grad2.addColorStop(1, successClr + '05');
     datasets.push({
       label: `繰上返済後`,
       data: accelData.map(p => p.balance),
       borderColor: successClr,
-      backgroundColor: grad2,
-      fill: true, tension: 0.35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4,
+      backgroundColor: makeGradient(ctx, canvas, successClr, 0.30, 0.02),
+      fill: true,
+      tension: 0.4,
+      borderWidth: 2.5,
+      pointRadius: 0,
+      pointHoverRadius: 7,
+      pointBackgroundColor: successClr,
+      pointBorderColor: surface,
+      pointBorderWidth: 2,
+      pointHoverBorderWidth: 3,
     });
   }
   _debtSimChart = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
     options: {
-      responsive: true, maintainAspectRatio: false,
-      animation: { duration: 700, easing: 'easeOutQuart' },
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: commonAnimation,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: 11 } } },
-        tooltip: {
-          backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--surface').trim(), borderColor: primaryClr, borderWidth: 1, cornerRadius: 8, padding: 10,
-          callbacks: {
-            label: c => ` ${c.dataset.label}: ${formatMoney(c.raw)}`,
-            title: items => `${items[0].label || (Math.round(items[0].dataIndex * step + 1) + 'ヶ月後')}`,
-          },
-        },
+        legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 14, font: { size: fs2xs } } },
+        tooltip: commonTooltip({
+          label: c => ` ${c.dataset.label}: ${formatMoney(c.raw)}`,
+          title: items => `${items[0].label || (Math.round(items[0].dataIndex * step + 1) + 'ヶ月後')}`,
+        }),
       },
       scales: {
-        x: { ticks: { maxTicksLimit: 8, color: muted, font: { size: 10 } }, grid: { color: border } },
-        y: { ticks: { callback: v => v >= 10000 ? `¥${Math.round(v / 10000)}万` : `¥${v}`, color: muted, font: { size: 10 } }, grid: { color: border } },
+        x: { ticks: { maxTicksLimit: 8, color: textColor, font: { size: fs2xs } }, grid: { color: gridColor } },
+        y: { ticks: { callback: v => v >= 10000 ? `¥${Math.round(v / 10000)}万` : `¥${v}`, color: textColor, font: { size: fs2xs } }, grid: { color: gridColor } },
       },
     },
   });
