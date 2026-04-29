@@ -16111,12 +16111,12 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 #md-modal.modal-is-open .dd-modal-header { animation: dd-hdr-in var(--dur-medium) var(--ease-bounce) both; }
 #md-modal.modal-is-open .dd-modal-footer { animation: dd-foot-in var(--dur-medium) var(--ease-bounce) var(--dur-delay-xs) both; }
 
-/* dd-list スクロールバー */
-.dd-list { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+/* dd-list スクロールバー / v26.29: 単色 var(--border) thumb → primary tint 縦グラデに格上げ＋hover に primary glow blur 8px 追加。Firefox の scrollbar-color も primary mix-xs ティントに統一 */
+.dd-list { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) transparent; }
 .dd-list::-webkit-scrollbar { width: var(--size-scrollbar-sm); }
 .dd-list::-webkit-scrollbar-track { background: transparent; }
-.dd-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-badge); }
-.dd-list::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+.dd-list::-webkit-scrollbar-thumb { background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) 0%, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 100%); border-radius: var(--radius-badge); transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.dd-list::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 0%, color-mix(in srgb, var(--primary) var(--mix-md), var(--text-muted)) 100%); box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 
 /* グラフ hover ヒント（クリック可能を示す） */
 .chart-clickable-wrap {
@@ -16534,12 +16534,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   padding: 0 var(--sp-1);
   margin: 0 calc(-1 * var(--sp-1));
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  /* v26.29: Firefox scrollbar-color も primary mix-xs ティントに統一（dd-list / グローバル v23 系統一規格） */
+  scrollbar-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) transparent;
 }
 .md-scroll-body::-webkit-scrollbar { width: var(--size-scrollbar-sm); }
 .md-scroll-body::-webkit-scrollbar-track { background: transparent; }
-.md-scroll-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-badge); }
-.md-scroll-body::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+/* v26.29: dd-list と同等パターン — 単色 var(--border) thumb → primary tint 縦グラデ＋hover primary glow */
+.md-scroll-body::-webkit-scrollbar-thumb { background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) 0%, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 100%); border-radius: var(--radius-badge); transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.md-scroll-body::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 0%, color-mix(in srgb, var(--primary) var(--mix-md), var(--text-muted)) 100%); box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 
 /* セクション見出し */
 .md-section-title {
@@ -41221,4 +41223,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .auth-card:hover .auth-offline-mode,
 [data-theme="dark"] .auth-card:focus-within .auth-offline-mode {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ============================================================
+   v26.29: モーダル内 scrollbar 4 種 primary tint 統一 ＋
+   モバイルボトムナビ上端 primary tint 装飾 ＋
+   モーダルフッター上方向 subtle lift drop-shadow
+   ── 内訳 ──
+   ① ダーク .dd-list / .md-scroll-body scrollbar primary-end tint
+   ② .notif-panel-body scrollbar primary tint thumb（ライト/ダーク両対応・新規）
+   ③ #bottom-nav 上端 border-top-color に primary tint mix-xs ＋
+      上方向 0 -2px 12px primary mix-xs glow を追加（既存 shadow-up-sm に呼応）
+   ④ ダーク #bottom-nav 上端 primary-end tint ＋ 上方向 primary-end glow
+   ⑤ .modal-footer 上方向 0 -3px 10px black-08 drop-shadow lift（既存 border-top primary tint と組合せて
+      フッターが「持ち上がる」立体感を獲得）＋ ダーク .modal-footer 上方向 black-12 lift shadow
+   ============================================================ */
+
+/* ① ダーク .dd-list / .md-scroll-body scrollbar primary-end tint
+   ライト v26.29 で primary mix-xs / mix-sm / mix-md の縦グラデ＋hover glow を実装したのと対称に、
+   ダークモードでは primary-end（lavender #a78bfa）ベースに切替え、ブランドアクセント色を統一。 */
+[data-theme="dark"] .dd-list { scrollbar-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) transparent; }
+[data-theme="dark"] .dd-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 100%);
+}
+[data-theme="dark"] .dd-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-md), var(--white)) 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .md-scroll-body { scrollbar-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) transparent; }
+[data-theme="dark"] .md-scroll-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 100%);
+}
+[data-theme="dark"] .md-scroll-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-md), var(--white)) 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ② .notif-panel-body scrollbar primary tint
+   通知センターパネル内のスクロールバー thumb をグローバル primary tint と同等規格で明示的にデザイン。
+   従来はグローバル ::-webkit-scrollbar-thumb（v22 末尾の primary mix-xs 単色）を継承していたが、
+   通知パネルは小さく頻繁にスクロールする領域なので、dd-list と同等のリッチな縦グラデ＋hover glow を適用。 */
+.notif-panel-body { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) transparent; }
+.notif-panel-body::-webkit-scrollbar { width: var(--size-scrollbar-sm); }
+.notif-panel-body::-webkit-scrollbar-track { background: transparent; }
+.notif-panel-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-xs), var(--border-strong)) 0%, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 100%);
+  border-radius: var(--radius-badge);
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.notif-panel-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) var(--mix-sm), var(--text-faint)) 0%, color-mix(in srgb, var(--primary) var(--mix-md), var(--text-muted)) 100%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+[data-theme="dark"] .notif-panel-body { scrollbar-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) transparent; }
+[data-theme="dark"] .notif-panel-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-strong)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 100%);
+}
+[data-theme="dark"] .notif-panel-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-text)) 0%, color-mix(in srgb, var(--primary-end) var(--mix-md), var(--white)) 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ③ #bottom-nav 上端 primary tint 装飾
+   モバイル底部ナビゲーションバーの上端境界線をニュートラル var(--border) → primary mix-xs ティント線に格上げ＋
+   上方向（負の y）に微小 box-shadow glow を追加。既存 var(--shadow-up-sm) と呼応してナビバーが
+   コンテンツから「フロート」した印象が強調される。
+   注意: 既存の box-shadow は var(--shadow-up-sm) のみなので、追加 glow を含めて 2 段重ねに。 */
+#bottom-nav {
+  border-top-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border));
+  box-shadow: var(--shadow-up-sm), 0 -2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+/* ④ ダーク #bottom-nav 上端 primary-end tint */
+[data-theme="dark"] #bottom-nav {
+  border-top-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border));
+  box-shadow: var(--shadow-up-sm), 0 -2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑤ .modal-footer 上方向 subtle drop-shadow lift
+   既存 border-top-color：primary tint mix-xs（v22.91#7・line 18990）と組合せて
+   フッターが上方向に微小に「持ち上がる」立体感を獲得。
+   .modal-footer の元定義（line 3151）は box-shadow 無しなので、ここで新規追加（!important 不要）。
+   ダークでは black-08 → black-12 に強化（ダーク背景上で subtle shadow が見えにくいため）。 */
+.modal-footer {
+  box-shadow: 0 -3px 10px var(--black-08);
+}
+[data-theme="dark"] .modal-footer {
+  box-shadow: 0 -3px 12px var(--black-12);
 }
