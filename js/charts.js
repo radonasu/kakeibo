@@ -189,7 +189,7 @@ function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
   };
 }
 
-// ─── 共通クロスヘアプラグイン (line/area/bar系チャート用 hover時の縦ライン) ──
+// ─── 共通クロスヘアプラグイン (line/area/bar系チャート用 hover時のガイドライン) ──
 // v26.24: renderCategoryTrendChart に閉じていた ctCrosshair を共通化し、全ライン系チャート
 // （renderBalanceLineChart / renderNetWorthChart / renderCategoryTrendChart /
 //  renderFixedVariableTrend / renderDebtSimChart）に適用。
@@ -199,39 +199,59 @@ function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
 //  失敗時 (or scale 未対応時) のみ従来の element.x にフォールバック。
 //  これにより grouped bar （4 dataset per category 等）でも crosshair が
 //  「カテゴリの幾何学的中央」を貫く（旧来は最初の dataset の bar 中心 = 左寄り）。
+// v26.26: 横棒系（indexAxis:'y'）に展開するため orientation 引数（'vertical' | 'horizontal'）を追加。
+//  'horizontal' 指定時はカテゴリ軸（y）の getPixelForValue(idx) を優先し、chartArea の left→right に
+//  水平方向のクロスヘアを描画。renderCategoryBarChart / renderMemberExpenseChart に適用予定。
 //   ① strokeStyle: gridColor → primary alpha 0.42 で brand 色のクロスヘアに格上げ（テーマ追従）
 //   ② lineWidth 1 → 1.2 で線が立つ（hairline すぎず認識しやすい）
 //   ③ dash [4,4] → [5,4] で破線リズム微強化
 //   ④ shadow（primary alpha 0.18 / blur 6）追加でクロスヘアに微発光
 // hover中のみ描画（chart.tooltip._active ある時のみ afterDraw）。各チャート毎に新規 instance を
 // 生成しテーマ色をクロージャに保持する（ライト/ダーク切替時は再描画で最新色が適用される）。
-function makeCrosshairPlugin(strokeColor, glowColor) {
+function makeCrosshairPlugin(strokeColor, glowColor, orientation = 'vertical') {
   return {
     id: 'crosshair',
     afterDraw(chart) {
       const active = chart.tooltip?._active;
       if (!active?.length) return;
-      // v26.25: category center を優先（grouped bar で正確にスナップ）。
-      // line/stacked bar では element.x と一致するため挙動は変わらない。
       const idx = active[0].index;
-      const xScale = chart.scales?.x;
-      let x;
-      if (xScale && typeof xScale.getPixelForValue === 'function' && Number.isFinite(idx)) {
-        const v = xScale.getPixelForValue(idx);
-        x = Number.isFinite(v) ? v : active[0].element.x;
-      } else {
-        x = active[0].element.x;
-      }
-      const { top, bottom } = chart.chartArea;
       const c = chart.ctx;
+      const { left, right, top, bottom } = chart.chartArea;
+      let x1, y1, x2, y2;
+      if (orientation === 'horizontal') {
+        // 横棒系: カテゴリ軸（y）の中心を貫く水平線（chartArea の left→right）。
+        const yScale = chart.scales?.y;
+        let y;
+        if (yScale && typeof yScale.getPixelForValue === 'function' && Number.isFinite(idx)) {
+          const v = yScale.getPixelForValue(idx);
+          y = Number.isFinite(v) ? v : active[0].element.y;
+        } else {
+          y = active[0].element.y;
+        }
+        x1 = left;  y1 = y;
+        x2 = right; y2 = y;
+      } else {
+        // 縦棒/ライン系: カテゴリ軸（x）の中心を貫く垂直線。
+        // line/stacked bar では element.x と一致するため挙動は変わらない。
+        const xScale = chart.scales?.x;
+        let x;
+        if (xScale && typeof xScale.getPixelForValue === 'function' && Number.isFinite(idx)) {
+          const v = xScale.getPixelForValue(idx);
+          x = Number.isFinite(v) ? v : active[0].element.x;
+        } else {
+          x = active[0].element.x;
+        }
+        x1 = x; y1 = top;
+        x2 = x; y2 = bottom;
+      }
       c.save();
       if (glowColor) {
         c.shadowColor = glowColor;
         c.shadowBlur = 6;
       }
       c.beginPath();
-      c.moveTo(x, top);
-      c.lineTo(x, bottom);
+      c.moveTo(x1, y1);
+      c.lineTo(x2, y2);
       c.lineWidth = 1.2;
       c.strokeStyle = strokeColor;
       c.setLineDash([5, 4]);
@@ -548,6 +568,7 @@ function renderCategoryBarChart(canvasId, transactions, type) {
   canvas.style.display = '';
 
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
+  const primaryClr = getCSSVar('--primary');
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -561,6 +582,8 @@ function renderCategoryBarChart(canvasId, transactions, type) {
         borderSkipped: false,
       }],
     },
+    // v26.26: 横棒系（indexAxis:'y'）に水平方向クロスヘア適用。
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18), 'horizontal')],
     options: {
       indexAxis: 'y',
       responsive: true,
@@ -618,6 +641,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
   const labels = members.map(m => m.name);
   const colors = members.map(m => m.color || getCSSVar('--text-muted'));
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
+  const primaryClr = getCSSVar('--primary');
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -644,6 +668,9 @@ function renderMemberExpenseChart(canvasId, transactions) {
         },
       ],
     },
+    // v26.26: メンバー別横棒（grouped bar・indexAxis:'y'）に水平方向クロスヘア適用。
+    // yScale.getPixelForValue(idx) を優先しメンバー行の幾何中央を貫通する。
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18), 'horizontal')],
     options: {
       indexAxis: 'y',
       responsive: true,
