@@ -41310,3 +41310,84 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .modal-footer {
   box-shadow: 0 -3px 12px var(--black-12);
 }
+
+/* ============================================================
+   v26.30: チェックインモーダル ci-ok-btn 立体感統一 + ボトムナビ rest hover lift +
+            空状態 empty-month-btn glassy sheen 強化
+   ① .ci-ok-btn rest（line 14523）に 0 2px 8px primary mix-xl 外側 glow + inset 0 1px 0 rgba(255,255,255,0.22)
+      glassy sheen を追加。元定義は box-shadow 未設定でフラットだったが、btn-primary（v26.10・line 1328）と
+      同じ 3D ハイライトパターンを獲得。グラデ背景の OK ボタンが「光が当たる立体ボタン」になる。
+   ② .ci-ok-btn:hover（line 14537）の lift を translate-lift-xs（-1px）→ translate-lift-sm（-2px）に深化＋
+      box-shadow を 0 4px 16px primary mix-xl → 0 6px 20px primary mix-2xl に強化＋inset 0 1px 0 rgba(255,255,255,0.28)
+      白光沢を hover 時に 0.22→0.28 微強化。lift・glow・sheen の 3 軸で「触れたら明確に持ち上がる」反応に。
+   ③ .ci-ok-btn:active（line 14542）の box-shadow: none → inset 0 1px 2px rgba(0,0,0,0.18) に変更し、
+      フラット消失 → 内側影で「凹む」反転圧覚演出に。タクタイルなフィードバックを獲得。
+   ④ ダーク .ci-ok-btn rest / hover 専用の box-shadow（primary-end ティント）を新規追加。
+      ライト primary mix-xl → ダーク primary-end mix-2xl で lavender アクセント色をダーク背景上でも維持。
+      inset 白は 0.22 → 0.06（ダーク版）/ 0.28 → 0.08（hover）に減らし、ダークの控えめな glassy 感に。
+   ⑤ .bottom-nav-item transition list（line 4456）に transform を追加し、lift アニメーションが
+      スムーズに animate するように（従来は transform 未含有でジャンプ表示の懸念があった）。
+   ⑥ .bottom-nav-item:not(.active):hover に transform: translateY(-1px) を追加し、
+      モバイル底部ナビの非アクティブ項目が「触れたら一段上に持ち上がる」反応を獲得。
+      既存のサイドバー .nav-item:hover（box-shadow lift・v11.x）と整合。
+   ⑦ .bottom-nav-item:not(.active):active に transform: translateY(0) を明示的に追加し、
+      hover lift → press でぐっと押し戻る反転圧覚演出を獲得。
+   ⑧ .empty-month-btn rest（line 5374）に inset 0 1px 0 rgba(255,255,255,0.5) を追加し、
+      btn-ghost（v26.10・line 1339）と同じ「淡い背景上の上端白光沢」を獲得（primary-light bg + 白 sheen で 3D 凹凸感）。
+   ⑨ .empty-month-btn:hover の inset を 0.5 → 0.55 に微強化（btn-ghost v26.10 と同じパターン）。
+   ⑩ ダーク .empty-month-btn rest / hover の inset 白を 0.06 / 0.08 に減らし、ダーク控えめ sheen に。
+   全変更 CSS-only 実装（JS変更なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .ci-ok-btn rest 立体感獲得（外側 primary glow + 内側白光沢） */
+.ci-ok-btn {
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+/* ② .ci-ok-btn:hover lift 深化 + glow 強化 + 白光沢強化 */
+.ci-ok-btn:hover {
+  transform: translateY(var(--translate-lift-sm));
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  filter: brightness(var(--brightness-hover-sm));
+}
+/* ③ .ci-ok-btn:active 内側凹み影で press 圧覚演出 */
+.ci-ok-btn:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
+  filter: brightness(var(--brightness-press));
+}
+/* ④ ダーク .ci-ok-btn rest / hover 専用の primary-end ティント影 */
+[data-theme="dark"] .ci-ok-btn {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .ci-ok-btn:hover {
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ⑤ .bottom-nav-item transition に transform を追加し lift アニメーションを滑らかに */
+.bottom-nav-item {
+  transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce);
+}
+/* ⑥ .bottom-nav-item:not(.active):hover に微小 lift（-1px）を追加 */
+.bottom-nav-item:not(.active):hover {
+  transform: translateY(-1px);
+}
+/* ⑦ .bottom-nav-item:not(.active):active 押下時は元位置に戻る */
+.bottom-nav-item:not(.active):active {
+  transform: translateY(0);
+}
+
+/* ⑧ .empty-month-btn rest に inset 白光沢（btn-ghost v26.10 同パターン） */
+.empty-month-btn {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+/* ⑨ .empty-month-btn:hover で inset 白光沢を 0.5 → 0.55 微強化（既存 outer glow と組合せ） */
+.empty-month-btn:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+/* ⑩ ダーク .empty-month-btn rest / hover の inset 白を控えめに */
+[data-theme="dark"] .empty-month-btn {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .empty-month-btn:hover {
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
