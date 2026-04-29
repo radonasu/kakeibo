@@ -40854,3 +40854,57 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .cal-panel-empty:hover {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v26.17: 三次空状態 3種への primary glow 統合（.empty 汎用 /
+            .dd-empty ドリルダウン / .ct-row-empty カテゴリトレンド行）
+   - v26.05/26.10/26.12-26.16 で 14種空状態（主要10種＋二次4種）への
+     primary glow 統合が完成した一方、テーブル/カード/インラインで使われる
+     汎用テキスト系の3種（.empty・.dd-empty・.ct-row-empty）が plain
+     text-muted のみで glow 連携が無かった。
+   - .empty はインサイトカード/タグ取引テーブル/メンバーテーブル/
+     カテゴリトレンドモーダル内テーブル/カテゴリ管理空 等の8箇所超で使われる
+     最も汎用的な空状態クラス。常時 glow + hover 強化で全カードの空メッセージが
+     統一光を獲得。
+   - .dd-empty はカテゴリドリルダウンモーダルで「該当取引なし」表示。
+   - .ct-row-empty td はカテゴリトレンドテーブルで全月ゼロ円のカテゴリ行（— 表示）。
+     既存の tr:hover で translateY/box-shadow がある上に td text-shadow を上乗せ。
+   - これで全空状態（主要10＋二次4＋三次3＝計17種）が統一 primary glow を獲得し、
+     家計簿アプリ上のあらゆる「空っぽ画面」が一貫したブランド表現に。
+   ============================================================ */
+
+/* ① 3種三次空状態に常時 primary text-shadow glow + transition */
+.empty,
+.dd-empty,
+.ct-row-empty td {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+  transition: text-shadow var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] .empty,
+[data-theme="dark"] .dd-empty,
+[data-theme="dark"] .ct-row-empty td {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .empty / .dd-empty hover: text-shadow 強化（card/modal にホバーすると空メッセージが明るく） */
+.card:hover .empty,
+.dd-modal-box:hover .dd-empty,
+.empty:hover,
+.dd-empty:hover {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .card:hover .empty,
+[data-theme="dark"] .dd-modal-box:hover .dd-empty,
+[data-theme="dark"] .empty:hover,
+[data-theme="dark"] .dd-empty:hover {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ .ct-row-empty 行ホバー: 既存 tr:hover lift と連動して td text-shadow 強化 */
+.ct-table tbody tr.ct-row-empty:hover td {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ct-table tbody tr.ct-row-empty:hover td {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
