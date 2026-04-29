@@ -118,17 +118,63 @@ if (!Chart.registry.plugins.get('centerText')) {
 // Chart.js グローバルフォント設定（日本語フォントスタック）
 Chart.defaults.font.family = CHART_FONT_FAMILY;
 
-// ─── グラデーション生成ヘルパー ──────────────────────────────
+// ─── 色変換ヘルパー (hex→rgba) ────────────────────────────
+// 8桁hex (#rrggbbaa) も #rrggbb と同様に rgb 部分のみ取り出して指定 alpha を付与
+function hexToRgba(color, alpha) {
+  if (!color || typeof color !== 'string' || !color.startsWith('#')) return color;
+  const h = color.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return color;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ─── グラデーション生成ヘルパー (line area / 3-stop richer fade) ──
+// v26.21: 中間stopを追加し色帯の伸びを強化。既存呼び出しの数値はそのまま流用可
 function makeGradient(ctx, canvas, color, alpha1 = 0.25, alpha2 = 0.02) {
   const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  // hex→rgb変換 (簡易)
-  const hex = color.replace('#', '');
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
-  grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha1})`);
-  grad.addColorStop(1,   `rgba(${r},${g},${b},${alpha2})`);
+  const top   = hexToRgba(color, alpha1);
+  const mid   = hexToRgba(color, alpha1 * 0.45);
+  const bottom = hexToRgba(color, alpha2);
+  grad.addColorStop(0,    top);
+  grad.addColorStop(0.55, mid);
+  grad.addColorStop(1,    bottom);
   return grad;
+}
+
+// ─── 縦方向バー用グラデーション (canvas全体・単色データセット用) ──
+// 上部 alpha 高 / 下部 alpha 低 でバー全体に光沢感
+function makeBarVertGrad(ctx, canvas, color, alphaTop = 0.92, alphaBottom = 0.55) {
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, hexToRgba(color, alphaTop));
+  grad.addColorStop(1, hexToRgba(color, alphaBottom));
+  return grad;
+}
+
+// ─── バーごとグラデーション (scriptable: dataIndex 毎の色配列対応) ──
+// indexAxis: 'y' (横棒) は base→x、'x' (縦棒) は y→base に勾配
+function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
+  return (ctx) => {
+    const color = Array.isArray(colorOrArr) ? colorOrArr[ctx.dataIndex] : colorOrArr;
+    if (!color) return null;
+    const meta = ctx.chart.getDatasetMeta(ctx.datasetIndex);
+    const bar  = meta && meta.data && meta.data[ctx.dataIndex];
+    if (!bar) return hexToRgba(color, alphaHigh);
+    const isHorizontal = ctx.chart.options && ctx.chart.options.indexAxis === 'y';
+    const c2 = ctx.chart.ctx;
+    let grad;
+    if (isHorizontal) {
+      grad = c2.createLinearGradient(bar.base, 0, bar.x, 0);
+      grad.addColorStop(0, hexToRgba(color, alphaLow));
+      grad.addColorStop(1, hexToRgba(color, alphaHigh));
+    } else {
+      grad = c2.createLinearGradient(0, bar.y, 0, bar.base);
+      grad.addColorStop(0, hexToRgba(color, alphaHigh));
+      grad.addColorStop(1, hexToRgba(color, alphaLow));
+    }
+    return grad;
+  };
 }
 
 // ─── カテゴリ別支出ドーナツグラフ ────────────────────────────
@@ -179,11 +225,12 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
       _centerTotal: total,
       datasets: [{
         data,
-        backgroundColor: colors.map(c => c + 'e0'),  // 軽い透過
+        backgroundColor: colors.map(c => hexToRgba(c, 0.88)),
+        hoverBackgroundColor: colors.map(c => hexToRgba(c, 0.98)),
         borderWidth: 2.5,
         borderColor: surface,
-        hoverBorderWidth: 3,
-        hoverOffset: 6,
+        hoverBorderWidth: 4,
+        hoverOffset: 10,
       }],
     },
     options: {
@@ -240,8 +287,9 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
   const incomeClr  = getCSSVar('--income');
   const expenseClr = getCSSVar('--expense');
   const clickable  = typeof onMonthClick === 'function';
+  const ctx2d = canvas.getContext('2d');
 
-  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+  chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'bar',
     data: {
       labels,
@@ -249,22 +297,22 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
         {
           label: '収入',
           data: incomeData,
-          backgroundColor: incomeClr + 'bf',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, incomeClr, 0.92, 0.55),
           borderColor: incomeClr,
           borderWidth: 0,
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: incomeClr + 'f2',
+          hoverBackgroundColor: makeBarVertGrad(ctx2d, canvas, incomeClr, 1, 0.78),
         },
         {
           label: '支出',
           data: expenseData,
-          backgroundColor: expenseClr + 'bf',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, expenseClr, 0.92, 0.55),
           borderColor: expenseClr,
           borderWidth: 0,
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: expenseClr + 'f2',
+          hoverBackgroundColor: makeBarVertGrad(ctx2d, canvas, expenseClr, 1, 0.78),
         },
       ],
     },
@@ -353,7 +401,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
         label: '収支',
         data: balances,
         borderColor: lineColor,
-        backgroundColor: makeGradient(ctx2d, canvas, lineColor, 0.22, 0.01),
+        backgroundColor: makeGradient(ctx2d, canvas, lineColor, 0.32, 0.01),
         borderWidth: 2.5,
         fill: true,
         tension: 0.4,
@@ -421,9 +469,9 @@ function renderCategoryBarChart(canvasId, transactions, type) {
   });
 
   const sorted = Object.entries(catMap).sort((a, b) => b[1].amount - a[1].amount);
-  const labels = sorted.map(([k]) => k);
-  const data   = sorted.map(([, v]) => v.amount);
-  const colors = sorted.map(([, v]) => v.color + 'cc');
+  const labels    = sorted.map(([k]) => k);
+  const data      = sorted.map(([, v]) => v.amount);
+  const baseColors = sorted.map(([, v]) => v.color);
 
   if (data.length === 0) {
     canvas.style.display = 'none';
@@ -439,8 +487,8 @@ function renderCategoryBarChart(canvasId, transactions, type) {
       labels,
       datasets: [{
         data,
-        backgroundColor: colors,
-        hoverBackgroundColor: sorted.map(([, v]) => v.color),
+        backgroundColor: barFillScript(baseColors, 0.92, 0.45),
+        hoverBackgroundColor: barFillScript(baseColors, 1, 0.7),
         borderRadius: 6,
         borderSkipped: false,
       }],
@@ -511,16 +559,16 @@ function renderMemberExpenseChart(canvasId, transactions) {
         {
           label: '支出',
           data: expData,
-          backgroundColor: colors.map(c => c + 'cc'),
-          hoverBackgroundColor: colors,
+          backgroundColor: barFillScript(colors, 0.92, 0.45),
+          hoverBackgroundColor: barFillScript(colors, 1, 0.7),
           borderRadius: 6,
           borderSkipped: false,
         },
         {
           label: '収入',
           data: incData,
-          backgroundColor: colors.map(c => c + '55'),
-          hoverBackgroundColor: colors.map(c => c + '99'),
+          backgroundColor: barFillScript(colors, 0.42, 0.18),
+          hoverBackgroundColor: barFillScript(colors, 0.6, 0.32),
           borderColor: colors,
           borderWidth: 1.5,
           borderRadius: 6,
@@ -631,11 +679,12 @@ function renderPaymentMethodChart(canvasId, transactions) {
       _centerTotal: total,
       datasets: [{
         data,
-        backgroundColor: colors.map(c => c + 'e0'),
+        backgroundColor: colors.map(c => hexToRgba(c, 0.88)),
+        hoverBackgroundColor: colors.map(c => hexToRgba(c, 0.98)),
         borderWidth: 2.5,
         borderColor: surface,
-        hoverBorderWidth: 3,
-        hoverOffset: 6,
+        hoverBorderWidth: 4,
+        hoverOffset: 10,
       }],
     },
     options: {
@@ -700,20 +749,25 @@ function renderPaymentTrendChart(canvasId, year) {
   }
 
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
+  const ctx2d = canvas.getContext('2d');
 
-  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+  chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'bar',
     data: {
       labels,
-      datasets: activeKeys.map(pm => ({
-        label: pm,
-        data: pmData[pm],
-        backgroundColor: (PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted')) + 'cc',
-        borderColor:      PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted'),
-        borderWidth: 0,
-        borderRadius: 6,
-        borderSkipped: false,
-      })),
+      datasets: activeKeys.map(pm => {
+        const baseColor = PAYMENT_METHOD_COLORS[pm] || getCSSVar('--text-muted');
+        return {
+          label: pm,
+          data: pmData[pm],
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, baseColor, 0.92, 0.55),
+          hoverBackgroundColor: makeBarVertGrad(ctx2d, canvas, baseColor, 1, 0.78),
+          borderColor:      baseColor,
+          borderWidth: 0,
+          borderRadius: 6,
+          borderSkipped: false,
+        };
+      }),
     },
     options: {
       responsive: true,
@@ -779,8 +833,9 @@ function renderYoYChart(canvasId, year) {
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
   const expClr = getCSSVar('--expense');
   const incClr = getCSSVar('--income');
+  const ctx2d = canvas.getContext('2d');
 
-  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+  chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'bar',
     data: {
       labels,
@@ -788,16 +843,16 @@ function renderYoYChart(canvasId, year) {
         {
           label: `${year}年 支出`,
           data: thisExp,
-          backgroundColor: expClr + 'bf',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, expClr, 0.92, 0.55),
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: expClr + 'f2',
+          hoverBackgroundColor: makeBarVertGrad(ctx2d, canvas, expClr, 1, 0.78),
           order: 1,
         },
         {
           label: `${prevYear}年 支出`,
           data: prevExp,
-          backgroundColor: expClr + '38',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, expClr, 0.30, 0.14),
           borderColor: expClr + '73',
           borderWidth: 1,
           borderRadius: 6,
@@ -807,16 +862,16 @@ function renderYoYChart(canvasId, year) {
         {
           label: `${year}年 収入`,
           data: thisInc,
-          backgroundColor: incClr + 'bf',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, incClr, 0.92, 0.55),
           borderRadius: 6,
           borderSkipped: false,
-          hoverBackgroundColor: incClr + 'f2',
+          hoverBackgroundColor: makeBarVertGrad(ctx2d, canvas, incClr, 1, 0.78),
           order: 3,
         },
         {
           label: `${prevYear}年 収入`,
           data: prevInc,
-          backgroundColor: incClr + '38',
+          backgroundColor: makeBarVertGrad(ctx2d, canvas, incClr, 0.30, 0.14),
           borderColor: incClr + '73',
           borderWidth: 1,
           borderRadius: 6,
@@ -876,14 +931,6 @@ function renderDayOfWeekChart(canvasId, transactions) {
   const DOW_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
   // グローバル定数 DOW_COLORS_HEX を参照（app.js と共用）
   const DOW_BORDERS = DOW_COLORS_HEX;
-  // バー背景色は border色に 85% opacity を付与
-  function hexToRgba(hex, a) {
-    const r = parseInt(hex.slice(1,3),16);
-    const g = parseInt(hex.slice(3,5),16);
-    const b = parseInt(hex.slice(5,7),16);
-    return `rgba(${r},${g},${b},${a})`;
-  }
-  const DOW_COLORS = DOW_COLORS_HEX.map(c => hexToRgba(c, 0.85));
 
   const dowTotals   = new Array(7).fill(0);
   const dowCounts   = new Array(7).fill(0);
@@ -903,9 +950,9 @@ function renderDayOfWeekChart(canvasId, transactions) {
 
   const { text, grid, fs2xs, fs3xs, fsSm } = getThemeColors();
 
-  // 最大値インデックスを取得してバーをハイライト
+  // 最大値ハイライト: 最大値バーは alpha を引き上げて目立たせる
   const maxAvg = Math.max(...dowAvgs);
-  const hoverColors = DOW_COLORS.map((c, i) => dowAvgs[i] === maxAvg ? DOW_BORDERS[i] : c);
+  const isMax  = dowAvgs.map(v => v === maxAvg && v > 0);
 
   chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'bar',
@@ -914,12 +961,19 @@ function renderDayOfWeekChart(canvasId, transactions) {
       datasets: [{
         label: '平均支出（円）',
         data: dowAvgs,
-        backgroundColor: DOW_COLORS,
+        backgroundColor: (ctx) => {
+          const i = ctx.dataIndex;
+          const high = isMax[i] ? 1 : 0.88;
+          const low  = isMax[i] ? 0.65 : 0.45;
+          return barFillScript(DOW_COLORS_HEX[i], high, low)(ctx);
+        },
+        hoverBackgroundColor: (ctx) => {
+          return barFillScript(DOW_COLORS_HEX[ctx.dataIndex], 1, 0.7)(ctx);
+        },
         borderColor: DOW_BORDERS,
         borderWidth: 2,
         borderRadius: 9,
         borderSkipped: false,
-        hoverBackgroundColor: hoverColors,
       }],
     },
     options: {
@@ -993,7 +1047,7 @@ function renderNetWorthChart(canvasId) {
         label: '純資産',
         data: netWorthData,
         borderColor: lineColor,
-        backgroundColor: makeGradient(ctx2d, canvas, lineColor, 0.20, 0.01),
+        backgroundColor: makeGradient(ctx2d, canvas, lineColor, 0.30, 0.01),
         borderWidth: 2.5,
         fill: true,
         tension: 0.4,
@@ -1061,7 +1115,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
       label: cat.name,
       data,
       borderColor: cat.color,
-      backgroundColor: makeGradient(ctx2d, canvas, cat.color, 0.30, 0.03),
+      backgroundColor: makeGradient(ctx2d, canvas, cat.color, 0.36, 0.02),
       borderWidth: 2.5,
       pointRadius: 4,
       pointHoverRadius: 8,
@@ -1171,10 +1225,15 @@ function renderFixedVariableDonut(canvasId, allTxs) {
       labels: ['固定費', '変動費'],
       datasets: [{
         data: [fixedAmt, varAmt],
-        backgroundColor: [getCSSVar('--primary'), getCSSVar('--success')],
+        backgroundColor: [
+          hexToRgba(getCSSVar('--primary'), 0.92),
+          hexToRgba(getCSSVar('--success'), 0.92),
+        ],
+        hoverBackgroundColor: [getCSSVar('--primary'), getCSSVar('--success')],
         borderColor: surface,
         borderWidth: 3,
-        hoverOffset: 10,
+        hoverOffset: 12,
+        hoverBorderWidth: 4,
       }],
       _centerTotal: total,
     },
@@ -1241,7 +1300,8 @@ function renderFixedVariableTrend(canvasId, year) {
           type: 'bar',
           label: '固定費',
           data: fixedData,
-          backgroundColor: primaryClr + 'cc',
+          backgroundColor: makeBarVertGrad(ctx, canvas, primaryClr, 0.92, 0.55),
+          hoverBackgroundColor: makeBarVertGrad(ctx, canvas, primaryClr, 1, 0.78),
           borderRadius: 6,
           order: 2,
         },
@@ -1249,7 +1309,8 @@ function renderFixedVariableTrend(canvasId, year) {
           type: 'bar',
           label: '変動費',
           data: varData,
-          backgroundColor: successClr + 'b8',
+          backgroundColor: makeBarVertGrad(ctx, canvas, successClr, 0.88, 0.5),
+          hoverBackgroundColor: makeBarVertGrad(ctx, canvas, successClr, 1, 0.72),
           borderRadius: 6,
           order: 2,
         },
@@ -1379,11 +1440,12 @@ function renderTagChart(canvasId, transactions) {
       _centerTotal: total,
       datasets: [{
         data,
-        backgroundColor: colors.map(c => c + 'e0'),
+        backgroundColor: colors.map(c => hexToRgba(c, 0.88)),
+        hoverBackgroundColor: colors.map(c => hexToRgba(c, 0.98)),
         borderWidth: 2.5,
         borderColor: surface,
-        hoverBorderWidth: 3,
-        hoverOffset: 6,
+        hoverBorderWidth: 4,
+        hoverOffset: 10,
       }],
     },
     options: {
