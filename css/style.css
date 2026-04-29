@@ -41085,3 +41085,124 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   background: rgba(255, 255, 255, 0.18);
   transform: scale(1.06);
 }
+
+/* ============================================================
+   v26.20: 認証画面セカンダリ要素 glow & lift 強化（v26.19 続編）
+   v26.19 で auth-overlay/card/title/logo-icon と summary-card sheen を強化済み。
+   今回は周辺要素 8 箇所を hover/focus に呼応させ、ログイン画面全体を一体化。
+   ① .auth-tabs（コンテナ）: auth-card hover で subtle inset glow
+   ② .auth-tab.active: auth-card hover で scale + primary glow box-shadow 強化
+   ③ .auth-form .form-group input :focus: auth-card 内では mix-sm の primary glow に格上げ
+   ④ .auth-error: 表示時 shake animation + 常時 danger glow border
+   ⑤ .auth-submit: auth-card hover で extra primary glow（btn-primary hover と独立）
+   ⑥ .auth-subtitle: auth-card hover で text-shadow + opacity 1
+   ⑦ .auth-hint（🔒 を含む）: auth-card hover で primary tint text-shadow
+   ⑧ .auth-offline-mode: auth-card hover で text 明度 up + subtle underline glow
+   ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .auth-tabs container — auth-card hover 時に subtle inset glow */
+.auth-tabs {
+  transition: box-shadow var(--dur-medium) var(--ease-out);
+}
+.auth-card:hover .auth-tabs,
+.auth-card:focus-within .auth-tabs {
+  box-shadow: inset 0 1px 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-tabs,
+[data-theme="dark"] .auth-card:focus-within .auth-tabs {
+  box-shadow: inset 0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ② .auth-tab.active — auth-card hover 時に scale + primary glow 強化 */
+.auth-tab.active {
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-bounce), text-shadow var(--dur-fast) var(--ease-out);
+}
+.auth-card:hover .auth-tab.active,
+.auth-card:focus-within .auth-tab.active {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-tab), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-tab.active,
+[data-theme="dark"] .auth-card:focus-within .auth-tab.active {
+  box-shadow: var(--shadow-tab), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ③ .auth-form input focus — auth-card 内では primary glow を強化 */
+.auth-form .form-group input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .auth-form .form-group input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ④ .auth-error — entrance shake + 常時 danger glow border */
+@keyframes auth-error-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-3px); }
+  30% { transform: translateX(3px); }
+  45% { transform: translateX(-2px); }
+  60% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+}
+.auth-error {
+  animation: auth-error-shake 0.42s var(--ease-out);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .auth-error {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+
+/* ⑤ .auth-submit — auth-card hover 時に extra primary glow */
+.auth-submit {
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
+}
+.auth-card:hover .auth-submit,
+.auth-card:focus-within .auth-submit {
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-submit,
+[data-theme="dark"] .auth-card:focus-within .auth-submit {
+  box-shadow: 0 6px 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑥ .auth-subtitle — auth-card hover で subtle text-shadow + opacity ramp */
+.auth-subtitle {
+  transition: opacity var(--dur-medium) var(--ease-out), text-shadow var(--dur-medium) var(--ease-out);
+}
+.auth-card:hover .auth-subtitle,
+.auth-card:focus-within .auth-subtitle {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  opacity: 1;
+}
+[data-theme="dark"] .auth-card:hover .auth-subtitle,
+[data-theme="dark"] .auth-card:focus-within .auth-subtitle {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑦ .auth-hint（🔒 含む）— auth-card hover で primary tint text-shadow */
+.auth-hint {
+  transition: color var(--dur-medium) var(--ease-out), text-shadow var(--dur-medium) var(--ease-out);
+}
+.auth-card:hover .auth-hint,
+.auth-card:focus-within .auth-hint {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-hint,
+[data-theme="dark"] .auth-card:focus-within .auth-hint {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑧ .auth-offline-mode — auth-card hover で明度 up + subtle underline glow */
+.auth-offline-mode {
+  transition: color var(--dur-medium) var(--ease-out), text-shadow var(--dur-medium) var(--ease-out), filter var(--dur-press) var(--ease-out), opacity var(--dur-medium) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.auth-card:hover .auth-offline-mode,
+.auth-card:focus-within .auth-offline-mode {
+  color: var(--text);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .auth-card:hover .auth-offline-mode,
+[data-theme="dark"] .auth-card:focus-within .auth-offline-mode {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
