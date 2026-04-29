@@ -189,10 +189,16 @@ function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
   };
 }
 
-// ─── 共通クロスヘアプラグイン (line/area系チャート用 hover時の縦ライン) ──
+// ─── 共通クロスヘアプラグイン (line/area/bar系チャート用 hover時の縦ライン) ──
 // v26.24: renderCategoryTrendChart に閉じていた ctCrosshair を共通化し、全ライン系チャート
 // （renderBalanceLineChart / renderNetWorthChart / renderCategoryTrendChart /
 //  renderFixedVariableTrend / renderDebtSimChart）に適用。
+// v26.25: 月別時系列バー系 3 種（renderMonthlyBarChart / renderPaymentTrendChart /
+//  renderYoYChart）にも展開。さらに category center に正確にスナップさせるため、
+//  chart.scales.x.getPixelForValue(_active[0].index) を優先使用し、
+//  失敗時 (or scale 未対応時) のみ従来の element.x にフォールバック。
+//  これにより grouped bar （4 dataset per category 等）でも crosshair が
+//  「カテゴリの幾何学的中央」を貫く（旧来は最初の dataset の bar 中心 = 左寄り）。
 //   ① strokeStyle: gridColor → primary alpha 0.42 で brand 色のクロスヘアに格上げ（テーマ追従）
 //   ② lineWidth 1 → 1.2 で線が立つ（hairline すぎず認識しやすい）
 //   ③ dash [4,4] → [5,4] で破線リズム微強化
@@ -203,8 +209,19 @@ function makeCrosshairPlugin(strokeColor, glowColor) {
   return {
     id: 'crosshair',
     afterDraw(chart) {
-      if (!chart.tooltip?._active?.length) return;
-      const x = chart.tooltip._active[0].element.x;
+      const active = chart.tooltip?._active;
+      if (!active?.length) return;
+      // v26.25: category center を優先（grouped bar で正確にスナップ）。
+      // line/stacked bar では element.x と一致するため挙動は変わらない。
+      const idx = active[0].index;
+      const xScale = chart.scales?.x;
+      let x;
+      if (xScale && typeof xScale.getPixelForValue === 'function' && Number.isFinite(idx)) {
+        const v = xScale.getPixelForValue(idx);
+        x = Number.isFinite(v) ? v : active[0].element.x;
+      } else {
+        x = active[0].element.x;
+      }
       const { top, bottom } = chart.chartArea;
       const c = chart.ctx;
       c.save();
@@ -333,6 +350,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
   const incomeClr  = getCSSVar('--income');
   const expenseClr = getCSSVar('--expense');
+  const primaryClr = getCSSVar('--primary');
   const clickable  = typeof onMonthClick === 'function';
   const ctx2d = canvas.getContext('2d');
 
@@ -363,6 +381,8 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
         },
       ],
     },
+    // v26.25: 月別収支グループ化バーに crosshair 適用（カテゴリ中心追従）。
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -797,6 +817,7 @@ function renderPaymentTrendChart(canvasId, year) {
   }
 
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
+  const primaryClr = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
   chartInstances[canvasId] = new Chart(ctx2d, {
@@ -817,6 +838,8 @@ function renderPaymentTrendChart(canvasId, year) {
         };
       }),
     },
+    // v26.25: 支払方法 stacked bar（年間 12 ヶ月分）に crosshair 適用。
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -881,6 +904,7 @@ function renderYoYChart(canvasId, year) {
   const { text: textColor, grid: gridColor, fs2xs, fs3xs, fsXs } = getThemeColors();
   const expClr = getCSSVar('--expense');
   const incClr = getCSSVar('--income');
+  const primaryClr = getCSSVar('--primary');
   const ctx2d = canvas.getContext('2d');
 
   chartInstances[canvasId] = new Chart(ctx2d, {
@@ -928,6 +952,9 @@ function renderYoYChart(canvasId, year) {
         },
       ],
     },
+    // v26.25: 前年比較 grouped bar（4 dataset/category）に crosshair 適用。
+    // category center 追従によりグループの幾何中央を貫く。
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
