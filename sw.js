@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.09'; // v26.09: スクロールバー洗練 + ::selection グロー + sync/update トースト出現演出洗練（::-webkit-scrollbar-thumb 単色→縦グラデ + transition 追加 + hover で primary glow box-shadow + ライト/ダーク/サイドバー全3バリアント対応 + ::selection mix-soft→mix-md & text-shadow グロー追加 + ダーク用 ::selection を分離して primary-end カラー化 + .sync-toast.show に backdrop-filter blur-sm→blur-md & box-shadow に primary glow 追加 & border-color を primary tint 化 + .update-toast.show に scale(scale-popup-init)→scale-rest 追加で sync-toast と統一感 + 同様の glow/blur/border 強化）
+const CACHE_NAME = 'kakeibo-v26.10'; // v26.10: 空状態メッセージ発光 + ボトムナビアクティブ強化 + ボタン inset 白ハイライト + ×danger glow強化（btn-primary box-shadow に inset 0 1px 0 rgba(255,255,255,0.2) 追加で上端光沢ハイライト + hover 時 0.22 に強化 + btn-ghost に inset 0 1px 0 rgba(255,255,255,0.5) 追加（ダークは 0.07 で別宣言） + #global-fab に inset 0 1px 0 rgba(255,255,255,0.28) 追加（hover 0.32）で球体感 + bottom-nav-item.active .bottom-nav-icon に primary halo box-shadow 12px 追加（ダーク primary-end 14px mix-md 強化）+ bottom-nav-item.active .bottom-nav-label に primary text-shadow glow 追加 + 空状態メッセージ4種（empty-month/asset/goal/debt-msg）に primary text-shadow glow 追加 + .modal-close hover text-shadow を mix-sm 8px → mix-md 10px 強化 + .bottom-nav-icon transition list に box-shadow 追加でアクティブ切替時の halo 出現が滑らか化）
 const ASSETS = [
   './index.html',
   './css/style.css',

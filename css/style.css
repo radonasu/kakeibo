@@ -1324,16 +1324,19 @@ select:focus:not(:focus-visible) {
 .btn-primary {
   background: var(--primary);
   color: var(--white);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
+  /* v26.10: inset 0 1px 0 rgba(255,255,255,0.2) を追加してボタン上端に白の光沢ハイライトを獲得。グラデ・ソリッド紫背景の上から光が当たっているような3D感のある glassy sheen に。 */
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent); }
+/* v26.10: hover 時も inset 白ハイライトを維持（mix-4xl の外側影 + inset 0 1px 0 rgba(255,255,255,0.22)）。hover で僅かに inset 強化（0.2→0.22）。 */
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 .btn-primary:active { filter: brightness(var(--brightness-press)); box-shadow: none; }
 
 .btn-ghost {
   background: var(--surface-2);
   color: var(--text);
   border: var(--bw-thin) solid var(--border);
-  box-shadow: var(--shadow-btn-base);
+  /* v26.10: inset 0 1px 0 rgba(255,255,255,0.5) で上端に白の subtle ハイライトを追加。淡い surface-2 背景上で「彫り込み」のような立体感が出る。ダークでは [data-theme="dark"] 側で別宣言（v26.10 末尾ブロック） */
+  box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 10→14px で薄く広がるプライマリ光をクッキリ視認可能に */
 .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
@@ -3124,7 +3127,8 @@ mark.tx-hl {
   flex-shrink: 0;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
-.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)) rotate(90deg); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+/* v26.10: hover 時の text-shadow を mix-sm 8px → mix-md 10px へ強化。×記号自体の danger 発光がより明確に視認可能となり、hover時のキャンセル CTA 認識を強化。 */
+.modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)) rotate(90deg); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
 .modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -4474,11 +4478,14 @@ body {
   margin-bottom: var(--sp-0-5);
   border-radius: var(--radius-btn);
   padding: var(--sp-0-5);
+  /* v26.10: transition list に box-shadow を追加してアクティブ切替時の halo 出現が滑らかに遷移するように */
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce),
               width var(--dur-base) var(--ease-bounce), height var(--dur-base) var(--ease-bounce),
-              padding var(--dur-base) var(--ease-bounce), border-radius var(--dur-base) var(--ease-bounce);
+              padding var(--dur-base) var(--ease-bounce), border-radius var(--dur-base) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out);
 }
 .bottom-nav-icon svg { display: block; }
+/* v26.10: アクティブナビアイコンに box-shadow primary halo（0 0 12px primary mix-sm）を追加。primary-light bg + scale + svg drop-shadow（v26.06④）に加えてアイコンコンテナ自体が淡くプライマリ発光。「選択中」の存在感が大幅に強化される。 */
 .bottom-nav-item.active .bottom-nav-icon {
   background: var(--primary-light);
   color: var(--primary);
@@ -4486,6 +4493,7 @@ body {
   padding: var(--sp-1);
   width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-sm);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 .bottom-nav-label { font-size: var(--fs-2xs); letter-spacing: var(--ls-label); line-height: var(--lh-none); }
 
@@ -4575,7 +4583,8 @@ body {
   font-weight: var(--fw-light);
   letter-spacing: var(--ls-normal); line-height: var(--lh-none);
   border: none;
-  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12);
+  /* v26.10: inset 0 1px 0 rgba(255,255,255,0.28) を追加して FAB 上端に白の光沢線を獲得。紫グラデ球体に「上から光が当たっている」3D球感が生まれる。base の primary glow + 黒 12% 影と組み合わせて立体感が大幅に向上。 */
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), 0 2px 6px var(--black-12), inset 0 1px 0 rgba(255, 255, 255, 0.28);
   z-index: var(--z-fab);
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
@@ -4586,9 +4595,10 @@ body {
 }
 #global-fab svg { color: var(--white); stroke: var(--white); }
 /* v26.07: FAB hover に filter brightness 1.06 を追加してプライマリグラデが明るく弾むビビッド hover に */
+/* v26.10: hover 時も inset 白ハイライトを維持（base 0.28→hover 0.32 で僅かに強化）。brightness(1.06) と相まって FAB が hover 時により明るく光る球体に。 */
 #global-fab:hover {
   transform: scale(var(--scale-icon-hover));
-  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent), 0 3px 8px var(--black-14);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent), 0 3px 8px var(--black-14), inset 0 1px 0 rgba(255, 255, 255, 0.32);
   filter: brightness(1.06);
 }
 #global-fab:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press)); box-shadow: none; }
@@ -40436,3 +40446,60 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ⑩ hm-stat-card:nth-child(4):hover .hm-stat-label dark brightness(1.1) — income-end color+text-shadow glow（line 35201）と連動しダーク hover 輝度強化。月次ヒートマップ統計カード4枚目（成功色）のラベル。⑦〜⑩で hm-stat-card 全4 nth-child variant の hm-stat-label のダーク hover 輝度強化が完成形に統一（既存 hm-stat-value/sub/unit の nth-child 別 brightness と合わせ統計カード4種×4テキスト要素 全揃いの完成形へ） */
 [data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-label { filter: brightness(1.1); }
+
+/* ============================================================
+   v26.10: 空状態メッセージ発光 + ボトムナビアクティブラベル発光 +
+   ボタン inset 白ハイライト ダーク補完 + アクティブナビアイコン halo ダーク強化
+   （①〜④は既存ルール直接編集済み — line 1324-1330（btn-primary inset）/
+    line 1336（btn-ghost inset）/ line 3127（modal-close hover text-shadow強化）/
+    line 4578（global-fab inset）/ line 4482-4489（bottom-nav-icon active halo）。
+    本ブロックは新規追加要素のみを集約）
+   ============================================================ */
+
+/* ① 空状態メッセージ4種に primary text-shadow glow 追加（ライト/ダーク）
+   v26.05 で 4種主要空状態アイコン（empty-month/asset/goal/debt-icon）に primary drop-shadow glow が追加済み。
+   その下に表示されるメッセージテキストにも常時の text-shadow primary glow を追加し、
+   アイコン↔メッセージ全体が淡くプライマリ発光する統一感ある「光るブロック」演出に進化。
+   ライト：mix-2xs（約12%）の控えめ glow / ダーク：primary-end mix-xs（約16%）の少し強めの glow */
+.empty-month-msg,
+.empty-asset-msg,
+.empty-goal-msg,
+.empty-debt-msg {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .empty-month-msg,
+[data-theme="dark"] .empty-asset-msg,
+[data-theme="dark"] .empty-goal-msg,
+[data-theme="dark"] .empty-debt-msg {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ② ボトムナビアクティブラベルに primary text-shadow glow 追加（ライト/ダーク）
+   既存 .bottom-nav-item.active は color: primary・fw-bold だが text-shadow なし。
+   v26.10 で .bottom-nav-icon に halo を追加した（line 4490付近）のと連動し、
+   ラベルテキスト自体にも primary glow を加えてアイコン+ラベル全体がアクティブ時に光る。
+   ライト：mix-xs / ダーク：primary-end mix-sm */
+.bottom-nav-item.active .bottom-nav-label {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-label {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ ボトムナビアクティブアイコン halo ダーク強化
+   v26.10 で .bottom-nav-item.active .bottom-nav-icon に
+   box-shadow: 0 0 12px primary mix-sm（ライト）を追加した。
+   ダークモードでは primary-end カラーに切替 + halo を mix-md / 14px へ強化し、
+   暗背景上でも明確にアクティブナビアイコンの存在感を視認可能に。 */
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ④ btn-ghost inset 白ハイライト ダーク補完
+   v26.10 で .btn-ghost に inset 0 1px 0 rgba(255,255,255,0.5) を追加した（line 1336）。
+   ライトモードの淡い surface-2 背景には適切だが、ダークモードの暗背景上では
+   白50%は強すぎるので、ダーク用に white(0.07)（約 1/7）の subtle ハイライトに切替。
+   暗背景上でも上端が僅かに光って彫り込み感のある立体感を獲得。 */
+[data-theme="dark"] .btn-ghost {
+  box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
