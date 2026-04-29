@@ -208,6 +208,87 @@ function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
 //   ④ shadow（primary alpha 0.18 / blur 6）追加でクロスヘアに微発光
 // hover中のみ描画（chart.tooltip._active ある時のみ afterDraw）。各チャート毎に新規 instance を
 // 生成しテーマ色をクロージャに保持する（ライト/ダーク切替時は再描画で最新色が適用される）。
+// ─── Arc Hover Glow（v26.27: doughnut 系 hover halo 共通プラグイン）──────
+// active arc の外周に色付きハロー弧 + shadowBlur で発光させる。
+// renderDonutChart / renderFixedVariableDonut / renderTagChart で共用。
+function makeArcHoverGlowPlugin(alpha = 0.45, blur = 14) {
+  return {
+    id: 'arcHoverGlow',
+    afterDatasetsDraw(chart) {
+      if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+      const active = chart.tooltip?._active;
+      if (!active?.length) return;
+      const idx = active[0].index;
+      const meta = chart.getDatasetMeta(0);
+      const arc = meta?.data?.[idx];
+      if (!arc) return;
+      const ds = chart.data.datasets[0];
+      let color = '#7c3aed';
+      const bg = Array.isArray(ds.backgroundColor) ? ds.backgroundColor[idx] : ds.backgroundColor;
+      const hbg = Array.isArray(ds.hoverBackgroundColor) ? ds.hoverBackgroundColor[idx] : ds.hoverBackgroundColor;
+      if (typeof hbg === 'string') color = hbg;
+      else if (typeof bg === 'string') color = bg;
+      const props = arc.getProps(['x', 'y', 'startAngle', 'endAngle', 'outerRadius'], true);
+      if (!Number.isFinite(props.outerRadius)) return;
+      const c = chart.ctx;
+      c.save();
+      c.beginPath();
+      c.arc(props.x, props.y, props.outerRadius + 4, props.startAngle, props.endAngle);
+      c.lineWidth = 2.5;
+      c.strokeStyle = hexToRgba(color, alpha);
+      c.shadowColor = hexToRgba(color, alpha * 0.75);
+      c.shadowBlur = blur;
+      c.lineCap = 'round';
+      c.stroke();
+      c.restore();
+    },
+  };
+}
+
+// ─── Bar Hover Glow（v26.27: 縦棒系 hover top outline + 発光）──────
+// active bar の上辺〜両側辺をなぞる丸角アウトラインに shadowBlur で発光。
+// renderDayOfWeekChart で適用（曜日 hover 強調）。
+function makeBarHoverGlowPlugin(alpha = 0.55, blur = 14) {
+  return {
+    id: 'barHoverGlow',
+    afterDatasetsDraw(chart) {
+      const active = chart.tooltip?._active;
+      if (!active?.length) return;
+      const idx = active[0].index;
+      const meta = chart.getDatasetMeta(0);
+      const bar = meta?.data?.[idx];
+      if (!bar) return;
+      const ds = chart.data.datasets[0];
+      let color = '#7c3aed';
+      const border = Array.isArray(ds.borderColor) ? ds.borderColor[idx] : ds.borderColor;
+      if (typeof border === 'string') color = border;
+      const props = bar.getProps(['x', 'y', 'width', 'height', 'base'], true);
+      if (!Number.isFinite(props.x) || !Number.isFinite(props.y)) return;
+      const left = props.x - props.width / 2;
+      const top = Math.min(props.y, props.base);
+      const h = Math.abs(props.base - props.y);
+      if (h < 2) return;
+      const r = Math.min(9, props.width / 2);
+      const c = chart.ctx;
+      c.save();
+      c.shadowColor = hexToRgba(color, alpha);
+      c.shadowBlur = blur;
+      c.lineWidth = 2;
+      c.strokeStyle = hexToRgba(color, alpha);
+      c.lineJoin = 'round';
+      c.beginPath();
+      c.moveTo(left, top + h);
+      c.lineTo(left, top + r);
+      c.quadraticCurveTo(left, top, left + r, top);
+      c.lineTo(left + props.width - r, top);
+      c.quadraticCurveTo(left + props.width, top, left + props.width, top + r);
+      c.lineTo(left + props.width, top + h);
+      c.stroke();
+      c.restore();
+    },
+  };
+}
+
 function makeCrosshairPlugin(strokeColor, glowColor, orientation = 'vertical') {
   return {
     id: 'crosshair',
@@ -349,6 +430,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
         centerText: {},
       },
     },
+    plugins: [makeArcHoverGlowPlugin(0.46, 14)],
   });
 }
 
@@ -809,6 +891,7 @@ function renderPaymentMethodChart(canvasId, transactions) {
       },
       cutout: '62%',
     },
+    plugins: [makeArcHoverGlowPlugin(0.46, 14)],
   });
 }
 
@@ -1107,6 +1190,7 @@ function renderDayOfWeekChart(canvasId, transactions) {
         },
       },
     },
+    plugins: [makeBarHoverGlowPlugin(0.55, 14)],
   });
 }
 
@@ -1343,7 +1427,7 @@ function renderFixedVariableDonut(canvasId, allTxs) {
       },
       cutout: '62%',
     },
-    plugins: [centerTextPlugin],
+    plugins: [centerTextPlugin, makeArcHoverGlowPlugin(0.5, 16)],
   });
 }
 
@@ -1564,5 +1648,6 @@ function renderTagChart(canvasId, transactions) {
       },
       cutout: '62%',
     },
+    plugins: [makeArcHoverGlowPlugin(0.46, 14)],
   });
 }
