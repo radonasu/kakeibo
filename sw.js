@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.10'; // v26.10: 空状態メッセージ発光 + ボトムナビアクティブ強化 + ボタン inset 白ハイライト + ×danger glow強化（btn-primary box-shadow に inset 0 1px 0 rgba(255,255,255,0.2) 追加で上端光沢ハイライト + hover 時 0.22 に強化 + btn-ghost に inset 0 1px 0 rgba(255,255,255,0.5) 追加（ダークは 0.07 で別宣言） + #global-fab に inset 0 1px 0 rgba(255,255,255,0.28) 追加（hover 0.32）で球体感 + bottom-nav-item.active .bottom-nav-icon に primary halo box-shadow 12px 追加（ダーク primary-end 14px mix-md 強化）+ bottom-nav-item.active .bottom-nav-label に primary text-shadow glow 追加 + 空状態メッセージ4種（empty-month/asset/goal/debt-msg）に primary text-shadow glow 追加 + .modal-close hover text-shadow を mix-sm 8px → mix-md 10px 強化 + .bottom-nav-icon transition list に box-shadow 追加でアクティブ切替時の halo 出現が滑らか化）
+const CACHE_NAME = 'kakeibo-v26.11'; // v26.11: ボタン inset 白ハイライト統合（success/danger） + サマリーカード装飾円ホバー強化 + フォーム入力ホバー立体化 + btn-link hover プライマリ glow + ダーク btn-danger inset 補完（btn-primary v26.10 と同パターンで .btn-success に inset 0 1px 0 rgba(255,255,255,0.2) 追加（hover 0.22）+ .btn-danger ライトに inset 0 1px 0 rgba(255,255,255,0.5) 追加（hover 0.55）/ ダークは 0.06 で別宣言（hover 0.08）+ .summary-card:hover::after scale 1.2→1.28 + 白halo 24px + 白透過度 10%→18% / ::before scale 1.15→1.22 + 白halo 28px + 白透過度 6%→14% でカード hover 時に装飾円ペアが躍動的に膨張・発光 + .form-group input/select/textarea:hover に 0 2px 8px black-08 ドロップシャドウ追加で hover lift 立体感 + .btn-link:hover に primary text-shadow glow 追加（ライト mix-sm / ダーク primary-end mix-mid））
 const ASSETS = [
   './index.html',
   './css/style.css',

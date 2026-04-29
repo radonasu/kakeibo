@@ -1346,8 +1346,11 @@ select:focus:not(:focus-visible) {
   background: var(--danger-bg);
   color: var(--danger-text);
   border: var(--bw-base) solid var(--danger-border);
+  /* v26.11: inset 0 1px 0 rgba(255,255,255,0.5) で淡 danger-bg 背景上に上端白光沢を追加。btn-primary（v26.10）/btn-ghost（v26.10）と同パターンで danger ボタンも 3D 立体感を獲得。ダークは末尾v26.11ブロック①で white(0.06) に切替 */
+  box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
-.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
+/* v26.11: hover も inset 白ハイライト維持（hover 時 0.5→0.55 微強化）+ 既存 expense glow */
+.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
 .btn-danger:active { filter: brightness(var(--brightness-press)); box-shadow: none; }
 
 .btn-sm   { padding: var(--sp-1-5) var(--sp-3); font-size: var(--fs-xs); letter-spacing: var(--ls-label); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; border-radius: var(--radius-btn-sm); }
@@ -1545,7 +1548,8 @@ select:focus:not(:focus-visible) {
 .form-group select:hover,
 .form-group textarea:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v26.11: 既存 primary ring に 0 2px 8px black-08 のドロップシャドウを追加し、hover 時に微小な lift 立体感を獲得。形は静止のまま視覚的に「浮き上がる」フォーム入力体験へ */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 8px var(--black-08);
 }
 .form-group input:focus,
 .form-group select:focus,
@@ -6867,8 +6871,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 
 /* btn-success */
-.btn-success { background: var(--success); color: var(--white); border: none; }
-.btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent); }
+/* v26.11: inset 0 1px 0 rgba(255,255,255,0.2) で success-green 背景上に上端白光沢を追加。btn-primary（v26.10）と同パターン。Solid green 背景の上から光が当たっているような glassy sheen を獲得し、btn-primary/btn-ghost/btn-danger と統合された 3D 立体ボタン群へ */
+.btn-success { background: var(--success); color: var(--white); border: none; box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+/* v26.11: hover も inset 白ハイライト維持（0.2→0.22 強化）。primary v26.10 と完全対称 */
+.btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 .btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: none; }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
@@ -19136,10 +19142,13 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    transitionを付与し、ホバー時にそれぞれ scale(1.2) / scale(1.15) で滑らかに拡大。
    カード全体のlift・glowアニメーション（v22.62）と連動して
    背景装飾が動くリッチなホバー演出になる。 */
-.summary-card::after  { transition: transform var(--dur-fast) var(--ease-bounce); }
-.summary-card::before { transition: transform var(--dur-fast) var(--ease-bounce); }
-.summary-card:hover::after  { transform: scale(1.2); }
-.summary-card:hover::before { transform: scale(1.15); }
+/* v26.11: transition に box-shadow と background 追加で hover 時の glow & 透過度遷移を滑らか化 */
+.summary-card::after  { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-mid) var(--ease-out), background var(--dur-mid) var(--ease-out); }
+.summary-card::before { transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-mid) var(--ease-out), background var(--dur-mid) var(--ease-out); }
+/* v26.11: ::after scale 1.2→1.28 強化 + 白halo box-shadow 追加 + 白透過度ブースト（10%→18%）でカード hover 時に右上小円が明確に膨張・発光 */
+.summary-card:hover::after  { transform: scale(1.28); box-shadow: 0 0 24px rgba(255, 255, 255, 0.22); background: rgba(255, 255, 255, 0.18); }
+/* v26.11: ::before scale 1.15→1.22 強化 + 白halo box-shadow 追加 + 白透過度ブースト（6%→14%）でカード hover 時に左下大円も明確に膨張・発光。①+②でサマリーカード装飾円ペアが躍動的に hover 反応 */
+.summary-card:hover::before { transform: scale(1.22); box-shadow: 0 0 28px rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.14); }
 
 /* 3. FAB + アイコン ホバー rotate(45deg)
    FABのSVGアイコンにtransitionを付与し、ホバー時に45度回転させる。
@@ -40502,4 +40511,40 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    暗背景上でも上端が僅かに光って彫り込み感のある立体感を獲得。 */
 [data-theme="dark"] .btn-ghost {
   box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================================
+   v26.11: ボタン inset 白ハイライト統合（success/danger）+
+   サマリーカード装飾円ホバー強化 + フォーム入力ホバー立体化 +
+   btn-link hover プライマリ glow + ダーク btn-danger inset 補完
+   （①〜③⑤は既存ルール直接編集済み — line 1345-1351（btn-danger inset）/
+    line 6870-6873（btn-success inset）/ line 19139-19147（summary-card 装飾円 hover scale&glow）/
+    line 1547-1549（form-group input/select/textarea hover lift shadow）。
+    本ブロックは新規追加要素のみを集約：④btn-link hover glow / ⑥ダーク btn-danger inset 補完）
+   ============================================================ */
+
+/* ① btn-link hover プライマリ text-shadow glow 追加
+   既存の .btn-link:hover は color: primary-hover + text-decoration: underline + text-underline-offset 拡張のみ。
+   primary 色のテキストに primary glow を加えてリンク要素全体が hover 時に明るく発光する演出に強化。
+   既存の :focus-visible の box-shadow ring と併存（focus は ring・hover は glow で役割分担）。
+   ライト：mix-sm（約20%）/ ダーク：primary-end mix-mid（約32%）の少し強めの glow */
+.btn-link:hover {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .btn-link:hover {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-mid), transparent);
+}
+
+/* ② ダーク btn-danger inset 白ハイライト補完
+   v26.11 ライト .btn-danger に inset 0 1px 0 rgba(255,255,255,0.5) を追加した（line 1349）。
+   ダークモードの暗 danger-bg 上では白50%は強すぎるため、white(0.06) の極薄ハイライトに切替。
+   暗背景上でも上端が僅かに光って彫り込み感のある立体感を獲得。
+   v26.10 の btn-ghost ダーク inset（white 0.07）と類似の値で統一感。 */
+[data-theme="dark"] .btn-danger {
+  box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* v26.11: ダーク .btn-danger:hover も inset 維持 + 既存 expense-end 強化 glow（line 34228 v24.90）と統合 */
+[data-theme="dark"] .btn-danger:hover {
+  background: var(--danger-border);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
