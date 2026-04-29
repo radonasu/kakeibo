@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.08'; // v26.08: モーダル/トースト出現演出洗練（.modal-overlay backdrop-filter blur(0)→blur-sm 入場アニメで「フォーカスプル」演出 + .modal-overlay .modal box-shadow shadow-md→shadow-lg 入場アニメで奥行き感 + .modal-close:hover に rotate(90deg) 追加で「閉じる」予感 + .kk-toast-progress を 単色→3点グラデ(primary→primary-end→primary) + box-shadow 6px グロー + success/error/warning progress bar に同色 box-shadow グロー + .kk-toast-success/error/warning タイプ別 glow を mix-xs→mix-sm 強化）
+const CACHE_NAME = 'kakeibo-v26.09'; // v26.09: スクロールバー洗練 + ::selection グロー + sync/update トースト出現演出洗練（::-webkit-scrollbar-thumb 単色→縦グラデ + transition 追加 + hover で primary glow box-shadow + ライト/ダーク/サイドバー全3バリアント対応 + ::selection mix-soft→mix-md & text-shadow グロー追加 + ダーク用 ::selection を分離して primary-end カラー化 + .sync-toast.show に backdrop-filter blur-sm→blur-md & box-shadow に primary glow 追加 & border-color を primary tint 化 + .update-toast.show に scale(scale-popup-init)→scale-rest 追加で sync-toast と統一感 + 同様の glow/blur/border 強化）
 const ASSETS = [
   './index.html',
   './css/style.css',
