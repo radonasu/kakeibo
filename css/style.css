@@ -6284,8 +6284,11 @@ body {
   color: var(--text);
   background: var(--surface-2);
   border-bottom-color: var(--border-strong);
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v26.32: 非アクティブ hover の外側 glow を 0 2px 10px primary mix-xs → 0 3px 14px primary mix-sm に強化（blur 10→14 / mix-xs→mix-sm 双方）し、サイドバー .nav-item:hover（v26.31）/ .ci-ok-btn:hover（v26.30）の glow と整合 */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
+/* v26.32: .section-tab:not(.is-active):hover に translateY(-1px) lift を新規追加。アクティブタブには適用しないことで is-active の border-bottom（primary 下線）と .section-tabs の border-bottom の連続性を保護。非アクティブタブのみ「触れたら一段持ち上がる」反応を獲得し、サイドバー nav-item（v26.31）/ ボトムナビ bottom-nav-item（v26.30）と統一感のある lift 立体感に */
+.section-tab:not(.is-active):hover { transform: translateY(var(--translate-lift-xs)); }
 .section-tab:hover .tab-icon { transform: scale(var(--scale-hover)); }
 .section-tab:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .section-tab:active .tab-icon { transform: scale(var(--scale-rest)); }
@@ -6296,9 +6299,10 @@ body {
   font-weight: var(--fw-bold);
   background: var(--primary-light);
 }
+/* v26.32: アクティブタブの hover glow を強化（lift 無しで border 連続性を保護しつつ立体感を増す）。外側 0 2px 10px primary mix-xs → 0 3px 14px primary mix-sm（非アクティブ hover と同規格）+ 内側 inset 0 -4px 14px mix-sm → 0 -6px 18px mix-md に深化し、底辺から立ち上がる primary 光が強化 */
 .section-tab.is-active:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface));
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 -4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
 .section-tab .tab-icon {
   font-size: var(--fs-sm);
@@ -6314,12 +6318,16 @@ body {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 /* v22.74: ダークモード section-tab:hover 強化 */
+/* v26.32: ダーク .section-tab:hover に primary-end ベースの外側 glow を新規追加。従来 background+border-bottom-color のみで box-shadow 無し → 0 3px 14px primary-end mix-sm を追加し、ライト hover の primary mix-sm glow と対称配置でダーク背景上でも lift 演出が視認しやすくなる（サイドバー .nav-item:hover ダーク強化 v26.31 と同規格） */
 [data-theme="dark"] .section-tab:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface));
   border-bottom-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+/* v26.32: ダーク .section-tab.is-active:hover にも primary-end ベースの内側 inset glow を新規追加。ライト hover の inset 0 -6px 18px primary mix-md と対称配置で primary-end mix-md / blur 18px に統一。ダーク背景上でアクティブタブが「底辺から立ち上がる lavender 光」を獲得 */
 [data-theme="dark"] .section-tab.is-active:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 [data-theme="dark"] .section-tabs {
