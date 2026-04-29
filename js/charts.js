@@ -189,6 +189,41 @@ function barFillScript(colorOrArr, alphaHigh = 0.92, alphaLow = 0.5) {
   };
 }
 
+// ─── 共通クロスヘアプラグイン (line/area系チャート用 hover時の縦ライン) ──
+// v26.24: renderCategoryTrendChart に閉じていた ctCrosshair を共通化し、全ライン系チャート
+// （renderBalanceLineChart / renderNetWorthChart / renderCategoryTrendChart /
+//  renderFixedVariableTrend / renderDebtSimChart）に適用。
+//   ① strokeStyle: gridColor → primary alpha 0.42 で brand 色のクロスヘアに格上げ（テーマ追従）
+//   ② lineWidth 1 → 1.2 で線が立つ（hairline すぎず認識しやすい）
+//   ③ dash [4,4] → [5,4] で破線リズム微強化
+//   ④ shadow（primary alpha 0.18 / blur 6）追加でクロスヘアに微発光
+// hover中のみ描画（chart.tooltip._active ある時のみ afterDraw）。各チャート毎に新規 instance を
+// 生成しテーマ色をクロージャに保持する（ライト/ダーク切替時は再描画で最新色が適用される）。
+function makeCrosshairPlugin(strokeColor, glowColor) {
+  return {
+    id: 'crosshair',
+    afterDraw(chart) {
+      if (!chart.tooltip?._active?.length) return;
+      const x = chart.tooltip._active[0].element.x;
+      const { top, bottom } = chart.chartArea;
+      const c = chart.ctx;
+      c.save();
+      if (glowColor) {
+        c.shadowColor = glowColor;
+        c.shadowBlur = 6;
+      }
+      c.beginPath();
+      c.moveTo(x, top);
+      c.lineTo(x, bottom);
+      c.lineWidth = 1.2;
+      c.strokeStyle = strokeColor;
+      c.setLineDash([5, 4]);
+      c.stroke();
+      c.restore();
+    },
+  };
+}
+
 // ─── カテゴリ別支出ドーナツグラフ ────────────────────────────
 function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
   destroyChart(canvasId);
@@ -425,6 +460,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
         pointHoverBorderWidth: 3,
       }],
     },
+    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1071,6 +1107,7 @@ function renderNetWorthChart(canvasId) {
         pointHoverBorderWidth: 3,
       }],
     },
+    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1142,30 +1179,15 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
 
   if (!datasets.length) return;
 
-  // クロスヘアプラグイン（ホバー時の垂直ライン）
-  const ctCrosshairPlugin = {
-    id: 'ctCrosshair',
-    afterDraw(chart) {
-      if (!chart.tooltip?._active?.length) return;
-      const x = chart.tooltip._active[0].element.x;
-      const { top, bottom } = chart.chartArea;
-      const c = chart.ctx;
-      c.save();
-      c.beginPath();
-      c.moveTo(x, top);
-      c.lineTo(x, bottom);
-      c.lineWidth = 1;
-      c.strokeStyle = gridColor;
-      c.setLineDash([4, 4]);
-      c.stroke();
-      c.restore();
-    },
-  };
+  // v26.24: 共通クロスヘアプラグイン（makeCrosshairPlugin）に統合。
+  // 従来 strokeStyle: gridColor / lineWidth 1 / dash [4,4] / shadow なしの素朴版を、
+  // primary alpha 0.42 + lineWidth 1.2 + dash [5,4] + shadow blur 6 の brand 連動版に置換。
+  const primaryClr = getCSSVar('--primary');
 
   chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'line',
     data: { labels, datasets },
-    plugins: [ctCrosshairPlugin],
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1342,6 +1364,7 @@ function renderFixedVariableTrend(canvasId, year) {
         },
       ],
     },
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
     options: {
       responsive: true,
       maintainAspectRatio: false,
