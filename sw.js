@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.17'; // v26.17: 三次空状態 3種への primary glow 統合（.empty 汎用 / .dd-empty ドリルダウン / .ct-row-empty カテゴリトレンド行）— v26.05〜v26.16 で 14種空状態（主要10種＋二次4種）への primary glow 統合が完成する一方、テーブル/カード/インラインで使われる汎用テキスト系の3種が plain text-muted のみで glow 連携が無く取り残されていた。.empty はインサイトカード/タグ取引テーブル/メンバーテーブル/カテゴリトレンド/カテゴリ管理空 等の8箇所超で使われる最も汎用的な空状態クラス。.dd-empty はカテゴリドリルダウンモーダル「該当取引なし」表示。.ct-row-empty td はカテゴリトレンドテーブルで全月ゼロ円のカテゴリ行（— 表示）。3種に常時 primary text-shadow glow（ライト mix-nano 6px / ダーク mix-2xs 8px の控えめトーン）+ transition: text-shadow/color 追加。card:hover/dd-modal-box:hover/.empty:hover/.dd-empty:hover で text-shadow を mix-2xs 8px / dark mix-sm 10px に強化。.ct-row-empty は既存の tr:hover lift（v22.70 translateY/box-shadow）と連動して :hover で td text-shadow を mix-2xs 8px / dark mix-sm 10px に強化。これで全空状態（主要10＋二次4＋三次3＝計17種）が統一 primary glow を獲得し、家計簿アプリ上のあらゆる空メッセージが一貫したブランド表現に
+const CACHE_NAME = 'kakeibo-v26.18'; // v26.18: トースト通知 3要素タイプ別グロー強化（.kk-toast-icon box-shadow / 内部白テキスト光沢 / .kk-toast-body text-shadow）— v22.84/v26.08 で .kk-toast 自体には backdrop-blur ガラスモーフィズム + タイプ別外周 box-shadow glow（success/error/warning × mix-sm 24px）が施されているが、内部の .kk-toast-icon（円形ソリッド色アイコンバッジ）と .kk-toast-body（メッセージテキスト）は plain な状態のままだった。v26.18 で内部 3要素にタイプ別カラーグローを追加：①.kk-toast-icon に常時 box-shadow（success/danger-text/warning カラー mix-md 8px、ダーク mix-lg 10px）+ inset 0 1px 0 rgba(255,255,255,0.3) で上端白光沢。内部チェックマーク文字に黒影 + 白色 text-shadow（rgba 0.35）でバッジ立体感を付与。②.kk-toast-body にタイプ別 subtle text-shadow（success/danger-text/warning カラー mix-2xs 6px、ダーク mix-xs 8px）。これでトースト 3 層（外周 glow / アイコン glow / 本文 glow）が統一カラーで連動し、成功は緑・エラーは赤・警告は黄橙の「色立体感のあるトースト」が完成。ライト/ダーク両対応
 const ASSETS = [
   './index.html',
   './css/style.css',

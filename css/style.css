@@ -40908,3 +40908,75 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ct-table tbody tr.ct-row-empty:hover td {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v26.18: トースト通知 3要素タイプ別グロー強化
+            （アイコンバッジ box-shadow / 内部文字 text-shadow / body テキスト text-shadow）
+   - v22.84/v26.08 で .kk-toast 自体には backdrop-blur ガラスモーフィズム +
+     タイプ別外周 box-shadow glow（success/error/warning × mix-sm 24px）が施されているが、
+     内部の .kk-toast-icon（円形ソリッド色アイコンバッジ）と .kk-toast-body（メッセージ）は
+     プレーンな状態のまま、トースト全体の演出層に対して内部要素が取り残されていた。
+   - v26.18 で内部 3要素にタイプ別カラーグローを追加：
+     ① .kk-toast-icon: 常時 box-shadow（success/danger-text/warning カラーで mix-md 8px）+
+        内部チェックマーク文字に白色 text-shadow（rgba 0.35）。
+        既存のソリッド色背景の上から「光るバッジ」のような立体感を獲得。
+     ② .kk-toast-body: タイプ別 subtle text-shadow glow（mix-2xs 6px、ダーク mix-xs 8px）。
+        メッセージ文字がタイプカラーの淡い光をまとい、本文と外枠 glow が色味で一致。
+   - これでトースト 3 層（外周 glow / アイコン glow / 本文 glow）が統一カラーで連動し、
+     成功通知は緑、エラーは赤、警告は黄橙の「色立体感のあるトースト」が完成。
+   - ライト/ダーク両対応。ダークモードはトースト背景透過率が低い（88%）ため
+     アイコン box-shadow を mix-lg に強化し、本文 text-shadow を mix-xs に上げて視認性を確保。
+   ============================================================ */
+
+/* ① .kk-toast-icon: 常時タイプ別 box-shadow glow + 内部白テキスト光沢 */
+.kk-toast-icon {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 6px rgba(255, 255, 255, 0.35);
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+.kk-toast-success .kk-toast-icon {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.kk-toast-error .kk-toast-icon {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.kk-toast-warning .kk-toast-icon {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+[data-theme="dark"] .kk-toast-success .kk-toast-icon {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--success) var(--mix-lg), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+[data-theme="dark"] .kk-toast-error .kk-toast-icon {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+[data-theme="dark"] .kk-toast-warning .kk-toast-icon {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② .kk-toast-body: タイプ別 subtle text-shadow glow */
+.kk-toast-body {
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+}
+.kk-toast-success .kk-toast-body {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-2xs), transparent);
+}
+.kk-toast-error .kk-toast-body {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-2xs), transparent);
+}
+.kk-toast-warning .kk-toast-body {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--warning) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .kk-toast-success .kk-toast-body {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .kk-toast-error .kk-toast-body {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .kk-toast-warning .kk-toast-body {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-xs), transparent);
+}
