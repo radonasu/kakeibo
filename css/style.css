@@ -40785,3 +40785,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .notif-empty:hover .notif-empty-sub {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v26.16: 二次空状態 4種への primary glow 統合（empty-state-sm /
+            cal-panel-empty / sim-no-data / ev-month-empty）
+   - v26.05/26.10/26.12-26.15 で 10種主要空状態（empty-month/asset/goal/debt/
+     tx-empty/wl-empty/ch-empty/sub-empty/pt-empty/notif-empty）の3層 glow 統合完了。
+   - 表示頻度はやや低いが他画面で使われる4種の二次空状態（汎用小空状態 /
+     カレンダー詳細パネル空 / ローンシミュレーション no-data / 年間予定月別空）が
+     plain text-muted のみで glow 連携が無く統一感が欠けていた。
+   - v26.16 で4種に primary text-shadow glow（v26.13 サブテキスト と同じ控えめ
+     mix-nano 6px / dark mix-2xs 8px トーン）を常時適用 + hover 強化。
+   - sim-no-data はサーフェス背景を持つため :hover で translateY(-1px) lift +
+     box-shadow（primary mix-2xs / dark primary-end mix-sm）を追加し触れたら浮き上がる。
+   - ev-month-empty はダッシュ枠を持つため :hover で border-color を primary 系に
+     切替え + text-shadow 強化。月別ボックスが触れた時に明確に反応するように。
+   - empty-state-sm / cal-panel-empty は背景/枠を持たないため text-shadow 強化のみ。
+   - これで家計簿アプリ全空状態（主要10種＋二次4種＝計14種）が統一された
+     primary glow を持ち、設定モーダル / ローン試算モーダル / 年間予定モーダル /
+     カレンダー詳細パネル の全画面で空状態の統一感が完成。
+   ============================================================ */
+
+/* ① 4種二次空状態に常時 primary text-shadow glow + transition */
+.empty-state-sm,
+.cal-panel-empty,
+.sim-no-data,
+.ev-month-empty {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+  transition: text-shadow var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] .empty-state-sm,
+[data-theme="dark"] .cal-panel-empty,
+[data-theme="dark"] .sim-no-data,
+[data-theme="dark"] .ev-month-empty {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② sim-no-data hover: surface-hover 背景持ちなので lift + box-shadow + glow強化 */
+.sim-no-data:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .sim-no-data:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ ev-month-empty hover: ダッシュ枠を primary 系に切替 + text-shadow 強化 */
+.ev-month-empty:hover {
+  border-color: color-mix(in srgb, var(--primary) var(--mix-md), var(--border));
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ev-month-empty:hover {
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-lg), var(--border));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ④ empty-state-sm / cal-panel-empty hover: 背景/枠なしのため text-shadow 強化のみ */
+.empty-state-sm:hover,
+.cal-panel-empty:hover {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .empty-state-sm:hover,
+[data-theme="dark"] .cal-panel-empty:hover {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}

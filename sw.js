@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.15'; // v26.15: 通知空状態 hover インタラクション統合 + empty-month-btn lift強化 — notif-empty-icon の従来 black-08 drop-shadow を primary 系 glow（ライト 0 4px 14px primary mix-md / ダーク 0 4px 18px primary-end mix-lg）に置換し、:hover で 0 6px 18-22px primary mix-lg/xl + scale(1.06) 強化。notif-empty p（メッセージ）に常時 primary text-shadow glow（mix-2xs/xs 8-10px）+ hover 強化（mix-sm/md 12-14px）追加。notif-empty-sub に常時 primary text-shadow glow（mix-nano/2xs 6-8px）+ hover 強化（mix-2xs/sm 8-10px）追加。empty-month-btn :hover に translateY(-1px) lift + box-shadow を 0 2px 8px→0 4px 14px / dark 0 2px 10px→0 4px 16px に深化。v26.14 で完成した 9種空状態の「常時glow+hover強化」二層構造に通知空状態を追加し、CTA ボタンも触れたら浮き上がる立体感を獲得
+const CACHE_NAME = 'kakeibo-v26.16'; // v26.16: 二次空状態 4種への primary glow 統合（empty-state-sm / cal-panel-empty / sim-no-data / ev-month-empty）— v26.05/26.10/26.12-26.15 で 10種主要空状態の3層 glow 統合が完了する一方、表示頻度はやや低いが他画面で使われる4種の二次空状態が plain text-muted のみで glow 連携が無く統一感が欠けていた。v26.16 で4種に常時 primary text-shadow glow（ライト mix-nano 6px / ダーク mix-2xs 8px の控えめトーン）を統一適用 + hover 強化。sim-no-data はサーフェス背景持ちなので :hover で translateY(-1px) lift + box-shadow（primary mix-2xs 4px 12px / dark primary-end mix-sm 4px 14px）を追加し触れたら浮き上がる。ev-month-empty はダッシュ枠を持つため :hover で border-color を primary 系（mix-md / dark mix-lg）に切替え + text-shadow 強化。empty-state-sm / cal-panel-empty は背景/枠を持たないため text-shadow 強化のみ。これで全空状態（主要10種＋二次4種＝計14種）が統一された primary glow を持ち、設定モーダル / ローン試算モーダル / 年間予定モーダル / カレンダー詳細パネル の全画面で空状態の統一感が完成
 const ASSETS = [
   './index.html',
   './css/style.css',
