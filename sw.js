@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.14'; // v26.14: 9種空状態コンテナ hover インタラクション統合 — empty-month-state/empty-asset-state/empty-goal-state/empty-debt-state/tx-empty-state/wl-empty/ch-empty/sub-empty/pt-empty の9種コンテナに :hover を追加し、子要素のアイコン drop-shadow を mix-md→mix-lg / dark mix-lg→mix-xl + 4px 14-18px→6px 18-22px に強化 + scale(1.06) 拡大、メッセージ text-shadow を mix-2xs/xs→mix-sm/md に強化、サブ text-shadow を mix-nano/2xs→mix-2xs/sm に強化。アイコンに transition: filter+transform、メッセージ/サブに transition: text-shadow を追加し滑らかフェード反応。v26.05 アイコン常時glow + v26.10① メッセージ常時glow + v26.13① サブ常時glow の3層に hover 強化レイヤーが上乗せされ「触れたら3要素が一段強く光る」反応を9種空状態画面全てで獲得
+const CACHE_NAME = 'kakeibo-v26.15'; // v26.15: 通知空状態 hover インタラクション統合 + empty-month-btn lift強化 — notif-empty-icon の従来 black-08 drop-shadow を primary 系 glow（ライト 0 4px 14px primary mix-md / ダーク 0 4px 18px primary-end mix-lg）に置換し、:hover で 0 6px 18-22px primary mix-lg/xl + scale(1.06) 強化。notif-empty p（メッセージ）に常時 primary text-shadow glow（mix-2xs/xs 8-10px）+ hover 強化（mix-sm/md 12-14px）追加。notif-empty-sub に常時 primary text-shadow glow（mix-nano/2xs 6-8px）+ hover 強化（mix-2xs/sm 8-10px）追加。empty-month-btn :hover に translateY(-1px) lift + box-shadow を 0 2px 8px→0 4px 14px / dark 0 2px 10px→0 4px 16px に深化。v26.14 で完成した 9種空状態の「常時glow+hover強化」二層構造に通知空状態を追加し、CTA ボタンも触れたら浮き上がる立体感を獲得
 const ASSETS = [
   './index.html',
   './css/style.css',

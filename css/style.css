@@ -5387,7 +5387,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
 }
-.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: scale(var(--scale-hover)); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+.empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: translateY(-1px) scale(var(--scale-hover)); box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); box-shadow: none; }
 .empty-month-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -34254,7 +34254,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .btn-icon:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ⑥ empty-month-btn dark enhanced hover glow（primary-end mix-lg + text-shadow） */
-[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
@@ -40721,5 +40721,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .empty-debt-state:hover .empty-debt-sub,
 [data-theme="dark"] .wl-empty:hover .wl-empty-sub,
 [data-theme="dark"] .ch-empty:hover .ch-empty-sub {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ============================================================
+   v26.15: 通知空状態 hover インタラクション統合 + empty-month-btn lift強化
+   - .notif-empty-icon の従来 black-08 drop-shadow を v26.05 と同じ primary 系 glow に置換し、
+     v26.14 の 9種空状態と同じ「常時 glow + hover 時に強化 + scale(1.06)」二層構造を導入。
+   - .notif-empty p（メッセージ）と .notif-empty-sub（サブ）にも常時 primary text-shadow glow +
+     hover 時の text-shadow 強化を追加し、アイコン/メッセージ/サブの3層 hover 反応を獲得。
+   - empty-month-btn :hover に translateY(-1px) lift + box-shadow を 0 2px 8px → 0 4px 14px に
+     深化し（dark は 0 2px 10px → 0 4px 16px）、9種空状態唯一の CTA ボタンが「触れたら浮き上がる」
+     立体感を獲得。v26.14 で完成した「コンテナ hover で3層光る」演出と整合する CTA 反応に。
+   - 通知パネルを開いた時の「✅ 新しい通知はありません」空状態画面が、v26.14 の 9種空状態と
+     同じ「フワフワ浮遊 + 触れたら3要素強化」の統一演出に格上げ（家計簿アプリでは通知パネルを
+     開いて空状態を見る頻度も高い）。
+   - prefers-reduced-motion はグローバル transition: 0.01ms 強制で hover 変化も即時化。
+   ============================================================ */
+
+/* ① notif-empty-icon: 従来 black-08 drop-shadow → primary 常時 glow + transition */
+.notif-empty-icon {
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent));
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] .notif-empty-icon {
+  filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+.notif-empty:hover .notif-empty-icon {
+  filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--primary) var(--mix-lg), transparent));
+  transform: scale(1.06);
+}
+[data-theme="dark"] .notif-empty:hover .notif-empty-icon {
+  filter: drop-shadow(0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent));
+  transform: scale(1.06);
+}
+
+/* ② notif-empty p（メッセージ）: 常時 primary text-shadow glow + hover 強化 */
+.notif-empty p {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  transition: text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] .notif-empty p {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+.notif-empty:hover p {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .notif-empty:hover p {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ③ notif-empty-sub（サブテキスト）: 常時 primary text-shadow glow + hover 強化 */
+.notif-empty-sub {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] .notif-empty-sub {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.notif-empty:hover .notif-empty-sub {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .notif-empty:hover .notif-empty-sub {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
