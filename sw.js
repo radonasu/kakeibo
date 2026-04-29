@@ -2,7 +2,7 @@
 // sw.js - Service Worker（オフライン対応・PWAキャッシュ）
 // ============================================================
 
-const CACHE_NAME = 'kakeibo-v26.13'; // v26.13: 空状態サブテキスト glow 5種統合 + フォーム入力 focus 浮上深度ラダー完成（form-group / amount-input-wrap）— empty-asset-sub/empty-goal-sub/empty-debt-sub/wl-empty-sub/ch-empty-sub に primary text-shadow glow 追加（ライト mix-nano / ダーク primary-end mix-2xs）でアイコン+メッセージ+サブの3層空状態演出に進化 + form-group input/select/textarea:focus drop-shadow を 0 1px 3px black-05 → 0 4px 12px black-12 に強化（rest→hover(v26.11)→focus 深度ラダー完成）+ amount-input-wrap:focus-within drop-shadow を 0 1px 3px black-05 → 0 4px 14px black-12 に強化（rest→hover(v26.12)→focus-within 深度ラダー完成）でフォーム入力中の最大持ち上がり立体感を獲得
+const CACHE_NAME = 'kakeibo-v26.14'; // v26.14: 9種空状態コンテナ hover インタラクション統合 — empty-month-state/empty-asset-state/empty-goal-state/empty-debt-state/tx-empty-state/wl-empty/ch-empty/sub-empty/pt-empty の9種コンテナに :hover を追加し、子要素のアイコン drop-shadow を mix-md→mix-lg / dark mix-lg→mix-xl + 4px 14-18px→6px 18-22px に強化 + scale(1.06) 拡大、メッセージ text-shadow を mix-2xs/xs→mix-sm/md に強化、サブ text-shadow を mix-nano/2xs→mix-2xs/sm に強化。アイコンに transition: filter+transform、メッセージ/サブに transition: text-shadow を追加し滑らかフェード反応。v26.05 アイコン常時glow + v26.10① メッセージ常時glow + v26.13① サブ常時glow の3層に hover 強化レイヤーが上乗せされ「触れたら3要素が一段強く光る」反応を9種空状態画面全てで獲得
 const ASSETS = [
   './index.html',
   './css/style.css',

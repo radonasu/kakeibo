@@ -40612,3 +40612,114 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ch-empty-sub {
   text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v26.14: 空状態コンテナ hover インタラクション統合（9種）
+   - 9種の空状態コンテナ（empty-month-state / empty-asset-state / empty-goal-state /
+     empty-debt-state / tx-empty-state / wl-empty / ch-empty / sub-empty / pt-empty）に
+     :hover を追加し、子要素のアイコン drop-shadow / メッセージ text-shadow / サブ text-shadow
+     を一段強化 + アイコンに transform: scale(1.06) 拡大を追加。
+   - v26.05 の常時アイコン glow + v26.10① の常時メッセージ glow + v26.13① の常時サブ glow に
+     hover 時の強化レイヤーが上乗せされ、3層全てが「触れたら一段明るく光る」反応を獲得。
+   - icon は drop-shadow + transform、メッセージ/サブは text-shadow にそれぞれ transition を追加し
+     瞬間切替えではなくスムーズな滑らかフェードで反応する。
+   - 9種の空状態画面（今月データなし・資産なし・ゴールなし・負債なし・取引なし・
+     ウィッシュリスト空・チャレンジ空・サブスク空・ポイント空）全てで「フワフワ浮遊する常時演出」+
+     「触れたら全要素が一段強く光る hover 演出」の二層構造が完成。
+   - prefers-reduced-motion はグローバル transition: 0.01ms 強制で hover 変化も即時化（アクセシビリティ準拠）。
+   ============================================================ */
+
+/* ① 9種空状態アイコン: transition + hover 時の drop-shadow 強化 + scale 1.06 拡大 */
+.empty-month-icon,
+.empty-goal-icon,
+.empty-asset-icon,
+.empty-debt-icon,
+.sub-empty-icon,
+.pt-empty-icon,
+.wl-empty-icon,
+.ch-empty-icon,
+.tx-empty-icon {
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.empty-month-state:hover .empty-month-icon,
+.empty-goal-state:hover .empty-goal-icon,
+.empty-asset-state:hover .empty-asset-icon,
+.empty-debt-state:hover .empty-debt-icon,
+.sub-empty:hover .sub-empty-icon,
+.pt-empty:hover .pt-empty-icon,
+.wl-empty:hover .wl-empty-icon,
+.ch-empty:hover .ch-empty-icon,
+.tx-empty-state:hover .tx-empty-icon {
+  filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--primary) var(--mix-lg), transparent));
+  transform: scale(1.06);
+}
+[data-theme="dark"] .empty-month-state:hover .empty-month-icon,
+[data-theme="dark"] .empty-goal-state:hover .empty-goal-icon,
+[data-theme="dark"] .empty-asset-state:hover .empty-asset-icon,
+[data-theme="dark"] .empty-debt-state:hover .empty-debt-icon,
+[data-theme="dark"] .sub-empty:hover .sub-empty-icon,
+[data-theme="dark"] .pt-empty:hover .pt-empty-icon,
+[data-theme="dark"] .wl-empty:hover .wl-empty-icon,
+[data-theme="dark"] .ch-empty:hover .ch-empty-icon,
+[data-theme="dark"] .tx-empty-state:hover .tx-empty-icon {
+  filter: drop-shadow(0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent));
+  transform: scale(1.06);
+}
+
+/* ② 9種空状態メッセージ: transition + hover 時の text-shadow 強化 */
+.empty-month-msg,
+.empty-asset-msg,
+.empty-goal-msg,
+.empty-debt-msg,
+.tx-empty-msg,
+.wl-empty p,
+.ch-empty p,
+.sub-empty p,
+.pt-empty p {
+  transition: text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.empty-month-state:hover .empty-month-msg,
+.empty-asset-state:hover .empty-asset-msg,
+.empty-goal-state:hover .empty-goal-msg,
+.empty-debt-state:hover .empty-debt-msg,
+.tx-empty-state:hover .tx-empty-msg,
+.wl-empty:hover p,
+.ch-empty:hover p,
+.sub-empty:hover p,
+.pt-empty:hover p {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .empty-month-state:hover .empty-month-msg,
+[data-theme="dark"] .empty-asset-state:hover .empty-asset-msg,
+[data-theme="dark"] .empty-goal-state:hover .empty-goal-msg,
+[data-theme="dark"] .empty-debt-state:hover .empty-debt-msg,
+[data-theme="dark"] .tx-empty-state:hover .tx-empty-msg,
+[data-theme="dark"] .wl-empty:hover p,
+[data-theme="dark"] .ch-empty:hover p,
+[data-theme="dark"] .sub-empty:hover p,
+[data-theme="dark"] .pt-empty:hover p {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ③ 5種空状態サブテキスト: transition + hover 時の text-shadow 強化 */
+.empty-asset-sub,
+.empty-goal-sub,
+.empty-debt-sub,
+.wl-empty-sub,
+.ch-empty-sub {
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+}
+.empty-asset-state:hover .empty-asset-sub,
+.empty-goal-state:hover .empty-goal-sub,
+.empty-debt-state:hover .empty-debt-sub,
+.wl-empty:hover .wl-empty-sub,
+.ch-empty:hover .ch-empty-sub {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .empty-asset-state:hover .empty-asset-sub,
+[data-theme="dark"] .empty-goal-state:hover .empty-goal-sub,
+[data-theme="dark"] .empty-debt-state:hover .empty-debt-sub,
+[data-theme="dark"] .wl-empty:hover .wl-empty-sub,
+[data-theme="dark"] .ch-empty:hover .ch-empty-sub {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
