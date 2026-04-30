@@ -44126,3 +44126,71 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-bottom-icon-breath-dark 3.4s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.54 (Sprint #1050): グラデサマリーカード decoration 円
+   continuous breathing pulse animation 統一
+   v26.53 のアクティブナビ ambient liveness（第 9 弾）を承け、第 10 弾と
+   して「rest 状態の ambient liveness」テーマをダッシュボードのグラデ背景
+   サマリーカード装飾円に展開。家計簿アプリ全画面に存在する 6 系統 10
+   セレクタの decoration ::before / ::after 円に subtle filter drop-shadow
+   breath を一括追加。
+   - 系統: ①.summary-card（メインダッシュボード収入/支出/残高）::after+::before
+            ②.pt-summary-card（ポイントサマリー）::after+::before
+            ③.ev-sum-card（イベントサマリー this/next/year）::after+::before
+            ④.wl-summary-card（ウィッシュリスト count/budget/done）::after+::before
+            ⑤.ch-summary-card（チャレンジサマリー active/achieved/total）::before
+            ⑥.health-score-card（家計スコア）::after（per-grade color 追従）
+   - 計 9 セレクタが「白系装飾円」（① 〜 ⑤）+ 1 セレクタが「per-grade
+     color 装飾円」（⑥）の構成。①〜⑤ はすべてグラデ背景上の白/on-dark-*
+     系の装飾円なので白色 drop-shadow 共通、⑥ は --hs-grade-color 追従で
+     A/B/C/D で primary/teal/warning/expense glow に呼応。
+   - filter: drop-shadow は既存の background / transform / box-shadow /
+     opacity hover 演出と独立 property レイヤーで合流（衝突なし）。hover
+     時の v26.11 scale 1.28/1.22 + 白 halo box-shadow + 白 background
+     ブースト（.summary-card のみ）は無傷で、breath glow は背後に並行。
+   - ::after 3.6s / ::before 4.0s の異速で同期しないナチュラルな揺らぎ。
+     ダッシュボードに 4-6 円が並ぶ場合でも全体が揃って脈動する違和感を回避。
+   - amplitude: blur 4-5px @ alpha 0.10-0.12 (rest peak) → blur 10-12px
+     @ alpha 0.24-0.28 (50% peak)。「ふんわり光って消える」subtle
+     ambient レベル。注意を奪わない。
+   - prefers-reduced-motion はグローバル wildcard ルール（line 18923-30）
+     で animation-duration: 0.01ms 強制となり自動で停止（アクセシビリティ準拠）。
+   - 親カード自体の entrance animation（sum-card-in / pt-card-in 等）は
+     parent 要素のみで、::before / ::after pseudo-element には継承されない
+     ため multi-animation 並行不要（単一 animation 宣言で OK）。
+   ============================================================ */
+
+/* ── 白系装飾円（小・::after）4 系統 — 3.6s breath ── */
+@keyframes deco-circle-breath-after {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.12)); }
+  50%      { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.28)); }
+}
+.summary-card::after,
+.pt-summary-card::after,
+.ev-sum-card::after,
+.wl-summary-card::after {
+  animation: deco-circle-breath-after 3.6s ease-in-out infinite;
+}
+
+/* ── 白系装飾円（大・::before）5 系統 — 4.0s breath ── */
+@keyframes deco-circle-breath-before {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.10)); }
+  50%      { filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.24)); }
+}
+.summary-card::before,
+.pt-summary-card::before,
+.ev-sum-card::before,
+.wl-summary-card::before,
+.ch-summary-card::before {
+  animation: deco-circle-breath-before 4.0s ease-in-out infinite;
+}
+
+/* ── 家計スコアカード decoration（per-grade color 追従）── */
+@keyframes hs-card-deco-breath {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--hs-grade-color, var(--primary)) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--hs-grade-color, var(--primary)) var(--mix-md), transparent)); }
+}
+.health-score-card::after {
+  animation: hs-card-deco-breath 4.0s ease-in-out infinite;
+}
