@@ -43807,3 +43807,144 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   color: var(--primary-end);
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.51 Sprint #1047: 残る単発ボタン群 :focus-visible 状態を :hover ラダーに統一（第 7 弾）
+   v26.45 行系・v26.46 アイコン/ナビ・v26.47 サマリーカード・v26.48 主要ボタン/タブ/チップ/カード・
+   v26.49 フィルター/カテゴリ・v26.50 モーダル/編集/取引/イベント に続く第 7 弾。
+   レシート/メンバー/ウィッシュ/チャレンジ/タイプ/機会/レコメンド系の 9 系統を完全合流。
+   ライト 9 + ダーク 7 計 16 セレクタ。
+   ============================================================ */
+
+/* ① .btn-receipt-file:focus-visible — :hover (line 3392) ラダー合流: surface-hover bg + lift-xs + ring + 0 2px 8px primary mix-xs glow */
+.btn-receipt-file:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ② .btn-mr-fill:focus-visible — :hover (line 3502) ラダー合流: surface-hover bg + lift-xs + ring + 0 2px 8px primary mix-xs glow */
+.btn-mr-fill:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ③ .btn-mr-add:focus-visible — :hover (line 3510) ラダー合流: opacity-near + lift-xs + ring + 0 0 0 (focus-ring-w*2) income mix-md outer ring + 0 2px 8px income mix-md glow */
+.btn-mr-add:focus-visible {
+  outline: none;
+  opacity: var(--opacity-near);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 0 calc(var(--focus-ring-w) * 2) color-mix(in srgb, var(--income) var(--mix-md), transparent),
+              0 2px 8px color-mix(in srgb, var(--income) var(--mix-md), transparent);
+}
+
+/* ④ .wl-archive-summary:focus-visible — :hover (line 9312) ラダー合流: text color + border-strong + lift-xs + ring + 0 2px 8px primary mix-xs glow */
+.wl-archive-summary:focus-visible {
+  outline: none;
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑤ .ch-archive-summary:focus-visible — :hover (line 10375) ラダー合流: text color + border-strong + lift-xs + ring + 0 2px 8px primary mix-xs glow */
+.ch-archive-summary:focus-visible {
+  outline: none;
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑥ .type-btn:focus-visible — :hover (line 3073) ラダー合流: surface-hover bg + text + lift-xs + ring + 0 2px 6px primary mix-sm glow（generic 用、.expense-btn/.income-btn は specificity 0,2,0 で別途 :hover が勝つため上書きされない） */
+.type-btn:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+  color: var(--text);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑦ .opp-challenge-btn:focus-visible — :hover (line 16447) ラダー合流: lift-xs + ring + 0 4px 12px opp-accent mix-2xl glow（per-severity opp-accent 保持） */
+.opp-challenge-btn:focus-visible {
+  outline: none;
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-2xl), transparent);
+}
+
+/* ⑧ .rc-close:focus-visible — :hover (line 15499) ラダー合流: danger-bg + danger color + scale-hover + ring + 0 0 0 (focus-ring-w*2) danger-text mix-md outer ring */
+.rc-close:focus-visible {
+  outline: none;
+  background: var(--danger-bg);
+  color: var(--danger);
+  transform: scale(var(--scale-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 0 calc(var(--focus-ring-w) * 2) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+
+/* ⑨ .rc-item:focus-visible — :hover (line 15535) ラダー合流: primary border + primary mix-nano bg + lift-xs + shadow-sm + ring + 0 2px 10px primary mix-xs glow */
+.rc-item:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1));
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              var(--shadow-sm),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ===== ダークモード（v26.51） ===== */
+
+/* ⑩ ダーク .btn-receipt-file:focus-visible — primary-end mix-sm bg + primary-end mix-md text-shadow（visibility 確保） */
+[data-theme="dark"] .btn-receipt-file:focus-visible {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--surface-2));
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑪ ダーク .btn-mr-fill:focus-visible — primary-end mix-sm bg + primary-end mix-md text-shadow */
+[data-theme="dark"] .btn-mr-fill:focus-visible {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--surface-2));
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑫ ダーク .wl-archive-summary:focus-visible — :hover (line 34347) primary-end color + mix-md text-shadow 強化 */
+[data-theme="dark"] .wl-archive-summary:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑬ ダーク .ch-archive-summary:focus-visible — :hover (line 34350) primary-end color + mix-md text-shadow 強化 */
+[data-theme="dark"] .ch-archive-summary:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑭ ダーク .type-btn:focus-visible — :hover (line 34241) primary-end mix-sm glow + mix-md text-shadow 強化 */
+[data-theme="dark"] .type-btn:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑮ ダーク .opp-challenge-btn:focus-visible — :hover (line 38190) opp-accent/primary-end color + mix-md text-shadow 強化 */
+[data-theme="dark"] .opp-challenge-btn:focus-visible {
+  color: var(--opp-accent, var(--primary-end));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent);
+}
+
+/* ⑯ ダーク .rc-close:focus-visible — :hover (line 38125) expense-end color + mix-md text-shadow 強化 */
+[data-theme="dark"] .rc-close:focus-visible {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
