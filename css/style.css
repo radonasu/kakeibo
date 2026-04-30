@@ -41681,3 +41681,178 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 4px 14px var(--black-14),
               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v26.36 — チェックボックス / トグルスイッチ / トグルラベル群
+              hover-focus 立体感統一（5 系統 11 セレクタ）
+
+   v26.30〜32 でナビ系 UI 4 種（bottom-nav-item / nav-item /
+   notif-mark-read / section-tab）に hover lift translateY(-1px)
+   を導入し、v26.34 でアイコンボタン群（btn-icon / edit-tx /
+   delete-tx / dup-tx）にも lift を展開。さらに v26.11/13/35 で
+   フォーム入力（form-group input/select/textarea / amount-input /
+   filter-bar / adv-filter / account-select）に「rest → hover →
+   focus」3 段の浮上深度ラダーを統一展開した。
+
+   一方、選択操作系の UI （取引行カスタムチェックボックス
+   .tx-cb・ダッシュボードウィジェットのトグルスイッチ
+   .dw-slider・通知/繰り返しトグルラベル .notif-toggle-label /
+   .recurring-toggle-label・詳細フィルタートグル
+   .adv-filter-toggle）は hover でのリフトが無く、scale や
+   text-shadow のみ・あるいは ring 単段のみで、ナビ/ボタン/
+   入力と立体感ラダーがズレていた。v26.36 でこの 5 系統に
+   hover lift / focus glow / press-back を一括統一追加。
+
+   ① .tx-cb:hover に 0 2px 8px primary mix-sm 外側 drop-shadow
+      追加（既存 scale + ring inset を保持）
+   ② .tx-cb:focus-visible に 0 0 12px primary mix-sm 外周 glow
+      追加（既存 ring inset を保持）
+   ③ .dw-item:hover .dw-slider に 0 2px 8px primary mix-xs 外側
+      drop-shadow + 0 0 0 1px primary mix-xs 外周ライン追加
+   ④ .dw-item:hover .dw-slider::after にノブ scale(1.05) +
+      0 2px 6px black-14 drop-shadow 強化
+   ⑤ .dw-item:has(input:focus-visible) .dw-slider に 0 0 0
+      var(--focus-ring-w) var(--focus-ring) + 0 0 12px primary
+      mix-sm 外周 glow 追加（キーボードフォーカス時の浮上）
+   ⑥ .notif-toggle-label:hover に translateY(-1px) lift +
+      transform transition 追加
+   ⑦ .notif-toggle-label:active に translateY(0) press-back
+   ⑧ .recurring-toggle-label:hover に translateY(-1px) lift
+   ⑨ .recurring-toggle-label:active に translateY(0) press-back
+   ⑩ .adv-filter-toggle:hover に translateY(-1px) lift +
+      0 2px 10px primary mix-xs drop-shadow 追加（既存 ring +
+      text-shadow を保持）+ transform transition 追加
+   ⑪ .adv-filter-toggle:active に translateY(0) press-back
+
+   ダーク版は ⑫〜⑰ で primary-end ベース glow に切替。
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   選択操作系 UI もナビ/ボタン/入力と同じ「触れたら一段
+   持ち上がる」立体感を獲得し、家計簿アプリ全体の hover 反応
+   ラダーがほぼ完全統一に至る。
+   ============================================================ */
+
+/* ① .tx-cb:hover — 既存 scale + ring inset に外側 drop-shadow 追加 */
+.tx-cb:hover:not(:checked):not(:indeterminate) {
+  border-color: var(--primary);
+  transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ② .tx-cb:focus-visible — 既存 ring inset に外周 glow 追加 */
+.tx-cb:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .dw-item:hover .dw-slider — 外側 drop-shadow + 外周ライン */
+.dw-slider {
+  transition: background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.dw-item:hover .dw-slider {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ④ .dw-item:hover .dw-slider::after — ノブ scale + drop-shadow 強化 */
+.dw-item:hover .dw-slider::after {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px var(--black-14);
+}
+.dw-item:hover input:checked ~ .dw-slider::after {
+  transform: translateX(calc(var(--size-toggle-w) - var(--size-checkbox) - 2 * var(--sp-0-75))) scale(1.05);
+  box-shadow: 0 2px 6px var(--black-14);
+}
+
+/* ⑤ .dw-item:has(input:focus-visible) .dw-slider — focus 外周 glow */
+.dw-item:has(input:focus-visible) .dw-slider {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑥ .notif-toggle-label:hover — translateY(-1px) lift 追加 */
+.notif-toggle-label {
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.notif-toggle-label:hover {
+  transform: translateY(var(--translate-lift-xs));
+}
+
+/* ⑦ .notif-toggle-label:active — translateY(0) press-back */
+.notif-toggle-label:active {
+  transform: translateY(0);
+}
+
+/* ⑧ .recurring-toggle-label:hover — translateY(-1px) lift 追加 */
+.recurring-toggle-label {
+  transition: color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.recurring-toggle-label:hover {
+  transform: translateY(var(--translate-lift-xs));
+}
+
+/* ⑨ .recurring-toggle-label:active — translateY(0) press-back */
+.recurring-toggle-label:active {
+  transform: translateY(0);
+}
+
+/* ⑩ .adv-filter-toggle:hover — translateY(-1px) lift + drop-shadow 追加 */
+.adv-filter-toggle {
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.adv-filter-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑪ .adv-filter-toggle:active — translateY(0) press-back */
+.adv-filter-toggle:active {
+  transform: translateY(0);
+  filter: brightness(var(--brightness-press-mid));
+  border-color: var(--primary);
+}
+
+/* ⑫〜⑰ ダーク版: primary-end ベース glow に切替 */
+
+/* ⑫ ダーク .tx-cb:hover */
+[data-theme="dark"] .tx-cb:hover:not(:checked):not(:indeterminate) {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑬ ダーク .tx-cb:focus-visible */
+[data-theme="dark"] .tx-cb:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑭ ダーク .dw-item:hover .dw-slider — primary-end glow */
+[data-theme="dark"] .dw-item:hover .dw-slider {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑮ ダーク .dw-item:has(input:focus-visible) .dw-slider — primary-end 外周 glow */
+[data-theme="dark"] .dw-item:has(input:focus-visible) .dw-slider {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑯ ダーク .adv-filter-toggle:hover — primary-end glow 強化 */
+[data-theme="dark"] .adv-filter-toggle:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑰ ダーク .notif-toggle-label / .recurring-toggle-label — 既存 dark hover に加え lift 維持
+       （ハードシャドウは無いがダーク bg 上での text-shadow brightness 強化は既存ルールで担保） */
+[data-theme="dark"] .notif-toggle-label:hover,
+[data-theme="dark"] .recurring-toggle-label:hover {
+  transform: translateY(var(--translate-lift-xs));
+}
