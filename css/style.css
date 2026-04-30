@@ -42546,3 +42546,169 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
 }
+
+/* ============================================================
+   Sprint #1038 / v26.42
+   タグ chip 系 hover/focus 立体感統一
+   ------------------------------------------------------------
+   v26.39 で 5 系統の絵文字ピッカー btn に「:hover 0 2px 10px
+   primary mix-sm 外側 glow + :focus-visible 0 0 12px primary
+   mix-sm 外周 glow」を統一追加し、v26.41 でカラー swatch
+   selected 状態に二段強化（mix-md/lg deeper halo）を完成し、
+   各モーダルの「色 × 絵文字」セット UI が完全対称な 4 段
+   立体感ラダーを共有する完成形に到達した。
+
+   一方、取引行のタグ chip（.tx-tag-chip）と取引一覧のタグ
+   フィルター chip 系（.tx-tag-filter-all / .tx-tag-filter-chip
+   ＋ .active 状態）は、:hover の box-shadow blur が 4〜6px
+   と弱く、:focus-visible は inset focus-ring 単段のみで、
+   v26.39〜41 で揃えたラダーから外れていた。タグ chip は
+   取引一覧画面で常時可視のチップ系 UI として最も視線を
+   浴びる場所だが、立体感がカラー swatch / 絵文字ピッカーの
+   一段下に沈んで見えていた。
+
+   v26.42 で 3 系統 8 種のセレクタに以下を一括統一追加：
+   - 非 active hover: box-shadow blur を 4〜6px → 10px に
+     深度統一（mix-sm はそのまま、blur のみ強化）
+   - 非 active focus-visible: 既存 focus-ring 単段に外周
+     0 0 12px (primary or tc) mix-sm glow を二段重ね
+   - .active focus-visible: 選択中ハイライトリング（既存
+     0 0 0 2px primary/tc mix-xs〜sm）を末尾に保持しつつ
+     focus-ring + 0 0 14px mix-md deeper glow を 3 段重ね
+     （v26.41 sub-color-btn.selected と同じ 3 段重ね設計）
+
+   tag chip は --tc（タグ色）変数で per-tag identity が表現
+   されているため、hover halo は --tc（mix-sm）でタグ色を
+   保持、focus-visible 外周 glow は --primary（mix-sm/md）で
+   全フォーカスリング統一視認性を保つハイブリッド設計。
+   .tx-tag-filter-all は --tc を持たない（全タグ用フィルター）
+   ため hover/focus とも --primary ベースで統一。
+
+   ① .tx-tag-chip:hover — 0 2px 6px → 10px に深度統一（tc）
+   ② .tx-tag-chip:focus-visible — focus-ring + 外周
+      0 0 12px primary mix-sm 追加
+   ③ .tx-tag-filter-all:hover:not(.active) — 0 1px 4px →
+      0 2px 10px primary mix-sm 深度統一
+   ④ .tx-tag-filter-all:focus-visible — focus-ring + 外周
+      0 0 12px primary mix-sm 追加
+   ⑤ .tx-tag-filter-chip:hover:not(.active) — 0 1px 4px →
+      0 2px 10px tc mix-sm 深度統一
+   ⑥ .tx-tag-filter-chip:focus-visible — focus-ring + 外周
+      0 0 12px primary mix-sm 追加
+   ⑦ .tx-tag-filter-all.active:focus-visible — selected ring
+      保持 + focus-ring + 0 0 14px primary mix-md deeper glow
+      の 3 段重ね（new rule, specificity 0,3,0 で勝つ）
+   ⑧ .tx-tag-filter-chip.active:focus-visible — selected ring
+      保持 + focus-ring + 0 0 14px tc mix-md deeper glow
+      の 3 段重ね（new rule, specificity 0,3,0 で勝つ）
+   ⑨〜⑯ ダーク版は primary-end / tc ベース mix-md（hover/
+      非 active focus）と mix-lg（active focus deeper）で
+      さらに深度を増す。
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .tx-tag-chip:hover — 0 2px 6px → 0 2px 10px 深度統一 */
+.tx-tag-chip:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
+}
+
+/* ② .tx-tag-chip:focus-visible — focus-ring + 外周 primary glow 二段重ね */
+.tx-tag-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .tx-tag-filter-all:hover:not(.active) — 0 1px 4px → 0 2px 10px 深度統一 */
+.tx-tag-filter-all:hover:not(.active) {
+  background: var(--border);
+  color: var(--text);
+  transform: scale(var(--scale-hover-sm));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ④ .tx-tag-filter-all:focus-visible — focus-ring + 外周 primary glow 二段重ね */
+.tx-tag-filter-all:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑤ .tx-tag-filter-chip:hover:not(.active) — 0 1px 4px → 0 2px 10px 深度統一 */
+.tx-tag-filter-chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
+  transform: scale(var(--scale-hover-sm));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
+}
+
+/* ⑥ .tx-tag-filter-chip:focus-visible — focus-ring + 外周 primary glow 二段重ね */
+.tx-tag-filter-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑦ .tx-tag-filter-all.active:focus-visible — selected ring + focus-ring + deeper glow 三段重ね */
+.tx-tag-filter-all.active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑧ .tx-tag-filter-chip.active:focus-visible — selected ring + focus-ring + deeper tc glow 三段重ね */
+.tx-tag-filter-chip.active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent);
+}
+
+/* ⑨〜⑯ ダーク版: primary-end / tc ベース mix-md / mix-lg でさらに深度を増す */
+
+/* ⑨ ダーク .tx-tag-chip:hover */
+[data-theme="dark"] .tx-tag-chip:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
+}
+
+/* ⑩ ダーク .tx-tag-chip:focus-visible */
+[data-theme="dark"] .tx-tag-chip:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑪ ダーク .tx-tag-filter-all:hover:not(.active) */
+[data-theme="dark"] .tx-tag-filter-all:hover:not(.active) {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑫ ダーク .tx-tag-filter-all:focus-visible */
+[data-theme="dark"] .tx-tag-filter-all:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑬ ダーク .tx-tag-filter-chip:hover:not(.active) */
+[data-theme="dark"] .tx-tag-filter-chip:hover:not(.active) {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
+}
+
+/* ⑭ ダーク .tx-tag-filter-chip:focus-visible */
+[data-theme="dark"] .tx-tag-filter-chip:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑮ ダーク .tx-tag-filter-all.active:focus-visible — ring + focus-ring + deeper glow 三段重ね */
+[data-theme="dark"] .tx-tag-filter-all.active:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑯ ダーク .tx-tag-filter-chip.active:focus-visible — ring + focus-ring + deeper tc glow 三段重ね */
+[data-theme="dark"] .tx-tag-filter-chip.active:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-lg), transparent);
+}
