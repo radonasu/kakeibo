@@ -43602,3 +43602,102 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
               inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.49 Sprint #1045: 残るチップ/ボタン系 :focus-visible 状態を :hover ラダーに統一
+   v26.45 行系・v26.46 アイコン/ナビ・v26.47 サマリーカード・v26.48 主要ボタン/タブ/チップ/カードに続く第 5 弾。
+   フィルター/カテゴリトレンド/クイック追加/通知の 4 系統 + 2 種 .active/.is-selected 状態を完全合流。
+   対象：① .adv-preset-chip:not(.active) ② .adv-preset-chip.active ③ .ct-chip:not(.is-selected)
+        ④ .ct-chip.is-selected ⑤ .qa-type-btn ⑥ .notif-item
+   ============================================================ */
+
+/* ① .adv-preset-chip:not(.active):focus-visible — :hover (line 2822) ラダー合流: primary border + primary color + bg primary mix-faint + lift-xs + ring + 0 2px 6px primary mix-base glow */
+.adv-preset-chip:not(.active):focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+}
+
+/* ② .adv-preset-chip.active:focus-visible — selected ring (line 2837 0 0 0 var(--focus-ring-w) primary mix-xs) 保持 + focus-ring + 0 0 14px primary mix-md deeper glow 三段重ね */
+.adv-preset-chip.active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ③ .ct-chip:not(.is-selected):focus-visible — :hover (line 10724) ラダー合流: ct-color border + ct-color color + lift-sm + ring + 0 3px 8px ct-color mix-mid glow */
+.ct-chip:not(.is-selected):focus-visible {
+  outline: none;
+  border-color: var(--ct-color, var(--primary));
+  color: var(--ct-color, var(--primary));
+  transform: translateY(var(--translate-lift-sm));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 8px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-mid), transparent);
+}
+
+/* ④ .ct-chip.is-selected:focus-visible — selected ring (line 10737 0 2px 6px ct-color mix-md) 保持 + focus-ring + 0 0 14px ct-color mix-md deeper glow 三段重ね */
+.ct-chip.is-selected:focus-visible {
+  outline: none;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent);
+}
+
+/* ⑤ .qa-type-btn:focus-visible — :hover (line 11515) ラダー合流: primary border + primary color + lift-xs + ring + 0 2px 6px primary mix-sm glow */
+.qa-type-btn:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑥ .notif-item:focus-visible — :hover (line 14856) ラダー合流: surface-hover bg + translateX slide + shadow-row-hover + ring */
+.notif-item:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+  transform: translateX(var(--translate-slide));
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ===== ダークモード（v26.49） ===== */
+
+/* ⑦ ダーク .adv-preset-chip:not(.active):focus-visible — :hover (line 38688) primary-end color + 0 0 10px primary-end mix-md text-shadow 強化 */
+[data-theme="dark"] .adv-preset-chip:not(.active):focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑧ ダーク .ct-chip:not(.is-selected):focus-visible .ct-chip-name — :hover (line 37928) ct-color/primary-end color + 0 0 10px text-shadow 強化 */
+[data-theme="dark"] .ct-chip:not(.is-selected):focus-visible .ct-chip-name {
+  color: var(--ct-color, var(--primary-end));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--ct-color, var(--primary-end)) var(--mix-md), transparent);
+}
+
+/* ⑨ ダーク .ct-chip:not(.is-selected):focus-visible .ct-chip-icon — :hover icon (line 36141) drop-shadow 強化 */
+[data-theme="dark"] .ct-chip:not(.is-selected):focus-visible .ct-chip-icon {
+  filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--ct-color, var(--primary-end)) var(--mix-md), transparent));
+}
+
+/* ⑩ ダーク .qa-type-btn:focus-visible — :hover (line 38734) primary-end color + 0 0 10px primary-end mix-md text-shadow 強化 */
+[data-theme="dark"] .qa-type-btn:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑪ ダーク .notif-item:focus-visible — :hover (line 15021/15024) on-dark-dim bg を踏襲 + ring */
+[data-theme="dark"] .notif-item:focus-visible {
+  background: var(--on-dark-dim);
+}
+
+/* ⑫ ダーク .notif-item:not(.notif-read):focus-visible — :hover (line 15024) primary mix-xs bg 強化 */
+[data-theme="dark"] .notif-item:not(.notif-read):focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
