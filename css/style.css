@@ -42365,3 +42365,184 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
 }
+
+/* ============================================================
+   Sprint #1037 / v26.41
+   カラー swatch selected 状態 hover/focus 二段強化
+   ------------------------------------------------------------
+   v26.40 で 5 系統の絵文字ピッカー btn の selected/is-active/
+   active 状態に hover/focus 二段強化（mix-md/lg deeper halo）を
+   統一追加し、絵文字ピッカーの 4 段ラダー（rest → hover →
+   selected rest → selected hover/focus）が完成した。
+
+   一方、v26.38 で完成した 5 系統のカラー swatch
+   （.color-swatch / .goal-color-btn / .sub-color-btn /
+   .pt-color-btn / .ch-color-btn）の selected/is-active/active
+   状態 hover/focus は、未選択 hover（v26.38 mix-sm halo）と
+   同じ反応のままで、「これが選ばれている色だ」と再認識させる
+   立体感の段差が無かった — selected の border-color: text +
+   transform: scale + sub だけ ring box-shadow 状態に、v26.38 の
+   未選択 hover の mix-sm halo がそのまま乗るだけ。
+
+   v26.41 で 5 系統の selected/is-active/active 状態に
+   「:hover で 0 2px 14px primary mix-md / ダーク 0 2px 18px
+   primary-end mix-lg deeper halo」と「:focus-visible で
+   0 0 14px primary mix-md / ダーク 0 0 16px primary-end mix-lg
+   deeper outer glow」を統一追加。selected 状態の hover/focus
+   立体感が未選択 hover の +1 ティア深く沈み、カラー swatch
+   全体で「rest（無印）→ hover（mix-sm halo）→ selected rest
+   （border-text + scale）→ selected hover/focus（mix-md/lg
+   deeper halo）」の 4 段ラダーが完成。v26.40 の絵文字ピッカー
+   selected ラダーと完全対称構造に。
+
+   sub-color-btn は .selected 自体が
+   box-shadow: 0 0 0 focus-ring-w currentColor, 0 0 0 5px border
+   で「選択中ハイライトリング」を表現しているため、v26.41 の
+   selected:hover/focus ルールでは選択リングを末尾に保持した
+   上で deeper glow を一段奥に重ねる（3 段重ね box-shadow）。
+   他 4 系統（color-swatch / goal-color-btn / pt-color-btn /
+   ch-color-btn）は selected が box-shadow を持たない（border /
+   transform / outline のみ）ので box-shadow を直接置き換える
+   形（transform / border-color / outline は .selected の宣言が
+   cascade で残る — プロパティ単位カスケード）。
+
+   selected/is-active/active 状態の specificity は (0,2,0)〜
+   (0,2,1) で v26.38 の未選択 hover/focus（0,1,1）より勝つため
+   box-shadow を完全に置き換える形となる。selected 状態に
+   hover/focus が重なった時のみ強化が走り、selected rest
+   状態には影響しない設計。
+
+   ① .color-swatch.selected:hover に 0 2px 14px primary mix-md
+   ② .color-swatch.selected:focus-visible に focus-ring +
+      0 0 14px primary mix-md
+   ③ .goal-color-btn.selected:hover     ④ :focus-visible
+   ⑤ .sub-color-btn.selected:hover (preserve ring + add glow)
+   ⑥ .sub-color-btn.selected:focus-visible (preserve ring + glow)
+   ⑦ .pt-color-btn.is-active:hover      ⑧ :focus-visible
+   ⑨ .ch-color-btn.active:hover         ⑩ :focus-visible
+   ⑪〜⑳ ダーク版は primary-end ベース mix-lg
+   （0 2px 18px hover / 0 0 16px focus）でさらに深度を増す。
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .color-swatch.selected:hover — 一段深い primary halo */
+.color-swatch.selected:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ② .color-swatch.selected:focus-visible — 一段深い外周 primary glow */
+.color-swatch.selected:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ③ .goal-color-btn.selected:hover */
+.goal-color-btn.selected:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ④ .goal-color-btn.selected:focus-visible */
+.goal-color-btn.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑤ .sub-color-btn.selected:hover — selected ring を保持しつつ deeper glow を末尾に追加 */
+.sub-color-btn.selected:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑥ .sub-color-btn.selected:focus-visible — selected ring + 外周 deeper primary glow */
+.sub-color-btn.selected:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑦ .pt-color-btn.is-active:hover */
+.pt-color-btn.is-active:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑧ .pt-color-btn.is-active:focus-visible */
+.pt-color-btn.is-active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑨ .ch-color-btn.active:hover */
+.ch-color-btn.active:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑩ .ch-color-btn.active:focus-visible */
+.ch-color-btn.active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑪〜⑳ ダーク版: primary-end ベース mix-lg でさらに深度を増す */
+
+/* ⑪ ダーク .color-swatch.selected:hover */
+[data-theme="dark"] .color-swatch.selected:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑫ ダーク .color-swatch.selected:focus-visible */
+[data-theme="dark"] .color-swatch.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑬ ダーク .goal-color-btn.selected:hover */
+[data-theme="dark"] .goal-color-btn.selected:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑭ ダーク .goal-color-btn.selected:focus-visible */
+[data-theme="dark"] .goal-color-btn.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑮ ダーク .sub-color-btn.selected:hover — selected ring + deeper primary-end glow */
+[data-theme="dark"] .sub-color-btn.selected:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑯ ダーク .sub-color-btn.selected:focus-visible — selected ring + 外周 deeper glow */
+[data-theme="dark"] .sub-color-btn.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑰ ダーク .pt-color-btn.is-active:hover */
+[data-theme="dark"] .pt-color-btn.is-active:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑱ ダーク .pt-color-btn.is-active:focus-visible */
+[data-theme="dark"] .pt-color-btn.is-active:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑲ ダーク .ch-color-btn.active:hover */
+[data-theme="dark"] .ch-color-btn.active:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑳ ダーク .ch-color-btn.active:focus-visible */
+[data-theme="dark"] .ch-color-btn.active:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
