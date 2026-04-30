@@ -44051,3 +44051,78 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 4px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
   text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.53 (Sprint #1049): アクティブナビ continuous breathing pulse
+   サイドナビ/ボトムナビの「現在のページ」インジケーターに ambient
+   breathing pulse animation を統一追加。
+   従来は static box-shadow / drop-shadow halo のみで「rest 状態」が
+   完全な静止だったが、ユーザーが画面を見るたびに「今ここのページ」を
+   優しく主張する継続的な脈動演出を獲得。
+   - 4 系統: .nav-item.active::before（サイド左アクセントバー）/
+     .nav-item.active .nav-icon（サイドアイコンボックス）/
+     .bottom-nav-item.active::before（ボトム上インジケーター）/
+     .bottom-nav-item.active .bottom-nav-icon（ボトムアイコンボックス）
+   - サイドバーは常時ダーク背景なので primary-end（ラベンダー）固定。
+     ボトムナビはテーマ追従（ライト=primary / ダーク=primary-end）。
+   - 3.4s cycle / ease-in-out / infinite で「呼吸」の認知速度に合致。
+     blur 半径と mix 階の振れ幅は subtle（rest peak vs 50% peak）で
+     注意を奪わない ambient レベル。
+   - prefers-reduced-motion はグローバル wildcard ルール（line 18923-30）
+     で animation-duration: 0.01ms 強制となり自動で停止（アクセシビリティ準拠）。
+   - .bottom-nav-item.active::before は既存 entrance animation
+     nav-ind-slide-in（transform/opacity）と multi-animation 並行
+     （filter のみ別個アニメーション、property 衝突なし）。
+   ============================================================ */
+
+/* ── サイドナビ 左アクセントバー breath（::before）────────── */
+@keyframes nav-side-bar-breath {
+  0%, 100% { box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+}
+.nav-item.active::before {
+  animation: nav-side-bar-breath 3.4s ease-in-out infinite;
+}
+
+/* ── サイドナビ アイコンボックス breath ─────────────────── */
+@keyframes nav-side-icon-breath {
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+}
+.nav-item.active .nav-icon {
+  animation: nav-side-icon-breath 3.4s ease-in-out infinite;
+}
+
+/* ── ボトムナビ 上インジケーターバー breath（::before・filter ベース）── */
+@keyframes nav-bottom-bar-breath {
+  0%, 100% { filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 1px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+}
+.bottom-nav-item.active::before {
+  animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+             nav-bottom-bar-breath 3.4s ease-in-out infinite;
+}
+[data-theme="dark"] .bottom-nav-item.active::before {
+  animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+             nav-bottom-bar-breath-dark 3.4s ease-in-out infinite;
+}
+@keyframes nav-bottom-bar-breath-dark {
+  0%, 100% { filter: drop-shadow(0 1px 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 1px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+}
+
+/* ── ボトムナビ アイコンボックス breath ─────────────────── */
+@keyframes nav-bottom-icon-breath {
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+}
+.bottom-nav-item.active .bottom-nav-icon {
+  animation: nav-bottom-icon-breath 3.4s ease-in-out infinite;
+}
+@keyframes nav-bottom-icon-breath-dark {
+  0%, 100% { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+}
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
+  animation: nav-bottom-icon-breath-dark 3.4s ease-in-out infinite;
+}
