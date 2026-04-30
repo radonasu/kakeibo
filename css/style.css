@@ -41576,3 +41576,108 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
               0 3px 12px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.35 — フィルターバー / 詳細フィルター / アカウント選択
+              hover-focus 浮上深度ラダー統一
+
+   v26.11 / v26.13 で .form-group input/select/textarea および
+   .amount-input-wrap に「rest（影なし）→ hover（0 2px 8px black-08
+   ドロップシャドウ追加）→ focus（0 4px 12px black-12 + 0 0 12px
+   primary mix-xs 外周 glow）」の浮上深度ラダーを導入し、
+   フォーム入力フィールドが触れるほど持ち上がる立体感を獲得した。
+   一方、リスト画面のフィルターバーに並ぶ select / 月セレクタ /
+   検索入力（.filter-bar select / .filter-bar .month-sel /
+   .filter-search）と、詳細フィルターパネル内のテキスト/数値入力
+   （.adv-filter-input）、サイドバーのアカウント切替セレクタ
+   （.account-select）は ring（focus-ring-w 単段）のみで外側
+   drop-shadow / 外周 glow が無く、フォーム本体と立体感ラダーが
+   ズレていた。
+
+   v26.35 で 4 系統 5 種のフィルター/セレクト入力に同じ深度ラダーを
+   一括追加。すべて末尾 v26.35 ブロックで同 specificity 上書きの
+   ため original ルール（line 2621-2624 / 2641-2642 / 2769-2774 /
+   911）との競合は無く、ソース順により本ブロックが優先される。
+
+   ① .filter-bar select / .month-sel:hover に 0 2px 8px black-08 追加
+   ② .filter-bar select / .month-sel:focus に 0 4px 12px black-12
+       + 0 0 12px primary mix-xs 外周 glow 追加
+   ③ .filter-search:hover に 0 2px 8px black-08 追加
+   ④ .filter-search:focus に 0 4px 12px black-12 + primary mix-xs glow 追加
+   ⑤ .adv-filter-input:hover に 0 2px 8px black-08 追加
+   ⑥ .adv-filter-input:focus に 0 4px 12px black-12 + primary mix-xs glow 追加
+   ⑦ .account-select:hover に 0 3px 12px black-14 追加（サイドバーは
+      常時暗色背景のため black-08 → black-14 に強化）
+   ⑧ .account-select:focus に 0 4px 14px black-14 + 0 0 12px
+      primary-end mix-sm 外周 glow 追加（ダーク bg コンテキスト追従）
+
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   フィルターバーと form-group input が同じ「rest → hover → focus」
+   3 段の浮上深度を共有する完成形演出に統一。
+   ============================================================ */
+
+/* ① .filter-bar select / .month-sel:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.filter-bar select:hover,
+.filter-bar .month-sel:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ② .filter-bar select / .month-sel:focus — ring + drop-shadow + 外周 glow */
+.filter-bar select:focus,
+.filter-bar .month-sel:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ③ .filter-search:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.filter-search:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ④ .filter-search:focus — ring + drop-shadow + 外周 glow */
+.filter-search:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑤ .adv-filter-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.adv-filter-input:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ⑥ .adv-filter-input:focus — ring + drop-shadow + 外周 glow */
+.adv-filter-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑦ .account-select:hover — 既存 primary-end ring + サイドバー暗色背景上に black-14 drop-shadow 追加 */
+.account-select:hover {
+  background: var(--on-dark-base);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 3px 12px var(--black-14);
+}
+
+/* ⑧ .account-select:focus — 既存 primary-end ring + black-14 drop-shadow + primary-end mix-sm 外周 glow */
+.account-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end),
+              0 4px 14px var(--black-14),
+              0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
