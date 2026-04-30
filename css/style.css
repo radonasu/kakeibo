@@ -43701,3 +43701,109 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .notif-item:not(.notif-read):focus-visible {
   background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v26.50 Sprint #1046: 残る単発ボタン/チップ系 :focus-visible 状態を :hover ラダーに統一
+   v26.45 行系・v26.46 アイコン/ナビ・v26.47 サマリーカード・v26.48 主要ボタン/タブ/チップ/カード・v26.49 フィルター/カテゴリトレンドに続く第 6 弾。
+   モーダル/編集/取引/イベント系の 7 系統 .btn-preset / .btn-tpl / .btn-inline-add / .ev-add-month / .sf-chip / .sf-chip-del / .sf-save-btn を完全合流。
+   ライト 7 + ダーク 4 計 11 セレクタ。
+   ============================================================ */
+
+/* ① .btn-preset:focus-visible — :hover (line 3305) ラダー合流: primary-light bg + primary border + primary color + lift-xs + ring + 0 2px 6px primary mix-sm glow */
+.btn-preset:focus-visible {
+  outline: none;
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ② .btn-tpl:focus-visible — :hover (line 3745) ラダー合流: opacity-faded + lift-xs + ring + 0 2px 8px currentColor mix-sm glow（per-template currentColor 保持） */
+.btn-tpl:focus-visible {
+  outline: none;
+  opacity: var(--opacity-faded);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, currentColor var(--mix-sm), transparent);
+}
+
+/* ③ .btn-inline-add:focus-visible — :hover (line 3252) ラダー合流: primary-light bg + lift-xs + ring + 0 2px 5px primary mix-sm glow */
+.btn-inline-add:focus-visible {
+  outline: none;
+  background: var(--primary-light);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ④ .ev-add-month:focus-visible — :hover (line 13210) ラダー合流: primary bg + white color + primary border + scale-icon-hover + ring + 0 2px 6px primary mix-lg glow */
+.ev-add-month:focus-visible {
+  outline: none;
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  transform: scale(var(--scale-icon-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+}
+
+/* ⑤ .sf-chip:focus-visible — :hover (line 13399) ラダー合流: primary border + primary color + primary mix-faint bg + lift-xs + ring + 0 2px 8px primary mix-soft glow */
+.sf-chip:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
+}
+
+/* ⑥ .sf-chip-del:focus-visible — :hover (line 13422) ラダー合流: danger-bg + danger-text + scale-hover-chip + ring + 0 0 0 (focus-ring-w*2) danger-text mix-md outer ring（既存 hover ring を踏襲しつつ focus-ring を内側に重ね） */
+.sf-chip-del:focus-visible {
+  outline: none;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 0 calc(var(--focus-ring-w) * 2) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+
+/* ⑦ .sf-save-btn:focus-visible — :hover (line 13450) ラダー合流: primary mix-faint bg + lift-xs + ring + 0 2px 6px primary mix-sm glow */
+.sf-save-btn:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ===== ダークモード（v26.50） ===== */
+
+/* ⑧ ダーク .btn-preset:focus-visible — :hover (line 34426/38736) primary-end color + 0 0 10px primary-end mix-md text-shadow 強化 */
+[data-theme="dark"] .btn-preset:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑨ ダーク .btn-inline-add:focus-visible — :hover (line 34300/38698) primary-end color + 0 0 10px primary-end mix-md text-shadow + primary mix-md bg 強化 */
+[data-theme="dark"] .btn-inline-add:focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑩ ダーク .ev-add-month:focus-visible — :hover (line 37415) white color + 0 0 12px rgba(255,255,255,0.6) text-shadow 強化 */
+[data-theme="dark"] .ev-add-month:focus-visible {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* ⑪ ダーク .sf-chip:focus-visible — :hover (line 38500) primary-end color + 0 0 10px primary-end mix-md text-shadow 強化 */
+[data-theme="dark"] .sf-chip:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
