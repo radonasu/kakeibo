@@ -42201,3 +42201,167 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   Sprint #1036 / v26.40
+   絵文字ピッカー selected 状態 hover/focus 二段強化
+   ------------------------------------------------------------
+   v26.39 で 5 系統の絵文字ピッカー btn（.goal-emoji-btn /
+   .sub-emoji-btn / .pt-emoji-btn / .ch-emoji-btn /
+   .ev-emoji-chip）に「:hover 0 2px 10px primary mix-sm 外側 glow」
+   と「:focus-visible 0 0 12px primary mix-sm 外周 glow」を統一
+   追加し、各モーダルで絵文字選択 UI が「触れたらブランド色の
+   ハロー光が立つ」立体感を獲得した。
+
+   一方で「すでに選ばれている」selected/is-active/active 状態の
+   絵文字には、hover/focus した時の「もっと深く locked in した」
+   反応が無かった — selected の border-color: primary +
+   背景 primary tint の上に、v26.39 で追加した :hover の
+   mix-sm halo がそのまま乗るだけで、未選択 hover と差別化
+   されていなかった。selected 状態は「選ばれている」事実を
+   静的に示すだけで、もう一度 hover した時に「これがアクティブ
+   選択肢」だと再認識させる立体感の段差が無かった。
+
+   v26.40 で 5 系統の selected/is-active/active 状態に「:hover で
+   一段深いハロー（0 2px 14px primary mix-md / 18px primary mix-lg
+   ダーク）」と「:focus-visible で一段深い外周 glow（0 0 14px
+   primary mix-md）」を統一追加。selected 状態の hover/focus
+   立体感が未選択 hover の +1 ティア深く沈み、絵文字ピッカー
+   全体で「rest（無印）→ hover（mix-sm halo）→ selected rest
+   （border + bg tint）→ selected hover/focus（mix-md/lg deeper
+   halo）」の 4 段ラダーが完成。
+
+   ① .goal-emoji-btn.selected:hover に 0 2px 14px primary mix-md
+      外側 glow（既存 selected の border/bg/scale 維持）
+   ② .goal-emoji-btn.selected:focus-visible に focus-ring +
+      0 0 14px primary mix-md 外周 glow
+   ③ .sub-emoji-btn.selected:hover  ④ :focus-visible
+   ⑤ .pt-emoji-btn.is-active:hover  ⑥ :focus-visible
+   ⑦ .ch-emoji-btn.active:hover     ⑧ :focus-visible
+   ⑨ .ev-emoji-chip.selected:hover  ⑩ :focus-visible
+
+   ダーク版（⑪〜⑳）は primary-end ベース mix-lg（18px hover /
+   16px focus）でさらに深度を増し、ダーク背景上で selected
+   状態の hover/focus が鮮明に浮上する。
+   selected 状態の specificity は (0,2,0) で v26.39 の
+   :hover/:focus-visible（0,1,1）より勝つため box-shadow を
+   完全に置き換える形となる。全変更 CSS-only 実装（JS 変更
+   なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .goal-emoji-btn.selected:hover — 一段深いハロー */
+.goal-emoji-btn.selected:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ② .goal-emoji-btn.selected:focus-visible — 一段深い外周 glow */
+.goal-emoji-btn.selected:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ③ .sub-emoji-btn.selected:hover */
+.sub-emoji-btn.selected:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ④ .sub-emoji-btn.selected:focus-visible */
+.sub-emoji-btn.selected:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑤ .pt-emoji-btn.is-active:hover */
+.pt-emoji-btn.is-active:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑥ .pt-emoji-btn.is-active:focus-visible */
+.pt-emoji-btn.is-active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑦ .ch-emoji-btn.active:hover */
+.ch-emoji-btn.active:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑧ .ch-emoji-btn.active:focus-visible */
+.ch-emoji-btn.active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑨ .ev-emoji-chip.selected:hover */
+.ev-emoji-chip.selected:hover {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑩ .ev-emoji-chip.selected:focus-visible */
+.ev-emoji-chip.selected:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑪〜⑳ ダーク版: primary-end ベース mix-lg でさらに深度を増す */
+
+/* ⑪ ダーク .goal-emoji-btn.selected:hover */
+[data-theme="dark"] .goal-emoji-btn.selected:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑫ ダーク .goal-emoji-btn.selected:focus-visible */
+[data-theme="dark"] .goal-emoji-btn.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑬ ダーク .sub-emoji-btn.selected:hover */
+[data-theme="dark"] .sub-emoji-btn.selected:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑭ ダーク .sub-emoji-btn.selected:focus-visible */
+[data-theme="dark"] .sub-emoji-btn.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑮ ダーク .pt-emoji-btn.is-active:hover */
+[data-theme="dark"] .pt-emoji-btn.is-active:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑯ ダーク .pt-emoji-btn.is-active:focus-visible */
+[data-theme="dark"] .pt-emoji-btn.is-active:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑰ ダーク .ch-emoji-btn.active:hover */
+[data-theme="dark"] .ch-emoji-btn.active:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑱ ダーク .ch-emoji-btn.active:focus-visible */
+[data-theme="dark"] .ch-emoji-btn.active:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑲ ダーク .ev-emoji-chip.selected:hover */
+[data-theme="dark"] .ev-emoji-chip.selected:hover {
+  box-shadow: 0 2px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑳ ダーク .ev-emoji-chip.selected:focus-visible */
+[data-theme="dark"] .ev-emoji-chip.selected:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
