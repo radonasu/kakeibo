@@ -43243,3 +43243,204 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   color: var(--primary-end);
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.47: ダッシュボードサマリーカード :focus-visible 状態を :hover ラダーに統一
+   （.summary-card.income/.expense/.balance.positive/.balance.negative .dash-sum-clickable）
+   ライト 11 + ダーク 9 計 20 セレクタ
+   ── 経緯 ──
+   v26.45 で行系（.dd-tx-row / .rpt-month-row.is-clickable）、v26.46 で
+   アイコン/ナビボタン群（.modal-close / .month-nav-btn / .cal-panel-close /
+   .cal-ev-nav）の :focus-visible を :hover ラダーに統一済み。
+   続編として、家計簿アプリ最上段の最重要 UI である
+   ダッシュボードサマリーカード 3 種（収入/支出/残高・role=button tabindex=0
+   の dash-sum-clickable）も :focus-visible が
+   `transform translateY(lift-md) + box-shadow shadow-hover-sm + focus-ring`
+   のフラット 3 段のみで、:hover の極めて rich な多層演出から大きく外れていた。
+   :hover では①タイプ別外周 box-shadow glow（income/expense/primary/danger
+   各 mix-sm の 0 6px 24px halo）②.summary-amount タイプ別 color 変色 +
+   brightness(1.06) + タイプ別 text-shadow glow（success/danger-text/primary）
+   ③.summary-label opacity 1 + 白 text-shadow glow ④::after / ::before
+   デコレーション円の scale 1.28/1.22 + 白 halo + 白透過度ブースト
+   ⑤.diff バッジ scale 1.06 と、6 系統の連動ラダーが組まれている。
+   ── 対象 ──
+   ライト：①.summary-card.income.dash-sum-clickable:focus-visible — income
+   mix-sm 外周 glow + focus-ring を box-shadow に合流
+   ②同 expense — expense mix-sm halo
+   ③同 .balance.positive — primary mix-sm halo
+   ④同 .balance.negative — expense mix-sm halo
+   ⑤income.dash-sum-clickable:focus-visible .summary-amount —
+   color:success + brightness(1.06) + success mix-sm text-shadow
+   ⑥同 expense — color:danger-text + brightness(1.06) + danger-text mix-sm
+   ⑦同 .balance.positive — color:primary + brightness(1.06) + primary mix-sm
+   ⑧同 .balance.negative — color:danger-text + brightness(1.06) + danger-text mix-sm
+   ⑨.dash-sum-clickable:focus-visible .summary-label — opacity 1 + 白 text-shadow
+   + filter:brightness(1.05)
+   ⑩.dash-sum-clickable:focus-visible::after — scale 1.28 + 白 halo
+   + 白透過度 18%（hover と同等の右上小円膨張）
+   ⑪.dash-sum-clickable:focus-visible::before — scale 1.22 + 白 halo
+   + 白透過度 14%（hover と同等の左下大円膨張）
+   ── ダーク版 ──
+   ⑫～⑮タイプ別外周 glow を income-end/expense-end/primary-end/expense-end
+   の mix-md（ライト mix-sm よりブランドアクセント追従強化）に
+   ⑯～⑲.summary-amount を income-end/expense-end/primary-end/expense-end
+   color + filter:brightness(1.08) + mix-md text-shadow に
+   ⑳ダーク .summary-label を #fff + brightness(1.1) + 白 mix-md text-shadow に
+   ── カスケード安全 ──
+   ①～④：.summary-card.income.dash-sum-clickable:focus-visible は
+   (0,3,0) > .dash-sum-clickable:focus-visible (0,2,0) で box-shadow を上書き、
+   transform は元の translateY(lift-md) を継承（再宣言で上書きせず保持）。
+   ⑤～⑧：summary-amount は (0,4,0) で hover の (0,3,0) を上書きせず、
+   focus-visible 専用の独立宣言として共存。⑨～⑪は .dash-sum-clickable
+   :focus-visible (0,2,0) と同階層、後出しで上書き。⑫～⑳：[data-theme="dark"]
+   付加で specificity (0,4,0) > ライト (0,3,0) で完全勝利。
+   :hover :active は無変更。
+   ── 設計判断 ──
+   サマリーカードは家計簿アプリで最も注視される UI（家計の総額が表示）。
+   キーボードユーザーが Tab で income/expense/balance カードに focus を移動した時、
+   マウス hover と同じ「タイプ別カラー halo + 数値発光 + 装飾円膨張」の
+   完成形演出を獲得し、ドリルダウンモーダルを開く CTA を視覚的に強調。
+   ::after / ::before デコレーション円も同期スケール拡大で躍動感をキープ。
+   ============================================================ */
+
+/* ① .summary-card.income.dash-sum-clickable:focus-visible — income mix-sm 外周 glow + focus-ring */
+.summary-card.income.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ② .summary-card.expense.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring */
+.summary-card.expense.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ③ .summary-card.balance.positive.dash-sum-clickable:focus-visible — primary mix-sm 外周 glow + focus-ring */
+.summary-card.balance.positive.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ④ .summary-card.balance.negative.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring */
+.summary-card.balance.negative.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑤ income summary-amount focus-visible — color success + brightness + success mix-sm glow */
+.summary-card.income.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--success);
+  filter: brightness(1.06);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+}
+
+/* ⑥ expense summary-amount focus-visible — color danger-text + brightness + danger-text mix-sm glow */
+.summary-card.expense.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--danger-text);
+  filter: brightness(1.06);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+
+/* ⑦ balance.positive summary-amount focus-visible — color primary + brightness + primary mix-sm glow */
+.summary-card.balance.positive.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--primary);
+  filter: brightness(1.06);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑧ balance.negative summary-amount focus-visible — color danger-text + brightness + danger-text mix-sm glow */
+.summary-card.balance.negative.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--danger-text);
+  filter: brightness(1.06);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+
+/* ⑨ .dash-sum-clickable:focus-visible .summary-label — opacity 1 + 白 text-shadow + brightness */
+.dash-sum-clickable:focus-visible .summary-label {
+  opacity: 1;
+  filter: brightness(1.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ⑩ .dash-sum-clickable:focus-visible::after — 右上小円 scale 1.28 + 白 halo + 白透過度 18% */
+.dash-sum-clickable:focus-visible::after {
+  transform: scale(1.28);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ⑪ .dash-sum-clickable:focus-visible::before — 左下大円 scale 1.22 + 白 halo + 白透過度 14% */
+.dash-sum-clickable:focus-visible::before {
+  transform: scale(1.22);
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ── ダーク版 ── */
+
+/* ⑫ ダーク income focus-visible — income-end mix-md 外周 glow + focus-ring */
+[data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑬ ダーク expense focus-visible — expense-end mix-md 外周 glow + focus-ring */
+[data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑭ ダーク balance.positive focus-visible — primary-end mix-md 外周 glow + focus-ring */
+[data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑮ ダーク balance.negative focus-visible — expense-end mix-md 外周 glow + focus-ring */
+[data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible {
+  box-shadow: var(--shadow-summary-hover),
+              0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑯ ダーク income summary-amount focus-visible — color income-end + brightness 1.08 + glow */
+[data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--income-end);
+  filter: brightness(1.08);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent);
+}
+
+/* ⑰ ダーク expense summary-amount focus-visible — color expense-end + brightness 1.08 + glow */
+[data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--expense-end);
+  filter: brightness(1.08);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+
+/* ⑱ ダーク balance.positive summary-amount focus-visible — color primary-end + brightness + glow */
+[data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--primary-end);
+  filter: brightness(1.08);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑲ ダーク balance.negative summary-amount focus-visible — color expense-end + brightness + glow */
+[data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible .summary-amount {
+  color: var(--expense-end);
+  filter: brightness(1.08);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+
+/* ⑳ ダーク .dash-sum-clickable:focus-visible .summary-label — #fff + brightness 1.1 + 白 mix-md glow */
+[data-theme="dark"] .dash-sum-clickable:focus-visible .summary-label {
+  color: #fff;
+  filter: brightness(1.1);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
