@@ -41427,3 +41427,72 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
       ⑥ライト hover の primary mix-md / 0 3px 10px と対称配置で primary-end ベース・blur 12px に微強化。
    全変更 CSS-only 実装（JS変更なし）・ライト/ダーク両対応。サイドバー nav-item 4箇所 + 通知ボタン 4箇所 = 計8箇所改善。
    ============================================================ */
+
+/* ============================================================
+   v26.33: グラデ背景サマリーカード rest 文字 contrast 強化
+            （白 text-shadow 静的化 一括 7 セレクタ）
+   v26.32 までで .summary-amount（line 18779）/ .diff.up/.down（line 18785/18792）/
+   .hs-score-num（line 18800）にはグラデ背景白テキストの「常時 subtle 白 glow」を獲得済み
+   だが、家計簿アプリ内のグラデ背景サマリーカード 4 系統（メインダッシュボード summary-card・
+   ポイントタブ pt-summary-card・イベントタブ ev-sum-card・ウィッシュリストタブ wl-sum-card）の
+   うち、①.summary-label（メインダッシュボード INCOME / EXPENSE / BALANCE 大文字ラベル）、
+   ②.pt-summary-label（ポイント「合計ポイント」「まもなく失効」ラベル）、
+   ③.pt-summary-amount（ポイント残高大型数値）、④.ev-sum-card .ev-sum-label（イベント
+   「今月」「来月」「年間」ラベル）、⑤.ev-sum-card .ev-sum-count（イベント件数）、
+   ⑥.wl-sum-count/budget/done .wl-summary-value（ウィッシュリスト件数・予算合計・購入済み）、
+   ⑦.wl-sum-count/budget/done .wl-summary-label（ウィッシュリストラベル）の 7 箇所は
+   rest 状態で text-shadow が無く、グラデ背景上で白テキストが「のっぺり」した印象だった。
+   各箇所すでに hover 時の text-shadow（v23.x）が定義済みで、rest と hover の差分が
+   「無 → 強 glow」になっていたが、rest にも subtle 白 glow を入れることで「常時 subtle
+   発光 → hover 時 強 glow」のスムーズなレンジへ移行。グラデ背景上の文字 contrast が
+   静的に強化され、視認性向上＋プレミアム感アップ。
+   いずれも既存 hover ルール（specificity 0,3,0）より低い specificity（0,1,0 〜 0,2,0）で
+   定義するため、rest を CSS 末尾に追加してもカスケード上 hover が優先される（破壊なし）。
+   ① .summary-label rest（specificity 0,1,0 vs hover .summary-card:hover .summary-label = 0,3,0）
+   ② .pt-summary-label rest（0,1,0 vs .pt-total:hover .pt-summary-label = 0,3,0）
+   ③ .pt-summary-amount rest（0,1,0 vs .pt-summary-card:hover .pt-summary-amount = 0,3,0）
+   ④ .ev-sum-card .ev-sum-label rest（0,2,0 vs .ev-sum-card:hover .ev-sum-label = 0,3,0）
+   ⑤ .ev-sum-card .ev-sum-count rest（0,2,0 vs .ev-sum-card:hover .ev-sum-count = 0,3,0）
+   ⑥ .wl-sum-* .wl-summary-value rest（0,2,0 vs .wl-sum-*:hover .wl-summary-value = 0,3,0）
+   ⑦ .wl-sum-* .wl-summary-label rest（0,2,0 vs .wl-sum-*:hover .wl-summary-label = 0,3,0）
+   全変更 CSS-only 実装（JS変更なし）・ライト/ダーク両対応（白 rgba ベースのため両テーマで効く）。
+   ============================================================ */
+
+/* ① .summary-label rest（メインダッシュボード INCOME/EXPENSE/BALANCE 大文字ラベル） */
+.summary-label {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.22);
+}
+
+/* ② .pt-summary-label rest（ポイント「合計ポイント」「まもなく失効」） */
+.pt-summary-label {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.22);
+}
+
+/* ③ .pt-summary-amount rest（ポイント残高大型数値） */
+.pt-summary-amount {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.22), 0 0 22px rgba(255, 255, 255, 0.08);
+}
+
+/* ④ .ev-sum-card .ev-sum-label rest（イベント「今月/来月/年間」ラベル） */
+.ev-sum-card .ev-sum-label {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.22);
+}
+
+/* ⑤ .ev-sum-card .ev-sum-count rest（イベント件数大型数値） */
+.ev-sum-card .ev-sum-count {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.22), 0 0 22px rgba(255, 255, 255, 0.08);
+}
+
+/* ⑥ .wl-sum-count/budget/done .wl-summary-value rest（ウィッシュリスト件数/予算/購入済み大型数値） */
+.wl-sum-count .wl-summary-value,
+.wl-sum-budget .wl-summary-value,
+.wl-sum-done .wl-summary-value {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.22), 0 0 22px rgba(255, 255, 255, 0.08);
+}
+
+/* ⑦ .wl-sum-count/budget/done .wl-summary-label rest（ウィッシュリストラベル） */
+.wl-sum-count .wl-summary-label,
+.wl-sum-budget .wl-summary-label,
+.wl-sum-done .wl-summary-label {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.22);
+}
