@@ -41496,3 +41496,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .wl-sum-done .wl-summary-label {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.22);
 }
+
+/* ============================================================
+   v26.34 — アイコンボタン群 hover lift 統一拡張
+   （btn-icon / edit-tx / delete-tx / dup-tx 4 種に translateY(-1px) lift +
+    外側 glow を追加し、active 時は scale のみで press-back を表現）
+
+   v26.30 〜 32 で完成したナビ系 UI 4 種（bottom-nav-item / nav-item /
+   notif-mark-read / section-tab）の「触れたら一段持ち上がる」hover lift システムを
+   取引行・カテゴリ行に並ぶ操作アイコンボタン群に展開。これまで btn-icon /
+   edit-tx / delete-tx / dup-tx は scale(1.06) や scale(1.12) のサイズ変化のみで
+   ナビ系の lift と反応軸が違っていた。本スプリントで scale + translateY の組み合わせに
+   統一し、同時に edit-tx / delete-tx / dup-tx は ring のみで外側 drop-shadow が無かった
+   ため 0 2px 10px primary/danger-text/warning mix-sm の外側 glow を新規追加して
+   btn-icon と同じ「ring + 外側 glow」二段構成に揃える。active 時は元の transform:
+   scale(--scale-icon-active) のみが適用されカスケード上 hover の translateY を
+   打ち消すため「持ち上がって押すと元に戻る」press-back 感を演出。
+
+   ① .btn-icon:hover → scale(--scale-hover-chip) translateY(-1px)（既存 scale に lift 追加）
+   ② .edit-tx:hover  → scale(--scale-icon-hover) translateY(-1px) + 外側 0 2px 10px primary mix-sm glow
+   ③ .delete-tx:hover → scale(--scale-icon-hover) translateY(-1px) + 外側 0 2px 10px danger-text mix-sm glow
+   ④ .dup-tx:hover   → scale(--scale-icon-hover) translateY(-1px) + 外側 0 2px 10px warning mix-sm glow
+   ⑤ ダーク .btn-icon:hover  → 0 2px 10px primary-end mix-sm → 0 3px 14px primary-end mix-md 強化
+   ⑥ ダーク .edit-tx:hover   → 外側 0 3px 12px primary-end mix-md glow 新規追加
+   ⑦ ダーク .delete-tx:hover → 外側 0 3px 12px expense-end mix-md glow 新規追加
+   ⑧ ダーク .dup-tx:hover    → 外側 0 3px 12px warning-end mix-md glow 新規追加
+   全変更 CSS-only 実装（JS変更なし）・ライト/ダーク両対応。各セレクタの specificity は
+   元の定義と同じ（0,1,1）または（0,2,1）で、ソース順により末尾の本ブロックが優先される。
+   transform / box-shadow は元のルールから transition list 含有済みのため
+   transition 設定は変更不要。
+   ============================================================ */
+
+/* ① .btn-icon:hover lift（既存 scale + translateY -1px） */
+.btn-icon:hover {
+  transform: scale(var(--scale-hover-chip)) translateY(-1px);
+}
+
+/* ② .edit-tx:hover lift + 外側 glow（既存 ring に外側 glow 追加） */
+.edit-tx:hover {
+  transform: scale(var(--scale-icon-hover)) translateY(-1px);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .delete-tx:hover lift + 外側 glow（既存 ring に外側 glow 追加） */
+.delete-tx:hover {
+  transform: scale(var(--scale-icon-hover)) translateY(-1px);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+              0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+
+/* ④ .dup-tx:hover lift + 外側 glow（既存 ring に外側 glow 追加） */
+.dup-tx:hover {
+  transform: scale(var(--scale-icon-hover)) translateY(-1px);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-mid), transparent),
+              0 2px 10px color-mix(in srgb, var(--warning) var(--mix-sm), transparent);
+}
+
+/* ⑤ ダーク .btn-icon:hover ring + 外側 glow 強化（mix-sm 0 2px 10px → mix-md 0 3px 14px） */
+[data-theme="dark"] .btn-icon:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑥ ダーク .edit-tx:hover 外側 glow 新規追加（既存 ring + 外側 primary-end mix-md） */
+[data-theme="dark"] .edit-tx:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent),
+              0 3px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑦ ダーク .delete-tx:hover 外側 glow 新規追加（既存 ring + 外側 expense-end mix-md） */
+[data-theme="dark"] .delete-tx:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent),
+              0 3px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+
+/* ⑧ ダーク .dup-tx:hover 外側 glow 新規追加（既存 ring + 外側 warning-end mix-md） */
+[data-theme="dark"] .dup-tx:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+              0 3px 12px color-mix(in srgb, var(--warning-end) var(--mix-md), transparent);
+}
