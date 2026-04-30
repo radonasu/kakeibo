@@ -44194,3 +44194,90 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .health-score-card::after {
   animation: hs-card-deco-breath 4.0s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.55 (Sprint #1051): カレンダー「現在地」インジケーター + 認証
+   アクティブタブ continuous breathing pulse animation 統一
+   v26.53 ナビ ambient liveness（第 9 弾）/ v26.54 グラデサマリーカード
+   decoration 円 ambient liveness（第 10 弾）に続き、第 11 弾として
+   「rest 状態の ambient liveness」テーマを「現在選択中」インジケーター
+   3 系統に展開。
+   - 系統: ①.cal-cell.selected（カレンダー選択セル light + dark）
+            ②.cal-date-num.today（カレンダー today バッジ light + dark）
+            ③.auth-tab.active（認証アクティブタブ light + dark）
+   - 計 3 系統 6 セレクタに subtle filter:drop-shadow / text-shadow
+     breath を一括追加。
+   - filter:drop-shadow は既存の box-shadow hover 演出と独立 property
+     レイヤーで合流（衝突なし）。.cal-cell.selected:hover の
+     box-shadow（inset 2px primary + outer 14px primary mix-md glow）は
+     無傷で、breath drop-shadow は背後に並行。.cal-date-num.today も
+     親 .cal-cell:hover の box-shadow 強化（v26.28）と独立。
+   - .auth-tab.active は text-shadow を breath。.auth-card:hover の
+     box-shadow + transform 強化（v26.05）と独立 property。.auth-tab.active
+     は :hover 専用 text-shadow override が無いため breath が常時適用
+     （hover でも継続）— rest 値（0%/100%）は line 26160-26161 既存
+     静的値（0 0 8px primary/primary-end mix-sm）に完全一致させて
+     カスケード連続性を保護。
+   - 3.6s（cal-sel）/ 3.8s（cal-today）/ 4.0s（auth-tab）の異速で
+     同期しないナチュラルな揺らぎ。複数同時表示時（カレンダー上で
+     selected と today が並ぶ場合）も全体が揃って脈動する違和感を回避。
+   - amplitude: subtle ambient（rest peak vs 50% peak で blur +6px / mix
+     +1〜2 ティア）。注意を奪わないレベル。
+   - prefers-reduced-motion はグローバル wildcard ルール（line 18923-30）
+     で animation-duration: 0.01ms 強制となり自動で停止（アクセシビリティ準拠）。
+   - .cal-cell の overflow:hidden は drop-shadow 自体は描画段階で
+     ボックス外に展開されるが、親 .cal-grid-wrap の overflow:hidden に
+     より外周は clip される（カレンダー枠内で subtle に脈動）。
+     .cal-date-num.today の drop-shadow は親 .cal-cell の
+     overflow:hidden で clip されるが、バッジ周囲 ~30px 範囲は
+     セル内に収まり ambient breath として認識可能。
+   ============================================================ */
+
+/* ── カレンダー選択セル breath（filter:drop-shadow）── */
+@keyframes cal-sel-breath {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+}
+.cal-cell.selected {
+  animation: cal-sel-breath 3.6s ease-in-out infinite;
+}
+@keyframes cal-sel-breath-dark {
+  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+}
+[data-theme="dark"] .cal-cell.selected {
+  animation: cal-sel-breath-dark 3.6s ease-in-out infinite;
+}
+
+/* ── カレンダー today バッジ breath（filter:drop-shadow）── */
+@keyframes cal-today-breath {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+}
+.cal-date-num.today {
+  animation: cal-today-breath 3.8s ease-in-out infinite;
+}
+@keyframes cal-today-breath-dark {
+  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+}
+[data-theme="dark"] .cal-date-num.today {
+  animation: cal-today-breath-dark 3.8s ease-in-out infinite;
+}
+
+/* ── 認証アクティブタブ breath（text-shadow）──
+   rest 値（0%/100%）は line 26160-26161 既存静的値に一致 */
+@keyframes auth-tab-active-breath {
+  0%, 100% { text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+  50%      { text-shadow: 0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+}
+.auth-tab.active {
+  animation: auth-tab-active-breath 4.0s ease-in-out infinite;
+}
+@keyframes auth-tab-active-breath-dark {
+  0%, 100% { text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+  50%      { text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+}
+[data-theme="dark"] .auth-tab.active {
+  animation: auth-tab-active-breath-dark 4.0s ease-in-out infinite;
+}
