@@ -41867,3 +41867,172 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .recurring-toggle-label:hover {
   transform: translateY(var(--translate-lift-xs));
 }
+
+/* ============================================================
+   Sprint #1034 / v26.38
+   カラーピッカー swatch 系 hover-focus 立体感統一
+   ------------------------------------------------------------
+   v26.36/v26.37 で選択操作系 UI（.tx-cb / .dw-slider /
+   .notif-toggle-label / .recurring-toggle-label /
+   .adv-filter-toggle / .type-toggle label+radio）に hover lift /
+   focus-visible 外周 glow / press-back を統一追加し、家計簿
+   アプリ全体の hover 反応ラダーをほぼ完全統一に至らせた。
+
+   一方、各モーダル（カテゴリ / 目標 / サブスク / ポイント /
+   チャレンジ）のカラー選択 UI 5 系統 — .color-swatch /
+   .goal-color-btn / .sub-color-btn / .pt-color-btn /
+   .ch-color-btn — は :hover で scale (+ 一部 shadow-badge 黒
+   neutral 影) のみ・:focus-visible は inset focus-ring のみで、
+   v26.36/37 の他選択操作系と比べて「外周 primary glow」が無く
+   立体感ラダーから外れていた。
+
+   v26.38 で 5 系統に「rest scale → hover scale + 外周 primary
+   drop-shadow → focus-visible 外周 primary glow」を一括統一追加。
+   選択操作系 UI のラダーがカラーピッカー swatch まで完全統一に
+   到達する。
+
+   ① .color-swatch:hover に 0 2px 10px primary mix-sm 外側 glow
+   ② .color-swatch:focus-visible に 0 0 12px primary mix-sm 外周 glow
+   ③ .goal-color-btn:hover に 0 2px 10px primary mix-sm 外側 glow
+      （既存 shadow-badge を保持しつつ追加）
+   ④ .goal-color-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑤ .sub-color-btn:hover に 0 2px 10px primary mix-sm 外側 glow
+   ⑥ .sub-color-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑦ .pt-color-btn:hover に 0 2px 10px primary mix-sm 外側 glow
+   ⑧ .pt-color-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑨ .ch-color-btn:hover に 0 2px 10px primary mix-sm 外側 glow
+   ⑩ .ch-color-btn:focus-visible に 0 0 12px primary mix-sm 外周
+
+   ダーク版（⑪〜⑳）は primary-end ベースの mix-md glow に切替。
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .color-swatch:hover — primary 外側 drop-shadow 追加（既存 scale を保持） */
+.color-swatch:hover {
+  transform: scale(var(--scale-hover-lg));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ② .color-swatch:focus-visible — 外周 primary glow 追加 */
+.color-swatch:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .goal-color-btn:hover — 既存 shadow-badge を残しつつ primary tint 重ね */
+.goal-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow: var(--shadow-badge),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ④ .goal-color-btn:focus-visible — 外周 primary glow 追加 */
+.goal-color-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑤ .sub-color-btn:hover — primary tint 重ね */
+.sub-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow: var(--shadow-badge),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑥ .sub-color-btn:focus-visible — 外周 primary glow 追加 */
+.sub-color-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑦ .pt-color-btn:hover — primary tint 重ね */
+.pt-color-btn:hover {
+  transform: scale(var(--scale-hover));
+  box-shadow: var(--shadow-badge),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑧ .pt-color-btn:focus-visible — 外周 primary glow 追加 */
+.pt-color-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑨ .ch-color-btn:hover — primary tint 重ね */
+.ch-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow: var(--shadow-badge),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑩ .ch-color-btn:focus-visible — 外周 primary glow 追加 */
+.ch-color-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑪〜⑳ ダーク版: primary-end ベース mix-md glow に切替 */
+
+/* ⑪ ダーク .color-swatch:hover */
+[data-theme="dark"] .color-swatch:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑫ ダーク .color-swatch:focus-visible */
+[data-theme="dark"] .color-swatch:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑬ ダーク .goal-color-btn:hover */
+[data-theme="dark"] .goal-color-btn:hover {
+  box-shadow: var(--shadow-badge),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑭ ダーク .goal-color-btn:focus-visible */
+[data-theme="dark"] .goal-color-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑮ ダーク .sub-color-btn:hover */
+[data-theme="dark"] .sub-color-btn:hover {
+  box-shadow: var(--shadow-badge),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑯ ダーク .sub-color-btn:focus-visible */
+[data-theme="dark"] .sub-color-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑰ ダーク .pt-color-btn:hover */
+[data-theme="dark"] .pt-color-btn:hover {
+  box-shadow: var(--shadow-badge),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑱ ダーク .pt-color-btn:focus-visible */
+[data-theme="dark"] .pt-color-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑲ ダーク .ch-color-btn:hover */
+[data-theme="dark"] .ch-color-btn:hover {
+  box-shadow: var(--shadow-badge),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑳ ダーク .ch-color-btn:focus-visible */
+[data-theme="dark"] .ch-color-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
