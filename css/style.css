@@ -43444,3 +43444,161 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   filter: brightness(1.1);
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
 }
+
+/* ============================================================
+   v26.48 Sprint #1044: 主要ボタン/タブ/チップ/カード系 :focus-visible 状態を :hover ラダーに統一
+   v26.45 行系・v26.46 アイコン/ナビ・v26.47 サマリーカードに続く第 4 弾。
+   汎用ボタン群 7 系統 + .cat-chip.selected のキーボードフォーカス立体感を :hover ラダーへ完全合流。
+   対象：① .btn-icon ② .cat-chip:not(.selected) ③ .cat-chip.selected ④ .tx-th-sort
+        ⑤ .auth-tab:not(.active) ⑥ .step-card ⑦ .empty-month-btn ⑧ .section-tab(:not/.is-active/.tab-icon)
+   ============================================================ */
+
+/* ① .btn-icon:focus-visible — :hover (line 1398) ラダー合流: opacity + bg + scale + ring + primary mix-md glow */
+.btn-icon:focus-visible {
+  opacity: 1;
+  background: var(--bg);
+  transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ② .cat-chip:not(.selected):focus-visible — :hover (line 1724) ラダー合流: border + bg + lift + shadow + primary mix-2xs glow + ring */
+.cat-chip:not(.selected):focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
+  background: var(--surface-hover);
+  color: var(--text);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: var(--shadow-sm),
+              0 3px 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ③ .cat-chip.selected:focus-visible — :hover (line 1744) ラダー合流: cat-color border + lift + cat-color ring + drop-shadow */
+.cat-chip.selected:focus-visible {
+  outline: none;
+  border-color: var(--cat-color, var(--primary));
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent),
+              0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent);
+}
+
+/* ④ .tx-th-sort:focus-visible — :hover (line 2116) ラダー合流: primary color + primary-light bg + ring */
+.tx-th-sort:focus-visible {
+  outline: none;
+  color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑤ .auth-tab:not(.active):focus-visible — :hover (line 4139 + 26153) ラダー合流: bg + color + ring + primary mix-xs text-shadow */
+.auth-tab:not(.active):focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+  color: var(--text);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑥ .step-card:focus-visible — :hover (line 5303) ラダー合流: lift-md + shadow-md + primary mix-xs glow + primary border + ring */
+.step-card:focus-visible {
+  outline: none;
+  transform: translateY(var(--translate-lift-md));
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md),
+              0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑦ .empty-month-btn:focus-visible — :hover (line 5402) ラダー合流: bg primary mix-md + lift+scale + ring + primary mix-md glow */
+.empty-month-btn:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white));
+  transform: translateY(-1px) scale(var(--scale-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑧-1 .section-tab:not(.is-active):focus-visible — :hover (line 6294 + 6302) 非アクティブラダー合流: color + bg + border-bottom + lift + ring + primary mix-sm glow */
+.section-tab:not(.is-active):focus-visible {
+  outline: none;
+  color: var(--text);
+  background: var(--surface-2);
+  border-bottom-color: var(--border-strong);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑧-2 .section-tab.is-active:focus-visible — :hover (line 6314) アクティブラダー合流: bg primary mix-sm + ring + outer mix-sm glow + inset mix-md glow（lift 無しで border 連続性保護） */
+.section-tab.is-active:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
+
+/* ⑧-3 .section-tab:not(.is-active):focus-visible .tab-icon — :hover (line 6303) 連動: tab-icon scale */
+.section-tab:not(.is-active):focus-visible .tab-icon {
+  transform: scale(var(--scale-hover));
+}
+
+/* ===== ダークモード（v26.48） ===== */
+
+/* ⑨ ダーク .btn-icon:focus-visible — :hover (line 34294) primary-end mix-sm 強化 + ring */
+[data-theme="dark"] .btn-icon:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑩ ダーク .cat-chip:not(.selected):focus-visible — primary-end mix-xs glow 強化 + ring */
+[data-theme="dark"] .cat-chip:not(.selected):focus-visible {
+  box-shadow: var(--shadow-sm),
+              0 3px 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑪ ダーク .tx-th-sort:focus-visible — :hover (line 2196) primary mix-sm bg 強化 */
+[data-theme="dark"] .tx-th-sort:focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑫ ダーク .auth-tab:not(.active):focus-visible — :hover (line 26154) primary-end color + text-shadow 強化 */
+[data-theme="dark"] .auth-tab:not(.active):focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑬ ダーク .step-card:focus-visible — :hover (line 34172 + 5409) primary-end border + mix-md outer glow 強化 */
+[data-theme="dark"] .step-card:focus-visible {
+  border-color: var(--primary-end);
+  box-shadow: var(--shadow-md),
+              0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ⑭ ダーク .empty-month-btn:focus-visible — :hover (line 34297) primary-end mix-lg bg + glow + color + text-shadow 強化 */
+[data-theme="dark"] .empty-month-btn:focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+  color: var(--primary-end);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑮ ダーク .section-tab:not(.is-active):focus-visible — :hover (line 34178 + 6333) primary-end mix-sm outer glow + bg/border 強化 */
+[data-theme="dark"] .section-tab:not(.is-active):focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface));
+  border-bottom-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑯ ダーク .section-tab.is-active:focus-visible — :hover (line 6339 + 33629) primary-end mix-md inset glow 強化 */
+[data-theme="dark"] .section-tab.is-active:focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
