@@ -42943,3 +42943,124 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
               0 2px 10px rgba(0,0,0,0.22);
 }
+
+/* ============================================================
+   Sprint #1040 / v26.44
+   .qa-amount-wrap hover-focus 浮上深度ラダー統一 + qa-yen 連動 glow
+   ------------------------------------------------------------
+   v26.12/13 で .amount-input-wrap（イベントモーダル金額入力ラッパー）に
+   「rest（影なし）→ hover（control ring + 0 2px 8px black-08
+   drop-shadow）→ focus-within（focus-ring + 0 4px 14px black-12
+   drop-shadow + 0 0 12px primary mix-xs 外周 glow）」3 段ラダーを
+   完成させた。一方、クイック追加カードの金額入力ラッパー .qa-amount-wrap
+   （¥ プレフィックス + 数値入力 + タイプ別 expense/income アクセント）
+   は v26.43 のモーダルフォーム入力統一（6 系統）に含まれず、
+   :hover で「border-strong + ring（focus-ring-w primary mix-xs）単段」、
+   :focus-within で「border-color qa-accent + ring 2px primary mix-2xs
+   単段（type 別 expense mix-xs / success mix-xs オーバーライド）」のみで、
+   外側 drop-shadow / 外周 glow が抜けていた。クイック追加カード使用時に
+   イベントモーダル金額入力より立体感が一段下に沈んで見えていた。
+
+   v26.44 で .qa-amount-wrap に v26.13 と同じ 3 段ラダーを統一展開
+   （ライト 4 + ダーク 4 計 8 セレクタ）+ qa-yen 連動 text-shadow
+   1 セレクタ（ライト/ダーク統合 2 セレクタ）。type 別 expense/income
+   accent を保持しつつ深度のみ深化（identity 表現を壊さない）。
+
+   ① .qa-amount-wrap:hover に 0 2px 8px black-08 drop-shadow 追加
+       既存 primary mix-xs ring を保持
+   ② .qa-amount-wrap:focus-within（generic）に focus-ring 強化 +
+       0 4px 14px black-12 drop-shadow + 0 0 12px primary mix-xs
+       外周 glow 追加（既存 2px primary mix-2xs ring を focus-ring に
+       格上げし v26.13 amount-input-wrap と完全対称化）
+   ③ .qa-card[data-qa-type="expense"] .qa-amount-wrap:focus-within に
+       expense mix-xs ring + 0 4px 14px black-12 + 0 0 12px expense
+       mix-xs 外周 glow（既存 expense ring を保持しつつ深度追加）
+   ④ .qa-card[data-qa-type="income"] .qa-amount-wrap:focus-within に
+       success mix-xs ring + 0 4px 14px black-12 + 0 0 12px success
+       mix-xs 外周 glow（既存 success ring を保持しつつ深度追加）
+   ⑤ ダーク .qa-amount-wrap:hover — primary-end mix-sm ring + 0 2px
+       10px rgba(0,0,0,0.22) drop-shadow 強化（暗背景上の visibility 確保）
+   ⑥ ダーク .qa-amount-wrap:focus-within（generic）— focus-ring +
+       0 4px 14px rgba(0,0,0,0.22) + 0 0 14px primary-end mix-sm 強化
+   ⑦ ダーク expense :focus-within — expense-end ring + black-22 +
+       expense-end mix-sm glow（type accent 保持）
+   ⑧ ダーク income :focus-within — income-end ring + black-22 +
+       income-end mix-sm glow（type accent 保持）
+
+   ⑨ .qa-amount-wrap:focus-within .qa-yen に text-shadow 0 0 8px
+       qa-accent mix-sm 追加。focus 時に ¥ プレフィックスが軽発光し
+       金額入力中である視覚フィードバックを強化。type 別 expense
+       danger-text / income success に追従。
+   ⑩ ダーク版 .qa-yen text-shadow を mix-md 強化。
+
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   モーダル/カード金額入力ラッパー 2 種（.amount-input-wrap /
+   .qa-amount-wrap）が同じ「rest → hover → focus-within」3 段深度
+   ラダーを共有する完成形演出に統一。
+   ============================================================ */
+
+/* ① .qa-amount-wrap:hover — 既存 primary mix-xs ring に 0 2px 8px black-08 追加 */
+.qa-amount-wrap:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ② .qa-amount-wrap:focus-within（generic）— focus-ring + drop-shadow + 外周 primary glow */
+.qa-amount-wrap:focus-within {
+  border-color: var(--qa-accent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ③ .qa-card expense type :focus-within — expense ring + drop-shadow + 外周 expense glow */
+.qa-card[data-qa-type="expense"] .qa-amount-wrap:focus-within {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent),
+              0 4px 14px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent);
+}
+
+/* ④ .qa-card income type :focus-within — success ring + drop-shadow + 外周 success glow */
+.qa-card[data-qa-type="income"] .qa-amount-wrap:focus-within {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+              0 4px 14px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+}
+
+/* ⑤ ダーク .qa-amount-wrap:hover — primary-end mix-sm ring + 強化 drop-shadow */
+[data-theme="dark"] .qa-amount-wrap:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 2px 10px rgba(0,0,0,0.22);
+}
+
+/* ⑥ ダーク .qa-amount-wrap:focus-within（generic）— focus-ring + 強化 drop-shadow + primary-end glow */
+[data-theme="dark"] .qa-amount-wrap:focus-within {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑦ ダーク expense type :focus-within — expense-end ring + black-22 + expense-end glow 強化 */
+[data-theme="dark"] .qa-card[data-qa-type="expense"] .qa-amount-wrap:focus-within {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
+}
+
+/* ⑧ ダーク income type :focus-within — income-end ring + black-22 + income-end glow 強化 */
+[data-theme="dark"] .qa-card[data-qa-type="income"] .qa-amount-wrap:focus-within {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income-end) var(--mix-sm), transparent),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
+}
+
+/* ⑨ .qa-amount-wrap:focus-within .qa-yen — qa-accent text-shadow glow（type 連動） */
+.qa-amount-wrap:focus-within .qa-yen {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent);
+}
+
+/* ⑩ ダーク .qa-amount-wrap:focus-within .qa-yen — text-shadow 強化（mix-md） */
+[data-theme="dark"] .qa-amount-wrap:focus-within .qa-yen {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--qa-accent) var(--mix-md), transparent);
+}
