@@ -42712,3 +42712,234 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 16px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-lg), transparent);
 }
+
+/* ============================================================
+   Sprint #1039 / v26.43
+   特殊モーダルフォーム入力 hover-focus 浮上深度ラダー統一
+   ------------------------------------------------------------
+   v26.11/13/35 で form-group input・amount-input・filter-bar /
+   adv-filter-input・account-select に「rest（影なし）→ hover
+   （control ring + 0 2px 8px black-08 drop-shadow）→ focus
+   （focus-ring + 0 4px 12px black-12 drop-shadow + 0 0 12px
+   accent mix-xs 外周 glow）」3 段の浮上深度ラダーを統一展開した。
+
+   一方、各モーダル/カード固有の特殊フォーム入力 6 種：
+   ① .budget-input（予算モーダルの月予算入力）
+   ② .recurring-day-input（繰り返し取引フォームの日付指定）
+   ③ .csv-map-select（CSV インポートの列マッピング select）
+   ④ .qa-cat-select（クイック追加カードのカテゴリ select）
+   ⑤ .qa-memo-input（クイック追加カードのメモ入力）
+   ⑥ .cat-budget-input（カテゴリ別予算カードの per-カテゴリ入力）
+   は、:hover で「border-strong + ring（focus-ring-w accent
+   mix-xs）単段」のみ、:focus で「border accent + ring 単段」
+   のみで、外側 drop-shadow / 外周 glow が抜けていた。
+   v26.35 で統一したフォーム/フィルター入力の 3 段ラダーから
+   ズレており、特に予算モーダルやクイック追加カードを操作する
+   際に form-group input より立体感が一段下に沈んで見えていた。
+
+   v26.43 で 6 系統 12 セレクタにライト 3 段ラダーを一括統一
+   追加（ダーク 8 セレクタ含めライト 12 + ダーク 8 計 20 セレクタ）。
+   すべて末尾 v26.43 ブロックで同〜高 specificity 上書きの
+   ため original ルール（line 3711-3712 / 5182-5187 / 8256-8257 /
+   11607-11608 / 11632-11633 / 17468-17473）との競合は無く、
+   ソース順により本ブロックが優先される。
+
+   per-input accent mapping（hover の ring + focus の outer glow）：
+   - .budget-input → --primary（汎用）
+   - .recurring-day-input → --primary（汎用）
+   - .csv-map-select → --primary（汎用）
+   - .qa-cat-select → --qa-accent（タイプ別 income/expense 連動）
+   - .qa-memo-input → --qa-accent（タイプ別 income/expense 連動）
+   - .cat-budget-input → --cat-clr fallback --primary（per-カテゴリ色）
+
+   既存 :focus が --qa-accent / --cat-clr で着色されていた箇所
+   は accent を保持しつつ outer glow も同 accent でハイブリッド
+   設計（identity 表現を壊さず深度のみ追加）。
+
+   ① .budget-input:hover に 0 2px 8px black-08 drop-shadow 追加
+   ② .budget-input:focus に 0 4px 12px black-12 + 0 0 12px primary
+       mix-xs 外周 glow 追加
+   ③ .recurring-day-input:hover に 0 2px 8px black-08 追加
+   ④ .recurring-day-input:focus に 0 4px 12px black-12 + primary
+       mix-xs glow 追加
+   ⑤ .csv-map-select:hover に 0 2px 8px black-08 追加
+   ⑥ .csv-map-select:focus に 0 4px 12px black-12 + primary
+       mix-xs glow 追加
+   ⑦ .qa-cat-select:hover に 0 2px 8px black-08 追加
+   ⑧ .qa-cat-select:focus に 0 4px 12px black-12 + qa-accent
+       mix-xs 外周 glow 追加
+   ⑨ .qa-memo-input:hover に 0 2px 8px black-08 追加
+   ⑩ .qa-memo-input:focus に 0 4px 12px black-12 + qa-accent
+       mix-xs 外周 glow 追加
+   ⑪ .cat-budget-input:hover に 0 2px 8px black-08 追加
+   ⑫ .cat-budget-input:focus に 0 4px 12px black-12 + cat-clr
+       mix-xs 外周 glow 追加（per-カテゴリ色追従）
+   ⑬〜⑳ ダーク版は black-12 → black-22（暗背景上の visibility
+       確保のため濃度+1 ティア強化）と、accent glow を mix-xs →
+       mix-sm 強化（ダークコントラスト対応）。.qa-cat-select /
+       .qa-memo-input は既存ダーク :focus（mix-soft）を保持しつつ
+       外側 drop-shadow と outer glow を末尾追加。.cat-budget-input
+       は既存ダーク :focus（mix-soft）を保持しつつ深化。
+
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   モーダル内のすべてのテキスト入力 / select が form-group input と
+   同じ「rest → hover → focus」3 段の浮上深度を共有する完成形演出
+   に統一。
+   ============================================================ */
+
+/* ① .budget-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.budget-input:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ② .budget-input:focus — ring + drop-shadow + 外周 glow */
+.budget-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ③ .recurring-day-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.recurring-day-input:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ④ .recurring-day-input:focus — ring + drop-shadow + 外周 glow */
+.recurring-day-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑤ .csv-map-select:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.csv-map-select:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ⑥ .csv-map-select:focus — ring + drop-shadow + 外周 glow */
+.csv-map-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑦ .qa-cat-select:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.qa-cat-select:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ⑧ .qa-cat-select:focus — qa-accent ring + drop-shadow + 外周 qa-accent glow */
+.qa-cat-select:focus {
+  border-color: var(--qa-accent);
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent);
+}
+
+/* ⑨ .qa-memo-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
+.qa-memo-input:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ⑩ .qa-memo-input:focus — qa-accent ring + drop-shadow + 外周 qa-accent glow */
+.qa-memo-input:focus {
+  border-color: var(--qa-accent);
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent);
+}
+
+/* ⑪ .cat-budget-input:hover — 既存 cat-clr ring に 0 2px 8px black-08 drop-shadow 追加 */
+.cat-budget-input:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent),
+              0 2px 8px var(--black-08);
+}
+
+/* ⑫ .cat-budget-input:focus — cat-clr ring + drop-shadow + 外周 cat-clr glow */
+.cat-budget-input:focus {
+  outline: none;
+  border-color: var(--cat-clr, var(--primary));
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent),
+              0 4px 12px var(--black-12),
+              0 0 12px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent);
+}
+
+/* ⑬〜⑳ ダーク版: black-12 → black-22 強化（暗背景上の visibility 確保）
+   accent glow は mix-xs → mix-sm 強化（ダークコントラスト対応） */
+
+/* ⑬ ダーク .budget-input:focus */
+[data-theme="dark"] .budget-input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑭ ダーク .recurring-day-input:focus */
+[data-theme="dark"] .recurring-day-input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑮ ダーク .csv-map-select:focus */
+[data-theme="dark"] .csv-map-select:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑯ ダーク .qa-cat-select:focus — 既存 mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+[data-theme="dark"] .qa-cat-select:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent);
+}
+
+/* ⑰ ダーク .qa-memo-input:focus — 既存 mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+[data-theme="dark"] .qa-memo-input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent);
+}
+
+/* ⑱ ダーク .cat-budget-input:focus — 既存 cat-clr mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+[data-theme="dark"] .cat-budget-input:focus {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-soft), transparent),
+              0 4px 14px rgba(0,0,0,0.22),
+              0 0 14px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent);
+}
+
+/* ⑲ ダーク .qa-cat-select:hover / .qa-memo-input:hover — primary-end mix-md ring + 強化 drop-shadow */
+[data-theme="dark"] .qa-cat-select:hover,
+[data-theme="dark"] .qa-memo-input:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 2px 10px rgba(0,0,0,0.22);
+}
+
+/* ⑳ ダーク .budget-input / .recurring-day-input / .csv-map-select / .cat-budget-input :hover — primary-end mix-sm ring + 強化 drop-shadow */
+[data-theme="dark"] .budget-input:hover,
+[data-theme="dark"] .recurring-day-input:hover,
+[data-theme="dark"] .csv-map-select:hover,
+[data-theme="dark"] .cat-budget-input:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 2px 10px rgba(0,0,0,0.22);
+}
