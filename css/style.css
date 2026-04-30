@@ -3080,8 +3080,15 @@ mark.tx-hl {
 .type-btn.income-btn:hover   { background: var(--income-light);  color: var(--income);  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); text-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
 .type-btn.income-btn:active  { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); }
 /* ev-modal の type-toggle は label+radio 構成（他の type-toggle は button.type-btn 構成） */
-.type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
-.type-toggle input[type="radio"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+.type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; border-radius: var(--radius-btn-sm); transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
+/* v26.37: type-toggle label（ev-modal radio 構成）に hover lift / focus-visible glow / active press-back を新規追加。v26.36 で統一した checkbox/dw-slider/notif-toggle-label/recurring-toggle-label/adv-filter-toggle と同じ hover ladder を radio 系の type-toggle にも展開し、選択操作 UI 全体の立体感を完成形に。 */
+.type-toggle label:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); }
+.type-toggle label:active { transform: translateY(0); }
+.type-toggle label:has(input:focus-visible) { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.type-toggle input[type="radio"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; transition: transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out); }
+.type-toggle input[type="radio"]:hover { transform: scale(1.08); filter: drop-shadow(0 1px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+.type-toggle input[type="radio"]:active { transform: scale(0.94); }
+.type-toggle input[type="radio"]:focus-visible { outline: none; }
 
 /* ── モーダル ────────────────────────────────────────── */
 .modal-overlay {
@@ -4826,6 +4833,10 @@ body {
 [data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); }
 [data-theme="dark"] .budget-item { background: var(--surface-2); }
 [data-theme="dark"] .type-toggle { background: var(--surface-2); }
+/* v26.37: ダーク版 type-toggle label/radio hover-focus 立体感 — primary-end ベースの mix-md glow に切替。ライトモード規格と対称配置。 */
+[data-theme="dark"] .type-toggle label:hover { box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent); }
+[data-theme="dark"] .type-toggle label:has(input:focus-visible) { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .type-toggle input[type="radio"]:hover { filter: drop-shadow(0 1px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); }
 [data-theme="dark"] .modal-overlay { background: var(--scrim-strong); }
 /* 収支テキスト: [data-theme="dark"] にて --income/#34d399, --expense/#fb7185 を定義済み（v9.8）*/
