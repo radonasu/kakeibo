@@ -42036,3 +42036,168 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   Sprint #1035 / v26.39
+   絵文字ピッカー btn 系 hover-focus 立体感統一
+   ------------------------------------------------------------
+   v26.38 でカラー swatch 5 系統（.color-swatch / .goal-color-btn /
+   .sub-color-btn / .pt-color-btn / .ch-color-btn）に hover 外周
+   primary drop-shadow + focus-visible 外周 primary glow を統一
+   追加し、家計簿アプリ全体の選択操作系 UI hover ラダーがほぼ
+   完全統一に到達した。
+
+   一方、各モーダル（目標 / サブスク / ポイント / チャレンジ /
+   イベント）の絵文字選択 UI 5 系統 — .goal-emoji-btn /
+   .sub-emoji-btn / .pt-emoji-btn / .ch-emoji-btn /
+   .ev-emoji-chip — は :hover で scale + 弱め drop-shadow
+   （0 2px 6〜8px primary mix-sm）はあったが、:focus-visible は
+   inset focus-ring のみで「外周 primary glow」が無く、v26.38 で
+   揃えたカラー swatch との立体感ラダーから外れていた。さらに
+   hover の drop-shadow blur が 6〜8px とまちまちで、カラー
+   swatch（10px）と並んだ際に深度感がチグハグだった。
+
+   v26.39 で 5 系統に「hover 0 2px 10px primary mix-sm 外側 glow
+   への深度統一 → focus-visible 外周 primary glow（0 0 12px
+   primary mix-sm）の新規追加」を一括統一。各モーダルでカラー
+   swatch と絵文字ピッカーが横並びで同じ「触れたらブランド色の
+   ハロー光が立つ」立体感を獲得し、v26.38 で開けた立体感ラダーが
+   絵文字選択 UI まで完全統一に到達する。
+
+   ① .goal-emoji-btn:hover の box-shadow を 0 2px 8px → 0 2px 10px
+      primary mix-sm に深度強化（既存 border-color/scale 維持）
+   ② .goal-emoji-btn:focus-visible に 0 0 12px primary mix-sm 外周
+      glow を追加（既存 ring 保持）
+   ③ .sub-emoji-btn:hover の box-shadow を 0 2px 6px → 0 2px 10px
+      primary mix-sm に深度強化（既存 background/scale 維持）
+   ④ .sub-emoji-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑤ .pt-emoji-btn:hover の box-shadow を 0 2px 6px → 0 2px 10px
+      primary mix-sm に深度強化（既存 background/scale 維持）
+   ⑥ .pt-emoji-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑦ .ch-emoji-btn:hover の box-shadow を 0 2px 6px → 0 2px 10px
+      primary mix-sm に深度強化（既存 background/scale 維持）
+   ⑧ .ch-emoji-btn:focus-visible に 0 0 12px primary mix-sm 外周
+   ⑨ .ev-emoji-chip:hover の box-shadow を 0 2px 6px → 0 2px 10px
+      primary mix-sm に深度強化（既存 bg/border/scale 維持）
+   ⑩ .ev-emoji-chip:focus-visible に 0 0 12px primary mix-sm 外周
+
+   ダーク版（⑪〜⑳）は primary-end ベースの mix-md glow に切替。
+   全変更 CSS-only 実装（JS 変更なし）・ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① .goal-emoji-btn:hover — 外側 drop-shadow を 8px → 10px に深度統一 */
+.goal-emoji-btn:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ② .goal-emoji-btn:focus-visible — 外周 primary glow 追加 */
+.goal-emoji-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .sub-emoji-btn:hover — 外側 drop-shadow を 6px → 10px に深度統一 */
+.sub-emoji-btn:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ④ .sub-emoji-btn:focus-visible — 外周 primary glow 追加 */
+.sub-emoji-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑤ .pt-emoji-btn:hover — 外側 drop-shadow を 6px → 10px に深度統一 */
+.pt-emoji-btn:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑥ .pt-emoji-btn:focus-visible — 外周 primary glow 追加 */
+.pt-emoji-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑦ .ch-emoji-btn:hover — 外側 drop-shadow を 6px → 10px に深度統一 */
+.ch-emoji-btn:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑧ .ch-emoji-btn:focus-visible — 外周 primary glow 追加 */
+.ch-emoji-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑨ .ev-emoji-chip:hover — 外側 drop-shadow を 6px → 10px に深度統一 */
+.ev-emoji-chip:hover {
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑩ .ev-emoji-chip:focus-visible — 外周 primary glow 追加 */
+.ev-emoji-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑪〜⑳ ダーク版: primary-end ベース mix-md glow に切替 */
+
+/* ⑪ ダーク .goal-emoji-btn:hover */
+[data-theme="dark"] .goal-emoji-btn:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑫ ダーク .goal-emoji-btn:focus-visible */
+[data-theme="dark"] .goal-emoji-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑬ ダーク .sub-emoji-btn:hover */
+[data-theme="dark"] .sub-emoji-btn:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑭ ダーク .sub-emoji-btn:focus-visible */
+[data-theme="dark"] .sub-emoji-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑮ ダーク .pt-emoji-btn:hover */
+[data-theme="dark"] .pt-emoji-btn:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑯ ダーク .pt-emoji-btn:focus-visible */
+[data-theme="dark"] .pt-emoji-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑰ ダーク .ch-emoji-btn:hover */
+[data-theme="dark"] .ch-emoji-btn:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑱ ダーク .ch-emoji-btn:focus-visible */
+[data-theme="dark"] .ch-emoji-btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑲ ダーク .ev-emoji-chip:hover */
+[data-theme="dark"] .ev-emoji-chip:hover {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑳ ダーク .ev-emoji-chip:focus-visible */
+[data-theme="dark"] .ev-emoji-chip:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
