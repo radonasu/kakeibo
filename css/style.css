@@ -43148,3 +43148,98 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               var(--shadow-row-hover),
               0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v26.46: アイコン/ナビボタン群 :focus-visible 状態を :hover ラダーに統一
+   （.modal-close + .month-nav-btn + .cal-panel-close + .cal-ev-nav）
+   ライト 4 + ダーク 2 計 6 セレクタ
+   ── 経緯 ──
+   v26.45 で .dd-tx-row / .rpt-month-row.is-clickable の :focus-visible を
+   :hover ラダー（lift + bg + shadow + 連動 glow）に統一済み。行系 UI に続き、
+   家計簿アプリの主要アイコン/ナビボタン 4 系統も :focus-visible が
+   `box-shadow: 0 0 0 focus-ring-w focus-ring` の ring 単段のみで、
+   :hover の rich な立体感（bg/color/scale/rotate/glow/text-shadow）から
+   外れていた。Tab キーで close ボタンや月ナビ矢印にフォーカスした際、
+   マウスホバー時の rich な反応に対し focus 時はフラットな ring だけが
+   浮かぶチグハグな体験になっていた。
+   ── 対象 ──
+   ① .modal-close:focus-visible（line 3150）— 13 種モーダル共通の × 閉じボタン
+      :hover では bg + danger-text color + scale(hover) + rotate(90deg) +
+      ring + danger-text mix-xs glow + text-shadow。:focus-visible に同等を統一。
+   ② .month-nav-btn:focus-visible:not(:disabled)（line 2955）— 月ナビ ‹ › 矢印
+      :hover では border + primary color + primary-light bg + scale(hover-chip) +
+      ring + primary mix-sm drop-shadow + primary mix-base text-shadow。
+   ③ .cal-panel-close:focus-visible（line 7218）— カレンダー日別パネル × 閉じ
+      :hover では surface-hover bg + text color + scale(hover) + ring。
+   ④ .cal-ev-nav:focus-visible（line 7411）— イベント日付内ナビボタン
+      :hover では primary mix-2xs bg + ring。subtle primary glow を末尾追加。
+   ── ダーク版 ──
+   ⑤ ダーク .modal-close:focus-visible — expense-end glow + text-shadow 強化
+      （ライト danger-text → ダーク expense-end ブランドアクセント色追従）
+   ⑥ ダーク .cal-panel-close:focus-visible — primary-end color + text-shadow 強化
+      （ライト text → ダーク primary-end ブランドアクセント色追従）
+   ── カスケード安全 ──
+   いずれも末尾追加で original :focus-visible ルール（line 3150 / 2955 /
+   7218 / 7411）と同 specificity（0,2,0）または高 specificity で上書き。
+   month-nav-btn は :not(:disabled) 付きで (0,3,0) > (0,2,0) で完全勝利。
+   原ルールの outline:none 宣言は本ブロックで再宣言不要（同セレクタの
+   別ルール間でプロパティは独立、重複しない outline:none は継承される）。
+   :hover :active は無変更。
+   ── 設計判断 ──
+   ① modal-close の rotate(90deg) は :hover 由来の identity 表現として
+      :focus-visible にも維持。Tab キーで ✕ 閉じボタンに focus が当たった時、
+      回転 + 赤化で「ここで Enter キーを押すとモーダルが閉じる」CTA を強調。
+   ② cal-ev-nav は :hover に外周 glow が無いが、:focus-visible では
+      キーボードユーザー向けに subtle primary mix-xs glow を末尾追加し、
+      フォーカス可視性を強化（hover よりやや強めの focus 表現）。
+   ============================================================ */
+
+/* ① .modal-close:focus-visible — bg + danger-text color + scale + rotate + danger glow + text-shadow */
+.modal-close:focus-visible {
+  background: var(--bg);
+  color: var(--danger-text);
+  transform: scale(var(--scale-hover)) rotate(90deg);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+
+/* ② .month-nav-btn:focus-visible:not(:disabled) — border + color + bg + scale + primary glow + text-shadow */
+.month-nav-btn:focus-visible:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(var(--scale-hover-chip));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+}
+
+/* ③ .cal-panel-close:focus-visible — bg + text color + scale */
+.cal-panel-close:focus-visible {
+  background: var(--surface-hover);
+  color: var(--text);
+  transform: scale(var(--scale-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ④ .cal-ev-nav:focus-visible — bg + subtle primary glow（focus 強化） */
+.cal-ev-nav:focus-visible {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑤ ダーク .modal-close:focus-visible — expense-end glow + text-shadow 強化 */
+[data-theme="dark"] .modal-close:focus-visible {
+  color: var(--expense-end);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+
+/* ⑥ ダーク .cal-panel-close:focus-visible — primary-end color + text-shadow 強化 */
+[data-theme="dark"] .cal-panel-close:focus-visible {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
