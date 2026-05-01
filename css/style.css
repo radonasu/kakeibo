@@ -43118,30 +43118,30 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    既存 :hover/:active は無変更。
    ============================================================ */
 
-/* ① .dd-tx-row:focus-visible — generic：hover ラダー継承 + focus-ring 重ね */
-.dd-tx-row:focus-visible {
+/* ① .dd-tx-row:focus-visible:not(:active) — generic：hover ラダー継承 + focus-ring 重ね（v26.73: :not(:active) 追加で押下感保護・:active line 16082 の translateY(press-down) + scale(press-fine) + filter brightness(press-haze) を完全保護） */
+.dd-tx-row:focus-visible:not(:active) {
   background: var(--surface-hover);
   transform: translateX(var(--translate-slide));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover);
 }
 
-/* ② .dd-tx-row 収入行 :focus-visible — success mix-xs glow（:hover と対称） */
-.dd-tx-row:has(.dd-tx-amount.income):focus-visible {
+/* ② .dd-tx-row 収入行 :focus-visible:not(:active) — success mix-xs glow（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
+.dd-tx-row:has(.dd-tx-amount.income):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
 }
 
-/* ③ .dd-tx-row 支出行 :focus-visible — danger-text mix-xs glow（:hover と対称） */
-.dd-tx-row:has(.dd-tx-amount.expense):focus-visible {
+/* ③ .dd-tx-row 支出行 :focus-visible:not(:active) — danger-text mix-xs glow（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
+.dd-tx-row:has(.dd-tx-amount.expense):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
 }
 
-/* ④ .rpt-month-row.is-clickable:focus-visible — hover ラダー継承 + primary mix-xs glow */
-.rpt-month-row.is-clickable:focus-visible {
+/* ④ .rpt-month-row.is-clickable:focus-visible:not(:active) — hover ラダー継承 + primary mix-xs glow（v26.73: :not(:active) 追加で押下感保護・:active line 16868 の translateY(press-down) + box-shadow none + filter brightness(press-haze) を完全保護） */
+.rpt-month-row.is-clickable:focus-visible:not(:active) {
   background: var(--surface-hover);
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
@@ -43149,29 +43149,29 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 
-/* ⑤ ダーク .dd-tx-row:focus-visible（generic）— shadow 強化 */
-[data-theme="dark"] .dd-tx-row:focus-visible {
+/* ⑤ ダーク .dd-tx-row:focus-visible:not(:active)（generic）— shadow 強化（v26.73: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .dd-tx-row:focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 12px rgba(0,0,0,0.22);
 }
 
-/* ⑥ ダーク .dd-tx-row 収入行 :focus-visible — income-end mix-md glow 強化 */
-[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.income):focus-visible {
+/* ⑥ ダーク .dd-tx-row 収入行 :focus-visible:not(:active) — income-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.income):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent);
 }
 
-/* ⑦ ダーク .dd-tx-row 支出行 :focus-visible — expense-end mix-md glow 強化 */
-[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.expense):focus-visible {
+/* ⑦ ダーク .dd-tx-row 支出行 :focus-visible:not(:active) — expense-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.expense):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
 }
 
-/* ⑧ ダーク .rpt-month-row.is-clickable:focus-visible — primary-end mix-md glow 強化 */
-[data-theme="dark"] .rpt-month-row.is-clickable:focus-visible {
+/* ⑧ ダーク .rpt-month-row.is-clickable:focus-visible:not(:active) — primary-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .rpt-month-row.is-clickable:focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
               0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
