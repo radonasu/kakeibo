@@ -9100,10 +9100,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .wl-sum-count .wl-summary-unit,
 .wl-sum-budget .wl-summary-unit,
 .wl-sum-done .wl-summary-unit   { color: var(--on-dark-soft); }
-/* v22.64: wl-summary-card タイプ別ホバーカラーグロー */
-.wl-sum-count:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.wl-sum-budget:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.wl-sum-done:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
+/* v22.64: wl-summary-card タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持（rest 0.18 → hover 0.22 で持ち上がるほど光が強まる v26.63 summary-card と同パターン） */
+.wl-sum-count:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
+.wl-sum-budget:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
+.wl-sum-done:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
 .wl-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .wl-summary-label {
@@ -10154,10 +10154,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-summary-label { font-size: var(--fs-xs); letter-spacing: var(--ls-fine); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; opacity: var(--opacity-near); margin-bottom: var(--sp-1); }
 .ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-none); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); white-space: nowrap; }
 .ch-summary-unit  { font-size: var(--fs-sm); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); opacity: var(--opacity-soft); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
-/* v22.64: ch-summary-card タイプ別ホバーカラーグロー */
-.ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
+/* v22.64: ch-summary-card タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持 */
+.ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
+.ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
+.ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
 .ch-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* -- セクションタイトル -- */
@@ -10903,15 +10903,16 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
 }
-.fv-stat-card:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-hover-md); }
+/* v26.64: hover 時も inset 上端白光沢を維持（rest 0.18 → hover 0.22 で持ち上がるほど光が強まる v26.63 summary-card と同パターン） */
+.fv-stat-card:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-hover-md), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 .fv-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-deep), var(--warning)); }
-/* v22.68: タイプ別ホバーカラーグロー */
-.fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
-.fv-stat-var:hover   { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
-.fv-stat-rate:hover  { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+/* v22.68: タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持 */
+.fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.fv-stat-var:hover   { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.fv-stat-rate:hover  { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 /* デコレーションサークル */
 .fv-stat-card::after {
   content: '';
@@ -21217,8 +21218,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    sub-monthly には primary glow・sub-yearly には teal glow を適用。 */
 .sub-summary-card { transition: transform var(--dur-gentle) var(--ease-bounce), box-shadow var(--dur-gentle) var(--ease-out), filter var(--dur-gentle) var(--ease-out); }
 .sub-summary-card:hover { transform: translateY(var(--translate-lift-sm)); }
-.sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-.sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-md), transparent); }
+/* v26.64: hover 時も inset 上端白光沢を維持 */
+.sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* 7. sub-summary-card:hover → .sub-summary-label brightness(1.2)
    サブスクリプションサマリーカードのホバー時に .sub-summary-label
@@ -21329,9 +21331,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    fv-stat-card:hover（v22.81）・ch-sum-achieved:hover（v23.15）・
    sub-summary-card:hover（v23.16）と同パターンでグラデーション系サマリーカードの
    ホバー演出を統一する。pt-summary-card には transition 設定済み。 */
-.pt-summary-card:hover        { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-summary-hover); }
-.pt-total:hover               { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-.pt-expiring:hover            { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-md), transparent); }
+/* v26.64: hover 時も inset 上端白光沢を維持 */
+.pt-summary-card:hover        { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-summary-hover), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.pt-total:hover               { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.pt-expiring:hover            { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* 2. pt-summary-card:hover → .pt-summary-amount text-shadow glow（白）
    ポイント残高サマリーカードのホバー時に .pt-summary-amount（白大型数値：
@@ -21973,10 +21976,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ev-sum-card {
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.ev-sum-card:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover); }
-.ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent); }
-.ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent); }
-.ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent); }
+/* v26.64: hover 時も inset 上端白光沢を維持 */
+.ev-sum-card:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 .ev-sum-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 2. ev-sum-card:hover → .ev-sum-count white text-shadow glow
@@ -33936,11 +33940,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑥ dow-stat-min dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
 [data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
 
-/* ⑦ fv-stat-fixed dark enhanced hover outer glow（primary-end mix-md 0 6px 20px） */
-[data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* ⑦ fv-stat-fixed dark enhanced hover outer glow（primary-end mix-md 0 6px 20px） / v26.64: ダーク hover も inset 上端白光沢を維持 */
+[data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑧ fv-stat-var dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
-[data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+/* ⑧ fv-stat-var dark enhanced hover outer glow（income-end mix-md 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ============================================================
    Sprint #881 (v24.85): yoy-summary-item-dark-hover-outer-glow＋ct-stat-card-dark-hover-outer-glow＋fv-stat-rate-dark-hover-outer-glow＋sub-widget-item-dark-hover-outer-glow×3＋pt-widget-item-dark-hover-outer-glow＋wish-widget-item-dark-hover-outer-glow
@@ -33983,8 +33987,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .ct-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
 [data-theme="dark"] .ct-stat-card:hover::before { box-shadow: 0 2px 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-lg), transparent); }
 
-/* ③ fv-stat-rate dark enhanced hover outer glow（warning mix-lg 0 6px 24px） */
-[data-theme="dark"] .fv-stat-rate:hover { box-shadow: var(--shadow-hover-md), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-lg), transparent); }
+/* ③ fv-stat-rate dark enhanced hover outer glow（warning mix-lg 0 6px 24px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .fv-stat-rate:hover { box-shadow: var(--shadow-hover-md), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ④ sub-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
 [data-theme="dark"] .sub-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
@@ -34048,23 +34052,23 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ② pt-widget-item.pt-soon dark enhanced hover outer glow（warning mix-md 0 2px 14px） */
 [data-theme="dark"] .pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
 
-/* ③ sub-summary-card.sub-monthly dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+/* ③ sub-summary-card.sub-monthly dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ④ sub-summary-card.sub-yearly dark enhanced hover outer glow（teal-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-lg), transparent); }
+/* ④ sub-summary-card.sub-yearly dark enhanced hover outer glow（teal-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑤ pt-total dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .pt-total:hover    { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+/* ⑤ pt-total dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .pt-total:hover    { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑥ pt-expiring dark enhanced hover outer glow（orange mix-lg 0 6px 20px） */
-[data-theme="dark"] .pt-expiring:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-lg), transparent); }
+/* ⑥ pt-expiring dark enhanced hover outer glow（orange mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .pt-expiring:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑦ ev-sum-card.ev-sum-this dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+/* ⑦ ev-sum-card.ev-sum-this dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑧ ev-sum-card.ev-sum-next dark enhanced hover outer glow（income-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent); }
+/* ⑧ ev-sum-card.ev-sum-next dark enhanced hover outer glow（income-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ============================================================
    Sprint #883 (v24.87): ev-sum-year-dark-hover-outer-glow＋forecast-card-dark-hover-outer-glow＋goal-dash-item-dark-hover-outer-glow＋ev-month-col-dark-hover-outer-glow＋hm-stat-card-nth1/2/3/4-dark-hover-outer-glow
@@ -34105,8 +34109,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.87・全script/linkタグ?v=24.87に更新。
    ============================================================ */
 
-/* ① ev-sum-card.ev-sum-year dark enhanced hover outer glow（warning-end mix-lg 0 6px 20px） */
-[data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent); }
+/* ① ev-sum-card.ev-sum-year dark enhanced hover outer glow（warning-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ② forecast-card dark enhanced hover outer glow（fc-color fallback primary-end mix-md 0 4px 18px） */
 [data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
@@ -37320,17 +37324,20 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ④ [data-theme="dark"] .ch-sum-achieved:hover → dark enhanced box-shadow（income-end・mix-lg）:
    ライトモード glow（income mix-md）のダーク強化版。income-end に切替え mix-lg に引き上げ
    チャレンジ達成サマリーカードの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ch-sum-achieved:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+/* v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ch-sum-achieved:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ⑤ [data-theme="dark"] .ch-sum-active:hover → dark enhanced box-shadow（primary-end・mix-lg）:
    ライトモード glow（primary mix-md）のダーク強化版。primary-end に切替え mix-lg に引き上げ
    チャレンジアクティブサマリーカードの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ch-sum-active:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+/* v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ch-sum-active:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ⑥ [data-theme="dark"] .ch-sum-total:hover → dark enhanced box-shadow（teal-end・mix-lg）:
    ライトモード glow（teal-end mix-md）のダーク強化版。mix-md を mix-lg に引き上げ
    チャレンジ合計サマリーカードの hover 発光をダークモードで鮮明化。④⑤⑥で ch-sum全3タイプ統一。 */
-[data-theme="dark"] .ch-sum-total:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent); }
+/* v26.64: ダーク hover inset 維持 */
+[data-theme="dark"] .ch-sum-total:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ⑦ [data-theme="dark"] .tg-stat-card:hover → dark enhanced box-shadow+border（primary-end・mix-sm/mix-md）:
    ライトモード glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-sm に引き上げ、border も強化
