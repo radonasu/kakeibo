@@ -4092,7 +4092,7 @@ mark.tx-hl {
   font-size: var(--fs-4xl);
   letter-spacing: var(--ls-normal); line-height: var(--lh-none);
   margin: 0 auto var(--sp-3-5);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20); /* v26.78: 上端白光沢 — 大型 identity icon 静的ベース（pulse 停止時 fallback） */
 }
 
 .auth-title {
@@ -41118,11 +41118,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ④ .auth-logo-icon 常時 pulse glow animation */
 @keyframes auth-logo-pulse {
   0%, 100% {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20); /* v26.78: pulse rest 時も上端白光沢を維持 */
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 10px 32px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent);
+    box-shadow: 0 10px 32px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.24); /* v26.78: peak で +0.04 強化 */
     transform: scale(1.03);
   }
 }
@@ -41139,11 +41139,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 @keyframes auth-logo-pulse-dark {
   0%, 100% {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.16); /* v26.78: ダーク pulse rest 上端白光沢（暗背景適正値） */
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-3xl), transparent);
+    box-shadow: 0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20); /* v26.78: ダーク peak +0.04 */
     transform: scale(1.03);
   }
 }
@@ -44705,16 +44705,16 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ============================================================ */
 
 @keyframes ident-glow-breath-primary {
-  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.22); /* v26.78: brand-icon/sidebar-avatar 上端白光沢 rest */ }
+  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--primary) var(--mix-lg), transparent), inset 0 1px 0 rgba(255,255,255,0.26); /* v26.78: peak +0.04 */ }
 }
 @keyframes ident-glow-breath-income {
-  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--income) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.22); /* v26.78: sync-user-avatar ライト上端白光沢 rest */ }
+  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--income) var(--mix-lg), transparent), inset 0 1px 0 rgba(255,255,255,0.26); /* v26.78: peak +0.04 */ }
 }
 @keyframes ident-glow-breath-income-dark {
-  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 16px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.18); /* v26.78: ダーク版 rest（暗背景適正値） */ }
+  50%      { box-shadow: 0 0 16px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255,255,255,0.22); /* v26.78: ダーク peak +0.04 */ }
 }
 
 /* ① ブランドアイコン（サイドバー上部 💰 ロゴ・常時可視・on-dark） */
