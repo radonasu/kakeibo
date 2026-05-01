@@ -6308,7 +6308,7 @@ body {
 .section-tab:hover .tab-icon { transform: scale(var(--scale-hover)); }
 .section-tab:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .section-tab:active .tab-icon { transform: scale(var(--scale-rest)); }
-.section-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+/* v26.72: 旧 .section-tab:focus-visible（ring 単独・specificity 0,2,0）を削除。v26.48 line 43559+ の :not(.is-active):focus-visible / .is-active:focus-visible（specificity 0,3,0）が常に上書きしていた dead code のため安全削除。v26.48 系 5 セレクタは line 43559/43570/43579/43627/43635 で in-place :not(:active) 化し押下感保護を一括追加 */
 .section-tab.is-active {
   color: var(--primary);
   border-bottom-color: var(--primary);
@@ -43555,8 +43555,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
 
-/* ⑧-1 .section-tab:not(.is-active):focus-visible — :hover (line 6294 + 6302) 非アクティブラダー合流: color + bg + border-bottom + lift + ring + primary mix-sm glow */
-.section-tab:not(.is-active):focus-visible {
+/* ⑧-1 .section-tab:not(.is-active):focus-visible:not(:active) — :hover (line 6294 + 6302) 非アクティブラダー合流: color + bg + border-bottom + lift + ring + primary mix-sm glow（v26.72: :not(:active) 追加で押下感保護） */
+.section-tab:not(.is-active):focus-visible:not(:active) {
   outline: none;
   color: var(--text);
   background: var(--surface-2);
@@ -43566,8 +43566,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
-/* ⑧-2 .section-tab.is-active:focus-visible — :hover (line 6314) アクティブラダー合流: bg primary mix-sm + ring + outer mix-sm glow + inset mix-md glow（lift 無しで border 連続性保護） */
-.section-tab.is-active:focus-visible {
+/* ⑧-2 .section-tab.is-active:focus-visible:not(:active) — :hover (line 6314) アクティブラダー合流: bg primary mix-sm + ring + outer mix-sm glow + inset mix-md glow（lift 無しで border 連続性保護）（v26.72: :not(:active) 追加で押下感保護） */
+.section-tab.is-active:focus-visible:not(:active) {
   outline: none;
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
@@ -43575,8 +43575,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
 
-/* ⑧-3 .section-tab:not(.is-active):focus-visible .tab-icon — :hover (line 6303) 連動: tab-icon scale */
-.section-tab:not(.is-active):focus-visible .tab-icon {
+/* ⑧-3 .section-tab:not(.is-active):focus-visible:not(:active) .tab-icon — :hover (line 6303) 連動: tab-icon scale（v26.72: :not(:active) 追加で押下感保護: :active line 6310 で scale-rest に戻る押下感を保護） */
+.section-tab:not(.is-active):focus-visible:not(:active) .tab-icon {
   transform: scale(var(--scale-hover));
 }
 
@@ -43623,16 +43623,16 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
-/* ⑮ ダーク .section-tab:not(.is-active):focus-visible — :hover (line 34178 + 6333) primary-end mix-sm outer glow + bg/border 強化 */
-[data-theme="dark"] .section-tab:not(.is-active):focus-visible {
+/* ⑮ ダーク .section-tab:not(.is-active):focus-visible:not(:active) — :hover (line 34178 + 6333) primary-end mix-sm outer glow + bg/border 強化（v26.72: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .section-tab:not(.is-active):focus-visible:not(:active) {
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface));
   border-bottom-color: color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
-/* ⑯ ダーク .section-tab.is-active:focus-visible — :hover (line 6339 + 33629) primary-end mix-md inset glow 強化 */
-[data-theme="dark"] .section-tab.is-active:focus-visible {
+/* ⑯ ダーク .section-tab.is-active:focus-visible:not(:active) — :hover (line 6339 + 33629) primary-end mix-md inset glow 強化（v26.72: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .section-tab.is-active:focus-visible:not(:active) {
   background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
