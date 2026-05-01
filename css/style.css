@@ -44281,3 +44281,89 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .auth-tab.active {
   animation: auth-tab-active-breath-dark 4.0s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.56 (Sprint #1052): セクションタブ + タグフィルターチップ
+   active 状態 continuous breathing pulse animation 統一
+   v26.53 ナビ ambient liveness（第 9 弾）/ v26.54 グラデサマリー
+   カード装飾円 ambient liveness（第 10 弾）/ v26.55 カレンダー
+   現在地 + 認証アクティブタブ（第 11 弾）に続き、第 12 弾として
+   「rest 状態の ambient liveness」テーマを「現在選択中のタブ /
+   フィルター」インジケーター 3 系統に展開。
+   - 系統: ①.section-tab.is-active（セクションタブ light + dark）
+            ②.tx-tag-filter-chip.active（タグフィルターチップ light + dark）
+            ③.tx-tag-filter-all（「すべて」タグフィルター light + dark）
+   - 計 3 系統 6 セレクタに subtle text-shadow / filter:drop-shadow
+     breath を一括追加。
+   - text-shadow / filter:drop-shadow ベースで既存 box-shadow / 背景
+     hover 演出と独立 property レイヤーで衝突なく合流。
+     .section-tab.is-active:hover の inset 0 -6px 18px primary mix-md
+     +外周 0 3px 14px mix-sm（v26.32）は無傷で breath は背後に並行。
+     .tx-tag-filter-chip.active:hover の box-shadow 0 0 0 2px tc mix-sm
+     +0 2px 10px tc mix-sm（v26.42）も無傷。
+   - .section-tab.is-active 0%/100% rest 値は line 18773 既存静的値
+     （0 0 10px primary mix-md）に完全一致。dark は line 18776 既存
+     静的値（0 0 12px primary-end mix-lg）に完全一致。peak（50%）で
+     blur +6px / mix +1 ティアの subtle 拡張。
+   - .tx-tag-filter-chip.active は --tc CSS 変数（per-tag color）を
+     halo に追従させる設計。各タグカラーで脈動。fallback --primary。
+   - 3.7s（section-tab）/ 4.2s（tx-tag-filter-chip）/ 3.9s
+     （tx-tag-filter-all）の異速で同期しないナチュラルな揺らぎ。
+     v26.53〜55 で使用済の 3.4s/3.6s/3.8s/4.0s と被らない新規 cycle。
+   - amplitude: subtle ambient（rest peak vs 50% peak で blur +6px /
+     mix +1〜2 ティア）。注意を奪わないレベル。
+   - prefers-reduced-motion はグローバル wildcard ルール（line 18923-30）
+     で animation-duration: 0.01ms 強制となり自動で停止
+     （アクセシビリティ準拠）。
+   ============================================================ */
+
+/* ── セクションタブ アクティブ breath（text-shadow）──
+   rest 値（0%/100%）は line 18773 既存静的値（light）/
+   line 18776 既存静的値（dark）に完全一致 */
+@keyframes section-tab-active-breath {
+  0%, 100% { text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+  50%      { text-shadow: 0 0 16px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
+}
+.section-tab.is-active {
+  animation: section-tab-active-breath 3.7s ease-in-out infinite;
+}
+@keyframes section-tab-active-breath-dark {
+  0%, 100% { text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+  50%      { text-shadow: 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent); }
+}
+[data-theme="dark"] .section-tab.is-active {
+  animation: section-tab-active-breath-dark 3.7s ease-in-out infinite;
+}
+
+/* ── タグフィルターチップ アクティブ breath（filter:drop-shadow）──
+   --tc CSS 変数（per-tag color）追従、fallback --primary */
+@keyframes tx-tag-chip-active-breath {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent)); }
+}
+.tx-tag-filter-chip.active {
+  animation: tx-tag-chip-active-breath 4.2s ease-in-out infinite;
+}
+@keyframes tx-tag-chip-active-breath-dark {
+  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent)); }
+}
+[data-theme="dark"] .tx-tag-filter-chip.active {
+  animation: tx-tag-chip-active-breath-dark 4.2s ease-in-out infinite;
+}
+
+/* ── タグフィルター「すべて」アクティブ breath（filter:drop-shadow）── */
+@keyframes tx-tag-all-active-breath {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+}
+.tx-tag-filter-all.active {
+  animation: tx-tag-all-active-breath 3.9s ease-in-out infinite;
+}
+@keyframes tx-tag-all-active-breath-dark {
+  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+}
+[data-theme="dark"] .tx-tag-filter-all.active {
+  animation: tx-tag-all-active-breath-dark 3.9s ease-in-out infinite;
+}
