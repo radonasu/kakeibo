@@ -974,7 +974,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); transform: translateY(-1px); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
-.nav-item:active { background: var(--on-dark-strong); transform: translateY(0); filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
+.nav-item:active { background: var(--on-dark-strong); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
 .nav-item:active .nav-icon { transform: scale(var(--scale-rest)); }
 .nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .nav-item.active {
@@ -1319,7 +1319,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-btn-base);
 }
 .btn:hover { transform: translateY(var(--translate-lift-sm)) scale(var(--scale-hover-sm)); }
-.btn:active { transform: scale(var(--scale-btn-active)) translateY(0); }
+.btn:active { transform: scale(var(--scale-btn-active)) translateY(var(--translate-press-down)); }
 .btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), var(--shadow-btn-base); }
 .btn:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; transform: none; }
 
@@ -1730,7 +1730,7 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-sm), 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
-.cat-chip:active { transform: translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.cat-chip:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .cat-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cat-chip.selected {
@@ -1979,7 +1979,7 @@ select:focus:not(:focus-visible) {
 .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 [data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
 [data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
-.tx-table tbody tr:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.tx-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
   border-top: var(--bw-select) solid var(--border);
@@ -2827,7 +2827,7 @@ select:focus:not(:focus-visible) {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
-.adv-preset-chip:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.adv-preset-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .adv-preset-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-preset-chip.active {
   border-color: var(--primary);
@@ -3084,7 +3084,7 @@ mark.tx-hl {
 .type-toggle label { display: flex; align-items: center; gap: var(--sp-1-5); flex: 1; justify-content: center; padding: var(--sp-2-5); font-size: var(--fs-base); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; border-radius: var(--radius-btn-sm); transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
 /* v26.37: type-toggle label（ev-modal radio 構成）に hover lift / focus-visible glow / active press-back を新規追加。v26.36 で統一した checkbox/dw-slider/notif-toggle-label/recurring-toggle-label/adv-filter-toggle と同じ hover ladder を radio 系の type-toggle にも展開し、選択操作 UI 全体の立体感を完成形に。 */
 .type-toggle label:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); }
-.type-toggle label:active { transform: translateY(0); }
+.type-toggle label:active { transform: translateY(var(--translate-press-down)); }
 .type-toggle label:has(input:focus-visible) { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .type-toggle input[type="radio"] { width: var(--size-checkbox); height: var(--size-checkbox); accent-color: var(--primary); cursor: pointer; flex-shrink: 0; transition: transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out); }
 .type-toggle input[type="radio"]:hover { transform: scale(1.08); filter: drop-shadow(0 1px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
@@ -3251,7 +3251,7 @@ mark.tx-hl {
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .btn-inline-add:hover { background: var(--primary-light); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 5px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.btn-inline-add:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-mod)); }
+.btn-inline-add:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-mod)); }
 .btn-inline-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .quick-cat-form {
@@ -3310,7 +3310,7 @@ mark.tx-hl {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.btn-preset:active { transform: scale(var(--scale-press)) translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.btn-preset:active { transform: scale(var(--scale-press)) translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .btn-preset:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* 取引モーダル内金額プリセット入場アニメーション */
@@ -3593,7 +3593,7 @@ mark.tx-hl {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: var(--shadow-sm), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
-.budget-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.budget-item:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* v22.67: budget-item ホバー時 プログレスバーglow */
 .budget-item:hover .budget-track { box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .budget-item:hover .budget-fill   { filter: brightness(1.08); }
@@ -3744,7 +3744,7 @@ mark.tx-hl {
   transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .btn-tpl:hover  { opacity: var(--opacity-faded); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 2px 8px color-mix(in srgb, currentColor var(--mix-sm), transparent); }
-.btn-tpl:active { transform: translateY(0); opacity: 1; box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.btn-tpl:active { transform: translateY(var(--translate-press-down)); opacity: 1; box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .btn-tpl:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── テンプレートバー ボタン stagger入場アニメーション（v20.56） ── */
@@ -4851,7 +4851,7 @@ body {
 /* v22.74: .card:hover primary color glow追加（全カードに適用） / v26.06: glow強度アップ mix-2xs→mix-xs */
 .card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-md)); border-color: var(--border-strong); }
 /* v26.07: 全カード :active に scale(--scale-card-active=0.98) 追加でタップ押下感（タクタイル）強化 */
-.card:active { transform: translateY(0) scale(var(--scale-card-active)); box-shadow: var(--shadow-sm); border-color: var(--border); filter: brightness(var(--brightness-press-soft)); }
+.card:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-card-active)); box-shadow: var(--shadow-sm); border-color: var(--border); filter: brightness(var(--brightness-press-soft)); }
 /* v22.74: ダークモード .card:hover 専用グロー / v26.06: 強化 mix-xs→mix-sm */
 [data-theme="dark"] .card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); }
@@ -4860,7 +4860,7 @@ body {
   box-shadow: var(--shadow-summary-hover);
   filter: brightness(var(--brightness-hover-sm));
 }
-.summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* v22.62: サマリーカード タイプ別ホバーカラーグロー */
 .summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
 .summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
@@ -5452,7 +5452,7 @@ body {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
-.btn-share:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-lt)); }
+.btn-share:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-lt)); }
 
 .modal-share { max-width: var(--size-modal-lg); width: calc(100% - var(--sp-8)); }
 
@@ -5655,7 +5655,7 @@ body {
   box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.asset-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.asset-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .asset-card-header {
   display: flex;
@@ -6214,7 +6214,7 @@ body {
 }
 /* v22.74: 前年比較アイテム ホバーグロー */
 .yoy-summary-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: var(--border-strong); }
-.yoy-summary-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.yoy-summary-item:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .yoy-summary-item:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 .yoy-summary-label {
   font-size: var(--fs-xs);
@@ -6391,7 +6391,7 @@ body {
   animation-delay: calc(var(--goal-i, 0) * var(--dur-stagger-lg));
 }
 .goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.goal-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.goal-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .goal-card-header {
   display: flex;
@@ -7863,7 +7863,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation: sub-card-in var(--dur-medium) var(--ease-bounce) calc(var(--sub-i, 0) * var(--dur-stagger-md)) both;
 }
 .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
-.sub-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.sub-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* v22.67: sub-card ホバー時 カラーバーglow強化 */
 .sub-card:hover .sub-card-color-bar { box-shadow: 2px 0 10px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-md), transparent); filter: brightness(1.1); }
 .sub-card-color-bar {
@@ -8432,7 +8432,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* v22.64: pt-summary-card タイプ別ホバーカラーグロー */
 .pt-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .pt-expiring:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.pt-summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.pt-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* カードリスト */
 .pt-cards-list {
@@ -8470,7 +8470,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
-.pt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.pt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
@@ -9096,7 +9096,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .wl-sum-count:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .wl-sum-budget:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .wl-sum-done:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.wl-summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.wl-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .wl-summary-label {
   font-size: var(--fs-xs);
@@ -9149,7 +9149,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.wl-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.wl-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes wl-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -9574,7 +9574,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent);
   border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border));
 }
-.forecast-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.forecast-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .forecast-card::before {
   content: '';
   position: absolute;
@@ -10148,7 +10148,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.ch-summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ch-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* -- セクションタイトル -- */
 .ch-section-title {
@@ -10200,7 +10200,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.ch-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ch-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ch-card.ch-card-done { opacity: var(--opacity-faded); }
 
 .ch-card-icon {
@@ -10547,7 +10547,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* v22.70: 最多/最少支出カード タイプ別ホバーglow */
 .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
-.dow-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.dow-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* 装飾サークル */
 .dow-stat-card::before,
 .dow-stat-card::after {
@@ -10623,7 +10623,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v22.76: dow-table-row ホバーにexpenseカラーglow追加 */
 .dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent); position: relative; z-index: var(--z-raise); }
-.dow-table-row:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.dow-table-row:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes dow-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -10730,7 +10730,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform: translateY(var(--translate-lift-sm));
   box-shadow: 0 3px 8px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-mid), transparent);
 }
-.ct-chip:active { transform: translateY(0); box-shadow: none; border-color: var(--border); color: var(--text-muted); filter: brightness(var(--brightness-press-soft)); }
+.ct-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; border-color: var(--border); color: var(--text-muted); filter: brightness(var(--brightness-press-soft)); }
 .ct-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ct-chip.is-selected {
   border-color: var(--ct-color, var(--primary));
@@ -10773,7 +10773,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent);
   border-color: color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-mid), var(--border));
 }
-.ct-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ct-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ct-stat-card:hover::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-md), transparent); }
 .ct-stat-card:nth-child(1) { animation-delay: 0s; }
 .ct-stat-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
@@ -10816,7 +10816,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v22.70: カテゴリトレンド テーブル行ホバー */
 .ct-table tbody tr:hover { background: var(--surface-hover); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); }
-.ct-table tbody tr:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.ct-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 
 /* -- ダークモード -- */
 [data-theme="dark"] .ct-chip {
@@ -10892,7 +10892,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
 }
 .fv-stat-card:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-hover-md); }
-.fv-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.fv-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-deep), var(--warning)); }
@@ -10995,7 +10995,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); } /* v22.68: primaryグロー追加 */
-.fv-cat-table tbody tr:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.fv-cat-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes fv-cat-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -11152,7 +11152,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .wk-summary-row .wk-cell:nth-child(1):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--expense) var(--mix-mid), var(--border)); }
 .wk-summary-row .wk-cell:nth-child(2):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
 .wk-summary-row .wk-cell:nth-child(3):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--success) var(--mix-mid), var(--border)); }
-.wk-summary-row .wk-cell:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.wk-summary-row .wk-cell:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .wk-summary-row .wk-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-md) + var(--dur-stagger-xl)); }
 .wk-summary-row .wk-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-md) + 2 * var(--dur-stagger-xl)); }
 
@@ -11521,7 +11521,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.qa-type-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.qa-type-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .qa-type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
   background: var(--danger-bg);
@@ -11693,7 +11693,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v22.71: 月次ノートカードホバーglow */
 .nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.nt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.nt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .nt-card::before {
   content: '';
   position: absolute;
@@ -11912,7 +11912,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .hm-stat-card:nth-child(2):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
 .hm-stat-card:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
 .hm-stat-card:nth-child(4):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
-.hm-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.hm-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .hm-stat-label {
   font-size: var(--fs-xs);
@@ -12162,7 +12162,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.debt-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.debt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -13022,7 +13022,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: opacity var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.ev-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ev-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ev-card::before {
   content: '';
   position: absolute;
@@ -13406,7 +13406,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
 }
-.sf-chip:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.sf-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .sf-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sf-chip-del {
   display: inline-flex;
@@ -13455,7 +13455,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: translateY(0); filter: brightness(var(--brightness-press-soft)); }
+.sf-save-btn:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); }
 .sf-save-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 @keyframes sf-chip-in {
   from { opacity: 0; transform: scale(var(--scale-anim-init)) translateY(var(--enter-y-2xs)); }
@@ -13491,7 +13491,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* v22.71: タグ統計カードホバーglow */
 .tg-stat-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
-.tg-stat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.tg-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .tg-stat-icon { font-size: var(--fs-icon-lg); letter-spacing: var(--ls-normal); line-height: var(--lh-none); }
 .tg-stat-label {
   font-size: var(--fs-xs);
@@ -13562,7 +13562,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* v22.71: AIアドバイスカードホバーglow */
 .adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.adv-widget-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.adv-widget-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .adv-widget-card::before {
   content: '';
   position: absolute;
@@ -13993,7 +13993,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .yr-cell-savings-success:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 14px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
 .yr-cell-savings-warn:hover    { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
 .yr-cell-savings-danger:hover  { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
-.yr-cell:active { transform: translateY(0); filter: brightness(var(--brightness-press-haze)); }
+.yr-cell:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-haze)); }
 .yr-cell-label {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -14345,7 +14345,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-cell:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
 .ci-cell:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 .ci-cell:has(.positive):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
-.ci-cell:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ci-cell:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ci-cell:nth-child(1) { animation-delay: var(--dur-delay-lg); }
 .ci-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-lg) + var(--dur-stagger-xl)); }
 .ci-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-lg) + 2 * var(--dur-stagger-xl)); }
@@ -14461,7 +14461,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* v22.76: ci-score-row ホバーprimaryグロー */
 .ci-score-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.ci-score-row:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ci-score-row:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ci-score-label { font-size: var(--fs-sm); color: var(--text-sub); letter-spacing: var(--ls-fine); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
 .ci-score-badge {
   font-size: var(--fs-lg);
@@ -14562,7 +14562,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-hover-sm));
 }
-.ci-ok-btn:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press)); }
+.ci-ok-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press)); }
 .ci-ok-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 /* ── チェックインモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
 @keyframes ci-hdr-in {
@@ -14786,7 +14786,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(-1px);
   box-shadow: 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
-.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); transform: translateY(0); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
+.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
 .notif-mark-read:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* パネルボディ */
@@ -15536,7 +15536,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 
 .rc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-nano), var(--surface-1)); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-sm), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.rc-item:active { transform: translateY(0); border-color: var(--border); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
+.rc-item:active { transform: translateY(var(--translate-press-down)); border-color: var(--border); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 .rc-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-item:has(.rc-check:checked) {
@@ -15771,7 +15771,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--surface-2);
   border-color: color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-press-soft));
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
   box-shadow: none;
 }
 [data-theme="dark"] .btn-continue {
@@ -16203,7 +16203,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
   border-color: var(--border-strong);
 }
-.yi-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.yi-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .yi-card::before {
   content: '';
   position: absolute;
@@ -16365,7 +16365,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.opp-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.opp-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .opp-card-left { flex-shrink: 0; }
 
@@ -16547,7 +16547,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: var(--shadow-hover-sm);
   filter: brightness(var(--brightness-hover-sm));
 }
-.dash-sum-clickable:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.dash-sum-clickable:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .dash-sum-clickable:focus-visible { outline: none; transform: translateY(var(--translate-lift-md)); box-shadow: var(--shadow-hover-sm), 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* スクロール可能な本文エリア */
@@ -16710,7 +16710,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .md-cell-expense:hover     { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); filter: brightness(1.04); }
 .md-cell-balance-pos:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(1.04); }
 .md-cell-balance-neg:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); filter: brightness(1.04); }
-.md-cell:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.md-cell:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .md-cell::after {
   content: '';
   position: absolute;
@@ -16847,7 +16847,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: translateX(var(--translate-slide));
 }
 .rpt-month-row.is-clickable:active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
   box-shadow: none;
   filter: brightness(var(--brightness-press-haze));
 }
@@ -17206,7 +17206,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 /* v22.70: 支払方法テーブル行 カラーglow追加 */
 .pm-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); }
-.pm-table-row:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.pm-table-row:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes pm-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -17237,7 +17237,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--pm-sum-color) var(--mix-mid), var(--border));
 }
-.pm-sum-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.pm-sum-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pm-sum-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
 .pm-sum-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 .pm-sum-card::before {
@@ -17329,7 +17329,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-mid), var(--border));
 }
-.cat-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.cat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .cat-card-accent {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -18103,7 +18103,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .debt-summary-total:hover   { transform: translateY(var(--translate-lift-xs)); filter: brightness(1.06); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
 .debt-summary-monthly:hover { transform: translateY(var(--translate-lift-xs)); filter: brightness(1.06); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
 .debt-summary-total:active,
-.debt-summary-monthly:active { transform: translateY(0); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.debt-summary-monthly:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 
 /* 4. ヒートマップセル ホバー グロー強化
    既存の heat-n:hover は brightness(1.07) のみ → expense比例のカラーglow追加 */
@@ -18297,14 +18297,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cal-sum-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .cal-sum-item:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
 .cal-sum-item:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
-.cal-sum-item:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.cal-sum-item:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 2. サブスクサマリーカード ホバーlift+カラーglow
    月額/年額の2枚グラデーションカードに hover 効果を追加。summary-card 系と同演出。 */
 .sub-summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); cursor: pointer; }
 .sub-summary-card.sub-monthly:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .sub-summary-card.sub-yearly:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.sub-summary-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.sub-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 3. ヘルスグレードバッジ ホバー scale+グレード別glow
    ヘルスチェックページのグレードバッジ（A/B/C等）hover 時に拡大+カラーglow。 */
@@ -21963,7 +21963,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent); }
 .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent); }
 .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent); }
-.ev-sum-card:active { transform: translateY(0); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.ev-sum-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 2. ev-sum-card:hover → .ev-sum-count white text-shadow glow
    収支予定サマリーカードのホバー時に .ev-sum-count（件数大数値：
@@ -41376,7 +41376,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 /* ③ .ci-ok-btn:active 内側凹み影で press 圧覚演出 */
 .ci-ok-btn:active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
   filter: brightness(var(--brightness-press));
 }
@@ -41396,9 +41396,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .bottom-nav-item:not(.active):hover {
   transform: translateY(-1px);
 }
-/* ⑦ .bottom-nav-item:not(.active):active 押下時は元位置に戻る */
+/* ⑦ .bottom-nav-item:not(.active):active 押下時は元位置を超えて押し込み（v26.62 統一） */
 .bottom-nav-item:not(.active):active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
 }
 
 /* ⑧ .empty-month-btn rest に inset 白光沢（btn-ghost v26.10 同パターン） */
@@ -41793,9 +41793,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: translateY(var(--translate-lift-xs));
 }
 
-/* ⑦ .notif-toggle-label:active — translateY(0) press-back */
+/* ⑦ .notif-toggle-label:active — translateY(--translate-press-down) press-back（v26.62 統一） */
 .notif-toggle-label:active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
 }
 
 /* ⑧ .recurring-toggle-label:hover — translateY(-1px) lift 追加 */
@@ -41806,9 +41806,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: translateY(var(--translate-lift-xs));
 }
 
-/* ⑨ .recurring-toggle-label:active — translateY(0) press-back */
+/* ⑨ .recurring-toggle-label:active — translateY(--translate-press-down) press-back（v26.62 統一） */
 .recurring-toggle-label:active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
 }
 
 /* ⑩ .adv-filter-toggle:hover — translateY(-1px) lift + drop-shadow 追加 */
@@ -41824,9 +41824,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
-/* ⑪ .adv-filter-toggle:active — translateY(0) press-back */
+/* ⑪ .adv-filter-toggle:active — translateY(--translate-press-down) press-back（v26.62 統一） */
 .adv-filter-toggle:active {
-  transform: translateY(0);
+  transform: translateY(var(--translate-press-down));
   filter: brightness(var(--brightness-press-mid));
   border-color: var(--primary);
 }
