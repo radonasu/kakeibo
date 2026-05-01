@@ -44698,3 +44698,83 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .sync-user-avatar {
   animation: ident-glow-breath-income-dark 4.8s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.66 Sprint #1062: 残るグラデ bold UI 群 4 系統に v26.63 inset 上端白光沢を一括拡張
+   ── 設計趣旨 ──
+   v26.63 で 7 系統のグラデ bold サマリーカード rest 状態に inset 0 1px 0 rgba(255,255,255,0.18-0.20) を
+   一括追加し、v26.64 で 6 系統 hover 状態に rgba 0.22 強化版を、v26.65 で dashboard summary
+   focus-visible 4 + 4 セレクタにも一括拡張してきた。一方、負債管理ページの .debt-summary-total /
+   .debt-summary-monthly は .summary-card クラス継承で rest 時は v26.63 inset 0.20 が適用されるが、
+   :hover 上書き（line 18118-18119）で box-shadow が `0 6px 20px rgba(0,0,0,.18)` 単独に置換され
+   inset 上端白光沢が消失していた。同様に支出提案バナー .sb-banner（line 12671）と繰上返済シミュ
+   モーダルヘッダ .sim-modal-header（line 12422）/ チェックインモーダルヘッダ .ci-header
+   （line 14261）はグラデ bold 背景でありながら一切の inset 上端白光沢を持たず、v26.63〜65 の
+   glassy 3D 立体感ラダーから取り残されていた。本スプリントで残る 4 系統に inset 上端白光沢を
+   一括拡張し、家計簿アプリ全体のグラデ bold UI 立体感が完全統一形へ到達。
+   ── 対象 ──
+   ① .debt-summary-total:hover （primary グラデ・負債合計サマリーカード hover）
+   ② .debt-summary-monthly:hover （expense グラデ・月次返済額サマリーカード hover）
+   ③ .sb-banner rest （primary グラデ・支出提案バナー）
+   ④ .sb-banner:hover （hover 強化版）
+   ⑤ .sim-modal-header rest （primary グラデ・繰上返済シミュモーダルヘッダ）
+   ⑥ .ci-header rest （primary グラデ・チェックインモーダルヘッダ）
+   ⑦ ダーク .debt-summary-total:hover （inset rgba 0.24 強化）
+   ⑧ ダーク .debt-summary-monthly:hover （inset rgba 0.24 強化）
+   ── カスケード ──
+   ①② は line 18118-18119 と同 specificity (0,1,1) で末尾に再宣言しソース順優先。
+   ③ は line 12671 と同 specificity (0,1,0) で末尾再宣言。
+   ④ は line 22184 と同 specificity (0,1,1) で末尾再宣言。
+   ⑤⑥ は line 12422 / 14261 と同 specificity (0,1,0) で末尾再宣言。
+   ⑦⑧ は [data-theme="dark"] 付加で specificity +0,1,0 = 0,2,1 でライト ①② を確実に上書き。
+   ============================================================ */
+
+/* ① .debt-summary-total:hover — 既存 box-shadow 0 6px 20px black-18 を保持 + inset 上端白光沢追加 */
+.debt-summary-total:hover {
+  transform: translateY(var(--translate-lift-xs));
+  filter: brightness(1.06);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② .debt-summary-monthly:hover — 同パターン */
+.debt-summary-monthly:hover {
+  transform: translateY(var(--translate-lift-xs));
+  filter: brightness(1.06);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ③ .sb-banner rest — base shadow 無しのため inset のみ（v26.63 fv-stat-fixed/var/rate と同パターン） */
+.sb-banner {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ④ .sb-banner:hover — 既存 0 4px 16px primary-end mix-sm を保持 + inset 強化版 */
+.sb-banner:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ⑤ .sim-modal-header rest — モーダルヘッダ上端 glassy sheen */
+.sim-modal-header {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑥ .ci-header rest — モーダルヘッダ上端 glassy sheen */
+.ci-header {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑦ ダーク .debt-summary-total:hover — ダーク背景上の visibility 確保のため inset rgba 0.22→0.24 強化 */
+[data-theme="dark"] .debt-summary-total:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+/* ⑧ ダーク .debt-summary-monthly:hover — 同パターン */
+[data-theme="dark"] .debt-summary-monthly:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
