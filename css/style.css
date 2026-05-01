@@ -44367,3 +44367,140 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .tx-tag-filter-all.active {
   animation: tx-tag-all-active-breath-dark 3.9s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.57 (Sprint #1053): 通知/アラートバッジ群 rest 状態
+   continuous breathing pulse animation 統一（第 13 弾）
+   v26.53 ナビ ambient liveness（第 9 弾）/ v26.54 グラデサマリー
+   カード装飾円（第 10 弾）/ v26.55 カレンダー現在地 + 認証アクティブ
+   タブ（第 11 弾）/ v26.56 セクションタブ + タグフィルターチップ
+   active（第 12 弾）に続く第 13 弾として「rest 状態の ambient
+   liveness」テーマを「未読/通知件数 + 通知許可ステータス」アラート
+   バッジ 4 系統に展開。家計簿アプリで「件数が来ている」「通知が
+   ON である」をユーザーに継続的に視覚伝達するアラート系 UI が、
+   rest 状態でも優しく脈動して "live" であることを発信する。
+   - 系統: ①.bottom-nav-badge（モバイルボトムナビ未読件数 expense bg）
+            ②.nav-badge（サイドバー未読件数 danger-text bg）
+            ③.notif-bell-badge（ベル通知件数 danger-text bg）
+            ④.notif-badge.notif-granted（通知許可済 income-light bg）
+   - 計 4 系統 × ライト + ダーク = 8 セレクタ + 8 keyframes に
+     subtle box-shadow / text-shadow breath を一括追加。
+   - box-shadow / text-shadow ベースで既存 transform pop-in
+     animation（@keyframes nav-badge-pop / notif-badge-pop の入場
+     scale + opacity）と独立 property レイヤーで衝突なく合流。
+     .bottom-nav-badge は line 4666 の nav-badge-pop 入場
+     animation を保持しつつ breath を comma-separated 追加で
+     並列再生（pop は both で end state 保持後、breath が継続）。
+   - .nav-badge 0%/100% rest 値は line 26848 既存静的 box-shadow
+     （0 0 6px danger-text mix-sm）に完全一致、dark は line 26849
+     既存静的値（0 0 7px expense-end mix-md）に完全一致。
+     prefers-reduced-motion 時の visual continuity 確保。
+   - .notif-badge.notif-granted 0%/100% rest 値は line 27102
+     既存静的 text-shadow（0 0 6px success mix-xs）に完全一致、
+     dark は line 27103 既存値（0 0 7px income-end mix-sm）に
+     完全一致。同パターン。
+   - .notif-bell-badge は既存 0 1px 4px expense mix-4xl
+     directional drop-shadow（line 14699）を保持しつつ、
+     0 0 N px halo を追加合成（comma-separated box-shadow）。
+   - 3.3s（bottom-nav-badge）/ 3.5s（nav-badge）/ 4.1s
+     （notif-bell-badge）/ 4.3s（notif-badge.notif-granted）の
+     異速で同期しないナチュラルな揺らぎ。v26.53〜56 で使用済の
+     3.4s/3.6s/3.7s/3.8s/3.9s/4.0s/4.2s と被らない新規 cycle。
+   - amplitude: subtle ambient（rest peak vs 50% peak で blur
+     +5〜6px / mix +1〜2 ティア）で注意を奪わないレベル。
+     ① ② ③ は danger/expense 系で「要確認」を発信、
+     ④ は success 系で「通知ON ✓」を発信。
+   - prefers-reduced-motion はグローバル wildcard ルール
+     （line 18923-30 *, *::before, *::after の animation-duration:
+     0.01ms !important）で自動停止（アクセシビリティ準拠）。
+   ============================================================ */
+
+/* ── ① .bottom-nav-badge breath（box-shadow / expense halo）──
+   既存 nav-badge-pop（transform + opacity 入場）と並列再生 */
+@keyframes bottom-nav-badge-breath {
+  0%, 100% { box-shadow: 0 0 5px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+  50%      { box-shadow: 0 0 11px color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
+}
+.bottom-nav-badge {
+  animation: nav-badge-pop var(--dur-medium) var(--ease-bounce) both,
+             bottom-nav-badge-breath 3.3s ease-in-out infinite;
+}
+@keyframes bottom-nav-badge-breath-dark {
+  0%, 100% { box-shadow: 0 0 6px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+}
+[data-theme="dark"] .bottom-nav-badge {
+  animation: nav-badge-pop var(--dur-medium) var(--ease-bounce) both,
+             bottom-nav-badge-breath-dark 3.3s ease-in-out infinite;
+}
+
+/* ── ② .nav-badge breath（box-shadow / danger-text halo）──
+   rest 値（0%/100%）は line 26848 既存静的値（light）/
+   line 26849 既存静的値（dark）に完全一致 */
+@keyframes nav-badge-rest-breath {
+  0%, 100% { box-shadow: 0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+  50%      { box-shadow: 0 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+}
+.nav-badge {
+  animation: nav-badge-rest-breath 3.5s ease-in-out infinite;
+}
+@keyframes nav-badge-rest-breath-dark {
+  0%, 100% { box-shadow: 0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 13px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+}
+[data-theme="dark"] .nav-badge {
+  animation: nav-badge-rest-breath-dark 3.5s ease-in-out infinite;
+}
+
+/* ── ③ .notif-bell-badge breath（box-shadow / danger-text halo
+   ＋既存 0 1px 4px expense mix-4xl directional drop-shadow 保持）──
+   既存 line 14699 の directional shadow を comma 1 段目で固定し、
+   2 段目に 0 0 N px halo を脈動 */
+@keyframes notif-bell-badge-breath {
+  0%, 100% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 5px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 11px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+  }
+}
+.notif-bell-badge {
+  animation: notif-bell-badge-breath 4.1s ease-in-out infinite;
+}
+@keyframes notif-bell-badge-breath-dark {
+  0%, 100% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 6px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent);
+  }
+}
+[data-theme="dark"] .notif-bell-badge {
+  animation: notif-bell-badge-breath-dark 4.1s ease-in-out infinite;
+}
+
+/* ── ④ .notif-badge.notif-granted breath（text-shadow / success halo）──
+   rest 値（0%/100%）は line 27102 既存静的値（light）/
+   line 27103 既存静的値（dark）に完全一致 */
+@keyframes notif-granted-breath {
+  0%, 100% { text-shadow: 0 0 6px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+  50%      { text-shadow: 0 0 12px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+}
+.notif-badge.notif-granted {
+  animation: notif-granted-breath 4.3s ease-in-out infinite;
+}
+@keyframes notif-granted-breath-dark {
+  0%, 100% { text-shadow: 0 0 7px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
+  50%      { text-shadow: 0 0 13px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+}
+[data-theme="dark"] .notif-badge.notif-granted {
+  animation: notif-granted-breath-dark 4.3s ease-in-out infinite;
+}
