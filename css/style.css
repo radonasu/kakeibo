@@ -5756,11 +5756,13 @@ body {
   letter-spacing: var(--ls-fine);
   line-height: var(--lh-tighter);
   animation: asset-row-in var(--dur-medium) var(--ease-bounce) both;
-  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
   border-radius: var(--radius-nano);
 }
 /* v22.69: 資産履歴行 ホバーグロー */
 .asset-entry-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+/* v26.67: 資産履歴行 :active 押下フィードバック新規追加（v26.60-62 行アイテム press-back パターン拡張） */
+.asset-entry-row:active { background: var(--surface-hover); transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .asset-entry-row:nth-child(1) { animation-delay: var(--dur-long); }
 .asset-entry-row:nth-child(2) { animation-delay: calc(var(--dur-long) + var(--dur-stagger-md)); }
 .asset-entry-row:nth-child(3) { animation-delay: calc(var(--dur-long) + 2 * var(--dur-stagger-md)); }
@@ -12306,11 +12308,13 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   letter-spacing: var(--ls-fine); line-height: var(--lh-tighter);
   animation: debt-entry-in var(--dur-appear) var(--ease-bounce) both;
   animation-delay: calc(var(--de-i, 0) * var(--dur-stagger-3xs));
-  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
   border-radius: var(--radius-nano);
 }
 /* v22.69: 負債返済履歴行 ホバーグロー */
 .debt-entry-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: 0 1px 6px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+/* v26.67: 負債返済履歴行 :active 押下フィードバック新規追加（v26.60-62 行アイテム press-back パターン拡張） */
+.debt-entry-row:active { background: var(--surface-hover); transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes debt-entry-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -44778,3 +44782,35 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
+
+/* ============================================================
+   v26.67 Sprint #1063: 履歴行 2 系統 :active 押下フィードバック新規追加
+   （.asset-entry-row / .debt-entry-row — 残るホバー translateX 系帯状行）
+   ── 設計趣旨 ──
+   v26.60 で widget 行 7 系統に :active press-back 強化統一を導入し、v26.61 で
+   帯状クリッカブル要素 11 系統 :active を追加、v26.62 で全カード/タイル/チップ/
+   テーブル行/ナビ/ボタン群の :active を translateY(0) → translateY(--translate-press-down)
+   に一括統一してきた。一方、資産管理ページの履歴行 .asset-entry-row（line 5749）と
+   負債管理ページの履歴行 .debt-entry-row（line 12302）は v22.69 で hover translateX
+   slide を持つにも関わらず :active 状態が一切定義されておらず、タップ/クリック時の
+   触覚フィードバックを欠いていた。本スプリントで残る帯状ホバー translateX 系 2 系統に
+   widget 行 v26.60 と完全同パターンの press-back を新規追加し、家計簿アプリ全体の
+   行アイテム :active 触覚ラダーが完全統一形へ到達。
+   ── 対象 ──
+   ① .asset-entry-row:active — 資産履歴行（line 5764 直下に新規追加）
+   ② .debt-entry-row:active — 負債返済履歴行（line 12314 直下に新規追加）
+   ── 変更内容 ──
+   ・hover の translateX(--translate-slide) は :active で
+     translateY(--translate-press-down) scale(--scale-press-fine) に置換
+     （.dw-item:active line 9886 と完全同パターン — translateX hover → translateY+scale active）
+   ・background: var(--surface-hover) で hover 時の薄いハイライトを維持
+   ・box-shadow: none で hover の outer glow を消す（押下感）
+   ・filter: brightness(--brightness-press-haze=0.96) で薄い暗化（テーブル/リスト行専用 tier）
+   ・transition プロパティに filter var(--dur-fast) var(--ease-out) を追記
+     （v26.60 で .goal-dash-item :active 追加時と同様 — press-back filter 切替を smooth に）
+   ── 効果 ──
+   履歴行クリック/タップ時に hover の右スライドから 1px 沈み込み + 0.99 縮小 +
+   brightness 0.96 暗化への自然な遷移を獲得。家計簿アプリの全 行アイテム
+   （widget 行・帯状クリッカブル行・テーブル行・履歴行）が rest → hover → active
+   の三段階で完全に対称な触覚ラダーを持つ完成形に到達。
+   ============================================================ */
