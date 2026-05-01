@@ -1838,7 +1838,8 @@ select:focus:not(:focus-visible) {
   color: var(--white);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  /* v26.63: inset 0 1px 0 rgba(255,255,255,0.20) を追加してダッシュボード上3カード（収入/支出/差引）の上端に白の glassy sheen 獲得。FAB（v26.10）/ btn-primary（v26.10）と同パターンでグラデ bold カードが「上から光が当たっている」3D 立体感を獲得。最も視認頻度が高いダッシュボードカードでビジュアル品質が大幅向上 */
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.20);
   border: none;
   animation: sum-card-in var(--dur-lift) var(--ease-bounce) both;
 }
@@ -4855,17 +4856,18 @@ body {
 /* v22.74: ダークモード .card:hover 専用グロー / v26.06: 強化 mix-xs→mix-sm */
 [data-theme="dark"] .card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 .summary-card { transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce), filter var(--dur-gentle) var(--ease-out); }
+/* v26.63: hover 時も inset 白光沢を維持（rest 0.20 → hover 0.24 で hover 時に微強化）。FAB hover（v26.10 inset 0.28→0.32）と同パターンで「持ち上がるほど上端の光が強まる」glassy 立体感を獲得 */
 .summary-card:hover {
   transform: translateY(var(--translate-lift-lg));
-  box-shadow: var(--shadow-summary-hover);
+  box-shadow: var(--shadow-summary-hover), inset 0 1px 0 rgba(255, 255, 255, 0.24);
   filter: brightness(var(--brightness-hover-sm));
 }
 .summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
-/* v22.62: サマリーカード タイプ別ホバーカラーグロー */
-.summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
-.summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
-.summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+/* v22.62: サマリーカード タイプ別ホバーカラーグロー / v26.63: 各タイプ hover にも inset 0.24 維持 */
+.summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+.summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+.summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+.summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
 /* ── モーダルアニメーション ── */
 /* v26.08: backdrop-filter blur(0)→blur-sm 遷移でフォーカスプル演出 */
@@ -7779,6 +7781,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-5) var(--sp-4);
   position: relative;
   overflow: hidden;
+  /* v26.63: .card 既定 var(--shadow) に inset 0 1px 0 rgba(255,255,255,0.18) を重ねて月額/年額グラデサマリーに glassy 上端 sheen 獲得。FAB/btn-primary（v26.10）と同パターン */
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* デコレーションサークル (v5.44) */
 .sub-summary-card::after {
@@ -8361,6 +8365,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   border-radius: var(--radius-btn);
   position: relative;
   overflow: hidden;
+  /* v26.63: .card 既定 var(--shadow) に inset 0 1px 0 rgba(255,255,255,0.18) を重ねて支払方法グラデサマリーに glassy 上端 sheen 獲得 */
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   animation: pt-sum-in var(--dur-lift) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
@@ -9059,6 +9065,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   position: relative;
   overflow: hidden;
   border: none;
+  /* v26.63: .card 既定 var(--shadow) に inset 0 1px 0 rgba(255,255,255,0.18) を重ねて欲しいものリストグラデサマリーに glassy 上端 sheen 獲得 */
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   animation: wl-sum-in var(--dur-lift) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
@@ -10120,6 +10128,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   overflow: hidden;
   padding: var(--sp-4);
   border-radius: var(--radius);
+  /* v26.63: .card 既定 var(--shadow) に inset 0 1px 0 rgba(255,255,255,0.18) を重ねてチャレンジグラデサマリーに glassy 上端 sheen 獲得 */
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   animation: ch-sum-in var(--dur-lift) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
@@ -10887,6 +10897,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   border-radius: var(--radius);
   padding: var(--sp-3) var(--sp-4);
   color: var(--white);
+  /* v26.63: 固定費/変動費/比率グラデ統計カードに inset 0 1px 0 rgba(255,255,255,0.18) を追加して上端 glassy sheen 獲得（base shadow 無しなので inset のみ） */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transition: transform var(--dur-faster) var(--ease-bounce), box-shadow var(--dur-faster) var(--ease-out), filter var(--dur-press) var(--ease-out);
   animation: fv-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--fv-si, 0) * var(--dur-stagger-mid));
@@ -12898,6 +12910,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   padding: var(--sp-3) var(--sp-4);
   position: relative;
   overflow: hidden;
+  /* v26.63: .card 既定 var(--shadow) に inset 0 1px 0 rgba(255,255,255,0.18) を重ねてイベント収支サマリーに glassy 上端 sheen 獲得 */
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   animation: ev-card-in var(--dur-lift) var(--ease-bounce) both;
   animation-delay: calc(var(--ev-si,0) * var(--dur-stagger-xl));
   color: var(--white);
@@ -33904,17 +33918,17 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.84・全script/linkタグ?v=24.84に更新。
    ============================================================ */
 
-/* ① summary-card.income dark enhanced hover outer glow（income-end mix-md 0 6px 24px） */
-[data-theme="dark"] .summary-card.income:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+/* ① summary-card.income dark enhanced hover outer glow（income-end mix-md 0 6px 24px） / v26.63: ダーク hover も inset 0 1px 0 rgba(255,255,255,0.24) を維持し glassy 上端 sheen を保つ */
+[data-theme="dark"] .summary-card.income:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
-/* ② summary-card.expense dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） */
-[data-theme="dark"] .summary-card.expense:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ② summary-card.expense dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
+[data-theme="dark"] .summary-card.expense:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
-/* ③ summary-card.balance.positive dark enhanced hover outer glow（primary-end mix-md 0 6px 24px） */
-[data-theme="dark"] .summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* ③ summary-card.balance.positive dark enhanced hover outer glow（primary-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
+[data-theme="dark"] .summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
-/* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） */
-[data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
+[data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
 /* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） */
 [data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
