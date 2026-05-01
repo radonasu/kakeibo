@@ -976,7 +976,7 @@ select:focus:not(:focus-visible) {
 .nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
 .nav-item:active { background: var(--on-dark-strong); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
 .nav-item:active .nav-icon { transform: scale(var(--scale-rest)); }
-.nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
+/* v26.70: 旧 .nav-item:focus-visible（ring inset 単独のみ）を削除し、末尾に :focus-visible:not(:active) ルールで :hover ラダー（translateY lift + bg + color + ring + 外周 halo + nav-icon scale）を一括提供する形に統一 */
 .nav-item.active {
   background: color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   color: var(--primary-end);
@@ -4467,7 +4467,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   position: relative;
 }
-.bottom-nav-item:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
+/* v26.70: 旧 .bottom-nav-item:focus-visible（ring + radius のみ）を削除し、末尾に :focus-visible:not(:active) ルールで base ring + 非アクティブ用 :hover ラダー（color + 外周 halo + bottom-nav-icon bg + scale）を一括提供する形に統一 */
 /* v26.07: 非アクティブナビ hover glow強化 mix-xs→mix-sm + blur 10→14px でアクティブ前段階の視認性アップ */
 .bottom-nav-item:not(.active):hover { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); transform: scale(var(--scale-hover-chip)); }
@@ -44985,4 +44985,140 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent),
               inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ============================================================
+   v26.70: ナビゲーション 2 系統 :focus-visible 状態を :hover ラダーに統一
+   （.nav-item サイドバー + .bottom-nav-item ボトムナビ・ライト 5 + ダーク 5 = 計 10 セレクタ）
+   ────────────────────────────────────────────────
+   v26.68（.btn 系汎用ボタン 4 系統）+ v26.69（.btn-success + #global-fab）に続く
+   第 11 弾。家計簿アプリ全ページで Tab キー移動の起点となる
+   2 大ナビゲーション系統 — サイドバー .nav-item（PC/タブレット）と
+   ボトムナビ .bottom-nav-item（モバイル）— の :focus-visible 状態が
+   :hover ラダーから取り残されていた問題を解消。
+   ── 旧状態（v26.69 までの問題）──
+   ① .nav-item:focus-visible（旧 line 979）= outline:none + box-shadow: ring inset 単独
+      → :hover ラダー（translateY(-1px) lift + bg on-dark-divider + color sidebar-text +
+        ring outer + 3px 14px primary mix-sm halo + nav-icon scale-icon-hover）を
+        Tab キー focus 時に一切再現できず、キーボードユーザーが mouse hover の
+        立体感・視認性を獲得できていなかった。
+   ② .bottom-nav-item:focus-visible（旧 line 4470）= outline:none + ring + radius 単独
+      → :not(.active):hover ラダー（color text + ring + 2px 14px primary mix-sm halo +
+        bottom-nav-icon surface-hover bg + scale-hover-chip）を Tab キー focus 時に
+        一切再現できず、モバイル Tab ユーザーが hover と同等の視覚フィードバックを
+        享受できていなかった。
+   ── 改修内容（10 セレクタ）──
+   ライト 5：
+   ① .nav-item:focus-visible:not(:active) — :hover (line 975) ラダー合流:
+      bg on-dark-divider + color sidebar-text + translateY(-1px) +
+      ring + 3px 14px primary mix-sm halo
+   ② .nav-item.active:focus-visible:not(:active) — .active:hover (line 986) ラダー合流:
+      bg primary mix-lg + translateY(-1px) +
+      ring + 3px 14px primary mix-sm halo
+   ③ .nav-item:not(.active):focus-visible:not(:active) .nav-icon — :hover (line 976) ラダー合流:
+      transform: scale(--scale-icon-hover)
+   ④ .bottom-nav-item:focus-visible:not(:active) — base ring + radius
+      （アクティブ含む全項目に最低限の ring を提供）
+   ⑤ .bottom-nav-item:not(.active):focus-visible:not(:active) — :not(.active):hover (line 4472) ラダー合流:
+      color text + ring + 2px 14px primary mix-sm halo
+      ＋ .bottom-nav-icon: surface-hover bg + scale-hover-chip
+   ダーク 5：
+   ⑥ ダーク .nav-item:not(.active):focus-visible:not(:active) — :not(.active):hover (line 38050) ラダー合流:
+      color primary-end + 10px primary-end mix-md text-shadow glow
+   ⑦ ダーク .nav-item.active:focus-visible:not(:active) — .active:hover (line 38057) ラダー合流:
+      color primary-end + 12px primary-end mix-lg text-shadow glow
+   ⑧ ダーク .nav-item:not(.active):focus-visible:not(:active) .nav-icon — :hover (line 19922 + 38273) ラダー合流:
+      bg primary-end mix-2xs + 8px primary-end mix-md drop-shadow glow
+   ⑨ ダーク .bottom-nav-item:not(.active):focus-visible:not(:active) — :not(.active):hover (line 34254) ラダー合流:
+      ring + 2px 10px primary-end mix-sm halo
+   ⑩ ダーク .bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-label — :not(.active):hover (line 37984) ラダー合流:
+      color primary-end + 10px primary-end mix-md text-shadow glow
+   ── 設計ポイント ──
+   :focus-visible:not(:active) 採用で :active 押下感を保護：
+   .nav-item:active（line 977）の bg on-dark-strong + translateY(press-down) +
+   filter brightness press-strong + box-shadow none、
+   .bottom-nav-item:not(.active):active（line 4474）の color primary +
+   box-shadow none を、:focus-visible が遮らず保護する。
+   ── 効果 ──
+   サイドバー .nav-item を Tab で focus した時、mouse hover と完全対称な
+   bg + color + lift + 外周 halo + アイコン scale を獲得（active 項目はさらに
+   濃い primary mix-lg bg + halo を獲得）。
+   ボトムナビ .bottom-nav-item を Tab で focus した時、:not(.active) 項目は
+   mouse hover と完全対称な color + 外周 halo + アイコン bg + scale を獲得。
+   v26.68 / v26.69 で完成した bold ボタン群の focus-visible 統一に続き、
+   家計簿アプリ全ナビゲーション UI でキーボードと mouse の視覚的対称性が完成形に到達。
+   ============================================================ */
+
+/* ① .nav-item:focus-visible:not(:active) — :hover (line 975) ラダー合流: bg on-dark-divider + color sidebar-text + translateY(-1px) + ring + 3px 14px primary mix-sm halo */
+.nav-item:focus-visible:not(:active) {
+  outline: none;
+  background: var(--on-dark-divider);
+  color: var(--sidebar-text);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ② .nav-item.active:focus-visible:not(:active) — .active:hover (line 986) ラダー合流: bg primary mix-lg + translateY(-1px) + ring + 3px 14px primary mix-sm halo */
+.nav-item.active:focus-visible:not(:active) {
+  outline: none;
+  background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ③ .nav-item:not(.active):focus-visible:not(:active) .nav-icon — :hover (line 976) ラダー合流: scale-icon-hover */
+.nav-item:not(.active):focus-visible:not(:active) .nav-icon {
+  transform: scale(var(--scale-icon-hover));
+}
+
+/* ④ .bottom-nav-item:focus-visible:not(:active) — base ring + radius（全項目に最低限の ring を提供） */
+.bottom-nav-item:focus-visible:not(:active) {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ⑤ .bottom-nav-item:not(.active):focus-visible:not(:active) — :not(.active):hover (line 4472) ラダー合流: color text + ring + 2px 14px primary mix-sm halo */
+.bottom-nav-item:not(.active):focus-visible:not(:active) {
+  color: var(--text);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ⑤b .bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-icon — :hover (line 4473) ラダー合流: surface-hover bg + scale-hover-chip */
+.bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-icon {
+  background: var(--surface-hover);
+  transform: scale(var(--scale-hover-chip));
+}
+
+/* ⑥ ダーク .nav-item:not(.active):focus-visible:not(:active) — :hover (line 38050) ラダー合流: color primary-end + 10px primary-end mix-md text-shadow glow */
+[data-theme="dark"] .nav-item:not(.active):focus-visible:not(:active) {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑦ ダーク .nav-item.active:focus-visible:not(:active) — .active:hover (line 38057) ラダー合流: color primary-end + 12px primary-end mix-lg text-shadow glow */
+[data-theme="dark"] .nav-item.active:focus-visible:not(:active) {
+  color: var(--primary-end);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑧ ダーク .nav-item:not(.active):focus-visible:not(:active) .nav-icon — :hover (line 19922 + 38273) ラダー合流: bg primary-end mix-2xs + 8px primary-end mix-md drop-shadow glow */
+[data-theme="dark"] .nav-item:not(.active):focus-visible:not(:active) .nav-icon {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: drop-shadow(0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
+
+/* ⑨ ダーク .bottom-nav-item:not(.active):focus-visible:not(:active) — :hover (line 34254) ラダー合流: ring + 2px 10px primary-end mix-sm halo */
+[data-theme="dark"] .bottom-nav-item:not(.active):focus-visible:not(:active) {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑩ ダーク .bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-label — :hover (line 37984) ラダー合流: color primary-end + 10px primary-end mix-md text-shadow glow */
+[data-theme="dark"] .bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-label {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
