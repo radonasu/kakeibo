@@ -413,6 +413,7 @@
   --scale-panel-init:  0.97; /* パネル初期非表示スケール（.notif-panel hidden state・btn-active:0.97と同値だが別セマンティック） */
   --scale-press-lt:    0.96; /* ライト押下縮小（.opp-challenge-btn:active・btn-active:0.97とscale-press:0.95の中間） */
   --scale-card-active: 0.98; /* カード微弱押下縮小（.step-card:active専用・btn-active:0.97より軽い超軽量縮小） */
+  --scale-press-fine:  0.99; /* 行アイテム超微弱押下縮小（widget-item:active 7系統専用・card-active:0.98より軽い極微縮小） */
   /* ── アニメーションscaleトークン (v18.1) ──────────────────── */
   --scale-anim-init:      0.8;  /* アニメーション初期スケール（入場from state：tx-icon-bounce/tx-hl-badge-in/adv-in/sf-chip-in 4箇所） */
   --scale-anim-bounce-sm: 0.82; /* バウンス収縮スケール（dup-pop 28%圧縮・sim-preset-pop from 2箇所） */
@@ -6779,12 +6780,14 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   align-items: center;
   gap: var(--sp-3);
   animation: gd-item-in var(--dur-medium) var(--ease-bounce) both;
-  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
   border-radius: var(--radius-sm);
   padding: var(--sp-1) var(--sp-1);
 }
 /* v22.69: ダッシュボード目標アイテム ホバーグロー */
 .goal-dash-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+/* v26.60: ダッシュボード目標アイテム press-back（他6系統 widget-item と整合） */
+.goal-dash-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .goal-dash-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
 .goal-dash-item:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-md)); }
 
@@ -7715,7 +7718,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   to   { opacity: 1; transform: none; }
 }
 .sub-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.sub-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.sub-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
 /* v22.69: サブスクウィジェット タイプ別ホバーグロー */
@@ -8684,7 +8687,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   to   { opacity: 1; transform: none; }
 }
 .pt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.pt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.pt-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) var(--mix-faint), transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) var(--mix-faint), transparent); }
 /* v22.69: ポイントウィジェット タイプ別ホバーグロー */
@@ -9396,7 +9399,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--ww-i, 0) * var(--dur-stagger-md));
 }
 .wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.wish-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.wish-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ww-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -10457,7 +10460,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   to   { opacity: 1; transform: none; }
 }
 .ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
-.ch-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.ch-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .ch-widget-icon {
   width: var(--size-icon-md);
   height: var(--size-icon-md);
@@ -12363,7 +12366,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 .debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xs), transparent); }
-.debt-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.debt-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .debt-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm); border-radius: var(--radius-circle);
   display: flex; align-items: center; justify-content: center;
@@ -13235,7 +13238,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
-.ev-widget-item:active { transform: translateX(0); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.ev-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ev-widget-item-in {
   0%   { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   100% { opacity: 1; transform: none; }
