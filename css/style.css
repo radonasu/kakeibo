@@ -44593,3 +44593,76 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite,
              empty-icon-glow-breath-dark 4.5s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.59 (Sprint #1055): ブランド/ユーザーアバターアイコン群
+   rest 状態 continuous breathing glow animation 統一（第 15 弾）
+
+   v26.53 ナビ ambient liveness（第 9 弾）/ v26.54 グラデサマリー
+   カード装飾円（第 10 弾）/ v26.55 カレンダー現在地 + 認証アクティブ
+   タブ（第 11 弾）/ v26.56 セクションタブ + タグフィルターチップ
+   active（第 12 弾）/ v26.57 通知/アラートバッジ群（第 13 弾）/
+   v26.58 空状態アイコン群（第 14 弾）に続く第 15 弾として
+   「rest 状態の ambient liveness」テーマを「常時可視のアイデンティ
+   ティアイコン」3 系統に展開。
+   サイドバー上部のブランドロゴ（💰）・サイドバーユーザーアバター・
+   同期設定モーダルのユーザーアバター — いずれもグラデーション充填
+   の identity アイコンで、起動時から常に画面端で目に入る存在。
+   既存は box-shadow なしの平面的な gradient 矩形/円だったため、
+   subtle な primary / income halo を 50% peak で脈動させる
+   ambient breath 演出を追加し、アプリの「鼓動」を感じさせる。
+   - 系統: 3 種 identity icon（box-shadow primary / income halo）
+            ①.brand-icon       （sidebar logo, 38px square,
+                                primary→primary-end→pink gradient）
+            ②.sidebar-avatar   （sidebar user, ~24px circle,
+                                primary→primary-mid gradient）
+            ③.sync-user-avatar （sync settings user, ~32px circle,
+                                income→income-end gradient）
+   - 計 3 系統 4 セレクタブロック + 3 keyframes。
+     ①②はサイドバー内（常時 on-dark）のためテーマ別なし。
+     ③は本文カード上（テーマ追従）のためライト/ダーク双方を用意。
+   - 既存スタイル（background gradient のみ）は無傷。box-shadow を
+     新規プロパティとして導入。
+   - 0%/100% rest 値は subtle halo（0 0 8-10px primary/income
+     mix-md）で peak（50%）で blur +6px / mix +1 ティア（0 0 14-16px
+     mix-lg）。amplitude は ambient（注意を奪わないレベル）。
+   - 4.4s（sidebar-avatar）/ 4.6s（brand-icon）/ 4.8s（sync-user-
+     avatar）の異速で同期しない自然な揺らぎ。v26.53〜58 で使用済の
+     3.3-4.5s と被らない新規 4.4s/4.6s/4.8s を採用。
+   - サイドバーで brand-icon と sidebar-avatar が縦に並ぶ際も
+     speed が異なるため呼吸が同期せずナチュラル。
+   - prefers-reduced-motion はグローバル wildcard ルール
+     （line 18923-30 *, *::before, *::after の animation-duration:
+     0.01ms !important）で自動停止（アクセシビリティ準拠）。
+   ============================================================ */
+
+@keyframes ident-glow-breath-primary {
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
+}
+@keyframes ident-glow-breath-income {
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--income) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--income) var(--mix-lg), transparent); }
+}
+@keyframes ident-glow-breath-income-dark {
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+  50%      { box-shadow: 0 0 16px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent); }
+}
+
+/* ① ブランドアイコン（サイドバー上部 💰 ロゴ・常時可視・on-dark） */
+.brand-icon {
+  animation: ident-glow-breath-primary 4.6s ease-in-out infinite;
+}
+
+/* ② サイドバーユーザーアバター（ログイン時表示・on-dark） */
+.sidebar-avatar {
+  animation: ident-glow-breath-primary 4.4s ease-in-out infinite;
+}
+
+/* ③ 同期設定ユーザーアバター（本文カード上・テーマ追従） */
+.sync-user-avatar {
+  animation: ident-glow-breath-income 4.8s ease-in-out infinite;
+}
+[data-theme="dark"] .sync-user-avatar {
+  animation: ident-glow-breath-income-dark 4.8s ease-in-out infinite;
+}
