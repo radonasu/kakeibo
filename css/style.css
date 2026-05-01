@@ -3370,7 +3370,8 @@ mark.tx-hl {
   cursor: pointer;
   transition: opacity var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
   white-space: nowrap;
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+  /* v26.77: 既存 primary mix-lg outer drop に inset 0 1px 0 rgba(255,255,255,0.22) を追加（FAB/btn-primary v26.10 と同パターン・bold 紫グラデ button に上端白光沢 glassy 3D 立体感） */
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 .btn-receipt:hover    { opacity: var(--opacity-near); }
 .btn-receipt:active        { opacity: var(--opacity-soft); filter: brightness(var(--brightness-press)); }
@@ -5194,6 +5195,7 @@ body {
    ============================================================ */
 
 /* ── ウェルカムヒーロー ──────────────────────────────────── */
+/* v26.77: bold グラデ welcome hero に inset 0 1px 0 rgba(255,255,255,0.18) を追加（v26.63 サブカード系と同値・hero 大面積に上端 glassy 3D 立体感） */
 .onboarding-hero {
   background: linear-gradient(var(--grad-diagonal), var(--primary-deep) 0%, var(--indigo-mid) 40%, var(--primary) 100%);
   border-radius: var(--radius-lg);
@@ -5203,6 +5205,7 @@ body {
   margin-bottom: var(--sp-5);
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .onboarding-hero::before {
   content: '';
@@ -10557,8 +10560,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .dow-stat-card:hover  { box-shadow: var(--shadow-md); transform: translateY(var(--translate-lift-sm)); }
 /* v22.70: 最多/最少支出カード タイプ別ホバーglow */
-.dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
-.dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
+/* v26.77: hover にも inset 0.22 を追加（rest 0.18 → hover +0.04 で持ち上がるほど上端の光が強まる v26.63 同パターン） */
+.dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 .dow-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* 装飾サークル */
 .dow-stat-card::before,
@@ -10573,14 +10577,17 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dow-stat-card::after  { width: var(--size-icon-md);  height: var(--size-icon-md);  top: calc(-1 * var(--sp-3)); right: var(--sp-7); }
 
 /* 最多支出: 赤系グラデーション */
+/* v26.77: rest box-shadow に inset 0 1px 0 rgba(255,255,255,0.18) を追加（v26.63 サブカード系 inset と同値・上端 glassy 3D 立体感） */
 .dow-stat-max {
   background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--expense) var(--mix-rich), black) 0%, var(--expense) 100%);
   color: var(--white);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* 最少支出: 緑系グラデーション */
 .dow-stat-min {
   background: linear-gradient(var(--grad-diagonal), var(--income-deep) 0%, var(--income-end) 100%);
   color: var(--white);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .dow-stat-icon { font-size: var(--fs-4xl); letter-spacing: var(--ls-normal); line-height: var(--lh-none); flex-shrink: 0; position: relative; z-index: var(--z-raise); }
@@ -33939,11 +33946,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
 [data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
-/* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） */
-[data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+/* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） / v26.77: ダーク hover も inset 上端白光沢を維持 */
+[data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
-/* ⑥ dow-stat-min dark enhanced hover outer glow（income-end mix-md 0 6px 20px） */
-[data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
+/* ⑥ dow-stat-min dark enhanced hover outer glow（income-end mix-md 0 6px 20px） / v26.77: ダーク hover も inset 上端白光沢を維持 */
+[data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ⑦ fv-stat-fixed dark enhanced hover outer glow（primary-end mix-md 0 6px 20px） / v26.64: ダーク hover も inset 上端白光沢を維持 */
 [data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
