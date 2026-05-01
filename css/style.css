@@ -44504,3 +44504,92 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .notif-badge.notif-granted {
   animation: notif-granted-breath-dark 4.3s ease-in-out infinite;
 }
+
+/* ============================================================
+   v26.58 (Sprint #1054): 空状態アイコン群 rest 状態
+   continuous breathing glow animation 統一（第 14 弾）
+   v26.53 ナビ ambient liveness（第 9 弾）/ v26.54 グラデサマリー
+   カード装飾円（第 10 弾）/ v26.55 カレンダー現在地 + 認証アクティブ
+   タブ（第 11 弾）/ v26.56 セクションタブ + タグフィルターチップ
+   active（第 12 弾）/ v26.57 通知/アラートバッジ群（第 13 弾）に
+   続く第 14 弾として「rest 状態の ambient liveness」テーマを
+   「フワフワ浮遊する 10 種空状態アイコン」に展開。
+   家計簿アプリで「データがまだない」状態のページを優しく彩る
+   絵文字アイコンが、既存の transform 浮遊（empty-icon-float /
+   txEmptyBounce）に加え、drop-shadow filter glow も連続的に
+   脈動する「浮きながら呼吸する」二層演出に格上げ。
+   - 系統: 10 種空状態アイコン（filter / drop-shadow primary halo）
+            ①.empty-month-icon  ②.empty-goal-icon
+            ③.empty-asset-icon  ④.empty-debt-icon
+            ⑤.sub-empty-icon    ⑥.pt-empty-icon
+            ⑦.wl-empty-icon     ⑧.ch-empty-icon
+            ⑨.tx-empty-icon     ⑩.notif-empty-icon
+   - 計 1 系統 × ライト + ダーク = 2 セレクタブロック + 2 keyframes。
+   - 既存 transform 浮遊アニメーション（empty-icon-float ×9 +
+     txEmptyBounce ×1）と独立 property レイヤー（filter）で
+     衝突なく合流。animation を comma-separated で再宣言し、
+     既存 animation-delay: var(--dur-delay-md) も shorthand に
+     吸収（tx-empty-icon は元々 delay なし）。
+   - 0%/100% rest 値（light: drop-shadow 0 4px 14px primary mix-md /
+     dark: 0 4px 18px primary-end mix-lg）は v22.92 / v26.15 で
+     設定された既存静的 filter 値（line 19035 / 19046 / 40784 /
+     40788）に完全一致、prefers-reduced-motion 時の visual
+     continuity を確保。50% peak は blur +6px / mix +1 ティア
+     （light: 0 4px 20px primary mix-lg / dark: 0 4px 24px
+     primary-end mix-xl）の subtle ambient amplitude。
+   - 4.5s cycle（v26.53〜57 で使用済の 3.3s/3.4s/3.5s/3.6s/3.7s/
+     3.8s/3.9s/4.0s/4.1s/4.2s/4.3s と被らない新規最長 cycle）。
+     既存 empty-icon-float（var(--dur-pulse) = 2.4s）と異速で
+     同期しないナチュラルな揺らぎ。10 種同時に呼吸するため
+     全空状態画面で「何もないけど生きている」liveness を発信。
+   - prefers-reduced-motion はグローバル wildcard ルール
+     （line 18923-30 *, *::before, *::after の animation-duration:
+     0.01ms !important）で自動停止（アクセシビリティ準拠）。
+   ============================================================ */
+
+/* ── 空状態アイコン rest breath glow（filter / primary halo）──
+   rest 値（0%/100%）は v22.92 / v26.15 既存静的 filter 値に完全一致 */
+@keyframes empty-icon-glow-breath {
+  0%, 100% { filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+}
+@keyframes empty-icon-glow-breath-dark {
+  0%, 100% { filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+  50%      { filter: drop-shadow(0 4px 24px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
+}
+
+/* 9 種 empty-icon-float 系: 既存 transform 浮遊 + 新規 filter glow breath */
+.empty-month-icon,
+.empty-goal-icon,
+.empty-asset-icon,
+.empty-debt-icon,
+.sub-empty-icon,
+.pt-empty-icon,
+.wl-empty-icon,
+.ch-empty-icon,
+.notif-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) var(--dur-delay-md) infinite,
+             empty-icon-glow-breath 4.5s ease-in-out infinite;
+}
+[data-theme="dark"] .empty-month-icon,
+[data-theme="dark"] .empty-goal-icon,
+[data-theme="dark"] .empty-asset-icon,
+[data-theme="dark"] .empty-debt-icon,
+[data-theme="dark"] .sub-empty-icon,
+[data-theme="dark"] .pt-empty-icon,
+[data-theme="dark"] .wl-empty-icon,
+[data-theme="dark"] .ch-empty-icon,
+[data-theme="dark"] .notif-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) var(--dur-delay-md) infinite,
+             empty-icon-glow-breath-dark 4.5s ease-in-out infinite;
+}
+
+/* tx-empty-icon: 既存 txEmptyBounce 浮遊（delay なし）+ 新規 filter glow breath */
+.tx-empty-icon {
+  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite,
+             empty-icon-glow-breath 4.5s ease-in-out infinite;
+}
+[data-theme="dark"] .tx-empty-icon {
+  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite,
+             empty-icon-glow-breath-dark 4.5s ease-in-out infinite;
+}
