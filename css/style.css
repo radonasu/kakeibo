@@ -11437,7 +11437,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset;
 }
 .qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
-.qa-toggle-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset; }
+/* v26.74: :hover ラダー合流（bg surface-hover 追加 + :not(:active) で :active line 11439 の bg/filter brightness/box-shadow none press feedback を完全保護）— Tab focus 時に mouse hover と完全対称な bg + ring inset を獲得 */
+.qa-toggle-btn:focus-visible:not(:active) { outline: none; background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset; }
 .qa-toggle-left {
   flex: 1;
   display: flex;
@@ -42655,11 +42656,15 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
-/* ④ .tx-tag-filter-all:focus-visible — focus-ring + 外周 primary glow 二段重ね */
-.tx-tag-filter-all:focus-visible {
+/* ④ .tx-tag-filter-all:focus-visible:not(:active):not(.active) — :hover:not(.active)（line 2536 + 42651）ラダー合流: bg border + color text + scale-hover-sm + ring + 外周 primary glow + 0 2px 10px primary mix-sm soft drop（v26.74: :not(:active) で press feedback line 2559 保護・bg/color/transform 追加で hover ラダーに完全合流） */
+.tx-tag-filter-all:focus-visible:not(:active):not(.active) {
   outline: none;
+  background: var(--border);
+  color: var(--text);
+  transform: scale(var(--scale-hover-sm));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
 /* ⑤ .tx-tag-filter-chip:hover:not(.active) — 0 1px 4px → 0 2px 10px 深度統一 */
@@ -42669,27 +42674,34 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
 
-/* ⑥ .tx-tag-filter-chip:focus-visible — focus-ring + 外周 primary glow 二段重ね */
-.tx-tag-filter-chip:focus-visible {
+/* ⑥ .tx-tag-filter-chip:focus-visible:not(:active):not(.active) — :hover:not(.active)（line 2553 + 42666）ラダー合流: bg tc mix-base + scale-hover-sm + ring + 外周 primary glow + 0 2px 10px tc mix-sm soft drop（v26.74: :not(:active) で press feedback line 2558 保護・bg/transform 追加で hover ラダーに完全合流） */
+.tx-tag-filter-chip:focus-visible:not(:active):not(.active) {
   outline: none;
+  background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
+  transform: scale(var(--scale-hover-sm));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
 
-/* ⑦ .tx-tag-filter-all.active:focus-visible — selected ring + focus-ring + deeper glow 三段重ね */
-.tx-tag-filter-all.active:focus-visible {
+/* ⑦ .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover（line 2532）ラダー合流: scale-hover-md + selected ring + focus-ring + deeper glow + 0 2px 10px primary mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
+.tx-tag-filter-all.active:focus-visible:not(:active) {
   outline: none;
+  transform: scale(var(--scale-hover-md));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+              0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
 
-/* ⑧ .tx-tag-filter-chip.active:focus-visible — selected ring + focus-ring + deeper tc glow 三段重ね */
-.tx-tag-filter-chip.active:focus-visible {
+/* ⑧ .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover（line 2549）ラダー合流: calc(scale-hover-md*1.01) + selected ring + focus-ring + deeper tc glow + 0 2px 10px tc mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
+.tx-tag-filter-chip.active:focus-visible:not(:active) {
   outline: none;
+  transform: scale(calc(var(--scale-hover-md) * 1.01));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent);
+              0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent),
+              0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
 
 /* ⑨〜⑯ ダーク版: primary-end / tc ベース mix-md / mix-lg でさらに深度を増す */
@@ -42710,10 +42722,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
-/* ⑫ ダーク .tx-tag-filter-all:focus-visible */
-[data-theme="dark"] .tx-tag-filter-all:focus-visible {
+/* ⑫ ダーク .tx-tag-filter-all:focus-visible:not(:active):not(.active) — :hover:not(.active)（line 42709）ラダー合流: 0 2px 12px primary-end mix-md soft drop 追加（v26.74: :not(:active) で press feedback 保護・soft drop 追加で hover ラダーに完全合流） */
+[data-theme="dark"] .tx-tag-filter-all:focus-visible:not(:active):not(.active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑬ ダーク .tx-tag-filter-chip:hover:not(.active) */
@@ -42721,24 +42734,36 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
 }
 
-/* ⑭ ダーク .tx-tag-filter-chip:focus-visible */
-[data-theme="dark"] .tx-tag-filter-chip:focus-visible {
+/* ⑭ ダーク .tx-tag-filter-chip:focus-visible:not(:active):not(.active) — :hover:not(.active)（line 35783 + 39648 + 42720）ラダー合流: color tc/primary-end + text-shadow tc/primary-end mix-md glow + filter brightness 1.1 + 0 2px 12px tc/primary-end mix-md soft drop 追加（v26.74: :not(:active) で press feedback 保護・color/text-shadow/filter/soft drop 追加で hover ラダーに完全合流） */
+[data-theme="dark"] .tx-tag-filter-chip:focus-visible:not(:active):not(.active) {
+  color: var(--tc, var(--primary-end));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
+  filter: brightness(1.1);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
 }
 
-/* ⑮ ダーク .tx-tag-filter-all.active:focus-visible — ring + focus-ring + deeper glow 三段重ね */
-[data-theme="dark"] .tx-tag-filter-all.active:focus-visible {
+/* ⑮ ダーク .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover（line 35789 + 39650）ラダー合流: color primary-end + text-shadow primary-end mix-md glow + filter brightness 1.1 + 0 2px 12px primary-end mix-md soft drop 追加（v26.74: :not(:active) で press feedback 保護・color/text-shadow/filter/soft drop 追加で hover ラダーに完全合流） */
+[data-theme="dark"] .tx-tag-filter-all.active:focus-visible:not(:active) {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  filter: brightness(1.1);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+              0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
-/* ⑯ ダーク .tx-tag-filter-chip.active:focus-visible — ring + focus-ring + deeper tc glow 三段重ね */
-[data-theme="dark"] .tx-tag-filter-chip.active:focus-visible {
+/* ⑯ ダーク .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover（line 35795 + 39929）ラダー合流: color tc/primary-end + text-shadow tc/primary-end mix-md glow + filter brightness 1.1 + 0 2px 12px tc/primary-end mix-md soft drop 追加（v26.74: :not(:active) で press feedback 保護・color/text-shadow/filter/soft drop 追加で hover ラダーに完全合流） */
+[data-theme="dark"] .tx-tag-filter-chip.active:focus-visible:not(:active) {
+  color: var(--tc, var(--primary-end));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
+  filter: brightness(1.1);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 0 16px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-lg), transparent);
+              0 0 16px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-lg), transparent),
+              0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent);
 }
 
 /* ============================================================
@@ -45191,4 +45216,106 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   outline: none;
   transform: translateY(var(--translate-lift-md));
   box-shadow: var(--shadow-hover-sm), 0 0 0 var(--focus-ring-w) var(--focus-ring);
+}
+
+/* ============================================================
+   v26.74: タグフィルターチップ + qa-toggle-btn :focus-visible 状態を
+   :hover ラダーに統一（タグフィルター 8 + qa-toggle-btn 3 = 計 11 セレクタ）
+   ────────────────────────────────────────────────
+   v26.68（.btn 系汎用ボタン 4 系統）+ v26.69（.btn-success + #global-fab）+
+   v26.70（.nav-item サイドバー + .bottom-nav-item ボトムナビ 10 セレクタ）+
+   v26.71（v26.46 アイコン/ナビボタン群 + v26.47 ダッシュボードサマリーカード
+   + .dash-sum-clickable 基底 15 セレクタ）+ v26.72（セクションタブ 5 セレクタ）+
+   v26.73（クリック可能行 8 セレクタ）に続く第 7 弾。家計簿アプリの取引一覧
+   タグフィルターチップ系 + クイック追加フォームトグルボタンの :focus-visible
+   状態が :hover ラダーから取り残されていた問題を解消。
+   ── 旧状態（v26.73 までの問題）──
+   ① v26.42 ④/⑥ .tx-tag-filter-all/chip:focus-visible（line 42658-42677 当時）=
+      outline:none + box-shadow: ring + 12px primary mix-sm 外周 glow 二段重ね
+      → :hover:not(.active)（line 2536/2553 + 42651/42666）の bg + transform
+        scale-hover-sm + 0 2px 10px soft drop の lift 立体感が抜けていた。
+        Tab で focus した時、mouse hover と非対称な ring + glow 単独状態。
+   ② v26.42 ⑦/⑧ .tx-tag-filter-all/chip.active:focus-visible（line 42680-42693 当時）=
+      ring + focus-ring + 14px deeper glow 三段重ね
+      → .active:hover（line 2532/2549）の transform scale-hover-md（all）/
+        scale calc(scale-hover-md*1.01)（chip）+ 0 2px 10px soft drop が抜けていた。
+   ③ v26.42 ⑫/⑭/⑮/⑯ ダーク版（line 42713-42741 当時）=
+      ring + 14-16px primary-end / tc-end 外周 glow のみ
+      → ダーク .tx-tag-filter-chip:hover:not(.active)（line 35783/39648）/
+        .active:hover（line 35789-35795/39650/39929）が持つ
+        color primary-end/tc-end + text-shadow mix-md glow + filter brightness(1.1) +
+        0 2px 12px soft drop が完全に抜けていた。
+   ④ .qa-toggle-btn:focus-visible（旧 line 11440）= outline:none + box-shadow ring inset
+      → :hover（line 11435）の bg surface-hover が抜けていた。
+        クイック追加フォームのカードヘッダートグルを Tab で focus した時、
+        ring inset のみで bg 変化なく地味な focus 状態だった。
+        さらに .qa-card-title text-shadow glow（line 26108 + 35778 + 39646）も
+        focus-visible 親では発火せずタイトル発光が hover 時のみ。
+   ── 改修内容（11 セレクタ）──
+   タグフィルター系 8（in-place 修正）：
+   ① .tx-tag-filter-all:focus-visible:not(:active):not(.active) — :hover:not(.active) ラダー合流:
+      bg border + color text + scale-hover-sm + ring + 外周 primary glow + soft drop
+   ② .tx-tag-filter-chip:focus-visible:not(:active):not(.active) — :hover:not(.active) ラダー合流:
+      bg tc mix-base + scale-hover-sm + ring + 外周 primary glow + tc soft drop
+   ③ .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover ラダー合流:
+      scale-hover-md + selected ring + focus-ring + deeper primary glow + primary soft drop
+   ④ .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover ラダー合流:
+      calc(scale-hover-md*1.01) + selected ring + focus-ring + deeper tc glow + tc soft drop
+   ⑤ ダーク .tx-tag-filter-all:focus-visible:not(:active):not(.active) —
+      :hover:not(.active) ラダー合流: ring + 14px primary-end mix-md + 12px primary-end mix-md soft drop
+   ⑥ ダーク .tx-tag-filter-chip:focus-visible:not(:active):not(.active) —
+      :hover:not(.active) ラダー合流: color tc/primary-end + text-shadow tc/primary-end mix-md +
+      filter brightness 1.1 + ring + 14px primary-end mix-md + 12px tc/primary-end mix-md soft drop
+   ⑦ ダーク .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover ラダー合流:
+      color primary-end + text-shadow primary-end mix-md + filter brightness 1.1 + selected ring +
+      focus-ring + 16px primary-end mix-lg + 12px primary-end mix-md soft drop
+   ⑧ ダーク .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover ラダー合流:
+      color tc/primary-end + text-shadow tc/primary-end mix-md + filter brightness 1.1 +
+      selected ring + focus-ring + 16px tc/primary-end mix-lg + 12px tc/primary-end mix-md soft drop
+   qa-toggle-btn 3（in-place 修正 1 + 末尾追加 2）：
+   ⑨ .qa-toggle-btn:focus-visible:not(:active)（line 11440 in-place）—
+      :hover ラダー合流: bg surface-hover + ring inset
+   ⑩ .qa-toggle-btn:focus-visible:not(:active) .qa-card-title — :hover descendant glow
+      （line 26108）合流: 8px qa-accent/primary mix-sm text-shadow glow（末尾新規追加）
+   ⑪ ダーク .qa-toggle-btn:focus-visible:not(:active) .qa-card-title — :hover descendant
+      （line 35778 + 39646）合流: color qa-accent/primary-end + 10px qa-accent/primary-end mix-md
+      text-shadow + filter brightness 1.1（末尾新規追加）
+   ── 設計ポイント ──
+   :focus-visible:not(:active) 採用で :active 押下感を保護：
+   .tx-tag-filter-chip:active（line 2558）/ .tx-tag-filter-all:active（line 2559）の
+   transform scale-chip-active + filter brightness press-soft + box-shadow none、
+   .qa-toggle-btn:active（line 11439）の bg surface-hover + filter brightness press-soft +
+   box-shadow none を、:focus-visible が遮らず保護する。
+   .tx-tag-filter-chip / .tx-tag-filter-all の transition には filter / text-shadow を
+   含む（line 2514 + 26034）ので color/filter/text-shadow 追加で滑らかに発火。
+   .qa-card-title transition も color / text-shadow / filter 含有済（line 26107 + 30168 周辺）。
+   ── 効果 ──
+   タグフィルターチップ（all/chip × 非active/active = 4 状態）を Tab で focus した時、
+   mouse hover と完全対称な bg + transform + 多段 box-shadow + ダーク color/text-shadow/
+   brightness を獲得。selected ring + focus-ring + outer halo + soft drop の 4 段重ね立体感が
+   キーボードユーザーにも開放。
+   qa-toggle-btn を Tab で focus した時、mouse hover と完全対称な bg surface-hover +
+   ring inset + qa-card-title text-shadow glow + ダーク filter brightness を獲得。
+   v26.68〜v26.73 で確立した :focus-visible:not(:active) パターンが家計簿アプリの
+   タグフィルター UI + クイック追加フォームトグルまで普及完了。
+   ── カスケード安全 ──
+   ①〜⑧：v26.42 ④/⑥/⑦/⑧/⑫/⑭/⑮/⑯ の in-place 修正。:focus-visible:not(:active)
+   は元の :focus-visible と比べ specificity が同等（②④はより高い）または高く、
+   line 2560-2561 の汎用 ring rule（specificity 0,2,0）よりも高い specificity で勝つ。
+   ⑨：line 11440 の in-place 修正。同 specificity（0,3,0 vs 0,2,0）。
+   ⑩⑪：本末尾ブロック新規追加。子孫 .qa-card-title への text-shadow / color / filter は
+   :focus-visible:not(:active) 親限定で発火（press 中は :active line 11439 の press feedback
+   が保護されつつ、子孫の text-shadow も親の rule が無効になるため落ち着く）。
+   ============================================================ */
+
+/* ⑩ .qa-toggle-btn:focus-visible:not(:active) .qa-card-title — :hover descendant glow（line 26108）ラダー合流: 8px qa-accent/primary mix-sm text-shadow glow */
+.qa-toggle-btn:focus-visible:not(:active) .qa-card-title {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--qa-accent, var(--primary)) var(--mix-sm), transparent);
+}
+
+/* ⑪ ダーク .qa-toggle-btn:focus-visible:not(:active) .qa-card-title — :hover descendant（line 35778 + 39646）ラダー合流: color qa-accent/primary-end + 10px qa-accent/primary-end mix-md text-shadow + filter brightness 1.1 */
+[data-theme="dark"] .qa-toggle-btn:focus-visible:not(:active) .qa-card-title {
+  color: var(--qa-accent, var(--primary-end));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-md), transparent);
+  filter: brightness(1.1);
 }
