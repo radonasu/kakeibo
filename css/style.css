@@ -43327,32 +43327,36 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ::after / ::before デコレーション円も同期スケール拡大で躍動感をキープ。
    ============================================================ */
 
-/* ① .summary-card.income.dash-sum-clickable:focus-visible — income mix-sm 外周 glow + focus-ring */
+/* ① .summary-card.income.dash-sum-clickable:focus-visible — income mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65: :hover ラダーと完全合流） */
 .summary-card.income.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ② .summary-card.expense.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring */
+/* ② .summary-card.expense.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 .summary-card.expense.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ③ .summary-card.balance.positive.dash-sum-clickable:focus-visible — primary mix-sm 外周 glow + focus-ring */
+/* ③ .summary-card.balance.positive.dash-sum-clickable:focus-visible — primary mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 .summary-card.balance.positive.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ④ .summary-card.balance.negative.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring */
+/* ④ .summary-card.balance.negative.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 .summary-card.balance.negative.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 /* ⑤ income summary-amount focus-visible — color success + brightness + success mix-sm glow */
@@ -43406,32 +43410,36 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ── ダーク版 ── */
 
-/* ⑫ ダーク income focus-visible — income-end mix-md 外周 glow + focus-ring */
+/* ⑫ ダーク income focus-visible — income-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 [data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑬ ダーク expense focus-visible — expense-end mix-md 外周 glow + focus-ring */
+/* ⑬ ダーク expense focus-visible — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 [data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑭ ダーク balance.positive focus-visible — primary-end mix-md 外周 glow + focus-ring */
+/* ⑭ ダーク balance.positive focus-visible — primary-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 [data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑮ ダーク balance.negative focus-visible — expense-end mix-md 外周 glow + focus-ring */
+/* ⑮ ダーク balance.negative focus-visible — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
 [data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
-              0 0 0 var(--focus-ring-w) var(--focus-ring);
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 /* ⑯ ダーク income summary-amount focus-visible — color income-end + brightness 1.08 + glow */
