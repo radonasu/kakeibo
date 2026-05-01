@@ -4621,7 +4621,7 @@ body {
   filter: brightness(1.06);
 }
 #global-fab:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press)); box-shadow: none; }
-#global-fab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset, 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent); }
+/* v26.69: 旧 #global-fab:focus-visible（ring inset + 4px 16px primary mix-3xl のみ）を削除し、末尾に :focus-visible:not(:active) ルールで :hover ラダー（scale + 6px 24px primary mix-5xl + inset 0.32 + brightness 1.06）+ ring を一括提供する形に統一 */
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
 @keyframes fab-pulse {
@@ -44912,4 +44912,77 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
               0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
               inset 0 1px 0 rgba(255, 255, 255, 0.55);
   text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+
+/* ============================================================
+   v26.69 Sprint #1065: 残るグラデ bold ボタン 2 系統 :focus-visible 状態を :hover ラダーに統一
+   ── 設計趣旨 ──
+   v26.68 で .btn / .btn-primary / .btn-ghost / .btn-danger の主要ボタン 4 系統の
+   :focus-visible:not(:active) を :hover ラダーへ合流したが、家計簿アプリの
+   グラデ bold ボタン群でカバー漏れだった残り 2 系統 — 緑 success ボタン .btn-success
+   （13 種モーダルで主に「保存」「追加」CTA に使用）と紫グラデ FAB #global-fab
+   （全ページ共通のクイック追加ボタン・bottom-right の最重要 CTA）— にも
+   :focus-visible:not(:active) を新規追加し :hover ラダーへ完全合流。
+   .btn-success には :focus-visible が一切定義されておらず、Tab で focus した時
+   ring すら表示されない unsafe な状態だった。#global-fab には ring + base glow の
+   :focus-visible（line 4624）があったが、:hover の scale lift（icon-hover）+
+   primary mix-5xl の大型 outer glow + 0.32 inset 白光沢 + filter brightness 1.06 の
+   弾むビビッド感が一切再現されておらず、キーボードユーザーが mouse hover の glassy
+   3D 立体感を獲得できていなかった。
+   ── 対象 ──
+   ① .btn-success:focus-visible:not(:active) — :hover (line 6909) ラダー合流:
+      income-deep bg + 6px 18px success mix-4xl glow + inset white 0.22 + ring
+   ② #global-fab:focus-visible:not(:active) — :hover (line 4618-4622) ラダー合流:
+      scale(--icon-hover) + 6px 24px primary mix-5xl + 3px 8px black-14 + inset white 0.32 +
+      filter brightness(1.06) + ring（line 4624 の :focus-visible は :not(:active) で削除）
+   ③ ダーク .btn-success:focus-visible:not(:active) — :hover (line 34313) ラダー合流:
+      6px 20px income-end mix-4xl glow + inset white 0.22 + ring
+   ── #global-fab :focus-visible 単独差し替えの理由 ──
+   既存 #global-fab:focus-visible（line 4624）は :focus-visible 単独 selector で、
+   :focus-visible:not(:active) の new rule とは specificity 同値（0,2,0）。両者が
+   並存すると後勝ちで new rule が勝つが、:not(:active) 条件が false（=:active true）
+   の時に旧 :focus-visible 単独 rule に fallback してしまい push-back 触覚が中途半端に
+   なる懸念があった。そこで line 4624 の旧 :focus-visible を削除し、new rule に
+   ring + base glow も継承させる形で「:focus-visible:not(:active) で hover ラダー全部 +
+   ring」を一発提供する設計に統一。:active 中は #global-fab:active（line 4623）の
+   scale(--press-md) + brightness(--press) + box-shadow:none が完全に勝つ。
+   ── :not(:active) を付ける理由 ──
+   v26.68 と同じ。.btn-success:active（line 6910）の filter brightness + translateY
+   press-down + box-shadow none、#global-fab:active（line 4623）の scale press-md +
+   filter brightness press + box-shadow none を、:focus-visible が遮らず保護する。
+   ── 効果 ──
+   13 種モーダルの「保存」「追加」緑 CTA を Tab で focus した時、mouse hover と
+   完全対称な income-deep bg + success 外周大 glow + 上端白光沢を獲得。
+   FAB を Tab で focus した時、mouse hover と完全対称な scale lift + primary 大 glow +
+   inset 白光沢 + brightness boost の glassy 3D 弾む立体感を獲得。
+   v26.68 で完成した .btn 系汎用ボタン focus-visible 統一が、緑グラデ + FAB を
+   含めて家計簿アプリ全 bold ボタン UI で完全形に到達。キーボードユーザーが
+   全モーダル CTA + FAB で mouse hover と完全対称な視覚フィードバックを享受。
+   ============================================================ */
+
+/* ① .btn-success:focus-visible:not(:active) — :hover (line 6909) ラダー合流: income-deep bg + 6px 18px success mix-4xl glow + inset white 0.22 + ring */
+.btn-success:focus-visible:not(:active) {
+  outline: none;
+  background: var(--income-deep);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② #global-fab:focus-visible:not(:active) — :hover (line 4618-4622) ラダー合流: scale + 6px 24px primary mix-5xl + 3px 8px black-14 + inset white 0.32 + filter brightness 1.06 + ring（line 4624 旧 :focus-visible は下記 :not(:active) に置換） */
+#global-fab:focus-visible:not(:active) {
+  outline: none;
+  transform: scale(var(--scale-icon-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent),
+              0 3px 8px var(--black-14),
+              inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  filter: brightness(1.06);
+}
+
+/* ③ ダーク .btn-success:focus-visible:not(:active) — :hover (line 34313) ラダー合流: 6px 20px income-end mix-4xl glow + inset white 0.22 + ring */
+[data-theme="dark"] .btn-success:focus-visible:not(:active) {
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
