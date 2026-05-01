@@ -44814,3 +44814,102 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    （widget 行・帯状クリッカブル行・テーブル行・履歴行）が rest → hover → active
    の三段階で完全に対称な触覚ラダーを持つ完成形に到達。
    ============================================================ */
+
+/* ============================================================
+   v26.68 Sprint #1064: 主要ボタン4系統 :focus-visible 状態を :hover ラダーに統一
+   ── 設計趣旨 ──
+   v26.48 で .btn-icon / .cat-chip / .tx-th-sort / .auth-tab / .step-card /
+   .empty-month-btn / .section-tab の 8 系統を :hover ラダーへ合流させたが、
+   13 種モーダルのフッターで使われる最も汎用かつ高頻度の .btn / .btn-primary /
+   .btn-ghost / .btn-danger は、長らく .btn:focus-visible（line 1323）の
+   ring + shadow-btn-base のみで :hover の lift（translateY+scale）と
+   変種別 glow（primary-dark / surface-hover / danger-border + 各 outer glow + inset 白光沢）
+   に未合流のままだった。キーボードでタブ移動した時、mouse hover と非対称な
+   ring-only 状態となり、キーボードユーザーが lift + 変種別 glow + inset 白光沢を
+   獲得できていなかった。本スプリントで 4 系統 + ダーク 3 系統を :hover ラダーへ合流。
+   ── 対象 ──
+   ① .btn:focus-visible:not(:active) — translateY(--lift-sm) + scale(--hover-sm) + ring + shadow-btn-base
+   ② .btn-primary:focus-visible:not(:active) — primary-dark bg + 6px 18px primary mix-4xl glow + inset white 0.22 + ring
+   ③ .btn-ghost:focus-visible:not(:active) — surface-hover + border-strong + shadow-sm + 2px 14px primary mix-sm glow + ring
+   ④ .btn-danger:focus-visible:not(:active) — danger-border bg + expense border + 4px 12px expense mix-md glow + inset white 0.55 + ring
+   ⑤ ダーク .btn-ghost:focus-visible:not(:active) — primary-end color + shadow-sm + 2px 12px primary-end mix-md glow + ring + text-shadow
+   ⑥ ダーク .btn-primary:focus-visible:not(:active) — #fff color + 6px 20px primary-end mix-4xl glow + ring + dual text-shadow
+   ⑦ ダーク .btn-danger:focus-visible:not(:active) — danger-border bg + expense-end color + 4px 14px expense-end mix-lg glow + ring + text-shadow
+   ── :not(:active) を付ける理由 ──
+   .btn:active（line 1322）の transform: scale(--btn-active) translateY(--press-down) を
+   :focus-visible が遮らず press feedback を保護するため。キーボードで Enter/Space を
+   押下した瞬間は :active が発火し translateY(press-down) + filter brightness が優先される。
+   同時に .btn-primary:active（line 1334）の box-shadow: none + filter brightness の
+   完全フラット押下感も保護される。
+   ── 効果 ──
+   キーボードで Tab 移動した時、mouse hover と完全対称な lift + 変種別 outer glow +
+   inset 白光沢（primary/danger）/ shadow-sm 浮き（ghost）を獲得。
+   13 種モーダル（取引/イベント/カテゴリ/予算/テンプレ/メンバー/資産/資産履歴/
+   目標/目標貯蓄/ウィッシュ/負債/負債履歴/シミュ）のキャンセル・保存・追加・削除等
+   全フッターボタンが、tab focus 時に視覚的フィードバックを獲得した完成形へ到達。
+   モバイルのみで運用していた hover lift がキーボード操作でも再現され、
+   v26.48 の focus-visible 統一形が .btn 系で完結。
+   ============================================================ */
+
+/* ① .btn:focus-visible:not(:active) — :hover (line 1321) ラダー合流: translateY lift + scale + ring + shadow-btn-base */
+.btn:focus-visible:not(:active) {
+  outline: none;
+  transform: translateY(var(--translate-lift-sm)) scale(var(--scale-hover-sm));
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), var(--shadow-btn-base);
+}
+
+/* ② .btn-primary:focus-visible:not(:active) — :hover (line 1333) ラダー合流: primary-dark bg + 6px 18px primary mix-4xl glow + inset white 0.22 + ring */
+.btn-primary:focus-visible:not(:active) {
+  background: var(--primary-dark);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ③ .btn-ghost:focus-visible:not(:active) — :hover (line 1344) ラダー合流: surface-hover bg + border-strong + shadow-sm + 2px 14px primary mix-sm glow + ring */
+.btn-ghost:focus-visible:not(:active) {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              var(--shadow-sm),
+              0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ④ .btn-danger:focus-visible:not(:active) — :hover (line 1355) ラダー合流: danger-border bg + expense border + 4px 12px expense mix-md glow + inset white 0.55 + ring */
+.btn-danger:focus-visible:not(:active) {
+  background: var(--danger-border);
+  border-color: var(--expense);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* ⑤ ダーク .btn-ghost:focus-visible:not(:active) — :hover (line 34251) ラダー合流: surface-hover + border-strong + primary-end color + shadow-sm + 2px 12px primary-end mix-md glow + ring + text-shadow */
+[data-theme="dark"] .btn-ghost:focus-visible:not(:active) {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  color: var(--primary-end);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              var(--shadow-sm),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑥ ダーク .btn-primary:focus-visible:not(:active) — :hover (line 34306 + 38097) ラダー合流: #fff color + 6px 20px primary-end mix-4xl glow + inset white 0.22 + ring + dual text-shadow */
+[data-theme="dark"] .btn-primary:focus-visible:not(:active) {
+  color: #fff;
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28);
+}
+
+/* ⑦ ダーク .btn-danger:focus-visible:not(:active) — :hover (line 34309 + 38724) ラダー合流: danger-border bg + expense-end color + 4px 14px expense-end mix-lg glow + inset white 0.55 + ring + text-shadow */
+[data-theme="dark"] .btn-danger:focus-visible:not(:active) {
+  background: var(--danger-border);
+  color: var(--expense-end);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
