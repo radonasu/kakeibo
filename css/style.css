@@ -45420,3 +45420,67 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .update-toast.show {
   box-shadow: var(--shadow-lg), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+
+/* ============================================================
+   v26.76 Sprint #1072: floating UI 群 base box-shadow に inset 上端白光沢を一括拡張
+   （.modal-overlay.modal-is-open .modal + .notif-panel = 2 系統 × ライト/ダーク
+    = 計 4 セレクタ）
+
+   ── 設計趣旨 ──
+   v26.63〜v26.66 でグラデ bold UI 11 系統（summary-card/dashboard summary/
+   debt-summary-total/monthly + sb-banner + sim-modal-header + ci-header）の
+   hover/focus/base 状態に inset 0 1px 0 rgba(255,255,255,0.18-0.24) を一括拡張し、
+   v26.75 でフィードバック UI（kk-toast 既定 + 変種 3 + sync-toast + update-toast）
+   出現時にも一括拡張して、家計簿アプリのグラデ bold UI + フィードバック UI を
+   glassy 3D 立体感ラダーへ統一してきた。一方、最も大きな floating UI である
+   「モーダル本体（.modal-overlay.modal-is-open .modal）」と「通知パネル（.notif-panel）」
+   の base box-shadow には依然として inset 上端白光沢が無く、画面中央/右上に
+   floating する大型 UI が glassy 3D ラダーから取り残されていた。
+   モーダルは画面中央に floating 表示される最大の UI、通知パネルは画面右上に
+   floating 表示される primary な UI であり、いずれも「surface から浮いている」
+   立体感が強く要求される。上端白光沢の追加で「ガラス越しに光が当たって
+   浮き上がっている」glassy 3D 質感を獲得し、これら 2 系統 × ライト/ダーク
+   = 計 4 セレクタに inset 上端白光沢を一括拡張する。
+
+   ── inset 値設計 ──
+   ・ライトモード: rgba(255,255,255,0.20)
+     surface bg（白系）上で控えめながら glassy sheen を獲得。toast 既定 0.22 より
+     やや弱め（モーダル/通知パネルは大きく長時間表示される UI のため過剰演出を避ける）
+   ・ダークモード: rgba(255,255,255,0.16)
+     ダーク surface bg（暗背景）上で 0.20 だと白光が浮きすぎるため 0.16 ダウン
+     （toast ダーク 0.18 と整合、面積が大きいため若干弱め）
+
+   ── カスケード設計 ──
+   ① .modal-overlay.modal-is-open .modal — line 4896 (specificity 0,3,0) と同 specificity・
+       end-of-file 順序で勝つ。既存 shadow-lg を保持し inset 0.20 を追加
+   ② [data-theme="dark"] .modal-overlay.modal-is-open .modal — ① 上書き（[data-theme="dark"]
+       で +0,1,0 → 0,4,0 で確実勝利）。shadow-lg + inset 0.16
+   ③ .notif-panel — line 14754 (specificity 0,1,0) と同 specificity・end-of-file 順序で勝つ。
+       既存 shadow-lg を保持し inset 0.20 を追加
+   ④ [data-theme="dark"] .notif-panel — line 15022 (specificity 0,2,0) を end-of-file 順序で
+       上書き。既存 shadow-panel を保持し inset 0.16 を追加
+   ============================================================ */
+
+/* ① .modal-overlay.modal-is-open .modal — モーダル出現時の上端 glassy sheen
+       既存 shadow-lg + inset 0.20（surface bg 上で控えめ立体感） */
+.modal-overlay.modal-is-open .modal {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
+/* ② ダーク .modal-overlay.modal-is-open .modal — ① 上書き
+       shadow-lg + inset 0.16（ダーク背景での白光沢適正値） */
+[data-theme="dark"] .modal-overlay.modal-is-open .modal {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* ③ .notif-panel — 通知パネル base shadow + 上端 glassy sheen
+       既存 shadow-lg + inset 0.20 */
+.notif-panel {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
+/* ④ ダーク .notif-panel — line 15022 を上書き
+       既存 shadow-panel + inset 0.16（ダーク背景での白光沢適正値） */
+[data-theme="dark"] .notif-panel {
+  box-shadow: var(--shadow-panel), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
