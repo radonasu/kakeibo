@@ -45319,3 +45319,104 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 0 10px color-mix(in srgb, var(--qa-accent, var(--primary-end)) var(--mix-md), transparent);
   filter: brightness(1.1);
 }
+
+/* ============================================================
+   v26.75 Sprint #1071: トースト群 (kk-toast 既定/変種3 + sync-toast + update-toast) 出現時 inset 上端白光沢一括拡張
+   ── 設計趣旨 ──
+   v26.63〜v26.66 でグラデ bold UI 11 系統 rest/hover に inset 0 1px 0 rgba(255,255,255,...)
+   を一括追加し、v26.65 で dashboard summary :focus-visible 8 セレクタにも拡張、glassy 3D
+   立体感ラダーを完成させてきた。一方、最も視認頻度が高い「保存・更新の即時フィードバック」
+   UI である通知トースト群は出現時の box-shadow が単純な shadow-lg / shadow-md+colored glow /
+   shadow-lg+primary mix-xs に留まり inset 上端白光沢を一切持たず、glassy 3D ラダーから
+   取り残されていた。トーストは画面中央〜下部に floating で「surface から少し浮いている」
+   立体感が要求される UI であり、上端白光沢の追加で「光が当たって浮いている」glassy 3D 質感が
+   獲得できる。本スプリントで kk-toast 既定 + 変種 3 (success/error/warning) + sync-toast +
+   update-toast = ライト 5 + ダーク 5 = 計 10 セレクタに inset 上端白光沢を一括拡張。
+   家計簿アプリの全フィードバック UI が glassy 3D 立体感ラダーへ完全合流。
+   ── 対象 ──
+   ① .kk-toast.kk-toast-show （既定・surface bg 上で shadow-lg + inset 0.22）
+   ② .kk-toast.kk-toast-show.kk-toast-success （success-bg 上で 既存 shadow-md + success glow + inset 0.55）
+   ③ .kk-toast.kk-toast-show.kk-toast-error   （danger-bg 上で 既存 shadow-md + danger  glow + inset 0.55）
+   ④ .kk-toast.kk-toast-show.kk-toast-warning （warning-bg 上で 既存 shadow-md + warning glow + inset 0.55）
+   ⑤ .sync-toast.show   （glassy mix bg 上で 既存 shadow-lg + primary mix-xs + inset 0.22 追加）
+   ⑥ .update-toast.show （同パターン）
+   ⑦ ダーク .kk-toast.kk-toast-show （ダーク glassy 88% surface bg 上で inset 0.18）
+   ⑧ ダーク .kk-toast.kk-toast-show.kk-toast-success （glow mix-sm→md 強化 + inset 0.18）
+   ⑨ ダーク .kk-toast.kk-toast-show.kk-toast-error   （同パターン）
+   ⑩ ダーク .kk-toast.kk-toast-show.kk-toast-warning （同パターン）
+   ── カスケード安全 ──
+   ①: line 5547 の `.kk-toast-show { box-shadow: var(--shadow-lg); }` (specificity 0,1,0) を
+       `.kk-toast.kk-toast-show` (specificity 0,2,0) で上書き。同時に line 19100/103/106 の
+       `.kk-toast-success/error/warning` (specificity 0,1,0) も specificity (0,2,0) で上書き
+       するため、変種は ②③④ で再度 (0,3,0) で上書きが必要。
+   ②③④: `.kk-toast.kk-toast-show.kk-toast-success` 等 (specificity 0,3,0) で line 19100 系
+       (0,1,0) と本末尾 ① (0,2,0) を完全上書き。既存の shadow-md + colored glow を保持しつつ
+       inset を新規付与。
+   ⑤⑥: line 4032/4417 の `.sync-toast.show` / `.update-toast.show` (specificity 0,2,0) と同等で
+       end-of-file 順序により勝つ。既存 shadow-lg + primary mix-xs を保持しつつ inset 追加。
+   ⑦〜⑩: `[data-theme="dark"]` 付加で specificity +0,1,0。① (0,2,0)→0,3,0 / ②③④ (0,3,0)→0,4,0
+       で確実に上書き。
+   ⑤⑥ ダーク: 既存ダーク変数（--surface 等）が透過しているため inset 0.22→0.18 ダウンで OK。
+       新規ダーク選択子は不要（明示変更なしの場合は ⑤⑥ の rule が両モードで適用）。
+   実際には ⑤⑥ ダーク用に明示的な inset 値変更が望ましいので、別途 ⑪⑫ として追加。
+   ============================================================ */
+
+/* ① .kk-toast.kk-toast-show 既定 — line 5547 (specificity 0,1,0) 上書き: shadow-lg + 上端白光沢 0.22（surface bg 上で glassy sheen 視認可能） */
+.kk-toast.kk-toast-show {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② .kk-toast.kk-toast-show.kk-toast-success — line 19100 + ① 上書き: 既存 shadow-md + success colored glow + 上端白光沢 0.55（success-bg 淡パステル上で強め） */
+.kk-toast.kk-toast-show.kk-toast-success {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--success) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* ③ .kk-toast.kk-toast-show.kk-toast-error — line 19103 + ① 上書き: 既存 shadow-md + danger colored glow + 上端白光沢 0.55 */
+.kk-toast.kk-toast-show.kk-toast-error {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* ④ .kk-toast.kk-toast-show.kk-toast-warning — line 19106 + ① 上書き: 既存 shadow-md + warning colored glow + 上端白光沢 0.55 */
+.kk-toast.kk-toast-show.kk-toast-warning {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--warning) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* ⑤ .sync-toast.show — line 4032 と同 specificity (0,2,0)・end-of-file 順序で勝つ: 既存 shadow-lg + primary mix-xs を保持し inset 0.22 追加 */
+.sync-toast.show {
+  box-shadow: var(--shadow-lg), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ⑥ .update-toast.show — line 4417 と同パターン */
+.update-toast.show {
+  box-shadow: var(--shadow-lg), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ⑦ ダーク .kk-toast.kk-toast-show 既定 — ① 上書き: ダーク glassy 88% surface bg 上で inset 0.18 ダウン（暗背景での白光沢適正値） */
+[data-theme="dark"] .kk-toast.kk-toast-show {
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑧ ダーク .kk-toast.kk-toast-show.kk-toast-success — ② 上書き: glow mix-sm→md 強化（暗背景で colored glow が埋もれないよう） + inset 0.18 */
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-success {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑨ ダーク .kk-toast.kk-toast-show.kk-toast-error — ③ 同パターン */
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-error {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑩ ダーク .kk-toast.kk-toast-show.kk-toast-warning — ④ 同パターン */
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-warning {
+  box-shadow: var(--shadow-md), 0 4px 24px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑪ ダーク .sync-toast.show — ⑤ 上書き: inset 0.22→0.18 ダウン（暗背景での白光沢適正値） */
+[data-theme="dark"] .sync-toast.show {
+  box-shadow: var(--shadow-lg), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑫ ダーク .update-toast.show — ⑥ 同パターン */
+[data-theme="dark"] .update-toast.show {
+  box-shadow: var(--shadow-lg), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
