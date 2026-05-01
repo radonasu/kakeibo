@@ -16567,7 +16567,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   filter: brightness(var(--brightness-hover-sm));
 }
 .dash-sum-clickable:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
-.dash-sum-clickable:focus-visible { outline: none; transform: translateY(var(--translate-lift-md)); box-shadow: var(--shadow-hover-sm), 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+/* v26.71: 旧 .dash-sum-clickable:focus-visible（transform lift-md + box-shadow hover-sm + focus-ring）を削除し、末尾 v26.71 ブロックに :focus-visible:not(:active) として再宣言。:active 押下感（translateY press-down + box-shadow none + filter press-soft）を保護する */
 
 /* スクロール可能な本文エリア */
 .md-scroll-body {
@@ -43222,8 +43222,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
       フォーカス可視性を強化（hover よりやや強めの focus 表現）。
    ============================================================ */
 
-/* ① .modal-close:focus-visible — bg + danger-text color + scale + rotate + danger glow + text-shadow */
-.modal-close:focus-visible {
+/* ① .modal-close:focus-visible:not(:active) — bg + danger-text color + scale + rotate + danger glow + text-shadow（v26.71: :not(:active) 追加で押下感保護） */
+.modal-close:focus-visible:not(:active) {
   background: var(--bg);
   color: var(--danger-text);
   transform: scale(var(--scale-hover)) rotate(90deg);
@@ -43232,8 +43232,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
 }
 
-/* ② .month-nav-btn:focus-visible:not(:disabled) — border + color + bg + scale + primary glow + text-shadow */
-.month-nav-btn:focus-visible:not(:disabled) {
+/* ② .month-nav-btn:focus-visible:not(:disabled):not(:active) — border + color + bg + scale + primary glow + text-shadow（v26.71: :not(:active) 追加で押下感保護） */
+.month-nav-btn:focus-visible:not(:disabled):not(:active) {
   border-color: var(--primary);
   color: var(--primary);
   background: var(--primary-light);
@@ -43243,31 +43243,31 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
 
-/* ③ .cal-panel-close:focus-visible — bg + text color + scale */
-.cal-panel-close:focus-visible {
+/* ③ .cal-panel-close:focus-visible:not(:active) — bg + text color + scale（v26.71: :not(:active) 追加で押下感保護） */
+.cal-panel-close:focus-visible:not(:active) {
   background: var(--surface-hover);
   color: var(--text);
   transform: scale(var(--scale-hover));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
 
-/* ④ .cal-ev-nav:focus-visible — bg + subtle primary glow（focus 強化） */
-.cal-ev-nav:focus-visible {
+/* ④ .cal-ev-nav:focus-visible:not(:active) — bg + subtle primary glow（focus 強化）（v26.71: :not(:active) 追加で押下感保護） */
+.cal-ev-nav:focus-visible:not(:active) {
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
 
-/* ⑤ ダーク .modal-close:focus-visible — expense-end glow + text-shadow 強化 */
-[data-theme="dark"] .modal-close:focus-visible {
+/* ⑤ ダーク .modal-close:focus-visible:not(:active) — expense-end glow + text-shadow 強化（v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .modal-close:focus-visible:not(:active) {
   color: var(--expense-end);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
   text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
 }
 
-/* ⑥ ダーク .cal-panel-close:focus-visible — primary-end color + text-shadow 強化 */
-[data-theme="dark"] .cal-panel-close:focus-visible {
+/* ⑥ ダーク .cal-panel-close:focus-visible:not(:active) — primary-end color + text-shadow 強化（v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .cal-panel-close:focus-visible:not(:active) {
   color: var(--primary-end);
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
@@ -43331,32 +43331,32 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ::after / ::before デコレーション円も同期スケール拡大で躍動感をキープ。
    ============================================================ */
 
-/* ① .summary-card.income.dash-sum-clickable:focus-visible — income mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65: :hover ラダーと完全合流） */
-.summary-card.income.dash-sum-clickable:focus-visible {
+/* ① .summary-card.income.dash-sum-clickable:focus-visible:not(:active) — income mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65: :hover ラダーと完全合流 / v26.71: :not(:active) 追加で押下感保護） */
+.summary-card.income.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ② .summary-card.expense.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-.summary-card.expense.dash-sum-clickable:focus-visible {
+/* ② .summary-card.expense.dash-sum-clickable:focus-visible:not(:active) — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+.summary-card.expense.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ③ .summary-card.balance.positive.dash-sum-clickable:focus-visible — primary mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-.summary-card.balance.positive.dash-sum-clickable:focus-visible {
+/* ③ .summary-card.balance.positive.dash-sum-clickable:focus-visible:not(:active) — primary mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+.summary-card.balance.positive.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ④ .summary-card.balance.negative.dash-sum-clickable:focus-visible — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-.summary-card.balance.negative.dash-sum-clickable:focus-visible {
+/* ④ .summary-card.balance.negative.dash-sum-clickable:focus-visible:not(:active) — expense mix-sm 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+.summary-card.balance.negative.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
@@ -43414,32 +43414,32 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 
 /* ── ダーク版 ── */
 
-/* ⑫ ダーク income focus-visible — income-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-[data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible {
+/* ⑫ ダーク income focus-visible:not(:active) — income-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑬ ダーク expense focus-visible — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-[data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible {
+/* ⑬ ダーク expense focus-visible:not(:active) — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑭ ダーク balance.positive focus-visible — primary-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-[data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible {
+/* ⑭ ダーク balance.positive focus-visible:not(:active) — primary-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-/* ⑮ ダーク balance.negative focus-visible — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65） */
-[data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible {
+/* ⑮ ダーク balance.negative focus-visible:not(:active) — expense-end mix-md 外周 glow + focus-ring + inset 上端白光沢（v26.65 / v26.71: :not(:active) 追加で押下感保護） */
+[data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible:not(:active) {
   box-shadow: var(--shadow-summary-hover),
               0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
@@ -45121,4 +45121,74 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 [data-theme="dark"] .bottom-nav-item:not(.active):focus-visible:not(:active) .bottom-nav-label {
   color: var(--primary-end);
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ============================================================
+   v26.71: 旧 :focus-visible 群（v26.46 アイコン/ナビボタン群 +
+   v26.47 ダッシュボードサマリーカード + .dash-sum-clickable 基底）
+   に :not(:active) 保護を一括追加
+   ライト 9 + ダーク 6 = 計 15 セレクタ
+   ── 経緯 ──
+   v26.68（.btn / .btn-primary / .btn-ghost / .btn-danger 4 系統）
+   v26.69（.btn-success + #global-fab）
+   v26.70（.nav-item サイドバー + .bottom-nav-item ボトムナビ 10 セレクタ）
+   と続いた :focus-visible:not(:active) パターン採用シリーズの第 4 弾。
+   v26.46 / v26.47 で :focus-visible を :hover ラダーに合流させた時点では
+   :not(:active) を付けていなかったため、Tab で focus した状態から
+   Space / Enter キーを押下した瞬間（focus + active 同時マッチ）に
+   :focus-visible 側の transform / box-shadow / filter / color が
+   :active 側の press-down / scale-active / brightness press-soft を
+   完全に上書きしてしまい、押下感（プレスバック演出）が一切発火しない
+   バグが残存していた。v26.68 以降で確立した「:focus-visible:not(:active)」
+   パターンで一括是正。
+   ── 対象（v26.46 グループ）──
+   ① .modal-close:focus-visible → :not(:active)
+      （:active line 3151: scale icon-active + brightness press-soft + box-shadow none を保護）
+   ② .month-nav-btn:focus-visible:not(:disabled) → :not(:disabled):not(:active)
+      （:active line 2949: scale press-nav + brightness press を保護）
+   ③ .cal-panel-close:focus-visible → :not(:active)
+      （:active line 7224: scale icon-active + brightness press-soft + box-shadow none を保護）
+   ④ .cal-ev-nav:focus-visible → :not(:active)
+      （:active line 7417: bg primary mix-base + brightness press-mid + box-shadow none を保護）
+   ⑤ ダーク .modal-close:focus-visible → :not(:active)（ライト ① と対称）
+   ⑥ ダーク .cal-panel-close:focus-visible → :not(:active)（ライト ③ と対称）
+   ── 対象（v26.47 グループ）──
+   ⑦ .summary-card.income.dash-sum-clickable:focus-visible → :not(:active)
+   ⑧ .summary-card.expense.dash-sum-clickable:focus-visible → :not(:active)
+   ⑨ .summary-card.balance.positive.dash-sum-clickable:focus-visible → :not(:active)
+   ⑩ .summary-card.balance.negative.dash-sum-clickable:focus-visible → :not(:active)
+   ⑪～⑭ ダーク 4 系統（v26.47 ⑫～⑮）→ :not(:active)
+      （:active line 16569: translateY press-down + box-shadow none + filter press-soft を保護）
+   ── 対象（基底）──
+   ⑮ .dash-sum-clickable:focus-visible（line 16570 in-place）→ 削除し
+      末尾本ブロックに :focus-visible:not(:active) として再宣言
+      （v26.69 #global-fab パターン踏襲: 旧ルール削除 → 末尾再宣言）
+      transform translateY(lift-md) + box-shadow shadow-hover-sm + focus-ring を維持。
+      これにより全 4 タイプの dash-sum-clickable で :active 押下感が完全保護される
+      （タイプ別 ⑦～⑭ は box-shadow を再宣言するが transform は本基底ルールから継承）。
+   ── カスケード安全 ──
+   ①～⑥：:focus-visible:not(:active) は元の :focus-visible と同 specificity（0,3,0 / 0,4,0）。
+   in-place 修正で同一行を直接書き換えているため重複なし。
+   ⑦～⑭：v26.47 ブロック内の in-place 修正。:focus-visible:not(:active) は
+   元の :focus-visible と同 specificity（0,4,0 / 0,5,0）。
+   ⑮：旧 line 16570 を削除（コメント化）し、本末尾ブロックに新規追加。
+   末尾配置で line 43335+ のタイプ別ルール（v26.47）と同階層、後出し勝利だが
+   タイプ別は :not(:active) 化済みなので box-shadow は重複しない。
+   transform は基底のみ宣言で全タイプに継承される。
+   :hover :active は無変更。元の hover ラダー（lift + glow + brightness）と
+   active ラダー（press-down + box-shadow none + brightness press-soft）は
+   共に従来通り発火し、focus-visible は :not(:active) で active 中だけ
+   控えめになる三状態（rest / hover or focus / active）の自然なアニメーション。
+   ── 効果 ──
+   キーボードユーザーが Tab → Space/Enter で操作した時、各ボタン/カードで
+   マウスクリックと同じ「focus 立体感 → press 沈み込み → 離した瞬間 focus 復帰」
+   の三段階アニメーションが完全発火。v26.68〜v26.70 で確立した
+   :focus-visible:not(:active) パターンが家計簿アプリ全体に普及完了。
+   ============================================================ */
+
+/* ⑮ .dash-sum-clickable:focus-visible:not(:active) — :hover ラダー合流: translateY lift-md + shadow-hover-sm + focus-ring（旧 line 16570 を削除し本末尾に再宣言） */
+.dash-sum-clickable:focus-visible:not(:active) {
+  outline: none;
+  transform: translateY(var(--translate-lift-md));
+  box-shadow: var(--shadow-hover-sm), 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
