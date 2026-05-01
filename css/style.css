@@ -4506,6 +4506,7 @@ body {
 }
 .bottom-nav-icon svg { display: block; }
 /* v26.10: アクティブナビアイコンに box-shadow primary halo（0 0 12px primary mix-sm）を追加。primary-light bg + scale + svg drop-shadow（v26.06④）に加えてアイコンコンテナ自体が淡くプライマリ発光。「選択中」の存在感が大幅に強化される。 */
+/* v26.79: base box-shadow に inset 0 1px 0 rgba(255,255,255,0.22) を追加（v26.53 nav-bottom-icon-breath animation 停止時 fallback として上端白光沢を保持） */
 .bottom-nav-item.active .bottom-nav-icon {
   background: var(--primary-light);
   color: var(--primary);
@@ -4513,7 +4514,7 @@ body {
   padding: var(--sp-1);
   width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 .bottom-nav-label { font-size: var(--fs-2xs); letter-spacing: var(--ls-label); line-height: var(--lh-none); }
 
@@ -18921,8 +18922,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    現在は color: primary-end + scale + background のみ。
    v22.89 で nav-item.active 自体に text-shadow glow 追加済み。
    アイコンボックスにも glow が加わりサイドバーが輝く。 */
+/* v26.79: base box-shadow に inset 0 1px 0 rgba(255,255,255,0.18) を追加（v26.53 nav-side-icon-breath animation 停止時 fallback として上端白光沢を保持・常時ダーク背景なので 0.18） */
 .nav-item.active .nav-icon {
-  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* 7. カードタイトル 微細 primary text-shadow
@@ -44153,9 +44155,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 
 /* ── サイドナビ アイコンボックス breath ─────────────────── */
+/* v26.79: keyframes 内 box-shadow に inset 0 1px 0 rgba(255,255,255,X) を追加（rest 0.18 → peak 0.22 の +0.04 amplitude で「光の脈動」が外周 halo + inset 上端白光沢の二段重ね breathing 設計・常時ダーク背景なので控えめ） */
 @keyframes nav-side-icon-breath {
-  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 }
 .nav-item.active .nav-icon {
   animation: nav-side-icon-breath 3.4s ease-in-out infinite;
@@ -44180,16 +44183,17 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 
 /* ── ボトムナビ アイコンボックス breath ─────────────────── */
+/* v26.79: keyframes 内 box-shadow に inset 0 1px 0 rgba(255,255,255,X) を追加（ライト rest 0.22 → peak 0.26 / ダーク rest 0.18 → peak 0.22 の +0.04 amplitude で外周 halo + inset 上端白光沢の二段重ね breathing 設計・primary-light bg ベースのライトはやや強め、ダーク背景は控えめ） */
 @keyframes nav-bottom-icon-breath {
-  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+  0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+  50%      { box-shadow: 0 0 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.26); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-bottom-icon-breath 3.4s ease-in-out infinite;
 }
 @keyframes nav-bottom-icon-breath-dark {
-  0%, 100% { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+  50%      { box-shadow: 0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 }
 [data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-bottom-icon-breath-dark 3.4s ease-in-out infinite;
