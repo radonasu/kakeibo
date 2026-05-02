@@ -1127,7 +1127,10 @@ select:focus:not(:focus-visible) {
   position: sticky;
   top: 0;
   z-index: var(--z-mobile-header);
-  box-shadow: var(--shadow-sticky);
+  /* v26.83: shadow-sticky に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。
+     #0f172a 固定ダーク bg 上で screen 上端に 1px の glassy sheen を出し、
+     v26.76 modal-overlay open / v26.82 modal-overlay hidden / v26.76 notif-panel と同系統。 */
+  box-shadow: var(--shadow-sticky), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 #hamburger {
@@ -4524,7 +4527,10 @@ body {
 @media (max-width: 768px) {
   #sidebar {
     transform: translateX(-100%);
-    box-shadow: var(--shadow-lg);
+    /* v26.83: shadow-lg に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。
+       slide-in panel 上端に 1px の glassy sheen を出し、modal/notif-panel と同系統の
+       glassy 3D ラダーへ合流。#0f172a 固定ダーク bg 上で適正値 0.18。 */
+    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
   #sidebar.open { transform: translateX(0); }
 
