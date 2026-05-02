@@ -834,6 +834,13 @@ select:focus:not(:focus-visible) {
 }
 
 /* ── サイドバー ───────────────────────────────────────── */
+/* v26.85: box-shadow 未宣言 → inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を新規追加。
+   desktop では position: fixed; top: 0; left: 0 で viewport 最上端に常駐する dark-navy chrome のため、
+   1px の glassy sheen を screen 最上端に出して v26.83 #sidebar mobile slide-in（@media max-width:768px の
+   shadow-lg + inset 0.18）/ #mobile-header（dark-navy bg + inset 0.18）/ v26.84 .offline-indicator と
+   同系統の glassy 3D ラダーへ完全合流。outer shadow は意図的に追加せず（desktop sidebar は layout の一部で
+   floating panel ではないため elevation を表現しない）、inset のみで surface decoration を担当。
+   transition list に box-shadow を追加し theme 切替時の補間を滑らかに。 */
 #sidebar {
   width: var(--sidebar-w);
   background: var(--sidebar-bg);
@@ -845,7 +852,8 @@ select:focus:not(:focus-visible) {
   top: 0; left: 0;
   height: 100vh;
   z-index: var(--z-sidebar);
-  transition: transform var(--dur-mid) var(--ease-enter);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform var(--dur-mid) var(--ease-enter), box-shadow var(--dur-fast) var(--ease-out);
 }
 
 #sidebar-brand {
