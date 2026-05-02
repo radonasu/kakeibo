@@ -4886,11 +4886,16 @@ body {
   backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
 }
+/* v26.82: hidden 状態にも inset 0 1px 0 rgba(255,255,255,0.20) を追加（v26.76 で .modal-overlay.modal-is-open .modal に追加した inset 0.20 と同値・open 状態と box-shadow リスト長を揃え、shadow-md → shadow-lg トランジション中に inset がリスト末尾差分として「transparent → 0.20」と fade-in せず、最初から最終強度で安定保持される設計に整合・hidden 状態は opacity:0 で実視認なし） */
 .modal-overlay .modal {
   transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init));
   opacity: 0;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.20);
   transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out), box-shadow var(--dur-gentle) var(--ease-out);
+}
+/* v26.82: ダーク .modal-overlay .modal hidden 状態の inset 補完（ダーク open 状態 line 45486 inset 0.16 と同値・hidden→open トランジション中も inset が安定維持される設計） */
+[data-theme="dark"] .modal-overlay .modal {
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 .modal-overlay.modal-is-open .modal {
   transform: translateY(0) scale(var(--scale-rest));
