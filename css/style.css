@@ -44941,13 +44941,14 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28);
 }
 
-/* ⑦ ダーク .btn-danger:focus-visible:not(:active) — :hover (line 34309 + 38724) ラダー合流: danger-border bg + expense-end color + 4px 14px expense-end mix-lg glow + inset white 0.55 + ring + text-shadow */
+/* ⑦ ダーク .btn-danger:focus-visible:not(:active) — :hover (line 40644) ラダー合流: danger-border bg + expense-end color + 4px 14px expense-end mix-lg glow + inset white 0.08 + ring + text-shadow
+   v26.81: inset 0.55 → 0.08 視覚バグ修正。v26.69 Sprint #1065 で本ルール新規追加時にライト .btn-danger:focus-visible（line 44921・inset 0.55）の値をそのまま流用していたが、ダークモードの inset ラダー（rest 0.06 line 40641 / hover 0.08 line 40646）から大きく逸脱（0.06→0.08→0.55）し、Tab focus 時のみ saturated red bg 上に強烈な白光ストライプが浮かぶ視覚バグになっていた。同じ danger-border bg を共有する :hover (0.08) に揃えてダーク inset ラダーを 0.06→0.08→0.08 に整合。これでダーク btn-danger 全状態（rest/hover/focus-visible）が肉眼で一貫した上端白光沢に。 */
 [data-theme="dark"] .btn-danger:focus-visible:not(:active) {
   background: var(--danger-border);
   color: var(--expense-end);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
-              inset 0 1px 0 rgba(255, 255, 255, 0.55);
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
   text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
 }
 
