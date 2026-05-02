@@ -4368,6 +4368,12 @@ body {
 }
 
 /* ── オフラインインジケーター ── */
+/* v26.84: shadow-sticky + inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を追加。
+   warning-saturated amber/yellow bg 上で screen 最上端に 1px の glassy sheen を出し、
+   v26.75 toast 群 / v26.76 modal/notif-panel / v26.83 mobile-header と同系統の
+   glassy 3D ラダーへ合流。bg は light #d97706 / dark #fbbf24 と異なるが中間適正値 0.20
+   で両モード単一値完結（modal light 0.20 / dark 0.16 の中間で warning 系の彩度を考慮）。
+   transition list に box-shadow を追加し show 状態 slide-in の完成度を保つ。 */
 .offline-indicator {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -4384,7 +4390,8 @@ body {
   text-wrap: pretty;
   z-index: var(--z-toast);
   transform: translateY(-100%);
-  transition: transform var(--dur-slow) var(--ease-out);
+  box-shadow: var(--shadow-sticky), inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  transition: transform var(--dur-slow) var(--ease-out), box-shadow var(--dur-slow) var(--ease-out);
 }
 .offline-indicator.show { transform: translateY(0); }
 
