@@ -34312,8 +34312,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.90・全script/linkタグ?v=24.90に更新。
    ============================================================ */
 
-/* ① btn-primary dark enhanced hover glow（primary-end mix-4xl 0 6px 20px） */
-[data-theme="dark"] .btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent); }
+/* ① btn-primary dark enhanced hover glow（primary-end mix-4xl 0 6px 20px）
+   v26.80: inset 0 1px 0 rgba(255,255,255,0.22) を追加し、ライト .btn-primary:hover（line 1333・inset 0.22）/ ダーク .btn-success:hover（line 34323・inset 0.22）/ ダーク .btn-primary:focus-visible:not(:active)（line 44935・inset 0.22）と整合。これまでダークモードで btn-primary を hover すると ライト基底（line 1330・inset 0.20）から継承していた上端白光沢が消失して glassy 3D が崩れる視覚バグを修正。saturated purple bg（primary-dark）上で 0.22 が適正値。 */
+[data-theme="dark"] .btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ② btn-danger dark enhanced hover glow（expense-end mix-lg 0 4px 14px） */
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
