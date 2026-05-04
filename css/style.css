@@ -990,11 +990,14 @@ select:focus:not(:focus-visible) {
   color: var(--primary-end);
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-snug);
+  /* v26.87: アクティブページ rest 状態に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を新規追加。サイドバー固定ダーク bg #0f172a 上の primary mix-md 半透明アクティブハイライトに 1px の glassy sheen を獲得し、現在地ナビ項目が常時 3D 立体感を持つ。floating UI 群（v26.83〜v26.86 完了）と同パターン */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .nav-item.active:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
   transform: translateY(-1px);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  /* v26.87: hover 状態の box-shadow リスト末尾に inset 0 1px 0 rgba(255,255,255,0.22) 追加（rest 0.18 → hover +0.04 で持ち上がるほど光が強まる v26.63 同パターン）。focus-ring + outer halo + 上端 glassy sheen の三層 */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 .nav-item::before {
   content: '';
@@ -6369,9 +6372,10 @@ body {
   background: var(--primary-light);
 }
 /* v26.32: アクティブタブの hover glow を強化（lift 無しで border 連続性を保護しつつ立体感を増す）。外側 0 2px 10px primary mix-xs → 0 3px 14px primary mix-sm（非アクティブ hover と同規格）+ 内側 inset 0 -4px 14px mix-sm → 0 -6px 18px mix-md に深化し、底辺から立ち上がる primary 光が強化 */
+/* v26.87: hover 状態の box-shadow リスト末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04）。focus-ring + outer halo + bottom inset glow + 上端 glassy sheen の四層 */
 .section-tab.is-active:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface));
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 .section-tab .tab-icon {
   font-size: var(--fs-sm);
@@ -33361,8 +33365,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 5. .section-tab.is-active → static inset-bottom glow（primary・mix-xs）
    セクションタブのアクティブ状態 border-bottom-color（primary）に常時 primary inset-bottom glow を追加（inset 0 -4px 10px mix-xs）。
    border-bottom 系 inset-bottom glow 新シリーズ第1弾。
-   .section-tab.is-active:hover も inset-bottom mix-sm で更新し hover 強調と連動。 */
-.section-tab.is-active { box-shadow: inset 0 -4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+   .section-tab.is-active:hover も inset-bottom mix-sm で更新し hover 強調と連動。
+   v26.87: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加。primary-light bg 上に 1px の glassy sheen を獲得し、底辺 inset glow + 上端 sheen の二段重ね設計で「光の挟み撃ち」立体感を強化（floating UI v26.83〜v26.86 ladder と同パターン） */
+.section-tab.is-active { box-shadow: inset 0 -4px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
 
 /* 6. .tx-th-sort.tx-th-active → static inset-bottom glow（primary・mix-xs）
    取引テーブルのアクティブソートヘッダーの border-bottom（accent-w・primary）に常時 primary inset-bottom glow を追加（inset 0 -4px 10px mix-xs）。
@@ -33694,8 +33699,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード静的 inset glow（v24.74: primary mix-xs inset 0 -4px 10px）のダーク強化版。
    ダークモードでは primary-end で mix-sm に引き上げ
    アクティブセクションタブ下部の border-bottom 奥行き演出をより鮮明に。
-   border-bottom 系 inset-bottom glow ダーク強化シリーズ第1弾。 */
-[data-theme="dark"] .section-tab.is-active { box-shadow: inset 0 -4px 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+   border-bottom 系 inset-bottom glow ダーク強化シリーズ第1弾。
+   v26.87: inset 0 1px 0 rgba(255,255,255,0.16) 上端白光沢を末尾追加。ダーク surface 上の primary mix-sm 半透明アクティブ tint に 1px の glassy sheen を獲得（dark bg 適正値・ライト 0.20 から 0.04 ダウン） */
+[data-theme="dark"] .section-tab.is-active { box-shadow: inset 0 -4px 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
 
 /* 7. .tx-th-sort.tx-th-active → dark mode enhanced inset-bottom glow（primary-end・mix-sm）
    ライトモード静的 inset glow（v24.74: primary mix-xs inset 0 -4px 10px）のダーク強化版。
@@ -33709,8 +33715,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ダークモードではホバー時も primary-end で mix-sm を維持し
    アクティブタブホバー時の下部発光演出をより鮮明に。⑥ section-tab.is-active dark glow と連動し
    アクティブタブの静的・ホバー両状態がダークモードで完成形演出に統一。
-   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.79・全script/linkタグ?v=24.79に更新。 */
-[data-theme="dark"] .section-tab.is-active:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 0 -4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+   全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.79・全script/linkタグ?v=24.79に更新。
+   v26.87: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加（rest 0.16 → hover +0.04 amplitude）。focus-ring + outer halo + bottom inset glow + 上端 glassy sheen の四層 */
+[data-theme="dark"] .section-tab.is-active:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 0 -4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
 
 /* ========================================
    v24.80: goal-card/wl-card/ch-card/asset-card/debt-card/ev-card/pt-urgent/pt-soon
