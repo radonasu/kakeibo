@@ -4307,8 +4307,12 @@ body {
   padding-bottom: calc(var(--sp-3-5) + env(safe-area-inset-bottom));
   z-index: var(--z-pwa-banner);
   transform: translateY(100%);
-  transition: transform var(--dur-slow) var(--ease-enter);
-  box-shadow: var(--shadow-up-md);
+  transition: transform var(--dur-slow) var(--ease-enter), box-shadow var(--dur-fast) var(--ease-out);
+  /* v26.86: shadow-up-md に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。
+     dark sidebar-bg + glass-lg 半透明 bg 上で screen 下端固定バナーの最上端に 1px の glassy sheen を獲得し、
+     v26.83 #mobile-header / #sidebar mobile / v26.84 .offline-indicator / v26.85 #sidebar desktop と
+     同系統の glassy 3D ラダーへ完全合流。固定 floating UI 群の上端白光沢統一。 */
+  box-shadow: var(--shadow-up-md), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 #pwa-install-banner.show { transform: translateY(0); }
 
@@ -5621,6 +5625,25 @@ body {
 @keyframes kk-toast-shrink {
   from { transform: scaleX(1); }
   to   { transform: scaleX(0); }
+}
+
+/* v26.86: トースト出現時 .kk-toast-icon に scale-pop 入場アニメーションを追加。
+   従来トースト本体は kk-toast-show で slide-up しつつフェードインしていたが、
+   内部の円形アイコンバッジには独自の入場演出がなく、親の slide だけで現れていた。
+   icon を 0.4 → overshoot 1.18 → settle 1.0 で scale-pop させて
+   「トーストが滑り上がった直後にバッジがポンッと弾む」二段階のタクタイル feedback を獲得。
+   親 toast slide (--dur-slow=0.3s) より少し長い --dur-modal=0.42s を使い、
+   icon が toast 着地後 120ms 程度オーバーシュートして settle する設計。
+   easing は --ease-out — keyframes 内に explicit overshoot を入れているため
+   --ease-bounce を重ねず軽量な減速曲線で滑らかに settle。
+   prefers-reduced-motion 時は line 18981 グローバルルールで 0.01ms に短縮され即時化（アクセシビリティ準拠）。 */
+@keyframes kk-toast-icon-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  55%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.kk-toast-show .kk-toast-icon {
+  animation: kk-toast-icon-pop var(--dur-modal) var(--ease-out) both;
 }
 
 /* タイプ: 成功 */
@@ -41375,15 +41398,18 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    モバイル底部ナビゲーションバーの上端境界線をニュートラル var(--border) → primary mix-xs ティント線に格上げ＋
    上方向（負の y）に微小 box-shadow glow を追加。既存 var(--shadow-up-sm) と呼応してナビバーが
    コンテンツから「フロート」した印象が強調される。
-   注意: 既存の box-shadow は var(--shadow-up-sm) のみなので、追加 glow を含めて 2 段重ねに。 */
+   注意: 既存の box-shadow は var(--shadow-up-sm) のみなので、追加 glow を含めて 2 段重ねに。
+   v26.86: inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。固定 floating UI 群（#mobile-header /
+   #sidebar / .offline-indicator / #pwa-install-banner）の glassy 3D ラダー統一の一環で、
+   border-top primary tint のすぐ下に 1px の glassy sheen を出し border と inset の二層で立体感を強化。 */
 #bottom-nav {
   border-top-color: color-mix(in srgb, var(--primary) var(--mix-xs), var(--border));
-  box-shadow: var(--shadow-up-sm), 0 -2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-up-sm), 0 -2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* ④ ダーク #bottom-nav 上端 primary-end tint */
 [data-theme="dark"] #bottom-nav {
   border-top-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border));
-  box-shadow: var(--shadow-up-sm), 0 -2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  box-shadow: var(--shadow-up-sm), 0 -2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* ⑤ .modal-footer 上方向 subtle drop-shadow lift
