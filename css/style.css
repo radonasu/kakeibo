@@ -2549,8 +2549,9 @@ select:focus:not(:focus-visible) {
 .tx-tag-filter-all.active:hover {
   /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
   /* v26.97: transform を scale-hover-md(1.05) → scale-hover-md * 1.01(1.0605) に強化（+0.01 amplitude）。.tx-tag-filter-chip.active:hover（v26.94）の scale ladder と完全対称になり「アクティブな全件チップを hover した瞬間にさらに 1% 大きくなる」連動 lift 演出を獲得 */
+  /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張。+1% additional amplitude でアクティブ全件チップを hover した瞬間の lift がより visible に。chip と同時拡張（line 2572）で all/chip の対称性は維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(calc(var(--scale-hover-md) * 1.01));
+  transform: scale(calc(var(--scale-hover-md) * 1.02));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -2568,8 +2569,9 @@ select:focus:not(:focus-visible) {
 }
 .tx-tag-filter-chip.active:hover {
   /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.22) 追加（rest 0.18 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張（+1% additional amplitude）。all 側（line 2553）と同時拡張で all/chip 対称性を維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: scale(calc(var(--scale-hover-md) * 1.01));
+  transform: scale(calc(var(--scale-hover-md) * 1.02));
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -15263,8 +15265,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .date-quick-btn.active:hover {
   filter: brightness(var(--brightness-hover-sm));
   /* v26.89: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 .summary-card 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  /* v26.98: transform を rest:hover の lift-xs (-1px) → active:hover で lift-sm (-2px) へ階層化（v26.94 .cat-chip.selected:hover / .adv-preset-chip.active:hover / .qa-type-btn.qa-type-active:hover と同パターン。アクティブな日付クイックボタンを hover した瞬間にさらに 1px 高く持ち上がる連動 lift 演出を獲得） */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: translateY(var(--translate-lift-xs));
+  transform: translateY(var(--translate-lift-sm));
 }
 
 /* 今日ボタンは非アクティブ時も少し強調 */
@@ -42835,9 +42838,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 
 /* ⑦ .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover（line 2532）ラダー合流: scale-hover-md + selected ring + focus-ring + deeper glow + 0 2px 10px primary mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
+/* v26.98: hover ラダー（line 2553）と完全合流するため scale を scale-hover-md(1.05) → scale-hover-md * 1.02(1.071) に揃えた（v26.97/v26.98 で hover が * 1.01 → * 1.02 に拡張されたが focus-visible が取りこぼされていた取りこぼしを回収） */
 .tx-tag-filter-all.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(var(--scale-hover-md));
+  transform: scale(calc(var(--scale-hover-md) * 1.02));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
@@ -42845,9 +42849,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 
 /* ⑧ .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover（line 2549）ラダー合流: calc(scale-hover-md*1.01) + selected ring + focus-ring + deeper tc glow + 0 2px 10px tc mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
+/* v26.98: hover ラダー（line 2572）と完全合流するため scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張 */
 .tx-tag-filter-chip.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.01));
+  transform: scale(calc(var(--scale-hover-md) * 1.02));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent),
