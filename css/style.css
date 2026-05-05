@@ -2541,10 +2541,12 @@ select:focus:not(:focus-visible) {
   color: var(--primary);
   border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
   font-weight: var(--fw-bold);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v26.88: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加。primary-light bg（薄ラベンダー）上に 1px の glassy sheen を獲得し、ring + 上端 sheen の二段重ね設計で立体感を強化（v26.87 .section-tab.is-active light と同 0.20） */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20);
 }
 .tx-tag-filter-all.active:hover {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
   transform: scale(var(--scale-hover-md));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
@@ -2556,12 +2558,14 @@ select:focus:not(:focus-visible) {
 .tx-tag-filter-chip.active {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-soft), transparent);
   border-color: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-4xl), transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
+  /* v26.88: inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を末尾追加。tag-color tinted 半透明 bg 上に 1px の glassy sheen を獲得し、ring + 上端 sheen の二段重ね設計で立体感を強化（v26.87 .nav-item.active rest と同 0.18・タグ色多様性のため tx-tag-filter-all より控えめ） */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transform: scale(var(--scale-hover-md));
   font-weight: var(--fw-bold);
 }
 .tx-tag-filter-chip.active:hover {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
+  /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.22) 追加（rest 0.18 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transform: scale(calc(var(--scale-hover-md) * 1.01));
 }
 .tx-tag-filter-chip:hover:not(.active) {
@@ -2588,6 +2592,8 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-tag-filter-all.active {
   background: color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
   border-color: color-mix(in srgb, var(--primary) var(--mix-2xl), transparent);
+  /* v26.88: ダーク bg（primary mix-soft over dark surface = 中間明度 muted purple）適正値として inset 0 1px 0 rgba(255,255,255,0.16) に減衰（ライト 0.20 - 0.04 = ダーク 0.16・v26.87 .section-tab.is-active dark と同パターン）。ring + 上端 sheen の二段重ね */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 [data-theme="dark"] .tx-tag-filter-chip {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -2596,6 +2602,8 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-tag-filter-chip.active {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-lg), transparent);
   border-color: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-4xl), transparent);
+  /* v26.88: ダーク bg（tc mix-lg over dark surface = 中間明度 tag-tinted）適正値として inset 0 1px 0 rgba(255,255,255,0.14) に減衰（ライト 0.18 - 0.04 = ダーク 0.14・タグ色多様性のため tx-tag-filter-all より控えめ）。ring + 上端 sheen の二段重ね */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 /* タグフィルターチップ 入場アニメーション（v20.58） */
 .tx-tag-filter-all,
