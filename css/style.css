@@ -13369,7 +13369,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-add-month:hover {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   transform: scale(var(--scale-icon-hover));
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+  /* v27.04: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加。primary fill bg 上に 1px の glassy sheen を獲得し、月次列追加 + ボタンも v26.86〜v26.95 family の 3D 立体感に合流（FAB / btn-primary v26.10 同パターン） */
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20);
 }
 .ev-add-month:active        { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .ev-add-month:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -37625,7 +37626,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
    ev-add-month static dark glow（rgba 0.22）から大幅引き上げ + blur 8 → 12px に強化
    収支予定月追加ボタンの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .ev-add-month:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
+/* v27.04: ダーク .ev-add-month:hover box-shadow を新規追加（outer halo を primary-end mix-lg にダーク適正化 + inset 0 1px 0 rgba(255,255,255,0.16) 上端白光沢でライト 0.20 から -0.04 減衰の family pattern）。これでダーク bg 上の月次列追加 + ボタンも上端 sheen を獲得しライトとシンメトリ完成 */
+[data-theme="dark"] .ev-add-month:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
 
 /* ⑩ [data-theme="dark"] .sim-preset:hover → dark enhanced text-shadow（白グロー強化・0 0 10px rgba 0.6）
    ライトモード text-shadow(0 0 8px rgba 0.5)のダーク強化版。
