@@ -34513,6 +34513,11 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑧ goal-emoji-btn dark enhanced hover glow（primary-end mix-sm 0 2px 10px） */
 [data-theme="dark"] .goal-emoji-btn:hover { border-color: var(--primary-end); box-shadow: 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
+/* ⑨ btn-preset dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.07 で glassy 1px sheen family 合流）
+   .btn-preset:hover の bg は dark で var(--primary-light)→#312e81 (deep indigo) と濃い indigo 面のため
+   1px inset 白光沢が高コントラスト視認可能。light は pale lavender bg(#ede9fe) で不可視のため skip。 */
+[data-theme="dark"] .btn-preset:hover { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
+
 /* ============================================================
    Sprint #887 v24.91 — 折りたたみ・アーカイブ・フィルタークリア要素
    ダークモード hover text-shadow 強化 8箇所
