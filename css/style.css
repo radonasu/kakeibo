@@ -26272,8 +26272,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 2. nav-item.active:hover → self primary-end text-shadow glow 強化
    サイドバーのアクティブナビ項目ホバー時に primary-end text-shadow glow 追加。
    既存 color:primary-end（v11.x）・background+box-shadow ホバー効果（v11.x）と連動し
-   アクティブナビテキストがホバーでさらに primary-end カラーで輝く完成形演出。 */
-.nav-item.active:hover { text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+   アクティブナビテキストがホバーでさらに primary-end カラーで輝く完成形演出。
+   v26.96: rest（line 18926: 10px primary-end mix-md）と同値だった hover を 14px primary-end mix-lg に強化（+4px / +10%）。
+   v26.95 .bottom-nav-item.active:hover .bottom-nav-label ライト ladder（rest 6px mix-sm → hover 10px mix-md）と完全対称設計でサイドバー側 hover ラダー獲得。 */
+.nav-item.active:hover { text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* 3. btn-sidebar-logout:hover → self expense text-shadow glow
    サイドバーのログアウトボタンホバー時に expense text-shadow glow 追加。
@@ -38195,8 +38197,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
    primary-end color 変色を追加し mix-md→mix-lg に引き上げ
    サイドバーアクティブナビ項目の hover 発光をダークモードでさらに鮮明化。
-   nav-item.active dark static glow（primary-end mix-lg）のホバー強化版。①②でサイドバーナビ全状態のダーク hover 完成。 */
-[data-theme="dark"] .nav-item.active:hover { color: var(--primary-end); text-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+   nav-item.active dark static glow（primary-end mix-lg）のホバー強化版。①②でサイドバーナビ全状態のダーク hover 完成。
+   v26.96: dark rest（line 32640: 12px primary-end mix-lg）と同値だった hover を 16px primary-end mix-xl に強化（+4px / +5%）。
+   v26.95 .bottom-nav-item.active:hover .bottom-nav-label ダーク ladder（rest 8px mix-md → hover 12px mix-lg）と完全対称設計。 */
+[data-theme="dark"] .nav-item.active:hover { color: var(--primary-end); text-shadow: 0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent); }
 
 /* ③ [data-theme="dark"] .btn-sidebar-logout:hover → dark enhanced color:expense-end+text-shadow glow（expense-end・mix-md）:
    ライトモード text-shadow glow（expense mix-sm）のダーク強化版。
