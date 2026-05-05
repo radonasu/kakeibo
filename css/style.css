@@ -2862,6 +2862,10 @@ select:focus:not(:focus-visible) {
   /* v26.89: inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を末尾追加。primary mix-sm 半透明 bg（ラベンダーティント）上に 1px の glassy sheen を獲得し、ring + 上端 sheen の二段重ね設計で立体感を強化（v26.88 .tx-tag-filter-chip.active light と同 0.18・chip-grade tinted bg） */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+/* v26.92: .adv-preset-chip.active hover ladder — rest ring + inset 0.18 → hover ring + 0 2px 10px outer halo + inset 0.22（+0.04 amplitude・三層重ね。.tx-tag-filter-chip.active:hover と同パターン） */
+.adv-preset-chip.active:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
 .adv-preset-chip.active::after {
   content: ' ✓';
   font-size: var(--fs-2xs);
@@ -2879,6 +2883,10 @@ select:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   /* v26.89: ダーク bg（primary mix-md over dark surface = 中間明度 muted purple）適正値として inset 0 1px 0 rgba(255,255,255,0.14) に減衰（ライト 0.18 - 0.04 = ダーク 0.14・v26.88 .tx-tag-filter-chip.active dark と同パターン）。ring + 上端 sheen の二段重ね */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+/* v26.92: dark .adv-preset-chip.active hover ladder — rest ring + inset 0.14 → hover ring + 0 2px 10px primary-end halo + inset 0.18（+0.04 amplitude・dark tinted bg grade で light 0.22 の -0.04 減衰） */
+[data-theme="dark"] .adv-preset-chip.active:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* ── v5.95: 検索テキストハイライト ── */
@@ -10825,6 +10833,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   font-weight: var(--fw-semi);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+/* v26.92: .ct-chip.is-selected hover ladder — rest 0 2px 6px + inset 0.18 → hover 0 4px 12px ct-color mix-lg + inset 0.22（+0.04 amplitude で「持ち上がるほど光が強まる」連動 sheen 演出。.tx-tag-filter-chip.active:hover / .cat-chip.selected:hover と同パターン） */
+.ct-chip.is-selected:hover {
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
 .ct-chip.is-selected .ct-chip-name::after {
   content: ' ✓';
   font-size: var(--fs-2xs);
@@ -10913,6 +10925,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .ct-chip.is-selected {
   background: color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-base), transparent);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+/* v26.92: dark .ct-chip.is-selected hover ladder — rest 0 2px 6px + inset 0.14 → hover 0 4px 12px ct-color mix-lg + inset 0.18（+0.04 amplitude・dark tinted bg grade で light 0.22 の -0.04 減衰） */
+[data-theme="dark"] .ct-chip.is-selected:hover {
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 [data-theme="dark"] .ct-stat-card {
   background: var(--surface);
@@ -11637,6 +11653,19 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* v26.90: ダーク danger-bg はテーマ変数で dark variant に切替わるが、light の inset 0.18 が継承される。dark tinted bg grade に合わせて inset を 0.14 に減衰させた box-shadow を新規宣言（income dark と対称・ct-chip dark と同値） */
 [data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="expense"] {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+/* v26.92: .qa-type-btn.qa-type-active hover ladder（expense/income × light/dark 計 4 セレクタ）— rest 0 2px 8px outer halo + inset 0.18/0.14 → hover 0 4px 14px mix-md outer halo + inset 0.22/0.18（+0.04 amplitude・halo spread 8px→14px / 不透明度 base→md 強化で「持ち上がるほど光が強まる」演出） */
+.qa-type-btn.qa-type-active[data-qa-type="expense"]:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.qa-type-btn.qa-type-active[data-qa-type="income"]:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"]:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="expense"]:hover {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* フィールド行 */
 .qa-fields-row {
