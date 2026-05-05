@@ -2553,8 +2553,9 @@ select:focus:not(:focus-visible) {
   /* v26.97: transform を scale-hover-md(1.05) → scale-hover-md * 1.01(1.0605) に強化（+0.01 amplitude）。.tx-tag-filter-chip.active:hover（v26.94）の scale ladder と完全対称になり「アクティブな全件チップを hover した瞬間にさらに 1% 大きくなる」連動 lift 演出を獲得 */
   /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張。+1% additional amplitude でアクティブ全件チップを hover した瞬間の lift がより visible に。chip と同時拡張（line 2572）で all/chip の対称性は維持 */
   /* v26.99: scale ladder amplitude を * 1.02(1.071) → * 1.03(1.0815) に拡張。さらに +1% で計 +3% amplitude へ到達し肉眼での lift 視認性を強化（v26.94/v26.97/v26.98 ladder 第 3 段）。chip と同時拡張で all/chip の対称性は維持 */
+  /* v27.00: scale ladder amplitude を * 1.03(1.0815) → * 1.05(1.1025) に拡張（+2% で 4 段目へジャンプ・計 +5% amplitude）。前段までの +1% 刻みでは肉眼識別性が頭打ちだったため +2% step で「アクティブ tag フィルター hover 時にさらに 5% 大きくなる」明瞭な lift を獲得。chip と同時拡張で all/chip 対称性は維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(calc(var(--scale-hover-md) * 1.03));
+  transform: scale(calc(var(--scale-hover-md) * 1.05));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -2574,8 +2575,9 @@ select:focus:not(:focus-visible) {
   /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.22) 追加（rest 0.18 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
   /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張（+1% additional amplitude）。all 側（line 2553）と同時拡張で all/chip 対称性を維持 */
   /* v26.99: scale ladder amplitude を * 1.02(1.071) → * 1.03(1.0815) に拡張（さらに +1%・計 +3% amplitude）。all 側（line 2554）と同時拡張で all/chip 対称性を維持 */
+  /* v27.00: scale ladder amplitude を * 1.03(1.0815) → * 1.05(1.1025) に +2% step ジャンプ拡張（4 段目・計 +5% amplitude）。all 側（line 2555）と同時拡張で all/chip 対称性を維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: scale(calc(var(--scale-hover-md) * 1.03));
+  transform: scale(calc(var(--scale-hover-md) * 1.05));
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -26746,6 +26748,19 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v23.93・全script/linkタグ?v=23.93に更新 */
 .section-tab.is-active .tab-icon { filter: drop-shadow(0 1px 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
 [data-theme="dark"] .section-tab.is-active .tab-icon { filter: drop-shadow(0 1px 7px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+/* v27.00: .section-tab.is-active:hover .tab-icon — アクティブセクションタブの tab-icon hover ラダー（filter 軸）。
+   .section-tab.is-active .tab-icon は rest 状態で scale(var(--scale-hover-lg))=1.2（v19.40 keyframe section-tab-icon-pop
+   の forwards fill 値）+ drop-shadow(...mix-md, blur 6px) で固定。
+   hover 時に drop-shadow blur 6px → 8px / mix-md → mix-lg に強化し「現在のセクションタブを hover した瞬間に
+   アイコン glow が visibly 強化される」立体感ラダーを獲得。
+   transform 軸は section-tab-icon-pop animation（origin: animations）が forwards fill で
+   scale(--scale-hover-lg) を保持しており、author rule の transform はカスケード上勝てないため filter 軸のみ採用。
+   .section-tab.is-active:hover 自体は v26.32 設計で transform 不可（border-bottom 連続性保護）。
+   サイドナビ accent bar scaleX ladder（line 44324）/ tx-tag-filter scale ladder（line 2557/2578）
+   と同じ「アクティブ要素 hover で更に強化」テーマをセクションタブにも filter 軸で展開。
+   .section-tab .tab-icon の transition には既に filter（line 22822）が含まれているので 150ms スムーズ補間。 */
+.section-tab.is-active:hover .tab-icon { filter: drop-shadow(0 1px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+[data-theme="dark"] .section-tab.is-active:hover .tab-icon { filter: drop-shadow(0 1px 9px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
 
 /* 2. tx-tag-filter-all.active → static primary text-shadow グロー
    「すべて」タグフィルターの選択中状態に常時 primary text-shadow を追加。
@@ -44319,9 +44334,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    box-shadow 軸は nav-side-bar-breath keyframe で連続アニメ中のため使用回避。transform 軸の hover ladder
    で keyframe との衝突なく「現在ページのサイドバーナビ項目を hover した瞬間にアクセントバーが太くなる」
    立体感ラダーを獲得。.nav-item::before（line 1002）の transition list に transform var(--dur-fast)
-   を追加済みなので、hover scaleX 変化は 150ms 滑らかに補間。 */
+   を追加済みなので、hover scaleX 変化は 150ms 滑らかに補間。
+   v27.00: scaleX 1.4 → 1.7 に拡張（+0.3 amplitude / 6px → 7.65px 相当の伸長量）。前段では 4.2px → 6px（v26.99）の控えめな伸びだったが、サイドナビ accent bar は左端固定の太さ僅か 3px なので scaleX を大きめに振っても全体レイアウトに影響せず、hover 時の「左 accent bar が visibly 引き伸ばされる」演出強度を引き上げ。 */
 .nav-item.active:hover::before {
-  transform: translateY(-50%) scaleX(1.4);
+  transform: translateY(-50%) scaleX(1.7);
 }
 
 /* ── サイドナビ アイコンボックス breath ─────────────────── */
