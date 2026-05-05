@@ -2548,8 +2548,9 @@ select:focus:not(:focus-visible) {
 }
 .tx-tag-filter-all.active:hover {
   /* v26.88: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  /* v26.97: transform を scale-hover-md(1.05) → scale-hover-md * 1.01(1.0605) に強化（+0.01 amplitude）。.tx-tag-filter-chip.active:hover（v26.94）の scale ladder と完全対称になり「アクティブな全件チップを hover した瞬間にさらに 1% 大きくなる」連動 lift 演出を獲得 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(var(--scale-hover-md));
+  transform: scale(calc(var(--scale-hover-md) * 1.01));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -33793,8 +33794,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    アクティブタブホバー時の下部発光演出をより鮮明に。⑥ section-tab.is-active dark glow と連動し
    アクティブタブの静的・ホバー両状態がダークモードで完成形演出に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.79・全script/linkタグ?v=24.79に更新。
-   v26.87: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加（rest 0.16 → hover +0.04 amplitude）。focus-ring + outer halo + bottom inset glow + 上端 glassy sheen の四層 */
-[data-theme="dark"] .section-tab.is-active:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 0 -4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
+   v26.87: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加（rest 0.16 → hover +0.04 amplitude）。focus-ring + outer halo + bottom inset glow + 上端 glassy sheen の四層
+   v26.97: outer halo を 0 2px 10px mix-xs → 0 3px 14px mix-sm、inner inset glow を inset 0 -4px 14px mix-sm → inset 0 -6px 18px mix-md に強化。v26.32 でライト hover に施した強化（line 6401）が v26.87 のダーク hover override で旧 v24.79 値（mix-xs/mix-sm・blur 10/14）に書き戻されていた取りこぼしを回収し、ライト hover とダーク hover の outer halo + inner inset glow が同じ blur 14/18 + mix 階での強化形に揃う */
+[data-theme="dark"] .section-tab.is-active:hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
 
 /* ========================================
    v24.80: goal-card/wl-card/ch-card/asset-card/debt-card/ev-card/pt-urgent/pt-soon
