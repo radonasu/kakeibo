@@ -1758,7 +1758,7 @@ select:focus:not(:focus-visible) {
 }
 .cat-chip.selected:hover {
   border-color: var(--cat-color, var(--primary));
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent), 0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent), 0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent), inset 0 1px 0 rgba(255,255,255,0.22);
   transform: translateY(var(--translate-lift-xs));
 }
 @supports (background: color-mix(in srgb, red 10%, white)) {
@@ -1788,6 +1788,7 @@ select:focus:not(:focus-visible) {
 /* ダークモード */
 [data-theme="dark"] .cat-chip.selected {
   background: color-mix(in srgb, var(--primary) var(--mix-base), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), inset 0 1px 0 rgba(255,255,255,0.14);
 }
 @supports (background: color-mix(in srgb, red 10%, white)) {
   [data-theme="dark"] .cat-chip.selected {
@@ -19252,7 +19253,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    cat-card（v22.87）・income/expense 行ホバー glow と同系統の演出。 */
 .cat-chip.selected {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent),
-              0 0 14px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent);
+              0 0 14px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent),
+              inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 /* 7. フォーム input フォーカス時 placeholder fade
@@ -33410,8 +33412,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    常時 primary glow を追加（0 2px 8px mix-xs）。インジケーターバー下方向に halo が広がりアクティブ状態の立体感を強化。
    ダークモードでは primary-end glow に切替。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.74・全script/linkタグ?v=24.74に更新。 */
-.bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent); }
-[data-theme="dark"] .bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+.bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary)     var(--mix-xs), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
+[data-theme="dark"] .bottom-nav-item.active::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.30); }
 
 /* ============================================================
    Sprint #871  v24.75
