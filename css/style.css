@@ -1756,10 +1756,11 @@ select:focus:not(:focus-visible) {
   letter-spacing: var(--ls-snug);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
+/* v26.94: transform を rest:hover の lift-xs (-1px) → selected:hover で lift-sm (-2px) へ階層化（選択中カテゴリチップを hover した瞬間にさらに 1px 高く持ち上がる連動 lift 演出。dark hover も transform はカスケード継承） */
 .cat-chip.selected:hover {
   border-color: var(--cat-color, var(--primary));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent), 0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent), inset 0 1px 0 rgba(255,255,255,0.22);
-  transform: translateY(var(--translate-lift-xs));
+  transform: translateY(var(--translate-lift-sm));
 }
 @supports (background: color-mix(in srgb, red 10%, white)) {
   .cat-chip.selected {
@@ -2863,8 +2864,10 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* v26.92: .adv-preset-chip.active hover ladder — rest ring + inset 0.18 → hover ring + 0 2px 10px outer halo + inset 0.22（+0.04 amplitude・三層重ね。.tx-tag-filter-chip.active:hover と同パターン） */
+/* v26.94: transform を rest:hover の lift-xs (-1px) → active:hover で lift-sm (-2px) へ階層化（選択中プリセットを hover した瞬間にさらに 1px 高く持ち上がる連動 lift 演出） */
 .adv-preset-chip.active:hover {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(var(--translate-lift-sm));
 }
 .adv-preset-chip.active::after {
   content: ' ✓';
@@ -10834,8 +10837,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 /* v26.92: .ct-chip.is-selected hover ladder — rest 0 2px 6px + inset 0.18 → hover 0 4px 12px ct-color mix-lg + inset 0.22（+0.04 amplitude で「持ち上がるほど光が強まる」連動 sheen 演出。.tx-tag-filter-chip.active:hover / .cat-chip.selected:hover と同パターン） */
+/* v26.94: transform を rest:hover の lift-sm (-2px) → selected:hover で lift-md (-3px) へ階層化（選択中要素を hover した瞬間にさらに 1px 高く持ち上がる連動 lift 演出） */
 .ct-chip.is-selected:hover {
   box-shadow: 0 4px 12px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(var(--translate-lift-md));
 }
 .ct-chip.is-selected .ct-chip-name::after {
   content: ' ✓';
@@ -11655,11 +11660,14 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 /* v26.92: .qa-type-btn.qa-type-active hover ladder（expense/income × light/dark 計 4 セレクタ）— rest 0 2px 8px outer halo + inset 0.18/0.14 → hover 0 4px 14px mix-md outer halo + inset 0.22/0.18（+0.04 amplitude・halo spread 8px→14px / 不透明度 base→md 強化で「持ち上がるほど光が強まる」演出） */
+/* v26.94: transform を rest:hover の lift-xs (-1px) → qa-type-active:hover で lift-sm (-2px) へ階層化（選択中の支出/収入トグルを hover した瞬間にさらに 1px 高く持ち上がる連動 lift 演出・dark hover も transform はカスケード継承） */
 .qa-type-btn.qa-type-active[data-qa-type="expense"]:hover {
   box-shadow: 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(var(--translate-lift-sm));
 }
 .qa-type-btn.qa-type-active[data-qa-type="income"]:hover {
   box-shadow: 0 4px 14px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(var(--translate-lift-sm));
 }
 [data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"]:hover {
   box-shadow: 0 4px 14px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
