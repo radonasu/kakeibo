@@ -740,6 +740,12 @@ html {
   background: linear-gradient(180deg, var(--text-faint) 0%, var(--text-muted) 100%);
   box-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
+/* v27.11: スクロールバー :active dragging 強化 — ドラッグ中（クリック+ホールド）に :hover よりさらに濃いグラデ + より広い primary グロー。
+   rest（border-strong→text-faint）→ hover（text-faint→text-muted, glow 6px primary mix-sm）→ active（text-muted→text, glow 10px primary mix-md）の 3 段ラダー完成。 */
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--text-muted) 0%, var(--text) 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
 ::-webkit-scrollbar-corner { background: transparent; }
 /* Firefox */
 * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
@@ -751,6 +757,11 @@ html {
   background: linear-gradient(180deg, var(--on-dark-text) 0%, var(--white) 100%);
   box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+/* v27.11: ダーク :active dragging 強化 — :hover の white で頂点なので、グラデ起点を on-dark-text→white→white に押し上げて全体が白寄りに、glow を 8px mix-md → 12px mix-lg に拡張。 */
+[data-theme="dark"] ::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--white) 0%, var(--white) 100%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
 [data-theme="dark"] * { scrollbar-color: var(--on-dark-strong) transparent; }
 /* サイドバーは常にダーク背景 */
 #sidebar-nav::-webkit-scrollbar-thumb {
@@ -759,6 +770,11 @@ html {
 #sidebar-nav::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--on-dark-text) 0%, var(--white) 100%);
   box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+/* v27.11: サイドバー（常時ダーク）:active dragging 強化 — グローバルダーク :active と同値。 */
+#sidebar-nav::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, var(--white) 0%, var(--white) 100%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
 }
 #sidebar-nav { scrollbar-color: var(--on-dark-strong) transparent; }
 body {
@@ -19318,6 +19334,19 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    ユーザーの入力テキストとの視覚的コントラストが高まる洗練された動作。 */
 .form-group input:focus::placeholder,
 .form-group textarea:focus::placeholder {
+  opacity: 0.35;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+/* v27.11: グローバル placeholder fade-on-focus 統一拡張
+   .form-group input/textarea のみだった placeholder opacity 0.35 fade を全 input/textarea に展開。
+   .filter-search / .adv-filter-input / .qa-amount-input / .qa-memo-input / .nt-textarea /
+   .cat-budget-input / .recurring-day-input / .mr-edit-row input / .quick-cat-form input /
+   .fx-rate-input / .budget-input 等 10種類以上の入力フィールドが、フォーカス瞬間に placeholder が
+   ふっと薄まる統一挙動を獲得。各フィールド固有の ::placeholder { opacity: 1 } は通常状態で維持され、
+   :focus 時のみ specificity 0,1,2 で 0.35 へ遷移。タイピング前の「ready to type」サインが全画面で統一。 */
+input:focus::placeholder,
+textarea:focus::placeholder {
   opacity: 0.35;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
