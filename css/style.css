@@ -10816,12 +10816,13 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .ct-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; border-color: var(--border); color: var(--text-muted); filter: brightness(var(--brightness-press-soft)); }
 .ct-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+/* v26.90: 既存 box-shadow（ct-color 外周 halo）に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加し glassy 3D 立体感を獲得（adv-preset-chip.active light v26.89 と同値・semi-transparent tinted bg grade） */
 .ct-chip.is-selected {
   border-color: var(--ct-color, var(--primary));
   background: color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-xs), transparent);
   color: var(--ct-color, var(--primary));
   font-weight: var(--fw-semi);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .ct-chip.is-selected .ct-chip-name::after {
   content: ' ✓';
@@ -10907,8 +10908,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--surface);
   border-color: var(--border);
 }
+/* v26.90: ライト box-shadow（v26.90 で ring + inset 0.18 に拡張）を継承するが、ダークの muted bg（mix-base）に合わせて inset を 0.14 に減衰させた box-shadow を新規宣言（adv-preset-chip.active dark v26.89 と同値・dark tinted bg grade） */
 [data-theme="dark"] .ct-chip.is-selected {
   background: color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-base), transparent);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ct-color, var(--primary)) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 [data-theme="dark"] .ct-stat-card {
   background: var(--surface);
@@ -11611,20 +11614,28 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 .qa-type-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .qa-type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
+/* v26.90: 既存 box-shadow（expense 外周 halo）に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。light tinted danger-bg grade で adv-preset-chip.active light v26.89 と同値 */
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
   background: var(--danger-bg);
   border-color: var(--danger-text);
   color: var(--danger-text);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-base), transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+/* v26.90: 既存 box-shadow（success 外周 halo）に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。light tinted success-bg grade で expense と対称 */
 .qa-type-btn.qa-type-active[data-qa-type="income"] {
   background: var(--success-bg);
   border-color: var(--income);
   color: var(--income);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-base), transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+/* v26.90: ダーク muted bg（success mix-sm 半透明）に対応して box-shadow を新規宣言。outer halo + inset 0 1px 0 rgba(255,255,255,0.14) で dark tinted bg grade（ct-chip dark / adv-preset-chip dark と同値） */
 [data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="income"] {
   background: color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+/* v26.90: ダーク danger-bg はテーマ変数で dark variant に切替わるが、light の inset 0.18 が継承される。dark tinted bg grade に合わせて inset を 0.14 に減衰させた box-shadow を新規宣言（income dark と対称・ct-chip dark と同値） */
+[data-theme="dark"] .qa-type-btn.qa-type-active[data-qa-type="expense"] {
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--expense) var(--mix-base), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 /* フィールド行 */
 .qa-fields-row {
