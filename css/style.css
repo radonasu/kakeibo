@@ -34518,6 +34518,15 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    1px inset 白光沢が高コントラスト視認可能。light は pale lavender bg(#ede9fe) で不可視のため skip。 */
 [data-theme="dark"] .btn-preset:hover { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
 
+/* ⑩ sf-save-btn dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.08 で glassy 1px sheen family 合流）
+   .sf-save-btn:hover は btn-ghost cascade により dark hover bg = var(--surface-hover) = #1e2d3d (dark blue-grey)
+   と濃い面のため 1px inset 白光沢が高コントラスト視認可能。
+   light は btn-ghost cascade で surface-hover(#eef2f7) ＋ sf-save-btn 自身の primary mix-faint tint が乗った
+   薄い lavender 面のため白光沢の視認性が劣り、 family pattern どおり dark のみに展開。
+   light box-shadow `0 2px 6px primary mix-sm` から dark は `0 2px 8px primary-end mix-sm` へ blur 6→8
+   ＋ color primary→primary-end の 2 段階強化を踏襲（btn-preset / btn-inline-add と同パターン）。 */
+[data-theme="dark"] .sf-save-btn:hover { box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
+
 /* ============================================================
    Sprint #887 v24.91 — 折りたたみ・アーカイブ・フィルタークリア要素
    ダークモード hover text-shadow 強化 8箇所
