@@ -14043,12 +14043,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   font-size: var(--fs-icon-5xl);
   display: block;
   margin-bottom: var(--sp-3);
-  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite;
+  /* v26.93: txEmptyBounce → empty-icon-float に統一（他 9 種空状態アイコンと同じ translateY + scale(1.06) 脈動を獲得）。delay は付与せず取引リスト空状態の即時演出を維持 */
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite;
   letter-spacing: var(--ls-normal); line-height: var(--lh-none);
-}
-@keyframes txEmptyBounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(var(--enter-y-neg-base)); }
 }
 .tx-empty-msg {
   font-size: var(--fs-sm);
@@ -44771,13 +44768,13 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
              empty-icon-glow-breath-dark 4.5s ease-in-out infinite;
 }
 
-/* tx-empty-icon: 既存 txEmptyBounce 浮遊（delay なし）+ 新規 filter glow breath */
+/* tx-empty-icon: empty-icon-float 浮遊（v26.93 で txEmptyBounce から統一・delay なし）+ filter glow breath */
 .tx-empty-icon {
-  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite,
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite,
              empty-icon-glow-breath 4.5s ease-in-out infinite;
 }
 [data-theme="dark"] .tx-empty-icon {
-  animation: txEmptyBounce var(--dur-pulse) var(--ease-in-out) infinite,
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite,
              empty-icon-glow-breath-dark 4.5s ease-in-out infinite;
 }
 
