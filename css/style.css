@@ -2554,8 +2554,9 @@ select:focus:not(:focus-visible) {
   /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張。+1% additional amplitude でアクティブ全件チップを hover した瞬間の lift がより visible に。chip と同時拡張（line 2572）で all/chip の対称性は維持 */
   /* v26.99: scale ladder amplitude を * 1.02(1.071) → * 1.03(1.0815) に拡張。さらに +1% で計 +3% amplitude へ到達し肉眼での lift 視認性を強化（v26.94/v26.97/v26.98 ladder 第 3 段）。chip と同時拡張で all/chip の対称性は維持 */
   /* v27.00: scale ladder amplitude を * 1.03(1.0815) → * 1.05(1.1025) に拡張（+2% で 4 段目へジャンプ・計 +5% amplitude）。前段までの +1% 刻みでは肉眼識別性が頭打ちだったため +2% step で「アクティブ tag フィルター hover 時にさらに 5% 大きくなる」明瞭な lift を獲得。chip と同時拡張で all/chip 対称性は維持 */
+  /* v27.01: scale ladder amplitude を * 1.05(1.1025) → * 1.07(1.1235) に +2% step ジャンプ拡張（5 段目・計 +7% amplitude）。v27.00 +5% でも他チップ rest scale 1.05 と差が見えるが、tx-tag-filter active hover を「現在のフィルター項目」最強アピールとしてさらに 2% 大きく強調。chip と同時拡張で all/chip 対称性維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(calc(var(--scale-hover-md) * 1.05));
+  transform: scale(calc(var(--scale-hover-md) * 1.07));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -2576,8 +2577,9 @@ select:focus:not(:focus-visible) {
   /* v26.98: scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張（+1% additional amplitude）。all 側（line 2553）と同時拡張で all/chip 対称性を維持 */
   /* v26.99: scale ladder amplitude を * 1.02(1.071) → * 1.03(1.0815) に拡張（さらに +1%・計 +3% amplitude）。all 側（line 2554）と同時拡張で all/chip 対称性を維持 */
   /* v27.00: scale ladder amplitude を * 1.03(1.0815) → * 1.05(1.1025) に +2% step ジャンプ拡張（4 段目・計 +5% amplitude）。all 側（line 2555）と同時拡張で all/chip 対称性を維持 */
+  /* v27.01: scale ladder amplitude を * 1.05(1.1025) → * 1.07(1.1235) に +2% step ジャンプ拡張（5 段目・計 +7% amplitude）。all 側と同時拡張で all/chip 対称性維持 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: scale(calc(var(--scale-hover-md) * 1.05));
+  transform: scale(calc(var(--scale-hover-md) * 1.07));
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -33493,9 +33495,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    rest dark:  0 2px 8px primary-end mix-sm + inset 0.30 → hover: 0 3px 12px primary-end mix-md + inset 0.40（同パターン・dark bg 適正値）。
    filter 軸は nav-bottom-bar-breath/-dark keyframe（line 44315/44326）で drop-shadow 連続アニメ中のため使用回避。
    box-shadow 軸は keyframe 未使用のため hover override 可能。「現在ページのボトムナビをタッチ/ホバー」した瞬間に
-   インジケーターバーの primary glow が +4px 拡大 + 透明度 +10% 強化される立体感ラダーを獲得。 */
-.bottom-nav-item.active:hover::before { box-shadow: 0 3px 12px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
-[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
+   インジケーターバーの primary glow が +4px 拡大 + 透明度 +10% 強化される立体感ラダーを獲得。
+   v27.01: blur 12px → 14px に +2px 拡張（rest 8px → hover 14px で計 +6px halo 半径ジャンプ）。前段 +4px では rest 8px との差が控えめだったため halo が「visibly よりふわっと広がる」+2px 上乗せでボトムナビ active hover のフィードバック強度を引き上げ。ライト/ダーク両 mix 値（mix-sm / mix-md）はそのまま維持し halo 不透明度ではなく半径のみで amplitude 強化。 */
+.bottom-nav-item.active:hover::before { box-shadow: 0 3px 14px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
+[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
 
 /* ============================================================
    Sprint #871  v24.75
@@ -42867,9 +42870,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑦ .tx-tag-filter-all.active:focus-visible:not(:active) — .active:hover（line 2532）ラダー合流: scale-hover-md + selected ring + focus-ring + deeper glow + 0 2px 10px primary mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
 /* v26.98: hover ラダー（line 2553）と完全合流するため scale を scale-hover-md(1.05) → scale-hover-md * 1.02(1.071) に揃えた（v26.97/v26.98 で hover が * 1.01 → * 1.02 に拡張されたが focus-visible が取りこぼされていた取りこぼしを回収） */
 /* v26.99: hover ラダー（line 2554）の scale 強化に追従し * 1.02(1.071) → * 1.03(1.0815) に揃えた。Tab focus と hover の scale を完全同一に維持 */
+/* v27.01: hover ラダー（line 2557 v27.00 +5% および line 2558 v27.01 +7%）に追従し * 1.03(1.0815) → * 1.07(1.1235) に揃えた（v27.00 で hover のみ * 1.05 に拡張され focus-visible が取りこぼされていた取りこぼし回収 + v27.01 hover 拡張への合流の二重対応・計 +4% step ジャンプ）。Tab focus と hover の scale を完全同一に維持 */
 .tx-tag-filter-all.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.03));
+  transform: scale(calc(var(--scale-hover-md) * 1.07));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
@@ -42879,9 +42883,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* ⑧ .tx-tag-filter-chip.active:focus-visible:not(:active) — .active:hover（line 2549）ラダー合流: calc(scale-hover-md*1.01) + selected ring + focus-ring + deeper tc glow + 0 2px 10px tc mix-sm soft drop 四段重ね（v26.74: :not(:active) で press feedback 保護・transform/soft drop 追加で hover ラダーに完全合流） */
 /* v26.98: hover ラダー（line 2572）と完全合流するため scale ladder amplitude を * 1.01(1.0605) → * 1.02(1.071) に拡張 */
 /* v26.99: hover ラダー（line 2575）の scale 強化に追従し * 1.02(1.071) → * 1.03(1.0815) に揃えた */
+/* v27.01: hover ラダー（line 2580 v27.00 +5% および line 2581 v27.01 +7%）に追従し * 1.03(1.0815) → * 1.07(1.1235) に揃えた（v27.00 取りこぼし + v27.01 hover 拡張への合流の二重対応・計 +4% step ジャンプ） */
 .tx-tag-filter-chip.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.03));
+  transform: scale(calc(var(--scale-hover-md) * 1.07));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent),
@@ -44335,9 +44340,10 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    で keyframe との衝突なく「現在ページのサイドバーナビ項目を hover した瞬間にアクセントバーが太くなる」
    立体感ラダーを獲得。.nav-item::before（line 1002）の transition list に transform var(--dur-fast)
    を追加済みなので、hover scaleX 変化は 150ms 滑らかに補間。
-   v27.00: scaleX 1.4 → 1.7 に拡張（+0.3 amplitude / 6px → 7.65px 相当の伸長量）。前段では 4.2px → 6px（v26.99）の控えめな伸びだったが、サイドナビ accent bar は左端固定の太さ僅か 3px なので scaleX を大きめに振っても全体レイアウトに影響せず、hover 時の「左 accent bar が visibly 引き伸ばされる」演出強度を引き上げ。 */
+   v27.00: scaleX 1.4 → 1.7 に拡張（+0.3 amplitude / 6px → 7.65px 相当の伸長量）。前段では 4.2px → 6px（v26.99）の控えめな伸びだったが、サイドナビ accent bar は左端固定の太さ僅か 3px なので scaleX を大きめに振っても全体レイアウトに影響せず、hover 時の「左 accent bar が visibly 引き伸ばされる」演出強度を引き上げ。
+   v27.01: scaleX 1.7 → 2.0 に拡張（+0.3 amplitude / 7.65px → 9px 相当の伸長量で 2 倍化に到達）。3px ベース accent bar が 6px → 9px へ完全 2 倍に伸びる視覚で「現在ページのアクセントバー hover 時にアクセントバーが倍に伸びる」明確なメタファーを獲得。サイドナビは固定幅 left: 0 配置で右側にコンテンツが余白を持つため scaleX 2.0 でもレイアウト無影響。 */
 .nav-item.active:hover::before {
-  transform: translateY(-50%) scaleX(1.7);
+  transform: translateY(-50%) scaleX(2);
 }
 
 /* ── サイドナビ アイコンボックス breath ─────────────────── */
