@@ -2858,7 +2858,8 @@ select:focus:not(:focus-visible) {
   color: var(--primary);
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-snug);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v26.89: inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を末尾追加。primary mix-sm 半透明 bg（ラベンダーティント）上に 1px の glassy sheen を獲得し、ring + 上端 sheen の二段重ね設計で立体感を強化（v26.88 .tx-tag-filter-chip.active light と同 0.18・chip-grade tinted bg） */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .adv-preset-chip.active::after {
   content: ' ✓';
@@ -2875,6 +2876,8 @@ select:focus:not(:focus-visible) {
 }
 [data-theme="dark"] .adv-preset-chip.active {
   background: color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  /* v26.89: ダーク bg（primary mix-md over dark surface = 中間明度 muted purple）適正値として inset 0 1px 0 rgba(255,255,255,0.14) に減衰（ライト 0.18 - 0.04 = ダーク 0.14・v26.88 .tx-tag-filter-chip.active dark と同パターン）。ring + 上端 sheen の二段重ね */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 /* ── v5.95: 検索テキストハイライト ── */
@@ -15206,12 +15209,14 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: var(--primary);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-snug);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
+  /* v26.89: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加。solid primary bg + 白テキストの bold ボタンに 1px の glassy sheen を獲得し、外側 halo + 上端 sheen の二段重ね設計で立体感を強化（v26.63 .summary-card と同 0.20・solid bold bg grade） */
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20);
 }
 /* v22.75: アクティブ日付ボタンホバー応答感追加 */
 .date-quick-btn.active:hover {
   filter: brightness(var(--brightness-hover-sm));
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
+  /* v26.89: hover box-shadow 末尾に inset 0 1px 0 rgba(255,255,255,0.24) 追加（rest 0.20 → hover +0.04 amplitude で持ち上がるほど光が強まる v26.63 .summary-card 同パターン）。ring + outer halo + 上端 glassy sheen の三層 */
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
   transform: translateY(var(--translate-lift-xs));
 }
 
