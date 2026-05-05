@@ -932,7 +932,7 @@ select:focus:not(:focus-visible) {
   flex-shrink: 0;
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.btn-account-add:hover { background: var(--on-dark-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+.btn-account-add:hover { background: var(--on-dark-strong); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
 .btn-account-add:active { filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
 .btn-account-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
@@ -3562,7 +3562,7 @@ mark.tx-hl {
   color: var(--white);
   transition: opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.btn-mr-add:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-md), transparent); }
+.btn-mr-add:hover  { opacity: var(--opacity-near); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20); }
 .btn-mr-add:active { filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
 .btn-mr-add:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .btn-mr-add:disabled { opacity: var(--opacity-ghost); cursor: not-allowed; }
@@ -38257,7 +38257,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
    blur 8→12px+rgba 0.5→0.65 に引き上げ
    サイドバーアカウント追加「＋」ボタンの hover 発光をダークモードで鮮明化。
    btn-account-add dark static glow（rgba 0.22・8px）のホバー強化版。 */
-[data-theme="dark"] .btn-account-add:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); }
+[data-theme="dark"] .btn-account-add:hover { color: #fff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.65); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
 
 /* ⑤ [data-theme="dark"] #hamburger:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-lg）:
    ライトモード text-shadow glow（primary-end mix-md）のダーク強化版。
