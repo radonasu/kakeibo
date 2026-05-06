@@ -2598,8 +2598,9 @@ select:focus:not(:focus-visible) {
   /* v27.23: scale ladder amplitude を * 1.33(1.3965) → * 1.35(1.4175) に +2% step ジャンプ拡張（19 段目・計 +35% amplitude）。v27.20 +33% から更に hover 持ち上がりを強調し base 比 +41.75% scale に到達（base 比 +40% 突破マイルストーン達成）。chip と同時拡張で all/chip 対称性維持 */
   /* v27.24: scale ladder amplitude を * 1.35(1.4175) → * 1.37(1.4385) に +2% step ジャンプ拡張（20 段目・計 +37% amplitude・base 比 +43.85% scale 到達 = base 比 +40% 大幅超過の象徴的到達点）。v27.23 +35% から更に hover 持ち上がりを強調。chip と同時拡張で all/chip 対称性維持。 */
   /* v27.25: scale ladder amplitude を * 1.37(1.4385) → * 1.39(1.4595) に +2% step ジャンプ拡張（21 段目・計 +39% amplitude・base 比 +45.95% scale 到達）。v27.24 +37% から更に hover 持ち上がりを強調。chip と同時拡張で all/chip 対称性維持。 */
+  /* v27.26: scale ladder amplitude を * 1.39(1.4595) → * 1.41(1.4805) に +2% step ジャンプ拡張（22 段目・計 +41% amplitude・base 比 +48.05% scale 到達）。v27.25 +39% から更に hover 持ち上がりを強調。chip と同時拡張で all/chip 対称性維持。 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(calc(var(--scale-hover-md) * 1.39));
+  transform: scale(calc(var(--scale-hover-md) * 1.41));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -2637,8 +2638,9 @@ select:focus:not(:focus-visible) {
   /* v27.23: scale ladder amplitude を * 1.33(1.3965) → * 1.35(1.4175) に +2% step ジャンプ拡張（19 段目・計 +35% amplitude）。all 側と同時拡張で all/chip 対称性維持・base 比 +40% 突破マイルストーン達成 */
   /* v27.24: scale ladder amplitude を * 1.35(1.4175) → * 1.37(1.4385) に +2% step ジャンプ拡張（20 段目・計 +37% amplitude・base 比 +43.85% 到達）。all 側と同時拡張で all/chip 対称性維持。 */
   /* v27.25: scale ladder amplitude を * 1.37(1.4385) → * 1.39(1.4595) に +2% step ジャンプ拡張（21 段目・計 +39% amplitude・base 比 +45.95% 到達）。all 側と同時拡張で all/chip 対称性維持。 */
+  /* v27.26: scale ladder amplitude を * 1.39(1.4595) → * 1.41(1.4805) に +2% step ジャンプ拡張（22 段目・計 +41% amplitude・base 比 +48.05% 到達）。all 側と同時拡張で all/chip 対称性維持。 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: scale(calc(var(--scale-hover-md) * 1.39));
+  transform: scale(calc(var(--scale-hover-md) * 1.41));
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -33609,8 +33611,9 @@ textarea:focus::placeholder {
 /* v27.23: box-shadow blur 40px → 42px に拡張（+2px halo 半径・rest 8px との計 +34px ジャンプ）。v27.20 完全 5 倍化マイルストーンから更に +2px で halo 半径が rest 比 5.25 倍に到達。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
 /* v27.24: box-shadow blur 42px → 44px に拡張（+2px halo 半径・rest 8px との計 +36px ジャンプ）。v27.23 から更に +2px で halo 半径が rest 比 5.5 倍に到達。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
 /* v27.25: box-shadow blur 44px → 46px に拡張（+2px halo 半径・rest 8px との計 +38px ジャンプ）。v27.24 から更に +2px で halo 半径が rest 比 5.75 倍に到達。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
-.bottom-nav-item.active:hover::before { box-shadow: 0 3px 46px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
-[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 46px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
+/* v27.26: box-shadow blur 46px → 48px に拡張（+2px halo 半径・rest 8px との計 +40px ジャンプ）。v27.25 から更に +2px で halo 半径が rest 比 6.0 倍に到達（halo 半径完全 6 倍化マイルストーン達成）。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
+.bottom-nav-item.active:hover::before { box-shadow: 0 3px 48px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
+[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 48px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
 
 /* ============================================================
    Sprint #871  v24.75
@@ -43014,9 +43017,10 @@ textarea:focus::placeholder {
 /* v27.23: hover ラダーに追従し * 1.33(1.3965) → * 1.35(1.4175) に揃えた（+2% step・計 +35% amplitude）。Tab focus と hover の scale を完全同一に維持 */
 /* v27.24: hover ラダーに追従し * 1.35(1.4175) → * 1.37(1.4385) に揃えた（+2% step・計 +37% amplitude・base 比 +43.85%）。Tab focus と hover の scale を完全同一に維持 */
 /* v27.25: hover ラダーに追従し * 1.37(1.4385) → * 1.39(1.4595) に揃えた（+2% step・計 +39% amplitude・base 比 +45.95%）。Tab focus と hover の scale を完全同一に維持 */
+/* v27.26: hover ラダーに追従し * 1.39(1.4595) → * 1.41(1.4805) に揃えた（+2% step・計 +41% amplitude・base 比 +48.05%）。Tab focus と hover の scale を完全同一に維持 */
 .tx-tag-filter-all.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.39));
+  transform: scale(calc(var(--scale-hover-md) * 1.41));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
@@ -43043,9 +43047,10 @@ textarea:focus::placeholder {
 /* v27.23: hover ラダーに追従し * 1.33(1.3965) → * 1.35(1.4175) に揃えた（+2% step・計 +35% amplitude） */
 /* v27.24: hover ラダーに追従し * 1.35(1.4175) → * 1.37(1.4385) に揃えた（+2% step・計 +37% amplitude） */
 /* v27.25: hover ラダーに追従し * 1.37(1.4385) → * 1.39(1.4595) に揃えた（+2% step・計 +39% amplitude） */
+/* v27.26: hover ラダーに追従し * 1.39(1.4595) → * 1.41(1.4805) に揃えた（+2% step・計 +41% amplitude） */
 .tx-tag-filter-chip.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.39));
+  transform: scale(calc(var(--scale-hover-md) * 1.41));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent),
@@ -44516,9 +44521,10 @@ textarea:focus::placeholder {
    v27.20: scaleX 5.6 → 5.9 に拡張（+0.3 amplitude / 25.2px → 26.55px 相当の伸長量・rest 3px との計 +23.55px ジャンプ）。v27.19 から更に +0.3 で rest 3px 比 8.85 倍に到達（accent bar 完全 9 倍化マイルストーン接近）。サイドナビ left: 0 固定幅配置のため scaleX 5.9 でもレイアウト無影響を維持。
    v27.23: scaleX 5.9 → 6.2 に拡張（+0.3 amplitude / 26.55px → 27.9px 相当の伸長量・rest 3px との計 +24.9px ジャンプ）。v27.20 から更に +0.3 で rest 3px 比 9.3 倍に到達（accent bar 完全 9 倍化マイルストーン突破）。サイドナビ left: 0 固定幅配置のため scaleX 6.2 でもレイアウト無影響を維持。
    v27.24: scaleX 6.2 → 6.5 に拡張（+0.3 amplitude / 27.9px → 29.25px 相当の伸長量・rest 3px との計 +26.25px ジャンプ）。v27.23 から更に +0.3 で rest 3px 比 9.75 倍に到達（**accent bar 完全 10 倍化マイルストーン接近**）。サイドナビ left: 0 固定幅配置のため scaleX 6.5 でもレイアウト無影響を維持。
-   v27.25: scaleX 6.5 → 6.8 に拡張（+0.3 amplitude / 29.25px → 30.6px 相当の伸長量・rest 3px との計 +27.6px ジャンプ）。v27.24 から更に +0.3 で rest 3px 比 10.2 倍に到達（**accent bar 完全 10 倍化マイルストーン突破達成**・hover lift amplitude 系列の象徴的到達点）。サイドナビ left: 0 固定幅配置のため scaleX 6.8 でもレイアウト無影響を維持。 */
+   v27.25: scaleX 6.5 → 6.8 に拡張（+0.3 amplitude / 29.25px → 30.6px 相当の伸長量・rest 3px との計 +27.6px ジャンプ）。v27.24 から更に +0.3 で rest 3px 比 10.2 倍に到達（**accent bar 完全 10 倍化マイルストーン突破達成**・hover lift amplitude 系列の象徴的到達点）。サイドナビ left: 0 固定幅配置のため scaleX 6.8 でもレイアウト無影響を維持。
+   v27.26: scaleX 6.8 → 7.1 に拡張（+0.3 amplitude / 30.6px → 31.95px 相当の伸長量・rest 3px との計 +28.95px ジャンプ）。v27.25 から更に +0.3 で rest 3px 比 10.65 倍に到達。サイドナビ left: 0 固定幅配置のため scaleX 7.1 でもレイアウト無影響を維持。 */
 .nav-item.active:hover::before {
-  transform: translateY(-50%) scaleX(6.8);
+  transform: translateY(-50%) scaleX(7.1);
 }
 
 /* ── サイドナビ アイコンボックス breath ─────────────────── */
