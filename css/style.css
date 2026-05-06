@@ -3206,6 +3206,8 @@ mark.tx-hl {
   justify-content: center;
   z-index: var(--z-modal);
   padding: var(--sp-4);
+  /* v27.22: 子モーダルの rotateX 3D 効果を遠近表現するための perspective 親宣言。モーダル登場時の hidden→open 遷移で「奥から手前へせり上がる」立体感を演出 */
+  perspective: 1200px;
 }
 
 .modal {
@@ -5002,8 +5004,9 @@ body {
   -webkit-backdrop-filter: blur(var(--blur-sm)) saturate(var(--saturate-subtle));
 }
 /* v26.82: hidden 状態にも inset 0 1px 0 rgba(255,255,255,0.20) を追加（v26.76 で .modal-overlay.modal-is-open .modal に追加した inset 0.20 と同値・open 状態と box-shadow リスト長を揃え、shadow-md → shadow-lg トランジション中に inset がリスト末尾差分として「transparent → 0.20」と fade-in せず、最初から最終強度で安定保持される設計に整合・hidden 状態は opacity:0 で実視認なし） */
+/* v27.22: hidden 状態 transform に rotateX(4deg) を追加。親 .modal-overlay の perspective 1200px と組み合わせ、モーダルが「奥から手前へせり上がる」3D 登場演出を獲得。bounce ease と translateY(20px)+scale(0.96) の既存合成変換に rotateX 4° を末尾追加 */
 .modal-overlay .modal {
-  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init));
+  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init)) rotateX(4deg);
   opacity: 0;
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.20);
   transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out), box-shadow var(--dur-gentle) var(--ease-out);
@@ -5012,14 +5015,16 @@ body {
 [data-theme="dark"] .modal-overlay .modal {
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
+/* v27.22: open 状態 transform にも rotateX(0) を明示。hidden 状態の rotateX(4deg) からの transition target として 3D 立ち上がりが滑らかに完了する設計 */
 .modal-overlay.modal-is-open .modal {
-  transform: translateY(0) scale(var(--scale-rest));
+  transform: translateY(0) scale(var(--scale-rest)) rotateX(0);
   opacity: 1;
   box-shadow: var(--shadow-lg);
 }
+/* v27.22: モバイル ≤480px の hidden/open transform にも rotateX(4deg)→rotateX(0) を統合し、デスクトップと同じ 3D 登場演出をモバイルでも獲得 */
 @media (max-width: 480px) {
-  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)); }
-  .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(var(--scale-rest)); }
+  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)) rotateX(4deg); }
+  .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(var(--scale-rest)) rotateX(0); }
 }
 
 /* ── 予算アイテム入場アニメーション ── */
@@ -6260,9 +6265,10 @@ body {
   100% { background-position: var(--size-shimmer-half) 0; }
 }
 /* v27.21: スケルトン bone に subtle breath（呼吸感）を付加。shimmer の横スライドと並行して全体 brightness が 1.0 → 1.05 → 1.0 と緩やかに脈動し、ローディング中の「生きている」感を演出 */
+/* v27.22: sk-breath に translateY(-2px) の縦ボブ追加。brightness 脈動と並行して bone が肉眼で識別可能な縦方向の上下動を獲得。スタッガード遅延（sk-d1〜sk-d5）と組み合わさり「呼吸する複数 bone が時間差で揺れる」生命感を演出 */
 @keyframes sk-breath {
-  0%, 100% { filter: brightness(1); }
-  50%      { filter: brightness(1.05); }
+  0%, 100% { filter: brightness(1);    transform: translateY(0); }
+  50%      { filter: brightness(1.05); transform: translateY(-2px); }
 }
 
 /* ベーススケルトン骨格 */
