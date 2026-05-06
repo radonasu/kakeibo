@@ -2041,7 +2041,18 @@ select:focus:not(:focus-visible) {
 @media (max-width: 600px) {
   .tx-col-pay, .tx-col-mem { display: none; }
 }
-.empty { text-align: center; color: var(--text-muted); padding: var(--sp-10) !important; }
+/* v27.21: .dd-empty とパリティ — font-size/letter-spacing/line-height/text-wrap + empty-state-in fade-in アニメーションを追加。表内 td.empty / p.empty / div.empty 全箇所で「不在状態」をより上品にフェードイン表示 */
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--sp-10) !important;
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-fine);
+  line-height: var(--lh-relaxed);
+  text-wrap: balance;
+  text-wrap: pretty;
+  animation: empty-state-in var(--dur-modal) var(--ease-bounce) both;
+}
 
 /* ── 一括操作 (v5.55 / v5.56デザイン洗練) ───────────────── */
 /* チェックボックス列 */
@@ -6248,6 +6259,11 @@ body {
   0%   { background-position: calc(-1 * var(--size-shimmer-half)) 0; }
   100% { background-position: var(--size-shimmer-half) 0; }
 }
+/* v27.21: スケルトン bone に subtle breath（呼吸感）を付加。shimmer の横スライドと並行して全体 brightness が 1.0 → 1.05 → 1.0 と緩やかに脈動し、ローディング中の「生きている」感を演出 */
+@keyframes sk-breath {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.05); }
+}
 
 /* ベーススケルトン骨格 */
 .sk-bone {
@@ -6258,7 +6274,8 @@ body {
     var(--border) 80%
   );
   background-size: var(--size-shimmer) 100%;
-  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
+  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite,
+             sk-breath var(--dur-pulse) var(--ease-in-out) infinite;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
@@ -6316,6 +6333,7 @@ body {
 }
 
 /* ── ダークモード対応 ─────────────────────────────────── */
+/* v27.21: ダークモードでも sk-breath を並行適用しローディング中の呼吸感を統一 */
 [data-theme="dark"] .sk-bone {
   background: linear-gradient(
     var(--grad-horizontal),
@@ -6324,7 +6342,8 @@ body {
     var(--surface) 80%
   );
   background-size: var(--size-shimmer) 100%;
-  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite;
+  animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite,
+             sk-breath var(--dur-pulse) var(--ease-in-out) infinite;
 }
 
 [data-theme="dark"] #sidebar-overlay {
