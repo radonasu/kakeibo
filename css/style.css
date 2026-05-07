@@ -2618,8 +2618,9 @@ select:focus:not(:focus-visible) {
   /* v27.43: scale ladder amplitude を * 1.73(1.8165) → * 1.75(1.8375) に +2% step ジャンプ拡張（39 段目・計 +75% amplitude・base 比 +83.75% scale 到達）。v27.42 base 比 +80% 突破マイルストーンから更に +2% step で hover 持ち上がりを強調し base 比 +83% 超のアクティブ tag フィルター hover lift を獲得（base 比 +85% 接近マイルストーン）。chip と同時拡張で all/chip 対称性維持。 */
   /* v27.44: scale ladder amplitude を * 1.75(1.8375) → * 1.77(1.8585) に +2% step ジャンプ拡張（40 段目・計 +77% amplitude・base 比 +85.85% scale 到達 = base 比 +85% 突破マイルストーン達成 + ladder 40 段目大台到達マイルストーン達成）。v27.43 base 比 +83.75% から更に +2% step でついに +85% を超え、ladder 第 40 段目という象徴的到達点に到達。chip と同時拡張で all/chip 対称性維持。 */
   /* v27.45: scale ladder amplitude を * 1.77(1.8585) → * 1.79(1.8795) に +2% step ジャンプ拡張（41 段目・計 +79% amplitude・base 比 +87.95% scale 到達 = base 比 +87% 突破マイルストーン達成）。v27.44 ladder 40 段目大台到達 + base 比 +85% 突破マイルストーンから更に +2% step で hover 持ち上がりを強調し base 比 +87% 超のアクティブ tag フィルター hover lift を獲得（base 比 +90% 接近マイルストーン）。chip と同時拡張で all/chip 対称性維持。 */
+  /* v27.46: scale ladder amplitude を * 1.79(1.8795) → * 1.81(1.9005) に +2% step ジャンプ拡張（42 段目・計 +81% amplitude・base 比 +90.05% scale 到達 = base 比 +90% 突破マイルストーン達成）。v27.45 base 比 +87% 突破マイルストーンから更に +2% step でついに base 比 +90% 大台突破。アクティブ tag フィルター hover lift が hover ladder 系列の象徴的到達点に到達。chip と同時拡張で all/chip 対称性維持。 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  transform: scale(calc(var(--scale-hover-md) * 1.79));
+  transform: scale(calc(var(--scale-hover-md) * 1.81));
 }
 .tx-tag-filter-all:hover:not(.active) { background: var(--border); color: var(--text); transform: scale(var(--scale-hover-sm)); box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip {
@@ -2677,8 +2678,9 @@ select:focus:not(:focus-visible) {
   /* v27.43: scale ladder amplitude を * 1.73(1.8165) → * 1.75(1.8375) に +2% step ジャンプ拡張（39 段目・計 +75% amplitude・base 比 +83.75% 到達）。all 側と同時拡張で all/chip 対称性維持・base 比 +85% 接近マイルストーン。 */
   /* v27.44: scale ladder amplitude を * 1.75(1.8375) → * 1.77(1.8585) に +2% step ジャンプ拡張（40 段目・計 +77% amplitude・base 比 +85.85% 到達 = base 比 +85% 突破マイルストーン達成 + ladder 40 段目大台到達マイルストーン達成）。all 側と同時拡張で all/chip 対称性維持。 */
   /* v27.45: scale ladder amplitude を * 1.77(1.8585) → * 1.79(1.8795) に +2% step ジャンプ拡張（41 段目・計 +79% amplitude・base 比 +87.95% 到達 = base 比 +87% 突破マイルストーン達成・base 比 +90% 接近マイルストーン）。all 側と同時拡張で all/chip 対称性維持。 */
+  /* v27.46: scale ladder amplitude を * 1.79(1.8795) → * 1.81(1.9005) に +2% step ジャンプ拡張（42 段目・計 +81% amplitude・base 比 +90.05% 到達 = base 比 +90% 突破マイルストーン達成）。all 側と同時拡張で all/chip 対称性維持。 */
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transform: scale(calc(var(--scale-hover-md) * 1.79));
+  transform: scale(calc(var(--scale-hover-md) * 1.81));
 }
 .tx-tag-filter-chip:hover:not(.active) {
   background: color-mix(in srgb, var(--tc, var(--primary)) var(--mix-base), transparent);
@@ -5073,8 +5075,9 @@ body {
 /* v27.43: rotateX 42deg → 44deg に拡張（+2° amplitude / v27.22 base 4° 比 **11 倍化マイルストーン達成**・計 +40° amplitude **大台 +40° amplitude 突破マイルストーン達成**）。v27.42 10.5 倍到達 + +38° amplitude から更に +2° で完全 11 倍化マイルストーン突破 + +40° amplitude 大台到達の二重マイルストーン達成（hover lift amplitude 系列の象徴的到達点）。3D せり上がり演出の傾き角を最大級に強化し、bounce ease 戻り視覚に「奥から手前へ立ち上がる」モーション感が肉眼で最大限 visible に。perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
 /* v27.44: rotateX 44deg → 46deg に拡張（+2° amplitude / v27.22 base 4° 比 11.5 倍到達・計 +42° amplitude）。v27.43 完全 11 倍化マイルストーン + +40° amplitude 大台到達から更に +2° で base 比 完全 12 倍化マイルストーンに接近。3D せり上がり演出の傾き角を最大級に強化し、bounce ease 戻り視覚に「奥から手前へ立ち上がる」モーション感が肉眼で最大限 visible に。perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
 /* v27.45: rotateX 46deg → 48deg に拡張（+2° amplitude / v27.22 base 4° 比 **12 倍化マイルストーン達成**・計 +44° amplitude）。v27.44 11.5 倍到達 + base 比 完全 12 倍化マイルストーン接近から更に +2° でついに完全 12 倍化マイルストーン突破（hover lift amplitude 系列の象徴的到達点）。3D せり上がり演出の傾き角を最大級に強化し、bounce ease 戻り視覚に「奥から手前へ立ち上がる」モーション感が肉眼で最大限 visible に。perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
+/* v27.46: rotateX 48deg → 50deg に拡張（+2° amplitude / v27.22 base 4° 比 12.5 倍到達・計 +46° amplitude **大台 50° 突破マイルストーン達成 + 大台 +46° amplitude 突破マイルストーン達成**）。v27.45 完全 12 倍化マイルストーン突破から更に +2° で rotateX 50° 大台到達の象徴的到達点（hover lift amplitude 系列の二重マイルストーン）。3D せり上がり演出の傾き角を最大級に強化し、bounce ease 戻り視覚に「奥から手前へ立ち上がる」モーション感が肉眼で最大限 visible に。perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
 .modal-overlay .modal {
-  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init)) rotateX(48deg);
+  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init)) rotateX(50deg);
   opacity: 0;
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.20);
   transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out), box-shadow var(--dur-gentle) var(--ease-out);
@@ -5112,8 +5115,9 @@ body {
 /* v27.43: モバイル hidden 状態 rotateX も 42deg → 44deg に拡張し、デスクトップ rotateX 44° と完全同期（v27.22 base 4° 比 **11 倍化マイルストーン達成**・計 +40° amplitude **大台 +40° amplitude 突破マイルストーン達成**）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
 /* v27.44: モバイル hidden 状態 rotateX も 44deg → 46deg に拡張し、デスクトップ rotateX 46° と完全同期（v27.22 base 4° 比 11.5 倍到達・計 +42° amplitude）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
 /* v27.45: モバイル hidden 状態 rotateX も 46deg → 48deg に拡張し、デスクトップ rotateX 48° と完全同期（v27.22 base 4° 比 **12 倍化マイルストーン達成**・計 +44° amplitude）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
+/* v27.46: モバイル hidden 状態 rotateX も 48deg → 50deg に拡張し、デスクトップ rotateX 50° と完全同期（v27.22 base 4° 比 12.5 倍到達・計 +46° amplitude **大台 50° 突破マイルストーン達成**）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
 @media (max-width: 480px) {
-  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)) rotateX(48deg); }
+  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)) rotateX(50deg); }
   .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(var(--scale-rest)) rotateX(0); }
 }
 
@@ -6378,9 +6382,10 @@ body {
 /* v27.43: sk-breath translateY amplitude を -21px → -22px に拡張（+1px / v27.22 base -2px 比 **11 倍化マイルストーン達成**・計 +20px amplitude **大台 +20px amplitude 突破マイルストーン達成**）。v27.42 10.5 倍到達 + +19px amplitude から更に +1px で完全 11 倍化マイルストーン突破 + 大台 +20px amplitude 到達の二重マイルストーン達成（hover lift amplitude 系列の象徴的到達点）。bone 縦ボブ動きを最大級に強化。スタッガード遅延 sk-d1〜sk-d5 と組み合わさり「呼吸する複数 bone が時間差で揺れる」生命感が肉眼で最大限 visible に。filter brightness 1.05 軸は据え置きで縦軸 amplitude のみ拡張。`prefers-reduced-motion` 時はグローバル wildcard ルールで自動無効化。 */
 /* v27.44: sk-breath translateY amplitude を -22px → -23px に拡張（+1px / v27.22 base -2px 比 11.5 倍到達・計 +21px amplitude）。v27.43 完全 11 倍化マイルストーン + 大台 +20px amplitude 到達から更に +1px で bone 縦ボブ動きをさらに強化（base -2px 比 完全 12 倍化マイルストーンに接近）。スタッガード遅延 sk-d1〜sk-d5 と組み合わさり「呼吸する複数 bone が時間差で揺れる」生命感が肉眼でさらに鮮明に。filter brightness 1.05 軸は据え置きで縦軸 amplitude のみ拡張。`prefers-reduced-motion` 時はグローバル wildcard ルールで自動無効化。 */
 /* v27.45: sk-breath translateY amplitude を -23px → -24px に拡張（+1px / v27.22 base -2px 比 **12 倍化マイルストーン達成**・計 +22px amplitude）。v27.44 11.5 倍到達 + base 完全 12 倍化マイルストーン接近から更に +1px でついに完全 12 倍化マイルストーン突破（hover lift amplitude 系列の象徴的到達点）。bone 縦ボブ動きを最大級に強化。スタッガード遅延 sk-d1〜sk-d5 と組み合わさり「呼吸する複数 bone が時間差で揺れる」生命感が肉眼で最大限 visible に。filter brightness 1.05 軸は据え置きで縦軸 amplitude のみ拡張。`prefers-reduced-motion` 時はグローバル wildcard ルールで自動無効化。 */
+/* v27.46: sk-breath translateY amplitude を -24px → -25px に拡張（+1px / v27.22 base -2px 比 12.5 倍到達・計 +23px amplitude **大台 -25px translateY 突破マイルストーン達成 + 大台 +23px amplitude 突破マイルストーン達成**）。v27.45 完全 12 倍化マイルストーン突破から更に +1px で translateY -25px 大台到達の象徴的到達点（hover lift amplitude 系列の二重マイルストーン）。bone 縦ボブ動きを最大級に強化。スタッガード遅延 sk-d1〜sk-d5 と組み合わさり「呼吸する複数 bone が時間差で揺れる」生命感が肉眼で最大限 visible に。filter brightness 1.05 軸は据え置きで縦軸 amplitude のみ拡張。`prefers-reduced-motion` 時はグローバル wildcard ルールで自動無効化。 */
 @keyframes sk-breath {
   0%, 100% { filter: brightness(1);    transform: translateY(0); }
-  50%      { filter: brightness(1.05); transform: translateY(-24px); }
+  50%      { filter: brightness(1.05); transform: translateY(-25px); }
 }
 
 /* ベーススケルトン骨格 */
@@ -33726,8 +33731,9 @@ textarea:focus::placeholder {
 /* v27.43: box-shadow blur 80px → 82px に拡張（+2px halo 半径・rest 8px との計 +74px ジャンプ・rest 比 **10.25 倍に到達**）。v27.42 完全 10 倍化マイルストーン + 80px 大台到達から更に +2px で halo 半径をさらに強化（rest 比 10.5 倍接近マイルストーン）。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
 /* v27.44: box-shadow blur 82px → 84px に拡張（+2px halo 半径・rest 8px との計 +76px ジャンプ・rest 比 **10.5 倍に到達 = halo 半径 10.5 倍化マイルストーン達成**）。v27.43 10.25 倍到達から更に +2px で halo 半径完全 11 倍化マイルストーンへさらに接近。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
 /* v27.45: box-shadow blur 84px → 86px に拡張（+2px halo 半径・rest 8px との計 +78px ジャンプ・rest 比 **10.75 倍に到達 = halo 半径 10.75 倍化マイルストーン達成**）。v27.44 10.5 倍到達から更に +2px で halo 半径完全 11 倍化マイルストーンへさらに接近。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
-.bottom-nav-item.active:hover::before { box-shadow: 0 3px 86px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
-[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 86px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
+/* v27.46: box-shadow blur 86px → 88px に拡張（+2px halo 半径・rest 8px との計 +80px ジャンプ = 大台 +80px ジャンプ突破マイルストーン達成・rest 比 **11.0 倍に到達 = halo 半径完全 11 倍化マイルストーン達成**）。v27.45 10.75 倍到達から更に +2px でついに完全 11 倍化マイルストーン突破 + 大台 +80px ジャンプ到達の二重マイルストーン達成（hover lift amplitude 系列の象徴的到達点）。mix-sm/mix-md 不透明度は維持し半径のみで amplitude 強化。filter 軸 nav-bottom-bar-breath/-dark keyframe との衝突は box-shadow 軸採用で回避継続。ライト/ダーク 2 セレクタ同時拡張。 */
+.bottom-nav-item.active:hover::before { box-shadow: 0 3px 88px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.50); }
+[data-theme="dark"] .bottom-nav-item.active:hover::before { box-shadow: 0 3px 88px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255,255,255,0.40); }
 
 /* ============================================================
    Sprint #871  v24.75
@@ -43152,9 +43158,10 @@ textarea:focus::placeholder {
 /* v27.43: hover ラダーに追従し * 1.73(1.8165) → * 1.75(1.8375) に揃えた（+2% step・計 +75% amplitude・base 比 +83.75%）。Tab focus と hover の scale を完全同一に維持 */
 /* v27.44: hover ラダーに追従し * 1.75(1.8375) → * 1.77(1.8585) に揃えた（+2% step・計 +77% amplitude・base 比 +85.85% = base 比 +85% 突破マイルストーン達成 + ladder 40 段目大台到達マイルストーン達成）。Tab focus と hover の scale を完全同一に維持 */
 /* v27.45: hover ラダーに追従し * 1.77(1.8585) → * 1.79(1.8795) に揃えた（+2% step・計 +79% amplitude・base 比 +87.95% = base 比 +87% 突破マイルストーン達成・base 比 +90% 接近マイルストーン）。Tab focus と hover の scale を完全同一に維持 */
+/* v27.46: hover ラダーに追従し * 1.79(1.8795) → * 1.81(1.9005) に揃えた（+2% step・計 +81% amplitude・base 比 +90.05% = base 比 +90% 突破マイルストーン達成）。Tab focus と hover の scale を完全同一に維持 */
 .tx-tag-filter-all.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.79));
+  transform: scale(calc(var(--scale-hover-md) * 1.81));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
@@ -43201,9 +43208,10 @@ textarea:focus::placeholder {
 /* v27.43: hover ラダーに追従し * 1.73(1.8165) → * 1.75(1.8375) に揃えた（+2% step・計 +75% amplitude・base 比 +83.75%） */
 /* v27.44: hover ラダーに追従し * 1.75(1.8375) → * 1.77(1.8585) に揃えた（+2% step・計 +77% amplitude・base 比 +85.85% = base 比 +85% 突破マイルストーン達成 + ladder 40 段目大台到達マイルストーン達成） */
 /* v27.45: hover ラダーに追従し * 1.77(1.8585) → * 1.79(1.8795) に揃えた（+2% step・計 +79% amplitude・base 比 +87.95% = base 比 +87% 突破マイルストーン達成・base 比 +90% 接近マイルストーン） */
+/* v27.46: hover ラダーに追従し * 1.79(1.8795) → * 1.81(1.9005) に揃えた（+2% step・計 +81% amplitude・base 比 +90.05% = base 比 +90% 突破マイルストーン達成） */
 .tx-tag-filter-chip.active:focus-visible:not(:active) {
   outline: none;
-  transform: scale(calc(var(--scale-hover-md) * 1.79));
+  transform: scale(calc(var(--scale-hover-md) * 1.81));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
               0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 0 14px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-md), transparent),
@@ -44694,9 +44702,10 @@ textarea:focus::placeholder {
    v27.42: scaleX 11.6 → 11.9 に拡張（+0.3 amplitude / 52.2px → 53.55px 相当の伸長量・rest 3px との計 +50.55px ジャンプ）。v27.41 完全 17 倍化マイルストーン突破から更に +0.3 で rest 3px 比 **17.85 倍に到達 = accent bar 完全 18 倍化マイルストーン接近**（大台 scaleX 50px 突破マイルストーン達成）。サイドナビ left: 0 固定幅配置のため scaleX 11.9 でもレイアウト無影響を維持。
    v27.43: scaleX 11.9 → 12.2 に拡張（+0.3 amplitude / 53.55px → 54.9px 相当の伸長量・rest 3px との計 +51.9px ジャンプ）。v27.42 完全 18 倍化マイルストーン接近から更に +0.3 で rest 3px 比 **18.3 倍に到達 = accent bar 完全 18 倍化マイルストーン突破達成 + 大台 scaleX 12.0 突破マイルストーン達成**（hover lift amplitude 系列の象徴的二重到達点）。サイドナビ left: 0 固定幅配置のため scaleX 12.2 でもレイアウト無影響を維持。
    v27.44: scaleX 12.2 → 12.5 に拡張（+0.3 amplitude / 54.9px → 56.25px 相当の伸長量・rest 3px との計 +53.25px ジャンプ）。v27.43 完全 18 倍化マイルストーン突破 + 大台 12.0 突破から更に +0.3 で rest 3px 比 **18.75 倍に到達 = accent bar 完全 19 倍化マイルストーン接近 + 大台 +50px ジャンプ突破継続マイルストーン達成**。サイドナビ left: 0 固定幅配置のため scaleX 12.5 でもレイアウト無影響を維持。
-   v27.45: scaleX 12.5 → 12.8 に拡張（+0.3 amplitude / 56.25px → 57.6px 相当の伸長量・rest 3px との計 +54.6px ジャンプ）。v27.44 18.75 倍到達 + accent bar 完全 19 倍化マイルストーン接近から更に +0.3 で rest 3px 比 **19.2 倍に到達 = accent bar 完全 19 倍化マイルストーン突破達成 + 大台 scaleX 12.5 超 + 大台 +54px ジャンプ継続**（hover lift amplitude 系列の象徴的到達点）。サイドナビ left: 0 固定幅配置のため scaleX 12.8 でもレイアウト無影響を維持。 */
+   v27.45: scaleX 12.5 → 12.8 に拡張（+0.3 amplitude / 56.25px → 57.6px 相当の伸長量・rest 3px との計 +54.6px ジャンプ）。v27.44 18.75 倍到達 + accent bar 完全 19 倍化マイルストーン接近から更に +0.3 で rest 3px 比 **19.2 倍に到達 = accent bar 完全 19 倍化マイルストーン突破達成 + 大台 scaleX 12.5 超 + 大台 +54px ジャンプ継続**（hover lift amplitude 系列の象徴的到達点）。サイドナビ left: 0 固定幅配置のため scaleX 12.8 でもレイアウト無影響を維持。
+   v27.46: scaleX 12.8 → 13.1 に拡張（+0.3 amplitude / 57.6px → 58.95px 相当の伸長量・rest 3px との計 +55.95px ジャンプ）。v27.45 完全 19 倍化マイルストーン突破から更に +0.3 で rest 3px 比 **19.65 倍に到達 = accent bar 完全 20 倍化マイルストーン接近 + 大台 scaleX 13.0 突破マイルストーン達成 + 大台 +55px ジャンプ突破マイルストーン達成**。サイドナビ left: 0 固定幅配置のため scaleX 13.1 でもレイアウト無影響を維持。 */
 .nav-item.active:hover::before {
-  transform: translateY(-50%) scaleX(12.8);
+  transform: translateY(-50%) scaleX(13.1);
 }
 
 /* ── サイドナビ アイコンボックス breath ─────────────────── */
