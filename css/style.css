@@ -447,6 +447,7 @@
   --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 60% 1箇所） */
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
   --scale-anim-pop-presqueeze: 0.87; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% 5箇所・v27.74→v27.75 で 0.95→0.93・v27.76→v27.77 で 0.93→0.91・v27.77→v27.78 で 0.91→0.89・v27.78→v27.79 で 0.89→0.87 amplitude 強化、pre-squeeze dip 全5 keyframe 同時深化第3弾） */
+  --scale-anim-chip-peak:      1.22; /* チップポップ共有ピークスケール（@keyframes cat-chip-select-pop 62% / amt-chip-pop 62% / memo-chip-pop 62% 3箇所、v27.80 新設：従来 1.16/--scale-selected-sm:1.18/--scale-hover-lg:1.2 をピーク 1.22 に統一強化） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
   --scale-rest:             1;    /* 完全スケールリセット（@keyframes終端・静的スケール全域 64箇所） */
@@ -1829,7 +1830,7 @@ select:focus:not(:focus-visible) {
 @keyframes cat-chip-select-pop {
   0%   { transform: scale(1); }
   28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
-  62%  { transform: scale(1.16); }
+  62%  { transform: scale(var(--scale-anim-chip-peak)); }
   82%  { transform: scale(0.96); }
   100% { transform: scale(1); }
 }
@@ -15738,7 +15739,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes amt-chip-pop {
   0%   { transform: scale(var(--scale-rest)); }
   28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
-  62%  { transform: scale(var(--scale-selected-sm)); }
+  62%  { transform: scale(var(--scale-anim-chip-peak)); }
   82%  { transform: scale(var(--scale-anim-pop-squeeze-sm)); }
   100% { transform: scale(var(--scale-rest)); }
 }
@@ -15817,7 +15818,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes memo-chip-pop {
   0%   { transform: scale(var(--scale-rest)); }
   28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
-  62%  { transform: scale(var(--scale-hover-lg)); }
+  62%  { transform: scale(var(--scale-anim-chip-peak)); }
   82%  { transform: scale(var(--scale-chip-active)); }
   100% { transform: scale(var(--scale-rest)); }
 }
