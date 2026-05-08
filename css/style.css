@@ -7999,8 +7999,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   to   { opacity: 1; transform: none; }
 }
 @keyframes insight-alert-pulse {
-  0%, 100% { border-left-width: var(--accent-w); }
-  50%       { border-left-width: var(--size-accent-bar-pulse); }
+  0%, 100% { border-left-width: var(--accent-w); filter: brightness(1); }
+  25%      { border-left-width: calc((var(--accent-w) + var(--size-accent-bar-pulse)) / 2); filter: brightness(1.03); }
+  50%      { border-left-width: var(--size-accent-bar-pulse); filter: brightness(1.06); }
+  75%      { border-left-width: calc((var(--accent-w) + var(--size-accent-bar-pulse)) / 2); filter: brightness(1.03); }
 }
 
 .insight-item {
@@ -8046,8 +8048,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   to   { width: var(--sub-progress, 0%); }
 }
 @keyframes sub-urgent-glow {
-  0%, 100% { border-color: var(--danger-border); }
-  50%       { border-color: var(--danger-text); }
+  0%, 100% { border-color: var(--danger-border); filter: brightness(1); }
+  25%      { border-color: color-mix(in srgb, var(--danger-text) 50%, var(--danger-border)); filter: brightness(1.03); }
+  50%      { border-color: var(--danger-text); filter: brightness(1.06); }
+  75%      { border-color: color-mix(in srgb, var(--danger-text) 50%, var(--danger-border)); filter: brightness(1.03); }
 }
 
 /* ── ダッシュボードウィジェット ── */
@@ -8838,8 +8842,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   to   { width: var(--pt-progress, 0%); }
 }
 @keyframes pt-urgent-glow {
-  0%, 100% { border-left-color: var(--danger-border); }
-  50%       { border-left-color: var(--danger-text); }
+  0%, 100% { border-left-color: var(--danger-border); filter: brightness(1); }
+  25%      { border-left-color: color-mix(in srgb, var(--danger-text) 50%, var(--danger-border)); filter: brightness(1.03); }
+  50%      { border-left-color: var(--danger-text); filter: brightness(1.06); }
+  75%      { border-left-color: color-mix(in srgb, var(--danger-text) 50%, var(--danger-border)); filter: brightness(1.03); }
 }
 .pt-card {
   display: flex;
