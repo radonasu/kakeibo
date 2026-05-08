@@ -446,7 +446,7 @@
   --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 30% 1箇所） */
   --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 60% 1箇所） */
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
-  --scale-anim-pop-presqueeze: 0.87; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% 5箇所・v27.74→v27.75 で 0.95→0.93・v27.76→v27.77 で 0.93→0.91・v27.77→v27.78 で 0.91→0.89・v27.78→v27.79 で 0.89→0.87 amplitude 強化、pre-squeeze dip 全5 keyframe 同時深化第3弾） */
+  --scale-anim-pop-presqueeze: 0.87; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% / nav-icon-pop 28% / nav-sidebar-icon-pop 28% / section-tab-icon-pop 28% 計8箇所・v27.74→v27.75 で 0.95→0.93・v27.76→v27.77 で 0.93→0.91・v27.77→v27.78 で 0.91→0.89・v27.78→v27.79 で 0.89→0.87 amplitude 強化、v27.81 でナビ系 3 keyframe を 4-step → 5-step bounce-settle 化、共有 var 適用先が 5→8 に拡張） */
   --scale-anim-chip-peak:      1.22; /* チップポップ共有ピークスケール（@keyframes cat-chip-select-pop 62% / amt-chip-pop 62% / memo-chip-pop 62% 3箇所、v27.80 新設：従来 1.16/--scale-selected-sm:1.18/--scale-hover-lg:1.2 をピーク 1.22 に統一強化） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
@@ -5328,27 +5328,30 @@ body {
 }
 @keyframes nav-icon-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  60%  { transform: scale(1.18); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(1.18); }
   82%  { transform: scale(1.07); }
   100% { transform: scale(var(--scale-hover)); }
 }
 .bottom-nav-item.active .bottom-nav-icon {
   animation: nav-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
-/* ── サイドバーナビ アクティブアイコン バウンス (v19.39) ── */
+/* ── サイドバーナビ アクティブアイコン バウンス (v19.39 / v27.81 5-step bounce-settle 化) ── */
 @keyframes nav-sidebar-icon-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  60%  { transform: scale(1.13); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(1.13); }
   82%  { transform: scale(1.02); }
   100% { transform: scale(var(--scale-hover-md)); }
 }
 .nav-item.active .nav-icon {
   animation: nav-sidebar-icon-pop var(--dur-slow) var(--ease-bounce) both;
 }
-/* ── セクションタブ アクティブアイコン バウンス (v19.40) ── */
+/* ── セクションタブ アクティブアイコン バウンス (v19.40 / v27.81 5-step bounce-settle 化) ── */
 @keyframes section-tab-icon-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  60%  { transform: scale(1.33); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(1.33); }
   82%  { transform: scale(1.16); }
   100% { transform: scale(var(--scale-hover-lg)); }
 }
