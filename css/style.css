@@ -13004,8 +13004,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-preset-pop var(--dur-slow) var(--ease-bounce) both;
 }
 @keyframes sim-preset-pop {
-  from { transform: scale(var(--scale-anim-bounce-sm)); }
-  to   { transform: scale(var(--scale-rest)); }
+  0%   { transform: scale(var(--scale-anim-bounce-sm)); }
+  50%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
+  76%  { transform: scale(var(--scale-anim-settle)); }
+  100% { transform: scale(var(--scale-rest)); }
 }
 
 /* 結果グリッドラッパー — フェードイン */
@@ -13076,8 +13078,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: sim-val-pop var(--dur-lift) var(--ease-bounce);
 }
 @keyframes sim-val-pop {
-  from { transform: scale(var(--scale-anim-bounce-lg)); }
-  to   { transform: scale(var(--scale-rest)); }
+  0%   { transform: scale(var(--scale-anim-bounce-lg)); }
+  40%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
+  72%  { transform: scale(var(--scale-anim-settle)); }
+  100% { transform: scale(var(--scale-rest)); }
 }
 
 /* チャートラッパー入場 */
@@ -13322,6 +13326,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes sb-count-pop {
   0%   { transform: scale(var(--scale-rest)); }
   50%  { transform: scale(var(--scale-anim-count-pop)); }
+  78%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 
@@ -14225,6 +14230,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 @keyframes adv-copy-pop {
   0%   { transform: scale(var(--scale-rest)); }
   40%  { transform: scale(var(--scale-anim-copy-peak)); }
+  72%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 .adv-copy-done {
