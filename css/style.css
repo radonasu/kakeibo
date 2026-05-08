@@ -437,14 +437,14 @@
   --scale-anim-tag-in:    0.75;  /* タグチップ入場スケール（@keyframes tag-chip-in from 1箇所） */
   --scale-anim-sort-in:   0.85;  /* ソートバッジ入場スケール（@keyframes tx-sort-badge-in from 1箇所） */
   --scale-anim-chip-in:   0.78;  /* チップ入場初期スケール（@keyframes preset-chip-in from 1箇所） */
-  --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82%フレーム 1箇所） */
+  --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82% / qa-btn-pop 80% / date-quick-pop 82% / sim-savings-val-pop 78% / ev-cb-pop 82% 5箇所） */
   --scale-anim-cell-in:   0.97;  /* セル入場スケール（translateY/X入場 @keyframes全般・opp-card-in/sum-card-in/insight-in/cal-ev-item-in/sw-item-in等 多数） */
   --scale-anim-ripple:    4;     /* リップル最大拡張スケール（@keyframes ripple-anim to 1箇所） */
   /* ── バウンスポップ中間スケールトークン (v18.4) ──────────────────── */
-  --scale-anim-pop-squeeze-xs: 0.91; /* ポップ軽圧縮スケール（@keyframes qa-btn-pop 35% 1箇所） */
-  --scale-anim-pop-expand-xs:  1.07; /* ポップ軽伸張スケール（@keyframes qa-btn-pop 65% 1箇所） */
-  --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 40% 1箇所） */
-  --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 70% 1箇所） */
+  --scale-anim-pop-squeeze-xs: 0.91; /* ポップ軽圧縮スケール（@keyframes qa-btn-pop 30% 1箇所） */
+  --scale-anim-pop-expand-xs:  1.07; /* ポップ軽伸張スケール（@keyframes qa-btn-pop 60% / ev-cb-pop 60% 2箇所） */
+  --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 30% 1箇所） */
+  --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 60% 1箇所） */
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 70% 1箇所） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
@@ -12106,8 +12106,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  35%  { transform: scale(var(--scale-anim-pop-squeeze-xs)); }
-  65%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
+  30%  { transform: scale(var(--scale-anim-pop-squeeze-xs)); }
+  60%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
+  80%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 .qa-card .qa-submit-btn.qa-sent {
@@ -13599,7 +13600,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ev-done-cb:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
 .ev-done-cb:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-@keyframes ev-cb-pop { 0% { transform: scale(var(--scale-anim-ev-cb)); } 100% { transform: scale(var(--scale-rest)); } }
+@keyframes ev-cb-pop {
+  0%   { transform: scale(var(--scale-anim-ev-cb)); }
+  60%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
+  82%  { transform: scale(var(--scale-anim-settle)); }
+  100% { transform: scale(var(--scale-rest)); }
+}
 .ev-card-actions { display: flex; gap: var(--sp-0-5); }
 
 /* --- 月別達成プログレスバー（v5.91）--- */
@@ -15604,8 +15610,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes date-quick-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  40%  { transform: scale(var(--scale-anim-pop-squeeze)); }
-  70%  { transform: scale(var(--scale-anim-pop-expand)); }
+  30%  { transform: scale(var(--scale-anim-pop-squeeze)); }
+  60%  { transform: scale(var(--scale-anim-pop-expand)); }
+  82%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 
@@ -19004,7 +19011,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 @keyframes sim-savings-val-pop {
   from { opacity: 0; transform: scale(0.75); }
-  60%  { transform: scale(1.07); }
+  55%  { opacity: 1; transform: scale(1.07); }
+  78%  { transform: scale(var(--scale-anim-settle)); }
   to   { opacity: 1; transform: scale(1); }
 }
 .sim-savings-banner { animation: sim-savings-in var(--dur-lift) var(--ease-bounce) both; }
