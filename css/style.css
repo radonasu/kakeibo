@@ -445,7 +445,8 @@
   --scale-anim-pop-expand-xs:  1.07; /* ポップ軽伸張スケール（@keyframes qa-btn-pop 60% / ev-cb-pop 60% 2箇所） */
   --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 30% 1箇所） */
   --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 60% 1箇所） */
-  --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 70% 1箇所） */
+  --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
+  --scale-anim-pop-presqueeze: 0.95; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% 3箇所・v27.74） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
   --scale-rest:             1;    /* 完全スケールリセット（@keyframes終端・静的スケール全域 64箇所） */
@@ -1824,11 +1825,12 @@ select:focus:not(:focus-visible) {
   from { opacity: 0; transform: translateY(var(--enter-y-2xs)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-/* v22.67: カテゴリチップ選択時ポップアニメーション */
+/* v22.67: カテゴリチップ選択時ポップアニメーション / v27.74: 5-step double-bounce-settle 化 */
 @keyframes cat-chip-select-pop {
   0%   { transform: scale(1); }
-  45%  { transform: scale(1.13); }
-  70%  { transform: scale(0.97); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(1.13); }
+  82%  { transform: scale(0.97); }
   100% { transform: scale(1); }
 }
 .cat-chip.selected {
@@ -15730,10 +15732,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 
+/* v27.74: 5-step double-bounce-settle 化（pre-squeeze 28% を挿入） */
 @keyframes amt-chip-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  40%  { transform: scale(var(--scale-selected-sm)); }
-  70%  { transform: scale(var(--scale-anim-pop-squeeze-sm)); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(var(--scale-selected-sm)); }
+  82%  { transform: scale(var(--scale-anim-pop-squeeze-sm)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 
@@ -15807,10 +15811,12 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   to   { opacity: 1; transform: none; }
 }
 
+/* v27.74: 5-step double-bounce-settle 化（pre-squeeze 28% を挿入） */
 @keyframes memo-chip-pop {
   0%   { transform: scale(var(--scale-rest)); }
-  40%  { transform: scale(var(--scale-hover-lg)); }
-  70%  { transform: scale(var(--scale-chip-active)); }
+  28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
+  62%  { transform: scale(var(--scale-hover-lg)); }
+  82%  { transform: scale(var(--scale-chip-active)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 
