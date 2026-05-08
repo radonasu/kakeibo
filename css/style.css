@@ -446,7 +446,7 @@
   --scale-anim-pop-squeeze:    0.88; /* ポップ標準圧縮スケール（@keyframes date-quick-pop 30% 1箇所） */
   --scale-anim-pop-expand:     1.12; /* ポップ標準伸張スケール（@keyframes date-quick-pop 60% 1箇所） */
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
-  --scale-anim-pop-presqueeze: 0.95; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% 3箇所・v27.74） */
+  --scale-anim-pop-presqueeze: 0.93; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% 5箇所・v27.74→v27.75 で 0.95→0.93 amplitude 強化 + 新規 2 keyframe 採用） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
   --scale-rest:             1;    /* 完全スケールリセット（@keyframes終端・静的スケール全域 64箇所） */
@@ -13328,6 +13328,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 @keyframes sb-count-pop {
   0%   { transform: scale(var(--scale-rest)); }
+  25%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
   50%  { transform: scale(var(--scale-anim-count-pop)); }
   78%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
@@ -14237,6 +14238,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 /* コピー成功アニメーション */
 @keyframes adv-copy-pop {
   0%   { transform: scale(var(--scale-rest)); }
+  18%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
   40%  { transform: scale(var(--scale-anim-copy-peak)); }
   72%  { transform: scale(var(--scale-anim-settle)); }
   100% { transform: scale(var(--scale-rest)); }
