@@ -9550,8 +9550,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 /* 高優先度カードのパルス */
 @keyframes wl-urgent-glow {
-  0%, 100% { border-left-color: var(--wl-accent, var(--expense)); box-shadow: 0 0 0 0 transparent; }
-  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+  0%, 100% { border-left-color: var(--wl-accent, var(--expense)); box-shadow: 0 0 0 0 transparent; filter: brightness(1); }
+  25%      { border-left-color: color-mix(in srgb, color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)) 50%, var(--wl-accent, var(--expense))); box-shadow: 0 0 0 calc(var(--focus-ring-w) * 0.5) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); filter: brightness(1.03); }
+  50%       { border-left-color: color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); filter: brightness(1.06); }
+  75%      { border-left-color: color-mix(in srgb, color-mix(in srgb, var(--wl-accent, var(--expense)) var(--mix-deep), var(--white)) 50%, var(--wl-accent, var(--expense))); box-shadow: 0 0 0 calc(var(--focus-ring-w) * 0.5) color-mix(in srgb, var(--expense) var(--mix-xs), transparent); filter: brightness(1.03); }
 }
 .wl-card.wl-high {
   animation: wl-card-in var(--dur-medium) var(--ease-bounce) both,
@@ -9946,8 +9948,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* alertパルスグロー */
 @keyframes fc-alert-glow {
-  0%, 100% { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); border-left-color: var(--danger-text); }
-  50%       { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), -3px 0 10px -2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); border-left-color: color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); }
+  0%, 100% { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); border-left-color: var(--danger-text); filter: brightness(1); }
+  25%      { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), -3px 0 10px -2px color-mix(in srgb, var(--expense) calc(var(--mix-2xl) / 2), transparent); border-left-color: color-mix(in srgb, color-mix(in srgb, var(--expense) var(--mix-4xl), transparent) 50%, var(--danger-text)); filter: brightness(1.03); }
+  50%       { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), -3px 0 10px -2px color-mix(in srgb, var(--expense) var(--mix-2xl), transparent); border-left-color: color-mix(in srgb, var(--expense) var(--mix-4xl), transparent); filter: brightness(1.06); }
+  75%      { box-shadow: inset 4px 0 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), -3px 0 10px -2px color-mix(in srgb, var(--expense) calc(var(--mix-2xl) / 2), transparent); border-left-color: color-mix(in srgb, color-mix(in srgb, var(--expense) var(--mix-4xl), transparent) 50%, var(--danger-text)); filter: brightness(1.03); }
 }
 /* スパークライン描画アニメーション */
 @keyframes fc-spark-draw {
@@ -12624,8 +12628,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
              debt-low-glow var(--dur-pulse) var(--ease-in-out) calc(var(--dc-i, 0) * var(--dur-stagger-lg) + 0.45s) infinite;
 }
 @keyframes debt-low-glow {
-  0%, 100% { border-left-color: var(--debt-accent, var(--expense)); }
-  50%       { border-left-color: color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xl), transparent); }
+  0%, 100% { border-left-color: var(--debt-accent, var(--expense)); filter: brightness(1); }
+  25%      { border-left-color: color-mix(in srgb, color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xl), transparent) 50%, var(--debt-accent, var(--expense))); filter: brightness(1.03); }
+  50%       { border-left-color: color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xl), transparent); filter: brightness(1.06); }
+  75%      { border-left-color: color-mix(in srgb, color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xl), transparent) 50%, var(--debt-accent, var(--expense))); filter: brightness(1.03); }
 }
 
 .debt-card-header {
