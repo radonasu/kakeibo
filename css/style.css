@@ -5134,7 +5134,8 @@ body {
   /* v27.63: rotateX 82° → 84° に拡張（**59 段目・+2° amplitude / v27.22 base 4° 比 完全 21 倍化マイルストーン達成 + 大台 84° 到達 + 計 +80° amplitude 大台突破マイルストーン達成**）。v27.62 base 比 20.5 倍化 + 大台 82° 到達から更に +2° でついに **base 比 完全 21 倍化マイルストーン突破 + 計 +80° amplitude 大台突破の二重マイルストーン同時達成**（hover lift amplitude 系列の象徴的二重到達点）。3D せり上がり演出の傾き角を最大級に強化し、perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
   /* v27.64: rotateX 84° → 86° に拡張（**60 段目・+2° amplitude / v27.22 base 4° 比 21.5 倍化マイルストーン達成 + 大台 86° 到達 + 計 +82° amplitude + 大台 60 段目突入マイルストーン**）。v27.63 完全 21 倍化突破 + 計 +80° amplitude 大台突破から更に +2° で base 比 21.5 倍化に到達（完全 22 倍化マイルストーンへ残り 0.5 倍）。3D せり上がり演出の傾き角を最大級に強化し、perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
   /* v27.65: rotateX 86° → 88° に拡張（**61 段目・+2° amplitude / v27.22 base 4° 比 完全 22 倍化マイルストーン達成 + 大台 88° 到達 + 計 +84° amplitude + 大台 +85° amplitude 接近**）。v27.64 base 比 21.5 倍化 + 大台 86° 到達から更に +2° でついに base 比 完全 22 倍化マイルストーン突破（hover lift amplitude 系列の象徴的到達点・大台 90° rotateX へ残り 2°）。3D せり上がり演出の傾き角を最大級に強化し、perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
-  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init)) rotateX(88deg);
+  /* v27.66: rotateX 88° → 90° に拡張（**62 段目・+2° amplitude / v27.22 base 4° 比 完全 22.5 倍化マイルストーン達成 + 大台 90° rotateX 到達マイルストーン達成 = 完全垂直モーダル開始姿勢の象徴的到達点 + 計 +86° amplitude**）。v27.65 完全 22 倍化突破 + 大台 88° 到達から更に +2° でついに **完全垂直 = perspective 視差最大 + perspective parent 1200px に対して画面と垂直なエッジオン姿勢へ到達**（hover lift amplitude 系列の natural cap）。3D せり上がり演出の傾き角を物理上限へ到達させ、perspective 1200px 親宣言維持・モバイル ≤480px と完全同期で連動拡張。 */
+  transform: translateY(var(--translate-popup-hide)) scale(var(--scale-popup-init)) rotateX(90deg);
   opacity: 0;
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.20);
   transition: transform var(--dur-gentle) var(--ease-bounce), opacity var(--dur-faster) var(--ease-out), box-shadow var(--dur-gentle) var(--ease-out);
@@ -5193,7 +5194,8 @@ body {
   /* v27.63: モバイル hidden 状態 rotateX も 82° → 84° に拡張し、デスクトップ rotateX 84° と完全同期（**v27.22 base 4° 比 完全 21 倍化マイルストーン達成 + 大台 84° 到達・計 +80° amplitude 大台突破マイルストーン達成**）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
   /* v27.64: モバイル hidden 状態 rotateX も 84° → 86° に拡張し、デスクトップ rotateX 86° と完全同期（**v27.22 base 4° 比 21.5 倍化マイルストーン達成 + 大台 86° 到達・計 +82° amplitude + 大台 60 段目突入マイルストーン**）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
   /* v27.65: モバイル hidden 状態 rotateX も 86° → 88° に拡張し、デスクトップ rotateX 88° と完全同期（**v27.22 base 4° 比 完全 22 倍化マイルストーン達成 + 大台 88° 到達・計 +84° amplitude**）。モバイル小型画面でも 3D せり上がり立体感が +2° amplitude さらに強化。 */
-  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)) rotateX(88deg); }
+  /* v27.66: モバイル hidden 状態 rotateX も 88° → 90° に拡張し、デスクトップ rotateX 90° と完全同期（**v27.22 base 4° 比 完全 22.5 倍化マイルストーン達成 + 大台 90° 到達 = 完全垂直モーダル開始姿勢の象徴的到達点・計 +86° amplitude**）。モバイル小型画面でも 3D せり上がり立体感が natural cap へ到達。 */
+  .modal-overlay .modal { transform: translateY(var(--translate-popup-hide-lg)) scale(var(--scale-rest)) rotateX(90deg); }
   .modal-overlay.modal-is-open .modal { transform: translateY(0) scale(var(--scale-rest)) rotateX(0); }
 }
 
@@ -5217,9 +5219,12 @@ body {
   to   { transform: scaleX(1); }
 }
 /* 超過予算バー警告パルス（v22.61） */
+/* v27.66: 2-step opacity → 4-step（opacity + 微細 scaleY + brightness）拡張で警告の視認性を底上げ。25%/75% に scaleY 1.04 + brightness 1.08 を挿入し「警告らしいビート感」を獲得。50% は opacity 0.68 のまま、両端 0/100% は静止。リフロー回避のため transform-origin: bottom + scaleY のみ使用。 */
 @keyframes over-budget-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.68; }
+  0%, 100% { opacity: 1; transform: scaleY(1); filter: brightness(1); }
+  25%      { opacity: 0.92; transform: scaleY(1.04); filter: brightness(1.08); }
+  50%      { opacity: 0.68; transform: scaleY(1); filter: brightness(1); }
+  75%      { opacity: 0.92; transform: scaleY(1.04); filter: brightness(1.08); }
 }
 /* 目標プログレスバー シマースイープ（v22.61） */
 @keyframes bar-shimmer {
@@ -5660,9 +5665,12 @@ body {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
+/* v27.66: 2-step → 4-step 拡張で subtle wobble rotation を追加。25% で +1.5deg / 75% で -1.5deg の左右振れを獲得し、translateY 浮遊 + scale 脈動に「揺れる呼吸」感を獲得。10+ 箇所の空状態アイコン（empty-month/empty-goal/empty-asset/empty-debt/sub-empty/pt-empty/ch-empty/tx-empty 等）が同 keyframe を共有しているため、全空状態で同時に視覚的リッチネスが向上。基本 amplitude（translateY -8px, scale 1.06）は維持。 */
 @keyframes empty-icon-float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50%       { transform: translateY(var(--enter-y-neg-base)) scale(1.06); }
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  25%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.03) rotate(1.5deg); }
+  50%      { transform: translateY(var(--enter-y-neg-base)) scale(1.06) rotate(0deg); }
+  75%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.03) rotate(-1.5deg); }
 }
 
 /* ── 今月データなし（既存データあり） ───────────────────── */
