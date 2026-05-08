@@ -5222,9 +5222,9 @@ body {
 /* v27.66: 2-step opacity → 4-step（opacity + 微細 scaleY + brightness）拡張で警告の視認性を底上げ。25%/75% に scaleY 1.04 + brightness 1.08 を挿入し「警告らしいビート感」を獲得。50% は opacity 0.68 のまま、両端 0/100% は静止。リフロー回避のため transform-origin: bottom + scaleY のみ使用。 */
 @keyframes over-budget-pulse {
   0%, 100% { opacity: 1; transform: scaleY(1); filter: brightness(1); }
-  25%      { opacity: 0.92; transform: scaleY(1.04); filter: brightness(1.08); }
-  50%      { opacity: 0.68; transform: scaleY(1); filter: brightness(1); }
-  75%      { opacity: 0.92; transform: scaleY(1.04); filter: brightness(1.08); }
+  25%      { opacity: 0.90; transform: scaleY(1.05); filter: brightness(1.10); }
+  50%      { opacity: 0.62; transform: scaleY(1); filter: brightness(1); }
+  75%      { opacity: 0.90; transform: scaleY(1.05); filter: brightness(1.10); }
 }
 /* 目標プログレスバー シマースイープ（v22.61） */
 @keyframes bar-shimmer {
@@ -5318,7 +5318,8 @@ body {
 /* ── ボトムナビ アクティブアイコン バウンス ── */
 @keyframes nav-ind-slide-in {
   0%   { transform: scaleX(0); opacity: 0; }
-  60%  { transform: scaleX(1.15); opacity: 1; }
+  60%  { transform: scaleX(1.18); opacity: 1; }
+  82%  { transform: scaleX(0.96); opacity: 1; }
   100% { transform: scaleX(1); opacity: 1; }
 }
 @keyframes nav-icon-pop {
@@ -5668,9 +5669,9 @@ body {
 /* v27.66: 2-step → 4-step 拡張で subtle wobble rotation を追加。25% で +1.5deg / 75% で -1.5deg の左右振れを獲得し、translateY 浮遊 + scale 脈動に「揺れる呼吸」感を獲得。10+ 箇所の空状態アイコン（empty-month/empty-goal/empty-asset/empty-debt/sub-empty/pt-empty/ch-empty/tx-empty 等）が同 keyframe を共有しているため、全空状態で同時に視覚的リッチネスが向上。基本 amplitude（translateY -8px, scale 1.06）は維持。 */
 @keyframes empty-icon-float {
   0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-  25%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.03) rotate(1.5deg); }
-  50%      { transform: translateY(var(--enter-y-neg-base)) scale(1.06) rotate(0deg); }
-  75%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.03) rotate(-1.5deg); }
+  25%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.04) rotate(2deg); }
+  50%      { transform: translateY(var(--enter-y-neg-base)) scale(1.08) rotate(0deg); }
+  75%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.04) rotate(-2deg); }
 }
 
 /* ── 今月データなし（既存データあり） ───────────────────── */
