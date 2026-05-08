@@ -437,7 +437,7 @@
   --scale-anim-tag-in:    0.75;  /* タグチップ入場スケール（@keyframes tag-chip-in from 1箇所） */
   --scale-anim-sort-in:   0.85;  /* ソートバッジ入場スケール（@keyframes tx-sort-badge-in from 1箇所） */
   --scale-anim-chip-in:   0.78;  /* チップ入場初期スケール（@keyframes preset-chip-in from 1箇所） */
-  --scale-anim-settle:    0.95;  /* バウンス収束スケール（@keyframes dup-pop 82% / qa-btn-pop 80% / date-quick-pop 82% / sim-savings-val-pop 78% / ev-cb-pop 82% 5箇所） */
+  --scale-anim-settle:    0.94;  /* バウンス収束スケール（@keyframes dup-pop 82% / qa-btn-pop 80% / date-quick-pop 82% / sim-savings-val-pop 78% / ev-cb-pop 82% / sb-count-pop 78% / adv-copy-pop 72% / sim-preset-pop 76% / sim-val-pop 72% / 入場系 88%/82%/85% 等 計14箇所・v27.75→v27.76 で 0.95→0.94 amplitude 強化、settle dip 全14 keyframe 同時深化マイルストーン） */
   --scale-anim-cell-in:   0.97;  /* セル入場スケール（translateY/X入場 @keyframes全般・opp-card-in/sum-card-in/insight-in/cal-ev-item-in/sw-item-in等 多数） */
   --scale-anim-ripple:    4;     /* リップル最大拡張スケール（@keyframes ripple-anim to 1箇所） */
   /* ── バウンスポップ中間スケールトークン (v18.4) ──────────────────── */
@@ -1829,8 +1829,8 @@ select:focus:not(:focus-visible) {
 @keyframes cat-chip-select-pop {
   0%   { transform: scale(1); }
   28%  { transform: scale(var(--scale-anim-pop-presqueeze)); }
-  62%  { transform: scale(1.13); }
-  82%  { transform: scale(0.97); }
+  62%  { transform: scale(1.16); }
+  82%  { transform: scale(0.96); }
   100% { transform: scale(1); }
 }
 .cat-chip.selected {
