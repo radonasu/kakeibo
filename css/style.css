@@ -2014,11 +2014,11 @@ select:focus:not(:focus-visible) {
 [data-theme="dark"] .tx-table tbody tr:hover {
   box-shadow: var(--shadow-row-selected);
 }
-/* 収支タイプ別ホバーグロー (v22.60) */
-.tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
-.tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
-[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent); }
-[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+/* 収支タイプ別ホバーグロー (v22.60) + v27.98 hover-only typed accent bar (inset 3px) */
+.tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent), inset 3px 0 0 var(--income); }
+.tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent), inset 3px 0 0 var(--expense-end); }
 .tx-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
