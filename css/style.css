@@ -7952,10 +7952,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .insight-item:hover  { background: color-mix(in srgb, var(--primary) var(--mix-micro), var(--surface-hover)); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .insight-item:active { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 /* インサイトタイプ別ホバーグロー (v22.60) */
-.insight-item.insight-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.insight-item.insight-alert:hover   { background: color-mix(in srgb, var(--danger-text) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
-.insight-item.insight-success:hover { background: color-mix(in srgb, var(--success) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
-.insight-item.insight-warning:hover { background: color-mix(in srgb, var(--warning) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+/* v27.96: hover 時に inset 3px 0 0 のタイプ別カラー左アクセントバーを追加（永続 border-left 3px と合わせて視覚的に 6px 幅へ強調・layout shift なし。dd-tx-row / ci-challenge-item / cal-sum-item / notif-item の hover 限定 typed accent bar ファミリーへ統合） */
+.insight-item.insight-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); }
+.insight-item.insight-alert:hover   { background: color-mix(in srgb, var(--danger-text) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--danger-text); }
+.insight-item.insight-success:hover { background: color-mix(in srgb, var(--success) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
+.insight-item.insight-warning:hover { background: color-mix(in srgb, var(--warning) var(--mix-nano), var(--surface-hover)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
 
 /* タイプ別ボーダー色 */
 .insight-item.insight-info    { border-left-color: var(--primary); }
@@ -18583,7 +18584,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* 1. カレンダーイベントリスト行 ホバー カラーglow追加
    cal-ev-item は左ボーダーに --cal-ev-color を使用しているのに
    ホバーはデフォルトのprimary色のみ → cal-ev-color ベースのglowを追加（notif-item 同パターン） */
-.cal-ev-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-xs), transparent); }
+/* v27.96: hover 時に inset 3px 0 0 var(--cal-ev-color) の左アクセントバーを追加（永続 border-left 3px と合わせて視覚的に 6px 幅へ強調・layout shift なし。hover-only typed accent bar ファミリーへ統合） */
+.cal-ev-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--cal-ev-color, var(--primary)); }
 
 /* 2. カレンダーイベントアイコン ホバー時スケール
    cal-ev-icon には transition/hover が未定義 → sub-card-icon/opp-icon と同パターンで追加 */
@@ -33407,25 +33409,25 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの primary glow を追加（inset 4px 0 12px primary mix-sm）。
    既存の outer glow（0 2px 10px primary mix-xs）と連動し左アクセントバーが内側に輝く演出に。
    ②③④と連動しインサイトアイテム全タイプのホバー inset 演出を完成形に統一。 */
-.insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 3px 0 0 var(--primary); }
 
 /* 2. .insight-item.insight-alert:hover → inset-left box-shadow glow（danger-text）追加
    インサイト「警告」アイテムの border-left（accent-w・danger-text）に対して
    ホバー時に内側左面からの danger-text glow を追加（inset 4px 0 12px danger-text mix-sm）。
    ①と対称にタイプ別カラーで内側から発光する演出に統一。 */
-.insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), inset 3px 0 0 var(--danger-text); }
 
 /* 3. .insight-item.insight-success:hover → inset-left box-shadow glow（success）追加
    インサイト「成功」アイテムの border-left（accent-w・success）に対して
    ホバー時に内側左面からの success glow を追加（inset 4px 0 12px success mix-sm）。
    ①②と連動しインサイトアイテムの success カラー演出を統一。 */
-.insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
+.insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-sm), transparent), inset 3px 0 0 var(--success); }
 
 /* 4. .insight-item.insight-warning:hover → inset-left box-shadow glow（warning）追加
    インサイト「注意」アイテムの border-left（accent-w・warning）に対して
    ホバー時に内側左面からの warning glow を追加（inset 4px 0 12px warning mix-sm）。
    ①〜③と連動しインサイトアイテム全4タイプの hover inset-left glow が完成形に統一。 */
-.insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+.insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-sm), transparent), inset 3px 0 0 var(--warning); }
 
 /* 5. .opp-card:hover → inset-left box-shadow glow（opp-accent）追加
    節約機会カードの border-left（accent-w・opp-accent）に対して
@@ -33472,7 +33474,7 @@ textarea:focus::placeholder {
    既存の outer shadow（shadow-row-hover のみ）と連動し translateX スライド方向から
    内側が輝く演出に。pm-table-row/sb-row inset glow（v24.68）と同パターン。
    ②〜④と連動し行アイテム系 inset-left glow シリーズ（#865）完成形へ。 */
-.cal-ev-item:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent); }
+.cal-ev-item:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--cal-ev-color, var(--primary)); }
 
 /* 2. .dow-table-row:hover → inset-left box-shadow glow（dow-row-color）追加
    曜日別集計テーブル行の border-left（accent-w・dow-row-color）に対して
@@ -34314,25 +34316,25 @@ textarea:focus::placeholder {
    ダークモードでは背景が暗く hover 時の inset glow がより映えるため
    mix-sm → mix-md に引き上げインサイト情報アイテムの hover 奥行き演出を鮮明化。
    primary → primary-end に切替てダーク背景で映える発光演出に統一。 */
-[data-theme="dark"] .insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .insight-item.insight-info:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 
 /* 2. [data-theme="dark"] .insight-item.insight-alert:hover → dark enhanced hover inset-left glow（danger-text・mix-md）
    v24.78 の hover inset-left glow（danger-text mix-sm inset 4px 0 12px）のダークモード強化版。
    mix-md に引き上げアラートインサイトの hover 警告発光をダークモードで鮮明化。
    ①と対称に info/alert の hover ダーク演出を統一。 */
-[data-theme="dark"] .insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
+[data-theme="dark"] .insight-item.insight-alert:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent), inset 3px 0 0 var(--danger-text); }
 
 /* 3. [data-theme="dark"] .insight-item.insight-success:hover → dark enhanced hover inset-left glow（success・mix-md）
    v24.78 の hover inset-left glow（success mix-sm inset 4px 0 12px）のダークモード強化版。
    mix-md に引き上げ成功インサイトの hover 達成感発光をダークモードで鮮明化。
    ①②と連動し info/alert/success の hover ダーク演出を統一。 */
-[data-theme="dark"] .insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-md), transparent); }
+[data-theme="dark"] .insight-item.insight-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 3px 0 0 var(--success); }
 
 /* 4. [data-theme="dark"] .insight-item.insight-warning:hover → dark enhanced hover inset-left glow（warning・mix-md）
    v24.78 の hover inset-left glow（warning mix-sm inset 4px 0 12px）のダークモード強化版。
    mix-md に引き上げ警告インサイトの hover 警戒発光をダークモードで鮮明化。
    ①〜④で insight-info/alert/success/warning 全4タイプの dark hover inset-left glow が完成形に統一。 */
-[data-theme="dark"] .insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+[data-theme="dark"] .insight-item.insight-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 3px 0 0 var(--warning); }
 
 /* 5. [data-theme="dark"] .opp-card:hover → dark enhanced hover inset-left glow（opp-accent fallback primary-end・mix-md）
    v24.72 の hover inset-left glow（opp-accent mix-sm inset 4px 0 14px）のダークモード強化版。
@@ -34374,7 +34376,7 @@ textarea:focus::placeholder {
    v24.69 の hover inset-left glow（cal-ev-color mix-sm）のダークモード強化版。
    mix-md に引き上げカレンダーイベントアイテムの hover translateX スライド方向 inset 奥行き演出をダークモードで鮮明化。
    cal-ev-name/cat dark glow（v24.59/v24.40）・cal-ev-item dark inset static glow（v24.76）と連動しダーク演出を完成形に統一。 */
-[data-theme="dark"] .cal-ev-item:hover { box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .cal-ev-item:hover { box-shadow: var(--shadow-row-hover), inset 4px 0 12px color-mix(in srgb, var(--cal-ev-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--cal-ev-color, var(--primary-end)); }
 
 /* 2. [data-theme="dark"] .dow-table-row:hover → dark enhanced hover inset-left glow（dow-row-color fallback primary-end・mix-md・inset 4px 0 12px）
    v24.69 の hover inset-left glow（dow-row-color mix-sm）のダークモード強化版。
