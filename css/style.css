@@ -448,6 +448,7 @@
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
   --scale-anim-pop-presqueeze: 0.83; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% / nav-icon-pop 28% / nav-sidebar-icon-pop 28% / section-tab-icon-pop 28% 計8箇所・v27.74→v27.75 で 0.95→0.93・v27.76→v27.77 で 0.93→0.91・v27.77→v27.78 で 0.91→0.89・v27.78→v27.79 で 0.89→0.87・v27.81→v27.82 で 0.87→0.85・v27.82→v27.83 で 0.85→0.83 amplitude 強化、v27.81 でナビ系 3 keyframe を 4-step → 5-step bounce-settle 化、共有 var 適用先が 5→8 に拡張） */
   --scale-anim-chip-peak:      1.26; /* チップポップ共有ピークスケール（@keyframes cat-chip-select-pop 62% / amt-chip-pop 62% / memo-chip-pop 62% 3箇所、v27.80 新設：従来 1.16/--scale-selected-sm:1.18/--scale-hover-lg:1.2 をピーク 1.22 に統一強化、v27.81→v27.82 で 1.22→1.24・v27.82→v27.83 で 1.24→1.26 さらなる peak amplitude 強化） */
+  --scale-anim-bounce-micro:   1.04; /* 入場ポップ二次マイクロバウンス（@keyframes kk-toast-icon-pop 86% / nav-badge-pop 88% / notif-badge-pop 88% / bulk-count-pop 90% / nt-saved-pop 86% 計5箇所、v27.84 新設：4-step rest-peak-settle-rest を 5-step double-bounce-settle 化するため peak1 → dip1 → bounce2 → rest の二次バウンス用に統一値 1.04 を共有導入。バッジ/トースト/カウンタ/保存通知の入場時に「ピーク → 軽くしぼむ → さらに小さく弾む → 着地」のディズニー 12 原則 follow-through 弾性振動を獲得） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
   --scale-rest:             1;    /* 完全スケールリセット（@keyframes終端・静的スケール全域 64箇所） */
@@ -2264,8 +2265,9 @@ select:focus:not(:focus-visible) {
 }
 @keyframes bulk-count-pop {
   0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
-  70%  { transform: scale(var(--scale-color-hover)); }
-  88%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  55%  { transform: scale(var(--scale-color-hover)); opacity: 1; }
+  75%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  90%  { transform: scale(var(--scale-anim-bounce-micro)); opacity: 1; }
   100% { transform: none;    opacity: 1; }
 }
 .bulk-bar {
@@ -5923,8 +5925,9 @@ body {
    prefers-reduced-motion 時は line 18981 グローバルルールで 0.01ms に短縮され即時化（アクセシビリティ準拠）。 */
 @keyframes kk-toast-icon-pop {
   0%   { transform: scale(0.4); opacity: 0; }
-  55%  { transform: scale(1.18); opacity: 1; }
-  78%  { transform: scale(0.97); opacity: 1; }
+  50%  { transform: scale(1.18); opacity: 1; }
+  70%  { transform: scale(0.94); opacity: 1; }
+  86%  { transform: scale(var(--scale-anim-bounce-micro)); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 .kk-toast-show .kk-toast-icon {
@@ -12138,8 +12141,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 @keyframes nt-saved-pop {
   0%   { transform: scale(var(--scale-anim-pop-init)); opacity: 0; }
-  60%  { transform: scale(var(--scale-color-hover)); }
-  82%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  50%  { transform: scale(var(--scale-color-hover)); opacity: 1; }
+  72%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  86%  { transform: scale(var(--scale-anim-bounce-micro)); opacity: 1; }
   100% { transform: none; opacity: 1; }
 }
 
@@ -15089,9 +15093,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes nav-badge-pop {
   0%   { transform: scale(var(--scale-anim-nav-badge)); opacity: 0; }
-  60%  { transform: scale(var(--scale-anim-pop-peak)); opacity: 1; }
-  82%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
-  100% { transform: none; }
+  55%  { transform: scale(var(--scale-anim-pop-peak)); opacity: 1; }
+  73%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  88%  { transform: scale(var(--scale-anim-bounce-micro)); opacity: 1; }
+  100% { transform: none; opacity: 1; }
 }
 
 .nav-badge-pop {
@@ -15183,9 +15188,10 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 
 @keyframes notif-badge-pop {
   0%   { transform: scale(var(--scale-anim-badge-in)); opacity: 0; }
-  65%  { transform: scale(var(--scale-anim-badge-peak)); opacity: 1; }
-  85%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
-  100% { transform: none; }
+  55%  { transform: scale(var(--scale-anim-badge-peak)); opacity: 1; }
+  75%  { transform: scale(var(--scale-anim-settle)); opacity: 1; }
+  88%  { transform: scale(var(--scale-anim-bounce-micro)); opacity: 1; }
+  100% { transform: none; opacity: 1; }
 }
 .notif-badge-pop {
   animation: notif-badge-pop var(--dur-medium) var(--ease-bounce) both;
