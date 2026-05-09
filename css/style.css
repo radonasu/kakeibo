@@ -15353,10 +15353,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
 }
 /* v22.69: 通知アイテム タイプ別ホバーカラーグロー */
-.notif-item.notif-type-danger:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
-.notif-item.notif-type-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
-.notif-item.notif-type-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
-.notif-item.notif-type-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+/* v27.95: hover 時に inset 3px 0 0 のタイプ別カラー左アクセントバーを追加（::after 永続バッジ色を hover でフルハイトに延伸する視覚効果。dd-tx-row / ci-challenge-item / cal-sum-item の hover 限定 typed accent bar ファミリーに統合） */
+.notif-item.notif-type-danger:hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
+.notif-item.notif-type-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
+.notif-item.notif-type-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
+.notif-item.notif-type-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); }
 .notif-item.notif-read {
   opacity: var(--opacity-read);
 }
