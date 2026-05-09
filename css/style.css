@@ -6610,7 +6610,7 @@ body {
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 /* v22.74: 前年比較アイテム ホバーグロー */
-.yoy-summary-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: var(--border-strong); }
+.yoy-summary-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); border-color: var(--border-strong); }
 .yoy-summary-item:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .yoy-summary-item:nth-child(2) { animation-delay: var(--dur-stagger-xl); }
 .yoy-summary-label {
@@ -11198,7 +11198,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* v22.70: カテゴリトレンド統計カード ホバーカラーglow */
 .ct-stat-card:hover {
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--ct-stat-color, var(--primary));
   border-color: color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-mid), var(--border));
 }
 .ct-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -13974,7 +13974,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 /* v22.71: タグ統計カードホバーglow */
-.tg-stat-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
+.tg-stat-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
 .tg-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .tg-stat-icon { font-size: var(--fs-icon-lg); letter-spacing: var(--ls-normal); line-height: var(--lh-none); }
 .tg-stat-label {
@@ -34598,10 +34598,10 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ① yoy-summary-item dark enhanced hover outer glow（primary-end mix-md 0 4px 18px） */
-[data-theme="dark"] .yoy-summary-item:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
+[data-theme="dark"] .yoy-summary-item:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); border-color: var(--border-strong); }
 
 /* ② ct-stat-card dark enhanced hover outer glow（ct-stat-color fallback primary-end mix-md 0 4px 18px） */
-[data-theme="dark"] .ct-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ct-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--ct-stat-color, var(--primary-end)); }
 [data-theme="dark"] .ct-stat-card:hover::before { box-shadow: 0 2px 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-lg), transparent); }
 
 /* ③ fv-stat-rate dark enhanced hover outer glow（warning mix-lg 0 6px 24px） / v26.64: ダーク hover inset 維持 */
@@ -37980,7 +37980,7 @@ textarea:focus::placeholder {
 /* ⑦ [data-theme="dark"] .tg-stat-card:hover → dark enhanced box-shadow+border（primary-end・mix-sm/mix-md）:
    ライトモード glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-sm に引き上げ、border も強化
    タグ統計カードの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .tg-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)); }
+[data-theme="dark"] .tg-stat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 3px 0 0 var(--primary-end); border-color: color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)); }
 
 /* ⑧ [data-theme="dark"] .hs-grade-s:hover → dark enhanced box-shadow（primary-end・mix-xl）:
    ライトモード glow（primary mix-lg）のダーク強化版。primary-end に切替え mix-xl に引き上げ
