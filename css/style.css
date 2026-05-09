@@ -16553,8 +16553,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .dd-tx-row:last-child { border-bottom: none; }
 .dd-tx-row:hover { background: var(--surface-hover); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 /* v22.66: 取引行 income/expense タイプ別カラーグロー */
-.dd-tx-row:has(.dd-tx-amount.income):hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success)      var(--mix-xs), transparent); }
-.dd-tx-row:has(.dd-tx-amount.expense):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent); }
+/* v27.93: hover 時に inset 3px 0 0 のタイプ別カラー左アクセントバーを追加（cal-ev-item の永続左アクセント border-left と統一感） */
+.dd-tx-row:has(.dd-tx-amount.income):hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success)      var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
+.dd-tx-row:has(.dd-tx-amount.expense):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent), inset 3px 0 0 var(--danger-text); }
 .dd-tx-row:active { background: var(--surface-hover); transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .dd-tx-row:focus-visible {
   outline: none;
