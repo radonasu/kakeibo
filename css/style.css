@@ -448,7 +448,7 @@
   --scale-anim-pop-squeeze-sm: 0.93; /* ポップ小圧縮スケール（@keyframes amt-chip-pop 82% 1箇所） */
   --scale-anim-pop-presqueeze: 0.83; /* ポップ前圧縮スケール（@keyframes cat-chip-select-pop 28% / amt-chip-pop 28% / memo-chip-pop 28% / sb-count-pop 25% / adv-copy-pop 18% / nav-icon-pop 28% / nav-sidebar-icon-pop 28% / section-tab-icon-pop 28% 計8箇所・v27.74→v27.75 で 0.95→0.93・v27.76→v27.77 で 0.93→0.91・v27.77→v27.78 で 0.91→0.89・v27.78→v27.79 で 0.89→0.87・v27.81→v27.82 で 0.87→0.85・v27.82→v27.83 で 0.85→0.83 amplitude 強化、v27.81 でナビ系 3 keyframe を 4-step → 5-step bounce-settle 化、共有 var 適用先が 5→8 に拡張） */
   --scale-anim-chip-peak:      1.26; /* チップポップ共有ピークスケール（@keyframes cat-chip-select-pop 62% / amt-chip-pop 62% / memo-chip-pop 62% 3箇所、v27.80 新設：従来 1.16/--scale-selected-sm:1.18/--scale-hover-lg:1.2 をピーク 1.22 に統一強化、v27.81→v27.82 で 1.22→1.24・v27.82→v27.83 で 1.24→1.26 さらなる peak amplitude 強化） */
-  --scale-anim-bounce-micro:   1.04; /* 入場ポップ二次マイクロバウンス（@keyframes kk-toast-icon-pop 86% / nav-badge-pop 88% / notif-badge-pop 88% / bulk-count-pop 90% / nt-saved-pop 86% 計5箇所、v27.84 新設：4-step rest-peak-settle-rest を 5-step double-bounce-settle 化するため peak1 → dip1 → bounce2 → rest の二次バウンス用に統一値 1.04 を共有導入。バッジ/トースト/カウンタ/保存通知の入場時に「ピーク → 軽くしぼむ → さらに小さく弾む → 着地」のディズニー 12 原則 follow-through 弾性振動を獲得） */
+  --scale-anim-bounce-micro:   1.05; /* 入場/click-feedback ポップ二次マイクロバウンス（@keyframes kk-toast-icon-pop 86% / nav-badge-pop 88% / notif-badge-pop 88% / bulk-count-pop 90% / nt-saved-pop 86% / dup-pop 92% / qa-btn-pop 90% / date-quick-pop 92% 計8箇所、v27.84 新設：4-step rest-peak-settle-rest を 5-step double-bounce-settle 化するため peak1 → dip1 → bounce2 → rest の二次バウンス用に統一値 1.04 を共有導入。v27.84→v27.85 で 1.04→1.05 amplitude 強化、適用先 5→8 に拡張（click-feedback pop ファミリー dup-pop / qa-btn-pop / date-quick-pop へ拡大）。入場系（バッジ/トースト/カウンタ/保存通知）+ click-feedback 系（複製/送信/日付クイック）両方で「ピーク → 軽くしぼむ → さらに小さく弾む → 着地」のディズニー 12 原則 follow-through 弾性振動を獲得） */
 
   /* ── アクティブ状態リセット＆ポップピークスケールトークン (v18.6) ────── */
   --scale-rest:             1;    /* 完全スケールリセット（@keyframes終端・静的スケール全域 64箇所） */
@@ -1498,6 +1498,7 @@ select:focus:not(:focus-visible) {
   28%  { transform: scale(var(--scale-anim-bounce-sm)); }
   62%  { transform: scale(var(--scale-anim-bounce-lg)); }
   82%  { transform: scale(var(--scale-anim-settle)); }
+  92%  { transform: scale(var(--scale-anim-bounce-micro)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 .dup-popping { animation: dup-pop var(--dur-snap) var(--ease-bounce); }
@@ -12118,6 +12119,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   30%  { transform: scale(var(--scale-anim-pop-squeeze-xs)); }
   60%  { transform: scale(var(--scale-anim-pop-expand-xs)); }
   80%  { transform: scale(var(--scale-anim-settle)); }
+  90%  { transform: scale(var(--scale-anim-bounce-micro)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 .qa-card .qa-submit-btn.qa-sent {
@@ -15627,6 +15629,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   30%  { transform: scale(var(--scale-anim-pop-squeeze)); }
   60%  { transform: scale(var(--scale-anim-pop-expand)); }
   82%  { transform: scale(var(--scale-anim-settle)); }
+  92%  { transform: scale(var(--scale-anim-bounce-micro)); }
   100% { transform: scale(var(--scale-rest)); }
 }
 
