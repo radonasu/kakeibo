@@ -14987,6 +14987,9 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .ci-challenge-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover); }
 .ci-challenge-item:has(.achieved):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
 .ci-challenge-item:has(.failed):hover   { box-shadow: var(--shadow-row-hover), 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent), inset 3px 0 0 var(--primary); }
+/* v28.01: dark mode 強化版（-end トークン + mix-md 強化） */
+[data-theme="dark"] .ci-challenge-item:has(.achieved):hover { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .ci-challenge-item:has(.failed):hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 .ci-challenge-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes ci-ch-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -15364,6 +15367,11 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .notif-item.notif-type-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
 .notif-item.notif-type-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
 .notif-item.notif-type-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); }
+/* v28.01: dark mode 強化版（-end トークン + mix-md 強化・blur 12px） */
+[data-theme="dark"] .notif-item.notif-type-danger:hover  { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 3px 0 0 var(--expense-end); }
+[data-theme="dark"] .notif-item.notif-type-warning:hover { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--warning)     var(--mix-md), transparent), inset 3px 0 0 var(--warning); }
+[data-theme="dark"] .notif-item.notif-type-success:hover { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .notif-item.notif-type-info:hover    { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 .notif-item.notif-read {
   opacity: var(--opacity-read);
 }
@@ -16563,6 +16571,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 /* v27.93: hover 時に inset 3px 0 0 のタイプ別カラー左アクセントバーを追加（cal-ev-item の永続左アクセント border-left と統一感） */
 .dd-tx-row:has(.dd-tx-amount.income):hover  { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--success)      var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
 .dd-tx-row:has(.dd-tx-amount.expense):hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text)  var(--mix-xs), transparent), inset 3px 0 0 var(--danger-text); }
+/* v28.01: dark mode 強化版（-end トークン + mix-md 強化・blur 12px） */
+[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.income):hover  { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.expense):hover { box-shadow: var(--shadow-row-hover), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 3px 0 0 var(--expense-end); }
 .dd-tx-row:active { background: var(--surface-hover); transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .dd-tx-row:focus-visible {
   outline: none;
@@ -18801,6 +18812,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .cal-sum-item:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .cal-sum-item:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
 .cal-sum-item:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
+/* v28.01: dark mode 強化版（-end トークン + mix-md 強化・blur 14px） */
+[data-theme="dark"] .cal-sum-item:has(.income):hover  { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--income-end)  var(--mix-md), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .cal-sum-item:has(.expense):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 3px 0 0 var(--expense-end); }
 .cal-sum-item:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 2. サブスクサマリーカード ホバーlift+カラーglow
