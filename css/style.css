@@ -7183,7 +7183,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: var(--sp-1) var(--sp-1);
 }
 /* v22.69: ダッシュボード目標アイテム ホバーグロー */
-.goal-dash-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent); }
+.goal-dash-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--goal-accent, var(--primary)); }
 /* v26.60: ダッシュボード目標アイテム press-back（他6系統 widget-item と整合） */
 .goal-dash-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .goal-dash-item:nth-child(2) { animation-delay: var(--dur-stagger-md); }
@@ -9811,7 +9811,7 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: ww-item-in var(--dur-medium) var(--ease-bounce) both;
   animation-delay: calc(var(--ww-i, 0) * var(--dur-stagger-md));
 }
-.wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
+.wish-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); }
 .wish-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ww-item-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -10876,7 +10876,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent); }
+.ch-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--ch-accent, var(--primary)); }
 .ch-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .ch-widget-icon {
   width: var(--size-icon-md);
@@ -12835,7 +12835,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
 }
-.debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xs), transparent); }
+.debt-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-xs), transparent), inset 3px 0 0 var(--debt-accent, var(--expense)); }
 .debt-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 .debt-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm); border-radius: var(--radius-circle);
@@ -13721,7 +13721,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation-delay: calc(var(--ev-wi, 0) * var(--dur-stagger));
   transition: transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); }
+.ev-widget-item:hover  { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--ev-accent, var(--primary)); }
 .ev-widget-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes ev-widget-item-in {
   0%   { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -15023,7 +15023,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 /* v22.76: ci-event-item ホバー（ci-ev-accentカラーglow） */
-.ci-event-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent); }
+.ci-event-item:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--ci-ev-accent, var(--primary)); }
 .ci-event-item:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes ci-ev-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -33460,7 +33460,7 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの ci-ev-accent glow を追加（inset 4px 0 12px ci-ev-accent mix-sm）。
    translateX slide と組み合わさりスライド方向から内側が輝く演出に。
    insight-item inset glow（①〜④）と同パターンで translateX 系行アイテムの演出を統一。 */
-.ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent); }
+.ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--ci-ev-accent, var(--primary)); }
 
 /* 7. .pm-table-row:hover → inset-left box-shadow glow（pm-row-color）追加
    支払方法テーブル行の border-left（accent-w・pm-row-color）に対して
@@ -33514,7 +33514,7 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの ev-accent glow を追加（inset 4px 0 12px mix-sm）。
    既存の outer glow（0 2px 10px ev-accent mix-xs）と連動。
    ci-event-item inset glow（v24.68）と同パターンで translateX 系行アイテムの演出を統一。 */
-.ev-widget-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+.ev-widget-item:hover { transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--ev-accent, var(--primary)); }
 
 /* 5. .tx-table tbody tr[data-type="income"]:hover td:first-child → inset-left glow（income）追加
    取引テーブルの収入行において td:first-child（border-left: income color）に対して
@@ -34365,7 +34365,7 @@ textarea:focus::placeholder {
    v24.72 の hover inset-left glow（ci-ev-accent mix-sm inset 4px 0 12px）のダークモード強化版。
    mix-md に引き上げチェックインイベントアイテムの hover 奥行き演出をダークモードで鮮明化。
    ⑤と連動しカード・行アイテム系 hover ダーク演出シリーズに統一。 */
-[data-theme="dark"] .ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ci-event-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--ci-ev-accent, var(--primary-end)); }
 
 /* 7. [data-theme="dark"] .pm-table-row:hover → dark enhanced hover inset-left glow（pm-row-color fallback primary-end・mix-md）
    v24.72 の hover inset-left glow（pm-row-color mix-sm inset 4px 0 12px）のダークモード強化版。
@@ -34413,7 +34413,7 @@ textarea:focus::placeholder {
    v24.69 の hover inset-left glow（ev-accent mix-sm）のダークモード強化版。
    mix-md に引き上げ収支予定ウィジェットアイテムの hover translateX 方向 inset 奥行き演出をダークモードで鮮明化。
    ev-widget-name/amount dark glow（v24.58）・ev-widget-item dark inset static glow（v24.76）と連動し完成形に統一。 */
-[data-theme="dark"] .ev-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ev-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--ev-accent, var(--primary-end)); }
 
 /* 5. [data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td:first-child → dark enhanced hover inset-left glow（income・mix-md・inset 4px 0 10px）
    v24.69 の hover inset-left glow（income mix-sm）のダークモード強化版。
@@ -34620,7 +34620,7 @@ textarea:focus::placeholder {
 [data-theme="dark"] .pt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑧ wish-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
-[data-theme="dark"] .wish-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .wish-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 
 /* ============================================================
    Sprint #882 (v24.86): pt-widget-item-urgent/soon-dark-hover-outer-glow＋sub-summary-monthly/yearly-dark-hover-outer-glow＋pt-total/expiring-dark-hover-outer-glow＋ev-sum-this/next-dark-hover-outer-glow
@@ -34733,7 +34733,7 @@ textarea:focus::placeholder {
 [data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
 
 /* ③ goal-dash-item dark enhanced hover outer glow（goal-accent fallback primary-end mix-md 0 2px 10px） */
-[data-theme="dark"] .goal-dash-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .goal-dash-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--goal-accent, var(--primary-end)); }
 
 /* ④ ev-month-col dark enhanced hover outer glow（primary-end mix-md 0 4px 14px） */
 [data-theme="dark"] .ev-month-col:not(.ev-month-current):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border)); }
@@ -34801,10 +34801,10 @@ textarea:focus::placeholder {
 [data-theme="dark"] .rc-item:hover { box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
 
 /* ④ ch-widget-item dark enhanced hover outer glow（ch-accent fallback primary-end mix-md 0 2px 14px） */
-[data-theme="dark"] .ch-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--ch-accent, var(--primary-end)); }
 
 /* ⑤ debt-widget-item dark enhanced hover outer glow（debt-accent fallback expense-end mix-md 0 2px 14px） */
-[data-theme="dark"] .debt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .debt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent), inset 3px 0 0 var(--debt-accent, var(--expense-end)); }
 
 /* ⑥ step-card dark enhanced hover outer glow（primary-end mix-md 0 4px 20px） */
 [data-theme="dark"] .step-card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
