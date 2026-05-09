@@ -11431,7 +11431,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation-delay: calc(var(--fv-ci, 0) * var(--dur-stagger-3xs));
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-.fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); } /* v22.68: primaryグロー追加 */
+.fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--fv-cat-color, var(--primary)); position: relative; z-index: var(--z-raise); } /* v22.68: primaryグロー追加 / v28.05: hover-only typed accent bar inset 3px 0 0 fv-cat-color 追加 */
 .fv-cat-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 @keyframes fv-cat-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
@@ -33475,7 +33475,7 @@ textarea:focus::placeholder {
    既存の outer glow（0 2px 10px sb-cat-color mix-xs）と連動。
    ⑦と連動しテーブル行全体の hover inset-left glow が完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.68・全script/linkタグ?v=24.68に更新。 */
-.sb-row:hover { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent); }
+.sb-row:hover { background: color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-micro), transparent); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--sb-cat-color, var(--primary)); } /* v28.05: hover-only typed accent bar inset 3px 0 0 sb-cat-color 追加 */
 
 /* ========================================
    v24.69: cal-ev-item/dow-table-row/fv-cat-table/ev-widget-item/
@@ -33500,14 +33500,14 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの dow-row-color glow を追加（inset 4px 0 12px mix-sm）。
    既存の outer glow（0 2px 10px expense mix-nano）と連動。translateY lift と合わせ
    行が浮き上がりながら左から内側に輝く演出に。 */
-.dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--border)) var(--mix-sm), transparent); position: relative; z-index: var(--z-raise); }
+.dow-table-row:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--border)) var(--mix-sm), transparent), inset 3px 0 0 var(--dow-row-color, var(--primary)); position: relative; z-index: var(--z-raise); } /* v28.05: hover-only typed accent bar inset 3px 0 0 dow-row-color 追加 */
 
 /* 3. .fv-cat-table tbody tr:hover → inset-left box-shadow glow（fv-cat-color）追加
    財務予測カテゴリテーブル行の border-left（accent-w・fv-cat-color）に対して
    ホバー時に内側左面からの fv-cat-color glow を追加（inset 4px 0 12px mix-sm）。
    既存の outer glow（0 2px 10px primary mix-xs）と連動。②と同パターンで
    テーブル行の hover inset 演出を統一。 */
-.fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--border)) var(--mix-sm), transparent); position: relative; z-index: var(--z-raise); }
+.fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--border)) var(--mix-sm), transparent), inset 3px 0 0 var(--fv-cat-color, var(--primary)); position: relative; z-index: var(--z-raise); } /* v28.05: hover-only typed accent bar inset 3px 0 0 fv-cat-color 追加（cascade 勝者） */
 
 /* 4. .ev-widget-item:hover → inset-left box-shadow glow（ev-accent）追加
    収支予定ウィジェットアイテムの border-left（accent-w・ev-accent）に対して
@@ -34378,7 +34378,7 @@ textarea:focus::placeholder {
    mix-md に引き上げサブ行の hover 奥行き演出をダークモードで鮮明化。
    ⑤〜⑧で opp-card/ci-event-item/pm-table-row/sb-row の dark hover inset-left glow シリーズが完成形に統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.81・全script/linkタグ?v=24.81に更新。 */
-[data-theme="dark"] .sb-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .sb-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--sb-cat-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--sb-cat-color, var(--primary-end)); } /* v28.05: dark hover-only typed accent bar inset 3px 0 0 sb-cat-color/primary-end 追加 */
 
 /* ============================================================
    Sprint #878  v24.82
@@ -34401,13 +34401,13 @@ textarea:focus::placeholder {
    v24.69 の hover inset-left glow（dow-row-color mix-sm）のダークモード強化版。
    mix-md に引き上げ曜日別集計テーブル行の hover translateY lift 方向 inset 奥行き演出をダークモードで鮮明化。
    dow-table-row dark glow（v24.42）・dow-table-row dark inset static glow（v24.76）と連動し完成形に統一。 */
-[data-theme="dark"] .dow-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .dow-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-nano), transparent), inset 4px 0 12px color-mix(in srgb, var(--dow-row-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--dow-row-color, var(--primary-end)); } /* v28.05: dark hover-only typed accent bar inset 3px 0 0 dow-row-color/primary-end 追加 */
 
 /* 3. [data-theme="dark"] .fv-cat-table tbody tr:hover → dark enhanced hover inset-left glow（fv-cat-color fallback primary-end・mix-md・inset 4px 0 12px）
    v24.69 の hover inset-left glow（fv-cat-color mix-sm）のダークモード強化版。
    mix-md に引き上げ財務予測カテゴリテーブル行の hover inset 奥行き演出をダークモードで鮮明化。
    fv-cat-amt/fv-pct-txt dark glow（v24.53）・fv-cat-row dark inset static glow（v24.76）と連動し完成形に統一。 */
-[data-theme="dark"] .fv-cat-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .fv-cat-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--fv-cat-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--fv-cat-color, var(--primary-end)); } /* v28.05: dark hover-only typed accent bar inset 3px 0 0 fv-cat-color/primary-end 追加 */
 
 /* 4. [data-theme="dark"] .ev-widget-item:hover → dark enhanced hover inset-left glow（ev-accent fallback primary-end・mix-md・inset 4px 0 12px）
    v24.69 の hover inset-left glow（ev-accent mix-sm）のダークモード強化版。
