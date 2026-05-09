@@ -3236,10 +3236,10 @@ mark.tx-hl {
 .summary-mini > .smi-item:nth-child(3) { animation-delay: var(--dur-stagger-mid); }
 .summary-mini > .smi-item:nth-child(5) { animation-delay: calc(2 * var(--dur-stagger-mid)); }
 /* v22.67: smi-item タイプ別ホバーカラーリフト */
-.smi-income:hover  { filter: brightness(1.04); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 12px color-mix(in srgb, var(--income) var(--mix-sm), transparent); }
-.smi-expense:hover { filter: brightness(1.04); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
-[data-theme="dark"] .smi-income:hover  { box-shadow: 0 3px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); }
-[data-theme="dark"] .smi-expense:hover { box-shadow: 0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+.smi-income:hover  { filter: brightness(1.04); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 12px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 3px 0 0 var(--income); }
+.smi-expense:hover { filter: brightness(1.04); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 3px 0 0 var(--expense); }
+[data-theme="dark"] .smi-income:hover  { box-shadow: 0 3px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent), inset 3px 0 0 var(--income-end); }
+[data-theme="dark"] .smi-expense:hover { box-shadow: 0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 3px 0 0 var(--expense-end); }
 
 /* ── タイプトグル（モーダル） ────────────────────────── */
 .type-toggle {
