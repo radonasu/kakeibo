@@ -11243,7 +11243,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce);
 }
 /* v22.70: カテゴリトレンド テーブル行ホバー */
-.ct-table tbody tr:hover { background: var(--surface-hover); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); }
+.ct-table tbody tr:hover { background: var(--surface-hover); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); position: relative; z-index: var(--z-raise); }
 .ct-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
 
 /* -- ダークモード -- */
@@ -14009,7 +14009,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 /* v22.71: タグテーブル行ホバーglow */
-.tg-table tbody tr:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); position: relative; z-index: var(--z-raise); }
+.tg-table tbody tr:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); position: relative; z-index: var(--z-raise); }
 .tg-table tbody tr:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-sm)); }
@@ -33467,7 +33467,7 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの pm-row-color glow を追加（inset 4px 0 12px pm-row-color mix-sm）。
    既存の outer glow（0 2px 10px pm-row-color mix-xs）と連動。
    ⑧と連動しテーブル行の hover inset 演出を完成形に統一。 */
-.pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-sm), transparent); }
+.pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--pm-row-color, var(--primary)); }
 
 /* 8. .sb-row:hover → inset-left box-shadow glow（sb-cat-color）追加
    節約提案テーブル行の border-left（accent-w・sb-cat-color）に対して
@@ -34371,7 +34371,7 @@ textarea:focus::placeholder {
    v24.72 の hover inset-left glow（pm-row-color mix-sm inset 4px 0 12px）のダークモード強化版。
    mix-md に引き上げ支払いマネージャー行の hover 奥行き演出をダークモードで鮮明化。
    ⑥と連動し行アイテム系 hover ダーク演出シリーズに統一。 */
-[data-theme="dark"] .pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .pm-table-row:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--pm-row-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--pm-row-color, var(--primary-end)); }
 
 /* 8. [data-theme="dark"] .sb-row:hover → dark enhanced hover inset-left glow（sb-cat-color fallback primary-end・mix-md）
    v24.72 の hover inset-left glow（sb-cat-color mix-sm inset 4px 0 12px）のダークモード強化版。
@@ -34866,8 +34866,14 @@ textarea:focus::placeholder {
 /* ④ bottom-nav-item:not(.active):hover dark enhanced outer glow（primary-end mix-sm） */
 [data-theme="dark"] .bottom-nav-item:not(.active):hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
-/* ⑤ ct-table tbody tr dark enhanced hover inset-left glow（primary-end mix-md inset 4px 0 12px） */
-[data-theme="dark"] .ct-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* ⑤ ct-table tbody tr dark enhanced hover inset-left glow（primary-end mix-md inset 4px 0 12px） + v28.04 inset 3px 0 0 primary-end accent bar */
+[data-theme="dark"] .ct-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent), inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
+
+/* v28.04: tg-table tbody tr dark enhanced hover — primary-end glow + inset 3px 0 0 primary-end accent bar
+   ライトモード hover（primary mix-xs v22.71）のダーク強化版 + v28.04 hover-only typed accent bar 統合。
+   primary-end に切替え mix-md に引き上げ、3px 0 0 primary-end ソリッドアクセントバーを左端に重ねて
+   タグ統計テーブル行の hover 視覚識別をダークモードで鮮明化。ct-table dark hover（line 34870）と対称。 */
+[data-theme="dark"] .tg-table tbody tr:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 
 /* ⑥ type-btn.income-btn dark hover: tinted surface bg + income-end enhanced glow */
 [data-theme="dark"] .type-btn.income-btn:hover { background: color-mix(in srgb, var(--income) var(--mix-xs), var(--surface-2)); color: var(--income-end); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income-end) var(--mix-md), transparent), 0 4px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent); }
