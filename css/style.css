@@ -43901,18 +43901,20 @@ textarea:focus::placeholder {
               var(--shadow-row-hover);
 }
 
-/* ② .dd-tx-row 収入行 :focus-visible:not(:active) — success mix-xs glow（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
+/* ② .dd-tx-row 収入行 :focus-visible:not(:active) — success mix-xs glow + inset 3px typed accent bar（v28.02: :hover (line 16572) と対称になるよう inset 3px 0 0 var(--success) を追加・キーボードフォーカス時にもタイプ別カラー左アクセントバーを獲得）（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
 .dd-tx-row:has(.dd-tx-amount.income):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
-              0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+              0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--success);
 }
 
-/* ③ .dd-tx-row 支出行 :focus-visible:not(:active) — danger-text mix-xs glow（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
+/* ③ .dd-tx-row 支出行 :focus-visible:not(:active) — danger-text mix-xs glow + inset 3px typed accent bar（v28.02: :hover (line 16573) と対称になるよう inset 3px 0 0 var(--danger-text) を追加・キーボードフォーカス時にもタイプ別カラー左アクセントバーを獲得）（:hover と対称）（v26.73: :not(:active) 追加で押下感保護） */
 .dd-tx-row:has(.dd-tx-amount.expense):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
-              0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+              0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--danger-text);
 }
 
 /* ④ .rpt-month-row.is-clickable:focus-visible:not(:active) — hover ラダー継承 + primary mix-xs glow（v26.73: :not(:active) 追加で押下感保護・:active line 16868 の translateY(press-down) + box-shadow none + filter brightness(press-haze) を完全保護） */
@@ -43931,18 +43933,20 @@ textarea:focus::placeholder {
               0 2px 12px rgba(0,0,0,0.22);
 }
 
-/* ⑥ ダーク .dd-tx-row 収入行 :focus-visible:not(:active) — income-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
+/* ⑥ ダーク .dd-tx-row 収入行 :focus-visible:not(:active) — income-end mix-md glow 強化 + inset 3px typed accent bar（v28.02: ダーク :hover (line 16575) と対称になるよう inset 3px 0 0 var(--income-end) を追加）（v26.73: :not(:active) 追加で押下感保護） */
 [data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.income):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
-              0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent);
+              0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+              inset 3px 0 0 var(--income-end);
 }
 
-/* ⑦ ダーク .dd-tx-row 支出行 :focus-visible:not(:active) — expense-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
+/* ⑦ ダーク .dd-tx-row 支出行 :focus-visible:not(:active) — expense-end mix-md glow 強化 + inset 3px typed accent bar（v28.02: ダーク :hover (line 16576) と対称になるよう inset 3px 0 0 var(--expense-end) を追加）（v26.73: :not(:active) 追加で押下感保護） */
 [data-theme="dark"] .dd-tx-row:has(.dd-tx-amount.expense):focus-visible:not(:active) {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               var(--shadow-row-hover),
-              0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+              0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+              inset 3px 0 0 var(--expense-end);
 }
 
 /* ⑧ ダーク .rpt-month-row.is-clickable:focus-visible:not(:active) — primary-end mix-md glow 強化（v26.73: :not(:active) 追加で押下感保護） */
@@ -46304,4 +46308,102 @@ textarea:focus::placeholder {
        既存 shadow-panel + inset 0.16（ダーク背景での白光沢適正値） */
 [data-theme="dark"] .notif-panel {
   box-shadow: var(--shadow-panel), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* ============================================================
+   v28.02 Sprint #1197: notif-item タイプ別 :focus-visible:not(:active) を
+   v28.01 dark hover ラダー（typed accent bar + colored glow）と完全対称化
+
+   ── 経緯 ──
+   v27.95 で hover-only typed accent bar（inset 3px 0 0）ファミリーが
+   dd-tx-row / ci-challenge-item / cal-sum-item / notif-item に拡張され、
+   v28.01 で dark mode 専用 -end トークン強化版が 10 selector まで網羅された。
+   一方 :focus-visible:not(:active) 状態では .notif-item は generic 1 種類のみ
+   （line 44473 ライト + line 44507/44512 ダーク）で、
+   notif-type-danger/warning/success/info の 4 タイプ別バリアントが未実装だった。
+   :hover (line 15366-15369 ライト + 15371-15374 ダーク) では
+   タイプ別 colored glow + inset 3px typed accent bar が完成形に統一されているため、
+   :focus-visible（キーボード操作）時にも同等の typed 演出を獲得し、
+   マウス hover とキーボード focus の演出ラダーを完全対称化する。
+
+   ── 設計 ──
+   ライト: 0 2px 10px color-mix(TYPE mix-xs) + inset 3px 0 0 var(TYPE)
+   ダーク: 0 2px 12px color-mix(TYPE-end mix-md) + inset 3px 0 0 var(TYPE-end)
+   いずれも focus-ring + shadow-row-hover を保持。
+   :not(:active) で押下感保護。
+
+   ── カスケード ──
+   .notif-item:focus-visible (line 44473, specificity 0,2,0) を
+   .notif-item.notif-type-X:focus-visible:not(:active) (specificity 0,4,0) で上書き。
+   end-of-file 順序で確実勝利。
+
+   ── タイプ別カラー対応（v28.01 hover と完全一致） ──
+   ・danger  → ライト: --danger-text/--expense, ダーク: --expense-end
+   ・warning → ライト: --warning,             ダーク: --warning（変化なし）
+   ・success → ライト: --success,             ダーク: --income-end
+   ・info    → ライト: --primary,             ダーク: --primary-end
+   ============================================================ */
+
+/* ① .notif-item.notif-type-danger:focus-visible:not(:active) — :hover (line 15366) ラダー合流: surface-hover bg + translateX slide + shadow-row-hover + ring + danger-text mix-xs glow + inset 3px expense accent bar */
+.notif-item.notif-type-danger:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--expense);
+}
+
+/* ② .notif-item.notif-type-warning:focus-visible:not(:active) — :hover (line 15367) ラダー合流: warning mix-xs glow + inset 3px warning accent bar */
+.notif-item.notif-type-warning:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--warning);
+}
+
+/* ③ .notif-item.notif-type-success:focus-visible:not(:active) — :hover (line 15368) ラダー合流: success mix-xs glow + inset 3px success accent bar */
+.notif-item.notif-type-success:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--success);
+}
+
+/* ④ .notif-item.notif-type-info:focus-visible:not(:active) — :hover (line 15369) ラダー合流: primary mix-xs glow + inset 3px primary accent bar */
+.notif-item.notif-type-info:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              inset 3px 0 0 var(--primary);
+}
+
+/* ⑤ ダーク .notif-item.notif-type-danger:focus-visible:not(:active) — :hover (line 15371) ラダー合流: expense-end mix-md glow + inset 3px expense-end accent bar */
+[data-theme="dark"] .notif-item.notif-type-danger:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+              inset 3px 0 0 var(--expense-end);
+}
+
+/* ⑥ ダーク .notif-item.notif-type-warning:focus-visible:not(:active) — :hover (line 15372) ラダー合流: warning mix-md glow + inset 3px warning accent bar */
+[data-theme="dark"] .notif-item.notif-type-warning:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+              inset 3px 0 0 var(--warning);
+}
+
+/* ⑦ ダーク .notif-item.notif-type-success:focus-visible:not(:active) — :hover (line 15373) ラダー合流: income-end mix-md glow + inset 3px income-end accent bar */
+[data-theme="dark"] .notif-item.notif-type-success:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+              inset 3px 0 0 var(--income-end);
+}
+
+/* ⑧ ダーク .notif-item.notif-type-info:focus-visible:not(:active) — :hover (line 15374) ラダー合流: primary-end mix-md glow + inset 3px primary-end accent bar */
+[data-theme="dark"] .notif-item.notif-type-info:focus-visible:not(:active) {
+  box-shadow: var(--shadow-row-hover),
+              0 0 0 var(--focus-ring-w) var(--focus-ring),
+              0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              inset 3px 0 0 var(--primary-end);
 }
