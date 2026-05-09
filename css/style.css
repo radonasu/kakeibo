@@ -8125,8 +8125,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .sub-widget-item.sub-urgent { background: var(--danger-bg); }
 .sub-widget-item.sub-soon   { background: var(--warning-bg); }
 /* v22.69: サブスクウィジェット タイプ別ホバーグロー */
-.sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
-.sub-widget-item.sub-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+.sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
+.sub-widget-item.sub-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
 .sub-widget-icon {
   width: var(--size-icon-sm); height: var(--size-icon-sm);
   border-radius: var(--radius-btn-sm);
@@ -9100,8 +9100,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .pt-widget-item.pt-urgent { background: color-mix(in srgb, var(--expense) var(--mix-faint), transparent); }
 .pt-widget-item.pt-soon   { background: color-mix(in srgb, var(--warning) var(--mix-faint), transparent); }
 /* v22.69: ポイントウィジェット タイプ別ホバーグロー */
-.pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
-.pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
+.pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
+.pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
 .pt-widget-icon {
   width: var(--size-icon-md); height: var(--size-icon-md); border-radius: var(--radius-btn-sm);
   display: flex; align-items: center; justify-content: center;
@@ -34592,10 +34592,10 @@ textarea:focus::placeholder {
 [data-theme="dark"] .sub-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* ⑤ sub-widget-item.sub-urgent dark enhanced hover outer glow（expense-end mix-md 0 2px 14px） */
-[data-theme="dark"] .sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 3px 0 0 var(--expense-end); }
 
 /* ⑥ sub-widget-item.sub-soon dark enhanced hover outer glow（warning mix-md 0 2px 14px） */
-[data-theme="dark"] .sub-widget-item.sub-soon:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-widget-item.sub-soon:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 3px 0 0 var(--warning); }
 
 /* ⑦ pt-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
 [data-theme="dark"] .pt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
@@ -34645,10 +34645,10 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ① pt-widget-item.pt-urgent dark enhanced hover outer glow（expense-end mix-md 0 2px 14px） */
-[data-theme="dark"] .pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-urgent:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 3px 0 0 var(--expense-end); }
 
 /* ② pt-widget-item.pt-soon dark enhanced hover outer glow（warning mix-md 0 2px 14px） */
-[data-theme="dark"] .pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning)     var(--mix-md), transparent); }
+[data-theme="dark"] .pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning)     var(--mix-md), transparent), inset 3px 0 0 var(--warning); }
 
 /* ③ sub-summary-card.sub-monthly dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
 [data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
