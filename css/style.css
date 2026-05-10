@@ -10564,9 +10564,9 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-summary-value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-none); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); white-space: nowrap; }
 .ch-summary-unit  { font-size: var(--fs-sm); font-weight: var(--fw-normal); margin-left: var(--sp-0-5); opacity: var(--opacity-soft); letter-spacing: var(--ls-fine); line-height: var(--lh-tighter); }
 /* v22.64: ch-summary-card タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持 */
-.ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
-.ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
-.ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
+.ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
+.ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
+.ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
 .ch-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* -- セクションタイトル -- */
@@ -21756,8 +21756,8 @@ textarea:focus::placeholder {
 .sub-summary-card { transition: transform var(--dur-gentle) var(--ease-bounce), box-shadow var(--dur-gentle) var(--ease-out), filter var(--dur-gentle) var(--ease-out); }
 .sub-summary-card:hover { transform: translateY(var(--translate-lift-sm)); }
 /* v26.64: hover 時も inset 上端白光沢を維持 */
-.sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 
 /* 7. sub-summary-card:hover → .sub-summary-label brightness(1.2)
    サブスクリプションサマリーカードのホバー時に .sub-summary-label
@@ -21870,8 +21870,8 @@ textarea:focus::placeholder {
    ホバー演出を統一する。pt-summary-card には transition 設定済み。 */
 /* v26.64: hover 時も inset 上端白光沢を維持 */
 .pt-summary-card:hover        { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-summary-hover), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.pt-total:hover               { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.pt-expiring:hover            { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.pt-total:hover               { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.pt-expiring:hover            { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 
 /* 2. pt-summary-card:hover → .pt-summary-amount text-shadow glow（白）
    ポイント残高サマリーカードのホバー時に .pt-summary-amount（白大型数値：
@@ -22515,9 +22515,9 @@ textarea:focus::placeholder {
 }
 /* v26.64: hover 時も inset 上端白光沢を維持 */
 .ev-sum-card:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+.ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income)   var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning)  var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 .ev-sum-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 /* 2. ev-sum-card:hover → .ev-sum-count white text-shadow glow
@@ -34675,22 +34675,22 @@ textarea:focus::placeholder {
 [data-theme="dark"] .pt-widget-item.pt-soon:hover   { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--warning)     var(--mix-md), transparent), inset 3px 0 0 var(--warning); }
 
 /* ③ sub-summary-card.sub-monthly dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .sub-summary-card.sub-monthly:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ④ sub-summary-card.sub-yearly dark enhanced hover outer glow（teal-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .sub-summary-card.sub-yearly:hover  { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end)    var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑤ pt-total dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .pt-total:hover    { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .pt-total:hover    { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑥ pt-expiring dark enhanced hover outer glow（orange mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .pt-expiring:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .pt-expiring:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--orange)      var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑦ ev-sum-card.ev-sum-this dark enhanced hover outer glow（primary-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ev-sum-card.ev-sum-this:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑧ ev-sum-card.ev-sum-next dark enhanced hover outer glow（income-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ev-sum-card.ev-sum-next:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end)  var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ============================================================
    Sprint #883 (v24.87): ev-sum-year-dark-hover-outer-glow＋forecast-card-dark-hover-outer-glow＋goal-dash-item-dark-hover-outer-glow＋ev-month-col-dark-hover-outer-glow＋hm-stat-card-nth1/2/3/4-dark-hover-outer-glow
@@ -34732,7 +34732,7 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ① ev-sum-card.ev-sum-year dark enhanced hover outer glow（warning-end mix-lg 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ② forecast-card dark enhanced hover outer glow（fc-color fallback primary-end mix-md 0 4px 18px） */
 [data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--fc-color, var(--primary-end)); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
@@ -37968,19 +37968,19 @@ textarea:focus::placeholder {
    ライトモード glow（income mix-md）のダーク強化版。income-end に切替え mix-lg に引き上げ
    チャレンジ達成サマリーカードの hover 発光をダークモードで鮮明化。 */
 /* v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ch-sum-achieved:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ch-sum-achieved:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑤ [data-theme="dark"] .ch-sum-active:hover → dark enhanced box-shadow（primary-end・mix-lg）:
    ライトモード glow（primary mix-md）のダーク強化版。primary-end に切替え mix-lg に引き上げ
    チャレンジアクティブサマリーカードの hover 発光をダークモードで鮮明化。 */
 /* v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ch-sum-active:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ch-sum-active:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑥ [data-theme="dark"] .ch-sum-total:hover → dark enhanced box-shadow（teal-end・mix-lg）:
    ライトモード glow（teal-end mix-md）のダーク強化版。mix-md を mix-lg に引き上げ
    チャレンジ合計サマリーカードの hover 発光をダークモードで鮮明化。④⑤⑥で ch-sum全3タイプ統一。 */
 /* v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .ch-sum-total:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .ch-sum-total:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑦ [data-theme="dark"] .tg-stat-card:hover → dark enhanced box-shadow+border（primary-end・mix-sm/mix-md）:
    ライトモード glow（primary mix-xs）のダーク強化版。primary-end に切替え mix-sm に引き上げ、border も強化
