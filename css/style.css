@@ -1366,7 +1366,8 @@ select:focus:not(:focus-visible) {
 }
 /* v26.10: hover 時も inset 白ハイライトを維持（mix-4xl の外側影 + inset 0 1px 0 rgba(255,255,255,0.22)）。hover で僅かに inset 強化（0.2→0.22）。 */
 .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.btn-primary:active { filter: brightness(var(--brightness-press)); box-shadow: none; }
+/* v28.16: box-shadow: none → "pressed-in depression" inset。上端 dark inset 4px で押し込まれた凹み感 + 下端 white inset 1px で底部リバウンド光沢を獲得し、translateY/scale press-down + brightness と合わせて物理的なボタン押下感を実現 */
+.btn-primary:active { filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
 .btn-ghost {
   background: var(--surface-2);
@@ -1377,7 +1378,8 @@ select:focus:not(:focus-visible) {
 }
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 10→14px で薄く広がるプライマリ光をクッキリ視認可能に */
 .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.btn-ghost:active { background: var(--border); box-shadow: none; }
+/* v28.16: box-shadow: none → primary-tinted "pressed-in" inset 3px。淡 surface 背景の上で primary mix-sm 紫の凹み陰影が立ち上がり、translateY press-down + brightness と合わせて btn-primary と同質の depression 感を獲得 */
+.btn-ghost:active { background: var(--border); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 .btn-danger {
   background: var(--danger-bg);
@@ -1388,7 +1390,8 @@ select:focus:not(:focus-visible) {
 }
 /* v26.11: hover も inset 白ハイライト維持（hover 時 0.5→0.55 微強化）+ 既存 expense glow */
 .btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
-.btn-danger:active { filter: brightness(var(--brightness-press)); box-shadow: none; }
+/* v28.16: box-shadow: none → expense-tinted "pressed-in" inset 3px。淡 danger-bg 背景の上で expense mix-sm 赤の凹み陰影が立ち上がり、translateY press-down と合わせて danger ボタンの押下感を physical に表現 */
+.btn-danger:active { filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 
 .btn-sm   { padding: var(--sp-1-5) var(--sp-3); font-size: var(--fs-xs); letter-spacing: var(--ls-label); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; border-radius: var(--radius-btn-sm); }
 .btn-full { width: 100%; justify-content: center; }
@@ -1432,7 +1435,8 @@ select:focus:not(:focus-visible) {
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 8→12px でアイコンボタンのプライマリ光を視認可能レベルに */
 /* v26.12: glow さらに強化 mix-sm→mix-md でアイコンボタン hover 時のアクション可能性視認性をクッキリ向上 */
 .btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
-.btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.16: box-shadow: none → primary-tinted "pressed-in" inset 3px。透明背景アイコンボタンに primary mix-xs の薄紫 inset を加えて press 中も微かに primary tint が残り、scale press + brightness と合わせて視覚的なクリック感を強化 */
+.btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .btn-icon:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ── 編集ボタン ホバー洗練 (v17.1) ─────────────────── */
@@ -7309,7 +7313,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .btn-success { background: var(--success); color: var(--white); border: none; box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
 /* v26.11: hover も inset 白ハイライト維持（0.2→0.22 強化）。primary v26.10 と完全対称 */
 .btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: none; }
+/* v28.16: box-shadow: none → income-deep tinted "pressed-in depression" inset。上端 dark inset 4px で押し込まれた凹み感 + 下端 white inset 1px で底部リバウンド光沢を獲得し、btn-primary :active と完全対称な physical な押下感を実現 */
+.btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
 /* ダークモード対応（自動：CSS変数使用済みにつき追加対応不要） */
 [data-theme="dark"] .goal-emoji-btn { background: var(--surface-2); }
@@ -34972,6 +34977,13 @@ textarea:focus::placeholder {
 
 /* ⑥ empty-month-btn dark enhanced hover glow（primary-end mix-lg + text-shadow） */
 [data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+
+/* v28.16: dark mode :active "pressed-in depression" inset shadow ladder — light :active で primary/expense/income-deep tinted depression を獲得した同パターンの dark 強化版。primary-end/expense-end/income-end への切替で dark surface 上でも凹み陰影と底部リバウンドが視認可能。 */
+[data-theme="dark"] .btn-primary:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .btn-ghost:active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-danger:active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-icon:active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .btn-success:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-end) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
