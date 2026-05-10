@@ -2084,6 +2084,63 @@ select:focus:not(:focus-visible) {
     0 2px 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
   border-color: color-mix(in srgb, var(--primary-end) var(--mix-lg), var(--border-strong));
 }
+/* v28.30: チャート視覚改善#6 — chart-card top edge に primary→primary-end gradient accent bar を獲得（::before）。
+   idle: width 28% / height 2px / opacity 0.5 / center 配置で「ここはチャートカード」を常時 subtle に表明、
+   hover: width 100% / height 3px / opacity 1 + box-shadow primary mix-md glow + primary-end mix-sm wash の
+   二段 halo に拡張（active tab indicator 風 sweep アニメーション）。light は primary→primary-end の正順、
+   dark は primary-end→primary の inverse gradient で statement を強化。chart-card は他の .card と差別化される
+   visual identity を獲得し、ユーザーが「クリック可能なチャートはどれか」を idle 状態でも一目で識別可能に。
+   .card に position:relative が無いので chart-card に明示付与。border-radius nano で bar 端を微妙に丸めて
+   ピル感、margin 0 で card top edge にぴったり flush。prefers-reduced-motion で width/height transition のみ
+   無効化（opacity transition と visual は維持）。 */
+.chart-card { position: relative; }
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--primary) 35%,
+    var(--primary-end) 65%,
+    transparent 100%
+  );
+  border-radius: 0 0 var(--radius-nano) var(--radius-nano);
+  opacity: 0.5;
+  pointer-events: none;
+  transition:
+    width var(--dur-base) var(--ease-out),
+    height var(--dur-base) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+[data-theme="dark"] .chart-card::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--primary-end) 35%,
+    var(--primary) 65%,
+    transparent 100%
+  );
+  opacity: 0.6;
+}
+.chart-card:hover::before {
+  width: 100%;
+  height: 3px;
+  opacity: 1;
+  box-shadow:
+    0 2px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .chart-card:hover::before {
+  box-shadow:
+    0 2px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+}
 @keyframes chart-glow-breathe {
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50%      { opacity: 0.95; transform: scale(1.06); }
@@ -2100,6 +2157,7 @@ select:focus:not(:focus-visible) {
   .chart-wrap:hover::after,
   .chart-card:hover .chart-wrap::after { animation: none; }
   .chart-card:hover .card-title { transform: none; }
+  .chart-card::before { transition: opacity var(--dur-base) var(--ease-out); }
 }
 .charts-row > .card { min-width: 0; }
 .chart-h-sm { height: var(--size-chart-sm); }
