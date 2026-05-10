@@ -10963,8 +10963,9 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .dow-stat-card:hover  { box-shadow: var(--shadow-md); transform: translateY(var(--translate-lift-sm)); }
 /* v22.70: 最多/最少支出カード タイプ別ホバーglow */
 /* v26.77: hover にも inset 0.22 を追加（rest 0.18 → hover +0.04 で持ち上がるほど上端の光が強まる v26.63 同パターン） */
-.dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v28.08: hover-only typed accent bar（inset 3px 0 0 white）追加 — gradient bg 上に white solid bar が立ち上がる */
+.dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 .dow-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* 装飾サークル */
 .dow-stat-card::before,
@@ -11333,10 +11334,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-deep), var(--warning)); }
-/* v22.68: タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持 */
-.fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.fv-stat-var:hover   { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.fv-stat-rate:hover  { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v22.68: タイプ別ホバーカラーグロー / v26.64: hover 時も inset 上端白光沢を維持 / v28.08: hover-only typed accent bar（inset 3px 0 0 white）追加 — gradient bg 上に white solid bar が立ち上がる */
+.fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.fv-stat-var:hover   { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--success) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.fv-stat-rate:hover  { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--warning) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 /* デコレーションサークル */
 .fv-stat-card::after {
   content: '';
@@ -12372,12 +12373,12 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 [data-theme="dark"] .hm-stat-card:nth-child(2) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--danger-text) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
 [data-theme="dark"] .hm-stat-card:nth-child(3) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--warning) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
 [data-theme="dark"] .hm-stat-card:nth-child(4) { background: linear-gradient(var(--grad-diagonal), color-mix(in srgb, var(--success) var(--mix-xs), var(--surface)) 0%, var(--surface) 100%); }
-/* v22.64: hm-stat-card タイプ別ホバーカラーグロー */
+/* v22.64: hm-stat-card タイプ別ホバーカラーグロー / v28.08: hover-only typed accent bar（inset 3px 0 0 typed-color）追加 — light bg 上にカテゴリ色 solid bar が立ち上がる */
 .hm-stat-card:hover { transform: translateY(var(--translate-lift-xs)); }
-.hm-stat-card:nth-child(1):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
-.hm-stat-card:nth-child(2):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); }
-.hm-stat-card:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
-.hm-stat-card:nth-child(4):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent); }
+.hm-stat-card:nth-child(1):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); }
+.hm-stat-card:nth-child(2):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--danger-text); }
+.hm-stat-card:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
+.hm-stat-card:nth-child(4):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
 .hm-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .hm-stat-label {
@@ -34552,16 +34553,16 @@ textarea:focus::placeholder {
 [data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
 
 /* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） / v26.77: ダーク hover も inset 上端白光沢を維持 */
-[data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑥ dow-stat-min dark enhanced hover outer glow（income-end mix-md 0 6px 20px） / v26.77: ダーク hover も inset 上端白光沢を維持 */
-[data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑦ fv-stat-fixed dark enhanced hover outer glow（primary-end mix-md 0 6px 20px） / v26.64: ダーク hover も inset 上端白光沢を維持 */
-[data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .fv-stat-fixed:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑧ fv-stat-var dark enhanced hover outer glow（income-end mix-md 0 6px 20px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .fv-stat-var:hover { box-shadow: var(--shadow-hover-md), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ============================================================
    Sprint #881 (v24.85): yoy-summary-item-dark-hover-outer-glow＋ct-stat-card-dark-hover-outer-glow＋fv-stat-rate-dark-hover-outer-glow＋sub-widget-item-dark-hover-outer-glow×3＋pt-widget-item-dark-hover-outer-glow＋wish-widget-item-dark-hover-outer-glow
@@ -34605,7 +34606,7 @@ textarea:focus::placeholder {
 [data-theme="dark"] .ct-stat-card:hover::before { box-shadow: 0 2px 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-lg), transparent); }
 
 /* ③ fv-stat-rate dark enhanced hover outer glow（warning mix-lg 0 6px 24px） / v26.64: ダーク hover inset 維持 */
-[data-theme="dark"] .fv-stat-rate:hover { box-shadow: var(--shadow-hover-md), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+[data-theme="dark"] .fv-stat-rate:hover { box-shadow: var(--shadow-hover-md), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ④ sub-widget-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
 [data-theme="dark"] .sub-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
@@ -34739,16 +34740,16 @@ textarea:focus::placeholder {
 [data-theme="dark"] .ev-month-col:not(.ev-month-current):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--border)); }
 
 /* ⑤ hm-stat-card:nth-child(1) dark hover outer glow（primary-end mix-sm 0 4px 14px） */
-[data-theme="dark"] .hm-stat-card:nth-child(1):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 3px 0 0 var(--primary-end); }
 
 /* ⑥ hm-stat-card:nth-child(2) dark hover outer glow（expense-end mix-sm 0 4px 14px） */
-[data-theme="dark"] .hm-stat-card:nth-child(2):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent), inset 3px 0 0 var(--expense-end); }
 
 /* ⑦ hm-stat-card:nth-child(3) dark hover outer glow（warning mix-sm 0 4px 14px） */
-[data-theme="dark"] .hm-stat-card:nth-child(3):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--warning)    var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--warning)    var(--mix-sm), transparent), inset 3px 0 0 var(--warning); }
 
 /* ⑧ hm-stat-card:nth-child(4) dark hover outer glow（income-end mix-sm 0 4px 14px） */
-[data-theme="dark"] .hm-stat-card:nth-child(4):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--income-end)  var(--mix-sm), transparent), inset 3px 0 0 var(--income-end); }
 
 /* ============================================================
    Sprint #884 (v24.88): cat-card-dark-hover-outer-glow＋pt-card-dark-hover-outer-glow＋rc-item-dark-hover-outer-glow＋ch-widget-item-dark-hover-outer-glow＋debt-widget-item-dark-hover-outer-glow＋step-card-dark-hover-outer-glow＋asset-entry-row-dark-hover-outer-glow＋section-tab-dark-hover-outer-glow
