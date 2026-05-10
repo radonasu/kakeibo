@@ -1972,6 +1972,7 @@ select:focus:not(:focus-visible) {
 }
 .chart-card .chart-wrap { position: relative; }
 /* v28.25: 全チャート canvas 配下に呼吸する radial primary glow を配置 — チャート 25+ instance（dashboard donut/bar/line, analytics, forecast, debt sim, net worth, yoy, dow, cat-trend, fixed-vs-variable, payment, tag, member 等）が共通の ambient backdrop platform 上に座る統一感を獲得。chart-wrap に isolation:isolate で stacking context を境界化 + ::before に z-index:-1 + pointer-events:none で canvas ホバー/クリックを妨害せずカード背景は突き抜けない。canvas には position/z-index を付けない（Chart.js の responsive sizing と干渉しないため）。breathe アニメーション 8s で opacity 0.55→0.95 + scale 1→1.06 の脈動、ライトは primary mix-2xs/nano、ダークは primary-end mix-sm/2xs で強化。prefers-reduced-motion 対応で animation 無効化。 */
+/* v28.26: chart-wrap hover で ambient glow を intensify + breathe 加速（8s→4s）+ corner aurora dual halos（::after に対角 2 灯の primary/primary-end 静的ハロを追加）— マウス hover 時に center radial が mix-2xs/nano → mix-xs/2xs に格上げされ saturate(1.18) で発色 UP、breathe サイクルが半分に縮まり呼吸が速まる。::after は四隅対角に primary（左上）/primary-end（右下）を mix-2xs で配置（dark は両端 primary-end mix-sm）— 静的ベースで opacity 0.55、hover 時 0.95 に持ち上げ aurora borealis 風の発光獲得。chart-card hover の affordance + チャート視覚密度のさらなる richness 向上。prefers-reduced-motion でも opacity transition は維持（速度変更のみ無効化）。 */
 .chart-wrap { position: relative; isolation: isolate; }
 .chart-wrap::before {
   content: '';
@@ -1987,6 +1988,24 @@ select:focus:not(:focus-visible) {
   pointer-events: none;
   border-radius: var(--radius-sm);
   animation: chart-glow-breathe 8s var(--ease-in-out) infinite;
+  transition: background 0.5s var(--ease-out), filter 0.5s var(--ease-out), animation-duration 0.5s var(--ease-out);
+}
+.chart-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%,
+      color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 0%,
+      transparent 38%),
+    radial-gradient(circle at 100% 100%,
+      color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 0%,
+      transparent 38%);
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--radius-sm);
+  opacity: 0.55;
+  transition: opacity 0.6s var(--ease-out);
 }
 [data-theme="dark"] .chart-wrap::before {
   background: radial-gradient(
@@ -1996,12 +2015,42 @@ select:focus:not(:focus-visible) {
     transparent 72%
   );
 }
+[data-theme="dark"] .chart-wrap::after {
+  background:
+    radial-gradient(circle at 0% 0%,
+      color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 0%,
+      transparent 38%),
+    radial-gradient(circle at 100% 100%,
+      color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 0%,
+      transparent 38%);
+  opacity: 0.5;
+}
+.chart-wrap:hover::before {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary) var(--mix-xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 45%,
+    transparent 75%
+  );
+  animation-duration: 4s;
+  filter: saturate(1.18);
+}
+[data-theme="dark"] .chart-wrap:hover::before {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 45%,
+    transparent 75%
+  );
+}
+.chart-wrap:hover::after { opacity: 0.95; }
 @keyframes chart-glow-breathe {
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50%      { opacity: 0.95; transform: scale(1.06); }
 }
 @media (prefers-reduced-motion: reduce) {
   .chart-wrap::before { animation: none; opacity: 0.7; }
+  .chart-wrap:hover::before { animation: none; }
 }
 .charts-row > .card { min-width: 0; }
 .chart-h-sm { height: var(--size-chart-sm); }
