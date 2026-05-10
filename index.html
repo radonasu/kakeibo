@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>�E�Ƒ��E�ƌv�E��E�</title>
+  <title>・ｽE・ｽﾆ托ｿｽ・ｽE・ｽﾆ計・ｽE・ｽ・ｽE・ｽ</title>
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -11,7 +11,7 @@
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="�E�ƌv�E��E�">
+  <meta name="apple-mobile-web-app-title" content="・ｽE・ｽﾆ計・ｽE・ｽ・ｽE・ｽ">
   <!-- iOS Touch Icons -->
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
@@ -27,7 +27,7 @@
   <link rel="apple-touch-startup-image" href="icons/splash-1170x2532.png"
     media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
 
-  <!-- �E�_�E�[�E�N�E��E��E�[�E�h FOUC�E�h�E�~�E�iCSS�E�ǂݍ��E�ݑO�E�ɑ��E��E��E�K�E�p�E�j -->
+  <!-- ・ｽE・ｽ_・ｽE・ｽ[・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽh FOUC・ｽE・ｽh・ｽE・ｽ~・ｽE・ｽiCSS・ｽE・ｽﾇみ搾ｿｽ・ｽE・ｽﾝ前・ｽE・ｽﾉ托ｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽK・ｽE・ｽp・ｽE・ｽj -->
   <script>
     (function(){
       var t = localStorage.getItem('kakeibo-theme');
@@ -35,109 +35,109 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=28.16">
+  <link rel="stylesheet" href="css/style.css?v=28.17">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <!-- Supabase SDK�E�i�E�N�E��E��E�E�E�h�E��E��E��E��E�E�E�F�E�ؗp�E�j -->
+  <!-- Supabase SDK・ｽE・ｽi・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE・ｽE・ｽF・ｽE・ｽﾘ用・ｽE・ｽj -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
 <div id="app">
 
-  <!-- �E��E��E��E��E��E� �E�T�E�C�E�h�E�o�E�[ �E��E��E��E��E��E� -->
-  <nav id="sidebar" aria-label="�E��E��E�C�E��E��E�i�E�r�E�Q�E�[�E�V�E��E��E��E�">
+  <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽT・ｽE・ｽC・ｽE・ｽh・ｽE・ｽo・ｽE・ｽ[ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
+  <nav id="sidebar" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽi・ｽE・ｽr・ｽE・ｽQ・ｽE・ｽ[・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ">
     <div id="sidebar-brand">
       <div class="brand-row">
         <div class="brand-icon" aria-hidden="true">??</div>
-        <span class="brand-name">�E�Ƒ��E�ƌv�E��E�</span>
-        <button class="btn-dark-toggle" id="dark-toggle-side" title="�E�_�E�[�E�N�E��E��E�[�E�h�E�ؑ�" aria-label="�E�_�E�[�E�N�E��E��E�[�E�h�E�ؑ�">??</button>
+        <span class="brand-name">・ｽE・ｽﾆ托ｿｽ・ｽE・ｽﾆ計・ｽE・ｽ・ｽE・ｽ</span>
+        <button class="btn-dark-toggle" id="dark-toggle-side" title="・ｽE・ｽ_・ｽE・ｽ[・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽﾘ托ｿｽ" aria-label="・ｽE・ｽ_・ｽE・ｽ[・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽﾘ托ｿｽ">??</button>
       </div>
-      <!-- �E�A�E�J�E�E�E��E��E�g�E�ؑփo�E�[�E�iJS�E�ŕ`�E��E�j -->
-      <div id="account-bar" role="group" aria-label="�E�A�E�J�E�E�E��E��E�g�E�ؑ�"></div>
+      <!-- ・ｽE・ｽA・ｽE・ｽJ・ｽE・ｽE・ｽE・ｽ・ｽE・ｽ・ｽE・ｽg・ｽE・ｽﾘ替バ・ｽE・ｽ[・ｽE・ｽiJS・ｽE・ｽﾅ描・ｽE・ｽ・ｽE・ｽj -->
+      <div id="account-bar" role="group" aria-label="・ｽE・ｽA・ｽE・ｽJ・ｽE・ｽE・ｽE・ｽ・ｽE・ｽ・ｽE・ｽg・ｽE・ｽﾘ托ｿｽ"></div>
     </div>
 
-    <div id="sidebar-nav" role="group" aria-label="�E�y�E�[�E�W�E�i�E�r�E�Q�E�[�E�V�E��E��E��E�">
+    <div id="sidebar-nav" role="group" aria-label="・ｽE・ｽy・ｽE・ｽ[・ｽE・ｽW・ｽE・ｽi・ｽE・ｽr・ｽE・ｽQ・ｽE・ｽ[・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ">
       <button class="nav-item active" data-page="dashboard">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�_�E�b�E�V�E��E��E�{�E�[�E�h
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ_・ｽE・ｽb・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ{・ｽE・ｽ[・ｽE・ｽh
       </button>
       <button class="nav-item" data-page="transactions">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�x�E�ꗁE      </button>
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ齬・      </button>
       <button class="nav-item" data-page="reports">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�|�E�[�E�g
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ|・ｽE・ｽ[・ｽE・ｽg
       </button>
       <button class="nav-item" data-page="categories">
-        <span class="nav-icon" aria-hidden="true">???</span> �E�J�E�e�E�S�E��E�
+        <span class="nav-icon" aria-hidden="true">???</span> ・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ
       </button>
       <button class="nav-item" data-page="assets">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�Y�E�Ǘ�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽY・ｽE・ｽﾇ暦ｿｽ
       </button>
       <button class="nav-item" data-page="goals">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�~�E�ڕW
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ~・ｽE・ｽﾚ標
       </button>
       <button class="nav-item" data-page="calendar">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�J�E��E��E��E��E�_�E�[
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ_・ｽE・ｽ[
       </button>
       <button class="nav-item" data-page="subscriptions">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�T�E�u�E�X�E�N�E�Ǘ�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽT・ｽE・ｽu・ｽE・ｽX・ｽE・ｽN・ｽE・ｽﾇ暦ｿｽ
       </button>
       <button class="nav-item" data-page="points">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�|�E�C�E��E��E�g�E�Ǘ�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ|・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽg・ｽE・ｽﾇ暦ｿｽ
       </button>
       <button class="nav-item" data-page="wishlist">
-        <span class="nav-icon" aria-hidden="true">???</span> �E�ق��E��E��E��E��E��E�
+        <span class="nav-icon" aria-hidden="true">???</span> ・ｽE・ｽﾙゑｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ
       </button>
       <button class="nav-item" data-page="challenges">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�ߖ�`�E��E��E��E��E��E��E�W
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽﾟ厄ｿｽ`・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽW
       </button>
       <button class="nav-item" data-page="debts">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�[�E��E��E�Ǘ�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾇ暦ｿｽ
       </button>
       <button class="nav-item" data-page="events">
-        <span class="nav-icon" aria-hidden="true">??</span> �E��E��E�x�E�\�E��E�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ\・ｽE・ｽ・ｽE・ｽ
       </button>
       <button class="nav-item" data-page="settings">
-        <span class="nav-icon" aria-hidden="true">??</span> �E�ݒ�
+        <span class="nav-icon" aria-hidden="true">??</span> ・ｽE・ｽﾝ抵ｿｽ
       </button>
     </div>
 
-    <!-- �E��E��E�[�E�U�E�[�E��E��E�iJS�E�ŕ`�E��E�j -->
+    <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽU・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ・ｽE・ｽiJS・ｽE・ｽﾅ描・ｽE・ｽ・ｽE・ｽj -->
     <div id="sidebar-footer" class="sidebar-footer"></div>
   </nav>
 
-  <!-- �E�T�E�C�E�h�E�o�E�[�E�I�E�[�E�o�E�[�E��E��E�C�E�i�E��E��E�o�E�C�E��E��E�F�E�^�E�b�E�v�E�ŕ��E��E�j-->
+  <!-- ・ｽE・ｽT・ｽE・ｽC・ｽE・ｽh・ｽE・ｽo・ｽE・ｽ[・ｽE・ｽI・ｽE・ｽ[・ｽE・ｽo・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ・ｽE・ｽC・ｽE・ｽi・ｽE・ｽ・ｽE・ｽ・ｽE・ｽo・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽF・ｽE・ｽ^・ｽE・ｽb・ｽE・ｽv・ｽE・ｽﾅ閉ゑｿｽ・ｽE・ｽ・ｽE・ｽj-->
   <div id="sidebar-overlay" role="presentation" aria-hidden="true"></div>
 
-  <!-- �E��E��E��E��E��E� �E��E��E�C�E��E��E�G�E��E��E�A �E��E��E��E��E��E� -->
+  <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽG・ｽE・ｽ・ｽE・ｽ・ｽE・ｽA ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
   <div id="main-wrapper">
 
     <header id="mobile-header" role="banner">
-      <button id="hamburger" aria-label="�E��E��E�j�E��E��E�[�E��E��E�J�E��E�" aria-expanded="false" aria-controls="sidebar">?</button>
-      <span id="mobile-title">�E�Ƒ��E�ƌv�E��E�</span>
-      <!-- �E�N�E��E��E�E�E�h�E��E��E��E��E�X�E�e�E�[�E�^�E�X�E�C�E��E��E�W�E�P�E�[�E�^�E�[ -->
-      <span id="sync-status-dot-header" class="header-sync-dot" title="�E�N�E��E��E�E�E�h�E��E��E��E�: �E��E��E�ڑ�" role="status" aria-label="�E�N�E��E��E�E�E�h�E��E��E��E�: �E��E��E�ڑ�"></span>
-      <!-- �E�ʒm�E�Z�E��E��E�^�E�[�E�x�E��E��E�{�E�^�E��E� (v6.8) -->
-      <button class="btn-notif-bell" id="notif-bell-btn" title="�E�ʒm�E�Z�E��E��E�^�E�[" aria-label="�E�ʒm�E�Z�E��E��E�^�E�[" aria-haspopup="true" aria-expanded="false">
+      <button id="hamburger" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽj・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽ" aria-expanded="false" aria-controls="sidebar">?</button>
+      <span id="mobile-title">・ｽE・ｽﾆ托ｿｽ・ｽE・ｽﾆ計・ｽE・ｽ・ｽE・ｽ</span>
+      <!-- ・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽX・ｽE・ｽe・ｽE・ｽ[・ｽE・ｽ^・ｽE・ｽX・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽW・ｽE・ｽP・ｽE・ｽ[・ｽE・ｽ^・ｽE・ｽ[ -->
+      <span id="sync-status-dot-header" class="header-sync-dot" title="・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ: ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾚ托ｿｽ" role="status" aria-label="・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ: ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾚ托ｿｽ"></span>
+      <!-- ・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[・ｽE・ｽx・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ{・ｽE・ｽ^・ｽE・ｽ・ｽE・ｽ (v6.8) -->
+      <button class="btn-notif-bell" id="notif-bell-btn" title="・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[" aria-label="・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[" aria-haspopup="true" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <span class="notif-bell-badge" id="notif-bell-badge" aria-label="�E��E��E�ǒʒm�E��E��E��E�" style="display:none"></span>
+        <span class="notif-bell-badge" id="notif-bell-badge" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾇ通知・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ" style="display:none"></span>
       </button>
-      <button class="btn-dark-toggle" id="dark-toggle-mobile" title="�E�_�E�[�E�N�E��E��E�[�E�h�E�ؑ�" aria-label="�E�_�E�[�E�N�E��E��E�[�E�h�E�ؑ�">??</button>
+      <button class="btn-dark-toggle" id="dark-toggle-mobile" title="・ｽE・ｽ_・ｽE・ｽ[・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽﾘ托ｿｽ" aria-label="・ｽE・ｽ_・ｽE・ｽ[・ｽE・ｽN・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽﾘ托ｿｽ">??</button>
     </header>
 
-    <!-- �E�ʒm�E�Z�E��E��E�^�E�[�E�p�E�l�E��E� (v6.8) -->
-    <div id="notif-panel" class="notif-panel" role="dialog" aria-modal="false" aria-label="�E�ʒm�E�Z�E��E��E�^�E�[" style="display:none">
+    <!-- ・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[・ｽE・ｽp・ｽE・ｽl・ｽE・ｽ・ｽE・ｽ (v6.8) -->
+    <div id="notif-panel" class="notif-panel" role="dialog" aria-modal="false" aria-label="・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[" style="display:none">
       <div class="notif-panel-header">
-        <span class="notif-panel-title">?? �E�ʒm�E�Z�E��E��E�^�E�[</span>
-        <button class="notif-mark-read" id="notif-mark-read-btn" title="�E�S�E�Ċ��E�ǂɂ��E��E�" aria-label="�E�S�E�Ċ��E�ǂɂ��E��E�">�E�S�E�Ċ��E��E�</button>
+        <span class="notif-panel-title">?? ・ｽE・ｽﾊ知・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ^・ｽE・ｽ[</span>
+        <button class="notif-mark-read" id="notif-mark-read-btn" title="・ｽE・ｽS・ｽE・ｽﾄ奇ｿｽ・ｽE・ｽﾇにゑｿｽ・ｽE・ｽ・ｽE・ｽ" aria-label="・ｽE・ｽS・ｽE・ｽﾄ奇ｿｽ・ｽE・ｽﾇにゑｿｽ・ｽE・ｽ・ｽE・ｽ">・ｽE・ｽS・ｽE・ｽﾄ奇ｿｽ・ｽE・ｽ・ｽE・ｽ</button>
       </div>
       <div class="notif-panel-body" id="notif-panel-body">
-        <!-- JS�E�ŕ`�E��E� -->
+        <!-- JS・ｽE・ｽﾅ描・ｽE・ｽ・ｽE・ｽ -->
       </div>
       <div class="notif-panel-footer" id="notif-panel-footer"></div>
     </div>
     <div id="notif-overlay" class="notif-overlay" aria-hidden="true" style="display:none"></div>
 
     <main id="main-content" role="main">
-      <!-- �E�X�E�P�E��E��E�g�E��E��E��E��E�[�E�f�E�B�E��E��E�O�E�iJS�E��E��E��E��E��E��E�O�E�ɕ\�E��E��E�jv5.24 -->
+      <!-- ・ｽE・ｽX・ｽE・ｽP・ｽE・ｽ・ｽE・ｽ・ｽE・ｽg・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽf・ｽE・ｽB・ｽE・ｽ・ｽE・ｽ・ｽE・ｽO・ｽE・ｽiJS・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽO・ｽE・ｽﾉ表・ｽE・ｽ・ｽE・ｽ・ｽE・ｽjv5.24 -->
       <div class="sk-header">
         <div class="sk-bone sk-bone-title" style="width:180px"></div>
         <div class="sk-header-btns">
@@ -166,71 +166,71 @@
 
   </div>
 
-  <!-- �E��E��E��E��E��E� �E�ꊁE���E��E��E�o�E�[�E�i#main-content�E�O�E�ɔz�E�u: transform�E�̉e�E��E��E��E��E�󂯂Ȃ��E��E��E�߁j �E��E��E��E��E��E� -->
+  <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ鼕・・ｽ・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽo・ｽE・ｽ[・ｽE・ｽi#main-content・ｽE・ｽO・ｽE・ｽﾉ配・ｽE・ｽu: transform・ｽE・ｽﾌ影・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽｯなゑｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾟ） ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
   <div id="bulk-bar"></div>
 
-  <!-- �E��E��E��E��E��E� �E�O�E��E��E�[�E�o�E��E�FAB�E�i�E�S�E�y�E�[�E�W�E��E��E�ʁE�E�N�E�C�E�b�E�N�E�ǉ��E�j v8.5: SVG�E�A�E�C�E�R�E��E��E��E� �E��E��E��E��E��E� -->
-  <button id="global-fab" title="�E��E��E�x�E��E�ǉ�" aria-label="�E��E��E�x�E��E�ǉ�">
+  <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽO・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽo・ｽE・ｽ・ｽE・ｽFAB・ｽE・ｽi・ｽE・ｽS・ｽE・ｽy・ｽE・ｽ[・ｽE・ｽW・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾊ・・ｽE・ｽN・ｽE・ｽC・ｽE・ｽb・ｽE・ｽN・ｽE・ｽﾇ会ｿｽ・ｽE・ｽj v8.5: SVG・ｽE・ｽA・ｽE・ｽC・ｽE・ｽR・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
+  <button id="global-fab" title="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ・ｽE・ｽﾇ会ｿｽ" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ・ｽE・ｽﾇ会ｿｽ">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
   </button>
 
-  <!-- �E��E��E��E��E��E� �E�{�E�g�E��E��E�i�E�r�E�i�E��E��E�o�E�C�E��E��E�jv8.5: SVG�E�A�E�C�E�R�E��E��E��E��E�E5�E�A�E�C�E�e�E��E��E��E��E��E� �E��E��E��E��E��E� -->
-  <nav id="bottom-nav" aria-label="�E��E��E�o�E�C�E��E��E�i�E�r�E�Q�E�[�E�V�E��E��E��E�">
-    <button class="bottom-nav-item active" data-page="dashboard" aria-label="�E�_�E�b�E�V�E��E��E�{�E�[�E�h">
+  <!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ{・ｽE・ｽg・ｽE・ｽ・ｽE・ｽ・ｽE・ｽi・ｽE・ｽr・ｽE・ｽi・ｽE・ｽ・ｽE・ｽ・ｽE・ｽo・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽjv8.5: SVG・ｽE・ｽA・ｽE・ｽC・ｽE・ｽR・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽE5・ｽE・ｽA・ｽE・ｽC・ｽE・ｽe・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
+  <nav id="bottom-nav" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽo・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽi・ｽE・ｽr・ｽE・ｽQ・ｽE・ｽ[・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ">
+    <button class="bottom-nav-item active" data-page="dashboard" aria-label="・ｽE・ｽ_・ｽE・ｽb・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ{・ｽE・ｽ[・ｽE・ｽh">
       <span class="bottom-nav-icon" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </span>
-      <span class="bottom-nav-label">�E�z�E�[�E��E�</span>
+      <span class="bottom-nav-label">・ｽE・ｽz・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ</span>
     </button>
-    <button class="bottom-nav-item" data-page="transactions" aria-label="�E��E��E�x�E�ꗁE>
+    <button class="bottom-nav-item" data-page="transactions" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ齬・>
       <span class="bottom-nav-icon" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
       </span>
-      <span class="bottom-nav-label">�E��E��E�x</span>
+      <span class="bottom-nav-label">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx</span>
     </button>
-    <button class="bottom-nav-item" data-page="reports" aria-label="�E��E��E�|�E�[�E�g">
+    <button class="bottom-nav-item" data-page="reports" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ|・ｽE・ｽ[・ｽE・ｽg">
       <span class="bottom-nav-icon" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
       </span>
-      <span class="bottom-nav-label">�E��E��E�|�E�[�E�g</span>
+      <span class="bottom-nav-label">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ|・ｽE・ｽ[・ｽE・ｽg</span>
     </button>
-    <button class="bottom-nav-item" data-page="categories" aria-label="�E�J�E�e�E�S�E��E�">
+    <button class="bottom-nav-item" data-page="categories" aria-label="・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ">
       <span class="bottom-nav-icon" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
       </span>
-      <span class="bottom-nav-label">�E�J�E�e�E�S�E��E�</span>
+      <span class="bottom-nav-label">・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ</span>
     </button>
-    <button class="bottom-nav-item" data-page="settings" aria-label="�E�ݒ�">
+    <button class="bottom-nav-item" data-page="settings" aria-label="・ｽE・ｽﾝ抵ｿｽ">
       <span class="bottom-nav-icon" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </span>
-      <span class="bottom-nav-label">�E�ݒ�</span>
+      <span class="bottom-nav-label">・ｽE・ｽﾝ抵ｿｽ</span>
     </button>
   </nav>
 </div>
 
-<!-- �E��E��E��E��E��E� �E�J�E��E�Ԃ��E��E��E� �E�m�E�F�E��E��E�[�E�_�E��E� (v7.7) �E��E��E��E��E��E� -->
+<!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽﾔゑｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽm・ｽE・ｽF・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ (v7.7) ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
 <div id="rc-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rc-title">
   <div class="modal-wrap rc-wrap">
     <div class="rc-header">
       <div class="rc-header-top">
         <span class="rc-header-icon">??</span>
         <div>
-          <h2 class="rc-title" id="rc-title">�E��E��E��E��E�̌J�E��E�Ԃ��E��E��E�</h2>
-          <p class="rc-sub">�E�ǉ��E��E��E��E��E��E��E��E�I�E��E�ł��E��E��E��E��E��E�</p>
+          <h2 class="rc-title" id="rc-title">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾌ繰・ｽE・ｽ・ｽE・ｽﾔゑｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</h2>
+          <p class="rc-sub">・ｽE・ｽﾇ会ｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽI・ｽE・ｽ・ｽE・ｽﾅゑｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</p>
         </div>
       </div>
-      <button class="rc-close" id="rc-close-btn" aria-label="�E���E��E�">?</button>
+      <button class="rc-close" id="rc-close-btn" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <div class="rc-body" id="rc-body"></div>
     <div class="rc-footer">
-      <button class="btn btn-ghost rc-skip-btn" id="rc-skip-btn">�E��E��E��E��E�̓X�E�L�E�b�E�v</button>
-      <button class="btn btn-primary rc-ok-btn" id="rc-ok-btn">�E�ǉ��E��E��E��E�</button>
+      <button class="btn btn-ghost rc-skip-btn" id="rc-skip-btn">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾍス・ｽE・ｽL・ｽE・ｽb・ｽE・ｽv</button>
+      <button class="btn btn-primary rc-ok-btn" id="rc-ok-btn">・ｽE・ｽﾇ会ｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</button>
     </div>
   </div>
 </div>
 
-<!-- �E��E��E��E��E��E� �E��E��E��E��E�`�E�F�E�b�E�N�E�C�E��E��E��E��E�[�E�_�E��E� (v6.6) �E��E��E��E��E��E� -->
+<!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ`・ｽE・ｽF・ｽE・ｽb・ｽE・ｽN・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ (v6.6) ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
 <div id="checkin-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ci-title">
   <div class="modal-wrap ci-wrap">
     <div class="ci-header">
@@ -239,21 +239,21 @@
         <h2 class="ci-title" id="ci-title"></h2>
         <p class="ci-sub" id="ci-sub"></p>
       </div>
-      <button class="ci-close" id="ci-close-btn" aria-label="�E���E��E�">?</button>
+      <button class="ci-close" id="ci-close-btn" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <div class="ci-body" id="ci-body"></div>
     <div class="ci-footer">
-      <button class="btn btn-primary ci-ok-btn" id="ci-ok-btn">�E��E��E��E��E��E��E��E��E��E�΂낤�E�I</button>
+      <button class="btn btn-primary ci-ok-btn" id="ci-ok-btn">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾎろう・ｽE・ｽI</button>
     </div>
   </div>
 </div>
 
-<!-- �E��E��E��E��E��E� �E��E��E�x�E�\�E�胂�[�E�_�E��E��E�iv5.90�E�j�E��E��E��E��E��E� -->
+<!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ\・ｽE・ｽ閭ゑｿｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ・ｽE・ｽiv5.90・ｽE・ｽj・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
 <div id="ev-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ev-modal-title">
   <div class="modal-wrap">
     <div class="modal-header">
-      <h2 class="modal-title" id="ev-modal-title">�E��E��E�x�E�\�E��E��E�ǉ�</h2>
-      <button class="modal-close" onclick="closeEventModal()" aria-label="�E���E��E�">?</button>
+      <h2 class="modal-title" id="ev-modal-title">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽx・ｽE・ｽ\・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾇ会ｿｽ</h2>
+      <button class="modal-close" onclick="closeEventModal()" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <form id="ev-form" onsubmit="event.preventDefault(); saveEventForm();">
       <input type="hidden" id="ev-id">
@@ -261,12 +261,12 @@
       <input type="hidden" id="ev-color-selected" value="#6366f1">
 
       <div class="form-group">
-        <label>�E��E��E�O</label>
-        <input type="text" id="ev-name" placeholder="�E��E�: �E�ċx�E�ݗ��E�s" maxlength="40" required>
+        <label>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽO</label>
+        <input type="text" id="ev-name" placeholder="・ｽE・ｽ・ｽE・ｽ: ・ｽE・ｽﾄ休・ｽE・ｽﾝ暦ｿｽ・ｽE・ｽs" maxlength="40" required>
       </div>
 
       <div class="form-group">
-        <label>�E�G�E��E��E��E�</label>
+        <label>・ｽE・ｽG・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</label>
         <div class="ev-emoji-row">
           <span class="ev-emoji-preview-box" id="ev-emoji-preview">??</span>
           <div id="ev-emoji-grid" class="ev-emoji-grid"></div>
@@ -274,20 +274,20 @@
       </div>
 
       <div class="form-group">
-        <label>�E�J�E��E��E�[</label>
+        <label>・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[</label>
         <div id="ev-color-swatches" class="color-swatch-row"></div>
       </div>
 
       <div class="form-group">
-        <label>�E��E��E�</label>
+        <label>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</label>
         <div class="type-toggle">
-          <label><input type="radio" id="ev-type-expense" name="ev-type" value="expense"> �E�x�E�o</label>
-          <label><input type="radio" id="ev-type-income"  name="ev-type" value="income">  �E��E��E��E�</label>
+          <label><input type="radio" id="ev-type-expense" name="ev-type" value="expense"> ・ｽE・ｽx・ｽE・ｽo</label>
+          <label><input type="radio" id="ev-type-income"  name="ev-type" value="income">  ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</label>
         </div>
       </div>
 
       <div class="form-group">
-        <label>�E�\�E��E��E��E�z</label>
+        <label>・ｽE・ｽ\・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽz</label>
         <div class="amount-input-wrap">
           <span class="amount-prefix">\</span>
           <input type="number" id="ev-amount" placeholder="0" min="0">
@@ -295,59 +295,59 @@
       </div>
 
       <div class="form-group">
-        <label>�E�\�E�茁E/label>
+        <label>・ｽE・ｽ\・ｽE・ｽ闌・/label>
         <input type="month" id="ev-month">
       </div>
 
       <div class="form-group">
-        <label>�E�J�E�e�E�S�E��E�</label>
-        <select id="ev-cat"><option value="">�E�J�E�e�E�S�E��E��E�Ȃ�</option></select>
+        <label>・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ</label>
+        <select id="ev-cat"><option value="">・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾈゑｿｽ</option></select>
       </div>
 
       <div class="form-group">
-        <label>�E��E��E��E�</label>
-        <input type="text" id="ev-memo" placeholder="�E�C�E�ӂ́E���E��E�" maxlength="100">
+        <label>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</label>
+        <input type="text" id="ev-memo" placeholder="・ｽE・ｽC・ｽE・ｽﾓの・・ｽ・ｽ・ｽE・ｽ・ｽE・ｽ" maxlength="100">
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-ghost" onclick="closeEventModal()">�E�L�E��E��E��E��E�Z�E��E�</button>
-        <button type="submit" class="btn btn-primary">�E�ۑ�</button>
+        <button type="button" class="btn btn-ghost" onclick="closeEventModal()">・ｽE・ｽL・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽZ・ｽE・ｽ・ｽE・ｽ</button>
+        <button type="submit" class="btn btn-primary">・ｽE・ｽﾛ托ｿｽ</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- �E��E��E��E��E��E� �E�L�E�[�E�{�E�[�E�h�E�V�E��E��E�[�E�g�E�J�E�b�E�g�E�w�E��E��E�v�E��E��E�[�E�_�E��E� (v7.9) �E��E��E��E��E��E� -->
+<!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽL・ｽE・ｽ[・ｽE・ｽ{・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽg・ｽE・ｽJ・ｽE・ｽb・ｽE・ｽg・ｽE・ｽw・ｽE・ｽ・ｽE・ｽ・ｽE・ｽv・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ (v7.9) ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ -->
 <div id="kb-help-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="kb-help-title">
   <div class="modal-wrap kb-help-wrap">
     <div class="modal-header">
-      <h2 class="modal-title" id="kb-help-title">?? �E�L�E�[�E�{�E�[�E�h�E�V�E��E��E�[�E�g�E�J�E�b�E�g</h2>
-      <button class="modal-close" id="kb-help-close" aria-label="�E���E��E�">?</button>
+      <h2 class="modal-title" id="kb-help-title">?? ・ｽE・ｽL・ｽE・ｽ[・ｽE・ｽ{・ｽE・ｽ[・ｽE・ｽh・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽg・ｽE・ｽJ・ｽE・ｽb・ｽE・ｽg</h2>
+      <button class="modal-close" id="kb-help-close" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <div class="kb-help-body">
       <div class="kb-group">
-        <div class="kb-group-title">�E��E��E�</div>
-        <div class="kb-row"><div class="kb-keys"><kbd>N</kbd></div><span>�E�V�E�K�E��E��E��E��E�ǉ�</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>/</kbd></div><span>�E��E��E��E��E��E��E��E��E�</span></div>
+        <div class="kb-group-title">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>N</kbd></div><span>・ｽE・ｽV・ｽE・ｽK・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾇ会ｿｽ</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>/</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</span></div>
       </div>
       <div class="kb-group">
-        <div class="kb-group-title">�E�i�E�r�E�Q�E�[�E�V�E��E��E��E�</div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>D</kbd></div><span>�E�_�E�b�E�V�E��E��E�{�E�[�E�h</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>T</kbd></div><span>�E��E��E��E�ꗁE/span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>R</kbd></div><span>�E��E��E�|�E�[�E�g</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>C</kbd></div><span>�E�J�E��E��E��E��E�_�E�[</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>S</kbd></div><span>�E�ݒ�</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>A</kbd></div><span>�E��E��E�Y�E�Ǘ�</span></div>
+        <div class="kb-group-title">・ｽE・ｽi・ｽE・ｽr・ｽE・ｽQ・ｽE・ｽ[・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>D</kbd></div><span>・ｽE・ｽ_・ｽE・ｽb・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ{・ｽE・ｽ[・ｽE・ｽh</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>T</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ齬・/span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>R</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ|・ｽE・ｽ[・ｽE・ｽg</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>C</kbd></div><span>・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ_・ｽE・ｽ[</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>S</kbd></div><span>・ｽE・ｽﾝ抵ｿｽ</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>G</kbd><kbd>A</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽY・ｽE・ｽﾇ暦ｿｽ</span></div>
       </div>
       <div class="kb-group">
-        <div class="kb-group-title">�E��E��E�̑�</div>
-        <div class="kb-row"><div class="kb-keys"><kbd>?</kbd></div><span>�E��E��E�̃w�E��E��E�v�E��E�\�E��E�</span></div>
-        <div class="kb-row"><div class="kb-keys"><kbd>Esc</kbd></div><span>�E��E��E�[�E�_�E��E��E��E���E��E�</span></div>
+        <div class="kb-group-title">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾌ托ｿｽ</div>
+        <div class="kb-row"><div class="kb-keys"><kbd>?</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾌヘ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽv・ｽE・ｽ・ｽE・ｽ\・ｽE・ｽ・ｽE・ｽ</span></div>
+        <div class="kb-row"><div class="kb-keys"><kbd>Esc</kbd></div><span>・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ</span></div>
       </div>
     </div>
   </div>
 </div>
-<!-- �E�O�E��E��E�t �E�h�E��E��E��E��E�_�E�E�E��E��E��E��E�[�E�_�E��E� (v8.0) -->
+<!-- ・ｽE・ｽO・ｽE・ｽ・ｽE・ｽ・ｽE・ｽt ・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ_・ｽE・ｽE・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ (v8.0) -->
 <div id="dd-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="dd-modal-title">
   <div class="modal-box dd-modal-box">
     <div class="modal-header dd-modal-header">
@@ -355,72 +355,73 @@
         <span class="dd-cat-dot" id="dd-cat-dot" aria-hidden="true"></span>
         <h2 class="modal-title" id="dd-modal-title"></h2>
       </div>
-      <button class="modal-close" id="dd-modal-close" aria-label="�E���E��E�">?</button>
+      <button class="modal-close" id="dd-modal-close" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <div class="dd-summary" id="dd-summary"></div>
     <div class="dd-list" id="dd-list"></div>
     <div class="modal-footer dd-modal-footer">
-      <button class="btn btn-ghost" id="dd-modal-close2">�E���E��E�</button>
+      <button class="btn btn-ghost" id="dd-modal-close2">・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ</button>
       <button class="btn btn-primary" id="dd-add-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        �E��E��E�̃J�E�e�E�S�E��E��E�Œǉ�
+        ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾌカ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾅ追会ｿｽ
       </button>
     </div>
   </div>
 </div>
-<!-- �E��E��E�h�E��E��E��E��E�_�E�E�E��E��E��E��E�[�E�_�E��E� (v8.6) -->
+<!-- ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽh・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ_・ｽE・ｽE・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ[・ｽE・ｽ_・ｽE・ｽ・ｽE・ｽ (v8.6) -->
 <div id="md-modal" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="md-modal-title">
   <div class="modal-box md-modal-box">
     <div class="modal-header dd-modal-header">
       <div class="md-month-nav">
-        <button class="md-nav-btn" id="md-prev-btn" aria-label="�E�O�E��E�">
+        <button class="md-nav-btn" id="md-prev-btn" aria-label="・ｽE・ｽO・ｽE・ｽ・ｽE・ｽ">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="md-month-info">
           <span class="md-calendar-icon" aria-hidden="true">??</span>
           <h2 class="modal-title" id="md-modal-title"></h2>
         </div>
-        <button class="md-nav-btn" id="md-next-btn" aria-label="�E��E��E��E�">
+        <button class="md-nav-btn" id="md-next-btn" aria-label="・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
-      <button class="modal-close" id="md-modal-close" aria-label="�E���E��E�">?</button>
+      <button class="modal-close" id="md-modal-close" aria-label="・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ">?</button>
     </div>
     <div class="md-cells" id="md-summary"></div>
     <div class="md-scroll-body">
-      <h3 class="md-section-title">�E�x�E�o�E�J�E�e�E�S�E��E��E��E��E��E�</h3>
+      <h3 class="md-section-title">・ｽE・ｽx・ｽE・ｽo・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</h3>
       <div id="md-cats" class="md-cats"></div>
-      <h3 class="md-section-title md-income-title">�E��E��E��E��E�J�E�e�E�S�E��E��E��E��E��E�</h3>
+      <h3 class="md-section-title md-income-title">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽJ・ｽE・ｽe・ｽE・ｽS・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ</h3>
       <div id="md-income-cats" class="md-cats"></div>
-      <h3 class="md-section-title">�E�ŋ߂̎��E�</h3>
+      <h3 class="md-section-title">・ｽE・ｽﾅ近の趣ｿｽ・ｽE・ｽ</h3>
       <div id="md-list"></div>
     </div>
     <div class="modal-footer dd-modal-footer">
-      <button class="btn btn-ghost" id="md-modal-close2">�E���E��E�</button>
-      <button class="btn btn-primary" id="md-view-btn">�E��E��E�̌��E��E��E��E��E��E� �E��E�</button>
+      <button class="btn btn-ghost" id="md-modal-close2">・ｽE・ｽﾂゑｿｽ・ｽE・ｽ・ｽE・ｽ</button>
+      <button class="btn btn-primary" id="md-view-btn">・ｽE・ｽ・ｽE・ｽ・ｽE・ｽﾌ鯉ｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ ・ｽE・ｽ・ｽE・ｽ</button>
     </div>
   </div>
 </div>
 
-<!-- G�E�L�E�[�E�V�E�[�E�P�E��E��E�X�E�q�E��E��E�g -->
+<!-- G・ｽE・ｽL・ｽE・ｽ[・ｽE・ｽV・ｽE・ｽ[・ｽE・ｽP・ｽE・ｽ・ｽE・ｽ・ｽE・ｽX・ｽE・ｽq・ｽE・ｽ・ｽE・ｽ・ｽE・ｽg -->
 <div id="kb-g-hint" class="kb-g-hint" aria-hidden="true">
-  <div class="kb-g-hint-top"><kbd>G</kbd><span class="kb-g-dots">�E�c</span></div>
-  <div class="kb-g-hint-sub">D=�E�_�E�b�E�V�E��E�&nbsp;&nbsp;T=�E��E��E�&nbsp;&nbsp;R=�E��E��E�|�E�[�E�g&nbsp;&nbsp;C=�E�J�E��E��E��E��E�_�E�[&nbsp;&nbsp;S=�E�ݒ�&nbsp;&nbsp;A=�E��E��E�Y</div>
+  <div class="kb-g-hint-top"><kbd>G</kbd><span class="kb-g-dots">・ｽE・ｽc</span></div>
+  <div class="kb-g-hint-sub">D=・ｽE・ｽ_・ｽE・ｽb・ｽE・ｽV・ｽE・ｽ・ｽE・ｽ&nbsp;&nbsp;T=・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ&nbsp;&nbsp;R=・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ|・ｽE・ｽ[・ｽE・ｽg&nbsp;&nbsp;C=・ｽE・ｽJ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ_・ｽE・ｽ[&nbsp;&nbsp;S=・ｽE・ｽﾝ抵ｿｽ&nbsp;&nbsp;A=・ｽE・ｽ・ｽE・ｽ・ｽE・ｽY</div>
 </div>
 
-<!-- JS: �E�ǂݍ��E�ݏ��E��E��E��E��E�d�E�v -->
-<script src="js/icons.js?v=28.16"></script>
-<script src="js/config.js?v=28.16"></script>
-<script src="js/data.js?v=28.16"></script>
-<script src="js/export.js?v=28.16"></script>
-<script src="js/charts.js?v=28.16"></script>
-<script src="js/sync.js?v=28.16"></script>
-<script src="js/app.js?v=28.16"></script>
-<!-- PWA: �E�C�E��E��E�X�E�g�E�[�E��E��E��E��E�i�E�E�E�X�E�V�E�ʒm�E�E�E�I�E�t�E��E��E�C�E��E��E�\�E��E��E�ESW�E�o�E�^ -->
-<script src="js/pwa.js?v=28.16"></script>
+<!-- JS: ・ｽE・ｽﾇみ搾ｿｽ・ｽE・ｽﾝ擾ｿｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽd・ｽE・ｽv -->
+<script src="js/icons.js?v=28.17"></script>
+<script src="js/config.js?v=28.17"></script>
+<script src="js/data.js?v=28.17"></script>
+<script src="js/export.js?v=28.17"></script>
+<script src="js/charts.js?v=28.17"></script>
+<script src="js/sync.js?v=28.17"></script>
+<script src="js/app.js?v=28.17"></script>
+<!-- PWA: ・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽX・ｽE・ｽg・ｽE・ｽ[・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ・ｽE・ｽi・ｽE・ｽE・ｽE・ｽX・ｽE・ｽV・ｽE・ｽﾊ知・ｽE・ｽE・ｽE・ｽI・ｽE・ｽt・ｽE・ｽ・ｽE・ｽ・ｽE・ｽC・ｽE・ｽ・ｽE・ｽ・ｽE・ｽ\・ｽE・ｽ・ｽE・ｽ・ｽE・ｽESW・ｽE・ｽo・ｽE・ｽ^ -->
+<script src="js/pwa.js?v=28.17"></script>
 
 </body>
 </html>
+
 
 
 
