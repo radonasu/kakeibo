@@ -5076,10 +5076,11 @@ body {
 }
 .summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 /* v22.62: サマリーカード タイプ別ホバーカラーグロー / v26.63: 各タイプ hover にも inset 0.24 維持 */
-.summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
-.summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
-.summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
-.summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+/* v28.09: hover 限定 white inset 3px accent bar 追加（gradient bg + 白テキストのため bar も white 0.55 alpha・v28.08 fv-stat/dow-stat 系と同パターン・dashboard ヒーローカード hover で左端鋭い white bar 立ち上がり） */
+.summary-card.income:hover          { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.summary-card.expense:hover         { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
+.summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 
 /* ── モーダルアニメーション ── */
 /* v26.08: backdrop-filter blur(0)→blur-sm 遷移でフォーカスプル演出 */
@@ -5996,7 +5997,8 @@ body {
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .asset-card:hover {
-  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent);
+  /* v28.09: typed inset 3px accent bar 追加（asset-accent, var(--primary) fallback で資産タイプカラーに追従する hover 左アクセントバー獲得） */
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--asset-accent, var(--primary));
   transform: translateY(var(--translate-lift-xs));
 }
 .asset-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -9983,10 +9985,10 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: fc-card-in var(--dur-long) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-/* v22.76: forecast-card ホバーカラーglow追加 */
+/* v22.76: forecast-card ホバーカラーglow追加 / v28.09: typed inset 3px accent bar 追加（fc-color, var(--primary) fallback で各予測タイプのカラーに追従する hover 左アクセントバー獲得） */
 .forecast-card:hover {
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--fc-color, var(--primary));
   border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border));
 }
 .forecast-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
@@ -33379,7 +33381,8 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの accent glow を追加。
    既存の outer glow（0 4px 14px asset-accent mix-xs）と連動し
    ホバー時に左アクセントバーが内側に向けて輝く演出に。①②③と同パターン。 */
-.asset-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent); }
+/* v28.09: cascade 勝者ルールにも typed inset 3px accent bar 追加（既存 inset 5px halo + 新規 inset 3px solid bar の 2 層構造） */
+.asset-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--asset-accent, var(--primary)); }
 
 /* 5. .debt-card:hover → inset-left box-shadow glow（debt-accent）追加
    負債カードの border-left（size-accent-bar・debt-accent color）に対して
@@ -33791,7 +33794,8 @@ textarea:focus::placeholder {
    fc-color はカテゴリ別に変化し各カードが独自カラーでホバー前から上部に奥行きを発光。
    ⑥⑦と連動し border-top accent 系カード全体の静的 inset-top 演出を統一。 */
 .forecast-card { box-shadow: inset 0 4px 10px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent); }
-.forecast-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border)); }
+/* v28.09: cascade 勝者ルールにも typed inset 3px accent bar 追加（既存 inset 0 4px top glow + 新規 inset 3px left solid bar の 2 軸構造） */
+.forecast-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--fc-color, var(--primary)); border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border)); }
 
 /* 6. .wk-widget-card → static inset-top glow（primary・mix-xs）
    週次ウィジェットカードの border-top（accent-w・primary）に常時 primary inset glow を追加（inset 0 4px 10px mix-xs）。
@@ -34296,7 +34300,7 @@ textarea:focus::placeholder {
 /* 4. [data-theme="dark"] .asset-card:hover → dark enhanced hover inset-left glow（asset-accent fallback primary-end・mix-md）
    v24.67 の hover inset-left glow（asset-accent mix-sm）のダークモード強化版。
    ①〜③と同パターンで資産カードの hover 奥行き演出を鮮明化。 */
-[data-theme="dark"] .asset-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .asset-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--asset-accent, var(--primary-end)); }
 
 /* 5. [data-theme="dark"] .debt-card:hover → dark enhanced hover inset-left glow（debt-accent fallback primary-end・mix-md）
    v24.67 の hover inset-left glow（debt-accent mix-sm）のダークモード強化版。
@@ -34541,16 +34545,16 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ① summary-card.income dark enhanced hover outer glow（income-end mix-md 0 6px 24px） / v26.63: ダーク hover も inset 0 1px 0 rgba(255,255,255,0.24) を維持し glassy 上端 sheen を保つ */
-[data-theme="dark"] .summary-card.income:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+[data-theme="dark"] .summary-card.income:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
-/* ② summary-card.expense dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
-[data-theme="dark"] .summary-card.expense:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+/* ② summary-card.expense dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 / v28.09: white inset 3px accent bar 0.65 alpha 追加 */
+[data-theme="dark"] .summary-card.expense:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
-/* ③ summary-card.balance.positive dark enhanced hover outer glow（primary-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
-[data-theme="dark"] .summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+/* ③ summary-card.balance.positive dark enhanced hover outer glow（primary-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 / v28.09: white inset 3px accent bar 0.65 alpha 追加 */
+[data-theme="dark"] .summary-card.balance.positive:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
-/* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 */
-[data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24); }
+/* ④ summary-card.balance.negative dark enhanced hover outer glow（expense-end mix-md 0 6px 24px） / v26.63: ダーク hover inset 維持 / v28.09: white inset 3px accent bar 0.65 alpha 追加 */
+[data-theme="dark"] .summary-card.balance.negative:hover { box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
 
 /* ⑤ dow-stat-max dark enhanced hover outer glow（expense-end mix-md 0 6px 20px） / v26.77: ダーク hover も inset 上端白光沢を維持 */
 [data-theme="dark"] .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.65); }
@@ -34731,7 +34735,7 @@ textarea:focus::placeholder {
 [data-theme="dark"] .ev-sum-card.ev-sum-year:hover { box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--warning-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ② forecast-card dark enhanced hover outer glow（fc-color fallback primary-end mix-md 0 4px 18px） */
-[data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
+[data-theme="dark"] .forecast-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--fc-color, var(--primary-end)); border-color: color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-mid), var(--border)); }
 
 /* ③ goal-dash-item dark enhanced hover outer glow（goal-accent fallback primary-end mix-md 0 2px 10px） */
 [data-theme="dark"] .goal-dash-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--goal-accent, var(--primary-end)); }
