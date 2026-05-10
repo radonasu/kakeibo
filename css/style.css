@@ -2097,7 +2097,8 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
-.tx-cb:active:not(:checked):not(:indeterminate) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → neutral black inset 1px depression。未チェック cb 押下時に黒 0.20 凹み陰影が立ち上がり、cb family（sb-check/ev-done-cb）と統一の物理的押下感を獲得 */
+.tx-cb:active:not(:checked):not(:indeterminate) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0,0,0,0.20); }
 .tx-cb:checked {
   background: var(--primary);
   border-color: var(--primary);
@@ -2236,7 +2237,8 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-md));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
-.tx-sort-badge:active { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.24: box-shadow: none → primary mix-sm inset 1px depression。並び替えバッジ押下時に primary 紫の凹み陰影が立ち上がり、chip family と統一 */
+.tx-sort-badge:active { transform: scale(var(--scale-rest)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .tx-sort-badge:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .tx-sort-badge svg {
   width: var(--size-sort-badge);
@@ -4158,7 +4160,8 @@ mark.tx-hl {
 }
 .stp-config-summary::-webkit-details-marker { display: none; }
 .stp-config-summary:hover  { color: var(--primary-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。設定セクション summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.stp-config-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .stp-config-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-detail-body { margin-top: var(--sp-3-5); }
 .stp-help-details { margin-top: var(--sp-3-5); }
@@ -4188,7 +4191,8 @@ mark.tx-hl {
 }
 .stp-help-details[open] .stp-help-summary::before { transform: rotate(var(--rotate-chevron)); }
 .stp-help-summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.stp-help-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。ヘルプセクション summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.stp-help-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .stp-help-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-btn-sm); }
 .stp-help-list {
   font-size: var(--fs-xs);
@@ -4346,7 +4350,8 @@ mark.tx-hl {
   color: var(--text);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
-.auth-tab:not(.active):active { background: var(--border); color: var(--text); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-sm inset 1px chip depression。非アクティブ auth タブ押下時に primary 紫の凹み陰影が立ち上がり、chip family と統一 */
+.auth-tab:not(.active):active { background: var(--border); color: var(--text); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .auth-tab:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .auth-tab.active {
   background: var(--white);
@@ -4414,7 +4419,8 @@ mark.tx-hl {
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .auth-offline-mode:hover  { color: var(--text-muted); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
-.auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。オフラインモードリンク押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.auth-offline-mode:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .auth-offline-mode:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-2xs); }
 
 /* ── PWA インストールガイド ─────────────────────────────── */
@@ -4685,7 +4691,8 @@ body {
 /* v26.07: 非アクティブナビ hover glow強化 mix-xs→mix-sm + blur 10→14px でアクティブ前段階の視認性アップ */
 .bottom-nav-item:not(.active):hover { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .bottom-nav-item:not(.active):hover .bottom-nav-icon { background: var(--surface-hover); transform: scale(var(--scale-hover-chip)); }
-.bottom-nav-item:not(.active):active { color: var(--primary); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-sm inset 1px chip depression。非アクティブボトムナビ押下時に primary 紫の凹み陰影が立ち上がり、nav/chip family と統一 */
+.bottom-nav-item:not(.active):active { color: var(--primary); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .bottom-nav-item:not(.active):active .bottom-nav-icon { background: var(--border); transform: scale(var(--scale-icon-active)); }
 
 .bottom-nav-item.active {
@@ -4922,7 +4929,8 @@ body {
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .modal-details summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
-.modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。モーダル詳細 summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.modal-details summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .modal-details summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .modal-details summary::before {
   content: '▶';
@@ -5604,7 +5612,8 @@ body {
   transform: translateY(var(--translate-lift-sm));
   box-shadow: var(--shadow-cta-hover);
 }
-.onboarding-cta:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press)); box-shadow: none; }
+/* v28.24: box-shadow: none → white fill 上の黒 inset 2px depression。オンボーディング CTA 押下時に黒 0.20 凹み陰影が立ち上がり、btn-primary :active と完全対称な physical press 感を実現 */
+.onboarding-cta:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 4px rgba(0,0,0,0.20); }
 .onboarding-cta:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end), var(--shadow-cta); }
 
 /* ── ステップカード ──────────────────────────────────────── */
@@ -7073,7 +7082,8 @@ body {
 }
 .goal-achieved-summary::-webkit-details-marker { display: none; }
 .goal-achieved-summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
-.goal-achieved-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。達成済み目標 summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.goal-achieved-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .goal-achieved-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .goal-achieved-summary::before {
   content: '▶';
@@ -7536,7 +7546,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 
 /* v26.28: カレンダーセル hover 強化 — inset 1px/mix-sm → 1.5px/mix-md（リング線が立つ）+ 外側グロー 0 2px 14px primary mix-sm 追加（ライト primary tint で「指で触れた感」が付く） */
 .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.cal-cell:active:not(.cal-empty)        { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-sm inset 1px chip depression。カレンダーセル押下時に primary 紫の凹み陰影が立ち上がり、cell/chip family と統一 */
+.cal-cell:active:not(.cal-empty)        { background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover)); filter: brightness(var(--brightness-press-mild)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .cal-cell:focus-visible:not(.cal-empty) { outline: none; box-shadow: inset 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 /* v22.66: ヒートマップセル ホバー時に元の熱色を保持しbrightnessで強調
    v26.28: brightness のみだったのに加え 0 2px 12px expense mix-2xs 外側グロー追加（赤味でアクションフィードバック獲得） */
@@ -8474,7 +8485,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .sub-inactive-section summary:hover  { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
-.sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。非アクティブサブカード summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、summary family と統一 */
+.sub-inactive-section summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .sub-inactive-section summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .sub-inactive-section summary::before { content: '▶'; font-size: var(--fs-2xs); letter-spacing: var(--ls-normal); line-height: var(--lh-none); transition: transform var(--dur-base) var(--ease-out); }
 .sub-inactive-section[open] summary::before { transform: rotate(var(--rotate-chevron)); }
@@ -9767,7 +9779,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .wl-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。ウィッシュリストアーカイブ summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、archive summary family と統一 */
+.wl-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .wl-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .wl-archive-summary::-webkit-details-marker { display: none; }
 .wl-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); letter-spacing: var(--ls-normal); line-height: var(--lh-none); transition: transform var(--dur-base) var(--ease-out); flex-shrink: 0; }
@@ -10841,7 +10854,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .ch-archive-summary:hover  { color: var(--text); border-color: var(--border-strong); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.ch-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。チャレンジアーカイブ summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、archive summary family と統一 */
+.ch-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .ch-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-archive-summary::-webkit-details-marker { display: none; }
 .ch-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); letter-spacing: var(--ls-normal); line-height: var(--lh-none); transition: transform var(--dur-base) var(--ease-out); flex-shrink: 0; }
@@ -12563,7 +12577,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   z-index: var(--z-raise);
   position: relative;
 }
-.hm-cell:active:not(.hm-out):not(.hm-legend-cell)        { transform: scale(var(--scale-hm-active)); z-index: var(--z-raise); position: relative; filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → neutral black inset 1px depression。ヒートマップセル押下時に黒 0.20 凹み陰影が立ち上がり、cell family と統一（heat-1〜4 の色面に依存しない neutral inset で安全に視認性確保） */
+.hm-cell:active:not(.hm-out):not(.hm-legend-cell)        { transform: scale(var(--scale-hm-active)); z-index: var(--z-raise); position: relative; filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0,0,0,0.20); }
 .hm-cell:focus-visible:not(.hm-out):not(.hm-legend-cell) { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); z-index: var(--z-raise); position: relative; }
 /* レベル別ホバーグロー */
 .hm-lv0:hover:not(.hm-legend-cell) { box-shadow: 0 1px 6px color-mix(in srgb, var(--text) var(--mix-xs), transparent); }
@@ -12866,7 +12881,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .debt-archive-summary:hover { color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
-.debt-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → primary mix-xs inset 1px text-trigger depression。負債アーカイブ summary 折りたたみトリガー押下時に primary 紫の薄い凹み陰影が立ち上がり、archive summary family と統一 */
+.debt-archive-summary:active { opacity: var(--opacity-mild); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .debt-archive-summary:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); border-radius: var(--radius-sm); }
 .debt-archive-summary::-webkit-details-marker { display: none; }
 .debt-archive-summary::before { content: '▶'; font-size: var(--fs-2xs); letter-spacing: var(--ls-normal); line-height: var(--lh-none); transition: transform var(--dur-base) var(--ease-out); flex-shrink: 0; }
@@ -13262,7 +13278,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
-.sb-check:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → neutral black inset 1px depression。未チェック sb-check 押下時に黒 0.20 凹み陰影が立ち上がり、cb family（tx-cb/ev-done-cb）と統一の物理的押下感を獲得 */
+.sb-check:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0,0,0,0.20); }
 .sb-check:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sb-check:checked {
   background: var(--primary);
@@ -13681,7 +13698,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 .ev-done-cb:checked::after { transform: rotate(var(--rotate-cb-mark)) scale(var(--scale-rest)); }
 .ev-done-cb:hover:not(:checked) { border-color: var(--primary); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.ev-done-cb:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.24: box-shadow: none → neutral black inset 1px depression。未チェック ev-done-cb 押下時に黒 0.20 凹み陰影が立ち上がり、cb family（tx-cb/sb-check）と統一の物理的押下感を獲得 */
+.ev-done-cb:active:not(:checked) { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0,0,0,0.20); }
 .ev-done-cb:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 @keyframes ev-cb-pop {
   0%   { transform: scale(var(--scale-anim-ev-cb)); }
@@ -35195,6 +35213,26 @@ textarea:focus::placeholder {
 [data-theme="dark"] .qa-toggle-btn:active              { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 [data-theme="dark"] .date-quick-btn:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 [data-theme="dark"] .md-nav-btn:active:not(:disabled)  { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+
+/* v28.24: dark mode 第7陣 — cb/summary/nav/cell/auth/onboarding 残余 18 selector :active depression — checkbox family 4 (tx-cb/sb-check/ev-done-cb) + heatmap cell (hm-cell) は black mix-md 1px neutral depression（dark surface での透明 cb / 多色 heatmap 上の凹み視認性を確保）、chip family 4 (tx-sort-badge/cal-cell/bottom-nav-item/auth-tab) は primary-end mix-md 1px chip depression、summary family 9 (stp-config/stp-help/modal-details/goal-achieved/sub-inactive/wl-archive/ch-archive/debt-archive/auth-offline-mode) は primary-end mix-sm 1px text-trigger depression（dark での折りたたみトリガー薄 chip）、onboarding-cta は white fill 上 black mix-lg 2px 強 depression（fill btn family 統一）。全て -end fallback により dark surface での凹み陰影が鮮明化、cb-family / chip-family / summary-family / fill-btn-family と light に対称。これで v28.16〜v28.23 の 138 surface variant に 18 加わり、累計 156 surface variant が pressed-in depression 統一。 */
+[data-theme="dark"] .tx-cb:active:not(:checked):not(:indeterminate) { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .sb-check:active:not(:checked)                  { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .ev-done-cb:active:not(:checked)                { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .hm-cell:active:not(.hm-out):not(.hm-legend-cell) { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .tx-sort-badge:active                           { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .cal-cell:active:not(.cal-empty)                { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .bottom-nav-item:not(.active):active            { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .auth-tab:not(.active):active                   { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .stp-config-summary:active                      { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .stp-help-summary:active                        { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .modal-details summary:active                   { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .goal-achieved-summary:active                   { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .sub-inactive-section summary:active            { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .wl-archive-summary:active                      { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-archive-summary:active                      { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .debt-archive-summary:active                    { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .auth-offline-mode:active                       { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
+[data-theme="dark"] .onboarding-cta:active                          { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
