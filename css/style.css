@@ -5624,8 +5624,8 @@ body {
 .onboarding-steps .step-card:nth-child(3) { animation-delay: calc(2 * var(--dur-stagger-xl)); }
 .step-card:hover {
   transform: translateY(var(--translate-lift-md));
-  /* v22.75: primaryグロー追加 */
-  box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v22.75: primaryグロー追加 + v28.11 hover-only typed accent bar (inset 3px 0 0 primary) */
+  box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary);
   border-color: var(--primary);
 }
 .step-card:active        { transform: scale(var(--scale-card-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
@@ -5731,7 +5731,7 @@ body {
 /* ダークモード */
 [data-theme="dark"] .step-card { background: var(--surface); border-color: var(--border); }
 [data-theme="dark"] .step-num { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); color: var(--primary-end); }
-[data-theme="dark"] .step-card:hover { border-color: var(--primary-end); }
+[data-theme="dark"] .step-card:hover { border-color: var(--primary-end); box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 3px 0 0 var(--primary-end); } /* v28.11 hover-only typed accent bar */
 [data-theme="dark"] .empty-month-btn { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); color: var(--primary-end); }
 [data-theme="dark"] .empty-month-btn:hover { background: color-mix(in srgb, var(--primary) var(--mix-lg), transparent); }
 
@@ -9139,7 +9139,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 }
 .health-score-card:hover {
   transform: translateY(var(--translate-lift-xs));
-  box-shadow: var(--shadow-card-hover), 0 6px 24px color-mix(in srgb, var(--hs-grade-color, var(--primary)) var(--mix-xs), transparent);
+  /* v28.11 hover-only typed accent bar (inset 3px 0 0 hs-grade-color/primary) */
+  box-shadow: var(--shadow-card-hover), 0 6px 24px color-mix(in srgb, var(--hs-grade-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--hs-grade-color, var(--primary));
 }
 .health-score-card::before {
   content: '';
@@ -12160,8 +12161,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   animation: nt-card-in var(--dur-long) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-/* v22.71: 月次ノートカードホバーglow */
-.nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v22.71: 月次ノートカードホバーglow + v28.11 hover-only typed accent bar (inset 3px 0 0 primary) */
+.nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 3px 0 0 var(--primary); }
 .nt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .nt-card::before {
   content: '';
@@ -14047,8 +14048,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   animation: adv-card-in var(--dur-long) var(--ease-soft-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-/* v22.71: AIアドバイスカードホバーglow */
-.adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v22.71: AIアドバイスカードホバーglow + v28.11 hover-only typed accent bar (inset 3px 0 0 primary) */
+.adv-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 3px 0 0 var(--primary); }
 .adv-widget-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .adv-widget-card::before {
   content: '';
@@ -14439,7 +14440,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-top: var(--accent-w) solid var(--primary);
   transition: box-shadow var(--dur-gentle) var(--ease-bounce), transform var(--dur-gentle) var(--ease-bounce); /* v22.68 */
 }
-.yr-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); } /* v22.68 */
+.yr-widget-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 3px 0 0 var(--primary); } /* v22.68 + v28.11 hover-only typed accent bar (inset 3px 0 0 primary) */
 .yr-widget-card::before {
   content: '';
   position: absolute;
@@ -16881,7 +16882,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   animation-delay: calc(var(--opp-i, 0) * var(--dur-stagger-lg));
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
+.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--opp-accent, var(--primary)); transform: translateY(var(--translate-lift-xs)); } /* v28.11 hover-only typed accent bar */
 .opp-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 
 .opp-card-left { flex-shrink: 0; }
@@ -17748,9 +17749,9 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   animation: pm-sum-in var(--dur-lift) var(--ease-bounce) both;
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
-/* v22.70: 支払方法サマリーカード カラーglow強化 */
+/* v22.70: 支払方法サマリーカード カラーglow強化 + v28.11 hover-only typed accent bar (inset 3px 0 0 pm-sum-color) */
 .pm-sum-card:hover {
-  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-xs), transparent);
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pm-sum-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--pm-sum-color, var(--primary));
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--pm-sum-color) var(--mix-mid), var(--border));
 }
@@ -17842,7 +17843,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .cat-card:hover {
-  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent);
+  /* v28.11 hover-only typed accent bar (inset 3px 0 0 cat-clr/primary) */
+  box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--cat-clr, var(--primary));
   transform: translateY(var(--translate-lift-xs));
   border-color: color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-mid), var(--border));
 }
@@ -33457,7 +33459,7 @@ textarea:focus::placeholder {
    ホバー時に内側左面からの opp-accent glow を追加（inset 4px 0 14px opp-accent mix-sm）。
    既存の outer glow（0 4px 14px opp-accent mix-xs）と連動。
    goal/wl/ch/asset/debt/ev-card hover inset glow（v24.67）シリーズに連なる演出拡張。 */
-.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent); }
+.opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--opp-accent, var(--primary)); } /* v28.11 hover-only typed accent bar */
 
 /* 6. .ci-event-item:hover → inset-left box-shadow glow（ci-ev-accent）追加
    チェックインイベントアイテムの border-left（accent-w・ci-ev-accent）に対して
@@ -34797,7 +34799,7 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ① cat-card dark enhanced hover outer glow（cat-clr fallback primary-end mix-md 0 4px 18px） */
-[data-theme="dark"] .cat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-mid), var(--border)); }
+[data-theme="dark"] .cat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--cat-clr, var(--primary-end)); border-color: color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-mid), var(--border)); } /* v28.11 hover-only typed accent bar */
 
 /* ② pt-card（generic）dark enhanced hover outer glow（pt-accent fallback primary-end mix-md 0 4px 18px） */
 [data-theme="dark"] .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--pt-accent, var(--primary-end)); }
@@ -34811,8 +34813,8 @@ textarea:focus::placeholder {
 /* ⑤ debt-widget-item dark enhanced hover outer glow（debt-accent fallback expense-end mix-md 0 2px 14px） */
 [data-theme="dark"] .debt-widget-item:hover { box-shadow: var(--shadow-row-hover), 0 2px 14px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent), inset 3px 0 0 var(--debt-accent, var(--expense-end)); }
 
-/* ⑥ step-card dark enhanced hover outer glow（primary-end mix-md 0 4px 20px） */
-[data-theme="dark"] .step-card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+/* ⑥ step-card dark enhanced hover outer glow（primary-end mix-md 0 4px 20px）+ v28.11 hover-only typed accent bar */
+[data-theme="dark"] .step-card:hover { box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
 
 /* ⑦ asset-entry-row dark enhanced hover outer glow（primary-end mix-md 0 1px 12px） */
 [data-theme="dark"] .asset-entry-row:hover { box-shadow: 0 1px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
@@ -37952,17 +37954,24 @@ textarea:focus::placeholder {
 /* ① [data-theme="dark"] .nt-card:hover → dark enhanced box-shadow（primary-end・mix-sm/mix-md）:
    ライトモード glow（primary mix-xs/mix-sm）のダーク強化版。primary-end に切替え mix-sm/mix-md に引き上げ
    ノートカードの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .nt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .nt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); } /* v28.11 hover-only typed accent bar */
 
 /* ② [data-theme="dark"] .yr-widget-card:hover → dark enhanced box-shadow（primary-end・mix-sm/mix-md）:
    ライトモード glow（primary mix-xs/mix-sm）のダーク強化版。primary-end に切替え mix-sm/mix-md に引き上げ
    年間ウィジェットカードの hover 発光をダークモードで鮮明化。①②で pri系カード hover 発光統一。 */
-[data-theme="dark"] .yr-widget-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .yr-widget-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); } /* v28.11 hover-only typed accent bar */
 
 /* ③ [data-theme="dark"] .health-score-card:hover → dark enhanced box-shadow（hs-grade-color/primary-end・mix-sm）:
    ライトモード glow（hs-grade-color/primary mix-xs）のダーク強化版。primary-end フォールバックに切替え mix-sm に引き上げ
    ヘルススコアカードの hover 発光をダークモードで鮮明化。 */
-[data-theme="dark"] .health-score-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 24px color-mix(in srgb, var(--hs-grade-color, var(--primary-end)) var(--mix-sm), transparent); }
+[data-theme="dark"] .health-score-card:hover { box-shadow: var(--shadow-card-hover), 0 6px 24px color-mix(in srgb, var(--hs-grade-color, var(--primary-end)) var(--mix-sm), transparent), inset 3px 0 0 var(--hs-grade-color, var(--primary-end)); } /* v28.11 hover-only typed accent bar */
+
+/* v28.11: dark hover typed accent bar — 残 3 系統カード（adv-widget-card / opp-card / pm-sum-card）
+   ライトモードの outer glow をダーク強化版（primary-end / typed-end fallback）に切替え、inset 3px 0 0 typed bar を追加。
+   nt/yr/health card と同パターンで dashboard 上の AI アドバイス・節約提案・支払方法サマリーの hover 識別を統一。 */
+[data-theme="dark"] .adv-widget-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 3px 0 0 var(--primary-end); }
+[data-theme="dark"] .opp-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--opp-accent, var(--primary-end)); }
+[data-theme="dark"] .pm-sum-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--pm-sum-color, var(--primary-end)); border-color: color-mix(in srgb, var(--pm-sum-color, var(--primary-end)) var(--mix-mid), var(--border)); }
 
 /* ④ [data-theme="dark"] .ch-sum-achieved:hover → dark enhanced box-shadow（income-end・mix-lg）:
    ライトモード glow（income mix-md）のダーク強化版。income-end に切替え mix-lg に引き上げ
