@@ -2028,7 +2028,8 @@ select:focus:not(:focus-visible) {
       transparent 38%);
   opacity: 0.5;
 }
-.chart-wrap:hover::before {
+.chart-wrap:hover::before,
+.chart-card:hover .chart-wrap::before {
   background: radial-gradient(
     ellipse at center,
     color-mix(in srgb, var(--primary) var(--mix-xs), transparent) 0%,
@@ -2038,7 +2039,8 @@ select:focus:not(:focus-visible) {
   animation-duration: 4s;
   filter: saturate(1.18);
 }
-[data-theme="dark"] .chart-wrap:hover::before {
+[data-theme="dark"] .chart-wrap:hover::before,
+[data-theme="dark"] .chart-card:hover .chart-wrap::before {
   background: radial-gradient(
     ellipse at center,
     color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
@@ -2046,7 +2048,23 @@ select:focus:not(:focus-visible) {
     transparent 75%
   );
 }
-.chart-wrap:hover::after { opacity: 0.95; animation-duration: 7s; filter: saturate(1.22); }
+.chart-wrap:hover::after,
+.chart-card:hover .chart-wrap::after { opacity: 0.95; animation-duration: 7s; filter: saturate(1.22); }
+/* v28.28: チャート視覚改善#4 — chart-card:hover で card-title 自体が primary glow + lift を獲得し、title↔canvas の視覚連動を確立。
+   text-shadow で primary 紫が滲み出し、translateY(-1px) でわずかに浮き、color が primary に shift。dark は primary-end 強化版。
+   prefers-reduced-motion で transform は無効化（color/text-shadow transition は維持）。 */
+.chart-card .card-title {
+  transition: color var(--dur-base) var(--ease-out), text-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.chart-card:hover .card-title {
+  color: var(--primary);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .chart-card:hover .card-title {
+  color: var(--primary-end);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
 @keyframes chart-glow-breathe {
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50%      { opacity: 0.95; transform: scale(1.06); }
@@ -2057,9 +2075,12 @@ select:focus:not(:focus-visible) {
 }
 @media (prefers-reduced-motion: reduce) {
   .chart-wrap::before { animation: none; opacity: 0.7; }
-  .chart-wrap:hover::before { animation: none; }
+  .chart-wrap:hover::before,
+  .chart-card:hover .chart-wrap::before { animation: none; }
   .chart-wrap::after { animation: none; }
-  .chart-wrap:hover::after { animation: none; }
+  .chart-wrap:hover::after,
+  .chart-card:hover .chart-wrap::after { animation: none; }
+  .chart-card:hover .card-title { transform: none; }
 }
 .charts-row > .card { min-width: 0; }
 .chart-h-sm { height: var(--size-chart-sm); }
@@ -16861,25 +16882,50 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .chart-clickable-wrap {
   position: relative;
 }
+/* v28.28: チャート視覚改善#4 — chart-clickable-hint を glassmorphism floating pill に進化。
+   text-muted/plain surface-hover bg から primary tint + backdrop-blur(8px) saturate(1.4) + primary border + primary box-shadow halo に格上げ、
+   font-weight semibold で読みやすさ強化。entry は opacity 0→1 だけでなく translateY(2px) scale(0.92)→0 scale(1) の pop animation を獲得。
+   dark は primary-end 強化版。prefers-reduced-motion で transform は無効化（opacity transition のみ維持）。 */
 .chart-clickable-hint {
   position: absolute;
   top: var(--sp-1-5);
   right: var(--sp-2);
   font-size: var(--fs-2xs);
-  color: var(--text-muted);
-  background: var(--surface-hover);
-  border: var(--bw-thin) solid var(--border);
+  font-weight: var(--fw-semibold);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover));
+  backdrop-filter: blur(8px) saturate(1.4);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4);
+  border: var(--bw-thin) solid color-mix(in srgb, var(--primary) var(--mix-sm), var(--border));
   border-radius: var(--radius-badge);
   padding: var(--sp-0-5) var(--sp-1-75);
   pointer-events: none;
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease-out);
+  transform: translateY(2px) scale(0.92);
+  transform-origin: top right;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   letter-spacing: var(--ls-label);
   line-height: var(--lh-snug);
   text-wrap: balance;
   text-wrap: pretty;
 }
-.chart-clickable-wrap:hover .chart-clickable-hint { opacity: 1; }
+[data-theme="dark"] .chart-clickable-hint {
+  color: var(--primary-end);
+  background: color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--surface-hover));
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border));
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+.chart-clickable-wrap:hover .chart-clickable-hint,
+.chart-card:hover .chart-clickable-hint {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-clickable-hint { transform: none; }
+  .chart-clickable-wrap:hover .chart-clickable-hint,
+  .chart-card:hover .chart-clickable-hint { transform: none; }
+}
 
 /* ============================================================
    年次インサイト (v8.2)
