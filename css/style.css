@@ -1971,6 +1971,38 @@ select:focus:not(:focus-visible) {
   margin-bottom: var(--sp-4);
 }
 .chart-card .chart-wrap { position: relative; }
+/* v28.25: 全チャート canvas 配下に呼吸する radial primary glow を配置 — チャート 25+ instance（dashboard donut/bar/line, analytics, forecast, debt sim, net worth, yoy, dow, cat-trend, fixed-vs-variable, payment, tag, member 等）が共通の ambient backdrop platform 上に座る統一感を獲得。chart-wrap に isolation:isolate で stacking context を境界化 + ::before に z-index:-1 + pointer-events:none で canvas ホバー/クリックを妨害せずカード背景は突き抜けない。canvas には position/z-index を付けない（Chart.js の responsive sizing と干渉しないため）。breathe アニメーション 8s で opacity 0.55→0.95 + scale 1→1.06 の脈動、ライトは primary mix-2xs/nano、ダークは primary-end mix-sm/2xs で強化。prefers-reduced-motion 対応で animation 無効化。 */
+.chart-wrap { position: relative; isolation: isolate; }
+.chart-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 45%,
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--radius-sm);
+  animation: chart-glow-breathe 8s var(--ease-in-out) infinite;
+}
+[data-theme="dark"] .chart-wrap::before {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 45%,
+    transparent 72%
+  );
+}
+@keyframes chart-glow-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.95; transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-wrap::before { animation: none; opacity: 0.7; }
+}
 .charts-row > .card { min-width: 0; }
 .chart-h-sm { height: var(--size-chart-sm); }
 .chart-h-md { height: var(--size-chart-md); }
