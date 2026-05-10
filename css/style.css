@@ -8878,7 +8878,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   box-shadow: var(--shadow-btn-base);
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
-.pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
+.pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--pt-accent, var(--primary)); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 .pt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
@@ -33354,7 +33354,7 @@ textarea:focus::placeholder {
    ホバー時に左アクセントバーが内側に向けて輝く演出に。
    border-left-color を transition に追加し変化もスムーズに。 */
 .goal-card { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
-.goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent); }
+.goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--goal-accent, var(--primary)); }
 
 /* 2. .wl-card:hover → inset-left box-shadow glow（wl-accent）追加
    ウィッシュリストカードの border-left（size-accent-bar・wl-accent color）に対して
@@ -33362,7 +33362,7 @@ textarea:focus::placeholder {
    既存の outer glow（0 4px 16px wl-accent mix-xs）と連動し
    ホバー時に左アクセントバーが内側に向けて輝く演出に。
    goal-card-inset-glow（①）と同パターン。 */
-.wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent); }
+.wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--wl-accent, var(--primary)); }
 
 /* 3. .ch-card:hover → inset-left box-shadow glow（ch-accent）追加
    チャレンジカードの border-left（size-accent-bar・ch-accent color）に対して
@@ -33386,7 +33386,7 @@ textarea:focus::placeholder {
    既存の outer glow（0 4px 16px debt-accent mix-xs）と連動し
    ホバー時に左アクセントバーが内側に向けて輝く演出に。①〜④と同パターン。 */
 .debt-card { transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
-.debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); }
+.debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent), inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--debt-accent, var(--primary)); }
 
 /* 6. .ev-card:hover → inset-left box-shadow glow（ev-accent）追加
    収支予定カードの border-left（accent-w 3px・ev-accent color）に対して
@@ -33395,7 +33395,7 @@ textarea:focus::placeholder {
    inset を 4px に調整し細いバーに合わせた発光強度に。
    既存の outer glow（0 4px 14px ev-accent mix-xs）と連動。 */
 .ev-card { transition: opacity var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), border-left-color var(--dur-fast) var(--ease-out); }
-.ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); }
+.ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--ev-accent, var(--primary)); }
 
 /* 7. .pt-card.pt-urgent:hover → inset-left box-shadow glow（danger-border）追加
    期限切れ間近ポイントカードの border-left（accent-w・danger-border color）に対して
@@ -33543,7 +33543,7 @@ textarea:focus::placeholder {
    左アクセントバーが内外両方向から輝くより立体的な hover 演出に。
    goal/wl/ch/asset/debt/ev-card inset glow（v24.67）シリーズに統一。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.69・全script/linkタグ?v=24.69に更新。 */
-.sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
+.sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-xs), transparent), inset 4px 0 14px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent), inset 3px 0 0 var(--sub-accent, var(--primary)); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
 
 /* ============================================================
    Sprint #866  v24.70
@@ -34280,12 +34280,12 @@ textarea:focus::placeholder {
    ダークモードでは背景が暗く hover 時の inset glow がより映えるため
    mix-sm → mix-md に引き上げ左アクセントバーの hover 奥行き演出を鮮明化。
    fallback を primary-end（ダーク用グラデ終端）に変更し全バリアント対応。 */
-[data-theme="dark"] .goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .goal-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--goal-accent, var(--primary-end)); }
 
 /* 2. [data-theme="dark"] .wl-card:hover → dark enhanced hover inset-left glow（wl-accent fallback primary-end・mix-md）
    v24.67 の hover inset-left glow（wl-accent mix-sm）のダークモード強化版。
    ①と同パターンで mix-md に引き上げウィッシュリストカードの hover 奥行き演出を鮮明化。 */
-[data-theme="dark"] .wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .wl-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--wl-accent, var(--primary-end)); }
 
 /* 3. [data-theme="dark"] .ch-card:hover → dark enhanced hover inset-left glow（ch-accent fallback primary-end・mix-md）
    v24.67 の hover inset-left glow（ch-accent mix-sm）のダークモード強化版。
@@ -34300,13 +34300,13 @@ textarea:focus::placeholder {
 /* 5. [data-theme="dark"] .debt-card:hover → dark enhanced hover inset-left glow（debt-accent fallback primary-end・mix-md）
    v24.67 の hover inset-left glow（debt-accent mix-sm）のダークモード強化版。
    ①〜④と同パターンで負債カードの hover 奥行き演出を鮮明化。 */
-[data-theme="dark"] .debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent), inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--debt-accent, var(--primary-end)); }
 
 /* 6. [data-theme="dark"] .ev-card:hover → dark enhanced hover inset-left glow（ev-accent fallback primary-end・mix-md・inset 4px 0 14px）
    v24.67 の hover inset-left glow（ev-accent mix-sm inset 4px）のダークモード強化版。
    border-left 幅（accent-w 3px）に合わせ inset 4px を維持しつつ mix-md に引き上げ。
    ①〜⑤で goal/wl/ch/asset/debt/ev 全大型カードのダーク hover inset glow シリーズが完成形に統一。 */
-[data-theme="dark"] .ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--ev-accent, var(--primary-end)); }
 
 /* 7. [data-theme="dark"] .pt-card.pt-urgent:hover → dark enhanced hover inset-left glow（danger-border・mix-md）
    v24.67 の hover inset-left glow（danger-border mix-sm）のダークモード強化版。
@@ -34440,7 +34440,7 @@ textarea:focus::placeholder {
    v24.80（goal/wl/ch/asset/debt/ev/pt）・v24.81（insight/opp/ci/pm/sb）・v24.82（cal-ev/dow/fv-cat/ev-widget/tx-income/expense/fc-alert/sub）で
    dark hover inset-left glow シリーズ全完結。
    全変更CSS-only実装（JS変更なし）・SW CACHE_NAME v24.82・全script/linkタグ?v=24.82に更新。 */
-[data-theme="dark"] .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 16px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-sm), transparent), inset 4px 0 16px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--sub-accent, var(--primary-end)); }
 
 /* ============================================================
    Sprint #879 (v24.83): yr-cell-dark-hover-outer-glow×5＋wk-cell-dark-hover-outer-glow×3
@@ -34795,7 +34795,7 @@ textarea:focus::placeholder {
 [data-theme="dark"] .cat-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent); border-color: color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-mid), var(--border)); }
 
 /* ② pt-card（generic）dark enhanced hover outer glow（pt-accent fallback primary-end mix-md 0 4px 18px） */
-[data-theme="dark"] .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent), inset 3px 0 0 var(--pt-accent, var(--primary-end)); }
 
 /* ③ rc-item dark enhanced hover outer glow（primary-end mix-md 0 2px 14px） */
 [data-theme="dark"] .rc-item:hover { box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); border-color: var(--border-strong); }
