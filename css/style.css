@@ -3385,7 +3385,8 @@ mark.tx-hl {
   -webkit-tap-highlight-color: transparent;
 }
 .color-swatch:hover   { transform: scale(var(--scale-hover-lg)); }
-.color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → neutral black inset 1px depression。color picker swatch 押下時に黒 0.20 凹み陰影が立ち上がり、scale press + brightness と合わせて color-btn family（goal/sub/pt/ch）と統一の物理的押下感を獲得 */
+.color-swatch:active  { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.20); }
 .color-swatch.selected { border-color: var(--text); transform: scale(var(--scale-hover)); }
 .color-swatch:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -4837,7 +4838,8 @@ body {
   box-shadow: 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent), 0 3px 8px var(--black-14), inset 0 1px 0 rgba(255, 255, 255, 0.32);
   filter: brightness(1.06);
 }
-#global-fab:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary fill 上の黒 inset 2px depression。primary fill FAB 押下時に黒 0.20 凹み陰影が立ち上がり、btn-primary :active と完全対称な physical press 感を実現（v28.16 btn-primary parity） */
+#global-fab:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.20); }
 /* v26.69: 旧 #global-fab:focus-visible（ring inset + 4px 16px primary mix-3xl のみ）を削除し、末尾に :focus-visible:not(:active) ルールで :hover ラダー（scale + 6px 24px primary mix-5xl + inset 0.32 + brightness 1.06）+ ring を一括提供する形に統一 */
 
 /* v8.5: FABパルスアニメーション（初回起動時の視線誘導） */
@@ -7142,7 +7144,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: 0;
 }
 .goal-emoji-btn:hover  { border-color: var(--primary); transform: scale(var(--scale-hover)); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.goal-emoji-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。emoji picker btn 押下時に primary 紫の凹み陰影が立ち上がり、emoji-btn family（sub/pt/ch）と統一の押下感を獲得 */
+.goal-emoji-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .goal-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-emoji-btn.selected {
   border-color: var(--primary);
@@ -7167,7 +7170,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   padding: 0;
 }
 .goal-color-btn:hover  { transform: scale(var(--scale-color-hover)); box-shadow: var(--shadow-badge); }
-.goal-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → neutral black inset 1px depression。color picker swatch 押下時に黒 0.20 凹み陰影が立ち上がり、color-btn family と統一 */
+.goal-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.20); }
 .goal-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .goal-color-btn.selected {
   border-color: var(--text);
@@ -8493,7 +8497,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .sub-emoji-btn:hover { background: var(--border); transform: scale(var(--scale-hover-chip)); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.sub-emoji-btn:active { background: var(--border); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。emoji picker btn 押下時に primary 紫の凹み陰影が立ち上がり、emoji-btn family と統一 */
+.sub-emoji-btn:active { background: var(--border); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .sub-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-emoji-btn.selected { border-color: var(--primary); background: var(--focus-ring); }
 .sub-color-btn {
@@ -8505,7 +8510,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   outline: none;
 }
 .sub-color-btn:hover  { transform: scale(var(--scale-color-hover)); box-shadow: var(--shadow-badge); }
-.sub-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → neutral black inset 1px depression。color picker swatch 押下時に黒 0.20 凹み陰影が立ち上がり、color-btn family と統一 */
+.sub-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.20); }
 .sub-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sub-color-btn.selected {
   border-color: var(--surface);
@@ -9067,7 +9073,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   display: flex; align-items: center; justify-content: center;
 }
 .pt-emoji-btn:hover  { background: var(--border); transform: scale(var(--scale-hover-chip)); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.pt-emoji-btn:active { background: var(--border); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。emoji picker btn 押下時に primary 紫の凹み陰影が立ち上がり、emoji-btn family と統一 */
+.pt-emoji-btn:active { background: var(--border); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .pt-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .pt-emoji-btn.is-active { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); }
 .pt-color-grid {
@@ -9081,7 +9088,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .pt-color-btn:hover  { transform: scale(var(--scale-hover)); box-shadow: var(--shadow-badge); }
-.pt-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → neutral black inset 1px depression。color picker swatch 押下時に黒 0.20 凹み陰影が立ち上がり、color-btn family と統一 */
+.pt-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.20); }
 .pt-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .pt-color-btn.is-active { border-color: var(--text); transform: scale(var(--scale-selected-sm)); }
 
@@ -9969,7 +9977,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .memo-cat-hint-btn:hover  { background: var(--primary-hover); box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) var(--mix-xl), transparent); }
-.memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(var(--brightness-press-lt)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary-dark fill 上の黒 inset 2px depression。memo cat hint btn 押下時に黒 0.20 凹み陰影が立ち上がり、btn-primary :active と完全対称な physical press 感を実現 */
+.memo-cat-hint-btn:active { background: var(--primary-dark); filter: brightness(var(--brightness-press-lt)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.20); }
 .memo-cat-hint-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 [data-theme="dark"] .memo-cat-hint {
   background: color-mix(in srgb, var(--primary) var(--mix-faint), transparent);
@@ -10867,7 +10876,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .ch-emoji-btn:hover  { background: var(--surface-hover); transform: scale(var(--scale-hover-chip)); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
-.ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。emoji picker btn 押下時に primary 紫の凹み陰影が立ち上がり、emoji-btn family と統一 */
+.ch-emoji-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-lt)); transform: scale(var(--scale-icon-active)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .ch-emoji-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-emoji-btn.active { border-color: var(--primary); background: var(--primary-light); }
 
@@ -10887,7 +10897,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: transform var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .ch-color-btn:hover  { transform: scale(var(--scale-color-hover)); box-shadow: var(--shadow-badge); }
-.ch-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → neutral black inset 1px depression。color picker swatch 押下時に黒 0.20 凹み陰影が立ち上がり、color-btn family と統一 */
+.ch-color-btn:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.20); }
 .ch-color-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ch-color-btn.active { border-color: var(--text); transform: scale(var(--scale-hover)); }
 
@@ -11907,7 +11918,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   background: var(--surface-hover);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset;
 }
-.qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。qa toggle btn 押下時に primary 紫の凹み陰影が立ち上がり、tab/chip family と統一 */
+.qa-toggle-btn:active { background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 /* v26.74: :hover ラダー合流（bg surface-hover 追加 + :not(:active) で :active line 11439 の bg/filter brightness/box-shadow none press feedback を完全保護）— Tab focus 時に mouse hover と完全対称な bg + ring inset を獲得 */
 .qa-toggle-btn:focus-visible:not(:active) { outline: none; background: var(--surface-hover); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring) inset; }
 .qa-toggle-left {
@@ -12162,7 +12174,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: background var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out), filter var(--dur-press) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
 }
 .qa-card .qa-submit-btn:hover { filter: brightness(var(--brightness-hover)); transform: translateY(var(--translate-lift-xs)); box-shadow: 0 4px 12px color-mix(in srgb, var(--qa-accent) var(--mix-xl), transparent); }
-.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → qa-accent fill 上の黒 inset 2px depression。typed btn 押下時に黒 0.20 凹み陰影が立ち上がり、btn-primary :active と完全対称な physical press 感を実現 */
+.qa-card .qa-submit-btn:active { transform: scale(var(--scale-press)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.20); }
 /* 追加成功バウンスアニメーション */
 @keyframes qa-btn-pop {
   0%   { transform: scale(var(--scale-rest)); }
@@ -13755,7 +13768,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   /* v27.04: inset 0 1px 0 rgba(255,255,255,0.20) 上端白光沢を末尾追加。primary fill bg 上に 1px の glassy sheen を獲得し、月次列追加 + ボタンも v26.86〜v26.95 family の 3D 立体感に合流（FAB / btn-primary v26.10 同パターン） */
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.20);
 }
-.ev-add-month:active        { transform: scale(var(--scale-rest)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.23: box-shadow: none → primary fill 上の黒 inset 2px depression。月次列追加 + ボタン押下時に黒 0.20 凹み陰影が立ち上がり、FAB/btn-primary :active と完全対称な physical press 感を実現 */
+.ev-add-month:active        { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.20); }
 .ev-add-month:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* --- ダッシュボードウィジェット（v5.91）--- */
@@ -13825,7 +13839,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .ev-emoji-chip:hover  { background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); transform: scale(var(--scale-hover-chip)); }
-.ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); transform: scale(var(--scale-chip-active)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-md inset 1px depression。emoji chip 押下時に primary 紫の凹み陰影が立ち上がり、emoji-btn family と統一（既存 primary mix-sm bg active の上に mix-md 凹み陰影で hierarchy 確保） */
+.ev-emoji-chip:active { background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); transform: scale(var(--scale-chip-active)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .ev-emoji-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .ev-emoji-chip.selected { border-color: var(--primary); background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 
@@ -15128,7 +15143,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-hover-sm));
 }
-.ci-ok-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press)); }
+/* v28.23: box-shadow: none → primary fill 上の黒 inset 2px depression。チェックイン OK ボタン押下時に黒 0.20 凹み陰影が立ち上がり、btn-primary :active と完全対称な physical press 感を実現 */
+.ci-ok-btn:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.20); }
 .ci-ok-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end); }
 /* ── チェックインモーダル ヘッダー/フッター 入場アニメーション (v20.70) ── */
 @keyframes ci-hdr-in {
@@ -15685,7 +15701,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.date-quick-btn:active { transform: scale(var(--scale-press-md)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。日付クイックボタン押下時に primary 紫の凹み陰影が立ち上がり、chip family と統一 */
+.date-quick-btn:active { transform: scale(var(--scale-press-md)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
 .date-quick-btn.active {
   border-color: var(--primary);
@@ -17109,7 +17126,8 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   transform: scale(var(--scale-hover));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+/* v28.23: box-shadow: none → primary mix-sm inset 1px depression。月ナビ btn 押下時に primary 紫の凹み陰影が立ち上がり、chip family と統一 */
+.md-nav-btn:active:not(:disabled) { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .md-nav-btn:focus-visible:not(:disabled) { outline: none; color: var(--primary); background: var(--primary-light, color-mix(in srgb, var(--primary) var(--mix-faint), transparent)); border-color: var(--primary); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .md-nav-btn:disabled { cursor: default; }
 .md-month-info {
@@ -35157,6 +35175,26 @@ textarea:focus::placeholder {
 [data-theme="dark"] .btn-continue:active             { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 [data-theme="dark"] .opp-challenge-btn:active        { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent); }
 [data-theme="dark"] .rpt-month-row.is-clickable:active { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+
+/* v28.23: dark mode 第6陣 — picker/chip/FAB 残余 18 selector :active depression — primary fill 4 typed btn (#global-fab/ci-ok-btn/ev-add-month/memo-cat-hint-btn) は black mix-lg 2px 強 depression（dark surface での fill btn 凹み視認性確保）、qa-card .qa-submit-btn は qa-accent fill 上 black mix-lg 2px depression、color picker 5 swatch (color-swatch/goal-color-btn/sub-color-btn/pt-color-btn/ch-color-btn) は black mix-md 1px neutral swatch depression、emoji picker 4 btn (goal-emoji-btn/sub-emoji-btn/pt-emoji-btn/ch-emoji-btn) は primary-end mix-md 1px primary chip depression、ev-emoji-chip は既存 primary mix-sm bg 上 primary-end mix-lg 凹み hierarchy 確保、qa-toggle-btn/date-quick-btn/md-nav-btn は primary-end mix-sm/md 1px chip depression。全て -end fallback により dark surface での凹み陰影が鮮明化、emoji-btn family / color-btn family / typed btn family と light に対称。 */
+[data-theme="dark"] #global-fab:active                 { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .ci-ok-btn:active                  { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .ev-add-month:active               { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .memo-cat-hint-btn:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .qa-card .qa-submit-btn:active     { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .color-swatch:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .goal-color-btn:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .sub-color-btn:active              { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .pt-color-btn:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .ch-color-btn:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .goal-emoji-btn:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .sub-emoji-btn:active              { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .pt-emoji-btn:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-emoji-btn:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .ev-emoji-chip:active              { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-lg), transparent); }
+[data-theme="dark"] .qa-toggle-btn:active              { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .date-quick-btn:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .md-nav-btn:active:not(:disabled)  { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
