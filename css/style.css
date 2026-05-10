@@ -1001,7 +1001,7 @@ select:focus:not(:focus-visible) {
 
 .nav-item:hover { background: var(--on-dark-divider); color: var(--sidebar-text); transform: translateY(-1px); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
-.nav-item:active { background: var(--on-dark-strong); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-strong)); box-shadow: none; }
+.nav-item:active { background: var(--on-dark-strong); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-strong)); box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
 .nav-item:active .nav-icon { transform: scale(var(--scale-rest)); }
 /* v26.70: 旧 .nav-item:focus-visible（ring inset 単独のみ）を削除し、末尾に :focus-visible:not(:active) ルールで :hover ラダー（translateY lift + bg + color + ring + 外周 halo + nav-icon scale）を一括提供する形に統一 */
 .nav-item.active {
@@ -1183,7 +1183,7 @@ select:focus:not(:focus-visible) {
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 #hamburger:hover { background: var(--on-dark-base); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-#hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: none; }
+#hamburger:active { background: var(--on-dark-strong); filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
 #hamburger:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 #mobile-title { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; letter-spacing: var(--ls-tight); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
@@ -2024,7 +2024,7 @@ select:focus:not(:focus-visible) {
 .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent), inset 3px 0 0 var(--expense); }
 [data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover  { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent), inset 3px 0 0 var(--income-end); }
 [data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover { box-shadow: var(--shadow-row-selected), 0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent), inset 3px 0 0 var(--expense-end); }
-.tx-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.tx-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-haze)); }
 .tx-table tfoot .total-row td {
   font-weight: var(--fw-bold);
   border-top: var(--bw-select) solid var(--border);
@@ -2175,7 +2175,7 @@ select:focus:not(:focus-visible) {
   background: var(--primary-light);
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
 }
-.tx-th-sort:active { color: var(--primary); background: var(--primary-light); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
+.tx-th-sort:active { color: var(--primary); background: var(--primary-light); filter: brightness(var(--brightness-press-mid)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .tx-th-sort:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .tx-th-sort.tx-th-active {
   color: var(--primary);
@@ -2509,7 +2509,7 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-chip));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
-.tx-tag-chip:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.tx-tag-chip:active { transform: scale(var(--scale-rest)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .tx-tag-label-hint {
   font-size: var(--fs-xs);
@@ -2737,8 +2737,8 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-sm));
   box-shadow: 0 1px 4px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent);
 }
-.tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
-.tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+.tx-tag-filter-all:active  { transform: scale(var(--scale-chip-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .tx-tag-filter-chip:focus-visible,
 .tx-tag-filter-all:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 [data-theme="dark"] .tx-tag-chip {
@@ -2971,7 +2971,7 @@ select:focus:not(:focus-visible) {
   border-color: var(--danger-border);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
 }
-.adv-filter-clear:active { background: var(--danger-border); filter: brightness(var(--brightness-press-mod)); box-shadow: none; }
+.adv-filter-clear:active { background: var(--danger-border); filter: brightness(var(--brightness-press-mod)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense-deep, var(--danger-text)) var(--mix-md), transparent); }
 [data-theme="dark"] .adv-filter-inner {
   background: var(--surface);
   border-color: var(--border);
@@ -3014,7 +3014,7 @@ select:focus:not(:focus-visible) {
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-base), transparent);
 }
-.adv-preset-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.adv-preset-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .adv-preset-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-preset-chip.active {
   border-color: var(--primary);
@@ -5639,7 +5639,7 @@ body {
   box-shadow: var(--shadow-md), 0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary);
   border-color: var(--primary);
 }
-.step-card:active        { transform: scale(var(--scale-card-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.step-card:active        { transform: scale(var(--scale-card-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-md), transparent); }
 .step-card:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .step-num {
   width: var(--size-icon-xs); height: var(--size-icon-xs);
@@ -5736,7 +5736,7 @@ body {
   transition: background var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out);
 }
 .empty-month-btn:hover  { background: color-mix(in srgb, var(--primary) var(--mix-md), var(--white)); transform: translateY(-1px) scale(var(--scale-hover)); box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
-.empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); box-shadow: none; }
+.empty-month-btn:active { filter: brightness(var(--brightness-press)); transform: scale(var(--scale-btn-active)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-dark) var(--mix-md), transparent); }
 .empty-month-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* ダークモード */
@@ -7830,7 +7830,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .cal-ev-nav:hover  { background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.cal-ev-nav:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
+.cal-ev-nav:active { background: color-mix(in srgb, var(--primary) var(--mix-base), transparent); filter: brightness(var(--brightness-press-mid)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 .cal-ev-nav:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-events-list {
@@ -11289,7 +11289,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v22.70: カテゴリトレンド テーブル行ホバー */
 .ct-table tbody tr:hover { background: var(--surface-hover); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); position: relative; z-index: var(--z-raise); }
-.ct-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.ct-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-haze)); }
 
 /* -- ダークモード -- */
 [data-theme="dark"] .ct-chip {
@@ -11481,7 +11481,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out);
 }
 .fv-cat-table tbody tr:hover { background: var(--surface-2); transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--fv-cat-color, var(--primary)); position: relative; z-index: var(--z-raise); } /* v22.68: primaryグロー追加 / v28.05: hover-only typed accent bar inset 3px 0 0 fv-cat-color 追加 */
-.fv-cat-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-haze)); }
+.fv-cat-table tbody tr:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-haze)); }
 @keyframes fv-cat-row-in {
   from { opacity: 0; transform: translateX(var(--enter-x-sm)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -11638,7 +11638,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .wk-summary-row .wk-cell:nth-child(1):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); border-color: color-mix(in srgb, var(--expense) var(--mix-mid), var(--border)); }
 .wk-summary-row .wk-cell:nth-child(2):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--primary) var(--mix-mid), var(--border)); }
 .wk-summary-row .wk-cell:nth-child(3):hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent); border-color: color-mix(in srgb, var(--success) var(--mix-mid), var(--border)); }
-.wk-summary-row .wk-cell:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.wk-summary-row .wk-cell:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-soft)); }
 .wk-summary-row .wk-cell:nth-child(2) { animation-delay: calc(var(--dur-delay-md) + var(--dur-stagger-xl)); }
 .wk-summary-row .wk-cell:nth-child(3) { animation-delay: calc(var(--dur-delay-md) + 2 * var(--dur-stagger-xl)); }
 
@@ -13066,7 +13066,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   position: relative; overflow: hidden;
   transition: background-color var(--dur-fast) var(--ease-bounce), border-color var(--dur-fast) var(--ease-bounce), color var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-bounce), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
-.sim-preset:active { transform: scale(var(--scale-icon-active)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.sim-preset:active { transform: scale(var(--scale-icon-active)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .sim-preset.sim-preset-active {
   background: var(--primary); color: var(--white); border-color: var(--primary);
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
@@ -13946,7 +13946,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-soft), transparent);
 }
-.sf-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.sf-chip:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .sf-chip:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .sf-chip-del {
   display: inline-flex;
@@ -14066,7 +14066,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 }
 /* v22.71: タグテーブル行ホバーglow */
 .tg-table tbody tr:hover { background: var(--surface-2); transform: translateX(var(--translate-slide)); box-shadow: var(--shadow-row-hover), 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 3px 0 0 var(--primary); position: relative; z-index: var(--z-raise); }
-.tg-table tbody tr:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: none; filter: brightness(var(--brightness-press-mist)); }
+.tg-table tbody tr:active { transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-mist)); }
 @keyframes tg-stat-in {
   from { opacity: 0; transform: scale(0.88) translateY(var(--enter-y-sm)); }
   to   { opacity: 1; transform: none; }
@@ -15356,7 +15356,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(-1px);
   box-shadow: 0 3px 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
-.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
+.notif-mark-read:active { background: var(--surface-hover); border-color: var(--border); transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-mid)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .notif-mark-read:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 /* パネルボディ */
@@ -15830,7 +15830,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.amt-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.amt-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes amt-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
@@ -15909,7 +15909,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: translateY(var(--translate-lift-xs));
 }
 
-.memo-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.memo-hist-chip:active { transform: scale(var(--scale-press)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 
 @keyframes memo-chip-in {
   from { opacity: 0; transform: scale(0.75) translateY(var(--enter-y-xs)); }
@@ -16357,7 +16357,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   border-color: color-mix(in srgb, var(--primary) var(--mix-xl), transparent);
   filter: brightness(var(--brightness-press-soft));
   transform: translateY(var(--translate-press-down));
-  box-shadow: none;
+  box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
 }
 [data-theme="dark"] .btn-continue {
   background: color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2));
@@ -17045,7 +17045,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 .opp-challenge-btn:active {
   transform: scale(var(--scale-press-lt));
   filter: brightness(var(--brightness-press-soft));
-  box-shadow: none;
+  box-shadow: inset 0 2px 3px color-mix(in srgb, var(--opp-accent, var(--primary-dark)) var(--mix-md), transparent);
 }
 .opp-challenge-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
@@ -17136,7 +17136,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: var(--shadow-hover-sm);
   filter: brightness(var(--brightness-hover-sm));
 }
-.dash-sum-clickable:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.dash-sum-clickable:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-md), transparent); filter: brightness(var(--brightness-press-soft)); }
 /* v26.71: 旧 .dash-sum-clickable:focus-visible（transform lift-md + box-shadow hover-sm + focus-ring）を削除し、末尾 v26.71 ブロックに :focus-visible:not(:active) として再宣言。:active 押下感（translateY press-down + box-shadow none + filter press-soft）を保護する */
 
 /* スクロール可能な本文エリア */
@@ -17437,7 +17437,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
 }
 .rpt-month-row.is-clickable:active {
   transform: translateY(var(--translate-press-down));
-  box-shadow: none;
+  box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent);
   filter: brightness(var(--brightness-press-haze));
 }
 .rpt-month-row.is-clickable:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -35130,6 +35130,33 @@ textarea:focus::placeholder {
 [data-theme="dark"] .type-btn:active             { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 [data-theme="dark"] .qa-type-btn:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 [data-theme="dark"] .section-tab:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+
+/* v28.22: dark mode 第5陣 — nav/row/cell/chip/btn 残余 25 selector :active depression — sidebar の dark nav-item/#hamburger は black mix-2xl の強 depression（既存 dark sidebar bg #0f172a 上での凹み視認性確保）、tx/ct/fv/tg-table tbody tr / wk-cell / rpt-month-row / dash-sum-clickable は neutral black mix-md 1px の thin row depression、step-card は black mix-lg 2px 強化 card depression、tx-th-sort/tx-tag-chip/tx-tag-filter-chip/tx-tag-filter-all/adv-preset-chip/sim-preset/sf-chip/amt-hist-chip/memo-hist-chip/cal-ev-nav は primary-end mix-md primary chip depression、adv-filter-clear は expense-end mix-md danger depression、empty-month-btn/btn-continue/notif-mark-read は primary-end mix-md primary btn depression、opp-challenge-btn は opp-accent -end fallback mix-md typed depression。全て -end fallback により dark surface での凹み陰影が鮮明化。 */
+[data-theme="dark"] .nav-item:active                  { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-2xl), transparent); }
+[data-theme="dark"] #hamburger:active                 { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-2xl), transparent); }
+[data-theme="dark"] .tx-table tbody tr:active         { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .tx-th-sort:active                { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .tx-tag-chip:active               { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .tx-tag-filter-chip:active        { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .tx-tag-filter-all:active         { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .adv-filter-clear:active          { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense-end, var(--danger-text)) var(--mix-md), transparent); }
+[data-theme="dark"] .adv-preset-chip:active          { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .step-card:active                 { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent); }
+[data-theme="dark"] .empty-month-btn:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .cal-ev-nav:active                { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .ct-table tbody tr:active        { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .fv-cat-table tbody tr:active    { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .wk-summary-row .wk-cell:active  { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .sim-preset:active                { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .tg-table tbody tr:active        { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .sf-chip:active                   { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .amt-hist-chip:active            { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .memo-hist-chip:active            { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+[data-theme="dark"] .dash-sum-clickable:active       { box-shadow: inset 0 2px 3px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .notif-mark-read:active          { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .btn-continue:active             { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .opp-challenge-btn:active        { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .rpt-month-row.is-clickable:active { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
