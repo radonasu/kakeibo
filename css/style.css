@@ -6509,12 +6509,16 @@ body {
   50%      { filter: brightness(1.05); transform: translateY(-44px); }
 }
 
-/* ベーススケルトン骨格 */
+/* ベーススケルトン骨格
+   v28.15: 中間ハイライト stop を plain --bg → color-mix(primary mix-xs, --bg) に置換し
+   横スライドする shimmer band に primary brand tint を付与（gray-on-gray → primary tinted shine）。
+   さらに常時 box-shadow primary glow（mix-2xs）を追加し sk-breath 脈動と組み合わさって
+   「呼吸する on-brand bones」体験を獲得。 */
 .sk-bone {
   background: linear-gradient(
     var(--grad-horizontal),
     var(--border) 0%,
-    var(--bg) 40%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--bg)) 40%,
     var(--border) 80%
   );
   background-size: var(--size-shimmer) 100%;
@@ -6522,6 +6526,7 @@ body {
              sk-breath var(--dur-pulse) var(--ease-in-out) infinite;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* スケルトンカードコンテナ（シマーなし）*/
@@ -6582,12 +6587,13 @@ body {
   background: linear-gradient(
     var(--grad-horizontal),
     var(--surface) 0%,
-    var(--border) 40%,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--border)) 40%,
     var(--surface) 80%
   );
   background-size: var(--size-shimmer) 100%;
   animation: sk-shimmer var(--dur-shimmer) var(--ease-in-out) infinite,
              sk-breath var(--dur-pulse) var(--ease-in-out) infinite;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 [data-theme="dark"] #sidebar-overlay {
@@ -14161,17 +14167,31 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .adv-sk-line {
   height: var(--size-sk-line);
   border-radius: var(--radius-sm);
+  /* v28.15: 中間ハイライト stop を plain --border → color-mix(primary mix-sm, --border) に置換し
+     AI アドバイス読み込み中の shimmer band に primary brand tint を付与。さらに常時 box-shadow
+     primary glow（mix-2xs）で「on-brand な脈動するスケルトン行」体験を獲得。 */
   background: linear-gradient(
     var(--grad-horizontal),
     var(--surface-hover) var(--mix-mid),
-    var(--border) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--border)) 50%,
     var(--surface-hover) 75%
   );
   background-size: var(--size-shimmer-half) 100%;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
   animation: adv-shimmer var(--dur-rest) infinite linear;
   /* v22.76: スケルトン行に入場フェードイン追加 */
   opacity: 0;
   animation: adv-sk-in var(--dur-appear) var(--ease-out) both, adv-shimmer var(--dur-rest) var(--dur-appear) infinite linear;
+}
+[data-theme="dark"] .adv-sk-line {
+  background: linear-gradient(
+    var(--grad-horizontal),
+    var(--surface-hover) var(--mix-mid),
+    color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)) 50%,
+    var(--surface-hover) 75%
+  );
+  background-size: var(--size-shimmer-half) 100%;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 @keyframes adv-sk-in {
   from { opacity: 0; transform: translateX(-6px); }
