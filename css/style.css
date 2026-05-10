@@ -8862,7 +8862,10 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* v22.64: pt-summary-card タイプ別ホバーカラーグロー */
 .pt-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--primary) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
 .pt-expiring:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 24px color-mix(in srgb, var(--warning) var(--mix-md), transparent); filter: brightness(var(--brightness-hover-sm)); }
-.pt-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: pt-summary-card :active depression base — gradient bg 上の neutral 2 軸 depression (black mix-md inset + 底部 white mix-xs rebound)、modifier (.pt-total/.pt-expiring) で各タイプ deep 色 mix-2xl colored depression にオーバーライド */
+.pt-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); filter: brightness(var(--brightness-press-soft)); }
+.pt-total:active    { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.pt-expiring:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--warning) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
 /* カードリスト */
 .pt-cards-list {
@@ -8902,7 +8905,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both;
 }
 .pt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--pt-accent, var(--primary)); transform: translateY(var(--translate-lift-xs)); border-color: var(--border-strong); }
-.pt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: pt-card :active depression — typed --pt-accent で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.pt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .pt-card.pt-urgent {
   border-left: var(--accent-w) solid var(--danger-border);
   animation: pt-card-in var(--dur-medium) var(--ease-bounce) calc(var(--pt-i, 0) * var(--dur-stagger-md)) both,
@@ -9531,7 +9535,11 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 .wl-sum-count:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
 .wl-sum-budget:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
 .wl-sum-done:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); filter: brightness(var(--brightness-hover-sm)); }
-.wl-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: wl-summary-card :active depression base — gradient bg 上の neutral 2 軸 depression、modifier (.wl-sum-count/.wl-sum-budget/.wl-sum-done) で各タイプ deep 色 mix-2xl colored depression にオーバーライド */
+.wl-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); filter: brightness(var(--brightness-press-soft)); }
+.wl-sum-count:active  { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.wl-sum-budget:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.wl-sum-done:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
 .wl-summary-label {
   font-size: var(--fs-xs);
@@ -10014,7 +10022,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 18px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--fc-color, var(--primary));
   border-color: color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-mid), var(--border));
 }
-.forecast-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: forecast-card :active depression — typed --fc-color で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.forecast-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--fc-color, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .forecast-card::before {
   content: '';
   position: absolute;
@@ -10590,7 +10599,11 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
 .ch-sum-active:hover   { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
 .ch-sum-achieved:hover { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
 .ch-sum-total:hover    { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-summary-hover), 0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); filter: brightness(var(--brightness-hover-sm)); }
-.ch-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: ch-summary-card :active depression base — gradient bg 上の neutral 2 軸 depression、modifier (.ch-sum-active/.ch-sum-achieved/.ch-sum-total) で各タイプ deep 色 mix-2xl colored depression にオーバーライド */
+.ch-summary-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); filter: brightness(var(--brightness-press-soft)); }
+.ch-sum-active:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.ch-sum-achieved:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.ch-sum-total:active    { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
 /* -- セクションタイトル -- */
 .ch-section-title {
@@ -10642,7 +10655,8 @@ details[open] .wl-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent);
   transform: translateY(var(--translate-lift-xs));
 }
-.ch-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: ch-card :active depression — typed --ch-accent で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.ch-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .ch-card.ch-card-done { opacity: var(--opacity-faded); }
 
 .ch-card-icon {
@@ -10991,7 +11005,10 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 /* v28.08: hover-only typed accent bar（inset 3px 0 0 white）追加 — gradient bg 上に white solid bar が立ち上がる */
 .dow-stat-max:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--expense) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
 .dow-stat-min:hover { box-shadow: var(--shadow-md), 0 6px 20px color-mix(in srgb, var(--income) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 3px 0 0 rgba(255, 255, 255, 0.55); }
-.dow-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: dow-stat-card :active depression base — gradient bg 上の neutral 2 軸 depression、modifier (.dow-stat-max/.dow-stat-min) で expense/income-deep 色 mix-2xl colored depression にオーバーライド */
+.dow-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); filter: brightness(var(--brightness-press-soft)); }
+.dow-stat-max:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.dow-stat-min:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 /* 装飾サークル */
 .dow-stat-card::before,
 .dow-stat-card::after {
@@ -11228,7 +11245,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-xs), transparent), inset 3px 0 0 var(--ct-stat-color, var(--primary));
   border-color: color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-mid), var(--border));
 }
-.ct-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: ct-stat-card :active depression — typed --ct-stat-color で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.ct-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .ct-stat-card:hover::before { box-shadow: 0 2px 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-md), transparent); }
 .ct-stat-card:nth-child(1) { animation-delay: 0s; }
 .ct-stat-card:nth-child(2) { animation-delay: var(--dur-stagger-mid); }
@@ -11356,7 +11374,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v26.64: hover 時も inset 上端白光沢を維持（rest 0.18 → hover 0.22 で持ち上がるほど光が強まる v26.63 summary-card と同パターン） */
 .fv-stat-card:hover  { transform: translateY(var(--translate-lift-sm)); box-shadow: var(--shadow-hover-md), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
-.fv-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: fv-stat-card :active depression base — gradient bg 上の neutral 2 軸 depression、modifier (.fv-stat-fixed/.fv-stat-var/.fv-stat-rate) で primary-dark/income-deep/warning-deep 色 mix-2xl colored depression にオーバーライド */
+.fv-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); filter: brightness(var(--brightness-press-soft)); }
+.fv-stat-fixed:active { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.fv-stat-var:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
+.fv-stat-rate:active  { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--warning-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 .fv-stat-fixed { background: linear-gradient(var(--grad-diagonal), var(--primary-dark), var(--primary)); }
 .fv-stat-var   { background: linear-gradient(var(--grad-diagonal), var(--income-deep), var(--income-end)); }
 .fv-stat-rate  { background: linear-gradient(var(--grad-diagonal), var(--warning-deep), var(--warning)); }
@@ -12186,7 +12208,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 }
 /* v22.71: 月次ノートカードホバーglow + v28.11 hover-only typed accent bar (inset 3px 0 0 primary) */
 .nt-card:hover { transform: translateY(var(--translate-lift-xs)); box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), inset 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), inset 3px 0 0 var(--primary); }
-.nt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: nt-card :active depression — primary 単軸 mix-sm（hover の inset 3px primary bar と色味同期） */
+.nt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .nt-card::before {
   content: '';
   position: absolute;
@@ -12405,7 +12428,11 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
 .hm-stat-card:nth-child(2):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent), inset 3px 0 0 var(--danger-text); }
 .hm-stat-card:nth-child(3):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--warning) var(--mix-xs), transparent), inset 3px 0 0 var(--warning); }
 .hm-stat-card:nth-child(4):hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--success) var(--mix-xs), transparent), inset 3px 0 0 var(--success); }
-.hm-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: hm-stat-card :active depression base + nth-child 4 variant に各色 mix-sm 単軸（hover 4 色 bar と色味同期：primary/danger-text/warning/success） */
+.hm-stat-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
+.hm-stat-card:nth-child(2):active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(3):active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--warning) var(--mix-sm), transparent); }
+.hm-stat-card:nth-child(4):active { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--success) var(--mix-sm), transparent); }
 
 .hm-stat-label {
   font-size: var(--fs-xs);
@@ -12655,7 +12682,8 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transition: box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .debt-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.debt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: debt-card :active depression — typed --debt-accent で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.debt-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 @keyframes debt-card-in {
   from { opacity: 0; transform: translateY(var(--enter-y-lg)) scale(var(--scale-anim-cell-in)); }
   to   { opacity: 1; transform: none; }
@@ -13527,7 +13555,8 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: opacity var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), filter var(--dur-press) var(--ease-out);
 }
 .ev-card:hover { box-shadow: var(--shadow-card-hover), 0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-xs)); }
-.ev-card:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+/* v28.19: ev-card :active depression — typed --ev-accent で凹み色味を継承（fallback primary・mix-sm 単軸） */
+.ev-card:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .ev-card::before {
   content: '';
   position: absolute;
@@ -35024,6 +35053,40 @@ textarea:focus::placeholder {
 [data-theme="dark"] .wl-card:active    { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent); }
 [data-theme="dark"] .cat-chip:active   { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
 [data-theme="dark"] .ct-chip:active    { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--ct-color, var(--primary-end)) var(--mix-md), transparent); }
+
+/* v28.19: dark mode card :active "pressed-in depression" 第2陣 — 13 base + 13 modifier セレクター（analytics/forecast/wishlist/charge/debt/event card surface）に depression inset shadow を獲得し、btn と card で統一された pressed-in physical simulation の card 側カバレッジを拡張。
+   gradient bg (pt-summary/wl-summary/ch-summary/dow-stat/fv-stat) は base = black mix-lg + white rebound mix-sm の 2軸構造、各 typed modifier は対応 -end / deep 色を mix-3xl で deep colored depression にオーバーライド。
+   solid surface (pt-card/forecast-card/ch-card/ct-stat/nt-card/hm-stat/debt-card/ev-card) は typed accent var (-end fallback) mix-md の単軸 depression。
+   hm-stat-card は nth-child(2/3/4) で danger-text/warning/success の各 -end を切替。 */
+[data-theme="dark"] .pt-summary-card:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-total:active          { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-expiring:active       { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--warning-deep, var(--warning)) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .pt-card:active           { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .wl-summary-card:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .wl-sum-count:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .wl-sum-budget:active     { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .wl-sum-done:active       { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .forecast-card:active     { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--fc-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ch-summary-card:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-sum-active:active     { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-sum-achieved:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-sum-total:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .ch-card:active           { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .dow-stat-card:active     { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .dow-stat-max:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .dow-stat-min:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .ct-stat-card:active      { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .fv-stat-card:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .fv-stat-fixed:active     { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .fv-stat-var:active       { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .fv-stat-rate:active      { box-shadow: inset 0 2px 4px color-mix(in srgb, var(--warning-deep, var(--warning)) var(--mix-3xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+[data-theme="dark"] .nt-card:active           { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .hm-stat-card:active                  { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(2):active     { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--expense-end, var(--danger-text)) var(--mix-md), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(3):active     { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
+[data-theme="dark"] .hm-stat-card:nth-child(4):active     { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--income-end, var(--success)) var(--mix-md), transparent); }
+[data-theme="dark"] .debt-card:active         { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent); }
+[data-theme="dark"] .ev-card:active           { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
