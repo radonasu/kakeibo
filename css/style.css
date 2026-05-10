@@ -1278,7 +1278,7 @@ select:focus:not(:focus-visible) {
   transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
-.card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.card-collapse-btn:active { transform: scale(var(--scale-chip-active)); background: var(--surface-hover); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .card-collapse-btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring);
@@ -1452,12 +1452,12 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
   opacity: 1;
 }
-.edit-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.edit-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 [data-theme="dark"] .edit-tx:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
 }
-[data-theme="dark"] .edit-tx:active { box-shadow: none; }
+[data-theme="dark"] .edit-tx:active { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
 
 /* ── 削除ボタン ホバー洗練 (v17.1) ─────────────────── */
 .delete-tx {
@@ -1472,12 +1472,12 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent);
   opacity: 1;
 }
-.delete-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.delete-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 [data-theme="dark"] .delete-tx:hover {
   background: var(--danger-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent);
 }
-[data-theme="dark"] .delete-tx:active { box-shadow: none; }
+[data-theme="dark"] .delete-tx:active { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense-end, var(--expense)) var(--mix-sm), transparent); }
 
 /* ── 取引複製ボタン ビジュアル洗練 (v5.81) ─────────────── */
 .dup-tx {
@@ -1490,12 +1490,12 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-mid), transparent);
   opacity: 1;
 }
-.dup-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.dup-tx:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--warning) var(--mix-xs), transparent); }
 [data-theme="dark"] .dup-tx:hover {
   background: var(--warning-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent);
 }
-[data-theme="dark"] .dup-tx:active { box-shadow: none; }
+[data-theme="dark"] .dup-tx:active { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--warning) var(--mix-md), transparent); }
 
 @keyframes dup-pop {
   0%   { transform: scale(var(--scale-rest)); }
@@ -3272,7 +3272,7 @@ mark.tx-hl {
   cursor: pointer;
 }
 .type-btn:hover { background: var(--surface-hover); color: var(--text); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.type-btn:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press-mid)); box-shadow: none; }
+.type-btn:active { transform: scale(var(--scale-btn-active)); filter: brightness(var(--brightness-press-mid)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .type-btn.expense-btn { background: var(--expense-light); color: var(--expense); box-shadow: 0 1px 4px var(--black-10); }
 .type-btn.expense-btn:hover  { background: var(--expense-light); color: var(--expense); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-sm), transparent), 0 4px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); transform: translateY(var(--translate-lift-sm)); text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
@@ -3349,7 +3349,7 @@ mark.tx-hl {
 }
 /* v26.10: hover 時の text-shadow を mix-sm 8px → mix-md 10px へ強化。×記号自体の danger 発光がより明確に視認可能となり、hover時のキャンセル CTA 認識を強化。 */
 .modal-close:hover { background: var(--bg); color: var(--danger-text); transform: scale(var(--scale-hover)) rotate(90deg); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent), 0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent); text-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
-.modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.modal-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .modal-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .modal-body {
@@ -4525,7 +4525,7 @@ body {
   border-radius: var(--radius-btn-sm);
 }
 .install-banner-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-.install-banner-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.install-banner-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .install-banner-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 
 /* ── iOS インストールガイド ── */
@@ -4553,7 +4553,7 @@ body {
   border-radius: var(--radius-btn-sm);
 }
 .ios-guide-close:hover { color: var(--sidebar-text-hi); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-.ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.ios-guide-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .ios-guide-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ios-guide-icon { font-size: var(--fs-icon-3xl); margin-bottom: var(--sp-2); letter-spacing: var(--ls-normal); line-height: var(--lh-none); }
 .ios-guide-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); margin-bottom: var(--sp-1-5); letter-spacing: var(--ls-tight); line-height: var(--lh-snug); text-wrap: balance; text-wrap: pretty; }
@@ -6719,7 +6719,7 @@ body {
 /* v26.32: .section-tab:not(.is-active):hover に translateY(-1px) lift を新規追加。アクティブタブには適用しないことで is-active の border-bottom（primary 下線）と .section-tabs の border-bottom の連続性を保護。非アクティブタブのみ「触れたら一段持ち上がる」反応を獲得し、サイドバー nav-item（v26.31）/ ボトムナビ bottom-nav-item（v26.30）と統一感のある lift 立体感に */
 .section-tab:not(.is-active):hover { transform: translateY(var(--translate-lift-xs)); }
 .section-tab:hover .tab-icon { transform: scale(var(--scale-hover)); }
-.section-tab:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.section-tab:active { transform: translateY(var(--translate-press-down)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 .section-tab:active .tab-icon { transform: scale(var(--scale-rest)); }
 /* v26.72: 旧 .section-tab:focus-visible（ring 単独・specificity 0,2,0）を削除。v26.48 line 43559+ の :not(.is-active):focus-visible / .is-active:focus-visible（specificity 0,3,0）が常に上書きしていた dead code のため安全削除。v26.48 系 5 セレクタは line 43559/43570/43579/43627/43635 で in-place :not(:active) 化し押下感保護を一括追加 */
 .section-tab.is-active {
@@ -7637,7 +7637,7 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .cal-panel-close:hover { background: var(--surface-hover); color: var(--text); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
-.cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.cal-panel-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .cal-panel-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .cal-day-panel-body {
@@ -12008,7 +12008,7 @@ details[open] .ch-archive-summary::before { transform: rotate(var(--rotate-chevr
   transform: translateY(var(--translate-lift-xs));
   box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
 }
-.qa-type-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: none; filter: brightness(var(--brightness-press-soft)); }
+.qa-type-btn:active { transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); filter: brightness(var(--brightness-press-soft)); }
 .qa-type-btn:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 /* v26.90: 既存 box-shadow（expense 外周 halo）に inset 0 1px 0 rgba(255,255,255,0.18) 上端白光沢を追加。light tinted danger-bg grade で adv-preset-chip.active light v26.89 と同値 */
 .qa-type-btn.qa-type-active[data-qa-type="expense"] {
@@ -13968,7 +13968,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transform: scale(var(--scale-hover-chip));
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
 }
-.sf-chip-del:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.sf-chip-del:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 .sf-chip-del:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 .adv-filter-actions {
   display: flex;
@@ -14845,7 +14845,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .ci-close:hover { background: var(--on-dark-hover); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-.ci-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-deep)); box-shadow: none; }
+.ci-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-deep)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .ci-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 .ci-month-badge {
   display: inline-block;
@@ -15215,7 +15215,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
 .btn-notif-bell:active {
   transform: scale(var(--scale-chip-active));
   filter: brightness(var(--brightness-press-soft));
-  box-shadow: none;
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 .btn-notif-bell:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--primary-end) inset; }
 /* 未読あり状態 */
@@ -16085,7 +16085,7 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .rc-close:hover { background: var(--danger-bg); color: var(--danger); transform: scale(var(--scale-hover)); box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent); }
-.rc-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.rc-close:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent); }
 .rc-close:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
 
 .rc-body {
@@ -17993,7 +17993,7 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   opacity: 1;
 }
-.edit-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.edit-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .delete-cat:hover {
   background: var(--danger-bg) !important;
   color: var(--danger-text);
@@ -18001,17 +18001,17 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
   opacity: 1;
 }
-.delete-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: none; }
+.delete-cat:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
 [data-theme="dark"] .edit-cat:hover {
   background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
 }
-[data-theme="dark"] .edit-cat:active { box-shadow: none; }
+[data-theme="dark"] .edit-cat:active { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-sm), transparent); }
 [data-theme="dark"] .delete-cat:hover {
   background: var(--danger-bg) !important;
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent);
 }
-[data-theme="dark"] .delete-cat:active { box-shadow: none; }
+[data-theme="dark"] .delete-cat:active { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense-end, var(--expense)) var(--mix-sm), transparent); }
 /* stats */
 .cat-card-stats {
   display: flex;
@@ -35117,6 +35117,19 @@ textarea:focus::placeholder {
 [data-theme="dark"] .debt-summary-monthly:active { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
 [data-theme="dark"] .sub-summary-card:active   { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
 [data-theme="dark"] .ev-sum-card:active        { box-shadow: inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent); }
+
+/* v28.21: dark mode 第4陣 — 小型 icon/control :active depression — close icons (modal/cal-panel/ci/rc/install/ios) は neutral black mix-md、option chip (sf-chip-del/card-collapse-btn) は black mix-md / expense-end mix-sm、type/tab btn (type-btn/qa-type-btn/section-tab) は primary-end mix-md depression。全て -end fallback で dark surface 上の視認性確保。 */
+[data-theme="dark"] .modal-close:active           { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .cal-panel-close:active      { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .ci-close:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .rc-close:active             { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .install-banner-close:active { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .ios-guide-close:active      { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .sf-chip-del:active          { box-shadow: inset 0 1px 2px color-mix(in srgb, var(--expense-end, var(--expense)) var(--mix-sm), transparent); }
+[data-theme="dark"] .card-collapse-btn:active    { box-shadow: inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent); }
+[data-theme="dark"] .type-btn:active             { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .qa-type-btn:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
+[data-theme="dark"] .section-tab:active          { box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent); }
 
 /* ⑦ btn-inline-add dark enhanced hover glow（primary-end mix-sm 0 2px 8px + inset 上端白光沢 0.16・v27.06 で glassy 1px sheen family 合流） */
 [data-theme="dark"] .btn-inline-add:hover { background: color-mix(in srgb, var(--primary) var(--mix-md), transparent); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255,255,255,0.16); }
