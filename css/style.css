@@ -2065,6 +2065,25 @@ select:focus:not(:focus-visible) {
   color: var(--primary-end);
   text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
 }
+/* v28.29: チャート視覚改善#5 — chart-card:hover で .card:hover の汎用 lift を override し、primary tinted な専用 surface に格上げ。
+   .card:hover (line 5191) は shadow-md + 4px 20px primary mix-xs / border-strong（汎用 glow）。chart-card は aurora platform を持つ特別な
+   card variant なので、shadow halo を 8px 28px primary mix-md に強化 + border-color を primary mix-md tint に shift + 2px 24px primary
+   mix-2xs の outer aura を二段重ね（マウス追従しないが card の輪郭を primary 紫で縁取り、card 全体が「ブランド色で発光している」印象）。
+   light は primary、dark は primary-end を使用。translateY lift は .card:hover (translate-lift-md) を継承（重複定義しない）。 */
+.chart-card:hover {
+  box-shadow:
+    var(--shadow-md),
+    0 8px 28px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-md), var(--border-strong));
+}
+[data-theme="dark"] .chart-card:hover {
+  box-shadow:
+    var(--shadow-md),
+    0 8px 28px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 2px 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-lg), var(--border-strong));
+}
 @keyframes chart-glow-breathe {
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50%      { opacity: 0.95; transform: scale(1.06); }
@@ -16916,15 +16935,40 @@ canvas.chart-clickable { cursor: pointer; -webkit-tap-highlight-color: transpare
   border-color: color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border));
   box-shadow: 0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+/* v28.29: チャート視覚改善#5 — chart-clickable-hint に chevron arrow indicator ::after を追加。
+   テキスト「タップで詳細」の右側に「›」chevron を inline-flex で配置し、display:inline-block + transform translateX で
+   chart-card hover 時に「›」が 0→3px 右に nudge する 1.2s loop animation を獲得（hint pill が「クリックしてね」と訴える視覚的合図）。
+   margin-left で文字との spacing 確保、font-weight bold で chevron 自体を強調。dark は primary-end 継承。
+   prefers-reduced-motion で nudge animation 無効化（arrow 表示自体は維持）。 */
+.chart-clickable-hint::after {
+  content: '›';
+  display: inline-block;
+  margin-left: var(--sp-1);
+  font-weight: var(--fw-bold);
+  font-size: 1.1em;
+  line-height: 1;
+  transform: translateX(0);
+  will-change: transform;
+}
 .chart-clickable-wrap:hover .chart-clickable-hint,
 .chart-card:hover .chart-clickable-hint {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
+.chart-clickable-wrap:hover .chart-clickable-hint::after,
+.chart-card:hover .chart-clickable-hint::after {
+  animation: chart-hint-arrow-nudge 1.2s var(--ease-in-out) infinite;
+}
+@keyframes chart-hint-arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(3px); }
+}
 @media (prefers-reduced-motion: reduce) {
   .chart-clickable-hint { transform: none; }
   .chart-clickable-wrap:hover .chart-clickable-hint,
   .chart-card:hover .chart-clickable-hint { transform: none; }
+  .chart-clickable-wrap:hover .chart-clickable-hint::after,
+  .chart-card:hover .chart-clickable-hint::after { animation: none; }
 }
 
 /* ============================================================
