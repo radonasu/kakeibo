@@ -48521,3 +48521,97 @@ textarea:focus::placeholder {
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
+/* ============================================================
+   v28.51 Sprint #1246: page-title::after を brand gradient pill +
+   breath animation + page-header hover full-width sweep に格上げ
+   ----------------------------------------------------------------
+   既存 v22.93 の .page-title::after は静的 2px / 45% 幅 / 3-stop
+   linear-gradient(to right, primary, primary-end, transparent) で
+   無アニメーションだったものを、v28.49 サイドバー / v28.50
+   section-tab で確立した「5-stop brand gradient pill + 両端 transparent
+   fade + lavender breath halo」family に格上げする。kakeibo PWA で
+   全ページ（ダッシュボード / 取引 / カレンダー / 予算 / 資産 / 負債 /
+   目標 / レポート / カテゴリ / 設定 等）の最上部に表示される
+   page-title アクセントラインに brand gradient family を展開する
+   マイルストーン。
+   ① 5-stop horizontal gradient (transparent → primary-end mix-md 22%
+     → primary mix-xl 50% → primary-end mix-md 78% → transparent)
+   ② dual-layer box-shadow halo (primary mix-2xs + primary-end mix-2xs)
+   ③ page-title-accent-breath 4.5s 無限呼吸 (opacity 0.7↔1 + scaleX 0.97↔1.03)
+   ④ .page-header:hover .page-title::after で width 45%→100% sweep +
+      halo を mix-2xs→mix-sm に 1 ティア boost
+   ⑤ dark mode override：全層 primary-end 統一 mono-lavender + 1 ティア boost
+   ⑥ prefers-reduced-motion で animation 無効化（static state 維持）
+   ============================================================ */
+
+/* ① 既存 .page-title::after を 5-stop brand gradient pill + breath halo に上書き */
+.page-title::after {
+  height: 2px;
+  width: 45%;
+  border-radius: var(--radius-nano);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.85;
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transform-origin: center;
+  animation: page-title-accent-breath 4.5s ease-in-out infinite;
+  transition:
+    width var(--dur-mid) var(--ease-out),
+    opacity var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out);
+}
+
+/* ② dark mode override — 全層 primary-end mono-lavender + 1 ティア boost */
+[data-theme="dark"] .page-title::after {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ breath keyframe — 4.5s 無限ループ opacity + scaleX 微振幅 */
+@keyframes page-title-accent-breath {
+  0%, 100% { opacity: 0.7; transform: scaleX(0.97); }
+  50% { opacity: 1; transform: scaleX(1.03); }
+}
+
+/* ④ .page-header:hover で width 45%→100% sweep + halo boost */
+.page-header:hover .page-title::after {
+  width: 100%;
+  opacity: 1;
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑤ dark hover — lavender wider halo */
+[data-theme="dark"] .page-header:hover .page-title::after {
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑥ prefers-reduced-motion — animation 無効化、static state 維持 */
+@media (prefers-reduced-motion: reduce) {
+  .page-title::after {
+    animation: none;
+    transform: scaleX(1);
+    opacity: 0.85;
+  }
+  [data-theme="dark"] .page-title::after {
+    opacity: 0.95;
+  }
+}
+
