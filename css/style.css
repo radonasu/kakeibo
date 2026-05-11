@@ -47347,3 +47347,90 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.38 (Sprint #1233): サマリーカード装飾サークル hover 加速
+   + sub-summary-card breath family 合流
+   ──────────────────────────────────────────────────────────
+   v26.54 で 5 summary card family（.summary-card / .pt-summary-card
+   / .ev-sum-card / .wl-summary-card / .ch-summary-card）の deco orbs
+   ::after / ::before に 3.6s / 4.0s の subtle filter:drop-shadow
+   呼吸を獲得していたが、
+     ・hover した瞬間に「目覚める」演出が無く idle BGM のまま
+     ・.sub-summary-card は breath family から漏れていて idle でも
+       完全静止
+   という 2 点が空状態 (v28.37) / chart-wrap (v28.25-v28.30) の
+   「hover で 2× 加速 + 1 ティア intensify」family と乖離していた。
+   本スプリントで以下 4 ブロックを追加して両方解消：
+     ① .sub-summary-card::after を deco-circle-breath-after 3.6s 合流
+     ② .sub-summary-card::before を deco-circle-breath-before 4.0s 合流
+     ③ 全 6 summary card family の :hover で
+          ::after  3.6s → 1.8s (2× 加速) + peak halo 0.28→0.45 boost
+          ::before 4.0s → 2.0s (2× 加速) + peak halo 0.24→0.40 boost
+        新規 keyframe deco-circle-breath-after-hover /
+        deco-circle-breath-before-hover で実装。
+        既存 v22.93 hover transition (transform scale + box-shadow +
+        background) は filter property と独立レイヤーなので衝突無し。
+     ④ prefers-reduced-motion で hover acceleration を無効化、static
+        halo (drop-shadow 0 0 12px white 0.35) で affordance 確保。
+   ダッシュボード初回視認の最重要 surface（収入/支出/差引 3 カード）
+   が hover で活気づく演出を獲得し、空状態 (v28.34-v28.37) /
+   チャート (v28.25-v28.32) と並ぶ「ambient + hover wake」family の
+   summary card 版が完成。
+   ============================================================ */
+
+/* ── ① + ② .sub-summary-card を v26.54 breath family に合流 ── */
+.sub-summary-card::after {
+  animation: deco-circle-breath-after 3.6s ease-in-out infinite;
+}
+.sub-summary-card::before {
+  animation: deco-circle-breath-before 4.0s ease-in-out infinite;
+}
+
+/* ── ③ hover 加速 keyframes（peak halo intensify 版）── */
+@keyframes deco-circle-breath-after-hover {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.20)); }
+  50%      { filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.45)); }
+}
+@keyframes deco-circle-breath-before-hover {
+  0%, 100% { filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.18)); }
+  50%      { filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.40)); }
+}
+
+/* ── ③ 6 summary card families × ::after hover acceleration ── */
+.summary-card:hover::after,
+.sub-summary-card:hover::after,
+.pt-summary-card:hover::after,
+.ev-sum-card:hover::after,
+.wl-summary-card:hover::after {
+  animation: deco-circle-breath-after-hover 1.8s ease-in-out infinite;
+}
+
+/* ── ③ 6 summary card families × ::before hover acceleration（ch-summary-card は ::before のみ）── */
+.summary-card:hover::before,
+.sub-summary-card:hover::before,
+.pt-summary-card:hover::before,
+.ev-sum-card:hover::before,
+.wl-summary-card:hover::before,
+.ch-summary-card:hover::before {
+  animation: deco-circle-breath-before-hover 2.0s ease-in-out infinite;
+}
+
+/* ── ④ prefers-reduced-motion: hover 加速無効化 + static halo 維持 ── */
+@media (prefers-reduced-motion: reduce) {
+  .summary-card:hover::after,
+  .sub-summary-card:hover::after,
+  .pt-summary-card:hover::after,
+  .ev-sum-card:hover::after,
+  .wl-summary-card:hover::after,
+  .summary-card:hover::before,
+  .sub-summary-card:hover::before,
+  .pt-summary-card:hover::before,
+  .ev-sum-card:hover::before,
+  .wl-summary-card:hover::before,
+  .ch-summary-card:hover::before {
+    animation: none;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+  }
+}
+
+
