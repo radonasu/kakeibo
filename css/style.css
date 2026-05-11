@@ -47815,3 +47815,86 @@ textarea:focus::placeholder {
   }
 }
 
+/* ===================================================================
+   v28.42: スプリント#1237 — summary card 補助テキスト hover に
+   lavender accent text-shadow 投入（5 補助テキスト families 一括 dual-layer 化）
+   ===================================================================
+   v28.40 で大型金額・v28.41 でラベルに lavender (--primary-end) accent text-shadow を
+   投入し summary card 4 層（gradient bg / deco orbs / 大型金額 / ラベル）が lavender
+   brand family で統一されたが、サマリーカード内には残る「補助テキスト」要素群
+   （.sub-summary-sub / .pt-summary-sub / .debt-summary-sub / .ev-sum-inc / .ev-sum-exp）
+   が white-only single-layer text-shadow のままだった。
+   本スプリントで 5 補助テキスト families 全てに「white shimmer + lavender accent」
+   dual-layer text-shadow を hover で投入、summary card 5 層（gradient bg / deco orbs /
+   大型金額 / ラベル / 補助テキスト）が完全に lavender brand family で統一される
+   完成形マイルストーンに到達。
+   補助テキストは fs-xs〜fs-sm（≈12-13px）と小〜中型のため amount 比 1 ティア絞った
+   blur 半径 + intensity で control（ラベル v28.41 と同等レベルの subtle accent）。
+   既存 white text-shadow（v23.x〜v25.x）を温存し lavender layer のみ追加付与、
+   last-defined wins で同 selector を redefine。
+   dark mode は mix-sm → mix-md / blur +2-4px の 1 ティア boost で primary-end accent を
+   ダークサーフェス上で identifiable に強化（v28.40/v28.41 と統一）。
+   =================================================================== */
+
+/* ── light mode: white + lavender dual-layer text-shadow on hover ── */
+
+/* 1. .sub-summary-sub: 既存 white 0.4/10px → dual-layer (white + lavender mix-sm/12px) */
+.sub-summary-card:hover .sub-summary-sub {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 2. .pt-summary-sub: 既存 white 0.45/10px → dual-layer (white + lavender mix-sm/12px) */
+.pt-summary-card:hover .pt-summary-sub {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 3. .debt-summary-sub (.debt-summary-total/.debt-summary-monthly hover):
+      既存 white 0.45/10px → dual-layer (white + lavender mix-sm/12px) */
+.debt-summary-total:hover   .debt-summary-sub,
+.debt-summary-monthly:hover .debt-summary-sub {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 4. .ev-sum-inc: 既存 white 0.5/10px → dual-layer (white + lavender mix-sm/14px) */
+.ev-sum-card:hover .ev-sum-inc {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 5. .ev-sum-exp: 既存 white 0.5/10px → dual-layer (white + lavender mix-sm/14px) */
+.ev-sum-card:hover .ev-sum-exp {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ── dark mode: lavender intensity boost (mix-sm → mix-md) + blur +2-4px ── */
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-sub {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.45),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-sub {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .debt-summary-total:hover   .debt-summary-sub,
+[data-theme="dark"] .debt-summary-monthly:hover .debt-summary-sub {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-inc {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-exp {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.45),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
