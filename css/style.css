@@ -5898,14 +5898,17 @@ body {
   75%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.04) rotate(-2deg); }
 }
 
-/* v28.34: 空状態 surface に ambient aurora backdrop を獲得 — 7 borderless 空状態コンテナ（empty-month/empty-goal/empty-debt/tx-empty/sub-empty/pt-empty/wl-empty）に position:relative + isolation:isolate + ::before で primary mix-2xs/nano radial gradient backdrop + 7s breathe pulse。chart-wrap aurora platform (v28.25) と同じ family の呼吸する radial primary glow が空状態にも展開され、「データなし」surface も静的な余白から ambient platform へと格上げ。bordered surface bg を持つ .empty-asset-state / .ch-empty は除外（自前 bg で aura が occlusion されるため、icon halo のみで強化）。 */
+/* v28.35: 空状態 surface aurora 完全コンプリート — borderless 群を 7→9 に拡張（.notif-empty + .dd-empty 追加）、さらに bordered surface bg を持つ .empty-asset-state / .ch-empty の 2 コンテナにも boosted intensity の aurora を別 ::before family で投入。合計 11 空状態 surface が ambient aurora backdrop platform を獲得し、v28.34 の borderless-only 制約を撤廃して全空状態コンテナで chart-wrap aurora (v28.25) family が統一。bordered 用 ::before は z-index:0 + 子要素 position:relative で stacking 制御し、自前 surface bg の上に aurora を layered + 強度を mix-xs/2xs (light) / mix-md/sm (dark) に boost して surface bg 突破。 */
+/* v28.34: 空状態 surface に ambient aurora backdrop を獲得 — 7 borderless 空状態コンテナ（empty-month/empty-goal/empty-debt/tx-empty/sub-empty/pt-empty/wl-empty）に position:relative + isolation:isolate + ::before で primary mix-2xs/nano radial gradient backdrop + 7s breathe pulse。chart-wrap aurora platform (v28.25) と同じ family の呼吸する radial primary glow が空状態にも展開され、「データなし」surface も静的な余白から ambient platform へと格上げ。 */
 .empty-month-state,
 .empty-goal-state,
 .empty-debt-state,
 .tx-empty-state,
 .sub-empty,
 .pt-empty,
-.wl-empty {
+.wl-empty,
+.notif-empty,
+.dd-empty {
   position: relative;
   isolation: isolate;
 }
@@ -5915,7 +5918,9 @@ body {
 .tx-empty-state::before,
 .sub-empty::before,
 .pt-empty::before,
-.wl-empty::before {
+.wl-empty::before,
+.notif-empty::before,
+.dd-empty::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -5937,7 +5942,9 @@ body {
 [data-theme="dark"] .tx-empty-state::before,
 [data-theme="dark"] .sub-empty::before,
 [data-theme="dark"] .pt-empty::before,
-[data-theme="dark"] .wl-empty::before {
+[data-theme="dark"] .wl-empty::before,
+[data-theme="dark"] .notif-empty::before,
+[data-theme="dark"] .dd-empty::before {
   background: radial-gradient(
     ellipse at 50% 35%,
     color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 0%,
@@ -5956,7 +5963,54 @@ body {
   .tx-empty-state::before,
   .sub-empty::before,
   .pt-empty::before,
-  .wl-empty::before { animation: none; opacity: 0.65; }
+  .wl-empty::before,
+  .notif-empty::before,
+  .dd-empty::before { animation: none; opacity: 0.65; }
+}
+
+/* v28.35: bordered surface bg を持つ .empty-asset-state / .ch-empty 用の aurora family。
+   container 自前の surface bg が z-index:-1 ::before を occlusion しないよう、
+   ::before z-index:0 (level 6) + 子要素 position:relative (document order で後 → 上に paint) の
+   stacking 制御で aurora を surface bg の上に layered。さらに opacity 0.85 + boosted intensity
+   (light mix-xs/2xs = ~15%/10% / dark mix-md/sm = ~20%/15%) で surface bg 突破。 */
+.empty-asset-state,
+.ch-empty {
+  position: relative;
+  isolation: isolate;
+}
+.empty-asset-state::before,
+.ch-empty::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 42%,
+    transparent 72%
+  );
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--radius);
+  opacity: 0.85;
+  animation: empty-aura-breathe 7s var(--ease-in-out) infinite;
+}
+[data-theme="dark"] .empty-asset-state::before,
+[data-theme="dark"] .ch-empty::before {
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 42%,
+    transparent 72%
+  );
+}
+.empty-asset-state > *,
+.ch-empty > * {
+  position: relative;
+}
+@media (prefers-reduced-motion: reduce) {
+  .empty-asset-state::before,
+  .ch-empty::before { animation: none; opacity: 0.7; }
 }
 
 /* ── 今月データなし（既存データあり） ───────────────────── */
