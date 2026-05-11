@@ -1602,7 +1602,8 @@ select:focus:not(:focus-visible) {
   outline: none;
   border-color: var(--primary);
   /* v22.66: 外周拡散グロー追加 / v26.13: drop-shadow を 0 1px 3px black-05 → 0 4px 12px black-12 に強化し rest（無）→hover（0 2px 8px black-08, v26.11）→focus（0 4px 12px black-12）の浮上深度ラダーを完成。フォーム入力中に最も「持ち上がっている」立体感を獲得 */
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 12px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し dual-color halo 化（primary inner halo + primary-end outer wash）。v28.40-v28.44 で summary/amount/row テキストの hover に展開した lavender brand family を form input focus state にも展開、kakeibo PWA 全体の lavender brand 統一マイルストーン */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 12px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 /* ── フォームプレースホルダー・キャレット統一 v15.2 ── */
 .form-group input,
@@ -1650,7 +1651,8 @@ select:focus:not(:focus-visible) {
 .amount-input-wrap:focus-within {
   border-color: var(--primary);
   /* v22.74: 外周拡散グロー追加（通常input:focus v22.66と統一） / v26.13: drop-shadow を 0 1px 3px black-05 → 0 4px 14px black-12 に強化し rest（無）→hover（0 2px 8px black-08, v26.12）→focus-within（0 4px 14px black-12）の浮上深度ラダーを完成。金額入力中に最も「持ち上がっている」立体感を獲得し form-group input:focus（v26.13）と整合 */
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/20px outer wash を追加し dual-color halo 化、form-group input:focus v28.45 と整合 */
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 .amount-prefix {
   padding: 0 var(--sp-2) 0 var(--sp-3);
@@ -42487,11 +42489,12 @@ textarea:focus::placeholder {
 }
 
 /* ③ .auth-form input focus — auth-card 内では primary glow を強化 */
+/* v28.45: 4th layer lavender outer wash 追加・dual-color halo 化 */
 .auth-form .form-group input:focus {
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .auth-form .form-group input:focus {
-  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 4px 14px var(--black-12), 0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 0 32px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
 /* ④ .auth-error — entrance shake + 常時 danger glow border */
@@ -44260,9 +44263,11 @@ textarea:focus::placeholder {
 .budget-input:focus {
   outline: none;
   border-color: var(--primary);
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ③ .recurring-day-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
@@ -44276,9 +44281,11 @@ textarea:focus::placeholder {
 .recurring-day-input:focus {
   outline: none;
   border-color: var(--primary);
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ⑤ .csv-map-select:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
@@ -44292,9 +44299,11 @@ textarea:focus::placeholder {
 .csv-map-select:focus {
   outline: none;
   border-color: var(--primary);
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ⑦ .qa-cat-select:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
@@ -44308,9 +44317,11 @@ textarea:focus::placeholder {
 .qa-cat-select:focus {
   border-color: var(--qa-accent);
   outline: none;
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し qa-accent inner + lavender outer dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ⑨ .qa-memo-input:hover — 既存 ring に 0 2px 8px black-08 drop-shadow 追加 */
@@ -44324,9 +44335,11 @@ textarea:focus::placeholder {
 .qa-memo-input:focus {
   border-color: var(--qa-accent);
   outline: none;
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し qa-accent inner + lavender outer dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-base), transparent),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--qa-accent) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ⑪ .cat-budget-input:hover — 既存 cat-clr ring に 0 2px 8px black-08 drop-shadow 追加 */
@@ -44340,54 +44353,68 @@ textarea:focus::placeholder {
 .cat-budget-input:focus {
   outline: none;
   border-color: var(--cat-clr, var(--primary));
+  /* v28.45: 4th layer に lavender (--primary-end) mix-xs/18px outer wash を追加し cat-clr inner + lavender outer dual-color halo 化 */
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent),
               0 4px 12px var(--black-12),
-              0 0 12px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent);
+              0 0 12px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-xs), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 
 /* ⑬〜⑳ ダーク版: black-12 → black-22 強化（暗背景上の visibility 確保）
    accent glow は mix-xs → mix-sm 強化（ダークコントラスト対応） */
 
 /* ⑬ ダーク .budget-input:focus */
+/* v28.45: 4th layer に lavender (--primary-end) mix-md/22px outer wash を追加し triple-layer halo 化（既存 primary-end inner mix-sm/14px + outer mix-md/22px で深度感強化） */
 [data-theme="dark"] .budget-input:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑭ ダーク .recurring-day-input:focus */
+/* v28.45: 4th layer に lavender outer wash 追加 */
 [data-theme="dark"] .recurring-day-input:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑮ ダーク .csv-map-select:focus */
+/* v28.45: 4th layer に lavender outer wash 追加 */
 [data-theme="dark"] .csv-map-select:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑯ ダーク .qa-cat-select:focus — 既存 mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+/* v28.45: 4th layer に lavender (--primary-end) mix-md/22px outer wash を追加し qa-accent inner + lavender outer triple-layer halo */
 [data-theme="dark"] .qa-cat-select:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑰ ダーク .qa-memo-input:focus — 既存 mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+/* v28.45: 4th layer に lavender outer wash 追加 */
 [data-theme="dark"] .qa-memo-input:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--qa-accent) var(--mix-soft), transparent),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--qa-accent) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑱ ダーク .cat-budget-input:focus — 既存 cat-clr mix-soft ring 保持 + drop-shadow + 外周 glow 深化 */
+/* v28.45: 4th layer に lavender outer wash 追加 */
 [data-theme="dark"] .cat-budget-input:focus {
   box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-soft), transparent),
               0 4px 14px rgba(0,0,0,0.22),
-              0 0 14px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent);
+              0 0 14px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-sm), transparent),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
 /* ⑲ ダーク .qa-cat-select:hover / .qa-memo-input:hover — primary-end mix-md ring + 強化 drop-shadow */
