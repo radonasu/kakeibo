@@ -1365,7 +1365,8 @@ select:focus:not(:focus-visible) {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 /* v26.10: hover 時も inset 白ハイライトを維持（mix-4xl の外側影 + inset 0 1px 0 rgba(255,255,255,0.22)）。hover で僅かに inset 強化（0.2→0.22）。 */
-.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v28.46: ボタン hover box-shadow に lavender (--primary-end) accent 3rd layer 投入。primary mix-4xl glow + 新 primary-end mix-md outer wash で dual-color halo 化、v28.40-v28.45 lavender brand family を btn:hover にも展開 */
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) var(--mix-4xl), transparent), 0 10px 28px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 /* v28.16: box-shadow: none → "pressed-in depression" inset。上端 dark inset 4px で押し込まれた凹み感 + 下端 white inset 1px で底部リバウンド光沢を獲得し、translateY/scale press-down + brightness と合わせて物理的なボタン押下感を実現 */
 .btn-primary:active { filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
@@ -1377,7 +1378,8 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 10→14px で薄く広がるプライマリ光をクッキリ視認可能に */
-.btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+/* v28.46: lavender (--primary-end) mix-2xs outer wash 3rd layer 追加で primary inner glow + lavender outer wash の dual-color halo 化 */
+.btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 4px 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent); }
 /* v28.16: box-shadow: none → primary-tinted "pressed-in" inset 3px。淡 surface 背景の上で primary mix-sm 紫の凹み陰影が立ち上がり、translateY press-down + brightness と合わせて btn-primary と同質の depression 感を獲得 */
 .btn-ghost:active { background: var(--border); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
 
@@ -1389,7 +1391,8 @@ select:focus:not(:focus-visible) {
   box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 /* v26.11: hover も inset 白ハイライト維持（hover 時 0.5→0.55 微強化）+ 既存 expense glow */
-.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+/* v28.46: expense semantic red を主に、lavender primary-end mix-2xs を 2nd layer の subtle accent として追加（brand 統一しつつ赤の semantic 優位を維持） */
+.btn-danger:hover { background: var(--danger-border); border-color: var(--expense); box-shadow: 0 4px 12px color-mix(in srgb, var(--expense) var(--mix-md), transparent), 0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
 /* v28.16: box-shadow: none → expense-tinted "pressed-in" inset 3px。淡 danger-bg 背景の上で expense mix-sm 赤の凹み陰影が立ち上がり、translateY press-down と合わせて danger ボタンの押下感を physical に表現 */
 .btn-danger:active { filter: brightness(var(--brightness-press)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
 
@@ -1434,7 +1437,8 @@ select:focus:not(:focus-visible) {
 }
 /* v26.07: hover glow強化 mix-xs→mix-sm + blur 8→12px でアイコンボタンのプライマリ光を視認可能レベルに */
 /* v26.12: glow さらに強化 mix-sm→mix-md でアイコンボタン hover 時のアクション可能性視認性をクッキリ向上 */
-.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+/* v28.46: focus-ring + primary mix-md inner glow に lavender primary-end mix-sm outer wash 3rd layer 追加で triple-layer halo 化 */
+.btn-icon:hover { opacity: 1; background: var(--bg); transform: scale(var(--scale-hover-chip)); box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 12px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 /* v28.16: box-shadow: none → primary-tinted "pressed-in" inset 3px。透明背景アイコンボタンに primary mix-xs の薄紫 inset を加えて press 中も微かに primary tint が残り、scale press + brightness と合わせて視覚的なクリック感を強化 */
 .btn-icon:active { transform: scale(var(--scale-icon-active)); filter: brightness(var(--brightness-press-soft)); box-shadow: inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 .btn-icon:focus-visible { outline: none; box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring); }
@@ -7640,7 +7644,8 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 /* v26.11: inset 0 1px 0 rgba(255,255,255,0.2) で success-green 背景上に上端白光沢を追加。btn-primary（v26.10）と同パターン。Solid green 背景の上から光が当たっているような glassy sheen を獲得し、btn-primary/btn-ghost/btn-danger と統合された 3D 立体ボタン群へ */
 .btn-success { background: var(--success); color: var(--white); border: none; box-shadow: 0 2px 8px color-mix(in srgb, var(--success) var(--mix-xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
 /* v26.11: hover も inset 白ハイライト維持（0.2→0.22 強化）。primary v26.10 と完全対称 */
-.btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v28.46: success mix-4xl green glow + 新 lavender primary-end mix-md outer wash 3rd layer で income green + brand lavender の dual-color halo 化 */
+.btn-success:hover  { background: var(--income-deep); box-shadow: 0 6px 18px color-mix(in srgb, var(--success) var(--mix-4xl), transparent), 0 10px 28px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 /* v28.16: box-shadow: none → income-deep tinted "pressed-in depression" inset。上端 dark inset 4px で押し込まれた凹み感 + 下端 white inset 1px で底部リバウンド光沢を獲得し、btn-primary :active と完全対称な physical な押下感を実現 */
 .btn-success:active { filter: brightness(var(--brightness-press)); transform: translateY(var(--translate-press-down)); box-shadow: inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent), inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent); }
 
@@ -27268,7 +27273,8 @@ textarea:focus::placeholder {
    btn-success:hover 白glow（v22.89）と同パターンで完成形演出。
    btn-primary transition に text-shadow を追加。 */
 .btn-primary { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-bounce), box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-press) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out); }
-.btn-primary:hover { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 0 20px rgba(255, 255, 255, 0.18); }
+/* v28.46: text-shadow 3rd layer に lavender primary-end mix-md 追加で white shimmer + lavender accent dual-color halo 化 */
+.btn-primary:hover { text-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 0 20px rgba(255, 255, 255, 0.18), 0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
 
 /* 2. #hamburger:hover → self primary-end text-shadow glow
    モバイルヘッダーのハンバーガーメニューボタンホバー時に primary-end text-shadow glow 追加。
@@ -35331,7 +35337,8 @@ textarea:focus::placeholder {
 [data-theme="dark"] .budget-item:has(.budget-fill.over):hover { border-color: color-mix(in srgb, var(--expense-end) var(--mix-sm), var(--border)); box-shadow: var(--shadow-sm), 0 4px 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
 
 /* ③ btn-ghost dark enhanced hover glow（primary-end mix-md 0 2px 12px + text-shadow） */
-[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
+/* v28.46: 既存 primary-end mix-md inner glow に primary-end mix-sm wider outer wash を 3rd layer として追加し dark mode で lavender double-layer halo 化 */
+[data-theme="dark"] .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-sm), 0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); color: var(--primary-end); text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 
 /* ④ bottom-nav-item:not(.active):hover dark enhanced outer glow（primary-end mix-sm） */
 [data-theme="dark"] .bottom-nav-item:not(.active):hover { box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring), 0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
@@ -35393,14 +35400,16 @@ textarea:focus::placeholder {
 
 /* ① btn-primary dark enhanced hover glow（primary-end mix-4xl 0 6px 20px）
    v26.80: inset 0 1px 0 rgba(255,255,255,0.22) を追加し、ライト .btn-primary:hover（line 1333・inset 0.22）/ ダーク .btn-success:hover（line 34323・inset 0.22）/ ダーク .btn-primary:focus-visible:not(:active)（line 44935・inset 0.22）と整合。これまでダークモードで btn-primary を hover すると ライト基底（line 1330・inset 0.20）から継承していた上端白光沢が消失して glassy 3D が崩れる視覚バグを修正。saturated purple bg（primary-dark）上で 0.22 が適正値。 */
-[data-theme="dark"] .btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v28.46: 既存 primary-end mix-4xl inner glow に primary-end mix-md wider outer wash を 3rd layer として追加し dark mode で lavender triple-layer halo 化 */
+[data-theme="dark"] .btn-primary:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-4xl), transparent), 0 12px 36px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ② btn-danger dark enhanced hover glow（expense-end mix-lg 0 4px 14px） */
 [data-theme="dark"] .btn-danger:hover { background: var(--danger-border); box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
 
 /* ③ btn-success dark enhanced hover glow（income-end mix-4xl 0 6px 20px） */
 /* v26.12: inset 0 1px 0 rgba(255,255,255,0.22) を追加し v26.11 ライト btn-success:hover inset（line 6877）と整合。Solid green 背景上の上端白光沢が hover 時も維持され btn-primary/btn-ghost/btn-danger ダーク hover inset 統合パターン（v26.10/v26.11）と完成形に揃う */
-[data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+/* v28.46: income-end green glow に lavender primary-end mix-md outer wash 3rd layer を追加し income green + lavender brand の dark dual-color halo 化 */
+[data-theme="dark"] .btn-success:hover { box-shadow: 0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-4xl), transparent), 0 12px 36px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
 
 /* ④ modal-close dark enhanced hover glow（expense-end mix-md + text-shadow） */
 [data-theme="dark"] .modal-close:hover { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense-end) var(--mix-md), transparent), 0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); color: var(--expense-end); text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
@@ -39386,7 +39395,8 @@ textarea:focus::placeholder {
    ライトモード text-shadow（0 1px 6px rgba 0.45 + 0 0 20px rgba 0.18）のダーク強化版。
    両レイヤーの rgba 値を引き上げ（0.55+0.28）プライマリボタンの hover 白グローをダークモードで鮮明化。
    btn-primary:hover dark box-shadow（v25.0x）と連動しボタン全体のダーク hover 演出を完成形に統一。 */
-[data-theme="dark"] .btn-primary:hover { color: #fff; text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28); }
+/* v28.46: dark text-shadow に lavender primary-end mix-lg 4th layer 追加で white shimmer dual + lavender accent halo triple-layer 化 */
+[data-theme="dark"] .btn-primary:hover { color: #fff; text-shadow: 0 1px 6px rgba(255, 255, 255, 0.55), 0 0 22px rgba(255, 255, 255, 0.28), 0 0 28px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
 
 /* ⑨ [data-theme="dark"] .tx-sort-badge:hover → dark enhanced color:primary-end+text-shadow glow（primary-end・mix-md）:
    ライトモード text-shadow glow（primary mix-sm）のダーク強化版。
@@ -41922,9 +41932,10 @@ textarea:focus::placeholder {
   box-shadow: var(--shadow-btn-base), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 /* v26.11: ダーク .btn-danger:hover も inset 維持 + 既存 expense-end 強化 glow（line 34228 v24.90）と統合 */
+/* v28.46: expense-end red glow に lavender primary-end mix-sm outer wash 3rd layer を追加し dark danger ボタンも brand 統一（red 優位の subtle accent） */
 [data-theme="dark"] .btn-danger:hover {
   background: var(--danger-border);
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent), 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* ============================================================
@@ -42889,9 +42900,11 @@ textarea:focus::placeholder {
 }
 
 /* ⑤ ダーク .btn-icon:hover ring + 外側 glow 強化（mix-sm 0 2px 10px → mix-md 0 3px 14px） */
+/* v28.46: focus-ring + primary-end mix-md inner glow に primary-end mix-sm wider outer wash を 3rd layer として追加し dark triple-layer halo 化 */
 [data-theme="dark"] .btn-icon:hover {
   box-shadow: 0 0 0 var(--focus-ring-w) var(--focus-ring),
-              0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+              0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
 /* ⑥ ダーク .edit-tx:hover 外側 glow 新規追加（既存 ring + 外側 primary-end mix-md） */
