@@ -10911,7 +10911,7 @@ function renderDebtSimChart(base, accel, extra) {
   _debtSimChart = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
-    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18)), makePointHoverGlowPlugin(0.55, 16)],
     options: {
       responsive: true,
       maintainAspectRatio: false,

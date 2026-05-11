@@ -402,6 +402,52 @@ function makeBarHoverGlowPlugin(alpha = 0.55, blur = 14) {
   };
 }
 
+// ─── Point Hover Glow（v28.33: チャート視覚改善#9 — ライン系 active point に halo を獲得）──
+// 既存 makeArcHoverGlowPlugin（doughnut/pie の弧周りハロ）/ makeBarHoverGlowPlugin（縦棒の頂部
+// アウトライン+halo）に続く第 3 形態。tooltip._active を走査し、line 型データセットの active point
+// 直上に色付き soft disk + shadowBlur halo を描画。interaction:{ mode:'index', intersect:false }
+// との組み合わせで、4-line のカテゴリ別トレンド等では「コンステレーション風」に複数 point が
+// 同期発光する。
+//   ① fillStyle: dataset の borderColor / pointBackgroundColor を alpha * 0.35 で軽くタイント
+//   ② shadowColor: 同色を alpha 0.55 で blur 16 — point 外周に紫/カテゴリ色の発光ハロ
+//   ③ point.skip / data null は早期 return（null データ点に halo が出ない）
+//   ④ pointHoverRadius を基準に halo radius を `ptR + 4` で決定（pointRadius:0 の隠し点でも
+//      hover 時の本当のサイズに halo が追従）
+function makePointHoverGlowPlugin(alpha = 0.55, blur = 16) {
+  return {
+    id: 'pointHoverGlow',
+    afterDatasetsDraw(chart) {
+      const active = chart.tooltip?._active;
+      if (!active?.length) return;
+      const c = chart.ctx;
+      c.save();
+      active.forEach(item => {
+        const meta = chart.getDatasetMeta(item.datasetIndex);
+        if (!meta || meta.type !== 'line') return;
+        const point = meta.data?.[item.index];
+        if (!point || point.skip) return;
+        const ds = chart.data.datasets[item.datasetIndex];
+        const v = ds.data?.[item.index];
+        if (v == null) return;
+        let color = '#7c3aed';
+        if (typeof ds.borderColor === 'string') color = ds.borderColor;
+        else if (typeof ds.pointBackgroundColor === 'string') color = ds.pointBackgroundColor;
+        const props = point.getProps(['x', 'y'], true);
+        if (!Number.isFinite(props.x) || !Number.isFinite(props.y)) return;
+        const ptR = typeof ds.pointHoverRadius === 'number' ? ds.pointHoverRadius : 7;
+        const haloR = ptR + 4;
+        c.beginPath();
+        c.arc(props.x, props.y, haloR, 0, Math.PI * 2);
+        c.fillStyle   = hexToRgba(color, alpha * 0.35);
+        c.shadowColor = hexToRgba(color, alpha);
+        c.shadowBlur  = blur;
+        c.fill();
+      });
+      c.restore();
+    },
+  };
+}
+
 function makeCrosshairPlugin(strokeColor, glowColor, orientation = 'vertical') {
   return {
     id: 'crosshair',
@@ -697,7 +743,7 @@ function renderBalanceLineChart(canvasId, months, onMonthClick) {
         pointHoverBorderWidth: 3,
       }],
     },
-    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18))],
+    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18)), makePointHoverGlowPlugin(0.55, 16)],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1364,7 +1410,7 @@ function renderNetWorthChart(canvasId) {
         pointHoverBorderWidth: 3,
       }],
     },
-    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18))],
+    plugins: [makeCrosshairPlugin(hexToRgba(lineColor, 0.42), hexToRgba(lineColor, 0.18)), makePointHoverGlowPlugin(0.55, 16)],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1444,7 +1490,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
   chartInstances[canvasId] = new Chart(ctx2d, {
     type: 'line',
     data: { labels, datasets },
-    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18)), makePointHoverGlowPlugin(0.5, 14)],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1623,7 +1669,7 @@ function renderFixedVariableTrend(canvasId, year) {
         },
       ],
     },
-    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18))],
+    plugins: [makeCrosshairPlugin(hexToRgba(primaryClr, 0.42), hexToRgba(primaryClr, 0.18)), makePointHoverGlowPlugin(0.55, 14)],
     options: {
       responsive: true,
       maintainAspectRatio: false,
