@@ -48703,3 +48703,103 @@ textarea:focus::placeholder {
     0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
 }
 
+/* ============================================================
+   v28.54 Sprint #1247: floating UI surfaces 群（kk-toast / sync-toast /
+   update-toast / notif-panel = 4 系統 × ライト + ダーク = 8 redefinition）に
+   lavender (--primary-end) accent dual-color outer wash を投入
+
+   ── 設計趣旨 ──
+   v28.40-v28.53 で確立した「primary inner halo + primary-end outer wash」
+   dual-color shadow family を、ページ最前面に出現する floating UI surface
+   （アクションフィードバックトースト群 + 通知パネル）にも展開。
+
+   これまでの shadow:
+     - .kk-toast.kk-toast-show (light): shadow-lg + inset white 0.22 のみ
+     - .sync-toast.show / .update-toast.show (light): shadow-lg + primary mix-xs + inset 0.22
+     - .notif-panel (light): shadow-lg + inset white 0.20 のみ（primary glow 無し）
+     - dark 各種: primary-end mix-sm 単色 or shadow-panel + inset のみ
+
+   v28.54 では：
+     - light: 既存 shadow を保持しつつ primary inner 4px-8px / primary-end mix-2xs/xs
+       outer wash 14-22px を append → dual-color halo 化
+     - dark: 既存 primary-end shadow を保持しつつ primary mix-xs inner halo を append
+       → 暗背景でも brand 二色が共鳴
+
+   ── カスケード安全 ──
+   末尾配置 + 既存 v26.76 EOF block と同 specificity のため last-defined-wins
+   で確実に上書き。type-specific .kk-toast-success/error/warning は対象外
+   （type colored glow を維持）— generic kk-toast のみ拡張。
+   ============================================================ */
+
+/* ① light .kk-toast.kk-toast-show — primary inner + lavender outer wash dual-color halo 追加 */
+.kk-toast.kk-toast-show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② light .sync-toast.show — 既存 primary mix-xs に lavender mix-2xs outer wash 追加 */
+.sync-toast.show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ③ light .update-toast.show — sync-toast と同 family */
+.update-toast.show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ④ light .notif-panel — 既存 shadow-lg + inset のみから primary + lavender dual-color halo へ拡張 */
+.notif-panel {
+  box-shadow:
+    var(--shadow-lg),
+    0 8px 28px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
+/* ⑤ dark .kk-toast.kk-toast-show — primary-end mix-sm + primary mix-xs dual-color halo */
+[data-theme="dark"] .kk-toast.kk-toast-show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑥ dark .sync-toast.show — 既存 primary-end mix-sm に primary mix-xs inner halo 追加 */
+[data-theme="dark"] .sync-toast.show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑦ dark .update-toast.show — sync-toast と同 family */
+[data-theme="dark"] .update-toast.show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ⑧ dark .notif-panel — primary-end + primary dual-color halo 強化版 */
+[data-theme="dark"] .notif-panel {
+  box-shadow:
+    var(--shadow-panel),
+    0 8px 28px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
