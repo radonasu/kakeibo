@@ -47898,3 +47898,91 @@ textarea:focus::placeholder {
                0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
+/* ===================================================================
+   v28.43: スプリント#1238 — 非サマリーカード大型金額テキスト hover に
+   lavender accent text-shadow 投入（4 main amount families 一括 triple-layer 化）
+   ===================================================================
+   v28.40-v28.42 で summary card 系（amount/label/sub-text）が lavender brand family
+   で統一されたが、summary card 外の主役級「大型残高数値」群はまだ
+   single-color accent text-shadow（v25.01-25.03 起源の accent mix-sm/8px）のままだった。
+   本スプリントで以下 4 main amount families に「accent + white shimmer + lavender」
+   triple-layer text-shadow を hover で投入：
+     1. .asset-card:hover .asset-balance   （資産カード fs-4xl/fw-black 大型残高数値）
+     2. .debt-card:hover  .debt-balance    （負債カード fs-xl/fw-bold 大型残高数値）
+     3. .goal-card:hover  .goal-saved      （ゴールカード貯蓄額数値）
+     4. .ct-stat-card:hover .ct-stat-value （カテゴリトレンド統計値）
+   既存 accent text-shadow（v23.42-v23.46 起源、asset-accent/debt-accent/goal-accent/
+   ct-stat-color glow）を温存し、white shimmer + lavender layer を追加付与、
+   last-defined wins で同 selector を redefine。
+   accent + white + lavender の 3 色 chain で「カードの色彩アイデンティティを保ちつつ
+   ブランドカラー lavender が呼吸する」表現に到達。summary card 系（v28.40-v28.42）と
+   非サマリー大型金額系（v28.43）で「hover 時に lavender brand accent が共鳴」する
+   統一 UX 言語が成立。
+   dark mode は mix-sm → mix-md / blur +2-4px の 1 ティア boost で primary-end accent を
+   ダークサーフェス上で identifiable に強化（v28.40/v28.41/v28.42 と統一）。
+   prefers-reduced-motion で text-shadow transition のみ無効化（visual は維持）。
+   =================================================================== */
+
+/* ── light mode: accent + white + lavender triple-layer text-shadow on hover ── */
+
+/* 1. .asset-balance: 既存 asset-accent mix-sm/8px → triple-layer 化 */
+.asset-card:hover .asset-balance {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent),
+               0 0 12px rgba(255, 255, 255, 0.4),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 2. .debt-balance: 既存 debt-accent/expense mix-sm/8px → triple-layer 化 */
+.debt-card:hover .debt-balance {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--debt-accent, var(--expense)) var(--mix-sm), transparent),
+               0 0 12px rgba(255, 255, 255, 0.4),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 3. .goal-saved: 既存 goal-accent mix-sm/8px → triple-layer 化 */
+.goal-card:hover .goal-saved {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.35),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 4. .ct-stat-value: 既存 ct-stat-color mix-sm/8px → triple-layer 化 */
+.ct-stat-card:hover .ct-stat-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--ct-stat-color, var(--primary)) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.35),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ── dark mode: lavender intensity boost (mix-sm → mix-md) + blur +2-4px ── */
+[data-theme="dark"] .asset-card:hover .asset-balance {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent),
+               0 0 14px rgba(255, 255, 255, 0.45),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .debt-card:hover .debt-balance {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--debt-accent, var(--expense-end)) var(--mix-md), transparent),
+               0 0 14px rgba(255, 255, 255, 0.45),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .goal-card:hover .goal-saved {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.4),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .ct-stat-card:hover .ct-stat-value {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--ct-stat-color, var(--primary-end)) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.4),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ── reduced-motion fallback: text-shadow transition のみ無効化（visual は維持） ── */
+@media (prefers-reduced-motion: reduce) {
+  .asset-balance,
+  .debt-balance,
+  .goal-saved,
+  .ct-stat-value {
+    transition: filter var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+}
+
