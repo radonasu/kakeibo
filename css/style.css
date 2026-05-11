@@ -47066,3 +47066,110 @@ textarea:focus::placeholder {
               0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
               inset 3px 0 0 var(--primary-end);
 }
+
+/* ============================================================
+   v28.36 Sprint #1231: 空状態アイコン 装飾 orbit ring 獲得
+   ── 3 層化: icon glyph + filter halo (v22.92/v26.15) + 新規 ::after orbit ring ──
+   v28.34/v28.35 で 11 空状態 surface に呼吸する radial aurora backdrop を
+   獲得したが、icon 自身は emoji glyph + drop-shadow halo の 2 層構成で停滞
+   していた。本スプリントで全 10 空状態アイコンに「em 単位で font-size に
+   追従する dashed orbit ring」を ::after で重ねる第 3 層を追加。
+   - 1.55em 直径の dashed primary ring（border 1.5px）を icon 中心に重畳
+   - 16s linear infinite で 360° slow orbit（dashes が icon の周りを巡回）
+   - 5.2s ease-in-out infinite で opacity 0.55↔0.95 breath（呼吸）
+   - 両 animation は異速で発火 → 同期せず自然な ambient liveness
+   - light: --primary mix-md (20%) tinted dashed
+   - dark : --primary-end mix-lg (30%) tinted dashed（lavender 強化版）
+   - ::after は z-index なし → emoji glyph の visible 領域は ring の内側
+     1.55em diameter で覆われるため glyph の上に visually overlap せず
+     ring border line は emoji bounding box の外周をなぞる
+   - prefers-reduced-motion はグローバル wildcard（line 18923-30）で
+     自動停止 → orbit/breath 停止後も dashed ring は static decoration
+     として可視性維持
+   対象 10 selector:
+   ①.empty-month-icon ②.empty-goal-icon ③.empty-asset-icon
+   ④.empty-debt-icon  ⑤.sub-empty-icon  ⑥.pt-empty-icon
+   ⑦.wl-empty-icon    ⑧.ch-empty-icon   ⑨.tx-empty-icon
+   ⑩.notif-empty-icon
+   ============================================================ */
+
+@keyframes empty-icon-ring-orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes empty-icon-ring-breath {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.95; }
+}
+
+/* 10 空状態アイコン基底: ::after ring anchor 用に position relative + inline-block */
+.empty-month-icon,
+.empty-goal-icon,
+.empty-asset-icon,
+.empty-debt-icon,
+.sub-empty-icon,
+.pt-empty-icon,
+.wl-empty-icon,
+.ch-empty-icon,
+.tx-empty-icon,
+.notif-empty-icon {
+  position: relative;
+  display: inline-block;
+}
+
+/* ::after 装飾 orbit ring（dashed primary, 1.55em 直径, slow rotate + breath）*/
+.empty-month-icon::after,
+.empty-goal-icon::after,
+.empty-asset-icon::after,
+.empty-debt-icon::after,
+.sub-empty-icon::after,
+.pt-empty-icon::after,
+.wl-empty-icon::after,
+.ch-empty-icon::after,
+.tx-empty-icon::after,
+.notif-empty-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: empty-icon-ring-orbit 16s linear infinite,
+             empty-icon-ring-breath 5.2s ease-in-out infinite;
+}
+
+/* ダーク: primary-end (lavender) + 一段強い mix-lg で暗背景でも視認性確保 */
+[data-theme="dark"] .empty-month-icon::after,
+[data-theme="dark"] .empty-goal-icon::after,
+[data-theme="dark"] .empty-asset-icon::after,
+[data-theme="dark"] .empty-debt-icon::after,
+[data-theme="dark"] .sub-empty-icon::after,
+[data-theme="dark"] .pt-empty-icon::after,
+[data-theme="dark"] .wl-empty-icon::after,
+[data-theme="dark"] .ch-empty-icon::after,
+[data-theme="dark"] .tx-empty-icon::after,
+[data-theme="dark"] .notif-empty-icon::after {
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* prefers-reduced-motion: orbit + breath を停止し opacity 0.75 で static ring として可視性維持
+   （v28.34 aurora 0.65 より 0.10 高めで、emoji glyph の周りに常時 visible dashed circle として残る） */
+@media (prefers-reduced-motion: reduce) {
+  .empty-month-icon::after,
+  .empty-goal-icon::after,
+  .empty-asset-icon::after,
+  .empty-debt-icon::after,
+  .sub-empty-icon::after,
+  .pt-empty-icon::after,
+  .wl-empty-icon::after,
+  .ch-empty-icon::after,
+  .tx-empty-icon::after,
+  .notif-empty-icon::after {
+    animation: none;
+    opacity: 0.75;
+  }
+}
