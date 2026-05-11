@@ -47986,3 +47986,295 @@ textarea:focus::placeholder {
   }
 }
 
+/* ===================================================================
+   v28.44: スプリント#1239 — 行/テーブル/セル系 medium-amount text hover に
+   lavender accent text-shadow 投入（8 family group 一括 triple-layer 化）
+   ===================================================================
+   v28.40-v28.42 で summary card 系（amount/label/sub-text）が
+   v28.43 で非サマリー大型金額 4 families（asset/debt/goal/ct-stat）が
+   それぞれ lavender brand family で統一されたが、行（row）/テーブル（table）/
+   セル（cell）系の中間サイズ amount text（取引行・カレンダーセル・年次セル・
+   ヒートマップ統計値）は v25.x 起源の single-color accent text-shadow のままだった。
+   本スプリントで以下 8 family group に「accent + white shimmer + lavender」
+   triple-layer text-shadow を hover で投入：
+     1. .tx-table tbody tr:hover td.amount         （取引テーブル 行 income/expense）
+     2. .dd-tx-row:hover .dd-tx-amount             （ドリルダウン取引行 income/expense）
+     3. .ct-table tbody tr:hover .ct-row-total    （カテゴリトレンドテーブル行合計 primary）
+     4. .md-cell-(income|expense):hover .md-cell-value （月ドリルダウンセル income/expense）
+     5. .cal-cell:hover .cal-amount               （カレンダーセル income/expense）
+     6. .cal-sum-item:hover .cal-sum-value        （カレンダーサマリーアイテム income/expense）
+     7. .yr-cell-*:hover .yr-cell-value           （年次セル income/expense/savings×3）
+     8. .hm-stat-card:hover .hm-stat-value        （ヒートマップ統計値 4 type）
+   既存 accent text-shadow（v24.03-v24.07/v25.x 起源）を温存し、white shimmer +
+   lavender layer を追加付与、last-defined wins で同 selector を redefine。
+   row/cell text は fs-sm〜fs-md と amount より 1 ティア小さいため、v28.43 比で
+   blur 半径 -2px / lavender intensity を mix-sm → mix-2xs に絞った subtle 設計で
+   「行・セル単位の数値が hover で lavender brand color で目覚める」表現に到達。
+   summary card 系（v28.40-v28.42）+ 非サマリー大型金額 4 families（v28.43）+
+   row/table/cell 8 family group（v28.44）で「数値テキスト hover に lavender
+   brand accent が共鳴」する完成形 UX 言語が成立。
+   dark mode は mix-2xs → mix-sm / blur +2-4px の 1 ティア boost で primary-end
+   accent をダークサーフェス上で identifiable に強化。
+   prefers-reduced-motion で text-shadow transition のみ無効化（visual は維持）。
+   =================================================================== */
+
+/* ── light mode: accent + white shimmer + lavender triple-layer text-shadow on hover ── */
+
+/* 1. .tx-table 取引行 (income/expense) */
+.tx-table tbody tr[data-type="income"]:hover td.amount {
+  filter: brightness(1.08);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.tx-table tbody tr[data-type="expense"]:hover td.amount {
+  filter: brightness(1.08);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 2. .dd-tx-row ドリルダウン取引行 (income/expense) */
+.dd-tx-row:hover .dd-tx-amount.income {
+  filter: brightness(1.1);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.dd-tx-row:hover .dd-tx-amount.expense {
+  filter: brightness(1.1);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 3. .ct-table カテゴリトレンド行合計 (primary) */
+.ct-table tbody tr:hover .ct-row-total {
+  filter: brightness(1.1);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 4. .md-cell 月ドリルダウンセル (income/expense) */
+.md-cell-income:hover .md-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.md-cell-expense:hover .md-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 5. .cal-cell カレンダーセル (income/expense) */
+.cal-cell:hover:not(.cal-empty) .cal-amount.inc {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.cal-cell:hover:not(.cal-empty) .cal-amount.exp {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 6. .cal-sum-item カレンダーサマリーアイテム (income/expense) */
+.cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 7. .yr-cell 年次セル (income/expense/savings×3) */
+.yr-cell-income:hover .yr-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.yr-cell-expense:hover .yr-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.yr-cell-savings-success:hover .yr-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.yr-cell-savings-warn:hover .yr-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.yr-cell-savings-danger:hover .yr-cell-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* 8. .hm-stat-card ヒートマップ統計値 (primary/expense/warning/success) */
+.hm-stat-card:nth-child(1):hover .hm-stat-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.hm-stat-card:nth-child(2):hover .hm-stat-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.hm-stat-card:nth-child(3):hover .hm-stat-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.hm-stat-card:nth-child(4):hover .hm-stat-value {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+               0 0 10px rgba(255, 255, 255, 0.30),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── dark mode: 1 ティア boost (mix-2xs → mix-sm / white +0.10 / blur +2-4px) ── */
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover td.amount {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover td.amount {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.income {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .dd-tx-row:hover .dd-tx-amount.expense {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .ct-table tbody tr:hover .ct-row-total {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .md-cell-income:hover .md-cell-value {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .md-cell-expense:hover .md-cell-value {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.inc {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-amount.exp {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.income):hover .cal-sum-value {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .cal-sum-item:has(.cal-sum-value.expense):hover .cal-sum-value {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .yr-cell-income:hover .yr-cell-value {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .yr-cell-expense:hover .yr-cell-value {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .yr-cell-savings-success:hover .yr-cell-value {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .yr-cell-savings-warn:hover .yr-cell-value {
+  color: var(--warning);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .yr-cell-savings-danger:hover .yr-cell-value {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .hm-stat-card:nth-child(1):hover .hm-stat-value {
+  color: var(--primary-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .hm-stat-card:nth-child(2):hover .hm-stat-value {
+  color: var(--expense-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .hm-stat-card:nth-child(3):hover .hm-stat-value {
+  color: var(--warning);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .hm-stat-card:nth-child(4):hover .hm-stat-value {
+  color: var(--income-end);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+               0 0 12px rgba(255, 255, 255, 0.40),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ── reduced-motion fallback: text-shadow transition のみ無効化（visual は維持） ── */
+@media (prefers-reduced-motion: reduce) {
+  .tx-table tbody tr td.amount,
+  .dd-tx-amount,
+  .ct-row-total,
+  .md-cell-value,
+  .cal-amount,
+  .cal-sum-value,
+  .yr-cell-value,
+  .hm-stat-value {
+    transition: filter var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+}
+
