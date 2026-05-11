@@ -739,15 +739,21 @@ html {
   border-radius: var(--radius-badge);
   transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
+/* v28.47: スクロールバー :hover に lavender (--primary-end) accent 2nd layer outer wash 追加 */
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--text-faint) 0%, var(--text-muted) 100%);
-  box-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
 }
 /* v27.11: スクロールバー :active dragging 強化 — ドラッグ中（クリック+ホールド）に :hover よりさらに濃いグラデ + より広い primary グロー。
    rest（border-strong→text-faint）→ hover（text-faint→text-muted, glow 6px primary mix-sm）→ active（text-muted→text, glow 10px primary mix-md）の 3 段ラダー完成。 */
+/* v28.47: スクロールバー :active に lavender 2nd layer outer wash 追加（dragging 中の primary→lavender dual halo） */
 ::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg, var(--text-muted) 0%, var(--text) 100%);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 ::-webkit-scrollbar-corner { background: transparent; }
 /* Firefox */
@@ -756,28 +762,40 @@ html {
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--on-dark-strong) 0%, var(--on-dark-text) 100%);
 }
+/* v28.47: ダーク スクロールバー :hover に lavender 2nd wider layer 追加（既存 8px mix-md inner halo + 新規 16px mix-sm outer wash で dual-layer 化） */
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--on-dark-text) 0%, var(--white) 100%);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 /* v27.11: ダーク :active dragging 強化 — :hover の white で頂点なので、グラデ起点を on-dark-text→white→white に押し上げて全体が白寄りに、glow を 8px mix-md → 12px mix-lg に拡張。 */
+/* v28.47: ダーク :active dragging にも lavender 2nd wider layer 追加（既存 12px mix-lg inner halo + 新規 22px mix-md outer wash で dual-layer 化） */
 [data-theme="dark"] ::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg, var(--white) 0%, var(--white) 100%);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 [data-theme="dark"] * { scrollbar-color: var(--on-dark-strong) transparent; }
 /* サイドバーは常にダーク背景 */
 #sidebar-nav::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--on-dark-strong) 0%, var(--on-dark-text) 100%);
 }
+/* v28.47: サイドバー（常時ダーク）:hover にも lavender 2nd wider layer 追加（グローバルダーク :hover v28.47 と同値） */
 #sidebar-nav::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--on-dark-text) 0%, var(--white) 100%);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 /* v27.11: サイドバー（常時ダーク）:active dragging 強化 — グローバルダーク :active と同値。 */
+/* v28.47: サイドバー :active dragging にも lavender 2nd wider layer 追加（グローバルダーク :active v28.47 と同値） */
 #sidebar-nav::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg, var(--white) 0%, var(--white) 100%);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 #sidebar-nav { scrollbar-color: var(--on-dark-strong) transparent; }
 body {
@@ -802,14 +820,19 @@ a { color: inherit; text-decoration: none; }
 
 /* ── テキスト選択スタイリング（v15.9）：ブランドカラー選択ハイライト ── */
 /* v26.09: ::selection 強化 — mix-soft → mix-md で背景視認性アップ + text-shadow グローで選択テキスト発光 */
+/* v28.47: ::selection text-shadow に lavender (--primary-end) 2nd layer outer wash 追加（light は primary inner + lavender outer の dual-layer / dark は既存 lavender inner + より広い lavender outer の dual-layer）— UA-level surface lavender brand 統一マイルストーン第3陣 */
 ::selection {
   background: color-mix(in srgb, var(--primary) var(--mix-md), transparent);
   color: var(--text);
-  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
 }
 [data-theme="dark"] ::selection {
   background: color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
-  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
 /* ── number input スピンボタン非表示 (v17.6) ────────────── */
@@ -833,10 +856,19 @@ input:-webkit-autofill:active {
 
 /* ── フォーカス表示（キーボードナビ用） ─────────────────── */
 /* v26.07: 全グローバル :focus-visible にプライマリグローハロー追加（outline と二重リングで視認性アップ） */
+/* v28.47: 全グローバル :focus-visible に lavender (--primary-end) accent 2nd layer outer wash 追加 + dark mode 専用 override で outline-color を primary-end に切替 + dual-layer halo 強化（form input :focus v28.45 / button hover v28.46 と family 統一、UA-level surface lavender brand 統一マイルストーン第1陣） */
 :focus-visible {
   outline: var(--bw-select) solid var(--primary);
   outline-offset: var(--outline-offset);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 button:focus:not(:focus-visible),
 input:focus:not(:focus-visible),
