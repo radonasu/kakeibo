@@ -48350,3 +48350,66 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.48 (2026-05-12 / スプリント#1243)
+   モーダルヘッダー bottom edge に lavender gradient accent line 獲得
+   + modal-close:hover に lavender 2nd-layer outer wash 追加
+
+   - .modal-header:not(.sim-modal-header)::after で primary→primary-end→primary
+     の 90deg gradient strip を border-bottom 上に重畳。両端 transparent fade で
+     pill-like brand accent line を演出。
+   - light: 2px height / opacity 0.7 / 中央 primary-end mix-lg、両側 primary mix-md。
+   - dark: 2.5px height / opacity 0.95 / 中央 primary-end mix-xl、両側
+     primary-end mix-md（暗背景で lavender brand が際立つよう全層 lavender shift）。
+   - .sim-modal-header は既存 full gradient bg を持つため :not() で除外。
+   - .modal-close:hover に 2nd box-shadow layer (lavender primary-end outer wash) を追加
+     ─ 既存 danger-text glow に lavender brand accent を共鳴。
+   - prefers-reduced-motion fallback で transition のみ無効化（visual は維持）。
+   ============================================================ */
+.modal-header:not(.sim-modal-header) {
+  position: relative;
+}
+.modal-header:not(.sim-modal-header)::after {
+  content: "";
+  position: absolute;
+  left: var(--sp-6);
+  right: var(--sp-6);
+  bottom: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="dark"] .modal-header:not(.sim-modal-header)::after {
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+}
+
+/* v28.48: modal-close hover に lavender 2nd-layer outer wash 追加（既存 danger glow と共鳴） */
+.modal-close:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .modal-close:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
