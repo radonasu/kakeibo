@@ -47173,3 +47173,177 @@ textarea:focus::placeholder {
     opacity: 0.75;
   }
 }
+
+/* ============================================================
+   v28.37 (Sprint #1232): 空状態 4-layer hover 連動効果
+   ──────────────────────────────────────────────────────────
+   v28.34/v28.35/v28.36 で空状態 surface 11 コンテナに獲得した
+   ambient platform（aurora ::before / orbit ring ::after /
+   icon halo filter / icon float transform）の 4 層は idle で
+   それぞれ独立して呼吸しているが、ユーザーが container に
+   hover/focus した瞬間に「目覚める」演出が無く、せっかくの
+   多層アニメーションが pasive な BGM 状態に留まっていた。
+   本スプリントでは 11 コンテナいずれかに hover した瞬間に
+   4 層全てが同時加速 + intensify するシナジー演出を獲得：
+     ① aurora ::before  : 7s   → 3.5s breathe (2× 加速)
+                          opacity 0.6/0.85 → 0.95/1
+                          background mix one tier UP
+     ② orbit ring ::after: 16s  → 8s rotate    (2× 加速)
+     ③ ring breath      : 5.2s → 2.6s opacity (2× 加速)
+                          border alpha mix-md/lg → mix-lg/xl
+     ④ icon halo filter : 4.5s → 2.25s        (2× 加速)
+                          drop-shadow blur peak +6px
+   全レイヤーが同じ「hover で 2× 加速 + 1 ティア boost」の
+   family ルールに従うため、視覚的に「カードが活気づく」感覚を
+   獲得。chart-wrap (v28.25-v28.30) の hover intensify family と
+   コンセプト統一。
+   prefers-reduced-motion ではアニメ加速は無効化、opacity/border
+   のみの static intensify として affordance を確保。
+   ============================================================ */
+
+/* ── ① aurora ::before hover acceleration（borderless 9 + bordered 2）── */
+.empty-month-state:hover::before,
+.empty-goal-state:hover::before,
+.empty-debt-state:hover::before,
+.tx-empty-state:hover::before,
+.sub-empty:hover::before,
+.pt-empty:hover::before,
+.wl-empty:hover::before,
+.notif-empty:hover::before,
+.dd-empty:hover::before {
+  animation-duration: 3.5s;
+  opacity: 0.95;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 42%,
+    transparent 72%
+  );
+}
+[data-theme="dark"] .empty-month-state:hover::before,
+[data-theme="dark"] .empty-goal-state:hover::before,
+[data-theme="dark"] .empty-debt-state:hover::before,
+[data-theme="dark"] .tx-empty-state:hover::before,
+[data-theme="dark"] .sub-empty:hover::before,
+[data-theme="dark"] .pt-empty:hover::before,
+[data-theme="dark"] .wl-empty:hover::before,
+[data-theme="dark"] .notif-empty:hover::before,
+[data-theme="dark"] .dd-empty:hover::before {
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 42%,
+    transparent 72%
+  );
+}
+.empty-asset-state:hover::before,
+.ch-empty:hover::before {
+  animation-duration: 3.5s;
+  opacity: 1;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), transparent) 42%,
+    transparent 72%
+  );
+}
+[data-theme="dark"] .empty-asset-state:hover::before,
+[data-theme="dark"] .ch-empty:hover::before {
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 42%,
+    transparent 72%
+  );
+}
+
+/* ── ② + ③ orbit ring + ring breath hover acceleration（11 container × icon::after）── */
+.empty-month-state:hover .empty-month-icon::after,
+.empty-goal-state:hover .empty-goal-icon::after,
+.empty-asset-state:hover .empty-asset-icon::after,
+.empty-debt-state:hover .empty-debt-icon::after,
+.sub-empty:hover .sub-empty-icon::after,
+.pt-empty:hover .pt-empty-icon::after,
+.wl-empty:hover .wl-empty-icon::after,
+.ch-empty:hover .ch-empty-icon::after,
+.tx-empty-state:hover .tx-empty-icon::after,
+.notif-empty:hover .notif-empty-icon::after {
+  animation: empty-icon-ring-orbit 8s linear infinite,
+             empty-icon-ring-breath 2.6s ease-in-out infinite;
+  border-color: color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .empty-month-state:hover .empty-month-icon::after,
+[data-theme="dark"] .empty-goal-state:hover .empty-goal-icon::after,
+[data-theme="dark"] .empty-asset-state:hover .empty-asset-icon::after,
+[data-theme="dark"] .empty-debt-state:hover .empty-debt-icon::after,
+[data-theme="dark"] .sub-empty:hover .sub-empty-icon::after,
+[data-theme="dark"] .pt-empty:hover .pt-empty-icon::after,
+[data-theme="dark"] .wl-empty:hover .wl-empty-icon::after,
+[data-theme="dark"] .ch-empty:hover .ch-empty-icon::after,
+[data-theme="dark"] .tx-empty-state:hover .tx-empty-icon::after,
+[data-theme="dark"] .notif-empty:hover .notif-empty-icon::after {
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent);
+}
+
+/* ── ④ icon halo filter hover acceleration + intensify ── */
+@keyframes empty-icon-glow-breath-hover {
+  0%, 100% { filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+  50%      { filter: drop-shadow(0 4px 26px color-mix(in srgb, var(--primary) var(--mix-xl), transparent)); }
+}
+@keyframes empty-icon-glow-breath-hover-dark {
+  0%, 100% { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
+  50%      { filter: drop-shadow(0 4px 30px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent)); }
+}
+
+.empty-month-state:hover .empty-month-icon,
+.empty-goal-state:hover .empty-goal-icon,
+.empty-asset-state:hover .empty-asset-icon,
+.empty-debt-state:hover .empty-debt-icon,
+.sub-empty:hover .sub-empty-icon,
+.pt-empty:hover .pt-empty-icon,
+.wl-empty:hover .wl-empty-icon,
+.ch-empty:hover .ch-empty-icon,
+.notif-empty:hover .notif-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) var(--dur-delay-md) infinite,
+             empty-icon-glow-breath-hover 2.25s ease-in-out infinite;
+}
+[data-theme="dark"] .empty-month-state:hover .empty-month-icon,
+[data-theme="dark"] .empty-goal-state:hover .empty-goal-icon,
+[data-theme="dark"] .empty-asset-state:hover .empty-asset-icon,
+[data-theme="dark"] .empty-debt-state:hover .empty-debt-icon,
+[data-theme="dark"] .sub-empty:hover .sub-empty-icon,
+[data-theme="dark"] .pt-empty:hover .pt-empty-icon,
+[data-theme="dark"] .wl-empty:hover .wl-empty-icon,
+[data-theme="dark"] .ch-empty:hover .ch-empty-icon,
+[data-theme="dark"] .notif-empty:hover .notif-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) var(--dur-delay-md) infinite,
+             empty-icon-glow-breath-hover-dark 2.25s ease-in-out infinite;
+}
+.tx-empty-state:hover .tx-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite,
+             empty-icon-glow-breath-hover 2.25s ease-in-out infinite;
+}
+[data-theme="dark"] .tx-empty-state:hover .tx-empty-icon {
+  animation: empty-icon-float var(--dur-pulse) var(--ease-in-out) infinite,
+             empty-icon-glow-breath-hover-dark 2.25s ease-in-out infinite;
+}
+
+/* prefers-reduced-motion: hover 加速ルールも animation duration を保ちつつ
+   global wildcard で実質停止される。border-color / opacity / background の
+   intensify は static として残し、affordance を確保。 */
+@media (prefers-reduced-motion: reduce) {
+  .empty-month-state:hover .empty-month-icon::after,
+  .empty-goal-state:hover .empty-goal-icon::after,
+  .empty-asset-state:hover .empty-asset-icon::after,
+  .empty-debt-state:hover .empty-debt-icon::after,
+  .sub-empty:hover .sub-empty-icon::after,
+  .pt-empty:hover .pt-empty-icon::after,
+  .wl-empty:hover .wl-empty-icon::after,
+  .ch-empty:hover .ch-empty-icon::after,
+  .tx-empty-state:hover .tx-empty-icon::after,
+  .notif-empty:hover .notif-empty-icon::after {
+    animation: none;
+    opacity: 0.95;
+  }
+}
+
