@@ -47667,3 +47667,151 @@ textarea:focus::placeholder {
   }
 }
 
+/* ===================================================================
+   v28.41: スプリント#1236 — summary card ラベル hover に
+   lavender accent text-shadow 投入（6 label families 一括 dual-layer 化）
+   ===================================================================
+   v28.40 で大型金額テキスト 6 families に lavender (--primary-end) accent text-shadow を
+   投入し summary card 3 層（gradient bg / deco orbs / 大型金額テキスト）が lavender brand
+   family で統一されたが、サマリーカード内のもう一つの主要要素である「ラベルテキスト」
+   （.summary-label / .sub-summary-label / .pt-summary-label / .wl-summary-label /
+   .ch-summary-label / .ev-sum-label の 6 families）には text-shadow 自体が無く、
+   既存の opacity 1 / filter brightness(1.2) lift だけで色味アクセントが無い状態だった。
+   本スプリントで 6 label families 全てに「white shimmer + lavender accent」dual-layer
+   text-shadow を hover で投入、ラベル → 金額の視線誘導を lavender brand color で結び、
+   summary card 4 層（gradient bg / deco orbs / 大型金額 / ラベル）が完全に lavender
+   brand family で統一される完成形に到達。
+   ラベルは fs-xs（≈12px）と小型のため amount 比 1 ティア絞った blur 半径 + intensity で
+   subtle に控えめな accent を付与（蛍光ペンで線を引いたような呼吸感）。
+   dark mode は mix-sm → mix-md / blur +2-4px の 1 ティア boost で primary-end accent を
+   ダークサーフェス上で identifiable に強化。
+   =================================================================== */
+
+/* 全 6 label families に text-shadow transition を追加（idle は text-shadow:none） */
+.summary-label,
+.sub-summary-label,
+.pt-summary-label,
+.wl-summary-label,
+.ch-summary-label,
+.ev-sum-card .ev-sum-label {
+  transition: opacity var(--dur-fast) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out),
+              text-shadow var(--dur-base) var(--ease-out);
+}
+
+/* 1. .summary-label (income/expense/balance.positive/negative): white-on-gradient。
+      type-specific selector で white shimmer + type-color + lavender の triple-layer */
+.summary-card.income:hover           .summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.4),
+               0 0 10px color-mix(in srgb, var(--success)     var(--mix-sm), transparent),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+.summary-card.expense:hover          .summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.4),
+               0 0 10px color-mix(in srgb, var(--expense)     var(--mix-sm), transparent),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+.summary-card.balance.positive:hover .summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.4),
+               0 0 10px color-mix(in srgb, var(--primary)     var(--mix-sm), transparent),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+.summary-card.balance.negative:hover .summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.4),
+               0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 2. .sub-summary-label: white-on-gradient → white + lavender dual-layer */
+.sub-summary-card:hover .sub-summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 3. .pt-summary-label: white-on-gradient → white + lavender dual-layer */
+.pt-summary-card:hover .pt-summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 4. .wl-summary-label: text-muted on white-ish surface → 既存 brightness(1.2) と併存で lavender */
+.wl-sum-count:hover  .wl-summary-label,
+.wl-sum-budget:hover .wl-summary-label,
+.wl-sum-done:hover   .wl-summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.35),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 5. .ch-summary-label: white-on-gradient → white + lavender dual-layer（3 modifier 一括） */
+.ch-sum-active:hover   .ch-summary-label,
+.ch-sum-achieved:hover .ch-summary-label,
+.ch-sum-total:hover    .ch-summary-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* 6. .ev-sum-label: white-on-gradient → white + lavender dual-layer */
+.ev-sum-card:hover .ev-sum-label {
+  text-shadow: 0 0 8px  rgba(255, 255, 255, 0.45),
+               0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ── dark mode: lavender intensity boost (mix-sm → mix-md) + blur +2-4px ── */
+[data-theme="dark"] .summary-card.income:hover           .summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 12px color-mix(in srgb, var(--success)     var(--mix-md), transparent),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .summary-card.expense:hover          .summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 12px color-mix(in srgb, var(--expense)     var(--mix-md), transparent),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .summary-card.balance.positive:hover .summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 12px color-mix(in srgb, var(--primary)     var(--mix-md), transparent),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .summary-card.balance.negative:hover .summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .wl-sum-count:hover  .wl-summary-label,
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-label,
+[data-theme="dark"] .wl-sum-done:hover   .wl-summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .ch-sum-active:hover   .ch-summary-label,
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-label,
+[data-theme="dark"] .ch-sum-total:hover    .ch-summary-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-label {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ── reduced-motion fallback: text-shadow transition のみ無効化（visual は維持） ── */
+@media (prefers-reduced-motion: reduce) {
+  .summary-label,
+  .sub-summary-label,
+  .pt-summary-label,
+  .wl-summary-label,
+  .ch-summary-label,
+  .ev-sum-card .ev-sum-label {
+    transition: opacity var(--dur-fast) var(--ease-out),
+                filter var(--dur-fast) var(--ease-out);
+  }
+}
+
