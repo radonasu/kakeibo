@@ -33,38 +33,45 @@ function getThemeColors() {
 }
 
 // 共通ツールチップ設定
-// v26.22: Chart.js tooltip 高級化 — 全チャート（14種）一括強化。
-//   ① borderColor alpha 0x80→0xcc（primary枠線の存在感UP）+ borderWidth 1→1.5（線が立つ）
-//   ② padding {x:12,y:8}→{x:14,y:10}（呼吸感UP）+ cornerRadius 8→10（モダン丸み）
-//   ③ titleFont weight '600'→'700'（タイトル太字）+ titleMarginBottom 6（タイトル下の間隔）+ bodySpacing 4（行間）
-//   ④ displayColors のスウォッチを正方形→丸（boxWidth/Height 10→12 + 円形デフォルト未対応のため usePointStyle:true 追加）+ boxPadding 4→6
-//   ⑤ caretSize 5→7・caretPadding 2→8（吹き出し三角がチャートから浮く感が増し主張UP）
-//   ⑥ backgroundColor light alpha 0.92→0.95 / dark alpha 0.97→0.98（ガラス感を保ちつつコントラスト微増）
+// v28.31: チャート視覚改善#7 — Chart.js canvas tooltip を「glassmorphism風 frosted pill」に格上げ（全14チャート一括）。
+//   ① padding {x:14,y:10}→{x:18,y:14}（呼吸感を一段強化、内容と枠の余白が広がりリッチに）
+//   ② cornerRadius 10→14（モダン丸み拡大・ピル感が増し氷柱のような優雅さ）
+//   ③ backgroundColor light alpha 0.95→0.90 / dark alpha 0.98→0.92（半透明度を上げ frosted glass 感を強化）
+//   ④ borderColor: light は --primary を維持しつつ alpha 0xcc→0xee（より solid）/ dark は --primary-end (lavender) に切替（ダーク側のブランドアクセントカラー追従）+ borderWidth 1.5→2（線が立つ）
+//   ⑤ titleFont size fsXs→fsSm・weight '700'→'800'（タイトル一段大きく & blacker bold）+ titleMarginBottom 6→10（タイトル下の間隔）+ bodySpacing 4→5
+//   ⑥ footerMarginTop 6→9（フッター区切り強化）+ footerFont weight '400'→'500'（コール to アクション微強調）
+//   ⑦ displayColors のスウォッチ boxWidth/Height 12→14・boxPadding 6→8（円スウォッチ拡大で凡例可読性UP）
+//   ⑧ caretSize 7→9・caretPadding 8→11（吹き出し三角が一段浮き、tooltip と canvas の距離感がよりエレガント）
+// v26.22: tooltip 第1次高級化（borderColor 80→cc / padding 12→14 / cornerRadius 8→10 / titleFont 600→700 / displayColors square→round / caret 5→7）。
 function commonTooltip(callbacks) {
-  const { isDark, fsXs, fs2xs } = getThemeColors();
+  const { isDark, fsXs, fsSm, fs2xs } = getThemeColors();
   return {
+    // v28.31: light 0.95→0.90 / dark 0.98→0.92（frosted glass 感強化）
     // ダークモード: #0f172a背景ではツールチップが埋没するため中間色に切替 (v19.34)
-    backgroundColor: isDark ? 'rgba(51,65,85,0.98)' : 'rgba(15,23,42,0.95)',
+    backgroundColor: isDark ? 'rgba(51,65,85,0.92)' : 'rgba(15,23,42,0.90)',
     titleColor:      '#f8fafc',
     bodyColor:       isDark ? '#e2e8f0' : '#cbd5e1',
     footerColor:     '#94a3b8',
-    borderColor:     getCSSVar('--primary') + 'cc',
-    borderWidth:     1.5,
-    padding:         { x: 14, y: 10 },
-    cornerRadius:    10,
-    titleFont:       { size: fsXs, weight: '700' },
+    // v28.31: light primary 0xcc→0xee（より solid）/ dark は --primary-end (lavender) に切替
+    borderColor:     isDark
+      ? (getCSSVar('--primary-end') || '#a78bfa') + 'ee'
+      : (getCSSVar('--primary') || '#7c3aed') + 'ee',
+    borderWidth:     2,
+    padding:         { x: 18, y: 14 },
+    cornerRadius:    14,
+    titleFont:       { size: fsSm, weight: '800' },
     bodyFont:        { size: fsXs },
-    footerFont:      { size: fs2xs, weight: '400' },
-    titleMarginBottom: 6,
-    bodySpacing:     4,
-    footerMarginTop: 6,
+    footerFont:      { size: fs2xs, weight: '500' },
+    titleMarginBottom: 10,
+    bodySpacing:     5,
+    footerMarginTop: 9,
     displayColors:   true,
     usePointStyle:   true,
-    boxWidth:        12,
-    boxHeight:       12,
-    boxPadding:      6,
-    caretSize:       7,
-    caretPadding:    8,
+    boxWidth:        14,
+    boxHeight:       14,
+    boxPadding:      8,
+    caretSize:       9,
+    caretPadding:    11,
     callbacks,
   };
 }
