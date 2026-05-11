@@ -47433,4 +47433,94 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.39 (Sprint #1234): サマリーカード装飾サークル lavender accent 投入
+   ──────────────────────────────────────────────────────────
+   v26.54 で 5 summary card family の deco orbs ::after / ::before
+   に white-only filter:drop-shadow の breath を獲得、v28.38 で
+   .sub-summary-card 合流 + hover 2× 加速 + peak halo intensify
+   を獲得して「ambient + hover wake」family が完成していたが、
+     ・halo の色相が一貫して 白 のみで、v28.25 chart-wrap aurora /
+       v28.31 tooltip lavender border / v28.30 chart-card top accent
+       bar 等で確立した「primary 紫 / primary-end lavender」のブランド
+       アクセント family と非連携で、summary card だけ視覚言語が孤立
+   だった点を改善。本スプリントで idle / hover / reduced-motion の
+   全 5 keyframes / fallback を「白 + lavender」の 2 層 drop-shadow
+   に拡張、CSS filter プロパティで 2 つの drop-shadow を chain して
+   layered halo を実現：
+     ① 白 drop-shadow（既存）: 中心の glassy core halo（白系装飾円
+        の base color に呼応する white halo）
+     ② lavender drop-shadow（新規）: var(--primary-end) #a78bfa の
+        outer corona（チャート系と統一されたブランドアクセント）
+   idle (3.6s/4.0s) では subtle alpha (16-30%) で BGM レベルの brand
+   tint、hover (1.8s/2.0s) では strong alpha (32-55%) で flare レベル
+   の lavender 発光に格上げ。idle/hover の 2 段階で「目覚める」演出。
+   light/dark どちらでも --primary-end は同じ lavender #a78bfa な
+   ため theme cascade 不要、単一の keyframes 定義で両 mode 対応。
+   keyframes 名は v26.54 (idle) / v28.38 (hover) と同じため redefine
+   による cascade override で既存セレクタは無変更で挙動更新。
+   ============================================================ */
+
+/* ── v26.54 idle keyframes を redefine（lavender layer 追加）── */
+@keyframes deco-circle-breath-after {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.12))
+            drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) 16%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.28))
+            drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) 30%, transparent));
+  }
+}
+@keyframes deco-circle-breath-before {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.10))
+            drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) 14%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.24))
+            drop-shadow(0 0 16px color-mix(in srgb, var(--primary-end) 26%, transparent));
+  }
+}
+
+/* ── v28.38 hover keyframes を redefine（lavender flare layer 追加）── */
+@keyframes deco-circle-breath-after-hover {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.20))
+            drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) 32%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.45))
+            drop-shadow(0 0 20px color-mix(in srgb, var(--primary-end) 55%, transparent));
+  }
+}
+@keyframes deco-circle-breath-before-hover {
+  0%, 100% {
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.18))
+            drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) 30%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.40))
+            drop-shadow(0 0 22px color-mix(in srgb, var(--primary-end) 50%, transparent));
+  }
+}
+
+/* ── v28.38 reduced-motion fallback を redefine（static lavender 追加）── */
+@media (prefers-reduced-motion: reduce) {
+  .summary-card:hover::after,
+  .sub-summary-card:hover::after,
+  .pt-summary-card:hover::after,
+  .ev-sum-card:hover::after,
+  .wl-summary-card:hover::after,
+  .summary-card:hover::before,
+  .sub-summary-card:hover::before,
+  .pt-summary-card:hover::before,
+  .ev-sum-card:hover::before,
+  .wl-summary-card:hover::before,
+  .ch-summary-card:hover::before {
+    animation: none;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35))
+            drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) 38%, transparent));
+  }
+}
 
