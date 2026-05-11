@@ -48615,3 +48615,91 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.52 Sprint #1247: ナビゲーション/アクションボタン hover に
+   lavender (--primary-end) outer wash 2nd/3rd/4th layer 投入
+   ----------------------------------------------------------------
+   v28.40-v28.51 で展開した lavender brand family を、まだ touched
+   されていない 3 navigation/action button family
+     (1) #global-fab            … 右下フローティングアクションボタン
+     (2) .month-nav-btn         … 月送り prev/next ボタン（ダッシュボード等）
+     (3) .date-quick-btn        … 日付クイック (昨日/今日/明日)
+   の hover 状態にも展開、btn-primary/ghost/danger/icon/success (v28.46)
+   と統一された「primary inner halo + primary-end outer wash」dual-color
+   shadow family が高頻度接触の主要 nav/action button まで到達する
+   マイルストーン。
+   ── カスケード戦略 ──
+   既存 :hover ルールを末尾で box-shadow のみ last-defined-wins
+   redefine（同 specificity または高 specificity）。新規 dark hover
+   ルールは元 light ルールから transition/transform/border/etc を
+   inherit、box-shadow のみ上書き。
+   ============================================================ */
+
+/* ① #global-fab:hover (light) — 既存 3-layer に primary-end mix-md 4th layer outer wash 追加 */
+#global-fab:hover {
+  box-shadow:
+    0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent),
+    0 3px 8px var(--black-14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ② [data-theme="dark"] #global-fab:hover — 新規 dark hover rule、primary-end mix-lg wider outer wash で 1 ティア boost */
+[data-theme="dark"] #global-fab:hover {
+  box-shadow:
+    0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent),
+    0 3px 8px var(--black-14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 12px 40px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ③ .month-nav-btn:hover (light) — 既存 focus-ring + primary mix-sm shadow に primary-end mix-xs 3rd layer outer wash 追加 */
+.month-nav-btn:hover:not(:disabled) {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ④ [data-theme="dark"] .month-nav-btn:hover — 新規 dark rule、primary-end mix-sm boost */
+[data-theme="dark"] .month-nav-btn:hover:not(:disabled) {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑤ .date-quick-btn:hover (light) — 既存 focus-ring + primary mix-xs に primary-end mix-xs 3rd layer outer wash 追加 */
+.date-quick-btn:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑥ [data-theme="dark"] .date-quick-btn:hover — 既存 dark rule (line 16141, bg/border/color のみ) に box-shadow を追加 */
+[data-theme="dark"] .date-quick-btn:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑦ .date-quick-btn.active:hover (light) — 既存 3-layer に primary-end mix-md 4th layer outer wash 追加 */
+.date-quick-btn.active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑧ [data-theme="dark"] .date-quick-btn.active:hover — 新規 dark rule、primary-end mix-lg wider outer wash */
+[data-theme="dark"] .date-quick-btn.active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-soft), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
