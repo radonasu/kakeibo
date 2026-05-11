@@ -1058,7 +1058,8 @@ select:focus:not(:focus-visible) {
   transform-origin: left center;
   width: var(--accent-w);
   height: 0;
-  background: var(--primary);
+  /* v28.49: solid primary → vertical 3-stop gradient (primary-end → primary → primary-end). bottom-nav-item.active::before の 90deg horizontal gradient と family parity 獲得、サイドバー accent bar が縦方向 lavender→primary→lavender ブランド gradient で発光する */
+  background: linear-gradient(180deg, var(--primary-end) 0%, var(--primary) 50%, var(--primary-end) 100%);
   border-radius: 0 var(--radius-3xs) var(--radius-3xs) 0;
   /* v26.99: transition list に transform を追加し .nav-item.active:hover::before（line 996 付近）の scaleX 拡張がスムーズに補間されるように */
   transition: height var(--dur-appear) var(--ease-spring), transform var(--dur-fast) var(--ease-out);
@@ -4931,7 +4932,8 @@ body {
   position: absolute;
   top: 0; left: var(--size-nav-indicator); right: var(--size-nav-indicator);
   height: var(--bw-thick);
-  background: linear-gradient(90deg, var(--primary-end), var(--primary), var(--primary-end));
+  /* v28.49: 既存 3-stop horizontal gradient (primary-end → primary → primary-end) を 5-stop に拡張し両端 transparent fade を追加。bottom-nav active indicator が pill 状に両端 fade out する洗練形状を獲得（v28.48 modal-header lavender accent line の中央 lavender peak + 両端 fade 構造と family 統一） */
+  background: linear-gradient(90deg, transparent 0%, var(--primary-end) 18%, var(--primary) 50%, var(--primary-end) 82%, transparent 100%);
   border-radius: 0 0 var(--radius-nano) var(--radius-nano);
   transform-origin: center;
   filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent));
@@ -45622,9 +45624,10 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ── サイドナビ 左アクセントバー breath（::before）────────── */
+/* v28.49: single primary-end box-shadow layer → primary-end inner halo + primary outer wash dual-layer に拡張。サイドバー常時ダーク bg 上で「ラベンダー核 + プライマリ外周 wash」の二色 breath halo を獲得し、bottom-nav breath dual-layer と family 統一 */
 @keyframes nav-side-bar-breath {
-  0%, 100% { box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-  50%      { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+  0%, 100% { box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent); }
+  50%      { box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 22px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
 }
 .nav-item.active::before {
   animation: nav-side-bar-breath 3.4s ease-in-out infinite;
@@ -45709,9 +45712,10 @@ textarea:focus::placeholder {
 }
 
 /* ── ボトムナビ 上インジケーターバー breath（::before・filter ベース）── */
+/* v28.49: single primary drop-shadow → primary inner + primary-end outer dual-layer drop-shadow に拡張。ライトモード bottom-nav indicator が「プライマリ核 + ラベンダー外周 wash」の二色 breath halo を獲得 */
 @keyframes nav-bottom-bar-breath {
-  0%, 100% { filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
-  50%      { filter: drop-shadow(0 1px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+  0%, 100% { filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent)) drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 1px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)) drop-shadow(0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
 }
 .bottom-nav-item.active::before {
   animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
@@ -45721,9 +45725,10 @@ textarea:focus::placeholder {
   animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
              nav-bottom-bar-breath-dark 3.4s ease-in-out infinite;
 }
+/* v28.49: dark single primary-end drop-shadow → primary-end inner + primary outer dual-layer drop-shadow に拡張。ダークモード bottom-nav indicator が「ラベンダー核 + プライマリ外周 wash」の二色 breath halo を獲得し、ライト primary inner + primary-end outer と inverse mirror で family 統一 */
 @keyframes nav-bottom-bar-breath-dark {
-  0%, 100% { filter: drop-shadow(0 1px 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
-  50%      { filter: drop-shadow(0 1px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+  0%, 100% { filter: drop-shadow(0 1px 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)) drop-shadow(0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 1px 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)) drop-shadow(0 0 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
 }
 
 /* ── ボトムナビ アイコンボックス breath ─────────────────── */
