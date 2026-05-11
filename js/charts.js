@@ -149,6 +149,97 @@ if (!Chart.registry.plugins.get('centerText')) {
   Chart.register(centerTextPlugin);
 }
 
+// ─── Legend Hover Plugin（v28.32: チャート視覚改善#8 — 凡例 hover effect）──────
+// 全 visible-legend chart で凡例 item を hover すると brand-tinted な「glow pill」backdrop が
+// 該当 legendHitBox の裏に出現する。`chart._legendHoverIdx` が legendInteract() の onHover/onLeave
+// で更新され、本プラグインの afterDraw が legendHitBoxes[idx] の rect 周りに padding を付与した
+// rounded rect を描画する：
+//   ① fill: primary (light) / primary-end (dark) tinted alpha 0.14/0.20（テーマ追従ブランドアクセント）
+//   ② shadow: primary mix-md halo（blur 14）で凡例 item に "発光する pill" 感を付与
+//   ③ stroke: primary alpha 0.5/0.65 で輪郭を引き立て、background から確実に立ち上がる
+// padding 10x6 / cornerRadius 12（v28.31 tooltip frosted glass pill 14 と family揃え）。
+// 加えて legendInteract('doughnut') 経由で chart.tooltip.setActiveElements + chart.setActiveElements
+// が呼ばれるため、ドーナツ系では既存 makeArcHoverGlowPlugin の arc halo + tooltip pop が
+// 凡例 hover でも同期発火し、「凡例 ↔ arc ↔ tooltip」の 3 連動効果が成立する。
+const legendHoverPlugin = {
+  id: 'legendHover',
+  afterDraw(chart) {
+    const idx = chart._legendHoverIdx;
+    if (idx == null) return;
+    const lg = chart.legend;
+    if (!lg || !lg.legendHitBoxes || !lg.legendHitBoxes[idx]) return;
+    const box = lg.legendHitBoxes[idx];
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const accent = isDark
+      ? (getCSSVar('--primary-end') || '#a78bfa')
+      : (getCSSVar('--primary')     || '#7c3aed');
+    const padX = 10, padY = 6, r = 12;
+    const x = box.left   - padX;
+    const y = box.top    - padY;
+    const w = box.width  + padX * 2;
+    const h = box.height + padY * 2;
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.shadowColor = hexToRgba(accent, isDark ? 0.55 : 0.42);
+    ctx.shadowBlur  = 14;
+    ctx.fillStyle   = hexToRgba(accent, isDark ? 0.20 : 0.14);
+    ctx.beginPath();
+    if (typeof ctx.roundRect === 'function') ctx.roundRect(x, y, w, h, r);
+    else ctx.rect(x, y, w, h);
+    ctx.fill();
+    ctx.shadowBlur  = 0;
+    ctx.lineWidth   = 1.2;
+    ctx.strokeStyle = hexToRgba(accent, isDark ? 0.65 : 0.50);
+    ctx.stroke();
+    ctx.restore();
+  },
+};
+
+if (!Chart.registry.plugins.get('legendHover')) {
+  Chart.register(legendHoverPlugin);
+}
+
+// 凡例 onHover/onLeave handlers — `chart._legendHoverIdx` の更新で legendHoverPlugin pill を発火。
+// chartType==='doughnut'|'pie' のときは tooltip / chart の setActiveElements を経由して
+// 該当 arc を active 化し、makeArcHoverGlowPlugin の halo + tooltip pop を凡例 hover でも発火させる。
+function legendInteract(chartType) {
+  return {
+    onHover(evt, item, legend) {
+      const chart = legend.chart;
+      if (chart._legendHoverIdx === item.index) return;
+      chart._legendHoverIdx = item.index;
+      const native = evt && evt.native;
+      if (native && native.target) native.target.style.cursor = 'pointer';
+      if ((chartType === 'doughnut' || chartType === 'pie') && chart.data && chart.data.datasets && chart.data.datasets[0]) {
+        const meta = chart.getDatasetMeta(0);
+        const arc  = meta && meta.data && meta.data[item.index];
+        if (arc) {
+          const props = arc.getProps(['x', 'y'], true);
+          if (chart.tooltip && chart.tooltip.setActiveElements) {
+            chart.tooltip.setActiveElements([{ datasetIndex: 0, index: item.index }], props);
+          }
+          chart.setActiveElements([{ datasetIndex: 0, index: item.index }]);
+        }
+      }
+      chart.update('none');
+    },
+    onLeave(evt, item, legend) {
+      const chart = legend.chart;
+      if (chart._legendHoverIdx == null) return;
+      chart._legendHoverIdx = null;
+      const native = evt && evt.native;
+      if (native && native.target) native.target.style.cursor = 'default';
+      if (chartType === 'doughnut' || chartType === 'pie') {
+        if (chart.tooltip && chart.tooltip.setActiveElements) {
+          chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+        }
+        chart.setActiveElements([]);
+      }
+      chart.update('none');
+    },
+  };
+}
+
 // Chart.js グローバルフォント設定（日本語フォントスタック）
 Chart.defaults.font.family = CHART_FONT_FAMILY;
 
@@ -442,6 +533,7 @@ function renderDonutChart(canvasId, transactions, type, onCategoryClick) {
             usePointStyle: true,
             pointStyle: 'circle',
           },
+          ...legendInteract('doughnut'),
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -530,6 +622,7 @@ function renderMonthlyBarChart(canvasId, onMonthClick) {
             pointStyle: 'circle',
             padding: 16,
           },
+          ...legendInteract('bar'),
         },
         tooltip: commonTooltip({
           label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
@@ -791,6 +884,7 @@ function renderMemberExpenseChart(canvasId, transactions) {
             pointStyle: 'circle',
             padding: 16,
           },
+          ...legendInteract('bar'),
         },
         tooltip: commonTooltip({
           label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
@@ -902,6 +996,7 @@ function renderPaymentMethodChart(canvasId, transactions) {
             usePointStyle: true,
             pointStyle: 'circle',
           },
+          ...legendInteract('doughnut'),
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -987,6 +1082,7 @@ function renderPaymentTrendChart(canvasId, year) {
             pointStyle: 'circle',
             padding: 14,
           },
+          ...legendInteract('bar'),
         },
         tooltip: commonTooltip({
           label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
@@ -1102,6 +1198,7 @@ function renderYoYChart(canvasId, year) {
             pointStyle: 'circle',
             padding: 14,
           },
+          ...legendInteract('bar'),
         },
         tooltip: commonTooltip({
           label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
@@ -1363,6 +1460,7 @@ function renderCategoryTrendChart(canvasId, selectedCats, year) {
             pointStyle: 'circle',
             padding: 14,
           },
+          ...legendInteract('line'),
         },
         tooltip: commonTooltip({
           label: ctx => ` ${ctx.dataset.label}: ${formatMoney(ctx.raw)}`,
@@ -1439,6 +1537,7 @@ function renderFixedVariableDonut(canvasId, allTxs) {
         legend: {
           position: 'bottom',
           labels: { color: text, font: { size: fsXs }, padding: 12, usePointStyle: true },
+          ...legendInteract('doughnut'),
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -1534,6 +1633,7 @@ function renderFixedVariableTrend(canvasId, year) {
         legend: {
           position: 'bottom',
           labels: { color: text, font: { size: fs3xs }, padding: 10, usePointStyle: true },
+          ...legendInteract('bar'),
         },
         tooltip: commonTooltip({
           label: ctx => {
@@ -1659,6 +1759,7 @@ function renderTagChart(canvasId, transactions) {
             usePointStyle: true,
             pointStyle: 'circle',
           },
+          ...legendInteract('doughnut'),
         },
         tooltip: commonTooltip({
           label: ctx => {
