@@ -5898,6 +5898,67 @@ body {
   75%      { transform: translateY(calc(var(--enter-y-neg-base) * 0.5)) scale(1.04) rotate(-2deg); }
 }
 
+/* v28.34: 空状態 surface に ambient aurora backdrop を獲得 — 7 borderless 空状態コンテナ（empty-month/empty-goal/empty-debt/tx-empty/sub-empty/pt-empty/wl-empty）に position:relative + isolation:isolate + ::before で primary mix-2xs/nano radial gradient backdrop + 7s breathe pulse。chart-wrap aurora platform (v28.25) と同じ family の呼吸する radial primary glow が空状態にも展開され、「データなし」surface も静的な余白から ambient platform へと格上げ。bordered surface bg を持つ .empty-asset-state / .ch-empty は除外（自前 bg で aura が occlusion されるため、icon halo のみで強化）。 */
+.empty-month-state,
+.empty-goal-state,
+.empty-debt-state,
+.tx-empty-state,
+.sub-empty,
+.pt-empty,
+.wl-empty {
+  position: relative;
+  isolation: isolate;
+}
+.empty-month-state::before,
+.empty-goal-state::before,
+.empty-debt-state::before,
+.tx-empty-state::before,
+.sub-empty::before,
+.pt-empty::before,
+.wl-empty::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 42%,
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--radius);
+  opacity: 0.6;
+  animation: empty-aura-breathe 7s var(--ease-in-out) infinite;
+}
+[data-theme="dark"] .empty-month-state::before,
+[data-theme="dark"] .empty-goal-state::before,
+[data-theme="dark"] .empty-debt-state::before,
+[data-theme="dark"] .tx-empty-state::before,
+[data-theme="dark"] .sub-empty::before,
+[data-theme="dark"] .pt-empty::before,
+[data-theme="dark"] .wl-empty::before {
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 42%,
+    transparent 72%
+  );
+}
+@keyframes empty-aura-breathe {
+  0%, 100% { opacity: 0.5; transform: scale(0.97); }
+  50%      { opacity: 0.92; transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .empty-month-state::before,
+  .empty-goal-state::before,
+  .empty-debt-state::before,
+  .tx-empty-state::before,
+  .sub-empty::before,
+  .pt-empty::before,
+  .wl-empty::before { animation: none; opacity: 0.65; }
+}
+
 /* ── 今月データなし（既存データあり） ───────────────────── */
 .empty-month-state {
   display: flex;
