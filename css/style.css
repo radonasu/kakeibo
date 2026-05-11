@@ -47524,3 +47524,146 @@ textarea:focus::placeholder {
   }
 }
 
+/* ===================================================================
+   v28.40: スプリント#1235 — summary card 大型金額テキスト hover に
+   lavender accent text-shadow 投入（6 families 一括 dual-layer 化）
+   ===================================================================
+   既存の white-only single-layer hover text-shadow（.summary-amount は v22.89 で
+   静的 white text-shadow のみ、.sub-summary-amount は v23.16 / .pt-summary-amount は
+   v23.17 / .wl-summary-value は v23.18系 / .ch-summary-value は v23.15+v23.30系
+   3 variant / .ev-sum-count は v23.29 でそれぞれ white-only 14px-12px hover glow）を
+   「white + lavender (--primary-end) dual-layer」へと拡張。
+   v28.39 で deco orb 装飾に投入した white + lavender dual-layer concept を
+   summary card 系の主役要素である大型金額テキストにも展開し、
+   gradient bg / deco orbs (v28.39) / 大型金額テキスト (v28.40) の 3 層全てが
+   lavender accent family で統一される完成形に到達。
+   .summary-amount は transition に text-shadow を追加（line 19399 では filter+color のみ）、
+   dark mode は mix-md → mix-lg の 1 ティア boost で primary-end accent をより強調。
+   =================================================================== */
+
+/* .summary-amount は line 19399 の transition (filter+color のみ) を上書きして text-shadow を追加 */
+.summary-amount {
+  transition: filter var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              text-shadow var(--dur-base) var(--ease-out);
+}
+
+/* 1. .summary-amount: 既存 type-specific hover (line 26224 系・specificity 0,4,1) を継承する
+   type-specific selector で intensified white + type color + lavender accent の 3-layer に格上げ */
+.summary-card.income:hover           .summary-amount {
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.45),
+               0 0 22px rgba(255, 255, 255, 0.16),
+               0 0 14px color-mix(in srgb, var(--success)     var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+.summary-card.expense:hover          .summary-amount {
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.45),
+               0 0 22px rgba(255, 255, 255, 0.16),
+               0 0 14px color-mix(in srgb, var(--expense)     var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+.summary-card.balance.positive:hover .summary-amount {
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.45),
+               0 0 22px rgba(255, 255, 255, 0.16),
+               0 0 14px color-mix(in srgb, var(--primary)     var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+.summary-card.balance.negative:hover .summary-amount {
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.45),
+               0 0 22px rgba(255, 255, 255, 0.16),
+               0 0 14px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 2. .sub-summary-amount (v23.16): white-only → white + lavender dual-layer */
+.sub-summary-card:hover .sub-summary-amount {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.5),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 3. .pt-summary-amount (v23.17): white-only → white + lavender dual-layer */
+.pt-summary-card:hover .pt-summary-amount {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.55),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 4. .wl-summary-value (v23.18系): white-only → white + lavender dual-layer（3 modifier 一括） */
+.wl-sum-count:hover  .wl-summary-value,
+.wl-sum-budget:hover .wl-summary-value,
+.wl-sum-done:hover   .wl-summary-value {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 5. .ch-summary-value (v23.15+v23.30系 3 variant): white-only → white + lavender dual-layer */
+.ch-sum-active:hover   .ch-summary-value,
+.ch-sum-achieved:hover .ch-summary-value,
+.ch-sum-total:hover    .ch-summary-value {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.55),
+               0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* 6. .ev-sum-count (v23.29): white-only → white + lavender dual-layer */
+.ev-sum-card:hover .ev-sum-count {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.55),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ── dark mode: lavender intensity boost (mix-md → mix-lg) + white shimmer 微増 ── */
+[data-theme="dark"] .summary-card.income:hover           .summary-amount {
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.50),
+               0 0 24px rgba(255, 255, 255, 0.20),
+               0 0 16px color-mix(in srgb, var(--success)     var(--mix-lg), transparent),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .summary-card.expense:hover          .summary-amount {
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.50),
+               0 0 24px rgba(255, 255, 255, 0.20),
+               0 0 16px color-mix(in srgb, var(--expense)     var(--mix-lg), transparent),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .summary-card.balance.positive:hover .summary-amount {
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.50),
+               0 0 24px rgba(255, 255, 255, 0.20),
+               0 0 16px color-mix(in srgb, var(--primary)     var(--mix-lg), transparent),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .summary-card.balance.negative:hover .summary-amount {
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.50),
+               0 0 24px rgba(255, 255, 255, 0.20),
+               0 0 16px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .sub-summary-card:hover .sub-summary-amount {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.55),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .pt-summary-card:hover .pt-summary-amount {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.6),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .wl-sum-count:hover  .wl-summary-value,
+[data-theme="dark"] .wl-sum-budget:hover .wl-summary-value,
+[data-theme="dark"] .wl-sum-done:hover   .wl-summary-value {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6),
+               0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .ch-sum-active:hover   .ch-summary-value,
+[data-theme="dark"] .ch-sum-achieved:hover .ch-summary-value,
+[data-theme="dark"] .ch-sum-total:hover    .ch-summary-value {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6),
+               0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .ev-sum-card:hover .ev-sum-count {
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.6),
+               0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ── reduced-motion fallback: transition 無効化（visual は維持） ── */
+@media (prefers-reduced-motion: reduce) {
+  .summary-amount {
+    transition: filter var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+}
+
