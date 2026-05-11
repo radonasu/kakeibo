@@ -48418,3 +48418,106 @@ textarea:focus::placeholder {
     0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
 
+/* ============================================================
+   v28.50 Sprint #1245: section-tab.is-active 下端に brand gradient
+   accent pill + hover lavender outer wash 投入
+   ── 設計趣旨 ──
+   v28.49 でサイドバー .nav-item::before / ボトムナビ
+   .bottom-nav-item.active::before の 2 主要 navigator が「solid primary
+   → 3/5-stop brand gradient pill + dual-color breath halo」family へ
+   到達した。一方、in-page サブ navigation である .section-tabs
+   （月別収支 / 月別表 / カテゴリ / 支払方法 / 前年比較 / 曜日別 等
+    分析タブ群）の .section-tab.is-active は依然として
+    border-bottom: var(--accent-w) solid var(--primary) と
+    background: var(--primary-light) の単色 primary のみで、brand
+    gradient family から取り残されていた。
+   本スプリントで .section-tab.is-active の下端に ::after で 5-stop
+   horizontal gradient (transparent → primary-end mix-md → primary
+   mix-xl → primary-end mix-md → transparent) の pill-shaped lavender
+   accent strip を重畳し、既存 solid primary border-bottom 上に
+   lavender brand tint を獲得。ダーク mode は全層 primary-end 統一
+   + 高さ +1px + opacity 0.95 で lavender mono-tonal 強化。
+   加えて :hover (.section-tab.is-active:hover) の box-shadow に
+   primary-end mix-sm 22px outer wash 3rd layer を append（既存
+   focus-ring + primary mix-sm halo + inset primary mix-md bottom-glow
+   + inset white sheen に lavender 外側 wash が加わり quint-layer
+   halo へ拡張）。v28.49 nav family と完全統一の brand gradient +
+   lavender hover wash family が in-page section-tabs にも到達。
+   ── カスケード安全 ──
+   ① .section-tab に position: relative 付与（end-of-file specificity
+      0,1,0 + 既存 line 7046 .section-tab specificity 0,1,0 と同位、
+      end-of-file 順序で position 宣言のみ後勝ち。他 declared props
+      には影響なし）。
+   ② .section-tab.is-active::after は新規 pseudo-element のため
+      既存ルールとの衝突なし。
+   ③ .section-tab.is-active:hover (specificity 0,3,0) は line 7087
+      既存ルール (specificity 0,3,0) と同位、end-of-file box-shadow
+      宣言のみ後勝ち。background は line 7087 から継承（明示しない）。
+   ④ [data-theme="dark"] .section-tab.is-active:hover (specificity
+      0,4,0) は line 7112 既存 dark ルール (specificity 0,4,0) と
+      同位、end-of-file box-shadow 宣言のみ後勝ち。
+   ============================================================ */
+
+/* ① .section-tab に position: relative — ::after の絶対配置基準点 */
+.section-tab { position: relative; }
+
+/* ② .section-tab.is-active::after — 下端 5-stop horizontal brand gradient pill */
+.section-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: var(--sp-1);
+  right: var(--sp-1);
+  bottom: 0;
+  height: var(--accent-w);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+/* ③ [data-theme="dark"] override — 全層 primary-end 統一 + 高さ +1px + opacity 0.95 */
+[data-theme="dark"] .section-tab.is-active::after {
+  height: calc(var(--accent-w) + 1px);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+}
+
+/* ④ .section-tab.is-active:hover::after — hover で opacity 1 + 横幅 inset 縮小で pill 強調 */
+.section-tab.is-active:hover::after {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+/* ⑤ .section-tab.is-active:hover — line 7087 box-shadow 上書き、primary-end 3rd outer wash 追加 */
+.section-tab.is-active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+/* ⑥ [data-theme="dark"] .section-tab.is-active:hover — line 7112 box-shadow 上書き、primary-end wider outer wash 強化 */
+[data-theme="dark"] .section-tab.is-active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
