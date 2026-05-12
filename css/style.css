@@ -49282,3 +49282,47 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.61 Sprint #1255: .btn-primary rest state に lavender (--primary-end)
+   accent brand family を投入 — 最高頻度タップ surface「プライマリ
+   ボタン」を solid primary → diagonal gradient (primary 0% → primary-end
+   100%) に格上げ + box-shadow に primary-end mix-md outer wash 2nd layer
+   を append し dual-color halo 化。v28.46 で .btn-primary:hover に投入済
+   みだった lavender brand accent が rest state にも到達。
+   ── 設計趣旨 ──
+   v28.49 nav indicator gradient / v28.60 .bulk-count gradient と完全
+   統一の brand gradient family を、アプリ全体で最も触れられる
+   interactive element「プライマリボタン」rest state にも展開。これに
+   より「ログイン / 保存 / 追加 / 同期」等の主要 CTA が常時 lavender
+   brand identity を放つ完成形に到達。hover/active は v28.46 + v28.16
+   既存ルールを保持（specificity 0,2,0 で勝ち、hover で primary-dark
+   solid に snap する仕様）。
+   ── カスケード安全 ──
+   ① .btn-primary (specificity 0,1,0) を end-of-file で redefine。
+      line 1394 既存ルール (specificity 0,1,0) と同位、end-of-file 順序で
+      background / box-shadow のみ後勝ち。color: white は line 1394 から
+      継承（明示しない）。
+   ② [data-theme="dark"] .btn-primary は新規ルール（line 1394 周辺に
+      dark override は存在しない）— 衝突なし。
+   ③ line 20111 .btn-primary text-shadow は影響なし（プロパティ非競合）。
+   ============================================================ */
+
+/* ① .btn-primary rest — solid primary → diagonal gradient + dual-color halo */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② [data-theme="dark"] .btn-primary — primary-end 主体に重心シフト
+   + 外側 wash 1 ティア boost（dark surface 上で lavender brand を強化） */
+[data-theme="dark"] .btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
