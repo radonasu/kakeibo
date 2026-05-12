@@ -49690,3 +49690,118 @@ textarea:focus::placeholder {
     0 0 20px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
 }
 
+/* ============================================================
+   v28.66 Sprint #1260: トースト 3 タイプ (success/error/warning) の
+   .kk-toast-icon と .kk-toast-progress を solid color から
+   diagonal/horizontal gradient + dual-layer halo に格上げ
+   ----------------------------------------------------------------
+   既存:
+   - .kk-toast-success/error/warning .kk-toast-icon: 単色 background
+     + 単層 box-shadow (mix-md 8px) glow + inset white sheen
+   - .kk-toast-success/error/warning .kk-toast-progress: 単色 background
+     + 単層 box-shadow (mix-md 6px) glow
+
+   v28.66 後:
+   - icon background: 135deg linear-gradient(タイプ色 0% → end-variant 100%)
+     で「色立体感のあるバッジ」に格上げ (success: success→income-end /
+     error: danger-text→expense-end / warning: warning→orange)
+   - icon box-shadow: 既存 inner halo + 新規 end-variant outer wash
+     (mix-sm 16px) で dual-color halo 化
+   - progress background: 3-stop horizontal gradient
+     (タイプ色 0% → end-variant 50% → タイプ色 100%) で中央に
+     end-variant ピークを持つ brand peak gradient に格上げ
+     (neutral toast 6344 と同パターンの 3-stop 設計を typed variants
+     にも展開)
+   - progress box-shadow: 既存 6px inner halo + 新規 14px end-variant
+     outer wash で dual-color halo 化
+   - dark mode: 全層を 1 ティア boost (icon 10→14px outer / progress 6→16px outer)
+
+   toast はセーブ/同期/エラー/警告等で毎回出現する高頻度 ephemeral surface
+   で、v28.62 .show state 4 variant typed halo / v28.61 .btn-primary lavender
+   gradient と統一された「色立体感のあるブランド surface」family に
+   toast 内部 2 要素も合流するマイルストーン。CSS-only、layout shift なし、
+   ライト/ダーク両対応、reduced-motion 無関係 (animation 未追加)。
+   ============================================================ */
+
+/* ① success icon: 単色 → diagonal gradient + dual-color halo */
+.kk-toast-success .kk-toast-icon {
+  background: linear-gradient(135deg, var(--success) 0%, var(--income-end) 100%);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+.kk-toast-error .kk-toast-icon {
+  background: linear-gradient(135deg, var(--danger-text) 0%, var(--expense-end) 100%);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+.kk-toast-warning .kk-toast-icon {
+  background: linear-gradient(135deg, var(--warning) 0%, var(--orange) 100%);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--orange) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+/* ② success icon dark: 1 ティア boost */
+[data-theme="dark"] .kk-toast-success .kk-toast-icon {
+  background: linear-gradient(135deg, var(--success) 0%, var(--income-end) 100%);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--success) var(--mix-lg), transparent),
+    0 0 18px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+[data-theme="dark"] .kk-toast-error .kk-toast-icon {
+  background: linear-gradient(135deg, var(--danger-text) 0%, var(--expense-end) 100%);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+    0 0 18px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+[data-theme="dark"] .kk-toast-warning .kk-toast-icon {
+  background: linear-gradient(135deg, var(--warning) 0%, var(--orange) 100%);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+    0 0 18px color-mix(in srgb, var(--orange) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+/* ③ progress bar typed: 単色 → 3-stop horizontal gradient + dual-color halo */
+.kk-toast-success .kk-toast-progress {
+  background: linear-gradient(90deg, var(--success) 0%, var(--income-end) 50%, var(--success) 100%);
+  box-shadow:
+    0 0 6px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent);
+}
+.kk-toast-error .kk-toast-progress {
+  background: linear-gradient(90deg, var(--danger-text) 0%, var(--expense-end) 50%, var(--danger-text) 100%);
+  box-shadow:
+    0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent);
+}
+.kk-toast-warning .kk-toast-progress {
+  background: linear-gradient(90deg, var(--warning) 0%, var(--orange) 50%, var(--warning) 100%);
+  box-shadow:
+    0 0 6px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--orange) var(--mix-sm), transparent);
+}
+
+/* ④ progress bar typed dark: 1 ティア boost */
+[data-theme="dark"] .kk-toast-success .kk-toast-progress {
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--success) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--income-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .kk-toast-error .kk-toast-progress {
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .kk-toast-warning .kk-toast-progress {
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--orange) var(--mix-md), transparent);
+}
