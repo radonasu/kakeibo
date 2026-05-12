@@ -49215,3 +49215,70 @@ textarea:focus::placeholder {
     drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
 }
 
+/* ============================================================
+   v28.60 Sprint #1254: 一括選択フィードバック + identity icon halo に
+   lavender (--primary-end) accent brand family を投入。
+   v28.40-v28.59 で確立した「primary inner + primary-end outer」brand
+   family を、これまで漏れていた 3 系統に展開:
+     ① .bulk-count バッジ bg を solid primary → diagonal gradient
+        (primary 0% → primary-end 100%) に格上げ + dual-color halo +
+        inset top sheen で「件数バッジ」が brand identity 立体感を獲得
+     ② .bulk-bar 浮遊アクションバーに lavender outer wash 3rd layer
+        を append（light/dark）— 一括選択中に常時表示される floating
+        action surface が lavender brand family に合流
+     ③ @keyframes ident-glow-breath-primary を redefine し
+        primary halo を primary inner + primary-end outer の
+        dual-color halo に拡張（.brand-icon / .sidebar-avatar の
+        breath を二色化、サイドバー上端 identity icon 2 系統が
+        lavender brand 統一）
+   ============================================================ */
+
+/* ① .bulk-count — solid primary → diagonal gradient + dual-color halo */
+.bulk-count {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+[data-theme="dark"] .bulk-count {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② .bulk-bar — 既存 primary mix-6xl/4xl directional + black-14/30 drop
+   を保持し、lavender mix-2xs outer wash 3rd layer を append */
+.bulk-bar {
+  box-shadow:
+    0 -2px 0 0 color-mix(in srgb, var(--primary) var(--mix-6xl), transparent),
+    0 -8px 32px var(--black-14),
+    0 -4px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .bulk-bar {
+  box-shadow:
+    0 -2px 0 0 color-mix(in srgb, var(--primary) var(--mix-4xl), transparent),
+    0 -8px 32px var(--black-30),
+    0 -4px 26px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ @keyframes ident-glow-breath-primary を redefine し dual-color halo 化
+   — .brand-icon (4.6s) / .sidebar-avatar (4.4s) の breath が
+   primary inner + primary-end outer の二色 halo で脈動 */
+@keyframes ident-glow-breath-primary {
+  0%, 100% {
+    box-shadow:
+      0 0 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+      0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+  50% {
+    box-shadow:
+      0 0 14px color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+      0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  }
+}
+
