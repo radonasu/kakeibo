@@ -49822,3 +49822,94 @@ textarea:focus::placeholder {
     0 0 8px color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
     0 0 16px color-mix(in srgb, var(--orange) var(--mix-md), transparent);
 }
+
+/* ============================================================================
+   v28.68 Sprint #1262 — 進捗バー family lavender brand upgrade
+   ----------------------------------------------------------------------------
+   7 progress bar families (.goal-progress / .goal-dash / .cat-budget /
+   .hs-bar / .fc-progress / .ch-bar / .sub-card-progress / .pt-exp-bar) の
+   shimmer sweep を boost + 空 track surface に lavender brand tint 投入。
+   v22.61-v22.73 で構築した shimmer sweep （mix-xs lavender flanks +
+   rgba(255,255,255,0.28) white peak）を v28.40-v28.67 lavender brand family
+   と同等の濃度（mix-md flanks + 0.45 white peak）へとブーストし、空 rail も
+   solid border → border center に primary mix-nano（dark: primary-end mix-2xs）
+   をブレンドした 3-stop gradient へ拡張、目標/サブスク/支払/カテゴリ/年間スコア/
+   固定費/チャレンジ全画面の進捗 surface が lavender brand family に合流する完成形マイルストーン。
+   既存 transform-origin / animation / animation-delay は完全保持、layout shift 無し。
+   ============================================================================ */
+
+/* ① shimmer sweep boost — 7 families × ::after を last-defined-wins で redefine */
+.goal-progress-bar-fill::after,
+.goal-dash-bar-fill::after,
+.cat-budget-bar-fill::after,
+.hs-bar-fill::after,
+.fc-progress-fill::after,
+.ch-bar-ok::after,
+.ch-bar-warn::after,
+.sub-card-progress-fill.prog-normal::after,
+.sub-card-progress-fill.prog-soon::after,
+.pt-exp-bar-fill.prog-normal::after,
+.pt-exp-bar-fill.prog-soon::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 70%,
+    transparent 100%
+  );
+}
+
+/* ② shimmer sweep dark mode — 1 ティア boost (mix-md → mix-lg / white 0.45 → 0.52) */
+[data-theme="dark"] .goal-progress-bar-fill::after,
+[data-theme="dark"] .goal-dash-bar-fill::after,
+[data-theme="dark"] .cat-budget-bar-fill::after,
+[data-theme="dark"] .hs-bar-fill::after,
+[data-theme="dark"] .fc-progress-fill::after,
+[data-theme="dark"] .ch-bar-ok::after,
+[data-theme="dark"] .ch-bar-warn::after,
+[data-theme="dark"] .sub-card-progress-fill.prog-normal::after,
+[data-theme="dark"] .sub-card-progress-fill.prog-soon::after,
+[data-theme="dark"] .pt-exp-bar-fill.prog-normal::after,
+[data-theme="dark"] .pt-exp-bar-fill.prog-soon::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 30%,
+    rgba(255, 255, 255, 0.52) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 70%,
+    transparent 100%
+  );
+}
+
+/* ③ 空 track surface lavender brand tint — 6 track family を last-defined-wins で redefine
+   solid var(--border) → 3-stop gradient (border 0% → border + primary mix-nano 50% → border 100%)
+   transform-scaleX 駆動の fill が伸長する前 / 空状態の rail に lavender brand subtle hint */
+.goal-progress-bar-bg,
+.goal-dash-bar-bg,
+.cat-budget-bar-wrap,
+.hs-bar-track,
+.fc-progress-track,
+.ch-bar-bg {
+  background: linear-gradient(
+    90deg,
+    var(--border) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), var(--border)) 50%,
+    var(--border) 100%
+  );
+}
+
+/* ④ 空 track surface dark — primary-end (lavender) mix-2xs で 1 ティア boost */
+[data-theme="dark"] .goal-progress-bar-bg,
+[data-theme="dark"] .goal-dash-bar-bg,
+[data-theme="dark"] .cat-budget-bar-wrap,
+[data-theme="dark"] .hs-bar-track,
+[data-theme="dark"] .fc-progress-track,
+[data-theme="dark"] .ch-bar-bg {
+  background: linear-gradient(
+    90deg,
+    var(--border) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), var(--border)) 50%,
+    var(--border) 100%
+  );
+}
