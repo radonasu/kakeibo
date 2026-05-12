@@ -49044,3 +49044,168 @@ textarea:focus::placeholder {
     0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
+/* ============================================================
+   v28.58 — #global-fab 静的 rest + fab-pulse keyframe +
+   .bottom-nav-item.active label/icon/svg family に
+   lavender (--primary-end) accent dual-color halo 投入。
+   v28.40-v28.57 で確立した「primary inner halo + primary-end outer wash」
+   brand family を、常時 visible で操作の主役を担う 2 surface 群——
+   ① 画面右下に常駐する PRIMARY ACTION 「#global-fab」(rest + pulsing)
+   ② モバイル底部ナビの「現在地」を示す .bottom-nav-item.active
+       (label glow + icon container glow + SVG drop-shadow の 3 層)
+   ——にも展開、kakeibo PWA で「最も操作頻度が高いボタン」と
+   「最も滞在時間の長い navigator」が lavender brand 統一の完成形に到達する
+   マイルストーン。CSS-only、layout shift なし、ライト/ダーク両対応。
+   ── カスケード戦略 ──
+   既存ルール (line 5130 / 5152-5156 / 19922-19986 / 20628-20638 /
+   27669-27670) を直接編集せず CSS 末尾で last-defined-wins redefine。
+   v28.57 で確立した append 戦略を踏襲。
+   ============================================================ */
+
+/* ① light #global-fab rest — 既存 3-layer
+   (primary mix-3xl shadow + black-12 drop + inset white 0.28)
+   に primary-end mix-2xs 4th layer outer wash を append、
+   FAB 球体周囲に常時 lavender brand halo が滲み出る */
+#global-fab {
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+    0 2px 6px var(--black-12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② dark #global-fab rest — 新規 dark rule、primary-end inner halo +
+   primary-end mix-md wider outer wash で dark surface 上の lavender boost。
+   inset white は 0.30 に微増（dark で球体上面の光沢を視認性確保） */
+[data-theme="dark"] #global-fab {
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 6px var(--black-12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ③ light @keyframes fab-pulse redefine — 既存 single-color primary 拡張ring を
+   primary inner + primary-end outer の dual-color ring に拡張。
+   0%: 静止時の base layer に primary-end mix-2xs 4th wash を追加、
+   60%: ring expand に primary mix-2xl + primary-end mix-xs の 2-ring 化、
+   100%: fade out。fab-pulsing class 時のみ適用（rest は ① 維持）。 */
+@keyframes fab-pulse {
+  0% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+      0 0 0 0 color-mix(in srgb, var(--primary) var(--mix-2xl), transparent),
+      0 0 0 0 color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  }
+  60% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+      0 0 0 10px transparent,
+      0 0 0 16px transparent;
+  }
+  100% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+      0 0 0 0 transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+/* ④ dark @keyframes fab-pulse-dark — 新規 dark pulse keyframe、
+   base に primary-end inner halo + dual-color ring expand。
+   [data-theme="dark"] #global-fab.fab-pulsing で適用 */
+@keyframes fab-pulse-dark {
+  0% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.30),
+      0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+      0 0 0 0 color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+      0 0 0 0 color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  }
+  60% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.30),
+      0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+      0 0 0 12px transparent,
+      0 0 0 18px transparent;
+  }
+  100% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+      0 2px 6px var(--black-12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.30),
+      0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+      0 0 0 0 transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+/* ⑤ dark #global-fab.fab-pulsing — dark keyframe を bind */
+[data-theme="dark"] #global-fab.fab-pulsing {
+  animation: fab-pulse-dark var(--dur-fab-pulse) var(--ease-out) infinite;
+}
+
+/* ⑥ light .bottom-nav-item.active .bottom-nav-label — 既存
+   `text-shadow: 0 0 6px primary mix-sm` を redefine、lavender mix-xs 2nd layer
+   を追加して dual-color text-shadow に拡張、ラベル文字に lavender brand halo */
+.bottom-nav-item.active .bottom-nav-label {
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑦ dark .bottom-nav-item.active .bottom-nav-label — 1 ティア boost
+   (mix-md/8px → mix-lg/12px + primary inner halo は維持して二色 boost) */
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-label {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* ⑧ light .bottom-nav-item.active .bottom-nav-icon — 既存
+   `box-shadow: 0 2px 8px primary mix-sm` を redefine、
+   lavender mix-xs 14px 2nd layer outer wash で dual-color halo */
+.bottom-nav-item.active .bottom-nav-icon {
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑨ dark .bottom-nav-item.active .bottom-nav-icon — 1 ティア boost
+   (mix-base/10px → mix-md/18px wider lavender wash) */
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-base), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑩ light .bottom-nav-item.active .bottom-nav-icon svg — 既存
+   `filter: drop-shadow(0 0 4px primary mix-sm)` を redefine、
+   primary inner drop + primary-end outer drop の dual-color drop-shadow chain */
+.bottom-nav-item.active .bottom-nav-icon svg {
+  filter:
+    drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent))
+    drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent));
+}
+
+/* ⑪ dark .bottom-nav-item.active .bottom-nav-icon svg — 1 ティア boost
+   (mix-md/5px → mix-lg/10px wider lavender drop) */
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon svg {
+  filter:
+    drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+    drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
