@@ -49598,3 +49598,95 @@ textarea:focus::placeholder {
   }
 }
 
+/* ============================================================
+   v28.65 Sprint #1259 — Skeleton shimmer band に lavender accent
+   ============================================================
+   ロード中に全画面表示されるスケルトン (.sk-bone) と AI アドバイス
+   読み込み中のスケルトン行 (.adv-sk-line) の shimmer band を、
+   v28.40-v28.64 で確立した「primary → primary-end → primary」
+   brand gradient family に統一する。
+
+   既存:
+   - .sk-bone (light): 3-stop gradient (border → primary mix-xs → border)
+     + single-layer primary mix-2xs halo
+   - .sk-bone (dark):  3-stop (surface → primary-end mix-sm → surface)
+     + single-layer primary-end mix-xs halo
+   - .adv-sk-line (light): 3-stop (surface-hover → primary mix-sm → surface-hover)
+     + single-layer primary mix-2xs halo
+   - .adv-sk-line (dark):  3-stop (surface-hover → primary-end mix-md → surface-hover)
+     + single-layer primary-end mix-xs halo
+
+   v28.65 後:
+   - 全 4 sheet を 5-stop gradient (border → primary → primary-end → primary → border)
+     にし、横スライドする shimmer band 内に「lavender 中央ピーク + primary 両肩」
+     の 3-color brand peak を獲得。
+   - box-shadow を dual-layer 化（inner = 既存色 / outer = 反対色のより広く薄い wash）。
+     light の outer wash には primary-end、dark の outer wash には primary を採用し、
+     全 layer が brand family で構成される dual-color halo に統一。
+
+   stop 位置は v28.51 page-title gradient と同じ 0/30/50/70/100% 対称設計、
+   shimmer envelope は 0-100% に拡張（既存 0-80% より若干広いがロード中の
+   一時演出のため layout 影響なし）。background-size / animation / keyframes
+   は完全に保持。CSS-only、layout shift なし、ライト/ダーク両対応。
+   ============================================================ */
+
+.sk-bone {
+  background: linear-gradient(
+    var(--grad-horizontal),
+    var(--border) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--bg)) 30%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--bg)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--bg)) 70%,
+    var(--border) 100%
+  );
+  background-size: var(--size-shimmer) 100%;
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent);
+}
+
+[data-theme="dark"] .sk-bone {
+  background: linear-gradient(
+    var(--grad-horizontal),
+    var(--surface) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--border)) 30%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--border)) 70%,
+    var(--surface) 100%
+  );
+  background-size: var(--size-shimmer) 100%;
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+}
+
+.adv-sk-line {
+  background: linear-gradient(
+    var(--grad-horizontal),
+    var(--surface-hover) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--border)) 30%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), var(--border)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--border)) 70%,
+    var(--surface-hover) 100%
+  );
+  background-size: var(--size-shimmer-half) 100%;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent);
+}
+
+[data-theme="dark"] .adv-sk-line {
+  background: linear-gradient(
+    var(--grad-horizontal),
+    var(--surface-hover) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), var(--border)) 30%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), var(--border)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), var(--border)) 70%,
+    var(--surface-hover) 100%
+  );
+  background-size: var(--size-shimmer-half) 100%;
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 20px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+}
+
