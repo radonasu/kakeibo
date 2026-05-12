@@ -50449,3 +50449,189 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
+
+/* ============================================================
+   v28.75 — 大型カード family hover lavender brand 統一
+   スプリント#1267（2026-05-13）
+
+   ── 対象 surface ──
+   家計簿アプリ各タブで主役級に配置される 7 系統の大型カード hover に、
+   v28.40-v28.74 で確立した「primary-end (lavender) outer wash」
+   ブランドアクセント family を投入し dual-color halo に格上げする。
+   ・.asset-card:hover     （資産タブ、資産タイプ別カード）
+   ・.debt-card:hover      （負債タブ、負債タイプ別カード）
+   ・.goal-card:hover      （ゴールタブ、目標別カード）
+   ・.wl-card:hover        （ウィッシュリストタブ、欲しい物カード）
+   ・.ch-card:hover        （チャレンジタブ、節約チャレンジカード）
+   ・.ev-card:hover        （繰り返し取引タブ、収支予定カード）
+   ・.pt-card:hover        （ポイントタブ、通常状態カード）
+
+   ── 既存状態（lavender brand 投入前） ──
+   各カードの hover box-shadow は typed accent (--asset-accent /
+   --debt-accent / --goal-accent / --wl-accent / --ch-accent /
+   --ev-accent / --pt-accent) + fallback (--primary light /
+   --primary-end dark) を用いた単色 halo（outer mix-xs 14-18px
+   + inset-left 5px/4px halo mix-sm + inset 3px solid accent bar）。
+   v24.67 (line 33949/33957/33966/33974/33982/33991) で 6 カード、
+   v22.x で .pt-card (line 9353) の effective base が確立済み。
+   dark は v24.67 batch (line 34877/34882/34887/34892/34897/34903) と
+   .pt-card 用 line 35392 で primary-end fallback 強化版が設置済み。
+
+   ── 投入する lavender brand family ──
+   typed accent halo を保持したまま、末尾 layer に lavender (light:
+   --primary-end / dark: --primary) outer wash を append する事で、
+   タイプ色アクセントを残しつつ kakeibo 全体に貫く lavender ブランド
+   フレームを獲得。v28.44 row/cell 系 hover が「accent + white +
+   lavender」triple-layer で確立した「タイプ色 + lavender ブランド」
+   coexistence 戦略をカード box-shadow surface にも展開。
+
+   ── 投入する layer（既存 layer 構造を保持しつつ append） ──
+   ① light 7 selector → 末尾に 0 0 22-24px primary-end mix-2xs を append
+   ② dark 7 selector → 末尾に 0 0 24-26px primary mix-2xs を append
+      （dark は primary-end 重心の typed halo に対して primary を補色 wash）
+
+   ── カスケード安全 ──
+   末尾配置、specificity は基底ルールと完全一致 (light 0,0,2 /
+   dark 0,0,3) のため last-defined wins。typed accent halo / inset bar /
+   transform / border-color 等の他プロパティは earlier rules で個別に
+   declared されており、box-shadow のみ redefine する事で他プロパティは
+   cascade で継承。pt-urgent / pt-soon (specificity 0,0,3) は独立 selector
+   のため非対象 (danger/warning 色味温存)。子セレクタ群 (.card:hover
+   .card-icon 等) は独立宣言で別 selector のため衝突無し。
+   ============================================================ */
+
+/* ① light .asset-card:hover — 既存 4-layer (shadow-card-hover + outer asset halo + inset 5px asset halo + inset 3px asset bar) に lavender outer wash を 5th layer append */
+.asset-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--asset-accent, var(--primary)),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② light .debt-card:hover — 既存 4-layer に lavender outer wash 5th layer append */
+.debt-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--debt-accent, var(--primary)),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ light .goal-card:hover — 既存 4-layer に lavender outer wash 5th layer append */
+.goal-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--goal-accent, var(--primary)),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ light .wl-card:hover — 既存 4-layer に lavender outer wash 5th layer append */
+.wl-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--wl-accent, var(--primary)),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ light .ch-card:hover — 既存 3-layer (shadow-card-hover + outer ch halo + inset 5px ch halo, inset 3px bar 無し) に lavender outer wash 4th layer append */
+.ch-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑥ light .ev-card:hover — 既存 4-layer (inset 4px 0 14px は accent-w 3px 細バー合わせ) に lavender outer wash 5th layer append */
+.ev-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--ev-accent, var(--primary)),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑦ light .pt-card:hover — 既存 3-layer (shadow-card-hover + outer pt halo + inset 3px pt bar, inset 5px halo 無し) に lavender outer wash 4th layer append */
+.pt-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 14px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--pt-accent, var(--primary)),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑧ dark .asset-card:hover — primary-end 重心 typed halo に primary 補色 outer wash 5th layer append */
+[data-theme="dark"] .asset-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 14px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--asset-accent, var(--primary-end)),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑨ dark .debt-card:hover — primary-end 重心 typed halo に primary 補色 outer wash 5th layer append */
+[data-theme="dark"] .debt-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--debt-accent, var(--primary-end)),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑩ dark .goal-card:hover — primary-end 重心 typed halo に primary 補色 outer wash 5th layer append */
+[data-theme="dark"] .goal-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--goal-accent, var(--primary-end)),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑪ dark .wl-card:hover — primary-end 重心 typed halo に primary 補色 outer wash 5th layer append */
+[data-theme="dark"] .wl-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--wl-accent, var(--primary-end)),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑫ dark .ch-card:hover — primary-end 重心 typed halo (inset 3px bar 無し) に primary 補色 outer wash 4th layer append */
+[data-theme="dark"] .ch-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 16px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 5px 0 16px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑬ dark .ev-card:hover — primary-end 重心 typed halo に primary 補色 outer wash 5th layer append */
+[data-theme="dark"] .ev-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-sm), transparent),
+    inset 4px 0 14px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--ev-accent, var(--primary-end)),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑭ dark .pt-card:hover — primary-end 重心 typed halo (inset 5px halo 無し) に primary 補色 outer wash 3rd layer append */
+[data-theme="dark"] .pt-card:hover {
+  box-shadow:
+    var(--shadow-card-hover),
+    0 4px 18px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent),
+    inset 3px 0 0 var(--pt-accent, var(--primary-end)),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
