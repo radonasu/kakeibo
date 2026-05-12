@@ -49518,3 +49518,83 @@ textarea:focus::placeholder {
     var(--scrim-strong);
 }
 
+/* ============================================================
+   v28.64 Sprint #1258 — .card-title lavender gradient pill underline
+   ============================================================
+   全 .card サーフェス（家計簿アプリ全体で 58+ 箇所のカード）の
+   .card-title 直下に lavender brand gradient pill underline を獲得。
+   v28.40-v28.63 で確立した「primary inner + primary-end outer」brand
+   family を、これまで装飾の薄かった .card-title 領域にも展開する。
+
+   設計:
+   ① .card-title に position: relative を付与（既存 v22.89 text-shadow
+      は非競合プロパティで保持）。
+   ② .card-title::after で absolute 配置の gradient pill underline を
+      投入（width 32px / height 2.5px / 左下端）。
+      gradient は primary mix-lg → primary-end mix-md → transparent の
+      3-stop fade-pill 風、border-radius 999px で柔らかい丸形。
+      v28.40-v28.63 lavender brand と統一の primary-end mix-2xs halo。
+   ③ dark mode で gradient を full-lavender 化（primary-end mix-lg → mix-md）
+      + halo を mix-sm に 1 ティア boost。
+   ④ .card:hover で pill width 32px → 56px sweep + brightness boost +
+      halo を mix-sm/mix-md に boost、「カードに触れると lavender 下線が
+      左から右へ伸びる」マイクロインタラクションを獲得。
+   ⑤ prefers-reduced-motion で width transition を無効化（halo は保持）。
+
+   既存ルールとの非競合性:
+   - 既存 .card-title { text-shadow ... } (line 20007/20010) は
+     v22.89 起源で text-shadow のみ、position プロパティと非競合。
+   - 既存 .chart-card:hover .card-title (line 2098) は color/text-shadow/
+     transform を変更するが、::after は別 pseudo-element で衝突なし。
+   - .qa-card-title (span variant) も .card-title クラスを共有するため
+     pill underline を獲得、QA カードでも lavender brand 識別が一貫。
+   - .card-header-row .card-title { margin-bottom: 0 } レイアウト
+     （右側ボタン同行）でも、pill は absolute なので flex baseline 不変。
+   ============================================================ */
+
+.card-title { position: relative; }
+
+.card-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--sp-1));
+  width: 32px;
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--primary) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 60%,
+    transparent 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  pointer-events: none;
+  transition: width var(--dur-base) var(--ease-out),
+              filter var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+[data-theme="dark"] .card-title::after {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 60%,
+    transparent 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+.card:hover .card-title::after {
+  width: 56px;
+  filter: brightness(1.08);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+[data-theme="dark"] .card:hover .card-title::after {
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-title::after,
+  .card:hover .card-title::after {
+    transition: none;
+  }
+}
+
