@@ -7993,17 +7993,19 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
   justify-content: center;
   white-space: nowrap;
 }
-/* v26.28: 「今日」バッジ強化 — ring を 2 段重ね（mix-md→mix-lg + 外側 0 0 10px）にして「今日」の存在感を1段増し、 transition で hover 時のリング拡張に追従できるように */
+/* v26.28: 「今日」バッジ強化 — ring を 2 段重ね（mix-md→mix-lg + 外側 0 0 10px）にして「今日」の存在感を1段増し、 transition で hover 時のリング拡張に追従できるように
+   v28.59: 3rd layer に lavender (--primary-end) accent outer wash を append し dual-color halo へ拡張（v28.40-v28.58 brand family を today バッジに展開） */
 .cal-date-num.today {
   background: var(--primary);
   color: var(--white);
   border-radius: var(--radius-circle);
   font-weight: var(--fw-bold);
-  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent), 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent), 0 0 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
   transition: box-shadow var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
-/* v26.28: 親セル hover で today バッジの外側 glow を強化（焦点が合った時に「今日」のシンボルが脈動する印象） */
-.cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xl), transparent), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent); }
+/* v26.28: 親セル hover で today バッジの外側 glow を強化（焦点が合った時に「今日」のシンボルが脈動する印象）
+   v28.59: 3rd layer に lavender outer wash を append し dual-color hover halo へ拡張 */
+.cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xl), transparent), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 .cal-date-num.sun:not(.today) { color: var(--expense); }
 .cal-date-num.sat:not(.today) { color: var(--primary); }
 
@@ -8187,10 +8189,12 @@ details[open] .goal-achieved-summary::before { transform: rotate(var(--rotate-ch
 [data-theme="dark"] .cal-cell:hover:not(.cal-empty) { background: var(--surface-hover); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent); }
 /* v26.28: ダーク .cal-cell.selected:hover — primary-end で統一、外側 glow を blur 14px / mix-md に強化 */
 [data-theme="dark"] .cal-cell.selected:hover { box-shadow: inset 0 0 0 2px var(--primary-end), 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-/* v26.28: ダーク 今日バッジ — primary-end ring + 外側 glow（背景は light 同様 var(--primary) を継承し色の連続性を保つ） */
-[data-theme="dark"] .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent); }
-/* v26.28: ダーク 親セル hover で 今日バッジ glow 強化 */
-[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent), 0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent); }
+/* v26.28: ダーク 今日バッジ — primary-end ring + 外側 glow（背景は light 同様 var(--primary) を継承し色の連続性を保つ）
+   v28.59: 3rd layer に primary (purple) chromatic outer wash を append し lavender + purple dual-color halo に拡張（ダーク mono-lavender → dual-tone 化） */
+[data-theme="dark"] .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent); }
+/* v26.28: ダーク 親セル hover で 今日バッジ glow 強化
+   v28.59: 3rd layer の purple outer wash も 1 ティア boost (mix-2xs→mix-xs / 22px→28px) */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) .cal-date-num.today { box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent), 0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 28px color-mix(in srgb, var(--primary) var(--mix-xs), transparent); }
 
 /* モバイル */
 @media (max-width: 768px) {
@@ -45941,17 +45945,19 @@ textarea:focus::placeholder {
   animation: cal-sel-breath-dark 3.6s ease-in-out infinite;
 }
 
-/* ── カレンダー today バッジ breath（filter:drop-shadow）── */
+/* ── カレンダー today バッジ breath（filter:drop-shadow）──
+   v28.59: 2nd drop-shadow layer に lavender (--primary-end) accent を append し dual-color shimmer 化（v28.40-v28.58 brand family を呼吸 halo にも展開） */
 @keyframes cal-today-breath {
-  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)); }
-  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent)) drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)) drop-shadow(0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
 }
 .cal-date-num.today {
   animation: cal-today-breath 3.8s ease-in-out infinite;
 }
+/* v28.59: ダーク breath にも 2nd drop-shadow layer (primary purple chromatic accent) を append し lavender + purple dual-tone shimmer 化 */
 @keyframes cal-today-breath-dark {
-  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
-  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)) drop-shadow(0 0 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)) drop-shadow(0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent)); }
 }
 [data-theme="dark"] .cal-date-num.today {
   animation: cal-today-breath-dark 3.8s ease-in-out infinite;
