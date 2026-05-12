@@ -1657,18 +1657,27 @@ select:focus:not(:focus-visible) {
   opacity: 1;
 }
 /* ── セレクトボックス カスタム矢印 (v17.6) ──────────────── */
+/* v28.71: 矢印 stroke を slate (#64748b/#94a3b8) → primary lavender brand (#7c3aed/#a78bfa) に置換、selectフォーカス時に矢印を 180度回転（v28.40-v28.70 で確立した lavender brand family を select 矢印にも展開） */
 .form-group select {
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2364748b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%237c3aed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--sp-3) center;
   background-size: var(--size-select-icon) var(--size-select-icon);
   padding-right: var(--sp-8);
   cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background-image var(--dur-fast) var(--ease-out);
+}
+.form-group select:focus {
+  /* v28.71: フォーカス時に矢印を「上向き ▴」に切替（select が開いていることを視覚化） */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 12l4-4 4 4' stroke='%237c3aed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 [data-theme="dark"] .form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%2394a3b8' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%23a78bfa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] .form-group select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 12l4-4 4 4' stroke='%23a78bfa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 /* ── プレフィックス付き金額入力 (ev-form用 v19.56) ──────── */
 .amount-input-wrap {
@@ -50059,4 +50068,96 @@ textarea:focus::placeholder {
   box-shadow:
     var(--shadow-toggle),
     0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   v28.71: ネイティブ入力 UI 部品 lavender brand 化
+   ────────────────────────────────────────────────────────────────────────────
+   ① input[type="date"/"month"]::-webkit-calendar-picker-indicator
+      → Chrome/Edge 既定の灰色カレンダーアイコンを primary lavender SVG に置換
+   ② input[type="search"]::-webkit-search-cancel-button
+      → 検索クリアボタン (×) を primary lavender SVG に置換
+   v28.40-v28.70 で確立した lavender brand family を「ネイティブブラウザ UI」面にも展開
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* ── カレンダーピッカー (date/month) ── */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  width: 18px;
+  height: 18px;
+  margin-left: var(--sp-1);
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%237c3aed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='14' height='12.5' rx='2'/%3E%3Cpath d='M3 8.5h14'/%3E%3Cpath d='M7 3v3M13 3v3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  filter: drop-shadow(0 0 0 transparent);
+  transition: opacity var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="month"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+  transform: scale(1.08);
+}
+input[type="date"]:focus::-webkit-calendar-picker-indicator,
+input[type="month"]:focus::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="month"]::-webkit-calendar-picker-indicator {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23a78bfa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.5' width='14' height='12.5' rx='2'/%3E%3Cpath d='M3 8.5h14'/%3E%3Cpath d='M7 3v3M13 3v3'/%3E%3C/svg%3E");
+  opacity: 0.75;
+}
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator:hover,
+[data-theme="dark"] input[type="month"]::-webkit-calendar-picker-indicator:hover,
+[data-theme="dark"] input[type="date"]:focus::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="month"]:focus::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
+/* ── 検索入力 クリアボタン (×) ── */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-left: var(--sp-1);
+  cursor: pointer;
+  opacity: 0.7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='7'/%3E%3Cpath d='M7 7l6 6M13 7l-6 6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  transition: opacity var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+input[type="search"]::-webkit-search-cancel-button:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+  transform: scale(1.12) rotate(90deg);
+}
+[data-theme="dark"] input[type="search"]::-webkit-search-cancel-button {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23a78bfa' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='7'/%3E%3Cpath d='M7 7l6 6M13 7l-6 6'/%3E%3C/svg%3E");
+  opacity: 0.78;
+}
+[data-theme="dark"] input[type="search"]::-webkit-search-cancel-button:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="month"]::-webkit-calendar-picker-indicator,
+  input[type="search"]::-webkit-search-cancel-button {
+    transition: none;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover,
+  input[type="month"]::-webkit-calendar-picker-indicator:hover,
+  input[type="search"]::-webkit-search-cancel-button:hover {
+    transform: none;
+  }
 }
