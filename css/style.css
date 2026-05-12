@@ -49326,3 +49326,104 @@ textarea:focus::placeholder {
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
+/* ============================================================
+   v28.62 Sprint #1256: kk-toast .show state に type-color halo +
+   brand family elevation 投入 — 4 トースト variant（default-info /
+   success / error / warning）の show state box-shadow を boost し
+   type-resonant な colored halo を獲得、show 時のみ visual elevation
+   を強化することで「トーストが浮き上がる」タクタイル feedback を
+   完成形に到達させるマイルストーン。
+   ── 設計趣旨 ──
+   現状の課題：
+   ① 既存 line 6307 `.kk-toast-show` は shadow-lg のみで brand
+      identity なし（default/info トーストが無味乾燥）。
+   ② 既存 line 20182-20190 `.kk-toast-success/error/warning` は
+      .show 状態と関係なく static halo（mix-sm/blur 24）で固定さ
+      れているため show ↔ hidden の elevation 差が不在。
+   ③ dark mode 専用 boost なし。
+   v28.62 で：
+   ① `.kk-toast.kk-toast-show` (specificity 0,2,0) に lavender
+      brand dual-layer halo（primary inner + primary-end outer wash）
+      を投入、v28.40-v28.61 lavender brand family と統一。
+   ② `.kk-toast-success.kk-toast-show` / `.kk-toast-error.kk-toast-show`
+      / `.kk-toast-warning.kk-toast-show` (specificity 0,2,0) に
+      shadow-lg base + boosted type halo（mix-md/blur 30）+ inset
+      white sheen で show 時 elevation 強化（line 20182-20190 の static
+      mix-sm/blur 24 から 1 ティア boost）。
+   ③ dark mode 専用 override 4 群で全層 mix-md→mix-lg / blur +4-6px
+      / inset white +0.04 の 1 ティア boost。
+   ── カスケード安全 ──
+   全 8 ルール specificity 0,2,0（クラス 2 つ）で、既存 line 6307
+   .kk-toast-show (0,1,0) + line 20182-20190 type 単独 (0,1,0) を
+   end-of-file 順序で上書き。border-color はそのまま温存。
+   ============================================================ */
+
+/* ① default/info kk-toast.show — lavender brand dual-layer halo */
+.kk-toast.kk-toast-show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 6px 28px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ② success kk-toast.show — green type halo + shadow-lg base
+   既存 line 47008 (specificity 0,3,0 / shadow-md + success mix-sm/24px + inset 0.55) を
+   同 specificity 0,3,0 で end-of-file 後勝ち上書き */
+.kk-toast.kk-toast-show.kk-toast-success {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 24px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    0 6px 30px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ③ error kk-toast.show — red type halo + shadow-lg base */
+.kk-toast.kk-toast-show.kk-toast-error {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 24px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    0 6px 30px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ④ warning kk-toast.show — amber type halo + shadow-lg base */
+.kk-toast.kk-toast-show.kk-toast-warning {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 24px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    0 6px 30px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ⑤-⑧ dark mode override — 全 4 群 1 ティア boost
+   既存 line 47032-47049 (specificity 0,4,0) を同 specificity で end-of-file 後勝ち上書き */
+[data-theme="dark"] .kk-toast.kk-toast-show {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 22px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 8px 34px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-success {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 26px color-mix(in srgb, var(--success) var(--mix-lg), transparent),
+    0 8px 34px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-error {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 26px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+    0 8px 34px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+[data-theme="dark"] .kk-toast.kk-toast-show.kk-toast-warning {
+  box-shadow:
+    var(--shadow-lg),
+    0 4px 26px color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+    0 8px 34px color-mix(in srgb, var(--warning) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
