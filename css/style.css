@@ -49913,3 +49913,60 @@ textarea:focus::placeholder {
     var(--border) 100%
   );
 }
+
+/* ============================================================
+   v28.69 — section-tab hover lavender brand family 統一
+   ------------------------------------------------------------
+   全ページ最上部の高頻度接触 surface「.section-tab」hover/is-active hover の
+   box-shadow / text-shadow 系を「primary 単色 halo」から「primary inner +
+   primary-end (lavender) outer wash」dual-color halo + dual-layer 設計に
+   格上げ。v28.40-v28.68 で展開した lavender brand family（summary card /
+   form input :focus / btn:hover / scrollbar / focus-visible / nav-item
+   active bar / toast / skeleton / card-title underline / progress bar）に
+   セクションタブを合流させ、ページ全画面の主要 navigator surface 系
+   （サイドバー nav-item / bottom-nav / section-tab の 3 系統）が完全な
+   lavender brand 統一に到達するマイルストーン。
+
+   ライト：① .section-tab:hover に 0 6px 22px primary-end mix-xs を append
+   ② .section-tab.is-active:hover に 0 6px 22px primary-end mix-sm + text-shadow
+   2nd layer primary-end mix-sm を append
+   ダーク：③ .section-tab:hover に 0 6px 22px primary-end mix-md を append
+   ④ .section-tab.is-active:hover に 0 6px 22px primary-end mix-lg を append
+   ⑤ text-shadow は既に primary-end 単色のため triple-layer 化（mix-xl + mix-sm wider）
+
+   既存 v26.32 hover ルール（line 7137-7186）+ v23.x text-shadow ルール
+   （line 25234 / 27227-27228）を last-defined wins で redefine。
+   ============================================================ */
+.section-tab:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+.section-tab.is-active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 -6px 18px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .section-tab:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] .section-tab.is-active:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 6px 22px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 -6px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  text-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
