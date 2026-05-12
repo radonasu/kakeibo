@@ -50635,3 +50635,151 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 3px 0 0 var(--pt-accent, var(--primary-end)),
     0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.76: フィルター入力 family lavender brand 統一
+   ------------------------------------------------------------
+   対象（取引タブ最上部 + 詳細フィルター内部の高頻度入力 surface）：
+   ① .filter-bar select / .month-sel :hover / :focus
+   ② .filter-search :hover / :focus
+   ③ .adv-filter-input :hover / :focus
+
+   v28.45 form-group input :focus に投入した「primary inner halo +
+   primary-end (lavender) outer wash」dual-color halo を、取引一覧
+   フィルターバー 3 入力 family にも展開。検索/月セレクト/詳細
+   フィルター入力（収支タイプ、カテゴリ、金額レンジ、メモ）の
+   hover→focus 2 段階両方で dual-color brand 化、入力体験全体に
+   lavender brand を一貫させる。
+
+   ライト = primary 単色 → primary inner + primary-end outer の
+   dual-color、ダーク = 1 ティア boost で primary-end 重心 +
+   primary 補色 outer wash の対称構造、layout shift 無し。
+   ============================================================ */
+
+/* ── light hover (3 selector group) ── */
+/* ① light .filter-bar select / .month-sel :hover */
+.filter-bar select:hover,
+.filter-bar .month-sel:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② light .filter-search:hover */
+.filter-search:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ light .adv-filter-input:hover */
+.adv-filter-input:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── light focus (3 selector group) ── */
+/* ④ light .filter-bar select / .month-sel :focus */
+.filter-bar select:focus,
+.filter-bar .month-sel:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 4px 12px var(--black-12),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑤ light .filter-search:focus */
+.filter-search:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 4px 12px var(--black-12),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑥ light .adv-filter-input:focus */
+.adv-filter-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 4px 12px var(--black-12),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ── dark hover (3 selector group) — primary-end 重心 + primary 補色 outer wash ── */
+/* ⑦ dark .filter-bar select / .month-sel :hover */
+[data-theme="dark"] .filter-bar select:hover,
+[data-theme="dark"] .filter-bar .month-sel:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 8px var(--black-12),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑧ dark .filter-search:hover */
+[data-theme="dark"] .filter-search:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 8px var(--black-12),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑨ dark .adv-filter-input:hover */
+[data-theme="dark"] .adv-filter-input:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 8px var(--black-12),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ── dark focus (3 selector group) — primary-end 重心 boosted + primary 補色 outer wash ── */
+/* ⑩ dark .filter-bar select / .month-sel :focus */
+[data-theme="dark"] .filter-bar select:focus,
+[data-theme="dark"] .filter-bar .month-sel:focus {
+  outline: none;
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 4px 14px var(--black-16),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑪ dark .filter-search:focus */
+[data-theme="dark"] .filter-search:focus {
+  outline: none;
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 4px 14px var(--black-16),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑫ dark .adv-filter-input:focus */
+[data-theme="dark"] .adv-filter-input:focus {
+  outline: none;
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 4px 14px var(--black-16),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 26px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
