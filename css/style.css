@@ -48993,3 +48993,54 @@ textarea:focus::placeholder {
     0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
 
+/* ============================================================
+   v28.57 — .card:hover / .cal-cell:hover に lavender (--primary-end)
+   accent outer wash 投入。アプリ全体で最も基底かつ高頻度なホバー surface
+   2 系統 × ライト/ダーク = 4 box-shadow redefinition、v28.40-v28.56 で確立した
+   「primary inner halo + primary-end outer wash」brand family を「全カード」
+   と「カレンダーセル（月別ビュー 31 セル）」にも展開。last-defined wins で
+   line 5379 / 5383 / 7963 / 8187 の既存 2-layer ルールを上書きし
+   3rd layer に primary-end 外周 wash を append。CSS-only、JS 変更なし、
+   layout shift なし、ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① light .card:hover — primary inner halo + primary-end outer wash で
+   汎用カードホバーが dual-color brand halo を獲得 */
+.card:hover {
+  box-shadow:
+    var(--shadow-md),
+    0 4px 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transform: translateY(var(--translate-lift-md));
+  border-color: var(--border-strong);
+}
+
+/* ② dark .card:hover — 1 ティア boost (mix-2xs → mix-md / blur 24→28px)。
+   ダーク surface 上で lavender brand color がより visible に発光 */
+[data-theme="dark"] .card:hover {
+  box-shadow:
+    var(--shadow-md),
+    0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 28px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ③ light .cal-cell:hover:not(.cal-empty) — inset primary ring + primary
+   外周 glow + primary-end outer wash の triple-layer dual-color halo */
+.cal-cell:hover:not(.cal-empty) {
+  background: var(--surface-hover);
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ dark .cal-cell:hover:not(.cal-empty) — 1 ティア boost
+   (mix-2xs/18px → mix-md/22px)、dark surface 上で lavender wider wash */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) {
+  background: var(--surface-hover);
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
