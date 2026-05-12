@@ -50161,3 +50161,72 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     transform: none;
   }
 }
+
+/* ============================================================
+   v28.72 Sprint #1264: 球体/紫グラデ系 CTA 2 系統 (#global-fab /
+   .btn-receipt) の rest background gradient を
+   primary → primary-dark (古い暗色エンドポイント) から
+   primary → primary-end (lavender エンドポイント) に格上げ。
+
+   v28.61 .btn-primary / v28.66 toast / v28.70 checkbox+toggle
+   と完全統一の brand gradient surface family にアプリ最高頻度
+   接触の FAB (右下フローティングアクション) と receipt 取込
+   CTA も合流する完成形マイルストーン。
+
+   ── 設計趣旨 ──
+   v28.40-v28.71 で確立した「primary → primary-end」brand
+   gradient family と「primary inner + primary-end outer」
+   dual-color halo の 2 軸統一を、ボディ最上部に常時 visible
+   な紫球体 FAB と取引モーダルの receipt CTA にも展開する。
+   #global-fab は box-shadow / fab-pulse keyframe / hover halo
+   が既に v28.52-v28.58 で lavender brand family に合流済みだ
+   が、肝心の bg gradient endpoint だけが primary-dark (#6d28d9)
+   のままで、球体表面色相が暗紫止まりだった。今回 endpoint を
+   primary-end (#a78bfa lavender) に切り替えて球体上半 lavender /
+   下半 primary の brand-cohesive 紫グラデに完成。.btn-receipt
+   も同様に endpoint 統一 + 既存 single-layer halo を dual-color
+   dual-layer (primary inner + primary-end outer) に格上げし
+   btn-primary parity に到達。
+
+   ── カスケード安全 ──
+   ① #global-fab (specificity 0,1,0) を end-of-file で
+      background のみ redefine。line 5132 既存ルールと同位、
+      end-of-file 順序で last-defined-wins。box-shadow は
+      line 49101 (v28.58) の dual-color halo を維持。
+   ② [data-theme="dark"] #global-fab は line 49112 既存 dark
+      shadow ルールが background プロパティを宣言していない
+      ため、新規ルールで background のみ追加。
+   ③ .btn-receipt (specificity 0,1,0) も同様に end-of-file
+      で background + box-shadow を redefine、line 3871-3886
+      既存 single-layer shadow を dual-color dual-layer 化。
+   ④ [data-theme="dark"] .btn-receipt は新規 dark override
+      ルール、primary-end 重心 + 1 ティア boost halo。
+   ============================================================ */
+
+/* ① #global-fab rest — bg を primary→primary-end lavender gradient に格上げ */
+#global-fab {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+}
+
+/* ② [data-theme="dark"] #global-fab — 同じ lavender brand gradient を明示 (ダーク背景でも球体表面色相は brand 統一) */
+[data-theme="dark"] #global-fab {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+}
+
+/* ③ .btn-receipt rest — bg を lavender gradient + dual-color dual-layer halo に格上げ (btn-primary v28.61 parity) */
+.btn-receipt {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ④ [data-theme="dark"] .btn-receipt — primary-end 重心 boost、outer wash 1 ティア boost */
+[data-theme="dark"] .btn-receipt {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
