@@ -50230,3 +50230,75 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
+
+/* ============================================================
+   v28.73 Sprint #1265: カレンダーセル hover/selected:hover を
+   lavender (--primary-end) accent outer wash 3rd layer 投入で
+   dual-color brand halo family に合流
+
+   ── 設計趣旨 ──
+   家計簿で最も頻繁にタップされる「カレンダー日付セル」の hover/
+   selected:hover 4 系統 (light+dark × 通常+selected) は v26.28
+   時点で primary 単色 inset border + outer glow の構成だったが、
+   v28.40-v28.72 で確立した「primary inner halo + primary-end
+   outer wash」dual-color shadow family と未統一だった。
+
+   今回 4 selector group の box-shadow を末尾 redefine（同 specificity
+   last-defined wins）で 3rd layer に lavender outer wash を append
+   し、カレンダーグリッド主要 surface も brand family に合流。
+
+   ── レイヤー構成 ──
+   - light .cal-cell:hover:not(.cal-empty)
+       既存: inset 1.5px primary mix-md + outer 14px primary mix-sm
+       追加: outer 22px primary-end mix-xs
+   - light .cal-cell.selected:hover
+       既存: inset 2px primary + outer 14px primary mix-md
+       追加: outer 26px primary-end mix-sm
+   - dark .cal-cell:hover:not(.cal-empty)
+       既存: inset 1.5px primary-end mix-md + outer 14px primary-end mix-sm
+       追加: outer 22px primary mix-xs（dark は primary-end 重心 + primary 補色）
+   - dark .cal-cell.selected:hover
+       既存: inset 2px primary-end + outer 14px primary-end mix-md
+       追加: outer 28px primary mix-xs
+
+   ── カスケード安全 ──
+   末尾配置、selector specificity は line 7972 (0,0,3) / 7989 (0,0,3) /
+   8198 (0,0,4) / 8200 (0,0,4) と完全一致のため last-defined wins。
+   v28.41 cal-date-num.today や v23.42/v23.80 等の cal-cell:hover .cal-*
+   子セレクタは独立宣言で別 selector のため衝突無し。
+   ============================================================ */
+
+/* ① light .cal-cell:hover:not(.cal-empty) — 3rd layer lavender outer wash 追加で dual-color halo 化 */
+.cal-cell:hover:not(.cal-empty) {
+  background: var(--surface-hover);
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ② light .cal-cell.selected:hover — 3rd layer lavender outer wash 追加で dual-color halo 化 */
+.cal-cell.selected:hover {
+  background: var(--primary-light);
+  box-shadow:
+    inset 0 0 0 2px var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ③ [data-theme="dark"] .cal-cell:hover:not(.cal-empty) — primary 補色 outer wash 追加で dual-color halo 化 */
+[data-theme="dark"] .cal-cell:hover:not(.cal-empty) {
+  background: var(--surface-hover);
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ④ [data-theme="dark"] .cal-cell.selected:hover — primary 補色 outer wash 追加で dual-color halo 化 */
+[data-theme="dark"] .cal-cell.selected:hover {
+  box-shadow:
+    inset 0 0 0 2px var(--primary-end),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 28px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
