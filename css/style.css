@@ -49427,3 +49427,94 @@ textarea:focus::placeholder {
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
+/* ============================================================
+   v28.63 Sprint #1257: モーダル & サイドバーオーバーレイ backdrop に
+   radial vignette + lavender brand tint 投入 — flat dark scrim
+   から stage spotlight + lavender 周縁 vignette へと演出格上げ、
+   17+ モーダル と モバイル サイドバー が開閉する度に毎回視認
+   される最大頻度の overlay surface に v28.40-v28.62 で確立した
+   lavender brand family を展開する完成形マイルストーン。
+   ── 設計趣旨 ──
+   現状の課題：
+   ① .modal-overlay (line 3595) 既存 bg = solid sidebar-bg mix-3xl
+      (45% darkening) で uniform flat、stage の中心と周縁が同じ
+      暗さ・ブランド identity 無し。
+   ② [data-theme="dark"] .modal-overlay (line 5369) = solid
+      scrim-strong (rgba(0,0,0,.6)) で同様にflat、 lavender 不在。
+   ③ #sidebar-overlay (line 6784) = solid scrim (rgba(0,0,0,.4))
+      でモバイル ナビ用 backdrop も同じく flat。
+   ④ [data-theme="dark"] #sidebar-overlay (line 7036) = solid
+      scrim-strong で同様 flat。
+   v28.63 で：
+   ① 4 系統 overlay すべてに radial-gradient TOP layer を append
+      し、center transparent (base scrim only) → mid transparent
+      → outer-mid lavender tint mix-2xs → edge lavender tint mix-sm
+      の 4-stop vignette を獲得。center は base scrim のままで
+      モーダル/サイドバー視線集中点はクリーン、周縁 vignette が
+      lavender brand color で「ブランド spotlight が当たるステージ」
+      演出に格上げ。
+   ② 全 4 系統 ライト/ダーク両対応・既存 backdrop-filter blur と
+      共存（gradient は overlay 自身の bg、blur は背後の page を
+      blur するため衝突なし）。
+   ── カスケード安全 ──
+   end-of-file 順序で既存 bg を上書き：
+   ① .modal-overlay (0,1,0) → 同 specificity 0,1,0 で v28.63 が
+      line 3595 と line 5407 の v26.08 modal-overlay reset を温存
+      （後者は opacity 0 + transition のみで bg 触らず）。
+   ② [data-theme="dark"] .modal-overlay (0,2,0) → 同 specificity
+      で line 5369 を上書き。
+   ③ #sidebar-overlay (1,0,0) → 同 specificity で line 6784 上書き。
+   ④ [data-theme="dark"] #sidebar-overlay (1,1,0) → 同 specificity
+      で line 7036 上書き。
+   ============================================================ */
+
+/* ① .modal-overlay (light) — base sidebar-bg mix-3xl + radial lavender vignette
+   center transparent → 50% transparent → 78% primary mix-2xs → 100% primary-end mix-sm
+   左右上下対称の ellipse 80%/65% で「ステージ照明」が中央モーダル位置を照らす演出 */
+.modal-overlay {
+  background:
+    radial-gradient(ellipse 80% 65% at 50% 50%,
+      transparent 0%,
+      transparent 48%,
+      color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 78%,
+      color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 100%),
+    color-mix(in srgb, var(--sidebar-bg) var(--mix-3xl), transparent);
+}
+
+/* ② [data-theme="dark"] .modal-overlay — base scrim-strong + lavender vignette boost
+   ダークでは lavender intensity を 1 ティア boost（mix-xs/mix-md）し、
+   sidebar-bg 黒地と lavender 周縁 vignette のコントラストを強化 */
+[data-theme="dark"] .modal-overlay {
+  background:
+    radial-gradient(ellipse 80% 65% at 50% 50%,
+      transparent 0%,
+      transparent 48%,
+      color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 78%,
+      color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 100%),
+    var(--scrim-strong);
+}
+
+/* ③ #sidebar-overlay (light) — base scrim + radial lavender vignette
+   サイドバー (左から slide-in) のため照明 origin を左寄せ at 30% 50% に配置、
+   サイドバー縁から「光源」が中央側へ広がるような directional vignette 演出 */
+#sidebar-overlay {
+  background:
+    radial-gradient(ellipse 90% 70% at 30% 50%,
+      transparent 0%,
+      transparent 45%,
+      color-mix(in srgb, var(--primary) var(--mix-2xs), transparent) 75%,
+      color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 100%),
+    var(--scrim);
+}
+
+/* ④ [data-theme="dark"] #sidebar-overlay — base scrim-strong + lavender vignette boost */
+[data-theme="dark"] #sidebar-overlay {
+  background:
+    radial-gradient(ellipse 90% 70% at 30% 50%,
+      transparent 0%,
+      transparent 45%,
+      color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 75%,
+      color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 100%),
+    var(--scrim-strong);
+}
+
