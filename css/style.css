@@ -46246,14 +46246,25 @@ textarea:focus::placeholder {
    ============================================================ */
 
 /* ── 空状態アイコン rest breath glow（filter / primary halo）──
-   rest 値（0%/100%）は v22.92 / v26.15 既存静的 filter 値に完全一致 */
+   rest 値（0%/100%）は v22.92 / v26.15 既存静的 filter 値に完全一致
+   v28.67: single-color primary halo → primary inner + primary-end (lavender) outer wash の
+   dual-color dual-layer halo に格上げ。v28.39 サマリーカード装飾サークル / v28.40-v28.66
+   で確立した「primary inner + primary-end outer wash」brand family を、9 種空状態アイコン
+   （empty-month / empty-goal / empty-asset / empty-debt / sub-empty / pt-empty / wl-empty /
+   ch-empty / notif-empty / tx-empty）の rest/hover × light/dark 全 4 keyframe に展開し、
+   v28.34 borderless aurora platform + v28.36 orbit ring + v28.37 hover 4-layer シナジー
+   と同一の lavender brand family に合流させる完成形マイルストーン。 */
 @keyframes empty-icon-glow-breath {
-  0%, 100% { filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
-  50%      { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
+  0%, 100% { filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent))
+                     drop-shadow(0 2px 20px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent)); }
+  50%      { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary) var(--mix-lg), transparent))
+                     drop-shadow(0 2px 28px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
 }
 @keyframes empty-icon-glow-breath-dark {
-  0%, 100% { filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
-  50%      { filter: drop-shadow(0 4px 24px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
+  0%, 100% { filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent))
+                     drop-shadow(0 2px 26px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 4px 24px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent))
+                     drop-shadow(0 2px 34px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
 }
 
 /* 9 種 empty-icon-float 系: 既存 transform 浮遊 + 新規 filter glow breath */
@@ -47439,14 +47450,20 @@ textarea:focus::placeholder {
   border-color: color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent);
 }
 
-/* ── ④ icon halo filter hover acceleration + intensify ── */
+/* ── ④ icon halo filter hover acceleration + intensify ──
+   v28.67: single-color → dual-color dual-layer halo に拡張。rest と同じく primary inner +
+   primary-end (lavender) outer wash の brand family 構造、1 ティア boost 維持。 */
 @keyframes empty-icon-glow-breath-hover {
-  0%, 100% { filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary) var(--mix-lg), transparent)); }
-  50%      { filter: drop-shadow(0 4px 26px color-mix(in srgb, var(--primary) var(--mix-xl), transparent)); }
+  0%, 100% { filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--primary) var(--mix-lg), transparent))
+                     drop-shadow(0 2px 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 4px 26px color-mix(in srgb, var(--primary) var(--mix-xl), transparent))
+                     drop-shadow(0 2px 34px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
 }
 @keyframes empty-icon-glow-breath-hover-dark {
-  0%, 100% { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
-  50%      { filter: drop-shadow(0 4px 30px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent)); }
+  0%, 100% { filter: drop-shadow(0 4px 20px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent))
+                     drop-shadow(0 2px 28px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 4px 30px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent))
+                     drop-shadow(0 2px 38px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
 }
 
 .empty-month-state:hover .empty-month-icon,
