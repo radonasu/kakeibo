@@ -3013,6 +3013,77 @@ select:focus:not(:focus-visible) {
 .tx-tag-filter-chip:nth-child(11) { animation-delay: calc(10 * var(--dur-stagger-3xs)); }
 .tx-tag-filter-chip:nth-child(12) { animation-delay: calc(11 * var(--dur-stagger-3xs)); }
 
+/* ─────────────────────────────────────────────────────────────
+   v28.55: チップ family hover/active に lavender (--primary-end) accent outer wash 投入
+   ─ v28.40-v28.54 で展開した lavender brand family を、トランザクション入力モーダルの
+     カテゴリチップ群 (.cat-chip) と取引一覧画面のタグフィルターチップ群
+     (.tx-tag-filter-all/.tx-tag-filter-chip) という高頻度タップ対象 surface に展開。
+   ─ 既存 box-shadow の末尾に primary-end ベースの outer wash layer を append し、
+     既存 type-color (cat-color/tag-color) と独立した位置でブランド halo を共存させる
+     last-defined wins 戦略。CSS-only、ライト/ダーク両対応、layout shift なし。
+   ───────────────────────────────────────────────────────────── */
+.cat-chip:hover {
+  box-shadow: var(--shadow-sm),
+    0 3px 10px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.cat-chip.selected:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent),
+    0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+}
+[data-theme="dark"] .cat-chip:hover {
+  box-shadow: var(--shadow-sm),
+    0 3px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .cat-chip.selected:hover {
+  box-shadow: 0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-base), transparent),
+    0 4px 12px color-mix(in srgb, var(--cat-color, var(--primary)) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.16);
+}
+
+.tx-tag-filter-all.active {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+.tx-tag-filter-all.active:hover {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+.tx-tag-filter-all:hover:not(.active) {
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.tx-tag-filter-chip.active:hover {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+    0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+[data-theme="dark"] .tx-tag-filter-all.active {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+[data-theme="dark"] .tx-tag-filter-all.active:hover {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+[data-theme="dark"] .tx-tag-filter-chip.active:hover {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+    0 2px 10px color-mix(in srgb, var(--tc, var(--primary)) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
 /* ── フィルターバー ───────────────────────────────────── */
 .filter-bar {
   display: flex;
