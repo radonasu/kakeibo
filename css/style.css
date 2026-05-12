@@ -50302,3 +50302,150 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
     0 0 28px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v28.74 — 取引モーダル底部 date-quick-btn + btn-preset family lavender brand 統一
+   スプリント#1266（2026-05-13）
+
+   ── 対象 surface ──
+   取引モーダル（最頻出モーダル）の入力エリア下部に並ぶ
+   ・.date-quick-btn（一昨日 / 昨日 / 今日）3 ボタン
+   ・.btn-preset（¥500 / ¥1,000 / ¥3,000 / ¥5,000 / ¥10,000）5 ボタン
+   = 1 モーダル開閉あたり 8 ボタン視認、家計簿入力 UX で最頻接触する
+   chip/pill 系 surface。
+
+   ── 既存状態（lavender brand 投入前） ──
+   .date-quick-btn:hover (light, line 16142): primary 単色 2-layer halo
+   .date-quick-btn.active (line 16153): solid primary bg + primary 単色 outer halo + 上端白光沢
+   .date-quick-btn.active:hover (line 16163): solid primary bg + 強化 primary 単色 halo + 上端白光沢
+   .btn-preset:hover (light, line 3818): primary-light bg + primary border/color + primary 単色 halo
+   [data-theme="dark"] .btn-preset:hover (line 35728): primary-end 単色 halo + 上端白光沢
+
+   ── 投入する lavender brand family ──
+   v28.40-v28.73 で確立した「primary inner halo + primary-end outer wash」
+   shadow family + v28.70/v28.66/v28.61 の brand gradient surface family の
+   両系統を同時に取引モーダル底部 chip cluster に展開。
+
+   ① light .date-quick-btn:hover
+       既存: ring (mix-xs) + outer 12px primary mix-xs
+       追加: outer 18px primary-end mix-2xs（3rd layer）
+   ② light .date-quick-btn.active
+       bg: solid var(--primary) → linear-gradient(135deg, primary, primary-end)
+       既存: 0 2px 6px primary mix-xl + inset 上端白光沢 0.20
+       追加: 0 0 18px primary-end mix-sm outer wash（3rd layer）
+   ③ light .date-quick-btn.active:hover
+       bg: solid primary (継承) → linear-gradient(135deg, primary, primary-end)
+       既存: ring (mix-soft) + 14px primary mix-xl + inset 上端白光沢 0.24
+       追加: 0 0 22px primary-end mix-md outer wash（4th layer）
+   ④ light .btn-preset:hover
+       既存: 0 2px 6px primary mix-sm
+       追加: 0 0 16px primary-end mix-2xs outer wash（2nd layer）
+   ⑤ dark .date-quick-btn:hover
+       新規 box-shadow 上書き: ring primary-end mix-sm + 14px primary-end mix-sm + 22px primary mix-xs
+   ⑥ dark .date-quick-btn.active
+       bg: solid primary → linear-gradient(135deg, primary, primary-end)
+       新規 box-shadow: 0 2px 6px primary-end mix-xl + 0 0 22px primary mix-sm + inset 上端白光沢 0.22
+   ⑦ dark .date-quick-btn.active:hover
+       bg: linear-gradient(135deg, primary, primary-end) (継承)
+       新規 box-shadow: ring primary-end mix-soft + 14px primary-end mix-xl + 28px primary mix-xs + inset 上端白光沢 0.26
+   ⑧ dark .btn-preset:hover
+       既存: 0 2px 8px primary-end mix-sm + inset 0 1px 0 rgba(255,255,255,0.16)
+       追加: 0 0 22px primary mix-xs（3rd layer outer wash）
+
+   ── カスケード安全 ──
+   末尾配置、selector specificity は基底ルール（line 16142/16153/16163/3818/
+   16225/16231/35728）と完全一致のため last-defined wins。
+   .date-quick-today / .date-quick-pop / :focus-visible / :active 等の
+   独立 modifier セレクタはここで上書きしないため非対象、衝突無し。
+   v23.87 .btn-preset:hover text-shadow / v27.07 inset glassy sheen は別宣言で温存。
+   ============================================================ */
+
+/* ① light .date-quick-btn:hover — 3rd layer lavender outer wash 追加で dual-color halo 化 */
+.date-quick-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-micro), transparent);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transform: translateY(var(--translate-lift-xs));
+}
+
+/* ② light .date-quick-btn.active — bg を brand gradient 化 + 3rd layer lavender outer wash で dual-color halo */
+.date-quick-btn.active {
+  border-color: var(--primary);
+  color: var(--white);
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-snug);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
+/* ③ light .date-quick-btn.active:hover — bg gradient 維持 + 4th layer lavender outer wash で boosted dual-color halo */
+.date-quick-btn.active:hover {
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-soft), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary) var(--mix-xl), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  transform: translateY(var(--translate-lift-sm));
+}
+
+/* ④ light .btn-preset:hover — 2nd layer lavender outer wash 追加で dual-color halo 化 */
+.btn-preset:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ dark .date-quick-btn:hover — primary-end 重心 + primary 補色 3-layer dual-color halo */
+[data-theme="dark"] .date-quick-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑥ dark .date-quick-btn.active — brand gradient bg + primary-end 重心 + primary 補色 dual-color halo */
+[data-theme="dark"] .date-quick-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  border-color: var(--primary-end);
+  color: var(--white);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* ⑦ dark .date-quick-btn.active:hover — bg gradient 維持 + boosted dual-color halo */
+[data-theme="dark"] .date-quick-btn.active:hover {
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-soft), transparent),
+    0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
+    0 0 28px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  transform: translateY(var(--translate-lift-sm));
+}
+
+/* ⑧ dark .btn-preset:hover — 既存 2-layer (primary-end halo + inset white sheen) に primary 補色 3rd layer outer wash 追加 */
+[data-theme="dark"] .btn-preset:hover {
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
