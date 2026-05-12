@@ -49970,3 +49970,93 @@ textarea:focus::placeholder {
     0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
     0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
 }
+
+/* ============================================================
+   v28.70 — チェックボックス + トグルスイッチ family lavender brand 統一
+   tx-cb / sb-check / ev-done-cb / dw-slider の :checked / :indeterminate / ON state を
+   solid primary → diagonal gradient (135deg, primary → primary-end) に格上げ +
+   dual-color (primary inner + primary-end outer) box-shadow halo を獲得。
+   dw-slider の ON 時ノブ ::after にも lavender outer wash を append。
+   v28.60 .bulk-count gradient / v28.61 .btn-primary gradient / v28.66 トースト gradient
+   と統一の brand gradient surface family にチェックボックス + トグル群が合流。
+   既存 v28.24 inset depression（未チェック時 active）は変更なし。
+   ライト/ダーク両対応、layout shift なし。
+   ============================================================ */
+
+/* --- tx-cb (取引テーブル一括選択 cb) --- */
+.tx-cb:checked,
+.tx-cb:indeterminate {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .tx-cb:checked,
+[data-theme="dark"] .tx-cb:indeterminate {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* --- sb-check (予算提案モーダル cb) --- */
+.sb-check:checked {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .sb-check:checked {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* --- ev-done-cb (イベント完了 cb) --- */
+.ev-done-cb:checked {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .ev-done-cb:checked {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  border-color: var(--primary-end);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* --- dw-slider (ダッシュボードウィジェット ON/OFF トグル) --- */
+.dw-item input:checked ~ .dw-slider {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+.dw-item input:checked ~ .dw-slider::after {
+  box-shadow:
+    var(--shadow-toggle),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .dw-item input:checked ~ .dw-slider {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .dw-item input:checked ~ .dw-slider::after {
+  box-shadow:
+    var(--shadow-toggle),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
