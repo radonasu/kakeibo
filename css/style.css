@@ -50783,3 +50783,79 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
     0 0 26px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v28.77: 通知ベルバッジ family lavender brand 統一
+   ------------------------------------------------------------
+   対象（高頻度視認 alert surface）：
+   ① .notif-bell-badge bg — solid danger-text → diagonal gradient
+      (135deg, danger-text → expense-end) + 中央数字に subtle
+      depth text-shadow（expense mix-lg drop）
+   ② @keyframes notif-bell-badge-breath（light）—
+      2-layer halo → 3-layer halo に primary-end (lavender)
+      outer wash 3rd layer append、既存 4.1s breath ループの
+      rest/peak 両フレームで脈動。
+   ③ @keyframes notif-bell-badge-breath-dark（dark）—
+      2-layer → 3-layer に primary（補色）outer wash 3rd layer
+      append し 1 ティア boost。
+
+   v28.40-v28.76 で確立した「typed accent halo + lavender brand
+   outer wash」coexistence 戦略を、サイドバー右上に常時表示される
+   未読件数バッジ（kakeibo PWA 全画面共通の最頻視認 alert surface）
+   にも展開、未読件数が出るたびに 4.1s breath ループで「expense red
+   + lavender brand」の dual-color halo が共鳴する完成形に到達。
+
+   - 既存 line 15715 .notif-bell-badge bg は last-defined-wins で
+     上書き、box-shadow 動的値は line 46166/46181 @keyframes 同名
+     redefine で cascade override（CSS 仕様で後勝ち）。
+   - 既存 directional drop-shadow (0 1px 4px expense mix-4xl) は
+     comma 1 段目で温存し sidebar-bg border との contrast を保持。
+   - layout shift 無し、CSS-only、ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① light .notif-bell-badge bg — diagonal gradient + count text depth */
+.notif-bell-badge {
+  background: linear-gradient(135deg, var(--danger-text) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-lg), transparent);
+}
+
+/* ①-dark .notif-bell-badge bg override — dark では --danger-text と --expense-end
+   が同値 (#fb7185) になり gradient が見えないため、richer なベース色
+   --danger-border (#be123c) を gradient 起点に使い、終端 --expense-end (#fb7185)
+   とのコントラストで diagonal gradient を視認可能化。text-shadow も dark で boost。 */
+[data-theme="dark"] .notif-bell-badge {
+  background: linear-gradient(135deg, var(--danger-border) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent);
+}
+
+/* ② light @keyframes redefine — 3-layer halo with primary-end (lavender) outer wash */
+@keyframes notif-bell-badge-breath {
+  0%, 100% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 5px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+      0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 11px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+      0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  }
+}
+
+/* ③ dark @keyframes redefine — 3-layer halo with primary 補色 outer wash (1-tier boost) */
+@keyframes notif-bell-badge-breath-dark {
+  0%, 100% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 6px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+      0 0 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 4px color-mix(in srgb, var(--expense) var(--mix-4xl), transparent),
+      0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
+      0 0 20px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  }
+}
