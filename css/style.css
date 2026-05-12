@@ -50859,3 +50859,130 @@ input[type="search"]::-webkit-search-cancel-button:hover {
       0 0 20px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
   }
 }
+
+/* ============================================================
+   v28.78: ボトムナビ + サイドバー未読件数バッジ family lavender brand 統一
+   ------------------------------------------------------------
+   v28.77 (.notif-bell-badge) で確立した「diagonal gradient bg +
+   typed text-shadow depth + 多層 lavender halo breath」brand
+   family を、kakeibo PWA に存在する残り 2 つの主要アラート系
+   未読件数バッジ surface へ展開し、count badge 3 系統
+   (notif-bell + bottom-nav + sidebar nav) が完全に lavender
+   brand family 統一を達成するマイルストーン。
+
+   対象（高頻度視認 alert surface）：
+   ① .bottom-nav-badge — モバイルボトムナビ右上の未読件数バッジ
+      bg: solid expense → diagonal gradient
+      (light: expense → expense-end / dark: danger-border → expense-end)
+      + 中央数字に subtle expense mix-md depth text-shadow
+   ② .nav-badge — サイドバーメニュー右の未読件数バッジ
+      bg: solid danger-text → diagonal gradient
+      (light: danger-text → expense-end / dark: danger-border → expense-end)
+      + 中央数字に subtle expense mix-lg depth text-shadow
+   ③ @keyframes bottom-nav-badge-breath / -dark — 1-layer halo →
+      2-layer halo に primary-end (light) / primary (dark 補色)
+      outer wash 2nd layer append、既存 3.3s breath ループ脈動。
+   ④ @keyframes nav-badge-rest-breath / -dark — 1-layer halo →
+      2-layer halo に primary-end (light) / primary (dark 補色)
+      outer wash 2nd layer append、既存 3.5s breath ループ脈動。
+
+   - dark 1 ティア boost: primary 補色 outer wash の intensity を
+     light primary-end mix-2xs/xs → dark primary mix-2xs/sm に
+     微 boost、既存 expense typed halo の brightness 差 (mix-md/lg)
+     と合わせ「dark で halo が呼吸して見える」コントラスト確保。
+   - dark で --expense / --expense-end / --danger-text が全て
+     #fb7185 同値になる問題は v28.77 と同じく --danger-border
+     (#be123c) を gradient 起点に使い回避。
+   - 既存 line 5182 .bottom-nav-badge bg / line 15621 .nav-badge bg
+     は last-defined-wins で上書き、box-shadow 動的値は line 46127/
+     46135/46147/46154 @keyframes 同名 redefine で cascade override。
+   - .bottom-nav-badge は既存 nav-badge-pop (transform/opacity 入場)
+     と独立 property レイヤーで衝突なく合流。
+   - layout shift 無し、CSS-only、ライト/ダーク両対応。
+   ============================================================ */
+
+/* ① light .bottom-nav-badge bg — diagonal gradient + count text depth */
+.bottom-nav-badge {
+  background: linear-gradient(135deg, var(--expense) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-md), transparent);
+}
+
+/* ①-dark — dark では --expense / --expense-end が同値 (#fb7185) になり
+   gradient が見えないため --danger-border (#be123c) を gradient 起点に */
+[data-theme="dark"] .bottom-nav-badge {
+  background: linear-gradient(135deg, var(--danger-border) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent);
+}
+
+/* ② light .nav-badge bg — diagonal gradient + count text depth */
+.nav-badge {
+  background: linear-gradient(135deg, var(--danger-text) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense) var(--mix-lg), transparent);
+}
+
+/* ②-dark — dark では --danger-text / --expense-end が同値 (#fb7185) になるため
+   --danger-border (#be123c) を gradient 起点に */
+[data-theme="dark"] .nav-badge {
+  background: linear-gradient(135deg, var(--danger-border) 0%, var(--expense-end) 100%);
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent);
+}
+
+/* ③ light @keyframes bottom-nav-badge-breath redefine — 2-layer halo
+   with primary-end (lavender) outer wash 2nd layer */
+@keyframes bottom-nav-badge-breath {
+  0%, 100% {
+    box-shadow:
+      0 0 5px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+      0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 11px color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+      0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  }
+}
+
+/* ③-dark @keyframes bottom-nav-badge-breath-dark redefine — 2-layer halo
+   with primary (補色) outer wash 2nd layer (1-tier boost) */
+@keyframes bottom-nav-badge-breath-dark {
+  0%, 100% {
+    box-shadow:
+      0 0 6px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+      0 0 12px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 12px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
+      0 0 20px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  }
+}
+
+/* ④ light @keyframes nav-badge-rest-breath redefine — 2-layer halo
+   with primary-end (lavender) outer wash 2nd layer */
+@keyframes nav-badge-rest-breath {
+  0%, 100% {
+    box-shadow:
+      0 0 6px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+      0 0 11px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+      0 0 19px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  }
+}
+
+/* ④-dark @keyframes nav-badge-rest-breath-dark redefine — 2-layer halo
+   with primary (補色) outer wash 2nd layer (1-tier boost) */
+@keyframes nav-badge-rest-breath-dark {
+  0%, 100% {
+    box-shadow:
+      0 0 7px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+      0 0 13px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 13px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent),
+      0 0 21px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  }
+}
