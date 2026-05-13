@@ -51943,3 +51943,141 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 2px 12px color-mix(in srgb, var(--tc, var(--primary-end)) var(--mix-md), transparent),
     0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* =================================================================
+ * v28.88 — カード内副金額/補助テキスト hover 系 lavender brand 統一
+ * -----------------------------------------------------------------
+ * v28.43 で大型金額 (asset-balance/debt-balance/goal-saved/ct-stat-value)、
+ * v28.86 で 16 カード名 (card-name family) に投入した「typed inner halo
+ * + lavender (--primary-end) outer wash」dual-color text-shadow を、
+ * カード内部の「副金額・補助テキスト」7 系統にも展開する。
+ *
+ *   1. .sub-card:hover .sub-card-amount   (サブスクカード月額)
+ *   2. .ch-card:hover .ch-progress-pct    (チャレンジ達成率%)
+ *   3. .ch-card:hover .ch-progress-label  (チャレンジ ¥X / ¥Y ラベル)
+ *   4. .debt-card:hover .debt-balance-meta (負債利率/残月数等の補助)
+ *   5. .asset-card:hover .asset-balance-jpy (資産 JPY 換算)
+ *   6. .asset-card:hover .asset-balance-delta.up   (資産変動 + 値)
+ *   7. .asset-card:hover .asset-balance-delta.down (資産変動 − 値)
+ *
+ * 戦略：既存 1-layer (typed accent inner halo) → 2-layer (typed inner
+ * + primary-end outer wash, dark は primary 補色 outer wash) に拡張。
+ * text-shadow property のみ EOF last-defined-wins で redefine し、
+ * 既存 color / filter / transition / box-shadow には触らない最小
+ * サージカル戦略。これにより大型金額 (v28.43) + カード名 (v28.86)
+ * + 副金額/補助 (v28.88) の 3 層全てで lavender brand 共鳴が成立する。
+ * ============================================================== */
+
+/* ① light .sub-card:hover .sub-card-amount — dual-color halo
+ *    既存: 8px sub-accent mix-sm
+ *    新規: + 14px primary-end mix-2xs outer wash */
+.sub-card:hover .sub-card-amount {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--sub-accent, var(--primary))  var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end)                 var(--mix-2xs), transparent);
+}
+
+/* ② dark .sub-card:hover .sub-card-amount — dual-color halo
+ *    既存: 10px sub-accent fallback primary-end mix-md
+ *    新規: + 16px primary (補色) mix-2xs outer wash */
+[data-theme="dark"] .sub-card:hover .sub-card-amount {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)                        var(--mix-2xs), transparent);
+}
+
+/* ③ light .ch-card:hover .ch-progress-pct — dual-color halo */
+.ch-card:hover .ch-progress-pct {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end)               var(--mix-2xs), transparent);
+}
+
+/* ④ dark .ch-card:hover .ch-progress-pct — dual-color halo */
+[data-theme="dark"] .ch-card:hover .ch-progress-pct {
+  color: var(--ch-accent, var(--primary-end));
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)                       var(--mix-2xs), transparent);
+}
+
+/* ⑤ light .ch-card:hover .ch-progress-label — dual-color halo */
+.ch-card:hover .ch-progress-label {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end)               var(--mix-2xs), transparent);
+}
+
+/* ⑥ dark .ch-card:hover .ch-progress-label — dual-color halo */
+[data-theme="dark"] .ch-card:hover .ch-progress-label {
+  color: var(--ch-accent, var(--primary-end));
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)                       var(--mix-2xs), transparent);
+}
+
+/* ⑦ light .debt-card:hover .debt-balance-meta — dual-color halo
+ *    既存: 8px primary mix-sm（inner は brand 同色のため outer は
+ *    primary-end で「primary → primary-end」brand gradient halo に） */
+.debt-card:hover .debt-balance-meta {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--primary)     var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑧ dark .debt-card:hover .debt-balance-meta — dual-color halo */
+[data-theme="dark"] .debt-card:hover .debt-balance-meta {
+  color: var(--primary-end);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)     var(--mix-2xs), transparent);
+}
+
+/* ⑨ light .asset-card:hover .asset-balance-jpy — dual-color halo */
+.asset-card:hover .asset-balance-jpy {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--primary)     var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑩ dark .asset-card:hover .asset-balance-jpy — dual-color halo */
+[data-theme="dark"] .asset-card:hover .asset-balance-jpy {
+  color: var(--primary-end);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)     var(--mix-2xs), transparent);
+}
+
+/* ⑪ light .asset-card:hover .asset-balance-delta.up — dual-color halo
+ *    既存: 8px success mix-sm。success (income green) + lavender の
+ *    対比 dual-color に拡張 (v28.81 success/info-type dual-color と整合) */
+.asset-card:hover .asset-balance-delta.up {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--success)     var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑫ dark .asset-card:hover .asset-balance-delta.up — dual-color halo */
+[data-theme="dark"] .asset-card:hover .asset-balance-delta.up {
+  color: var(--income-end);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--income-end) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)    var(--mix-2xs), transparent);
+}
+
+/* ⑬ light .asset-card:hover .asset-balance-delta.down — dual-color halo
+ *    既存: 8px danger-text mix-sm。danger-text (expense red) + lavender
+ *    の対比 dual-color に拡張 (v28.81 danger-type と整合) */
+.asset-card:hover .asset-balance-delta.down {
+  text-shadow:
+    0 0 8px  color-mix(in srgb, var(--danger-text) var(--mix-sm),  transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑭ dark .asset-card:hover .asset-balance-delta.down — dual-color halo */
+[data-theme="dark"] .asset-card:hover .asset-balance-delta.down {
+  color: var(--expense-end);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md),  transparent),
+    0 0 16px color-mix(in srgb, var(--primary)     var(--mix-2xs), transparent);
+}
