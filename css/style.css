@@ -53683,3 +53683,68 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent),
     0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v28.99 Sprint #1291: 横スクロール strip edge fade UX hint
+   ============================================================
+   `scrollbar-width: none` で意図的にスクロールバーを隠している
+   横スクロール strip 2 系統 (.section-tabs / .tx-tag-filter-row)
+   に CSS mask-image による edge fade を投入し、ユーザーに
+   「水平方向にもっとコンテンツがある」UX hint を獲得。
+
+   v28.40-v28.98 で進めてきた lavender brand box-shadow saturation
+   ではなく、別の design dimension（マスク / 透明化）での視認
+   可能な UX 改善。横スクロール strip 端で内容が「フェードして消える」
+   ことで、ユーザーに対し「この方向にスクロール可能なコンテンツがある」
+   ことを示唆する canonical UX パターン（Material Design / Apple HIG
+   採用）。
+
+   設計:
+   ① .section-tabs（sticky 全ページ最上部タブ strip、padding 0 sp-8 = 32px）
+      mask-image: linear-gradient(to right, transparent 0, black 24px,
+        black calc(100% - 24px), transparent 100%)
+      - 24px fade region は padding 32px 内に収まるため、初期スクロール
+        位置（scroll-left=0）では全タブが完全不透明で表示される。
+      - ユーザーが右にスクロール → 左端タブが 24px fade region に進入し
+        徐々に透明化 → 「左にもっとコンテンツがある」hint 発火。
+      - sticky 位置・flex container・box-shadow（外側 fade region 外）
+        は完全保持。
+   ② .tx-tag-filter-row（取引一覧画面タグフィルター strip、padding 0 sp-4 = 16px）
+      mask-image: linear-gradient(to right, transparent 0, black 16px,
+        black calc(100% - 16px), transparent 100%)
+      - 16px fade region が padding 16px に正確に一致、初期位置で全
+        chip が完全不透明、スクロール時のみ端で透明化。
+      - border + border-radius + box-shadow（border-box 外の shadow は
+        mask 影響外）は完全保持、カード型 strip 識別性に変化なし。
+
+   ライト/ダーク両対応（mask-image はカラー非依存、theme cascade 不要）。
+   prefers-reduced-motion 影響なし（アニメーションではなく static マスク）。
+   layout shift なし、JS / HTML 変更なし、CSS-only。
+   -webkit-mask-image を併記し WebKit 古バージョン互換。
+   ============================================================ */
+
+.section-tabs {
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%);
+  mask-image: linear-gradient(to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%);
+}
+
+.tx-tag-filter-row {
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0,
+    black 16px,
+    black calc(100% - 16px),
+    transparent 100%);
+  mask-image: linear-gradient(to right,
+    transparent 0,
+    black 16px,
+    black calc(100% - 16px),
+    transparent 100%);
+}
