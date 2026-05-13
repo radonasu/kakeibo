@@ -51419,3 +51419,77 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 3px 0 0 var(--expense-end),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.84 Sprint #1276 (2026-05-13)
+   モーダルフッター top edge に lavender brand gradient accent line 獲得
+   — v28.48 で .modal-header:not(.sim-modal-header)::after に投入した
+     primary→primary-end→primary の 90deg 5-stop gradient pill を、
+     対称位置の .modal-footer::before にも追加し、モーダル上下の border
+     エッジが lavender brand accent strip でフレームされる完成形に到達。
+   ── 既存状態 ──
+   .modal-footer は line 3671 base (border-top + bg) + line 20128
+   (border-top-color に primary mix-xs tint) + line 42796 (box-shadow
+   0 -3px 10px black-08 で subtle 上方向 lift) の 3-layer。border-top
+   は単色 primary tint のみで、modal-header の 5-stop gradient pill
+   との対称性が欠落していた（モーダル UI のフレーム上端は鮮明な
+   brand accent / 下端は控えめ単色 tint のアンバランス）。
+   ── 本スプリント投入 ──
+   .modal-footer に position:relative + ::before で 5-stop gradient pill
+   accent を border-top 真上 (top: calc(-1 * var(--bw-thin))) に重畳。
+   light: 2px height / opacity 0.7 / 中央 primary-end mix-lg、両端
+   primary mix-md（modal-header と完全同値）。
+   dark: 2.5px height / opacity 0.95 / 中央 primary-end mix-xl、両側
+   primary-end mix-md（暗背景で lavender 際立つ全層 lavender 統一）。
+   ── 効果 ──
+   モーダル開閉時、上下両エッジに lavender brand pill が同時に光る
+   coordinated brand frame が完成。v28.40-v28.83 で確立した lavender
+   brand family の中で、モーダル surface が「header bottom + body
+   inputs + footer top + close btn」の 4 layer 全てで lavender brand
+   共鳴を獲得する完成形マイルストーン。
+   ── カスケード安全 ──
+   line 3671 base / line 20128 border-tint / line 42796 box-shadow と
+   独立した ::before pseudo / position:relative 追加のため衝突無し。
+   .sim-modal-footer は HTML 上未使用のため :not() 除外不要。
+   ============================================================ */
+.modal-footer {
+  position: relative;
+}
+.modal-footer::before {
+  content: "";
+  position: absolute;
+  left: var(--sp-6);
+  right: var(--sp-6);
+  top: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="dark"] .modal-footer::before {
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+}
+
+/* モバイル時は .modal-footer padding が sp-4 に絞られる (line 5102) ため、
+   gradient 両端 inset も sp-4 に揃え、左右余白に対応 */
+@media (max-width: 640px) {
+  .modal-footer::before {
+    left: var(--sp-4);
+    right: var(--sp-4);
+  }
+}
