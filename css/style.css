@@ -6797,7 +6797,13 @@ body {
   z-index: var(--z-sidebar-overlay);
   background: var(--scrim);
   opacity: 0;
-  transition: opacity var(--dur-mid) var(--ease-out);
+  /* v29.00: 単なる scrim → glassmorphism backdrop blur へ格上げ。
+     開閉時に背景が 6px ブラー + saturation で「奥に退く」深度感を獲得。 */
+  -webkit-backdrop-filter: blur(0) saturate(1);
+          backdrop-filter: blur(0) saturate(1);
+  transition: opacity var(--dur-mid) var(--ease-out),
+              backdrop-filter var(--dur-gentle) var(--ease-out),
+              -webkit-backdrop-filter var(--dur-gentle) var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
 #sidebar-overlay.active {
@@ -6805,6 +6811,8 @@ body {
 }
 #sidebar-overlay.visible {
   opacity: 1;
+  -webkit-backdrop-filter: blur(6px) saturate(var(--saturate-subtle));
+          backdrop-filter: blur(6px) saturate(var(--saturate-subtle));
 }
 
 /* (モバイルフルスクリーンモーダルは上の480pxブロックで position:fixed; inset:0 を適用) */
@@ -16717,13 +16725,21 @@ details[open] .debt-archive-summary::before { transform: rotate(var(--rotate-che
   background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-2));
 }
 
-/* ページ遷移アニメーション強化 (v7.7) */
+/* ページ遷移アニメーション強化 (v7.7 / v29.00 で深度感再注入) */
 @keyframes page-fade-in {
-  /* v22.67: scale削除・translateYのみでよりクリーンなページ遷移に */
-  from { opacity: 0; transform: translateY(var(--enter-y-xs)); }
-  to   { opacity: 1; transform: none; }
+  /* v29.00: 5px→10px slide + 0.992→1 scale-up + 4px→0 focus-pull blur で
+     iOS-like depth-of-field 入場へ格上げ。duration 0.22s→0.36s で felt time を確保。 */
+  from { opacity: 0; transform: translateY(var(--enter-y-base)) scale(0.992); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: none; }
 }
-.page-enter { animation: page-fade-in var(--dur-appear) var(--ease-spring) both; }
+.page-enter { animation: page-fade-in 0.36s var(--ease-spring) both; }
+@media (prefers-reduced-motion: reduce) {
+  @keyframes page-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .page-enter { animation-duration: var(--dur-fast); }
+}
 
 /* ナビボタン リップルエフェクト */
 .nav-item, .bottom-nav-item {
