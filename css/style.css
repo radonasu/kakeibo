@@ -52303,3 +52303,118 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 3px 0 0 var(--ci-ev-accent, var(--primary-end)),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* =================================================================
+ * v28.91 — サマリーミニ (.smi-item) hover lavender brand 統一
+ * -----------------------------------------------------------------
+ * カレンダー / 取引タブの最上部に常時表示される収支ミニサマリー
+ * (.smi-income / .smi-expense / .smi-balance) は v22.67〜v23.29 で
+ * typed (income/expense/primary) 単色 halo + inset 3px accent bar の
+ * box-shadow を獲得済みだが、v28.40〜v28.90 で展開した lavender
+ * (--primary-end) accent dual-color halo family にはまだ未合流。
+ *
+ * v28.91 では、最頻接触される top-of-page サマリーバンドの hover
+ * surface 全てに lavender outer wash 末尾 layer を append し
+ * dual-color brand halo family に合流させる。各 typed identity
+ * (income / expense / primary) inner halo + inset 3px accent bar は
+ * 完全保持しつつ、末尾 layer のみ追加することで last-defined-wins
+ * 機構で coexistence。
+ *
+ * 戦略: box-shadow property のみ EOF redefine、color / filter /
+ *       transform / background 等 他 property には触らない最小サージカル。
+ *
+ * light: typed inner halo + 末尾 `0 0 16-18px primary-end mix-xs` outer wash
+ * dark:  typed inner halo + 末尾 `0 0 18-20px primary mix-xs` outer wash
+ *
+ * 対象 (10 selector group):
+ *   ① light .smi-income:hover    (2-layer → 3-layer halo)
+ *   ② light .smi-expense:hover   (2-layer → 3-layer halo)
+ *   ③ light .smi-balance:hover                                  (1-layer → 2-layer)
+ *   ④ light .smi-balance:has(.smi-amount.income):hover          (1-layer → 2-layer)
+ *   ⑤ light .smi-balance:has(.smi-amount.expense):hover         (1-layer → 2-layer)
+ *   ⑥ dark  .smi-income:hover    (2-layer → 3-layer halo)
+ *   ⑦ dark  .smi-expense:hover   (2-layer → 3-layer halo)
+ *   ⑧ dark  .smi-balance:hover                                  (1-layer → 2-layer)
+ *   ⑨ dark  .smi-balance:has(.smi-amount.income):hover          (1-layer → 2-layer)
+ *   ⑩ dark  .smi-balance:has(.smi-amount.expense):hover         (1-layer → 2-layer)
+ * ============================================================== */
+
+/* ① light .smi-income:hover — typed income halo + inset bar → + lavender outer wash */
+.smi-income:hover {
+  filter: brightness(1.04);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--income),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ② light .smi-expense:hover — typed expense halo + inset bar → + lavender outer wash */
+.smi-expense:hover {
+  filter: brightness(1.04);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--expense),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ③ light .smi-balance:hover — primary halo → + lavender outer wash dual-layer */
+.smi-balance:hover {
+  filter: brightness(1.04);
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ④ light .smi-balance:has(.smi-amount.income):hover — income halo → + lavender outer wash */
+.smi-balance:has(.smi-amount.income):hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑤ light .smi-balance:has(.smi-amount.expense):hover — expense halo → + lavender outer wash */
+.smi-balance:has(.smi-amount.expense):hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑥ dark .smi-income:hover — income-end halo + inset bar → + lavender outer wash */
+[data-theme="dark"] .smi-income:hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--income-end),
+    0 0 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑦ dark .smi-expense:hover — expense halo + inset expense-end bar → + lavender outer wash */
+[data-theme="dark"] .smi-expense:hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    inset 3px 0 0 var(--expense-end),
+    0 0 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑧ dark .smi-balance:hover — primary-end halo → + lavender (primary) outer wash dual-layer */
+[data-theme="dark"] .smi-balance:hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑨ dark .smi-balance:has(.smi-amount.income):hover — income-end halo → + lavender outer wash */
+[data-theme="dark"] .smi-balance:has(.smi-amount.income):hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--income-end) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ⑩ dark .smi-balance:has(.smi-amount.expense):hover — expense halo → + lavender outer wash */
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense):hover {
+  box-shadow:
+    0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
