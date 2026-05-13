@@ -51622,3 +51622,235 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     filter: none;
   }
 }
+
+/* ============================================================
+   v28.86 Sprint #1278 (2026-05-13)
+   カード/リストアイテム名 hover text-shadow lavender brand 統一 —
+   16 主要カード名 hover surface に第 2 layer (lavender outer wash) を
+   append し dual-color text halo family に合流。
+   ── 既存状態 ──
+   家計簿全タブの主役級カード hover で「カード名テキスト」が typed
+   accent color に色変化 + single-color text-shadow glow するパターン
+   が広範に存在（line 20425-21137 + line 35973-36022 + line 24309-25500
+   等で 16 family × light+dark = 32 rule 群）。
+   各カードの typed accent (debt-accent / asset-accent / pt-accent /
+   sub-accent / ci-ev-accent / opp-accent / ch-accent / goal-accent /
+   wl-accent / ev-accent / cat-clr / 等) で単色 mix-sm/8px (light) や
+   mix-md/10px (dark, primary-end fallback) の halo のみ。
+   v28.75 でこれら 7 大型カード self の box-shadow hover に lavender
+   outer wash を投入したが、子要素「カード名テキスト」の text-shadow
+   は単色のまま、カード hover surface 内で「カード本体は brand 共鳴 /
+   名前テキストは typed 単色」の階層差が残存。
+   ── 本スプリント投入 ──
+   ① 16 light hover .card-name text-shadow を「typed accent inner halo
+      + primary-end (lavender) outer wash」dual-color halo に拡張。
+      既存 8px typed mix-sm に 14-18px primary-end mix-2xs/nano を append。
+   ② 16 dark hover .card-name text-shadow を「typed-end inner halo
+      + primary (補色) outer wash」対称 dual-color halo に拡張。
+      既存 10px typed-end mix-md に 16-20px primary mix-2xs/xs を append。
+   ③ color プロパティは redefine せず、既存 selector の color 宣言を
+      CSS cascade で保持（last-defined-wins は property 単位なので
+      text-shadow のみ上書きされる）。
+   ── 対象 16 family ──
+   .rc-item / .debt-card / .asset-card / .pt-card / .sub-card /
+   .ci-event-item / .opp-card / .ch-card / .goal-card / .cat-card /
+   .wl-card / .ev-card / .budget-item (+over variant) /
+   .pt-widget-item / .sub-widget-item (+urgent +soon variant)
+   ── 効果 ──
+   v28.75 大型カード self box-shadow の lavender brand 共鳴を、
+   その内部「カード名テキスト」text-shadow にも拡張、カード hover
+   surface 全体（self frame + name text の 2 層）で lavender brand
+   共鳴が成立。家計簿 PWA の全カード/リストアイテムで「hover で
+   typed identity + lavender brand が同時に光る」coordinated text
+   glow が完成形に到達するマイルストーン。
+   ── カスケード安全 ──
+   既存 line 20425-21137 (light color+text-shadow), line 24309-25500
+   (light text-shadow append), line 35973-36568 (dark color+text-shadow)
+   を末尾で text-shadow のみ last-defined-wins redefine。color/filter
+   は触らない。CSS-only、JS変更なし、HTML変更なし、ライト/ダーク両対応、
+   layout shift なし。
+   ============================================================ */
+
+/* ① 16 light hover .card-name dual-color text-shadow */
+.rc-item:hover .rc-item-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.debt-card:hover .debt-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.asset-card:hover .asset-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.pt-card:hover .pt-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-card:hover .sub-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ci-event-item:hover .ci-event-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--ci-ev-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.opp-card:hover .opp-title {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ch-card:hover .ch-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.goal-card:hover .goal-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.cat-card:hover .cat-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.wl-card:hover .wl-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ev-card:hover .ev-card-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.budget-item:hover .budget-cat-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.budget-item:has(.budget-fill.over):hover .budget-cat-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.pt-widget-item:hover .pt-widget-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-widget-item:hover .sub-widget-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-widget-item.sub-urgent:hover .sub-widget-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-widget-item.sub-soon:hover .sub-widget-name {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--warning) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② 16 dark hover .card-name dual-color text-shadow (typed-end + primary outer) */
+[data-theme="dark"] .rc-item:hover .rc-item-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .debt-card:hover .debt-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .asset-card:hover .asset-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .pt-card:hover .pt-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .sub-card:hover .sub-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ci-event-item:hover .ci-event-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--ci-ev-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .opp-card:hover .opp-title {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ch-card:hover .ch-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .goal-card:hover .goal-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .cat-card:hover .cat-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .wl-card:hover .wl-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ev-card:hover .ev-card-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .budget-item:hover .budget-cat-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .budget-item:has(.budget-fill.over):hover .budget-cat-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .pt-widget-item:hover .pt-widget-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .sub-widget-item:hover .sub-widget-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .sub-widget-item.sub-urgent:hover .sub-widget-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .sub-widget-item.sub-soon:hover .sub-widget-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
