@@ -53553,3 +53553,133 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
     0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v28.98 Sprint #1290: モバイル :active タップ parity 拡張 第4弾
+   — 残り 6 系統 (.nav-item / .cat-chip / .tx-tag-chip /
+   .tx-tag-filter-chip / .tx-tag-filter-all /
+   .cal-cell:not(.cal-empty)) × light+dark = 12 :active redefinition。
+   v28.94 大型カード 12 / v28.95 二次 surface 4 cluster 40 /
+   v28.96 ボタン+section-tab+modal-close 14 の流れの最終回収。
+
+   - .nav-item:active (サイドバー常時 dark surface, light は black
+     mix-lg inset / dark は black mix-2xl inset。末尾に primary-end
+     (light) / primary (dark, 補色) mix-2xs 14-16px outer wash を append)
+   - .cat-chip:active (取引モーダルカテゴリチップ, 既存 black mix-sm
+     inset (light) / black mix-md inset (dark)。末尾に lavender outer
+     wash append)
+   - .tx-tag-chip:active (取引行タグチップ, 既存 primary mix-sm inset
+     (light) / primary-end mix-sm inset (dark)。末尾に lavender outer
+     wash append)
+   - .tx-tag-filter-chip:active / .tx-tag-filter-all:active (取引一覧
+     タグフィルター, 既存 primary mix-sm inset (light) / primary-end
+     mix-sm inset (dark)。末尾に lavender outer wash append)
+   - .cal-cell:active:not(.cal-empty) (カレンダーセル — モバイルで
+     最頻タップされる grid surface, 既存 primary mix-sm inset (light) /
+     primary-end mix-md inset (dark)。末尾に lavender outer wash append、
+     インテンシティを 1 ティア boost (16-18px))
+
+   既存 inset depression + transform + filter + background は完全保持し、
+   box-shadow property のみ EOF last-defined-wins で redefine する最小
+   サージカル戦略。CSS-only、JS / HTML 変更なし、ライト/ダーク両対応、
+   layout shift なし。totalRules +12。
+   ============================================================ */
+
+/* ── light :active (6 selector group) ── */
+/* (88) light .nav-item:active — サイドバー常時 dark surface */
+.nav-item:active {
+  background: var(--on-dark-strong);
+  transform: translateY(var(--translate-press-down));
+  filter: brightness(var(--brightness-press-strong));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, black var(--mix-lg), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (89) light .cat-chip:active */
+.cat-chip:active {
+  transform: translateY(var(--translate-press-down));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (90) light .tx-tag-chip:active */
+.tx-tag-chip:active {
+  transform: scale(var(--scale-rest));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (91) light .tx-tag-filter-chip:active */
+.tx-tag-filter-chip:active {
+  transform: scale(var(--scale-chip-active));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (92) light .tx-tag-filter-all:active */
+.tx-tag-filter-all:active {
+  transform: scale(var(--scale-chip-active));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (93) light .cal-cell:active:not(.cal-empty) — モバイル最頻タップ surface, 1 ティア boost */
+.cal-cell:active:not(.cal-empty) {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-hover));
+  filter: brightness(var(--brightness-press-mild));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ── dark :active (6 selector group) — primary-end inset 重心 + primary 補色 outer wash ── */
+/* (94) dark .nav-item:active */
+[data-theme="dark"] .nav-item:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, black var(--mix-2xl), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (95) dark .cat-chip:active */
+[data-theme="dark"] .cat-chip:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (96) dark .tx-tag-chip:active */
+[data-theme="dark"] .tx-tag-chip:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (97) dark .tx-tag-filter-chip:active */
+[data-theme="dark"] .tx-tag-filter-chip:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (98) dark .tx-tag-filter-all:active */
+[data-theme="dark"] .tx-tag-filter-all:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (99) dark .cal-cell:active:not(.cal-empty) — 1 ティア boost */
+[data-theme="dark"] .cal-cell:active:not(.cal-empty) {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
