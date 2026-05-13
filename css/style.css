@@ -52633,3 +52633,133 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 3px 0 0 rgba(255, 255, 255, 0.65),
     0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* =============================================================
+ * v28.93 (2026-05-13) — 取引一覧 row action button + テーブルソート
+ *   family hover lavender brand 統一
+ * -----------------------------------------------------------
+ * 対象 (5 selector group × light + dark = 10 redefinition):
+ *   ① light .edit-tx:hover         (1-layer ring → 2-layer halo)
+ *      — primary ring inner + primary-end outer wash
+ *   ② light .delete-tx:hover       (1-layer ring → 2-layer halo)
+ *      — danger-text ring inner + primary-end outer wash
+ *   ③ light .dup-tx:hover          (1-layer ring → 2-layer halo)
+ *      — warning ring inner + primary-end outer wash
+ *   ④ light .tx-th-sort:hover      (1-layer focus-ring → 2-layer halo)
+ *      — focus-ring inner + primary-end outer wash
+ *   ⑤ light .tx-sort-badge:hover   (1-layer ring → 2-layer halo)
+ *      — primary mix-xs ring inner + primary-end outer wash
+ *   ⑥ dark  .edit-tx:hover         (1-layer ring → 2-layer halo)
+ *      — primary mix-mid ring inner + primary-end mix-sm outer wash
+ *   ⑦ dark  .delete-tx:hover       (1-layer ring → 2-layer halo)
+ *      — danger-text mix-mid ring inner + primary-end mix-sm outer wash
+ *   ⑧ dark  .dup-tx:hover          (1-layer ring → 2-layer halo)
+ *      — warning mix-lg ring inner + primary-end mix-sm outer wash
+ *   ⑨ dark  .tx-th-sort:hover      (no existing box-shadow → fresh)
+ *      — focus-ring inner + primary-end mix-sm outer wash
+ *   ⑩ dark  .tx-sort-badge:hover   (no existing box-shadow → fresh)
+ *      — primary-end mix-sm ring inner + primary mix-xs outer wash
+ *
+ * 戦略: 既存 box-shadow に末尾 layer のみ append、color / bg /
+ *       filter / transform 等は触らない最小サージカル。typed identity
+ *       (primary / danger-text / warning) inner halo は完全保持し
+ *       末尾に lavender (primary-end) outer wash を append し
+ *       dual-color brand halo family に合流させる。
+ *
+ * light: 既存 typed inner + 末尾 `0 0 14px primary-end mix-2xs` outer wash
+ * dark:  既存 typed inner + 末尾 `0 0 16px primary-end mix-xs` outer wash
+ *        (tx-th-sort/tx-sort-badge dark は fresh definition)
+ *
+ * 取引一覧画面で最も頻繁にタップされる 5 surface
+ * (row action 3 icon + sort header + sort reset badge) が
+ * v28.40-v28.92 lavender brand family に正式合流、取引一覧画面
+ * 全体で lavender brand 共鳴が成立するマイルストーン。
+ * ============================================================== */
+
+/* ① light .edit-tx:hover — primary ring inner + primary-end outer wash */
+.edit-tx:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), var(--bg)) !important;
+  color: var(--primary);
+  transform: scale(var(--scale-icon-hover));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  opacity: 1;
+}
+
+/* ② light .delete-tx:hover — danger-text ring inner + primary-end outer wash */
+.delete-tx:hover {
+  background: var(--danger-bg) !important;
+  color: var(--danger-text);
+  transform: scale(var(--scale-icon-hover));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  opacity: 1;
+}
+
+/* ③ light .dup-tx:hover — warning ring inner + primary-end outer wash */
+.dup-tx:hover {
+  background: var(--warning-bg) !important;
+  transform: scale(var(--scale-icon-hover));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-mid), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  opacity: 1;
+}
+
+/* ④ light .tx-th-sort:hover — focus-ring inner + primary-end outer wash */
+.tx-th-sort:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ light .tx-sort-badge:hover — primary mix-xs ring inner + primary-end outer wash */
+.tx-sort-badge:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  transform: scale(var(--scale-hover-md));
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑥ dark .edit-tx:hover — primary mix-mid ring + primary-end mix-sm outer wash */
+[data-theme="dark"] .edit-tx:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) !important;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-mid), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑦ dark .delete-tx:hover — danger-text mix-mid ring + primary-end mix-sm outer wash */
+[data-theme="dark"] .delete-tx:hover {
+  background: var(--danger-bg) !important;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-mid), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑧ dark .dup-tx:hover — warning mix-lg ring + primary-end mix-sm outer wash */
+[data-theme="dark"] .dup-tx:hover {
+  background: var(--warning-bg) !important;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--warning) var(--mix-lg), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑨ dark .tx-th-sort:hover — fresh: focus-ring inner + primary-end mix-sm outer wash */
+[data-theme="dark"] .tx-th-sort:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑩ dark .tx-sort-badge:hover — fresh: primary-end mix-sm ring inner + primary mix-xs outer wash */
+[data-theme="dark"] .tx-sort-badge:hover {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
