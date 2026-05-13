@@ -53838,3 +53838,99 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .tx-tag-filter-chip {
   scroll-snap-align: start;
 }
+
+/* ============================================================
+   v29.02 Sprint #1294: ページ遷移子要素 stagger cascade entrance
+   ============================================================
+   v29.00 で `@keyframes page-fade-in` を 5px→10px slide + scale-up +
+   blur(4px)→blur(0) の depth-of-field 入場へ格上げした続編。v29.02
+   では `.page-enter` 親に紐付く子要素群を「順次カスケード」で立ち上
+   がらせ、ページ遷移時に内容が「上から順番にせり上がる」iOS-like な
+   sequenced reveal を獲得。
+
+   設計:
+   ① `.page-enter > *` 直下子要素（.page-header / .summary-cards /
+      quickAddSection / .dash-grid / .filter-bar 等）に
+      `@keyframes page-child-stagger-in`（translateY 14px + opacity 0
+      → translateY 0 + opacity 1）を 0.42s var(--ease-spring) で適用。
+      `:nth-child(1..7)` で 0→320ms の段階的 delay、`(n+8)` 以降は
+      350ms に capして「最大遅延」を抑制（極端に長い場合の遅延感を回避）。
+
+   ② `.page-enter .dash-grid > *` ダッシュボードグリッド内子要素にも
+      同 stagger keyframe を適用。dashboard は 10-20 widget が縦積み
+      されるため、最大 cap を 280ms（7 番目以降）、duration 0.38s に
+      絞り、widget が「上から順番にポップイン」する visible cascade
+      を獲得。間隔は親 stagger より 10ms 短い 45ms step。
+
+   ③ `.page-enter .section-content.section-is-active > *` 取引タブ
+      （取引/予算/カテゴリ等）の section-tabs 切替時 active content
+      子要素にも軽量 stagger を投入（duration 0.32s / step 35ms / cap 230ms）。
+      tab 切替頻度が高いためより短く軽い設計。
+
+   ④ prefers-reduced-motion 対応:
+      `@keyframes page-child-stagger-in` を opacity-only fallback に
+      差し替え、duration を var(--dur-fast)（150ms）に短縮、delay は
+      全て 0 にリセット。アクセシビリティ準拠。
+
+   transform / opacity のみ animate するため layout/paint コストは
+   compositor 上で軽量、scroll-snap (v29.01) / mask-image edge fade
+   (v28.99) / page-fade-in (v29.00) と完全独立 coexist。
+   既存 lavender brand box-shadow family (v28.40-v28.98) も完全保持。
+   ============================================================ */
+
+@keyframes page-child-stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter > * {
+  animation: page-child-stagger-in 0.42s var(--ease-spring) both;
+}
+.page-enter > :nth-child(1) { animation-delay: 0ms; }
+.page-enter > :nth-child(2) { animation-delay: 55ms; }
+.page-enter > :nth-child(3) { animation-delay: 110ms; }
+.page-enter > :nth-child(4) { animation-delay: 165ms; }
+.page-enter > :nth-child(5) { animation-delay: 215ms; }
+.page-enter > :nth-child(6) { animation-delay: 265ms; }
+.page-enter > :nth-child(7) { animation-delay: 320ms; }
+.page-enter > :nth-child(n+8) { animation-delay: 350ms; }
+
+.page-enter .dash-grid > * {
+  animation: page-child-stagger-in 0.38s var(--ease-spring) both;
+}
+.page-enter .dash-grid > :nth-child(1) { animation-delay: 50ms; }
+.page-enter .dash-grid > :nth-child(2) { animation-delay: 95ms; }
+.page-enter .dash-grid > :nth-child(3) { animation-delay: 140ms; }
+.page-enter .dash-grid > :nth-child(4) { animation-delay: 185ms; }
+.page-enter .dash-grid > :nth-child(5) { animation-delay: 230ms; }
+.page-enter .dash-grid > :nth-child(6) { animation-delay: 275ms; }
+.page-enter .dash-grid > :nth-child(n+7) { animation-delay: 310ms; }
+
+.page-enter .section-content.section-is-active > * {
+  animation: page-child-stagger-in 0.32s var(--ease-spring) both;
+}
+.page-enter .section-content.section-is-active > :nth-child(1) { animation-delay: 0ms; }
+.page-enter .section-content.section-is-active > :nth-child(2) { animation-delay: 40ms; }
+.page-enter .section-content.section-is-active > :nth-child(3) { animation-delay: 80ms; }
+.page-enter .section-content.section-is-active > :nth-child(4) { animation-delay: 120ms; }
+.page-enter .section-content.section-is-active > :nth-child(5) { animation-delay: 160ms; }
+.page-enter .section-content.section-is-active > :nth-child(n+6) { animation-delay: 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes page-child-stagger-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .page-enter > *,
+  .page-enter .dash-grid > *,
+  .page-enter .section-content.section-is-active > * {
+    animation-duration: var(--dur-fast);
+    animation-delay: 0ms !important;
+  }
+}
