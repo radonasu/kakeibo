@@ -52972,3 +52972,317 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 3px 0 0 var(--primary-end),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.95: 二次 surface 4 cluster :active lavender brand 統一
+   ============================================================
+   v28.94 大型カード/リスト 12 系統 mobile tap parity の続編。
+   v28.81/v28.89/v28.91/v28.92 で :hover に lavender brand を投入した
+   二次 surface 4 cluster (widget-item / smi-item / sum-chip / notif-item)
+   の :active state にも展開し、ホバー経験のないモバイルタップユーザーが
+   初めて lavender brand 体験できる完成形 milestone。
+
+   - widget-item (6 light + 6 dark = 12)  既存 inset 3px accent bar + lavender outer
+   - sum-chip    (8 light + 8 dark = 16)  既存 dual inset depression + lavender outer
+   - smi-item    (5 light + 5 dark = 10)  fresh 定義: typed depression + lavender outer
+   - notif-item  (1 light + 1 dark =  2)  既存 small inset + lavender outer
+   合計 40 :active redefinition。
+
+   light: outer wash = 0 0 14px primary-end mix-2xs
+   dark : outer wash = 0 0 16px primary mix-2xs
+   transform / filter / background / color は完全保持。
+   ============================================================ */
+
+/* ── ① widget-item 6 系統 × light (6) ───────────────────── */
+/* ㉕ light .sub-widget-item:active */
+.sub-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+/* ㉖ light .pt-widget-item:active */
+.pt-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+/* ㉗ light .wish-widget-item:active */
+.wish-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+/* ㉘ light .ch-widget-item:active */
+.ch-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--ch-accent, var(--primary)),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+/* ㉙ light .debt-widget-item:active */
+.debt-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--debt-accent, var(--expense)),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+/* ㉚ light .ev-widget-item:active */
+.ev-widget-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--ev-accent, var(--primary)),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-haze));
+}
+
+/* ── ① widget-item 6 系統 × dark (6) ────────────────────── */
+/* ㉛ dark .sub-widget-item:active */
+[data-theme="dark"] .sub-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㉜ dark .pt-widget-item:active */
+[data-theme="dark"] .pt-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㉝ dark .wish-widget-item:active */
+[data-theme="dark"] .wish-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㉞ dark .ch-widget-item:active */
+[data-theme="dark"] .ch-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--ch-accent, var(--primary-end)),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㉟ dark .debt-widget-item:active */
+[data-theme="dark"] .debt-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--debt-accent, var(--expense-end)),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊱ dark .ev-widget-item:active */
+[data-theme="dark"] .ev-widget-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--ev-accent, var(--primary-end)),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ── ② sum-chip 8 系統 × light (8) ───────────────────────── */
+/* ㊲ light .pt-total:active */
+.pt-total:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊳ light .pt-expiring:active */
+.pt-expiring:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--warning) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊴ light .wl-sum-count:active */
+.wl-sum-count:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊵ light .wl-sum-budget:active */
+.wl-sum-budget:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊶ light .wl-sum-done:active */
+.wl-sum-done:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊷ light .ch-sum-active:active */
+.ch-sum-active:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊸ light .ch-sum-achieved:active */
+.ch-sum-achieved:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* ㊹ light .ch-sum-total:active */
+.ch-sum-total:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── ② sum-chip 8 系統 × dark (8) ──────────────────────── */
+/* ㊺ dark .pt-total:active */
+[data-theme="dark"] .pt-total:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊻ dark .pt-expiring:active */
+[data-theme="dark"] .pt-expiring:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--warning-deep, var(--warning)) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊼ dark .wl-sum-count:active */
+[data-theme="dark"] .wl-sum-count:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊽ dark .wl-sum-budget:active */
+[data-theme="dark"] .wl-sum-budget:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊾ dark .wl-sum-done:active */
+[data-theme="dark"] .wl-sum-done:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* ㊿ dark .ch-sum-active:active */
+[data-theme="dark"] .ch-sum-active:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (51) dark .ch-sum-achieved:active */
+[data-theme="dark"] .ch-sum-achieved:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (52) dark .ch-sum-total:active */
+[data-theme="dark"] .ch-sum-total:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--teal) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ── ③ smi-item 5 系統 × light (5) — fresh :active ──────── */
+/* (53) light .smi-income:active */
+.smi-income:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--income),
+    inset 0 2px 4px color-mix(in srgb, var(--income) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+/* (54) light .smi-expense:active */
+.smi-expense:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--expense),
+    inset 0 2px 4px color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+/* (55) light .smi-balance:active */
+.smi-balance:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+/* (56) light .smi-balance:has(income):active */
+.smi-balance:has(.smi-amount.income):active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (57) light .smi-balance:has(expense):active */
+.smi-balance:has(.smi-amount.expense):active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── ③ smi-item 5 系統 × dark (5) — fresh :active ───────── */
+/* (58) dark .smi-income:active */
+[data-theme="dark"] .smi-income:active {
+  box-shadow:
+    inset 3px 0 0 var(--income-end),
+    inset 0 2px 4px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (59) dark .smi-expense:active */
+[data-theme="dark"] .smi-expense:active {
+  box-shadow:
+    inset 3px 0 0 var(--expense-end),
+    inset 0 2px 4px color-mix(in srgb, var(--expense) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (60) dark .smi-balance:active */
+[data-theme="dark"] .smi-balance:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (61) dark .smi-balance:has(income):active */
+[data-theme="dark"] .smi-balance:has(.smi-amount.income):active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (62) dark .smi-balance:has(expense):active */
+[data-theme="dark"] .smi-balance:has(.smi-amount.expense):active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense) var(--mix-lg), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ── ④ notif-item × light (1) + dark (1) ─────────────────── */
+/* (63) light .notif-item:active */
+.notif-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+/* (64) dark .notif-item:active */
+[data-theme="dark"] .notif-item:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
