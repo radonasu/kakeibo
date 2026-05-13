@@ -52763,3 +52763,212 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
     0 0 20px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v28.94: 大型カード/リスト系 12 系統 :active lavender brand 統一
+   ============================================================
+   モバイルユーザーは hover 状態を経験しないため、:active state (タップ瞬間)
+   が唯一のフィードバック面となる。v28.75/v28.86/v28.90 で :hover に投入した
+   lavender brand outer wash を、対応 12 カード/アイテム families の
+   :active state にも展開し、モバイルタップで「typed identity inset depression
+   + lavender brand outer wash」の dual-color halo が立ち上がる。
+
+   既存 :active = 単層 inset depression (typed-accent mix-sm/mix-md)
+   v28.94 追加 = 末尾 layer に outer wash を append (last-defined-wins)
+   - light: 0 0 14px primary-end mix-2xs
+   - dark : 0 0 16px primary mix-2xs
+   transform / filter は完全保持。
+   ============================================================ */
+
+/* ① light .asset-card:active — asset-accent mix-sm inset + primary-end outer wash */
+.asset-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--asset-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ② light .goal-card:active — goal-accent mix-sm inset + primary-end outer wash */
+.goal-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--goal-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ③ light .sub-card:active — sub-accent mix-sm inset + primary-end outer wash */
+.sub-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--sub-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ④ light .pt-card:active — pt-accent mix-sm inset + primary-end outer wash */
+.pt-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--pt-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑤ light .wl-card:active — wl-accent mix-sm inset + primary-end outer wash */
+.wl-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--wl-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑥ light .ch-card:active — ch-accent mix-sm inset + primary-end outer wash */
+.ch-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--ch-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑦ light .debt-card:active — debt-accent mix-sm inset + primary-end outer wash */
+.debt-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--debt-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑧ light .ev-card:active — ev-accent mix-sm inset + primary-end outer wash */
+.ev-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--ev-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑨ light .opp-card:active — opp-accent mix-sm inset + primary-end outer wash */
+.opp-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--opp-accent, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑩ light .cat-card:active — cat-clr mix-sm inset + primary-end outer wash */
+.cat-card:active {
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--cat-clr, var(--primary)) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-soft));
+}
+
+/* ⑪ light .ci-event-item:active — ci-ev-accent inset 3px accent bar + primary-end outer wash */
+.ci-event-item:active {
+  transform: translateY(var(--translate-press-down)) scale(var(--scale-press-fine));
+  box-shadow:
+    inset 3px 0 0 var(--ci-ev-accent, var(--primary)),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-mist));
+}
+
+/* ⑫ light .rc-item:active — primary inset 3px accent bar + primary-end outer wash */
+.rc-item:active {
+  transform: translateY(var(--translate-press-down));
+  border-color: var(--border);
+  box-shadow:
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(var(--brightness-press-mist));
+}
+
+/* ⑬ dark .asset-card:active — asset-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .asset-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--asset-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑭ dark .goal-card:active — goal-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .goal-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--goal-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑮ dark .sub-card:active — sub-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .sub-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--sub-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑯ dark .pt-card:active — pt-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .pt-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--pt-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑰ dark .wl-card:active — wl-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .wl-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--wl-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑱ dark .ch-card:active — ch-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .ch-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--ch-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑲ dark .debt-card:active — debt-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .debt-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--debt-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑳ dark .ev-card:active — ev-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .ev-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--ev-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ㉑ dark .opp-card:active — opp-accent fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .opp-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--opp-accent, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ㉒ dark .cat-card:active — cat-clr fallback primary-end mix-md inset + primary outer wash */
+[data-theme="dark"] .cat-card:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--cat-clr, var(--primary-end)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ㉓ dark .ci-event-item:active — fresh: ci-ev-accent fallback primary-end inset 3px + primary outer wash */
+[data-theme="dark"] .ci-event-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--ci-ev-accent, var(--primary-end)),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ㉔ dark .rc-item:active — fresh: primary-end inset 3px accent bar + primary outer wash */
+[data-theme="dark"] .rc-item:active {
+  box-shadow:
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
