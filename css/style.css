@@ -53286,3 +53286,121 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.96 — ボタン family + section-tab + modal-close :active
+   lavender brand 統一 (モバイル tap parity 拡張、第3弾)
+   v28.94 = 大型カード 12 系統 / v28.95 = 二次 surface 4 cluster 40
+   selector に続き、最頻接触の interactive primitive である「ボタン」
+   とナビ/閉じるボタン 2 系統に :active 末尾 layer の lavender outer
+   wash を append。EOF redefine で既存 inset depression を完全保持し
+   last-defined-wins で追加層のみ重ねる最小サージカル戦略。
+   light = primary-end (lavender) mix-2xs 14-16px outer wash
+   dark  = primary (補色)         mix-2xs 16-18px outer wash
+   = 7 系統 × light/dark = 14 :active redefinition
+   対象: .btn-primary / .btn-ghost / .btn-danger / .btn-icon /
+        .btn-success / .section-tab / .modal-close
+   ============================================================ */
+
+/* ── light (7) ──────────────────────────────────────── */
+/* (65) light .btn-primary:active */
+.btn-primary:active {
+  filter: brightness(var(--brightness-press));
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (66) light .btn-ghost:active */
+.btn-ghost:active {
+  background: var(--border);
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (67) light .btn-danger:active */
+.btn-danger:active {
+  filter: brightness(var(--brightness-press));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (68) light .btn-icon:active */
+.btn-icon:active {
+  transform: scale(var(--scale-icon-active));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (69) light .btn-success:active */
+.btn-success:active {
+  filter: brightness(var(--brightness-press));
+  transform: translateY(var(--translate-press-down));
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (70) light .section-tab:active */
+.section-tab:active {
+  transform: translateY(var(--translate-press-down));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+/* (71) light .modal-close:active */
+.modal-close:active {
+  transform: scale(var(--scale-icon-active));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── dark (7) ───────────────────────────────────────── */
+/* (72) dark .btn-primary:active */
+[data-theme="dark"] .btn-primary:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (73) dark .btn-ghost:active */
+[data-theme="dark"] .btn-ghost:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (74) dark .btn-danger:active */
+[data-theme="dark"] .btn-danger:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (75) dark .btn-icon:active */
+[data-theme="dark"] .btn-icon:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (76) dark .btn-success:active */
+[data-theme="dark"] .btn-success:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-end) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (77) dark .section-tab:active */
+[data-theme="dark"] .section-tab:active {
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary-end, var(--primary)) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+/* (78) dark .modal-close:active */
+[data-theme="dark"] .modal-close:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
