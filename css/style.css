@@ -53404,3 +53404,152 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     inset 0 1px 2px color-mix(in srgb, black var(--mix-md), transparent),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.97 Sprint #1289: フォーム入力 base family :hover / :focus
+   lavender brand 統一 — v28.45 で form-group input/select/textarea
+   :focus に投入した「primary inner halo + primary-end (lavender)
+   outer wash」dual-color halo family、v28.76 で .filter-bar /
+   .filter-search / .adv-filter-input :hover に投入した
+   「primary mix-xs ring + black drop + primary-end mix-2xs outer wash」
+   triple-layer hover family、v28.79 で .budget-input /
+   .recurring-day-input / .csv-map-select / .qa-cat-select /
+   .qa-memo-input / .cat-budget-input :hover に投入した同 triple-layer
+   family の最後の取り残し — 最頻接触の **基底** form-group input/
+   select/textarea + amount-input-wrap + nt-textarea + account-select
+   の :hover state、および nt-textarea:focus を本 sprint で統一。
+
+   - light .form-group input/select/textarea:hover (1 selector group)
+     既存 2-layer (primary mix-xs ring + black-08 drop) → 3-layer
+     (+ 14px primary-end mix-2xs outer wash) に拡張。
+   - light .amount-input-wrap:hover (1 selector group)
+     既存 2-layer → 3-layer に拡張。
+   - light .nt-textarea:hover (1 selector group)
+     既存 1-layer (primary mix-xs ring only) → 3-layer
+     (+ black-08 drop + 14px primary-end mix-2xs outer wash) に拡張。
+   - light .nt-textarea:focus (1 selector group)
+     既存 1-layer (focus-ring only) → 4-layer
+     (+ black-12 drop + primary inner halo + primary-end outer wash)
+     に拡張し v28.45 form-group:focus family と完全整合。
+   - light .account-select:hover (1 selector group, sidebar 常時 dark surface)
+     既存 1-layer (primary-end mix-md ring) → 2-layer
+     (+ 14px primary mix-2xs outer wash) に拡張し dual-color halo 化。
+   - dark .form-group input/select/textarea:hover (fresh 定義)
+     primary-end mix-sm ring + black 0.22 drop + 16px primary mix-2xs outer wash。
+   - dark .amount-input-wrap:hover (fresh 定義) 同 triple-layer。
+   - dark .nt-textarea:hover (fresh 定義) 同 triple-layer。
+   - dark .nt-textarea:focus (fresh 定義) primary-end ring +
+     black 0.22 drop + primary-end inner + primary outer の quad-layer halo。
+
+   = 5 light + 4 dark = 9 redefinition。CSS-only、ライト/ダーク両対応、
+   layout shift なし、border-color / transition / caret-color 等他
+   property は触らない最小サージカル戦略。基底 form 入力 surface
+   全てが v28.40-v28.96 で確立した lavender brand family に合流する
+   完成形マイルストーン。
+   ============================================================ */
+
+/* ── light hover (5 selector group) ── */
+/* (79) light .form-group input/select/textarea:hover */
+.form-group input[type="text"]:hover,
+.form-group input[type="number"]:hover,
+.form-group input[type="date"]:hover,
+.form-group input[type="month"]:hover,
+.form-group input[type="email"]:hover,
+.form-group input[type="password"]:hover,
+.form-group input[type="url"]:hover,
+.form-group input[type="search"]:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (80) light .amount-input-wrap:hover */
+.amount-input-wrap:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (81) light .nt-textarea:hover */
+.nt-textarea:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* (82) light .nt-textarea:focus — v28.45 form-group:focus family と整合 */
+.nt-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  border-left-color: var(--primary);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 4px 12px var(--black-12),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* (83) light .account-select:hover — sidebar 常時 dark surface、primary-end 重心 + primary 補色 outer */
+.account-select:hover {
+  background: var(--on-dark-base);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ── dark hover (3 selector group) + dark focus (1 selector group) — primary-end 重心 + primary 補色 outer ── */
+/* (84) dark .form-group input/select/textarea:hover */
+[data-theme="dark"] .form-group input[type="text"]:hover,
+[data-theme="dark"] .form-group input[type="number"]:hover,
+[data-theme="dark"] .form-group input[type="date"]:hover,
+[data-theme="dark"] .form-group input[type="month"]:hover,
+[data-theme="dark"] .form-group input[type="email"]:hover,
+[data-theme="dark"] .form-group input[type="password"]:hover,
+[data-theme="dark"] .form-group input[type="url"]:hover,
+[data-theme="dark"] .form-group input[type="search"]:hover,
+[data-theme="dark"] .form-group select:hover,
+[data-theme="dark"] .form-group textarea:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 10px rgba(0,0,0,0.22),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (85) dark .amount-input-wrap:hover */
+[data-theme="dark"] .amount-input-wrap:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 10px rgba(0,0,0,0.22),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (86) dark .nt-textarea:hover */
+[data-theme="dark"] .nt-textarea:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 2px 10px rgba(0,0,0,0.22),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* (87) dark .nt-textarea:focus — quad-layer halo */
+[data-theme="dark"] .nt-textarea:focus {
+  outline: none;
+  border-color: var(--primary-end);
+  border-left-color: var(--primary-end);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 4px 14px rgba(0,0,0,0.32),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
