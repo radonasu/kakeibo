@@ -51200,3 +51200,92 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 2px 10px rgba(0,0,0,0.22),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v28.81 Sprint #1273: 通知パネル notif-item:hover 4 type 系統
+   lavender brand 統一 — .notif-item.notif-type-{danger,warning,
+   success,info}:hover の light+dark 8 selector group で box-shadow
+   2-layer (shadow-row-hover + typed mix-xs/md halo + inset 3px
+   accent bar) → 3-layer halo (既存 2-layer + lavender outer wash
+   3rd layer) に拡張。サイドバー鐘押下で開く通知パネル list の各
+   通知アイテム hover 時に「typed alert color (danger/warning/
+   success/primary) + lavender brand outer wash」の dual-color
+   halo が立ち上がる。v28.40-v28.80 で確立した lavender brand
+   family を通知 list surface に展開、v28.77-v28.78 の bell-badge
+   + nav-badge と統一された alert UI 立体感を達成。light 重心 =
+   typed inner halo + primary-end (lavender) outer wash、dark
+   重心 = typed-end inner halo + primary (補色) outer wash の
+   対称 dual-color 構造。inset 3px accent bar はそのまま温存。
+   ============================================================ */
+
+/* ① light .notif-item.notif-type-danger:hover */
+.notif-item.notif-type-danger:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--expense),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② light .notif-item.notif-type-warning:hover */
+.notif-item.notif-type-warning:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ light .notif-item.notif-type-success:hover */
+.notif-item.notif-type-success:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--success),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ light .notif-item.notif-type-info:hover — primary inner + primary-end outer の brand 同系 dual-color */
+.notif-item.notif-type-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑤ dark .notif-item.notif-type-danger:hover */
+[data-theme="dark"] .notif-item.notif-type-danger:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--expense-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑥ dark .notif-item.notif-type-warning:hover */
+[data-theme="dark"] .notif-item.notif-type-warning:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑦ dark .notif-item.notif-type-success:hover */
+[data-theme="dark"] .notif-item.notif-type-success:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--income-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑧ dark .notif-item.notif-type-info:hover — primary-end inner + primary outer の brand 同系 dual-color */
+[data-theme="dark"] .notif-item.notif-type-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
