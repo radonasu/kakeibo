@@ -51493,3 +51493,132 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     right: var(--sp-4);
   }
 }
+
+/* ============================================================
+   v28.85 Sprint #1277 (2026-05-13)
+   ヘッダータイトル系 text family lavender brand 化 —
+   .page-title (全ページ最上部 H1) + .modal-header h2 (17+ モーダル H2)
+   の background gradient を 2-stop (text → primary-end) から
+   3-stop (text → primary → primary-end) に格上げ + ホバー時に
+   filter: drop-shadow で lavender brand dual-color halo を点灯。
+   ── 既存状態 ──
+   .page-title (line 19874) と .modal-header h2 (line 20059) は
+   どちらも 135deg 2-stop gradient で「text → primary-end」のみ。
+   中間の primary トーンが欠落していたため、ブランドカラー軌跡が
+   平坦で「text 黒 → lavender 薄」の 2 ステップ移行に留まっていた。
+   page-title::after 装飾バー (v28.51) と modal-header::after pill
+   (v28.48) は両端 primary + 中央 primary-end の 5-stop で既に完成
+   形に到達していたのに対し、肝心のタイトルテキスト自体は brand
+   color depth が浅く、装飾と本体テキスト間で「ブランド色立体感」
+   の階層差が生じていた。
+   ── 本スプリント投入 ──
+   ① .page-title gradient を「text 0% → primary 55% → primary-end
+      100%」3-stop に拡張。常時表示の全ページタイトルでブランド色
+      が purple → lavender の色相 family を visible に成立。
+   ② .modal-header h2 gradient を同 3-stop pattern に拡張、light は
+      text 0% → primary 55% → primary-end 100%、dark は text-strong
+      0% → primary 55% → primary-end 100% に上書き。
+   ③ .page-title / .modal-header h2 に `transition: filter var(--dur-base)`
+      を追加し hover で滑らかに drop-shadow 入退場。
+   ④ .page-header:hover .page-title + .modal-header:hover h2 で
+      filter: drop-shadow dual-layer (近接 primary + 遠方 primary-end
+      lavender outer wash) を点灯。グラデーションクリップテキストに
+      対する drop-shadow は文字シェイプ単位で halo が発光するため、
+      text-shadow が機能しない transparent text-fill 制約を解決。
+   ⑤ [data-theme="dark"] 両者 hover を 1 ティア boost (primary-end
+      重心 + primary 補色 outer wash の対称構造)。
+   ⑥ @media (prefers-reduced-motion: reduce) で filter 静止
+      (drop-shadow なし) を保証。
+   ── 効果 ──
+   全ページ最上部の H1 + 全モーダル H2 という最も視認頻度の高い
+   2 系統タイトルテキストに、v28.40-v28.84 で確立した lavender
+   brand family (purple inner + lavender outer の dual-color halo)
+   が到達。装飾バー (v28.48/v28.51) と本体テキスト (v28.85) の
+   両層で brand 色立体感が完全成立、kakeibo PWA の見出しタイポ
+   グラフィが完成形に到達するマイルストーン。
+   ── カスケード安全 ──
+   line 19874 (.page-title 2-stop) + line 20059-20070
+   (.modal-header h2 2-stop light+dark) を末尾で last-defined-wins
+   redefine (具体性等価 + 終端記述)。transition: filter は既存
+   ph-in animation (line 1367, filter property は未使用) と衝突
+   無し。hover は親 .page-header / .modal-header にバインドする
+   既存 v28.51/v28.48 pattern (.page-header:hover .page-title::after)
+   と完全統一。
+   ============================================================ */
+
+/* ① .page-title 3-stop gradient (light+dark 共通、theme vars で自動切替) */
+.page-title {
+  background: linear-gradient(135deg,
+    var(--text) 0%,
+    var(--primary) 55%,
+    var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: filter var(--dur-base) var(--ease-out),
+              letter-spacing var(--dur-base) var(--ease-out);
+}
+
+/* ② .modal-header h2 3-stop gradient (light) */
+.modal-header h2 {
+  background: linear-gradient(135deg,
+    var(--text) 0%,
+    var(--primary) 55%,
+    var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: filter var(--dur-base) var(--ease-out),
+              letter-spacing var(--dur-base) var(--ease-out);
+}
+
+/* ③ .modal-header h2 3-stop gradient (dark — text-strong 起点) */
+[data-theme="dark"] .modal-header h2 {
+  background: linear-gradient(135deg,
+    var(--text-strong) 0%,
+    var(--primary) 55%,
+    var(--primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ④ .page-header:hover .page-title — light dual-color drop-shadow halo
+   グラデクリップテキストは text-shadow が透過 fill で機能しないため
+   filter: drop-shadow を用いて文字シェイプ単位で halo を点灯 */
+.page-header:hover .page-title {
+  filter:
+    drop-shadow(0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+
+/* ⑤ [data-theme="dark"] .page-header:hover .page-title — boost */
+[data-theme="dark"] .page-header:hover .page-title {
+  filter:
+    drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
+/* ⑥ .modal-header:hover h2 — light dual-color drop-shadow halo */
+.modal-header:hover h2 {
+  filter:
+    drop-shadow(0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+
+/* ⑦ [data-theme="dark"] .modal-header:hover h2 — boost */
+[data-theme="dark"] .modal-header:hover h2 {
+  filter:
+    drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
+/* ⑧ prefers-reduced-motion — filter 静止 (drop-shadow なし) */
+@media (prefers-reduced-motion: reduce) {
+  .page-header:hover .page-title,
+  [data-theme="dark"] .page-header:hover .page-title,
+  .modal-header:hover h2,
+  [data-theme="dark"] .modal-header:hover h2 {
+    filter: none;
+  }
+}
