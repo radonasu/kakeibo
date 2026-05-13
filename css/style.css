@@ -42508,11 +42508,13 @@ textarea:focus::placeholder {
 .auth-card:hover,
 .auth-card:focus-within {
   transform: translateY(var(--translate-lift-md));
-  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  /* v28.82: 4th layer lavender (--primary-end) outer wash 追加・dual-color halo 化 */
+  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 0 28px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .auth-card:hover,
 [data-theme="dark"] .auth-card:focus-within {
-  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  /* v28.82: 4th layer primary 補色 outer wash 追加・dual-color halo 化 */
+  box-shadow: var(--shadow-auth), 0 8px 32px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 32px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* ③ .auth-title: auth-card hover 時に primary tint text-shadow */
@@ -42521,21 +42523,25 @@ textarea:focus::placeholder {
 }
 .auth-card:hover .auth-title,
 .auth-card:focus-within .auth-title {
-  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  /* v28.82: lavender (--primary-end) 2nd layer outer wash 追加・dual-color text-shadow 化 */
+  text-shadow: 0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent), 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .auth-card:hover .auth-title,
 [data-theme="dark"] .auth-card:focus-within .auth-title {
-  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  /* v28.82: primary 補色 2nd layer outer wash 追加・dual-color text-shadow 化 */
+  text-shadow: 0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent), 0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* ④ .auth-logo-icon 常時 pulse glow animation */
 @keyframes auth-logo-pulse {
   0%, 100% {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20); /* v26.78: pulse rest 時も上端白光沢を維持 */
+    /* v28.82: 3rd layer lavender (--primary-end) outer wash 追加・dual-color halo 化（base） */
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20), 0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 10px 32px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.24); /* v26.78: peak で +0.04 強化 */
+    /* v28.82: 3rd layer lavender (--primary-end) outer wash 追加・peak でも dual-color halo */
+    box-shadow: 0 10px 32px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.24), 0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
     transform: scale(1.03);
   }
 }
@@ -42552,11 +42558,13 @@ textarea:focus::placeholder {
 }
 @keyframes auth-logo-pulse-dark {
   0%, 100% {
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.16); /* v26.78: ダーク pulse rest 上端白光沢（暗背景適正値） */
+    /* v28.82: 3rd layer primary 補色 outer wash 追加・dual-color halo 化（base） */
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent), inset 0 1px 0 rgba(255,255,255,0.16), 0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20); /* v26.78: ダーク peak +0.04 */
+    /* v28.82: 3rd layer primary 補色 outer wash 追加・peak でも dual-color halo */
+    box-shadow: 0 10px 36px color-mix(in srgb, var(--primary-end) var(--mix-3xl), transparent), inset 0 1px 0 rgba(255,255,255,0.20), 0 0 28px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
     transform: scale(1.03);
   }
 }
@@ -42596,11 +42604,13 @@ textarea:focus::placeholder {
 }
 .auth-card:hover .auth-tabs,
 .auth-card:focus-within .auth-tabs {
-  box-shadow: inset 0 1px 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  /* v28.82: 2nd layer lavender (--primary-end) outer wash 追加・dual-color halo 化 */
+  box-shadow: inset 0 1px 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent), 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
 }
 [data-theme="dark"] .auth-card:hover .auth-tabs,
 [data-theme="dark"] .auth-card:focus-within .auth-tabs {
-  box-shadow: inset 0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  /* v28.82: 2nd layer primary 補色 outer wash 追加・dual-color halo 化 */
+  box-shadow: inset 0 1px 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent), 0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* ② .auth-tab.active — auth-card hover 時に scale + primary glow 強化 */
@@ -42610,11 +42620,13 @@ textarea:focus::placeholder {
 .auth-card:hover .auth-tab.active,
 .auth-card:focus-within .auth-tab.active {
   transform: scale(1.02);
-  box-shadow: var(--shadow-tab), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  /* v28.82: 3rd layer lavender (--primary-end) outer wash 追加・dual-color halo 化 */
+  box-shadow: var(--shadow-tab), 0 4px 14px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .auth-card:hover .auth-tab.active,
 [data-theme="dark"] .auth-card:focus-within .auth-tab.active {
-  box-shadow: var(--shadow-tab), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  /* v28.82: 3rd layer primary 補色 outer wash 追加・dual-color halo 化 */
+  box-shadow: var(--shadow-tab), 0 4px 16px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* ③ .auth-form input focus — auth-card 内では primary glow を強化 */
@@ -42649,11 +42661,13 @@ textarea:focus::placeholder {
 }
 .auth-card:hover .auth-submit,
 .auth-card:focus-within .auth-submit {
-  box-shadow: 0 6px 22px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  /* v28.82: 2nd layer lavender (--primary-end) outer wash 追加・dual-color halo 化 */
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--primary) var(--mix-md), transparent), 0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
 [data-theme="dark"] .auth-card:hover .auth-submit,
 [data-theme="dark"] .auth-card:focus-within .auth-submit {
-  box-shadow: 0 6px 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+  /* v28.82: 2nd layer primary 補色 outer wash 追加・dual-color halo 化 */
+  box-shadow: 0 6px 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent), 0 0 26px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
 
 /* ⑥ .auth-subtitle — auth-card hover で subtle text-shadow + opacity ramp */
