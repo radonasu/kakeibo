@@ -52418,3 +52418,218 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     0 3px 12px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
     0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
 }
+
+/* =================================================================
+ * v28.92 — サマリーミニチップ family (.pt-total / .pt-expiring /
+ *          .wl-sum-* / .ch-sum-*) hover lavender brand 統一
+ * -----------------------------------------------------------------
+ * ポイント / ウィッシュリスト / チャレンジ各タブ最上部に並ぶ
+ * 3-card サマリーチップ 8 系統 (.pt-total / .pt-expiring /
+ * .wl-sum-count / .wl-sum-budget / .wl-sum-done /
+ * .ch-sum-active / .ch-sum-achieved / .ch-sum-total) の hover は
+ * 既存で typed identity (primary-end / orange / teal-end /
+ * income-end / primary / income) inner halo を持つが、
+ * v28.40〜v28.91 で展開した lavender (--primary-end) brand
+ * dual-color halo family にはまだ未合流。
+ *
+ * v28.92 では、最頻接触される top-of-tab サマリーチップの hover
+ * surface 全てに lavender outer wash 末尾 layer を append し
+ * dual-color brand halo family に合流させる。各 typed identity
+ * inner halo + inset white sheen + inset 3px accent bar (ch-sum) は
+ * 完全保持しつつ末尾 layer のみ追加することで last-defined-wins
+ * 機構で coexistence。
+ *
+ * 戦略: 既存 box-shadow に末尾 layer のみ append、color / filter /
+ *       transform / background 等 他 property には触らない最小サージカル。
+ *       typed が primary/primary-end の場合は対照色として primary or
+ *       primary-end の異なる brand color を outer wash に。それ以外
+ *       (orange/teal-end/income-end/income) typed には常に primary-end
+ *       (light) / primary (dark) を outer wash に。
+ *
+ * light: 既存 typed inner halo + 末尾 `0 0 22px [brand] mix-2xs` outer wash
+ * dark:  既存 typed inner halo + 末尾 `0 0 24px [brand] mix-2xs` outer wash
+ *
+ * 対象 (16 selector group):
+ *   ① light .pt-total:hover        (3-layer → 4-layer halo) — primary-end typed + primary outer
+ *   ② light .pt-expiring:hover     (3-layer → 4-layer halo) — orange typed + primary-end outer
+ *   ③ light .wl-sum-count:hover    (2-layer → 3-layer halo) — primary-end typed + primary outer
+ *   ④ light .wl-sum-budget:hover   (2-layer → 3-layer halo) — teal-end typed + primary-end outer
+ *   ⑤ light .wl-sum-done:hover     (2-layer → 3-layer halo) — income-end typed + primary-end outer
+ *   ⑥ light .ch-sum-active:hover   (3-layer → 4-layer halo) — primary typed + primary-end outer
+ *   ⑦ light .ch-sum-achieved:hover (3-layer → 4-layer halo) — income typed + primary-end outer
+ *   ⑧ light .ch-sum-total:hover    (3-layer → 4-layer halo) — teal-end typed + primary-end outer
+ *   ⑨ dark  .pt-total:hover        (3-layer → 4-layer halo) — primary-end typed + primary outer
+ *   ⑩ dark  .pt-expiring:hover     (3-layer → 4-layer halo) — orange typed + primary outer
+ *   ⑪ dark  .wl-sum-count:hover    (no existing dark → fresh 3-layer halo)
+ *   ⑫ dark  .wl-sum-budget:hover   (no existing dark → fresh 3-layer halo)
+ *   ⑬ dark  .wl-sum-done:hover     (no existing dark → fresh 3-layer halo)
+ *   ⑭ dark  .ch-sum-active:hover   (3-layer → 4-layer halo) — primary-end typed + primary outer
+ *   ⑮ dark  .ch-sum-achieved:hover (3-layer → 4-layer halo) — income-end typed + primary outer
+ *   ⑯ dark  .ch-sum-total:hover    (3-layer → 4-layer halo) — teal-end typed + primary outer
+ * ============================================================== */
+
+/* ① light .pt-total:hover — primary-end typed + primary outer wash */
+.pt-total:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.55),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ② light .pt-expiring:hover — orange typed + primary-end outer wash */
+.pt-expiring:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--orange) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.55),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ light .wl-sum-count:hover — primary-end typed + primary outer wash */
+.wl-sum-count:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ④ light .wl-sum-budget:hover — teal-end typed + primary-end outer wash */
+.wl-sum-budget:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ light .wl-sum-done:hover — income-end typed + primary-end outer wash */
+.wl-sum-done:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑥ light .ch-sum-active:hover — primary typed + primary-end outer wash */
+.ch-sum-active:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.55),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑦ light .ch-sum-achieved:hover — income typed + primary-end outer wash */
+.ch-sum-achieved:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--income) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.55),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑧ light .ch-sum-total:hover — teal-end typed + primary-end outer wash */
+.ch-sum-total:hover {
+  transform: translateY(var(--translate-lift-sm));
+  filter: brightness(var(--brightness-hover-sm));
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.55),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑨ dark .pt-total:hover — primary-end typed (mix-lg) + primary outer wash */
+[data-theme="dark"] .pt-total:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.65),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑩ dark .pt-expiring:hover — orange typed (mix-lg) + primary outer wash */
+[data-theme="dark"] .pt-expiring:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--orange) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.65),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑪ dark .wl-sum-count:hover — fresh definition: primary-end typed + primary outer */
+[data-theme="dark"] .wl-sum-count:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑫ dark .wl-sum-budget:hover — fresh: teal-end typed + primary outer */
+[data-theme="dark"] .wl-sum-budget:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑬ dark .wl-sum-done:hover — fresh: income-end typed + primary outer */
+[data-theme="dark"] .wl-sum-done:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑭ dark .ch-sum-active:hover — primary-end typed (mix-lg) + primary outer wash */
+[data-theme="dark"] .ch-sum-active:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.65),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑮ dark .ch-sum-achieved:hover — income-end typed (mix-lg) + primary outer wash */
+[data-theme="dark"] .ch-sum-achieved:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--income-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.65),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑯ dark .ch-sum-total:hover — teal-end typed (mix-lg) + primary outer wash */
+[data-theme="dark"] .ch-sum-total:hover {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 20px color-mix(in srgb, var(--teal-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 3px 0 0 rgba(255, 255, 255, 0.65),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
