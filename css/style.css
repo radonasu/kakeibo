@@ -53764,3 +53764,77 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     black calc(100% - 16px),
     transparent 100%);
 }
+
+/* ============================================================
+   v29.01 Sprint #1293: 横スクロール strip scroll-snap UX 投入
+   ============================================================
+   v28.99 で投入した CSS mask-image edge fade（横スクロール可能な
+   コンテンツ端を透明化し「もっとコンテンツがある」UX hint）の続編。
+   v29.01 では同じ 2 系統 strip（.section-tabs / .tx-tag-filter-row）
+   に CSS scroll-snap を投入し、ユーザーがスクロールした際に各タブ/
+   チップが「カチッと吸着」する iOS-like 物理スナップ挙動を獲得。
+
+   v28.99（視覚 hint：端で fade）+ v29.01（触感 hint：snap で停止）
+   の 2 dimension で「横スクロール体験」が完成形に到達するマイルストーン。
+
+   設計:
+   ① scroll-snap-type: x proximity
+      - mandatory ではなく proximity を採用。ユーザーが指を離した
+        位置が snap point の「近く」にある場合のみ吸着するため、
+        強制力が弱く「フリーに横スクロールできる + 近くで止めると
+        綺麗に揃う」自然な挙動。mandatory は常に snap point に
+        強制吸着するため意図的にスキップしたい時に違和感がある。
+   ② scroll-padding-left/right
+      - .section-tabs は親 padding 0 sp-8 (32px) と整合する 32px、
+        .tx-tag-filter-row は padding 0 sp-4 (16px) と整合する 16px
+        を scroll-padding に設定。snap 位置が padding 内側（=実
+        コンテンツの左端）と一致し、v28.99 edge fade の透明領域
+        (24px / 16px) に snap した chip が侵入しない設計。
+   ③ scroll-behavior: smooth
+      - 既存 :root の smooth は body 全体スクロールにのみ効くため、
+        各 strip 個別に smooth を再宣言。プログラム的に scrollLeft
+        を変更した場合（将来の機能拡張用）+ ユーザーが snap 中の
+        慣性スクロールにも滑らかな減速が乗る。
+   ④ 子要素 scroll-snap-align: start
+      - .section-tab, .tx-tag-filter-all, .tx-tag-filter-chip の
+        各 chip 子要素の「左端」が snap point となるよう align: start。
+        center だと幅の異なる chip ごとに snap 位置がブレるため start で統一。
+   ⑤ scroll-snap-stop: always（section-tab のみ）
+      - 強くフリックした際に複数タブを飛び越えないよう、各 tab で
+        「必ず一度停止」する always を採用。誤って 4-5 タブ先まで
+        飛んでしまう操作ミスを防止し、より controllable な体感に。
+      - tag-filter-chip は数が多く小さいため、always だと逆に
+        スクロールが鬱陶しくなるため normal（デフォルト）で fluid。
+
+   v28.99 mask-image と同じく：
+   - ライト/ダーク両対応（scroll-snap はカラー非依存）
+   - prefers-reduced-motion 影響なし（snap はアニメーションではなく
+     位置吸着、reduced-motion 環境でも UX 改善）
+   - layout shift なし、JS / HTML 変更なし、CSS-only
+   - 既存 overflow-x: auto / overscroll-behavior-x: contain と
+     完全 coexistence（追加 property のみ、既存値の変更なし）
+   ============================================================ */
+
+.section-tabs {
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--sp-8);
+  scroll-padding-right: var(--sp-8);
+  scroll-behavior: smooth;
+}
+
+.section-tab {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.tx-tag-filter-row {
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--sp-4);
+  scroll-padding-right: var(--sp-4);
+  scroll-behavior: smooth;
+}
+
+.tx-tag-filter-all,
+.tx-tag-filter-chip {
+  scroll-snap-align: start;
+}
