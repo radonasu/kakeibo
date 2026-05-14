@@ -54409,3 +54409,119 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 0% 50%;
   }
 }
+
+/* ============================================================
+   v29.08 Sprint #1300: ナビゲーターアクティブインジケーター
+   3 系統 + 1 関連 gradient bar に常時 background-position flow
+   ambient animation を投入。v29.07 で .page-title / .modal-header h2
+   見出しテキストに投入した「ラベンダー color を呼吸する」living
+   header 戦略を、PWA 全画面で常時表示される最頻視認 navigator
+   active indicator 4 系統にも拡張するマイルストーン。
+
+   対象 4 系統:
+   1. .nav-item.active::before — サイドバー縦アクセントバー
+      (180deg 3-stop: primary-end → primary → primary-end)
+      → background-size 100% 200% で縦 2 倍化、4 系統で唯一の縦軸 flow
+      animation: nav-side-bar-breath (box-shadow) 並列で衝突無し
+   2. .bottom-nav-item.active::before — ボトムナビ上端 pill indicator
+      (90deg 5-stop: transparent → primary-end → primary → primary-end → transparent)
+      → background-size 200% 100% で横 2 倍化、横軸 flow
+      animation: nav-ind-slide-in (transform/opacity entrance) +
+                 nav-bottom-bar-breath (filter:drop-shadow) 並列
+   3. [data-theme="dark"] .bottom-nav-item.active::before — dark variant
+      (90deg 5-stop primary-end 統一)
+      → background-size 200% 100%
+      animation: nav-ind-slide-in + nav-bottom-bar-breath-dark + flow
+   4. .section-tab.is-active::after — in-page セクションタブ下端 pill
+      (90deg 5-stop: transparent → primary-end → primary → primary-end → transparent)
+      → background-size 200% 100%、既存 animation 無しのため flow 単独
+   5. [data-theme="dark"] .section-tab.is-active::after — dark variant
+      (90deg 5-stop primary-end 統一)
+      → background-size 200% 100%、flow 単独
+
+   既存の box-shadow / filter / transform 軸 breath/entrance animation
+   とは property が完全独立（background-position axis）のため
+   multi-animation で coexistence、conflict 無し。
+
+   v29.07 で投入した brand-text-flow と family parity、7s 周期で
+   gradient peak が両端を往復する `infinite alternate` (本 sprint は
+   7-8s 周期で indicator 種別ごとに微差を持たせ重ならないように調整)。
+   indicator 上を「ラベンダー peak がゆっくりスライドする」ambient
+   flow を獲得、ユーザーが操作しなくても active 表示の navigator が
+   brand identity を語り続ける完成形 living indicator マイルストーン。
+
+   prefers-reduced-motion: reduce で nav-indicator-flow-h /
+   nav-indicator-flow-v を停止、既存の box-shadow/filter/transform
+   軸 animation のみ残す redefine、background-position を
+   横 50% 50% / 縦 50% 50% 固定で symmetric 表示を担保。
+   ============================================================ */
+@keyframes nav-indicator-flow-h {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+@keyframes nav-indicator-flow-v {
+  from { background-position: 50% 0%; }
+  to   { background-position: 50% 100%; }
+}
+
+/* 1. サイドバー .nav-item.active::before — 縦軸 flow */
+.nav-item.active::before {
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  animation: nav-side-bar-breath 3.4s ease-in-out infinite,
+             nav-indicator-flow-v 7.5s ease-in-out infinite alternate;
+}
+
+/* 2. ボトムナビ .bottom-nav-item.active::before (light) — 横軸 flow */
+.bottom-nav-item.active::before {
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+             nav-bottom-bar-breath 3.4s ease-in-out infinite,
+             nav-indicator-flow-h 8s ease-in-out infinite alternate;
+}
+
+/* 3. ボトムナビ dark variant */
+[data-theme="dark"] .bottom-nav-item.active::before {
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+             nav-bottom-bar-breath-dark 3.4s ease-in-out infinite,
+             nav-indicator-flow-h 8s ease-in-out infinite alternate;
+}
+
+/* 4. セクションタブ .section-tab.is-active::after (light) — 横軸 flow */
+.section-tab.is-active::after {
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: nav-indicator-flow-h 7s ease-in-out infinite alternate;
+}
+
+/* 5. セクションタブ dark variant */
+[data-theme="dark"] .section-tab.is-active::after {
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: nav-indicator-flow-h 7s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item.active::before {
+    animation: nav-side-bar-breath 3.4s ease-in-out infinite;
+    background-position: 50% 50%;
+  }
+  .bottom-nav-item.active::before {
+    animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+               nav-bottom-bar-breath 3.4s ease-in-out infinite;
+    background-position: 50% 50%;
+  }
+  [data-theme="dark"] .bottom-nav-item.active::before {
+    animation: nav-ind-slide-in var(--dur-pop) var(--ease-bounce) both,
+               nav-bottom-bar-breath-dark 3.4s ease-in-out infinite;
+    background-position: 50% 50%;
+  }
+  .section-tab.is-active::after,
+  [data-theme="dark"] .section-tab.is-active::after {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
