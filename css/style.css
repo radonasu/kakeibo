@@ -55438,3 +55438,108 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0;
   }
 }
+
+/* ============================================================
+   v29.19 Sprint #1311: 静止していたカード装飾デコオーブに
+                        idle ambient breath を一括投入
+   ── 設計趣旨 ──
+   v29.07 (見出しテキスト brand-text-flow) →
+   v29.08 (nav active indicator flow) →
+   v29.09 (FAB ambient halo breath) →
+   v29.10 (収支サマリー summary-bg-flow) →
+   v29.11 (bold-gradient 7 系統 bold-grad-flow) →
+   v29.12 (アクティブナビアイコン halo breath) →
+   v29.14 (identity / bulk-count ident-grad-flow) →
+   v29.15 (cal-cell heat-3/4 ambient halo) →
+   v29.16 (prog-urgent 1.5s breath) と続いてきた
+   "living surface" ambient family に、カード装飾デコオーブを
+   正式合流させる完成形マイルストーン。
+
+   現状: 以下 5 カード surface に position:absolute / 半hidden の
+   静止「装飾サークル」が ::before / ::after で配置されていたが、
+   いずれも transform / filter / opacity が animate されておらず
+   完全静止していた:
+     ① .health-score-card::after        (家計スコアカード 右上 大型)
+     ② .wl-summary-card::before/::after (ウィッシュリスト 3 サマリー / 2 orb × 3)
+     ③ .ch-summary-card::before         (チャレンジ 3 サマリー)
+     ④ .hm-stat-card::before            (ホーム dashboard 4 stat tile)
+     ⑤ .md-cell::after                  (月別ドリルダウン 4 サマリーセル)
+
+   本 sprint で 6 selector を 1 group に統合し、transform: scale +
+   filter: brightness/saturate を 7s ease-in-out infinite alternate
+   で呼吸させる ambient breath を一括投入。
+
+   ── 実装戦略 ──
+   ① @keyframes deco-orb-breath 新規:
+      0%,100% { transform: scale(1); filter: brightness(1) saturate(1) }
+      50%     { transform: scale(1.18); filter: brightness(1.18) saturate(1.18) }
+      → 静止していた orb が「18% 拡縮 + 明度/彩度 18% boost」で呼吸
+   ② transform / filter のみ animate、opacity / background /
+      border-radius / position / top/right/bottom/left は触らない
+      最小サージカル戦略。各 orb 固有の色 (--hs-grade-color /
+      --white / --primary / --danger-text / --warning / --success /
+      currentColor 等) は不変、可視 intensity のみ拡縮。
+   ③ ダーク mode は scale 拡張を 1.22 / filter boost を
+      brightness/saturate 1.24 に 1 ティア boost し、ダーク背景に
+      対する relative contrast 確保。
+   ④ pointer-events: none で入力イベント阻害なし、scale 1.18-1.22 でも
+      parent overflow:hidden 内に収まり layout shift なし。
+   ⑤ prefers-reduced-motion: reduce で 6 selector group に
+      animation: none + transform: none + filter: none で完全静止、
+      アクセシビリティ準拠。
+   ⑥ 7s 周期は v29.10 (11s) / v29.11 (12s) / v29.14 (13s) の
+      bg-flow より速、v29.09 (4.6s FAB) / v29.16 (1.5s urgent) より遅、
+      v29.12 (5.4s nav icon) / v29.15 (4.6-5.2s heat) と近い tempo
+      帯に位置付け。「ぼんやり呼吸する装飾オーブ」感を狙う。
+
+   ── visible effect ──
+   家計スコアカード、ウィッシュリスト 3 サマリーカード、
+   チャレンジ 3 サマリーカード、ホームダッシュボード 4 stat tile、
+   月別ドリルダウン 4 サマリーセルの計 5 surface × 12 orb が
+   常時 7s 周期で「拡縮 + 明度/彩度 boost」呼吸を開始、
+   PWA ホーム画面/月別レポート画面/各タブを開いた瞬間に
+   「画面上の装飾要素が ambient pulse で生きている」感覚を獲得。
+   ============================================================ */
+@keyframes deco-orb-breath {
+  0%, 100% { transform: scale(1); filter: brightness(1) saturate(1); }
+  50%      { transform: scale(1.18); filter: brightness(1.18) saturate(1.18); }
+}
+@keyframes deco-orb-breath-dark {
+  0%, 100% { transform: scale(1); filter: brightness(1) saturate(1); }
+  50%      { transform: scale(1.22); filter: brightness(1.24) saturate(1.24); }
+}
+.health-score-card::after,
+.wl-summary-card::before,
+.wl-summary-card::after,
+.ch-summary-card::before,
+.hm-stat-card::before,
+.md-cell::after {
+  animation: deco-orb-breath 7s ease-in-out infinite alternate;
+  will-change: transform, filter;
+}
+[data-theme="dark"] .health-score-card::after,
+[data-theme="dark"] .wl-summary-card::before,
+[data-theme="dark"] .wl-summary-card::after,
+[data-theme="dark"] .ch-summary-card::before,
+[data-theme="dark"] .hm-stat-card::before,
+[data-theme="dark"] .md-cell::after {
+  animation-name: deco-orb-breath-dark;
+}
+@media (prefers-reduced-motion: reduce) {
+  .health-score-card::after,
+  .wl-summary-card::before,
+  .wl-summary-card::after,
+  .ch-summary-card::before,
+  .hm-stat-card::before,
+  .md-cell::after,
+  [data-theme="dark"] .health-score-card::after,
+  [data-theme="dark"] .wl-summary-card::before,
+  [data-theme="dark"] .wl-summary-card::after,
+  [data-theme="dark"] .ch-summary-card::before,
+  [data-theme="dark"] .hm-stat-card::before,
+  [data-theme="dark"] .md-cell::after {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+}
