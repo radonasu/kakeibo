@@ -55209,3 +55209,104 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     box-shadow: none;
   }
 }
+
+/* ============================================================
+   v29.16 (Sprint #1308): 進捗バー urgent 状態 idle urgency pulse
+   投入 — living surface family を「期限が迫った危険状態」進捗
+   バー surface に展開する完成形マイルストーン
+   ----------------------------------------------------------
+   ◆ 既存状況
+   - .sub-card-progress-fill.prog-urgent (line 8868) /
+     .pt-exp-bar-fill.prog-urgent (line 9484) /
+     .nt-progress-fill.nt-prog-danger (line 12762) は
+     var(--danger-text) の static red fill。「期限切迫」を
+     pure color 強度のみで示しており、idle 時に完全静止。
+   - 隣接 prog-soon (warning yellow) は v22.73 bar-shimmer
+     ::after で「sweep する黄色バー」として既に visible
+     urgency hint を獲得しているが、より深刻な prog-urgent
+     (red) は shimmer も pulse も無く、color のみで
+     「more urgent」を示していた = visual hierarchy が
+     soon (動く黄色) > urgent (静止赤) と逆転していた問題。
+   - 唯一 .budget-fill.over (line 4180) のみ v22.61 で
+     over-budget-pulse (1.8s) を獲得していたが、3 系統の
+     prog-urgent には適用されていなかった = family parity 欠落。
+   ◆ 本 sprint のアプローチ
+   - 3 系統 .prog-urgent (.nt は .nt-prog-danger 命名) に
+     prog-urgent-pulse keyframe (1.5s ease-in-out infinite) を
+     投入し、opacity 1 → 0.55 → 1 の「燃え立っては消える」
+     urgency breath を獲得。
+   - 既存 entrance animation (sub-bar-fill / pt-bar-fill) が
+     ある 2 系統では comma-separated multi-animation で完全保持、
+     entrance 完了後 (var(--dur-fill) delay) に pulse 開始。
+   - .nt-progress-fill には parent entrance 無し → single
+     animation で直接 pulse 適用。
+   ◆ tempo 設計
+   - 1.5s ease-in-out infinite = .budget-fill.over の
+     over-budget-pulse (1.8s) よりわずかに速、「より急ぎ感」を
+     表現。家計簿全体で「budget 超過 < 期限切迫」の urgency
+     階段が tempo にも反映される。
+   - v29.15 heat-4 (4.6s) / v29.09 fab-halo (4.6s) より
+     大幅に速、v29.07-v29.14 living surface family の中で
+     最も urgent な tempo として位置付け。
+   ◆ opacity-only 戦略 (filter / box-shadow を避ける理由)
+   - .sub-card:hover .sub-card-progress-fill.prog-urgent (line 19499)
+     / .pt-card:hover (line 22270) / dark variant (line 38548, 38937)
+     で既に filter: brightness + box-shadow を占有。
+   - もし pulse で filter / box-shadow を animate すると、
+     CSS animation priority が static :hover 宣言に勝ち、
+     hover 時の brightness boost / glow halo が visible に
+     ならない衝突が発生。
+   - opacity は :hover 系で touch されていないため、
+     opacity-only pulse なら hover の filter / box-shadow と
+     完全に独立 coexist、pulsing red bar を hover すると
+     さらに bright + glow が乗る naturalsuperposition。
+   ◆ light/dark theme 戦略
+   - opacity は theme 非依存 visual property のため、
+     light/dark で同 keyframes を共有。
+   - 元の color (var(--danger-text)) が theme 追従 → light は
+     #dc2626 系の鮮やかな赤、dark は #fb7185 系の明るい赤、
+     どちらも opacity pulse で「赤 → 暗赤 → 赤」の breath。
+   ◆ prog-soon を含めない判断
+   - prog-soon は既に ::after shimmer で visible animation を
+     獲得。parent に opacity pulse を加えると ::after shimmer も
+     親の opacity に従って fade、「shimmer + pulse」の二重 dim
+     で「むしろ不安定で見えにくく」なる悪化。
+   - prog-urgent には shimmer が無いので、parent opacity pulse が
+     pure に "urgent breath" として可視化される。
+   ◆ prefers-reduced-motion 対応
+   - 3 系統 .prog-urgent / .nt-prog-danger で animation: none
+     (entrance も pulse も完全停止)。アクセシビリティ準拠
+     (v29.07-v29.15 と同パターン)。
+   ◆ totalRules 期待
+   - 1 keyframes + 3 selector rules + 1 reduced-motion media
+     = +5 rule、9954 → 9959。
+   CSS-only、JS変更なし、ライト/ダーク両対応、layout shift なし。
+   ============================================================ */
+@keyframes prog-urgent-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+.sub-card-progress-fill.prog-urgent {
+  animation:
+    sub-bar-fill var(--dur-fill) var(--ease-out) calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both,
+    prog-urgent-pulse 1.5s ease-in-out infinite calc(var(--sub-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+}
+
+.pt-exp-bar-fill.prog-urgent {
+  animation:
+    pt-bar-fill var(--dur-fill) var(--ease-out) calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl)) both,
+    prog-urgent-pulse 1.5s ease-in-out infinite calc(var(--pt-i, 0) * var(--dur-stagger-md) + var(--dur-delay-xl) + var(--dur-fill, 0.8s));
+}
+
+.nt-progress-fill.nt-prog-danger {
+  animation: prog-urgent-pulse 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-card-progress-fill.prog-urgent,
+  .pt-exp-bar-fill.prog-urgent,
+  .nt-progress-fill.nt-prog-danger {
+    animation: none;
+  }
+}
