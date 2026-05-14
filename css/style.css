@@ -54733,3 +54733,100 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 130% 0, 0% 50%;
   }
 }
+
+/* ============================================================
+   v29.11 Sprint #1303: 残り bold-gradient 大型 surface 7 系統に
+                        ambient gradient flow を投入 — living surface family 完成形
+   ── 設計趣旨 ──
+   v29.07 (page-title / modal-header h2 gradient text-flow) →
+   v29.08 (nav active indicator flow) → v29.09 (FAB halo breath) →
+   v29.10 (収支サマリーカード 4 系統 background flow) と続いてきた
+   "living surface" ambient-flow family を、v29.10 で漏れた残り
+   bold-gradient 大型 surface 7 系統に展開する完成形マイルストーン。
+   各 surface は `linear-gradient(135deg, X 0%, X-end 100%)` の
+   2-stop diagonal gradient bg を持つが、これまで bg-position は
+   静止していた。background-size を 200% 200% に拡大し
+   `background-position: 0% 50% → 100% 50%` を 12s ease-in-out
+   alternate で常時呼吸させる。
+   ── 対象 ──
+   ① .pt-total              (primary グラデ・ポイント合計サマリーカード)
+   ② .pt-expiring           (warning→orange グラデ・期限切れポイントサマリー)
+   ③ .debt-summary-total    (primary グラデ・負債合計サマリーカード)
+   ④ .debt-summary-monthly  (expense グラデ・月次返済額サマリーカード)
+   ⑤ .sim-modal-header      (primary グラデ・繰上返済シミュレーションモーダルヘッダ)
+   ⑥ .ci-header             (primary グラデ・チェックインモーダルヘッダ)
+   ⑦ .sb-banner             (primary グラデ・支出提案バナー)
+   ── multi-animation 戦略 ──
+   ・既存 entrance animation (pt-sum-in / debt-sum-in / sb-banner-in)
+     は comma-separated multi-animation で完全保持し、flow を 2nd
+     animation として併合。
+   ・.sim-modal-header / .ci-header は entrance animation を持たないため
+     bold-grad-flow 単独。
+   ・debt-sum-in stagger (line 13102 `calc(var(--ds-i,0) * --dur-stagger-xl)`)
+     は per-animation comma list で flow 側 0s と一緒に redefine。
+   ・周期は v29.10 (11s) よりわずかに長い 12s にし mass-sync を避ける。
+   ── reduced-motion 安全策 ──
+   prefers-reduced-motion: reduce で flow 停止 + background-position
+   50% 50% 固定 + 既存 entrance animation のみ残す。
+   ============================================================ */
+@keyframes bold-grad-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.pt-total,
+.pt-expiring,
+.debt-summary-total,
+.debt-summary-monthly,
+.sim-modal-header,
+.ci-header,
+.sb-banner {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+}
+
+/* pt-summary-card family: pt-sum-in entrance 完全保持 + flow append */
+.pt-total {
+  animation: pt-sum-in var(--dur-lift) var(--ease-bounce) both,
+             bold-grad-flow 12s ease-in-out infinite alternate;
+  animation-delay: 0s, 0s;
+}
+.pt-expiring {
+  animation: pt-sum-in var(--dur-lift) var(--ease-bounce) both,
+             bold-grad-flow 12s ease-in-out infinite alternate;
+  animation-delay: var(--dur-stagger-xl), 0s;
+}
+
+/* debt-summary family: debt-sum-in entrance + --ds-i stagger 完全保持 + flow append */
+.debt-summary-total,
+.debt-summary-monthly {
+  animation: debt-sum-in var(--dur-lift) var(--ease-bounce) both,
+             bold-grad-flow 12s ease-in-out infinite alternate;
+  animation-delay: calc(var(--ds-i, 0) * var(--dur-stagger-xl)), 0s;
+}
+
+/* sim-modal-header / ci-header: entrance animation なし、flow 単独 */
+.sim-modal-header,
+.ci-header {
+  animation: bold-grad-flow 12s ease-in-out infinite alternate;
+}
+
+/* sb-banner: sb-banner-in entrance 完全保持 + flow append */
+.sb-banner {
+  animation: sb-banner-in var(--dur-lift) var(--ease-bounce) both,
+             bold-grad-flow 12s ease-in-out infinite alternate;
+  animation-delay: var(--dur-delay-sm), 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-total,
+  .pt-expiring,
+  .debt-summary-total,
+  .debt-summary-monthly,
+  .sim-modal-header,
+  .ci-header,
+  .sb-banner {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
