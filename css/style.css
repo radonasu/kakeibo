@@ -55368,3 +55368,73 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0;
   }
 }
+
+/* ============================================================
+   v29.18: .section-tab + .hm-stat-card に diagonal sheen sweep 投入
+   ============================================================
+   v29.04 (.btn-primary / .btn-success) → v29.05 (widget-item 6 系統)
+   → v29.06 (大型カード 12 系統) → v29.17 (.btn-ghost / .btn-danger)
+   と展開してきた glass refraction sheen sweep family の続編。
+
+   ① .section-tab (全ページ最上部 高頻度接触 navigator):
+      - 既存 position: relative (line 48595) を維持、overflow: hidden を追加
+      - ::before 新規 (::after は .section-tab.is-active で active pill 使用済)
+      - 115° 細幅 sheen バンド (透明 36% → 白 0.14 48% → 白ピーク 0.26 50% → 白 0.14 52% → 透明 64%)
+      - bg-pos 130%→-30% を 0.85s var(--ease-out) で sweep
+      - :hover / :focus-visible:not(:active) で発火 + opacity 0→1 fade-in
+      - border-radius: inherit で section-tab の radius-sm radius-sm 0 0 に同期
+
+   ② .hm-stat-card (ホームダッシュボード 4 stat tile):
+      - 既存 position: relative + overflow: hidden (line 12847-12848) を維持
+      - ::after 新規 (::before は deco orb 使用済)
+      - 同 115° 細幅 sheen バンド + 同 0.85s sweep
+      - :hover で発火
+      - border-radius: inherit で radius-card に同期
+
+   ③ dark mode: rgba(255,255,255,0.10/0.20/0.10) に 1 ティア絞った subtle 設計
+   ④ reduced-motion: transition 即時化 + :hover 値を rest 固定
+   ⑤ pointer-events: none で入力イベント阻害なし
+   ⑥ 既存 box-shadow / transform / filter / background / text-shadow は完全保持
+   ============================================================ */
+.section-tab { overflow: hidden; }
+.section-tab::before,
+.hm-stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.26) 50%, rgba(255,255,255,0.14) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  border-radius: inherit;
+}
+.section-tab:hover::before,
+.section-tab:focus-visible:not(:active)::before,
+.hm-stat-card:hover::after {
+  background-position: -30% 0;
+  opacity: 1;
+}
+[data-theme="dark"] .section-tab::before,
+[data-theme="dark"] .hm-stat-card::after {
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.10) 48%, rgba(255,255,255,0.20) 50%, rgba(255,255,255,0.10) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-tab::before,
+  .hm-stat-card::after,
+  [data-theme="dark"] .section-tab::before,
+  [data-theme="dark"] .hm-stat-card::after {
+    transition: none;
+  }
+  .section-tab:hover::before,
+  .section-tab:focus-visible:not(:active)::before,
+  .hm-stat-card:hover::after {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+}
