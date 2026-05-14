@@ -53999,3 +53999,100 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 130% 0, 0 0;
   }
 }
+
+/* v29.04: 主要 CTA ボタン (.btn-primary / .btn-success) hover に対角線 sheen スイープを追加。
+   v29.03 サマリーカード sheen sweep の glass refraction 演出を、PWA 全画面で最も
+   頻繁にタップされる ButtonPrimitive 2 系統 (新規取引・モーダル送信・サブスク追加 etc.) にも展開。
+   背景を 2 層化 (上=115° 透明→白→透明 sheen バンド / 下=solid typed color) し、
+   :hover/:focus-visible 時に background-position を右端 130% から左端 -30% へ
+   0.85s var(--ease-out) でスイープして「ボタン上を光が斜めに横切る」演出を獲得。
+   v28.46 lavender brand box-shadow + v26.10 inset white sheen + v28.96 :active depression
+   は完全保持し、background-image / background-position のみ EOF last-defined-wins で
+   redefine する最小サージカル戦略。既存 :hover の background shorthand は同 specificity 同一
+   selector の EOF redefine で背景 2 層を再宣言することで上書き。:focus-visible:not(:active)
+   も同様に 2 層 bg を再宣言し、キーボードフォーカス時にも sheen sweep が発火。
+   sheen 色は rgba(255,255,255,X) でテーマ非依存、ライト/ダーク共通動作、
+   reduced-motion で transition 即時化 + hover 値も rest 固定で aria 準拠。
+   transform/box-shadow/filter/text-shadow は触らない、JS 不要、HTML 不要。 */
+.btn-primary,
+.btn-success,
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] .btn-success {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  background-size: 220% 100%, 100% 100%;
+  background-position: 130% 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+  transition: background-position 0.85s var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              filter var(--dur-press) var(--ease-out),
+              text-shadow var(--dur-fast) var(--ease-out);
+}
+/* base = primary→primary-end gradient (matches v28.61 .btn-primary line 49367) */
+.btn-primary,
+[data-theme="dark"] .btn-primary {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+}
+/* .btn-success: solid color base (matches v25.x line 7767) — light=--success, dark=--income-end */
+.btn-success {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(0deg, var(--success), var(--success));
+}
+[data-theme="dark"] .btn-success {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(0deg, var(--income-end), var(--income-end));
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible:not(:active),
+[data-theme="dark"] .btn-primary:hover,
+[data-theme="dark"] .btn-primary:focus-visible:not(:active) {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-end) 100%);
+  background-size: 220% 100%, 100% 100%;
+  background-position: -30% 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+}
+.btn-success:hover,
+.btn-success:focus-visible:not(:active) {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(0deg, var(--income-deep), var(--income-deep));
+  background-size: 220% 100%, 100% 100%;
+  background-position: -30% 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+}
+[data-theme="dark"] .btn-success:hover,
+[data-theme="dark"] .btn-success:focus-visible:not(:active) {
+  background-image: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%),
+                    linear-gradient(0deg, var(--income-deep), var(--income-deep));
+  background-size: 220% 100%, 100% 100%;
+  background-position: -30% 0, 0 0;
+  background-repeat: no-repeat, no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-success,
+  [data-theme="dark"] .btn-primary,
+  [data-theme="dark"] .btn-success {
+    transition: background-color var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out),
+                filter var(--dur-fast) var(--ease-out),
+                text-shadow var(--dur-fast) var(--ease-out);
+  }
+  .btn-primary:hover,
+  .btn-primary:focus-visible:not(:active),
+  .btn-success:hover,
+  .btn-success:focus-visible:not(:active),
+  [data-theme="dark"] .btn-primary:hover,
+  [data-theme="dark"] .btn-primary:focus-visible:not(:active),
+  [data-theme="dark"] .btn-success:hover,
+  [data-theme="dark"] .btn-success:focus-visible:not(:active) {
+    background-position: 130% 0, 0 0;
+  }
+}
