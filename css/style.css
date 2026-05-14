@@ -54525,3 +54525,104 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 50% 50%;
   }
 }
+
+/* ============================================================
+   v29.09 Sprint #1301: グローバル FAB に常時 ambient halo breath
+   投入 — v29.07 brand-text-flow (見出しテキスト) / v29.08 nav
+   active indicator flow と family parity の living surface マイル
+   ストーン。kakeibo PWA 全画面右下に常時 floating する最大級の
+   高頻度視認 surface 「#global-fab」(取引追加 + ボトムナビ ≥モバイル
+   時) が、ユーザーが操作していない rest 状態でも、ラベンダー primary
+   color の halo を 4.6s 周期で「呼吸する」ambient living surface に
+   格上げ。v28.40-v28.98 で蓄積した lavender brand box-shadow family +
+   v29.07/v29.08 の「常時 alive な flow」演出を、PWA 単一最重要の
+   floating CTA「FAB」にも展開する完成形マイルストーン。
+
+   実装方針：::before pseudo-element + z-index:-1 戦略を採用。
+   既存 #global-fab box-shadow（rest 0 4px 16px primary mix-3xl /
+   :hover 0 6px 24px primary mix-5xl / :active inset 0 2px 4px
+   black 0.20 / .fab-pulsing fab-pulse keyframe）は box-shadow 軸に
+   完全保持しつつ、::before 上で box-shadow + opacity の二軸
+   breath を独立展開、property 軸完全独立で multi-animation
+   coexistence、conflict 無し。z-index:-1 で FAB 本体（primary
+   gradient bg + 上端 inset 白光沢 + SVG アイコン）の背後に halo
+   を回し、halo は FAB の bounding box 外側にのみ visible（FAB
+   円形内側は primary fill で完全に隠蔽される）。
+
+   keyframe 構成：
+   - `fab-ambient-halo-breath` (light): box-shadow 0 0 18px 2px
+     primary mix-md + opacity 0.55 (rest) ↔ 0 0 28px 6px primary
+     mix-lg + opacity 0.88 (peak)、4.6s ease-in-out infinite。
+   - `fab-ambient-halo-breath-dark`: box-shadow 0 0 20px 2px
+     primary-end mix-md + opacity 0.50 (rest) ↔ 0 0 32px 8px
+     primary-end mix-lg + opacity 0.85 (peak)、ダーク背景に
+     対する relative contrast を確保しつつ 1 ティア boost。
+
+   coexistence ルール：
+   - `#global-fab.fab-pulsing::before { display: none; }` で
+     初回起動時の invitation pulse (fab-pulse 2.2s) と halo 重畳
+     を回避、entrance pulse が完了し .fab-pulsing が剥がれた後に
+     ambient halo が立ち上がる、UX が「invitation → ambient」の
+     2 段階で自然に推移。
+   - `#global-fab:active::before { animation-play-state: paused;
+     opacity: 0; }` で press 中は halo を完全停止、physical
+     depression 感（既存 inset 黒凹み）を halo が邪魔しない。
+
+   prefers-reduced-motion: reduce で animation を停止 + box-shadow
+   を rest 値で固定 + opacity 0.55 (light) / 0.50 (dark) で
+   subtle な静的 halo のみ残す redefine、アクセシビリティ準拠。
+
+   CSS-only、JS変更なし、HTML変更は ?v= 更新のみ、ライト/ダーク
+   両対応、layout shift なし、totalRules +5 程度 (2 keyframes +
+   3 selector + 1 reduced-motion media)。
+   ============================================================ */
+@keyframes fab-ambient-halo-breath {
+  0%, 100% {
+    box-shadow: 0 0 18px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+    opacity: 0.55;
+  }
+  50% {
+    box-shadow: 0 0 28px 6px color-mix(in srgb, var(--primary) var(--mix-lg), transparent);
+    opacity: 0.88;
+  }
+}
+
+@keyframes fab-ambient-halo-breath-dark {
+  0%, 100% {
+    box-shadow: 0 0 20px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+    opacity: 0.50;
+  }
+  50% {
+    box-shadow: 0 0 32px 8px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+    opacity: 0.85;
+  }
+}
+
+#global-fab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: fab-ambient-halo-breath 4.6s ease-in-out infinite;
+}
+
+[data-theme="dark"] #global-fab::before {
+  animation-name: fab-ambient-halo-breath-dark;
+}
+
+#global-fab.fab-pulsing::before { display: none; }
+#global-fab:active::before { animation-play-state: paused; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  #global-fab::before {
+    animation: none;
+    box-shadow: 0 0 18px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+    opacity: 0.55;
+  }
+  [data-theme="dark"] #global-fab::before {
+    box-shadow: 0 0 20px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+    opacity: 0.50;
+  }
+}
