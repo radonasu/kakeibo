@@ -55310,3 +55310,61 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     animation: none;
   }
 }
+
+/* v29.17: 残り主要 ButtonPrimitive (.btn-ghost / .btn-danger) hover に対角線 sheen
+   スイープを追加。v29.04 で .btn-primary / .btn-success に投入した glass refraction sheen
+   を、PWA 全画面で頻繁にタップされる残り 2 主要ボタン family にも展開し、主要
+   ButtonPrimitive 4 family (.btn-primary / .btn-success / .btn-ghost / .btn-danger) 全てが
+   glass refraction 演出で統一される完成形マイルストーン。
+   .btn-ghost / .btn-danger は .btn class とペアで使われ position:relative + overflow:hidden
+   (line 5623) を既に獲得しているため parent base 宣言は不要、::after 1 ブロック追加のみで
+   sheen sweep が完成する最小サージカル戦略。115° 細幅 sheen バンド (透明 36% → 白 0.18 48%
+   → 白ピーク 0.30 50% → 白 0.18 52% → 透明 64%) を background-size:220% 100% で配置し
+   background-position:130% 0 で右端外に待機、:hover/:focus-visible で -30% 0 + opacity:1 に
+   切替して 0.85s で diagonal sweep。dark mode は rgba(255,255,255,0.14/0.22/0.14) に 1
+   ティア絞った subtle 設計。prefers-reduced-motion で transition 即時化 + :hover 値を rest
+   固定。既存 box-shadow / transform / filter / background / text-shadow は完全保持、::after
+   1 layer 追加のみ。 */
+.btn-ghost::after,
+.btn-danger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.30) 50%, rgba(255,255,255,0.18) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  border-radius: inherit;
+}
+.btn-ghost:hover::after,
+.btn-danger:hover::after,
+.btn-ghost:focus-visible:not(:active)::after,
+.btn-danger:focus-visible:not(:active)::after {
+  background-position: -30% 0;
+  opacity: 1;
+}
+[data-theme="dark"] .btn-ghost::after,
+[data-theme="dark"] .btn-danger::after {
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-ghost::after,
+  .btn-danger::after,
+  [data-theme="dark"] .btn-ghost::after,
+  [data-theme="dark"] .btn-danger::after {
+    transition: none;
+  }
+  .btn-ghost:hover::after,
+  .btn-danger:hover::after,
+  .btn-ghost:focus-visible:not(:active)::after,
+  .btn-danger:focus-visible:not(:active)::after {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+}
