@@ -54930,3 +54930,78 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     filter: drop-shadow(0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
   }
 }
+
+/* ============================================================
+   v29.13 Sprint #1305: クローズ X-ボタン family の rotation
+                        tap/hover feedback 統一拡張 — 5系統 family parity
+   ── 設計趣旨 ──
+   `.modal-close:hover` (line 3660) のみが既存で `transform: scale(...)
+   rotate(90deg)` の「Xが+に回転する」 delightful feedback を持つが、
+   他の 4 つの close X-button (`.cal-panel-close` / `.rc-close` /
+   `.install-banner-close` / `.ios-guide-close`) は `transform:
+   scale(...)` のみで rotation 無し、UX 言語が不揃いだった。
+   さらに全 5 系統で `:active` (タップ中) は `scale` のみで rotation 無し。
+   → モバイルタップユーザーは hover を経験しないため delightful feedback
+     が全く届かない。
+
+   本 sprint で:
+   ① 残り 4 close-X の `:hover` に `rotate(90deg)` を末尾合成し
+      family-wide hover parity を獲得 (デスクトップ全 5 surface 同期)
+   ② 全 5 close-X の `:active` に `rotate(90deg)` を末尾合成し
+      モバイルタップユーザーにも同じ X→+ 回転 delightful feedback を獲得
+   既存 scale/filter/box-shadow は完全保持、transform プロパティのみ
+   EOF last-defined-wins で redefine する最小サージカル戦略。
+
+   ── 対象 ──
+   ① .modal-close:active                  (現状 scale → scale + rotate 90°)
+   ② .cal-panel-close:hover/:active       (現状 scale → scale + rotate 90°)
+   ③ .rc-close:hover/:active              (現状 scale → scale + rotate 90°)
+   ④ .install-banner-close:hover/:active  (現状 scale → scale + rotate 90°)
+   ⑤ .ios-guide-close:hover/:active       (現状 scale → scale + rotate 90°)
+
+   ── coexistence ルール ──
+   - 既存 `transition` には全 5 系統で `transform var(--dur-press)
+     var(--ease-bounce)` が既に含まれているため、本 sprint は transition
+     更新不要。回転は ease-bounce で「カチッ」と settle する物理感を獲得。
+   - `:active` 中の rotation は scale 0.92 と合成 (scale × rotate 順)、
+     縮小しながら 90° 回転する squeeze-spin feedback を獲得。
+   - hover の場合 `:active` が後勝ちで rotation 二重適用は起こらない
+     (cascade で latest applies)。
+
+   ── reduced-motion 安全策 ──
+   prefers-reduced-motion: reduce で rotation を完全無効化、既存 scale
+   のみの transform に reset、アクセシビリティ準拠。
+
+   CSS-only、JS変更なし、HTML変更は ?v= 更新のみ、ライト/ダーク両対応、
+   layout shift なし、totalRules +3 (hover group + active group + reduced-motion)。
+   ============================================================ */
+.cal-panel-close:hover,
+.rc-close:hover,
+.install-banner-close:hover,
+.ios-guide-close:hover {
+  transform: scale(var(--scale-hover)) rotate(90deg);
+}
+
+.modal-close:active,
+.cal-panel-close:active,
+.rc-close:active,
+.install-banner-close:active,
+.ios-guide-close:active {
+  transform: scale(var(--scale-icon-active)) rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cal-panel-close:hover,
+  .rc-close:hover,
+  .install-banner-close:hover,
+  .ios-guide-close:hover {
+    transform: scale(var(--scale-hover));
+  }
+  .modal-close:active,
+  .cal-panel-close:active,
+  .rc-close:active,
+  .install-banner-close:active,
+  .ios-guide-close:active {
+    transform: scale(var(--scale-icon-active));
+  }
+}
