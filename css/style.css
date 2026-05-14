@@ -55094,3 +55094,118 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 50% 50%;
   }
 }
+
+/* ============================================================
+   v29.15 (Sprint #1307): カレンダーヒートマップ高強度セル
+   (.cal-cell.heat-3 / .cal-cell.heat-4) に idle ambient inset
+   halo breath を投入 — living surface family を「視覚的に重要な
+   情報セル」surface に展開する完成形マイルストーン
+   ----------------------------------------------------------
+   ◆ 既存状況
+   - line 7976-7977: .cal-cell.heat-3 / .heat-4 は static expense
+     mix-lg / mix-2xl bg (light)、line 8194-8195 で dark mix-xl /
+     mix-4xl bg。家計簿 PWA で最も視認頻度の高いカレンダー画面に
+     並ぶ 30+ 個のセルのうち、高支出日 (heat-3/4) は色の濃さで
+     visual hierarchy を構成しているが、idle 状態で完全静止して
+     いるため「ここは大きな出費があった日」の attention pull が
+     pure color 強度のみに頼っていた。
+   - line 45989 cal-today-breath (今日バッジ filter:drop-shadow
+     breath) で v28.59 に「カレンダー画面で attention pull が
+     必要な surface = filter halo で呼吸させる」family を確立。
+   ◆ 本 sprint のアプローチ
+   - 高支出 2 セル (heat-3 = 中高 / heat-4 = 最高) に ::after
+     pseudo-element + inset box-shadow halo breath を投入し、
+     「expense red の燃え立つような ambient pulse」を獲得。
+   - heat-4 = より速く (4.6s) + より深く (mix-md→mix-xl) で
+     「最も注意すべき日」を visual urgency で示し、heat-3 は
+     より緩く (5.2s) + より浅く (mix-xs→mix-md) で控えめ pulse。
+   ◆ ::after 戦略 (filter / box-shadow 直接 animate を避ける理由)
+   - .cal-cell の box-shadow は :hover (line 7986-7989) / :active
+     (line 7982) / :focus-visible (line 7983) / .selected:hover
+     (line 7997) で既に占有されており、本体 box-shadow を animate
+     すると hover/active state が animation cascade override で
+     消失する。
+   - .cal-cell の filter も :hover で brightness(1.07) を使用
+     しているため filter animation も同様の衝突。
+   - 解決: ::after pseudo-element (parent の box-shadow / filter
+     とは独立 property layer) で halo を描画。inset box-shadow を
+     ::after に当てると、::after の box (inset:0 で parent full
+     size) の内側に halo が描画され、parent の overflow:hidden
+     (line 7932) に clip されることもなく cell 内部から燃え立つ。
+   - parent には isolation:isolate を投入し stacking context を
+     成立、::after に z-index:-1 を当てて parent の text 内容
+     (.cal-date-num / .cal-tx-amount 等) より背後 + parent bg より
+     前面に配置。text が halo に潰されない。
+   ◆ coexistence ルール
+   - .cal-cell.heat-3:hover (line 7988) / .heat-4:hover (line 7989)
+     の box-shadow は本体 layer のため ::after の halo と独立、
+     hover 時は両方が visible で重畳する自然な「halo + hover ring」。
+   - .cal-cell.selected (line 7990) bg = primary-light に切替時に
+     ::after の expense halo は浮いて見えるため、.selected で
+     animation-play-state: paused で停止 + opacity:0 で halo を
+     退場させ、選択中は cleanly primary surface に戻る。
+   ◆ tempo 設計
+   - heat-3 = 5.2s ease-in-out infinite (v29.10 summary-bg-flow 11s
+     より速、v29.14 ident-grad-flow 13s より速、v29.09 fab-halo
+     4.6s よりは緩、「視認するが urgency は低い」ティア)
+   - heat-4 = 4.6s ease-in-out infinite (heat-3 より 0.6s 速い、
+     「最も urgency 高い」表現、v29.09 fab-halo と同 tempo)
+   - period の差異で 4 visible heat-3 + heat-4 cells が一斉
+     synchronized せず scatter pulse、自然な scatter rhythm。
+   ◆ light/dark theme 戦略
+   - light = expense (#e11d48) inner inset、4-5px → 12-16px の
+     blur 拡張 + mix-xs→mix-md (heat-3) / mix-sm→mix-lg (heat-4)
+     intensity 階段
+   - dark = expense-end (#fb7185) inner inset で 1 ティア boost、
+     5-6px → 14-18px の blur + mix-sm→mix-lg (heat-3) / mix-md→
+     mix-xl (heat-4)、dark surface に対する relative contrast
+     確保 (dark mode は背景が深いため halo の visibility を上げる)
+   ◆ prefers-reduced-motion 対応
+   - .cal-cell.heat-3::after / .heat-4::after で animation: none +
+     box-shadow: none、ambient 効果完全無効化、アクセシビリティ
+     準拠 (v29.07-v29.14 と同パターン) */
+.cal-cell.heat-3,
+.cal-cell.heat-4 {
+  isolation: isolate;
+}
+.cal-cell.heat-3::after,
+.cal-cell.heat-4::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+@keyframes heat-cell-burn-3 {
+  0%, 100% { box-shadow: inset 0 0 4px 0 color-mix(in srgb, var(--expense) var(--mix-xs), transparent); }
+  50%      { box-shadow: inset 0 0 12px 1px color-mix(in srgb, var(--expense) var(--mix-md), transparent); }
+}
+@keyframes heat-cell-burn-4 {
+  0%, 100% { box-shadow: inset 0 0 5px 0 color-mix(in srgb, var(--expense) var(--mix-sm), transparent); }
+  50%      { box-shadow: inset 0 0 16px 2px color-mix(in srgb, var(--expense) var(--mix-lg), transparent); }
+}
+.cal-cell.heat-3::after { animation: heat-cell-burn-3 5.2s ease-in-out infinite; }
+.cal-cell.heat-4::after { animation: heat-cell-burn-4 4.6s ease-in-out infinite; }
+@keyframes heat-cell-burn-3-dark {
+  0%, 100% { box-shadow: inset 0 0 5px 0 color-mix(in srgb, var(--expense-end) var(--mix-sm), transparent); }
+  50%      { box-shadow: inset 0 0 14px 1px color-mix(in srgb, var(--expense-end) var(--mix-lg), transparent); }
+}
+@keyframes heat-cell-burn-4-dark {
+  0%, 100% { box-shadow: inset 0 0 6px 0 color-mix(in srgb, var(--expense-end) var(--mix-md), transparent); }
+  50%      { box-shadow: inset 0 0 18px 2px color-mix(in srgb, var(--expense-end) var(--mix-xl), transparent); }
+}
+[data-theme="dark"] .cal-cell.heat-3::after { animation-name: heat-cell-burn-3-dark; }
+[data-theme="dark"] .cal-cell.heat-4::after { animation-name: heat-cell-burn-4-dark; }
+.cal-cell.heat-3.selected::after,
+.cal-cell.heat-4.selected::after {
+  animation-play-state: paused;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cal-cell.heat-3::after,
+  .cal-cell.heat-4::after {
+    animation: none;
+    box-shadow: none;
+  }
+}
