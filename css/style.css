@@ -51588,10 +51588,13 @@ input[type="search"]::-webkit-search-cancel-button:hover {
               letter-spacing var(--dur-base) var(--ease-out);
 }
 
-/* ③ .modal-header h2 3-stop gradient (dark — text-strong 起点) */
+/* ③ .modal-header h2 3-stop gradient (dark — v29.07 で var(--text-strong) → var(--text) に修正、
+   --text-strong は未定義 var だったため declaration 全体が invalid となり dark mode で
+   gradient text が消失していた pre-existing 不具合を修正、ダーク mode でも 3-stop gradient
+   が正常に発色するようになる) */
 [data-theme="dark"] .modal-header h2 {
   background: linear-gradient(135deg,
-    var(--text-strong) 0%,
+    var(--text) 0%,
     var(--primary) 55%,
     var(--primary-end) 100%);
   -webkit-background-clip: text;
@@ -54334,5 +54337,75 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   .rc-item:hover::after {
     background-position: 130% 0;
     opacity: 0;
+  }
+}
+
+/* ============================================================
+   v29.07 Sprint #1299: ページタイトル + モーダルヘッダー H2
+   gradient flow animation — v28.85 で 3-stop gradient text
+   (text → primary 55% → primary-end) + filter:drop-shadow hover
+   halo を獲得した見出しタイポグラフィに、ブランドラベンダーが
+   見出しテキスト上を「ゆっくり流れる」ambient animation を投入。
+
+   background-size を 200% 100% に拡大し、background-position を
+   0% 50% → 100% 50% で `alternate` 往復させることで、3-stop
+   gradient の可視ウィンドウが「テキスト寄り」⇔「ラベンダー寄り」
+   を 7 秒周期でゆっくり波打ち、見出し全体が「lavender brand 色を
+   呼吸する」 living header に格上げ。v29.03-v29.06 の glass
+   refraction sheen sweep (hover trigger / 0.85-0.95s 一過性) とは
+   独立の dimension — こちらは常時 idle で発火する ambient flow、
+   ユーザーが操作しなくても見出しが brand identity を語り続ける。
+
+   - `.page-title` (全ページ最上部 H1) — 既存 ph-in 入場 animation
+     と comma-separated で同居 (ph-in は both fill-mode で入場後
+     opacity/transform を保持、brand-text-flow は background-position
+     のみアニメで衝突無し)。
+   - `.modal-header h2` (全モーダル H2 — light + dark 別 selector)
+     — 既存 animation 無し、brand-text-flow 単独適用。
+   - `prefers-reduced-motion: reduce` で brand-text-flow を停止し
+     background-position を 0% 50% 固定、アクセシビリティ準拠。
+   - 既存 background-image (3-stop gradient) / -webkit-background-clip /
+     filter transition / v28.85 hover drop-shadow halo は完全保持、
+     background-size / background-position / animation の 3 property
+     のみ EOF 追加の最小サージカル戦略。
+   - background-repeat: no-repeat 明示で oversized gradient の繰り返し
+     を抑止 (bg-size 200% > 100% で実質繰り返し発生せずだが安全策)。
+   ============================================================ */
+@keyframes brand-text-flow {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+.page-title {
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  animation: ph-in var(--dur-gentle) var(--ease-bounce) both,
+             brand-text-flow 7s ease-in-out infinite alternate;
+}
+
+.modal-header h2 {
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  animation: brand-text-flow 7s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .modal-header h2 {
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  animation: brand-text-flow 7s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-title {
+    animation: ph-in var(--dur-gentle) var(--ease-bounce) both;
+    background-position: 0% 50%;
+  }
+  .modal-header h2,
+  [data-theme="dark"] .modal-header h2 {
+    animation: none;
+    background-position: 0% 50%;
   }
 }
