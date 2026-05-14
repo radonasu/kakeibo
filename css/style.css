@@ -54626,3 +54626,110 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0.50;
   }
 }
+
+/* ============================================================
+   v29.10 Sprint #1302: サマリーカード 4 系統 (.income / .expense /
+   .balance.positive / .balance.negative) に常時 background-position
+   ambient gradient flow を投入。v29.07 brand-text-flow (見出しテキスト
+   gradient flow) / v29.08 nav-indicator-flow-h/v (ナビゲーターアクティブ
+   インジケーター gradient flow) / v29.09 fab-ambient-halo-breath (FAB
+   halo breath) と family parity の「living surface」マイルストーン。
+
+   ホーム/カレンダーダッシュボード最上部に常時表示される 3-card サマリー
+   バンドの 135deg linear-gradient typed bg layer 2 を
+   `background-size: 200% 200%` で 2 倍化し、`background-position:
+   0% 50% → 100% 50%` を 11s ease-in-out alternate で常時呼吸、
+   最頻視認の収支サマリー surface が「ユーザーが操作していなくても
+   typed brand identity を流し続ける」living surface に格上げ。
+
+   重要: v29.03 で投入済みの 2-layer 背景構造 (layer 1 = 115° 透明→白
+   →透明 sheen バンド hover sweep / layer 2 = 既存 135° typed gradient)
+   を完全保持するため、keyframes は per-layer comma list で背景位置を
+   指定し、layer 1 (sheen) は 130% 0 (off-screen right) に固定、
+   layer 2 (typed) のみ animate する設計:
+
+   @keyframes summary-bg-flow {
+     0%   { background-position: 130% 0, 0% 50%; }
+     100% { background-position: 130% 0, 100% 50%; }
+   }
+
+   - layer 1 sheen は両端 keyframe で 130% 0 固定 → 常時 off-screen、
+     v29.03 hover 時 :hover 上書きで -30% 0 へ sweep (後述の hover 戦略)。
+   - layer 2 typed は 0% 50% ↔ 100% 50% で 11s slide、size 200% 200% で
+     2 倍化された typed gradient の visible window が左右に drift し
+     「typed identity color が呼吸する」visible effect。
+   - background-size を `220% 100%, 200% 200%` に redefine (v29.03 は
+     `220% 100%, 100% 100%` だった layer 2 を 200% 200% に拡大、layer
+     1 は 220% 100% 完全保持)。
+   - background-position 初期値は `130% 0, 0% 50%` (v29.03 は `130%
+     0, 0 0` の layer 2 を `0% 50%` に変更、layer 1 は完全保持)。
+   - hover 戦略: v29.03 line 53983-53988 の `:hover { background-
+     position: -30% 0, 0 0 }` が flow animation に override されるのを
+     避けるため、本 v29.10 EOF で :hover 時に `animation: sum-card-in
+     ... only` で flow を drop し、v29.03 transition が layer 1 を
+     -30% 0 へ sweep できるようにする。同時に layer 2 hover 位置を
+     `0% 50%` (rest 同値) に redefine し un-hover 時 layer 2 ジャンプ
+     回避。
+   - 既存 `.summary-card { animation: sum-card-in ... both }` (line
+     1936) + `:nth-child(2/3)` stagger delay (line 1938-39) は
+     comma-separated multi-animation で再宣言、entrance stagger 完全保持。
+   - 11s 周期は v29.07 brand-text-flow (7s) / v29.08 nav-indicator-flow
+     (7-8s) / v29.09 fab-ambient-halo-breath (4.6s) よりも slow にし、
+     大面積 surface での gradient drift が目障りにならない呼吸感に。
+   - ease-in-out alternate で両端軟着陸、線形ではなく余韻を獲得。
+   - prefers-reduced-motion: reduce で summary-bg-flow 停止 + bg-pos
+     固定 + sum-card-in entrance のみ残す safety redefine。
+   ============================================================ */
+@keyframes summary-bg-flow {
+  0%   { background-position: 130% 0, 0% 50%; }
+  100% { background-position: 130% 0, 100% 50%; }
+}
+
+.summary-card.income,
+.summary-card.expense,
+.summary-card.balance.positive,
+.summary-card.balance.negative {
+  background-size: 220% 100%, 200% 200%;
+  background-position: 130% 0, 0% 50%;
+  background-repeat: no-repeat;
+  animation: sum-card-in var(--dur-lift) var(--ease-bounce) both,
+             summary-bg-flow 11s ease-in-out infinite alternate;
+}
+
+.summary-cards .summary-card:nth-child(2).income,
+.summary-cards .summary-card:nth-child(2).expense,
+.summary-cards .summary-card:nth-child(2).balance.positive,
+.summary-cards .summary-card:nth-child(2).balance.negative {
+  animation-delay: var(--dur-stagger-xl), 0s;
+}
+
+.summary-cards .summary-card:nth-child(3).income,
+.summary-cards .summary-card:nth-child(3).expense,
+.summary-cards .summary-card:nth-child(3).balance.positive,
+.summary-cards .summary-card:nth-child(3).balance.negative {
+  animation-delay: calc(2 * var(--dur-stagger-xl)), 0s;
+}
+
+.summary-card.income:hover,
+.summary-card.expense:hover,
+.summary-card.balance.positive:hover,
+.summary-card.balance.negative:hover {
+  animation: sum-card-in var(--dur-lift) var(--ease-bounce) both;
+  background-position: -30% 0, 0% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summary-card.income,
+  .summary-card.expense,
+  .summary-card.balance.positive,
+  .summary-card.balance.negative {
+    animation: sum-card-in var(--dur-lift) var(--ease-bounce) both;
+    background-position: 130% 0, 0% 50%;
+  }
+  .summary-card.income:hover,
+  .summary-card.expense:hover,
+  .summary-card.balance.positive:hover,
+  .summary-card.balance.negative:hover {
+    background-position: 130% 0, 0% 50%;
+  }
+}
