@@ -53934,3 +53934,68 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     animation-delay: 0ms !important;
   }
 }
+
+/* v29.03: サマリーカード hover に対角線 sheen スイープを追加。
+   背景を 2 層化（上=透明→白→透明の細い 115° バンド / 下=既存タイプグラデ）し、
+   :hover 時に background-position を右端 130% から左端 -30% へスイープして
+   「カード上を光が斜めに横切る」glass refraction 演出を獲得。CSS-only、JS 不要、
+   ライト/ダーク共通動作（sheen 色は rgba(255,255,255,X) でテーマ非依存）、
+   ::before/::after deco orbs と独立 coexist、box-shadow/transform/filter は完全保持、
+   reduced-motion で transition 即時化（aria 準拠）。
+   家計簿 PWA で最も視認頻度の高いダッシュボード summary 3 カードに、
+   v28.40-v29.02 で蓄積した lavender brand + stagger entrance とは別 dimension の
+   visible 高級感（光のスイープ）を投入。 */
+.summary-card.income,
+.summary-card.expense,
+.summary-card.balance.positive,
+.summary-card.balance.negative {
+  background-size: 220% 100%, 100% 100%;
+  background-position: 130% 0, 0 0;
+  background-repeat: no-repeat;
+  transition: background-position 0.95s var(--ease-out),
+              box-shadow var(--dur-gentle) var(--ease-bounce),
+              transform var(--dur-gentle) var(--ease-bounce),
+              filter var(--dur-gentle) var(--ease-out);
+}
+.summary-card.income {
+  background-image:
+    linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 52%, transparent 64%),
+    linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%);
+}
+.summary-card.expense {
+  background-image:
+    linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 52%, transparent 64%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+}
+.summary-card.balance.positive {
+  background-image:
+    linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 52%, transparent 64%),
+    linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
+}
+.summary-card.balance.negative {
+  background-image:
+    linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.14) 52%, transparent 64%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+}
+.summary-card.income:hover,
+.summary-card.expense:hover,
+.summary-card.balance.positive:hover,
+.summary-card.balance.negative:hover {
+  background-position: -30% 0, 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .summary-card.income,
+  .summary-card.expense,
+  .summary-card.balance.positive,
+  .summary-card.balance.negative {
+    transition: box-shadow var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out),
+                filter var(--dur-fast) var(--ease-out);
+  }
+  .summary-card.income:hover,
+  .summary-card.expense:hover,
+  .summary-card.balance.positive:hover,
+  .summary-card.balance.negative:hover {
+    background-position: 130% 0, 0 0;
+  }
+}
