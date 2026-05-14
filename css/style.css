@@ -55665,3 +55665,166 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     100% { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
   }
 }
+
+/* ============================================================
+   v29.21 Sprint #1312: パネル/モーダル/サイドバー登場時に
+   lavender (--primary-end) summon edge-glow flash を一括投入
+   (::after pseudo + inset box-shadow 方式)
+   ============================================================
+   v27.22-v27.66 で .modal-overlay .modal の hidden→open 遷移に
+   rotateX 90° + scale + translateY による 3D せり上がり演出を
+   獲得、v29.02 でページ遷移に stagger cascade を投入したが、
+   モーダル/通知パネル/モバイルサイドバーといった「画面上に
+   出現する panel/popup 系 surface」自体の「出現の瞬間」に
+   ブランドカラーを使った視覚的アクセント flash は未投入だった。
+
+   v29.21 では @keyframes panel-summon-ring-flash 新規投入で
+   4 主要オーバーレイ surface に「出現の瞬間 lavender ring が
+   内側エッジに bloom して fade-out する 0.85s one-shot inset
+   box-shadow ring flash」を一括展開し、v28.40 以降確立した
+   lavender brand family にパネル/モーダル/サイドバー登場時
+   entrance accent が正式合流する完成形マイルストーン。
+
+   ── 対象 surface ──
+   ① .modal-overlay.modal-is-open .modal — 標準モーダル群 (tx/
+      sub/wl/ch/debt/goal/cat/asset/pt/advice 等 17+)
+   ② .modal-overlay.modal-is-open .modal-wrap — rc/ci/ev/kb-help
+   ③ .modal-overlay.modal-is-open .modal-box — dd-modal / md-modal
+   ④ .notif-panel.notif-panel-open — 通知パネル
+   ⑤ #sidebar.open (≤768px mobile slide-in) — モバイルサイドバー
+
+   ── 実装戦略: ::after pseudo + inset box-shadow ──
+   ① 親要素に position: relative を末尾 redefine で投入
+      (既存 transform でも positioning context は確立済だが
+       明示宣言で堅牢化)
+   ② ::after { content: ''; position: absolute; inset: 0;
+       pointer-events: none; border-radius: inherit; opacity: 0; }
+      で modal/wrap/box 内部に同サイズ pseudo を生成
+   ③ animation: panel-summon-ring-flash 0.85s 1 で
+      0% 透明 → 30% inset 2px lavender 縁 + 26px lavender 内側
+      bloom + opacity:1 → 100% 透明に戻る one-shot 演出
+   ④ ::after を別 element として用いるため、既存の per-modal
+      entrance animation (advice-modal の adv-modal-in / ci-wrap
+      の ci-modal-in / sub-modal の sub-modal-in 等) と完全
+      独立、specificity 衝突なし
+   ⑤ inset box-shadow は overflow:hidden 親の影響を受けず
+      modal 内側エッジに bloom 可能、外側に拡散しないため
+      shadow-lg 既存外側影と coexistence
+   ⑥ ダーク mode は @keyframes panel-summon-ring-flash-dark
+      で alpha 1 ティア boost (mix-md→mix-lg / mix-sm→mix-md)
+   ⑦ prefers-reduced-motion: reduce で animation: none +
+      opacity: 0 固定で完全静止、アクセシビリティ準拠
+
+   ── visible effect ──
+   - 各モーダル開閉時、出現の瞬間にモーダル内側エッジから
+     lavender ring が 0.26s でピーク bloom し残り 0.59s で
+     ゆるやかに消える
+   - 通知ベル押下で通知パネルが出る瞬間、同じ lavender 演出
+   - モバイル端末でハンバーガーメニュー押下時、サイドバーが
+     左から slide-in しながら同じ lavender 演出を獲得
+   - CSS-only、JS変更なし、ライト/ダーク両対応、layout shift なし
+   ============================================================ */
+
+@keyframes panel-summon-ring-flash {
+  0% {
+    opacity: 0;
+    box-shadow:
+      inset 0 0 0 0 transparent,
+      inset 0 0 0 0 transparent;
+  }
+  30% {
+    opacity: 1;
+    box-shadow:
+      inset 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+      inset 0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  }
+  100% {
+    opacity: 0;
+    box-shadow:
+      inset 0 0 0 0 transparent,
+      inset 0 0 0 0 transparent;
+  }
+}
+
+@keyframes panel-summon-ring-flash-dark {
+  0% {
+    opacity: 0;
+    box-shadow:
+      inset 0 0 0 0 transparent,
+      inset 0 0 0 0 transparent;
+  }
+  30% {
+    opacity: 1;
+    box-shadow:
+      inset 0 0 0 2px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+      inset 0 0 32px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  }
+  100% {
+    opacity: 0;
+    box-shadow:
+      inset 0 0 0 0 transparent,
+      inset 0 0 0 0 transparent;
+  }
+}
+
+/* ── 親要素に positioning context を明示 ── */
+.modal-overlay.modal-is-open .modal,
+.modal-overlay.modal-is-open .modal-wrap,
+.modal-overlay.modal-is-open .modal-box,
+.notif-panel.notif-panel-open {
+  position: relative;
+}
+
+/* ── ライト: モーダル系 + 通知パネル ::after ── */
+.modal-overlay.modal-is-open .modal::after,
+.modal-overlay.modal-is-open .modal-wrap::after,
+.modal-overlay.modal-is-open .modal-box::after,
+.notif-panel.notif-panel-open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  animation: panel-summon-ring-flash 0.85s var(--ease-out) 1;
+}
+
+/* ── ダーク: モーダル系 + 通知パネル ::after ── */
+[data-theme="dark"] .modal-overlay.modal-is-open .modal::after,
+[data-theme="dark"] .modal-overlay.modal-is-open .modal-wrap::after,
+[data-theme="dark"] .modal-overlay.modal-is-open .modal-box::after,
+[data-theme="dark"] .notif-panel.notif-panel-open::after {
+  animation-name: panel-summon-ring-flash-dark;
+}
+
+/* ── モバイルサイドバー (slide-in 時のみ) ── */
+@media (max-width: 768px) {
+  #sidebar.open::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    animation: panel-summon-ring-flash 0.85s var(--ease-out) 1;
+  }
+  [data-theme="dark"] #sidebar.open::after {
+    animation-name: panel-summon-ring-flash-dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay.modal-is-open .modal::after,
+  .modal-overlay.modal-is-open .modal-wrap::after,
+  .modal-overlay.modal-is-open .modal-box::after,
+  .notif-panel.notif-panel-open::after,
+  #sidebar.open::after,
+  [data-theme="dark"] .modal-overlay.modal-is-open .modal::after,
+  [data-theme="dark"] .modal-overlay.modal-is-open .modal-wrap::after,
+  [data-theme="dark"] .modal-overlay.modal-is-open .modal-box::after,
+  [data-theme="dark"] .notif-panel.notif-panel-open::after,
+  [data-theme="dark"] #sidebar.open::after {
+    animation: none;
+    opacity: 0;
+  }
+}
