@@ -55005,3 +55005,92 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     transform: scale(var(--scale-icon-active));
   }
 }
+
+/* ============================================================
+   v29.14 Sprint #1306: ブランド識別 + 一括選択バッジ surface に
+                        idle ambient gradient flow 投入 — living surface family を
+                        identity / selection-badge 系 surface に展開する完成形マイルストーン
+   ── 設計趣旨 ──
+   v29.07 (page-title / modal h2 gradient text-flow) → v29.08 (nav indicator flow)
+   → v29.09 (FAB halo breath) → v29.10 (summary card flow) →
+   v29.11 (bold-gradient 大型 surface 7 系統 flow) → v29.12 (nav active icon halo breath)
+   → v29.13 (X-button rotation feedback) と続いてきた "living surface" family を、
+   サイドバー identity 系 (.brand-icon / .sidebar-avatar) と一括選択バッジ (.bulk-count) の
+   gradient bg 自体に展開する。これら 3 surface は既に v28.60 で box-shadow halo
+   breath (.brand-icon 4.6s / .sidebar-avatar 4.4s) または entrance pop (.bulk-count)
+   を獲得していたが、gradient bg 自体は静止していた。本 sprint で bg-position flow
+   を投入し「色立体感が常時うっすら流れる」3 identity/badge surface を獲得。
+   ── 対象 ──
+   ① .brand-icon         (サイドバー上部 💰 ロゴ・3色 135deg gradient: primary → primary-end → pink)
+   ② .sidebar-avatar     (サイドバーログインユーザーアバター・2色 135deg gradient: primary → primary-mid)
+   ③ .bulk-count         (一括選択件数バッジ・2色 135deg gradient: primary → primary-end)
+
+   ── multi-animation 戦略 ──
+   既存 animation (.brand-icon: ident-glow-breath-primary 4.6s /
+   .sidebar-avatar: ident-glow-breath-primary 4.4s / .bulk-count: bulk-count-pop --dur-slow)
+   を comma-separated multi-animation で完全保持し、ident-grad-flow を 2nd animation
+   として append。background-size 200% 200% + background-position 0% 50% で初期姿勢を
+   設定、13s ease-in-out alternate で gradient 端 ↔ 端を呼吸させる。
+   13s は v29.11 (12s) よりわずかに slow、v29.10 (11s) よりも slow にし
+   「identity 系は最もゆったり呼吸させる」slow tempo を採用、識別アイコンの dignified な
+   identity 感を維持。
+
+   ── coexistence ルール ──
+   - 既存 box-shadow halo breath (ident-glow-breath-primary) と新規 bg-position flow は
+     異なるプロパティを animate するため互いに干渉しない。
+   - .bulk-count の entrance bulk-count-pop は transform + opacity を animate、
+     bg-position flow とは独立。entrance pop 完了後も flow は無限ループで継続。
+   - dark mode 専用 override は存在しない (.bulk-count の dark line 49300 は
+     background / box-shadow のみで animation 未指定、light の animation を継承)。
+
+   ── reduced-motion 安全策 ──
+   prefers-reduced-motion: reduce で animation: none + background-position 50% 50%
+   中央固定。v29.10/v29.11 と完全同パターン。視覚不変アクセシビリティ準拠。
+
+   CSS-only、JS変更なし、HTML変更は ?v= 更新のみ、ライト/ダーク両対応、layout shift なし、
+   totalRules +5 (1 keyframes + 3 selector rules + 1 reduced-motion media)。
+   ============================================================ */
+@keyframes ident-grad-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.brand-icon {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  animation: ident-glow-breath-primary 4.6s ease-in-out infinite,
+             ident-grad-flow 13s ease-in-out infinite alternate;
+}
+
+.sidebar-avatar {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  animation: ident-glow-breath-primary 4.4s ease-in-out infinite,
+             ident-grad-flow 13s ease-in-out infinite alternate;
+}
+
+.bulk-count {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  animation: bulk-count-pop var(--dur-slow) var(--ease-bounce) both,
+             ident-grad-flow 13s ease-in-out infinite alternate;
+}
+
+/* dark mode override: line 49300 `[data-theme="dark"] .bulk-count` の background:
+   shorthand が specificity (0,1,1) で my light rule (0,1,0) に勝ち、bg-size を
+   implicitly auto に reset するため、specificity-matched dark rule で longhand を
+   明示再宣言 */
+[data-theme="dark"] .bulk-count {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-icon,
+  .sidebar-avatar,
+  .bulk-count,
+  [data-theme="dark"] .bulk-count {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
