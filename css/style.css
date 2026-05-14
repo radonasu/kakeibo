@@ -54096,3 +54096,92 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 130% 0, 0 0;
   }
 }
+
+/* v29.05: ホームダッシュボード widget-item hover に対角線 sheen スイープ追加 — v29.03
+   サマリーカード / v29.04 主要 CTA ボタンの glass refraction 演出を、ダッシュボード上に
+   並ぶ 6 widget-item 系統 (.sub-widget-item / .pt-widget-item / .wish-widget-item /
+   .ch-widget-item / .debt-widget-item / .ev-widget-item) にも展開。
+   widget-item は variant bg (sub-urgent / sub-soon / pt-urgent / pt-soon / wl-high)
+   が多様で background-image 直接 redefine だと variant 分宣言が必要なため、
+   ::after pseudo-element 方式を採用：absolute fill + pointer-events:none + 115° 細幅
+   sheen バンド (透明→白→透明) を translateX(-110%) で待機させ、:hover 時に
+   translateX(110%) へ 0.85s var(--ease-out) でスライドさせて「カード上を光が斜めに
+   横切る」演出を獲得。parent には position:relative + overflow:hidden を追加し
+   border-radius (radius-btn) で角がきれいにクリップされる設計。既存 box-shadow /
+   transform / filter / inset accent bar / variant background は完全保持、::after は
+   z-index 不要 (pseudo は自然に親 inline content 上に乗る、但し .sub-widget-icon /
+   テキスト等 inline 子要素より下に来るよう z-index:0 を子に指定せず ::after 側に
+   pointer-events:none を付与し、入力イベント阻害を回避)。reduced-motion で transition
+   即時化 + :hover 値を rest 固定。ライト/ダーク共通動作 (white sheen はテーマ非依存)。 */
+.sub-widget-item,
+.pt-widget-item,
+.wish-widget-item,
+.ch-widget-item,
+.debt-widget-item,
+.ev-widget-item {
+  position: relative;
+  overflow: hidden;
+}
+.sub-widget-item::after,
+.pt-widget-item::after,
+.wish-widget-item::after,
+.ch-widget-item::after,
+.debt-widget-item::after,
+.ev-widget-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.26) 50%, rgba(255,255,255,0.14) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  border-radius: inherit;
+}
+.sub-widget-item:hover::after,
+.pt-widget-item:hover::after,
+.wish-widget-item:hover::after,
+.ch-widget-item:hover::after,
+.debt-widget-item:hover::after,
+.ev-widget-item:hover::after {
+  background-position: -30% 0;
+  opacity: 1;
+}
+[data-theme="dark"] .sub-widget-item::after,
+[data-theme="dark"] .pt-widget-item::after,
+[data-theme="dark"] .wish-widget-item::after,
+[data-theme="dark"] .ch-widget-item::after,
+[data-theme="dark"] .debt-widget-item::after,
+[data-theme="dark"] .ev-widget-item::after {
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.10) 48%, rgba(255,255,255,0.20) 50%, rgba(255,255,255,0.10) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sub-widget-item::after,
+  .pt-widget-item::after,
+  .wish-widget-item::after,
+  .ch-widget-item::after,
+  .debt-widget-item::after,
+  .ev-widget-item::after,
+  [data-theme="dark"] .sub-widget-item::after,
+  [data-theme="dark"] .pt-widget-item::after,
+  [data-theme="dark"] .wish-widget-item::after,
+  [data-theme="dark"] .ch-widget-item::after,
+  [data-theme="dark"] .debt-widget-item::after,
+  [data-theme="dark"] .ev-widget-item::after {
+    transition: none;
+  }
+  .sub-widget-item:hover::after,
+  .pt-widget-item:hover::after,
+  .wish-widget-item:hover::after,
+  .ch-widget-item:hover::after,
+  .debt-widget-item:hover::after,
+  .ev-widget-item:hover::after {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+}
