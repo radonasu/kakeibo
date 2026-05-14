@@ -55543,3 +55543,125 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     filter: none;
   }
 }
+
+/* ============================================================
+   v29.20 Sprint #1311: リップル波 (.ripple-wave) family を
+   solid 単色 background → radial-gradient soft halo に格上げ
+   + ボトムナビは primary→primary-end lavender brand dual-color
+   radial に格上げ + @keyframes ripple-anim に mid-keyframe を
+   追加して「fast bloom → slow fade」2 段モーションへ進化
+   ============================================================
+   v19.34/v19.36 で .ripple-wave 系の light-mode 不可視問題は
+   解決済（btn-ghost/btn-danger 等は black-05 / bottom-nav は
+   primary mix-sm に切替）。しかし全 ripple-wave は依然として
+   「solid 単色 expanding circle」で、外縁が硬く水滴感に乏しい
+   旧来 Material-Design 風の見た目に留まっていた。
+
+   v29.20 では JS が動的注入する `.ripple-wave` 全 selector
+   group (base / dark / 6 btn light variants / bottom-nav /
+   dark btn restore) を radial-gradient に格上げし、
+   center peak → soft fade → transparent 外縁の「水紋」状halo
+   に進化させる。さらに keyframe を 2 段化し、序盤 35% で 1.8x
+   までスパッと展開してから残り 65% でゆっくり 4x まで拡散しつ
+   つフェードアウトする 2-phase motion を獲得、視覚的に「タップ
+   した瞬間の弾けるエネルギー」が肉眼で明確に識別できる完成形
+   マイルストーン。
+
+   bottom-nav は primary inner core + primary-end (lavender)
+   middle ring + transparent 外縁の dual-color brand-halo に
+   進化、v28.40 以降の lavender brand family にリップル波が
+   正式合流。
+
+   CSS-only、JS 変更なし、ライト/ダーク両対応、reduced-motion
+   は keyframe simplification で対応。pointer-events:none 維持
+   で入力阻害なし。
+   ============================================================ */
+
+@keyframes ripple-anim {
+  0%   { transform: scale(0); opacity: 1; }
+  35%  { transform: scale(calc(var(--scale-anim-ripple) * 0.45)); opacity: 0.85; }
+  100% { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
+}
+
+/* ── ライトモード基底: 白 radial halo（明色 surface 上） ── */
+.ripple-wave {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.35) 32%,
+    rgba(255, 255, 255, 0.12) 62%,
+    transparent 80%
+  );
+}
+
+/* ── ダークモード基底: 控えめ白 radial halo ── */
+[data-theme="dark"] .ripple-wave {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.22) 32%,
+    rgba(255, 255, 255, 0.08) 62%,
+    transparent 80%
+  );
+}
+
+/* ── ライトモード: 白/淡色 surface 用ボタン群（black radial halo） ── */
+.btn-ghost .ripple-wave,
+.btn-danger .ripple-wave,
+.btn-share .ripple-wave,
+.btn-continue .ripple-wave,
+.btn-receipt-file .ripple-wave,
+.btn-mr-fill .ripple-wave {
+  background: radial-gradient(
+    circle,
+    var(--black-12) 0%,
+    var(--black-05) 38%,
+    color-mix(in srgb, var(--black-05) 35%, transparent) 65%,
+    transparent 82%
+  );
+}
+
+/* ── ボトムナビ: primary inner + primary-end (lavender) middle の dual-color brand halo ── */
+.bottom-nav-item .ripple-wave {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 28%,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent) 52%,
+    transparent 80%
+  );
+}
+
+/* ── ダークモード: ボタン+ボトムナビの ripple を白 radial halo に復元 ── */
+[data-theme="dark"] .btn-ghost .ripple-wave,
+[data-theme="dark"] .btn-danger .ripple-wave,
+[data-theme="dark"] .btn-share .ripple-wave,
+[data-theme="dark"] .btn-continue .ripple-wave,
+[data-theme="dark"] .btn-receipt-file .ripple-wave,
+[data-theme="dark"] .btn-mr-fill .ripple-wave {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.22) 32%,
+    rgba(255, 255, 255, 0.08) 62%,
+    transparent 80%
+  );
+}
+
+/* ダークモードのボトムナビは primary→primary-end の brand halo を維持しつつ alpha を 1 ティア boost */
+[data-theme="dark"] .bottom-nav-item .ripple-wave {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 28%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 52%,
+    transparent 80%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes ripple-anim {
+    0%   { transform: scale(0); opacity: 1; }
+    100% { transform: scale(var(--scale-anim-ripple)); opacity: 0; }
+  }
+}
