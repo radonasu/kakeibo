@@ -54185,3 +54185,154 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0;
   }
 }
+
+/* v29.06: 大型カード/リスト系 12 系統 hover に対角線 sheen スイープ追加 — v29.03
+   サマリーカード / v29.04 主要 CTA ボタン / v29.05 ホームダッシュボード widget-item の
+   glass refraction 演出を、家計簿 PWA 各タブで最も視認頻度の高い大型カード/リスト系
+   surface（.asset-card / .goal-card / .sub-card / .pt-card / .wl-card / .ch-card /
+   .debt-card / .ev-card / .opp-card / .cat-card / .ci-event-item / .rc-item）にも
+   展開、PWA 全画面の主要 interactive surface family が glass refraction 演出で
+   統一される完成形マイルストーン。
+
+   実装方針：::after pseudo-element 方式 (v29.05 widget-item と同型) を採用。
+   ① parent base group (12 selector) に position:relative + overflow:hidden を
+      EOF redefine で投入（既存設定とは last-defined-wins で coexistence、すでに
+      設定済みの .sub/.pt/.ch/.debt/.ev/.cat-card は no-op、未設定の
+      .asset/.goal/.wl/.opp/.ci-event-item/.rc-item に新規付与）。
+   ② ::after で content:"" + position:absolute + inset:0 + pointer-events:none +
+      border-radius:inherit (親の radius を継承し角丸内クリップ) + 115° 細幅 sheen
+      バンド (透明 36% → 白 0.14 48% → 白ピーク 0.26 50% → 白 0.14 52% → 透明 64%)
+      を background-size:220% 100% で配置し background-position:130% 0 で右端外に
+      待機、opacity:0 でフェードアウト状態。transition は
+      `background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out)`
+      で sweep duration を widget-item と同一に揃え PWA 全体の sheen 演出 tempo を統一。
+   ③ :hover::after で background-position:-30% 0 + opacity:1 に切替、sheen バンドが
+      右端外 130% から左端外 -30% へ 0.85s で diagonal sweep、同時に fade-in、
+      ホバー開始から 0.85s かけて白く細い光のバンドがカード上を斜めに横切る演出を獲得。
+   ④ dark mode で sheen 強度を rgba(255,255,255,0.10/0.20/0.10) に 1 ティア絞った
+      (light 0.14/0.26/0.14 比 -0.04/-0.06/-0.04) subtle 設計、ダーク背景に対する
+      relative contrast は保持しつつ過剰な eye-grab を回避。
+   ⑤ prefers-reduced-motion で transition 即時化 + :hover 値 (bg-position + opacity)
+      を rest 固定し sheen 動作を完全無効化、アクセシビリティ準拠。
+
+   既存 box-shadow / transform / filter / inset accent bar / border-left / typed
+   gradient background / .debt-card::before deco circle (line 13156) / .ev-card::before
+   deco circle (line 14026) は完全保持、::after は別 pseudo のため衝突無し。
+   .opp-card は background が `color-mix(opp-accent mix-nano, surface)` の薄い tint で
+   sheen との視覚的バランス保持、.ci-event-item は background-hover state でも sheen
+   ::after が overlay する設計。CSS-only、JS/HTML 変更なし、ライト/ダーク両対応、
+   layout shift なし。 */
+.asset-card,
+.goal-card,
+.sub-card,
+.pt-card,
+.wl-card,
+.ch-card,
+.debt-card,
+.ev-card,
+.opp-card,
+.cat-card,
+.ci-event-item,
+.rc-item {
+  position: relative;
+  overflow: hidden;
+}
+.asset-card::after,
+.goal-card::after,
+.sub-card::after,
+.pt-card::after,
+.wl-card::after,
+.ch-card::after,
+.debt-card::after,
+.ev-card::after,
+.opp-card::after,
+.cat-card::after,
+.ci-event-item::after,
+.rc-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.26) 50%, rgba(255,255,255,0.14) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  border-radius: inherit;
+}
+.asset-card:hover::after,
+.goal-card:hover::after,
+.sub-card:hover::after,
+.pt-card:hover::after,
+.wl-card:hover::after,
+.ch-card:hover::after,
+.debt-card:hover::after,
+.ev-card:hover::after,
+.opp-card:hover::after,
+.cat-card:hover::after,
+.ci-event-item:hover::after,
+.rc-item:hover::after {
+  background-position: -30% 0;
+  opacity: 1;
+}
+[data-theme="dark"] .asset-card::after,
+[data-theme="dark"] .goal-card::after,
+[data-theme="dark"] .sub-card::after,
+[data-theme="dark"] .pt-card::after,
+[data-theme="dark"] .wl-card::after,
+[data-theme="dark"] .ch-card::after,
+[data-theme="dark"] .debt-card::after,
+[data-theme="dark"] .ev-card::after,
+[data-theme="dark"] .opp-card::after,
+[data-theme="dark"] .cat-card::after,
+[data-theme="dark"] .ci-event-item::after,
+[data-theme="dark"] .rc-item::after {
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.10) 48%, rgba(255,255,255,0.20) 50%, rgba(255,255,255,0.10) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .asset-card::after,
+  .goal-card::after,
+  .sub-card::after,
+  .pt-card::after,
+  .wl-card::after,
+  .ch-card::after,
+  .debt-card::after,
+  .ev-card::after,
+  .opp-card::after,
+  .cat-card::after,
+  .ci-event-item::after,
+  .rc-item::after,
+  [data-theme="dark"] .asset-card::after,
+  [data-theme="dark"] .goal-card::after,
+  [data-theme="dark"] .sub-card::after,
+  [data-theme="dark"] .pt-card::after,
+  [data-theme="dark"] .wl-card::after,
+  [data-theme="dark"] .ch-card::after,
+  [data-theme="dark"] .debt-card::after,
+  [data-theme="dark"] .ev-card::after,
+  [data-theme="dark"] .opp-card::after,
+  [data-theme="dark"] .cat-card::after,
+  [data-theme="dark"] .ci-event-item::after,
+  [data-theme="dark"] .rc-item::after {
+    transition: none;
+  }
+  .asset-card:hover::after,
+  .goal-card:hover::after,
+  .sub-card:hover::after,
+  .pt-card:hover::after,
+  .wl-card:hover::after,
+  .ch-card:hover::after,
+  .debt-card:hover::after,
+  .ev-card:hover::after,
+  .opp-card:hover::after,
+  .cat-card:hover::after,
+  .ci-event-item:hover::after,
+  .rc-item:hover::after {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+}
