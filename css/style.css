@@ -54830,3 +54830,103 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     background-position: 50% 50%;
   }
 }
+
+/* ============================================================
+   v29.12 Sprint #1304: アクティブナビゲーションアイコン halo breath
+                        投入 — living indicator icon family の完成形
+   ── 設計趣旨 ──
+   v29.07 (ページタイトル / モーダル h2 gradient text-flow) →
+   v29.08 (nav active indicator bar gradient flow) →
+   v29.09 (FAB ambient halo breath) →
+   v29.10 (収支サマリーカード 4 系統 background flow) →
+   v29.11 (残り bold-gradient 7 系統 background flow) と続いてきた
+   "living surface" ambient family を、現在ページの「アクティブ
+   ナビゲーターアイコン (SVG)」に展開する完成形マイルストーン。
+   v29.08 で nav active indicator バーを「常時 alive な gradient flow」
+   に格上げした流れで、アクティブナビアイテム内側のアイコン本体も
+   drop-shadow halo を 5.4s ease-in-out alternate で呼吸させ、
+   モバイル底部ナビ (.bottom-nav-item.active) とデスクトップ
+   サイドバーナビ (.nav-item.active) の両 active state アイコンが
+   「現在ページ」を ambient pulse で示す living indicator に進化。
+
+   ── 対象 ──
+   ① .bottom-nav-item.active .bottom-nav-icon svg
+      (line 5178 static filter: drop-shadow primary mix-md 6px が baseline)
+      → 6px primary mix-md ↔ 12px primary mix-xl の dual-step breath
+   ② .nav-item.active .nav-icon svg
+      (line 27704 static filter: drop-shadow primary-end mix-sm 6px が baseline)
+      → 6px primary-end mix-sm ↔ 12px primary-end mix-lg の dual-step breath
+
+   ── multi-animation 戦略 ──
+   - 既存 static `filter: drop-shadow(...)` は keyframes 0%/100% と
+     同値を採用し idle state からの「無音始動」を保証、ユーザー
+     視点では「いきなり点滅する」ではなく「徐々に呼吸し始める」
+     なめらかな立ち上がり。
+   - 5.4s 周期は v29.09 FAB (4.6s) よりわずかに slow、v29.10 (11s) /
+     v29.11 (12s) よりも fast、icon サイズが小さいため per-cycle
+     visible delta を高速気味に保ち「pulse が気付ける」レベルに調整。
+   - ease-in-out alternate で両端軟着陸。
+
+   ── coexistence ルール ──
+   - :active 時は `animation-play-state: paused` で press 中の
+     halo 変動を停止、physical depression 感を halo が邪魔しない。
+   - :hover は別 selector (line 1047 / 27277 等) で text-shadow /
+     box-shadow ladder を提供しており SVG filter は触らないため
+     breath animation は :hover 中も継続、hover ラダー + breath が
+     共鳴して active item の "alive 感" がさらに増す。
+
+   ── reduced-motion 安全策 ──
+   prefers-reduced-motion: reduce で breath 停止 + baseline filter
+   再宣言、視覚不変アクセシビリティ準拠。
+
+   CSS-only、JS変更なし、HTML変更は ?v= 更新のみ、ライト/ダーク
+   両対応、layout shift なし、totalRules +6 程度
+   (3 keyframes + 4 selector rules + 1 reduced-motion media + 1 :active pause)。
+   ============================================================ */
+@keyframes bottom-nav-active-icon-breath {
+  0%, 100% { filter: drop-shadow(0 0 6px  color-mix(in srgb, var(--primary) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary) var(--mix-xl), transparent)); }
+}
+
+@keyframes sidebar-nav-active-icon-breath {
+  0%, 100% { filter: drop-shadow(0 0 6px  color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent)); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent)); }
+}
+
+@keyframes nav-active-icon-breath-dark {
+  0%, 100% { filter: drop-shadow(0 0 7px  color-mix(in srgb, var(--primary-end) var(--mix-md), transparent)); }
+  50%      { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent)); }
+}
+
+.bottom-nav-item.active .bottom-nav-icon svg {
+  animation: bottom-nav-active-icon-breath 5.4s ease-in-out infinite alternate;
+}
+
+.nav-item.active .nav-icon svg {
+  animation: sidebar-nav-active-icon-breath 5.4s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon svg,
+[data-theme="dark"] .nav-item.active .nav-icon svg {
+  animation-name: nav-active-icon-breath-dark;
+}
+
+.bottom-nav-item.active:active .bottom-nav-icon svg,
+.nav-item.active:active .nav-icon svg {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav-item.active .bottom-nav-icon svg {
+    animation: none;
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent));
+  }
+  .nav-item.active .nav-icon svg {
+    animation: none;
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+  }
+  [data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon svg,
+  [data-theme="dark"] .nav-item.active .nav-icon svg {
+    filter: drop-shadow(0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+  }
+}
