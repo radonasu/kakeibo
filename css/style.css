@@ -55828,3 +55828,92 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0;
   }
 }
+
+/* ============================================================
+   v29.22 Sprint #1300 (2026-05-15)
+   3 系統 中・小 list item / surface に hover sheen sweep 投入
+   — v29.03 サマリーカード → v29.04 主要 CTA ボタン → v29.05 ホーム
+     ダッシュボード widget-item 6 系統 → v29.06 大型カード/リスト系
+     12 系統 → v29.17 .btn-ghost/.btn-danger → v29.18 .section-tab/
+     .hm-stat-card と展開してきた glass refraction sheen sweep family の続編。
+
+   未投入だった 3 系統：
+   ① .budget-item — 予算ページ各カテゴリ予算カード (8〜12 staggered)
+   ② .dw-item    — ホーム / 設定 / その他モーダルのウィジェット表示切替
+                    トグル行 (グリッド配列)
+   ③ .notif-item — 通知パネル内の通知行 (タイプ別 typed accent badge bar
+                    を ::after で持つため、こちらは ::before で sheen 実装)
+
+   実装方針 (v29.06 と同型・::after または ::before pseudo)：
+   - parent に position:relative + overflow:hidden を付与
+     (.dw-item は元々 position:relative、追加は overflow のみ)
+     (.notif-item は元々 position:relative、追加は overflow のみ
+      — 既存 ::after 3px 左 badge bar は left:0 / width:3px で
+      親矩形内に収まるため clipping 影響なし)
+   - .budget-item / .dw-item は ::after に sheen
+     .notif-item は ::before に sheen (badge は ::after 維持・
+      stacking で ::before 下層 → badge ::after 上層を維持)
+   - 115° 細幅 sheen バンド (透明 36% → 白 0.14 48% → 白ピーク 0.26 50%
+     → 白 0.14 52% → 透明 64%) を background-size:220% 100% で配置、
+     bg-position:130% 0 → -30% 0 を 0.85s var(--ease-out) で sweep、
+     opacity 0 → 1 fade-in を var(--dur-fast) で重畳
+   - dark mode は 0.10/0.20/0.10 に絞り subtle 設計
+   - prefers-reduced-motion で transition 即時化 + :hover 値 (bg-position
+     + opacity) を rest 固定し sheen 動作を完全無効化
+
+   CSS-only、JS/HTML 変更なし、ライト/ダーク両対応、layout shift なし。
+   既存 box-shadow / transform / inset accent bar / background:not-read tint /
+   notif-item::after badge bar は完全保持。.notif-item::before stacking 戦略：
+   document order で ::before → ::after の順に paint → badge bar が上層を維持。
+   ============================================================ */
+.budget-item,
+.dw-item,
+.notif-item {
+  position: relative;
+  overflow: hidden;
+}
+.budget-item::after,
+.dw-item::after,
+.notif-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.14) 48%, rgba(255,255,255,0.26) 50%, rgba(255,255,255,0.14) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: background-position 0.85s var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  border-radius: inherit;
+}
+.budget-item:hover::after,
+.dw-item:hover::after,
+.notif-item:hover::before {
+  background-position: -30% 0;
+  opacity: 1;
+}
+[data-theme="dark"] .budget-item::after,
+[data-theme="dark"] .dw-item::after,
+[data-theme="dark"] .notif-item::before {
+  background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.10) 48%, rgba(255,255,255,0.20) 50%, rgba(255,255,255,0.10) 52%, transparent 64%);
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  .budget-item::after,
+  .dw-item::after,
+  .notif-item::before,
+  [data-theme="dark"] .budget-item::after,
+  [data-theme="dark"] .dw-item::after,
+  [data-theme="dark"] .notif-item::before {
+    transition: none;
+  }
+  .budget-item:hover::after,
+  .dw-item:hover::after,
+  .notif-item:hover::before {
+    background-position: 130% 0;
+    opacity: 0;
+  }
+}
