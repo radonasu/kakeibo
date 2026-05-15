@@ -55947,3 +55947,77 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
 }
+
+/* ============================================================
+   v29.24 (2026-05-15): 主要 SVG アイコン 3 系統 :hover svg に lavender
+   brand dual-layer drop-shadow halo を投入 — v29.12 active 状態 drop-shadow
+   halo (.nav-item.active .nav-icon / .bottom-nav-item.active .bottom-nav-icon svg)
+   と family parity の「hover 状態 drop-shadow halo」を SVG アイコン要素そのものに
+   獲得し、v28.46 親要素 box-shadow hover halo + v29.24 アイコン filter hover halo
+   の dual-tier brand 共鳴が成立する完成形マイルストーン。
+
+   ── 対象 SVG アイコン (high-traffic) ──
+   ① .btn-notif-bell:hover svg — header 常時 visible な通知ベル icon
+      (bell shape SVG path)
+   ② .md-nav-btn:hover:not(:disabled) svg — 月詳細モーダル ◀▶ 月送り
+      (polyline 矢印 SVG)
+   ③ .btn-icon:hover svg — 汎用 icon-button family 内 SVG (通知パネル
+      .notif-mark-read 等で使用される generic icon surface)
+
+   ── halo 仕様 ──
+   - light: drop-shadow(0 0 5px primary mix-md) drop-shadow(0 0 10px primary-end mix-sm)
+   - dark : drop-shadow(0 0 6px primary-end mix-md) drop-shadow(0 0 12px primary-end mix-sm)
+   - inner = primary (光源) / outer = primary-end (lavender 補色 wash)
+     v28.40-v28.98 lavender brand family と同じ dual-color halo 構造
+   - transition: filter var(--dur-fast) var(--ease-out) を SVG に付与で
+     hover 切替時に halo が cubic-ease で fade-in
+   - prefers-reduced-motion: transition: none + :hover svg filter: none で
+     完全静止、アクセシビリティ準拠
+
+   ── 既存との独立性 ──
+   - 親 .btn-notif-bell の hover text-shadow (v23.85 white glow line 27223) /
+     box-shadow halo (line 15679) は filter 別属性のため完全保持
+   - 親 .md-nav-btn の hover text-shadow (line 27209) / box-shadow halo
+     (line 17634) は filter 別属性のため完全保持
+   - 親 .btn-icon の hover box-shadow triple-layer halo (v28.46 line 1474) は
+     filter 別属性のため完全保持
+   - v29.12 active 状態 .bottom-nav-item.active .bottom-nav-icon svg filter
+     drop-shadow + breath (line 27698) は別 selector のため完全保持
+   - SVG stroke / fill / stroke-width 等のアトリビュートは完全保持
+
+   CSS-only、JS/HTML 変更なし (?v= 更新のみ)、ライト/ダーク両対応、layout shift なし。
+   ============================================================ */
+.btn-notif-bell svg,
+.md-nav-btn svg,
+.btn-icon svg {
+  transition: filter var(--dur-fast) var(--ease-out);
+}
+.btn-notif-bell:hover svg,
+.md-nav-btn:hover:not(:disabled) svg,
+.btn-icon:hover svg {
+  filter:
+    drop-shadow(0 0 5px color-mix(in srgb, var(--primary) var(--mix-md), transparent))
+    drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+[data-theme="dark"] .btn-notif-bell:hover svg,
+[data-theme="dark"] .md-nav-btn:hover:not(:disabled) svg,
+[data-theme="dark"] .btn-icon:hover svg {
+  filter:
+    drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-notif-bell svg,
+  .md-nav-btn svg,
+  .btn-icon svg {
+    transition: none;
+  }
+  .btn-notif-bell:hover svg,
+  .md-nav-btn:hover:not(:disabled) svg,
+  .btn-icon:hover svg,
+  [data-theme="dark"] .btn-notif-bell:hover svg,
+  [data-theme="dark"] .md-nav-btn:hover:not(:disabled) svg,
+  [data-theme="dark"] .btn-icon:hover svg {
+    filter: none;
+  }
+}
