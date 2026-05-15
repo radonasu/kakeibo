@@ -56342,3 +56342,102 @@ textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disab
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.30 Sprint #1319 (2026-05-15)
+   .form-group:focus-within 左端アクセントバー獲得
+   マイルストーン — フォーム入力アクティブ状態の視覚指標
+   を「① label color + ② label text-shadow + ③ input border
+   + ④ input box-shadow halo」既存 4 段ラダーに対して
+   「⑤ 左端 lavender アクセントレール」5 段目を投入する family。
+
+   既存：
+   - v22.66-v26.13: .form-group input:focus → border-color
+     primary + box-shadow primary inner halo + lavender outer wash
+   - v22.89-v22.x: .form-group:focus-within > label → color
+     primary + text-shadow primary glow
+
+   本スプリント：
+   `.form-group { position: relative }` を付与（既存 base
+   ルール line 1585 `.form-group { margin-bottom: var(--sp-4) }`
+   は完全保持・position 未設定確認済）、`.form-group::before`
+   疑似要素で `left: -7px / top: 2px / bottom: 2px / width: 2px`
+   の縦バーを絶対配置、bg は `primary-end → primary 50% →
+   primary-end` の 3-stop 縦 gradient。
+
+   idle 状態：opacity 0 + transform scaleY(0.3) で完全非表示。
+   :focus-within 状態：opacity 1 + transform scaleY(1) +
+   `0 0 8px primary mix-sm` outer halo に展開し、フォーカス中の
+   input フィールドの左側に lavender ハイライトレールが
+   「中央から上下に scaleY 伸展」する dramatic な現状指標。
+
+   ダーク：bg gradient を `primary → primary-end 50% → primary`
+   (補色基調) に反転、:focus-within halo を `0 0 10px
+   primary-end mix-md` に 1 ティア boost。
+
+   効果：
+   ① 多フィールドフォーム（取引追加・カテゴリ予算・カスタマイズ・
+   テンプレート・MR 編集・サブスク追加・FX レート・設定 API キー等
+   17+ モーダル）で「現在どこを入力中か」が左端 lavender bar
+   で一目瞭然
+   ② 既存 label color/text-shadow + input border/halo の
+   4 層に bar 5 層目を append し focused-field 認識速度向上
+   ③ left: -7px は modal-body padding (sp-6 = 24px) 内で完結、
+   layout shift なし、bounce ease で scaleY 0.3→1 が弾性的に伸展
+   ④ CSS-only、JS変更なし、ライト/ダーク両対応、
+   prefers-reduced-motion で transition のみ短絡（final state
+   は visible 維持）
+
+   実装ノート：
+   - .form-group { position: relative } は EOF last-defined-wins
+     で base ルールを cascade 通過（既存 `margin-bottom` を保持）。
+   - .form-group::before / .form-group:focus-within::before の
+     pseudo は既存なし grep 確認済 — 衝突リスクなし。
+   - `.form-row-2` は js/app.js で .form-group を 2 つ含む
+     wrapper として使われるが、CSS で flex/grid 指定なし =
+     block stack のため、横並び overlap なし確認済。
+   - .form-group が overflow:hidden の親内に置かれるケースは
+     css/style.css grep で zero 確認、bar は親 padding 内に収まる。
+   ============================================================ */
+.form-group {
+  position: relative;
+}
+.form-group::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  border-radius: var(--radius-badge);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    var(--primary) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+  opacity: 0;
+  transform: scaleY(0.3);
+  transform-origin: center;
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-bounce),
+              box-shadow var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+.form-group:focus-within::before {
+  opacity: 1;
+  transform: scaleY(1);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .form-group::before {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    var(--primary-end) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent));
+}
+[data-theme="dark"] .form-group:focus-within::before {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-group::before {
+    transition: none;
+  }
+}
