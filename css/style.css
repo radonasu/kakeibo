@@ -57498,3 +57498,66 @@ details[open] .debt-archive-summary::before {
     animation: none;
   }
 }
+
+/* ============================================================
+   v29.38 / スプリント#1327
+   Page-enter 着地 wake-glow choreography 第2弾 — 補助ヒーロー統計テキスト 8 family 拡張
+   v29.33 (sprint #1322) で投入した amount-wake-glow / amount-wake-glow-dark keyframe を、
+   それまでカバーされていなかった「タブ上部や主役 surface に並ぶ大型統計テキスト」8 family にも展開し、
+   ページ遷移時の wake-glow 発火を主要 8 family + 補助 8 family = 計 16 family に完成形拡張する
+   マイルストーン。keyframe は v29.33 で定義済の amount-wake-glow / amount-wake-glow-dark を完全
+   再利用（重複定義なし）、追加は selector のみの最小サージカル戦略。
+
+   対象 8 family:
+   - .wl-summary-value (ウィッシュリストタブ最上部 3-card サマリーバンド値)
+   - .ch-summary-value (チャレンジタブ最上部 3-card サマリーバンド値)
+   - .pt-total         (ポイントタブ最上部ポイント残高大型テキスト)
+   - .cal-sum-value    (カレンダータブ月次サマリー値)
+   - .hm-stat-value    (ホームタブ stat カード大型値)
+   - .smi-amount       (収支ミニサマリー amount text — カレンダー / 取引タブ上部)
+   - .fv-stat-value    (財務オーバービュー stat 値)
+   - .yoy-summary-value (前年比サマリー値)
+   ============================================================ */
+
+.page-enter .wl-summary-value,
+.page-enter .ch-summary-value,
+.page-enter .pt-total,
+.page-enter .cal-sum-value,
+.page-enter .hm-stat-value,
+.page-enter .smi-amount,
+.page-enter .fv-stat-value,
+.page-enter .yoy-summary-value {
+  animation: amount-wake-glow 1.2s var(--ease-out) var(--dur-delay-sm) 1;
+}
+
+[data-theme="dark"] .page-enter .wl-summary-value,
+[data-theme="dark"] .page-enter .ch-summary-value,
+[data-theme="dark"] .page-enter .pt-total,
+[data-theme="dark"] .page-enter .cal-sum-value,
+[data-theme="dark"] .page-enter .hm-stat-value,
+[data-theme="dark"] .page-enter .smi-amount,
+[data-theme="dark"] .page-enter .fv-stat-value,
+[data-theme="dark"] .page-enter .yoy-summary-value {
+  animation: amount-wake-glow-dark 1.3s var(--ease-out) var(--dur-delay-sm) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter .wl-summary-value,
+  .page-enter .ch-summary-value,
+  .page-enter .pt-total,
+  .page-enter .cal-sum-value,
+  .page-enter .hm-stat-value,
+  .page-enter .smi-amount,
+  .page-enter .fv-stat-value,
+  .page-enter .yoy-summary-value,
+  [data-theme="dark"] .page-enter .wl-summary-value,
+  [data-theme="dark"] .page-enter .ch-summary-value,
+  [data-theme="dark"] .page-enter .pt-total,
+  [data-theme="dark"] .page-enter .cal-sum-value,
+  [data-theme="dark"] .page-enter .hm-stat-value,
+  [data-theme="dark"] .page-enter .smi-amount,
+  [data-theme="dark"] .page-enter .fv-stat-value,
+  [data-theme="dark"] .page-enter .yoy-summary-value {
+    animation: none;
+  }
+}
