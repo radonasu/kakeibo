@@ -56106,3 +56106,70 @@ kbd {
     0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v29.26: :disabled 状態 desaturation polish
+   ============================================================
+   従来 .btn:disabled は「opacity: 0.5; cursor: not-allowed; transform: none;」
+   のみで brand color の彩度がそのまま残り、「色は鮮やかだが薄い」状態。
+   これでは「使えない」UX シグナルが弱く、ホバー/プレス系 box-shadow が
+   そのまま色付きで光り続ける問題があった。
+   v29.26 では grayscale + saturate filter を追加し、彩度を大幅に落として
+   「明確に inactive」な視覚言語を獲得。box-shadow は filter で同時に desaturate
+   されるため lavender brand halo は静かに沈黙する。さらに :hover/:active も
+   同等 specificity (0,3,0) で override してホバー時の box-shadow 復活を防止。
+   フォーム入力 input/select/textarea :disabled にもグローバル統一処理を追加し、
+   ライト/ダーク両モード対応で muted brand surface に統一する。
+   ============================================================ */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:active,
+.btn:disabled:focus-visible,
+.btn-receipt:disabled,
+.btn-receipt:disabled:hover,
+.btn-mr-add:disabled,
+.btn-mr-add:disabled:hover,
+.month-nav-btn:disabled,
+.month-nav-btn:disabled:hover {
+  filter: grayscale(0.55) saturate(0.5) brightness(0.98);
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  text-shadow: none;
+}
+[data-theme="dark"] .btn:disabled,
+[data-theme="dark"] .btn:disabled:hover,
+[data-theme="dark"] .btn:disabled:active,
+[data-theme="dark"] .btn:disabled:focus-visible,
+[data-theme="dark"] .btn-receipt:disabled,
+[data-theme="dark"] .btn-receipt:disabled:hover,
+[data-theme="dark"] .btn-mr-add:disabled,
+[data-theme="dark"] .btn-mr-add:disabled:hover,
+[data-theme="dark"] .month-nav-btn:disabled,
+[data-theme="dark"] .month-nav-btn:disabled:hover {
+  filter: grayscale(0.55) saturate(0.45) brightness(1.02);
+  opacity: 0.45;
+}
+
+/* グローバル input/select/textarea :disabled — muted surface 統一 */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(0.4) saturate(0.6);
+  background: color-mix(in srgb, var(--surface-2) var(--mix-3xl), transparent);
+  color: var(--text-muted);
+  -webkit-text-fill-color: var(--text-muted);
+  border-color: color-mix(in srgb, var(--border) var(--mix-2xl), transparent);
+}
+[data-theme="dark"] input:disabled,
+[data-theme="dark"] select:disabled,
+[data-theme="dark"] textarea:disabled {
+  opacity: 0.5;
+  filter: grayscale(0.45) saturate(0.55);
+  background: color-mix(in srgb, var(--surface) var(--mix-4xl), transparent);
+  color: var(--text-faint);
+  -webkit-text-fill-color: var(--text-faint);
+  border-color: color-mix(in srgb, var(--border) var(--mix-xl), transparent);
+}
