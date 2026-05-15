@@ -56775,3 +56775,146 @@ details[open] .debt-archive-summary::before {
     animation: none;
   }
 }
+
+/* ============================================================
+   v29.34 Sprint #1322 (2026-05-16)
+   フォームバリデーション状態 (.has-error / .has-success)
+   ハロー強化 + 左端アクセントバー color override マイルストーン —
+
+   背景:
+   - v28.45 で .form-group input/select/textarea:focus が
+     quad-layer halo (primary inner + lavender outer wash) を獲得。
+   - v29.30 で .form-group::before が左端 2px lavender アクセントバー
+     を獲得 (idle 非表示 → :focus-within 完全表示)。
+   - 一方で .form-group.has-error / .has-success は v5.26 時代の
+     single-layer ring (focus-ring-w + mix-2xs) のままで取り残され、
+     最新の brand halo / accent bar family と整合していなかった。
+
+   本スプリント:
+   ① .form-group.has-error input/select/textarea の box-shadow を
+      single-layer → triple-layer halo に拡張：
+      - light: 0 0 0 focus-ring-w danger mix-xs ring
+             + 0 2px 8px black-08 drop
+             + 0 0 16px danger mix-2xs outer wash
+      - dark : 0 0 0 focus-ring-w danger mix-sm ring
+             + 0 2px 10px rgba(0,0,0,0.22) drop
+             + 0 0 18px danger mix-xs outer wash
+   ② .form-group.has-success input/select/textarea の box-shadow を
+      同様に triple-layer halo (success 色) に拡張。
+   ③ .form-group.has-error::before / .has-success::before で
+      v29.30 lavender accent bar を danger / success カラーに override し
+      かつ idle (focus 外) でも常時 visible (opacity 1, scaleY 1)
+      で表示。focus 中はさらに halo を 1 ティア boost。
+      → focus を当てなくても「ここがエラー / 成功」が
+      左端アクセントバーで一目瞭然。
+   ④ .field-msg.error / .success / .warning に font-weight: medium +
+      letter-spacing: ls-snug を付与し、地のテキストより微妙に
+      強調されるよう visual weight を上げる。
+
+   設計判断:
+   - 既存 .form-group input:focus は v28.45 lavender halo を持ち、
+     validation rule は EOF 配置 (本ブロック) で last-defined-wins
+     により validation color が focus 中も支配する。
+   - .form-group.has-error::before / .has-success::before は
+     v29.30 の transition (opacity/transform/box-shadow var(--dur-base))
+     をそのまま継承するため新規 transition 定義不要。
+   - prefers-reduced-motion は v29.30 ブロックの
+     `.form-group::before { transition: none }` がそのままカバー。
+
+   効果:
+   ① エラー / 成功フィールドが triple-layer 色付きハロー + 常時
+      visible 左端アクセントバーで「状態」を 2 dimension で訴求。
+   ② 視線がフォーム上を流れる時、focus を当てる前にエラー箇所が
+      左端バーで pre-scan 可能、修正対象の特定が高速化。
+   ③ v28.45 lavender focus halo / v29.30 lavender accent bar の
+      brand 言語と完全対称構造、validation も同じ design family に合流。
+
+   CSS-only、JS / HTML 変更なし、ライト/ダーク両対応、layout shift なし。
+   ============================================================ */
+
+/* ── light validation halos (2 selector groups) ── */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: var(--danger-text) !important;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 16px color-mix(in srgb, var(--danger-text) var(--mix-2xs), transparent);
+}
+.form-group.has-success input,
+.form-group.has-success select,
+.form-group.has-success textarea {
+  border-color: var(--success) !important;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    0 2px 8px var(--black-08),
+    0 0 16px color-mix(in srgb, var(--success) var(--mix-2xs), transparent);
+}
+
+/* ── dark validation halos — 1 ティア boost ── */
+[data-theme="dark"] .form-group.has-error input,
+[data-theme="dark"] .form-group.has-error select,
+[data-theme="dark"] .form-group.has-error textarea {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent),
+    0 2px 10px rgba(0,0,0,0.22),
+    0 0 18px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .form-group.has-success input,
+[data-theme="dark"] .form-group.has-success select,
+[data-theme="dark"] .form-group.has-success textarea {
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+    0 2px 10px rgba(0,0,0,0.22),
+    0 0 18px color-mix(in srgb, var(--success) var(--mix-xs), transparent);
+}
+
+/* ── 左端アクセントバー (.form-group::before) を validation color に override + 常時表示 ── */
+.form-group.has-error::before {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    var(--danger-text) 50%,
+    color-mix(in srgb, var(--danger-text) var(--mix-md), transparent));
+  opacity: 1;
+  transform: scaleY(1);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--danger-text) var(--mix-sm), transparent);
+}
+.form-group.has-success::before {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    var(--success) 50%,
+    color-mix(in srgb, var(--success) var(--mix-md), transparent));
+  opacity: 1;
+  transform: scaleY(1);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+}
+/* focus 中はさらに halo を 1 ティア boost し focus accent を明示 */
+.form-group.has-error:focus-within::before {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+.form-group.has-success:focus-within::before {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--success) var(--mix-md), transparent);
+}
+
+/* dark variant 1 ティア boost */
+[data-theme="dark"] .form-group.has-error::before {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent);
+}
+[data-theme="dark"] .form-group.has-success::before {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--success) var(--mix-md), transparent);
+}
+[data-theme="dark"] .form-group.has-error:focus-within::before {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--danger-text) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .form-group.has-success:focus-within::before {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--success) var(--mix-lg), transparent);
+}
+
+/* ── .field-msg 強調 — font-weight medium + letter-spacing snug ── */
+.field-msg.error,
+.field-msg.success,
+.field-msg.warning {
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-snug);
+}
