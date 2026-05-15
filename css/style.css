@@ -56173,3 +56173,47 @@ textarea:disabled {
   -webkit-text-fill-color: var(--text-faint);
   border-color: color-mix(in srgb, var(--border) var(--mix-xl), transparent);
 }
+
+/* ============================================================
+   v29.27 (sprint #1326) — viewport ambient lavender atmosphere + modal scrim vignette
+   ① body bg を solid var(--bg) → viewport-fixed lavender brand 2-orb radial atmosphere + bg color
+      に拡張。左上 (12% 8%) に primary-end mix-nano(light)/mix-2xs(dark) orb、右下 (88% 92%) に
+      primary mix-nano(light)/mix-2xs(dark) orb を `fixed` attachment で viewport に固定、
+      スクロール時もページ全域の背景に薄ラベンダー ambient atmosphere を獲得、ライト 5% / ダーク 10%
+      の 1ティア boost、--bg solid color は最終 layer に温存し既存全レイアウト互換性保持。
+   ② .modal-overlay scrim を flat var(--scrim-strong) / color-mix(sidebar-bg mix-3xl) →
+      2-layer radial gradient (vignette scrim + edge lavender brand tint) に拡張。
+      lower layer = 中央 mix-2xl → mid mix-3xl → 周辺 mix-4xl の scrim ヴィネット (light) /
+      中央 #000 42% → mid scrim-strong → 周辺 #000 72% (dark)、
+      upper layer = transparent 25%→primary-end mix-nano 100% (light) / transparent 20%→primary-end mix-2xs 100% (dark)
+      の edge brand tint、モーダル中央への視線誘導 + 17+ モーダル全体 brand 統一感 +
+      既存 backdrop-filter blur との合成で premium 立体感獲得。
+   ============================================================ */
+body {
+  background:
+    radial-gradient(ellipse at 12% 8%, color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent), transparent 55%) fixed,
+    radial-gradient(ellipse at 88% 92%, color-mix(in srgb, var(--primary) var(--mix-nano), transparent), transparent 55%) fixed,
+    var(--bg);
+}
+[data-theme="dark"] body {
+  background:
+    radial-gradient(ellipse at 12% 8%, color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent), transparent 55%) fixed,
+    radial-gradient(ellipse at 88% 92%, color-mix(in srgb, var(--primary) var(--mix-2xs), transparent), transparent 55%) fixed,
+    var(--bg);
+}
+.modal-overlay {
+  background:
+    radial-gradient(circle at 50% 45%, transparent 25%, color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent) 100%),
+    radial-gradient(circle at 50% 45%,
+      color-mix(in srgb, var(--sidebar-bg) var(--mix-2xl), transparent) 0%,
+      color-mix(in srgb, var(--sidebar-bg) var(--mix-3xl), transparent) 50%,
+      color-mix(in srgb, var(--sidebar-bg) var(--mix-4xl), transparent) 100%);
+}
+[data-theme="dark"] .modal-overlay {
+  background:
+    radial-gradient(circle at 50% 45%, transparent 20%, color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 100%),
+    radial-gradient(circle at 50% 45%,
+      color-mix(in srgb, #000 42%, transparent) 0%,
+      var(--scrim-strong) 50%,
+      color-mix(in srgb, #000 72%, transparent) 100%);
+}
