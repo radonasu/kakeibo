@@ -56021,3 +56021,88 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     filter: none;
   }
 }
+
+/* ============================================================
+   v29.25 (2026-05-15): キーボードキー (kbd) 3D キーキャップ立体感獲得
+   — `?` キーで開くキーボードショートカットヘルプモーダル内 14+ 個 +
+   G キー入力時に画面下部に pop up する G キーシーケンスヒント内 1 個 =
+   計 15+ instance の kbd 要素が現状フラットな矩形 (surface-2 単色 bg +
+   1.5px border + 3px 太底ボーダー) で表示されているのを、"上から光が
+   当たっている本物のキーキャップ" の 3D 立体感に格上げするマイルストーン。
+
+   実装:
+   ① kbd (light): bg を `surface → surface-2` の縦 linear-gradient に
+      格上げし上端が明るく下端が暗い "光が上から当たる" 質感、box-shadow
+      に inset 0 1px 0 rgba(255,255,255,0.6) (上端 sheen) + 0 1px 2px
+      rgba(0,0,0,0.06) (微小外側 drop) の dual-layer halo を獲得。
+   ② [data-theme="dark"] kbd: bg を `primary mix-xs over surface-2 →
+      primary mix-2xs over surface-2` の薄ラベンダー縦 gradient に格上げ
+      + inset 0 1px 0 primary-end mix-md (上端 primary-end sheen) +
+      0 1px 2px rgba(0,0,0,0.32) (外側 drop) の dual-layer halo。
+   ③ .kb-g-hint-top kbd (light): G キー押下時に pop up する G キー
+      シーケンスヒント内 G キーアイコン (size-kbd-lg = 30px / fs-md /
+      primary 色字)。bg を `primary mix-2xs over surface → primary mix-md
+      over surface` の強めの primary 縦 gradient に格上げ + inset 0 1px 0
+      rgba(255,255,255,0.7) 上端白 sheen + inset 0 -1px 0 primary mix-md
+      下端 primary line + 0 2px 6px primary mix-sm outer drop + 0 0 14px
+      primary-end mix-2xs lavender outer wash の quad-layer halo。
+   ④ [data-theme="dark"] .kb-g-hint-top kbd: bg を `primary-end mix-md
+      over surface-2 → primary mix-lg over surface-2` の強めの lavender
+      縦 gradient + inset 0 1px 0 primary-end mix-lg 上端 lavender sheen
+      + inset 0 -1px 0 primary-end mix-md 下端 line + 0 2px 6px primary-end
+      mix-md outer + 0 0 16px primary mix-2xs primary outer wash の対称
+      quad-layer halo (light 側との primary/primary-end 補色 brand 共鳴)。
+
+   既存との独立性:
+   - 既存 line 16854 kbd の border / border-bottom-width (--accent-w 3px) /
+     border-radius / padding / display / min-width / height / font-size /
+     font-family / color / font-weight / letter-spacing / line-height /
+     white-space / user-select は完全保持。redefine は background +
+     box-shadow のみ (EOF last-defined-wins)。
+   - 既存 line 16874 [data-theme="dark"] kbd の border-color (primary mix-lg)
+     は完全保持。redefine は background + box-shadow のみ。
+   - 既存 line 16960 .kb-g-hint-top kbd の min-width / height / font-size /
+     letter-spacing / line-height / border-color / color は完全保持。
+     redefine は background + box-shadow のみ。
+
+   v28.40-v29.24 で展開してきた lavender brand box-shadow family + v26.x の
+   inset white sheen 3D 立体感 family の両 design dimension で未投入だった
+   kbd 要素に正式展開、家計簿 PWA キーボードショートカット表示層が
+   "キーキャップ感" を獲得する完成形マイルストーン。
+   CSS-only、JS/HTML 変更なし (?v= 更新のみ)、ライト/ダーク両対応、
+   layout shift なし。
+   ============================================================ */
+kbd {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 1px 2px rgba(0,0,0,0.06);
+}
+[data-theme="dark"] kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 1px 2px rgba(0,0,0,0.32);
+}
+.kb-g-hint-top kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), var(--surface)) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .kb-g-hint-top kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), var(--surface-2)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-lg), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
