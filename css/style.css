@@ -55917,3 +55917,33 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 0;
   }
 }
+
+/* ============================================================
+   v29.23: モーダル本文 (.modal-body) 縦スクロール edge fade UX hint 投入
+   ============================================================
+   背景:
+   - v28.99 で横スクロール strip (.section-tabs / .tx-tag-filter-row) に
+     mask-image による edge fade UX hint を投入済み (両端 24px / 16px の透明化)。
+   - 一方、kakeibo PWA で最も頻繁にスクロールされる縦方向 surface である
+     .modal-body (overflow-y: auto / app.js 内で 17 モーダル共通の本文 container)
+     は「上下にもっとコンテンツがある」可視性が欠落していた。スクロール可能と
+     ユーザーが気付けるのは scrollbar thumb のみ。
+
+   実装:
+   - .modal-body に top/bottom 18px の透明 → 黒 mask gradient を適用。
+   - 既存 padding (var(--sp-6) = 24px) > fade 距離 (18px) のため、
+     content が overflow せず収まるケースでは fade ゾーンが padding-y 内に
+     完全に収まり content の見切れ・テキスト先頭末尾の不可視化は発生しない。
+   - overflow 発生時のみ、scroll 中に edge 付近に来た content が
+     徐々に透明化し「上下にもっと続く」を視覚的に hint する canonical
+     overflow scrollability hint を獲得。
+   - prefers-reduced-motion 影響なし (mask は静的属性、transition 無し)。
+
+   layout shift なし、ライト/ダーク両モード共通、CSS-only、JS/HTML 変更なし。
+   既存の .modal-body padding / overflow-y / overscroll-behavior / stagger
+   cascade entrance animation には一切干渉しない。
+   ============================================================ */
+.modal-body {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+}
