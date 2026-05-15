@@ -56217,3 +56217,67 @@ body {
       var(--scrim-strong) 50%,
       color-mix(in srgb, #000 72%, transparent) 100%);
 }
+
+/* ============================================================
+   v29.28 Sprint #1317 (2026-05-15)
+   .tx-table tbody tr[data-type]:hover + .ct-table tbody tr:hover
+   family lavender brand outer wash 統一 — v28.83 list family
+   parity の漏れ補完。
+   既存：.tx-table typed rows (line 2259-2262) は shadow-row-hover
+   + typed mix-xs 10px + inset 3px typed の 3-layer halo 止まり、
+   .ct-table tbody tr:hover (line 11752 / line 35481 dark) は
+   primary inner halo + inset accent bar の 3-4-layer 止まりで
+   v28.83 の lavender outer wash 4th-5th layer が欠落していた。
+   本スプリント：light = 既存 3-layer に末尾 14px primary-end
+   mix-2xs outer wash を append、dark = 既存 3-4 layer に末尾
+   16px primary mix-2xs (補色) outer wash を append。EOF
+   last-defined-wins 戦略で box-shadow のみ redefine、background
+   / transform / position / z-index / transition は親 .tx-table
+   tbody tr:hover / .ct-table tbody tr:hover の cascade で完全保持。
+   効果：取引一覧テーブル (最頻接触 surface) と category-table の
+   全行 hover が v28.83 .sb-row / .rpt-month-row / .dd-tx-row
+   list family と brand parity に到達。
+   ============================================================ */
+.tx-table tbody tr[data-type="income"]:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--income),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.tx-table tbody tr[data-type="expense"]:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--expense),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ct-table tbody tr:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--primary),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .tx-table tbody tr[data-type="income"]:hover {
+  box-shadow:
+    var(--shadow-row-selected),
+    0 2px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--income-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .tx-table tbody tr[data-type="expense"]:hover {
+  box-shadow:
+    var(--shadow-row-selected),
+    0 2px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--expense-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ct-table tbody tr:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--primary-end),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
