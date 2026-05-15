@@ -56918,3 +56918,290 @@ details[open] .debt-archive-summary::before {
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-snug);
 }
+
+/* ============================================================
+   v29.35 Sprint #1324 (2026-05-16)
+   小バッジ count family 5 系統 lavender brand 統一 +
+   hover micro-interaction 投入マイルストーン
+
+   背景:
+   - kakeibo PWA は v28.40-v29.34 で大型カード/ボタン/フォーム
+     入力等の主要 surface に lavender brand halo family を展開
+     してきた。一方で各画面に散在する「数値の隣に並ぶ小さな
+     count badge」群は v5 時代の素朴な solid bg + 静止のまま
+     取り残されていた:
+     - .cal-ev-count (line 8254): primary mix-xs 単色 bg、
+       transition / hover なし、ホバーしても無反応。
+     - .adv-filter-count (line 3178): primary 単色 bg + 白文字、
+       詳細フィルター件数表示、transition / hover なし。
+     - .md-cell-count (line 17903): surface-hover 灰色 bg、
+       month-day セル内件数表示、transition / hover なし。
+     - .sb-apply-count (line 13840): on-dark-overlay (white .25)
+       単色 bg、smart-budget モーダル内件数表示、pop アニメは
+       既にあるが idle/hover の visual depth は皆無。
+     - .acc-tx-count (line 4782): 純テキスト (バッジなし)、
+       acc-card 内 tx 件数、transition / hover なし。
+
+   本スプリント:
+   ① 上記 5 系統に「solid 単色 → 135deg 3-stop gradient + 常時
+      drop-shadow halo + hover scale + halo boost」の lavender
+      brand badge 言語を投入。
+   ② 各 surface コンテキストに合わせた色帯選択:
+      - light surface 上 (.cal-ev-count / .md-cell-count /
+        .acc-tx-count): primary → primary 中間 → primary-end
+        gradient (lavender accent end-point)、idle drop-shadow
+        primary mix-2xs / hover primary-end mix-sm boost。
+      - 既に primary 強色 bg を持つ .adv-filter-count は
+        primary → primary-end gradient で saturation up +
+        inset top sheen + drop-shadow halo を獲得。
+      - on-dark surface 上の .sb-apply-count (smart-budget の
+        紫グラデモーダル内): primary-end mix-md 半透明 → white
+        mix-md → primary-end mix-md の対称グラデ + 白系
+        drop-shadow halo を獲得。
+   ③ 全 5 系統に transition: transform / box-shadow /
+      background-position / filter を付与し hover で
+      scale(1.06-1.10) + 1 ティア halo boost で「触れたら
+      光る」micro-interaction を獲得。
+   ④ .acc-tx-count (純テキスト) は新たに inline-flex pill bg
+      を獲得しないテキスト変種として light pill background
+      (primary mix-2xs 半透明 + inline padding) を追加、視覚的
+      に他の count badge と family-style 合流。
+   ⑤ ダークモード 1 ティア boost: gradient stop を primary-end
+      重心に振り替え、drop-shadow を mix-md/mix-lg に格上げ。
+   ⑥ prefers-reduced-motion: 5 selector group の transition と
+     :hover transform を短絡、halo (box-shadow) のみ残し
+     アクセシビリティ準拠。
+
+   設計判断:
+   - 既存 line 8254 / 3178 / 17903 / 13840 / 4782 の base ルール
+     は完全保持、本ブロックは EOF redefine で
+     background / transition / box-shadow / hover 系のみ
+     last-defined-wins で上書き、layout (width/height/padding/
+     font-size/letter-spacing) は触らず。
+   - .sb-apply-count の既存 transition: transform および
+     sb-count-pop @keyframes animation は触らず、本ブロックは
+     box-shadow / background のみ追加 redefine (transition は
+     既存 transform に box-shadow を append)。
+   - .md-cell-count は親 .md-cell の hover 色変化に干渉しないよう
+     box-shadow のみ追加、border / color は維持。
+   - layout shift ゼロ (size 系プロパティ未変更、box-shadow と
+     gradient のみ追加).
+
+   効果:
+   ① カレンダー画面のイベント件数バッジが lavender brand
+      gradient で点灯、ホバーで halo が広がる。
+   ② 取引一覧の詳細フィルターパネル内フィルター件数バッジが
+      lavender accent 帯を獲得、見つけやすく。
+   ③ 月別詳細画面のセル件数表示が subtle drop-shadow halo +
+      hover で primary 帯を獲得、件数の存在感アップ。
+   ④ Smart-budget モーダル内の対象件数バッジがダークガラス上で
+      白系 halo を獲得、件数 pop animation がより華やかに。
+   ⑤ アカウント詳細の tx 件数テキストが pill 化、視覚的に
+      他の count badge family と統一。
+
+   CSS-only、JS / HTML 変更なし、ライト/ダーク両対応、
+   layout shift なし。
+   ============================================================ */
+
+/* ── light .cal-ev-count (calendar event count badge) ── */
+.cal-ev-count {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--surface)) 100%);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.30);
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background-position var(--dur-base) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+.cal-ev-count:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.36);
+  filter: brightness(1.04);
+}
+
+/* ── light .adv-filter-count (advanced filter pill, white text on primary) ── */
+.adv-filter-count {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-end) 100%);
+  box-shadow:
+    0 1px 4px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.32);
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+.adv-filter-count:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.40);
+  filter: brightness(1.06);
+}
+
+/* ── light .md-cell-count (month-detail cell count) ── */
+.md-cell-count {
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+.md-cell:hover .md-cell-count {
+  transform: scale(1.06);
+  box-shadow:
+    0 2px 5px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.30);
+  filter: brightness(1.03);
+}
+
+/* ── .sb-apply-count (smart-budget modal, on dark glass surface) ── */
+.sb-apply-count {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--white) var(--mix-md), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 100%);
+  box-shadow:
+    0 1px 4px rgba(0,0,0,0.18),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.30);
+  transition: transform var(--dur-base) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+.sb-apply-count:hover {
+  transform: scale(1.10);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.24),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.40);
+  filter: brightness(1.08);
+}
+
+/* ── .acc-tx-count (account tx count text → pill) ── */
+.acc-tx-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--sp-1-5);
+  height: var(--size-badge-sm);
+  border-radius: var(--radius-badge);
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  color: var(--primary);
+  font-weight: var(--fw-bold);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 1px 2px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+.acc-card:hover .acc-tx-count,
+.acc-tx-count:hover {
+  transform: scale(1.06);
+  background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  filter: brightness(1.04);
+}
+
+/* ── dark variant — 1 ティア boost (primary-end 重心) ── */
+[data-theme="dark"] .cal-ev-count {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--surface)) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) 100%);
+  box-shadow:
+    0 1px 4px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+}
+[data-theme="dark"] .cal-ev-count:hover {
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+}
+[data-theme="dark"] .adv-filter-count {
+  background: linear-gradient(135deg, var(--primary-end) 0%, var(--primary) 100%);
+  box-shadow:
+    0 1px 5px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+[data-theme="dark"] .adv-filter-count:hover {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+}
+[data-theme="dark"] .md-cell-count {
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+[data-theme="dark"] .md-cell:hover .md-cell-count {
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+}
+[data-theme="dark"] .sb-apply-count {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 0%,
+    color-mix(in srgb, var(--white) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 100%);
+  box-shadow:
+    0 1px 5px rgba(0,0,0,0.30),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.20);
+}
+[data-theme="dark"] .sb-apply-count:hover {
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.36),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent),
+    inset 0 1px 0 rgba(255,255,255,0.26);
+}
+[data-theme="dark"] .acc-tx-count {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  color: var(--primary-end);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 1px 3px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .acc-card:hover .acc-tx-count,
+[data-theme="dark"] .acc-tx-count:hover {
+  background: color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 2px 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cal-ev-count,
+  .adv-filter-count,
+  .md-cell-count,
+  .sb-apply-count,
+  .acc-tx-count {
+    transition: none;
+  }
+  .cal-ev-count:hover,
+  .adv-filter-count:hover,
+  .md-cell:hover .md-cell-count,
+  .sb-apply-count:hover,
+  .acc-card:hover .acc-tx-count,
+  .acc-tx-count:hover {
+    transform: none;
+  }
+}
