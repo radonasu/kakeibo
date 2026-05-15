@@ -56686,3 +56686,92 @@ details[open] .debt-archive-summary::before {
     transform: rotate(var(--rotate-chevron));
   }
 }
+
+/* ============================================================
+   v29.33 / スプリント#1322
+   Page-enter 着地 wake-glow choreography — 主要 amount/value テキスト 8 family
+   ページ遷移時 .page-enter クラス追加に同期して、各ページの「主役の大型数値」が
+   ふわっと lavender brand halo を点灯 → 減衰する 1-shot drop-shadow + brightness パルス。
+   既存 text-shadow は触らず filter のみ animate するため、idle 状態のテキストシャドウ
+   (例: .summary-amount の white shimmer / .asset-balance などの idle 値) と衝突なし。
+   ライト = primary-end + primary の dual-layer drop-shadow / dark = 1 tier boost。
+   ============================================================ */
+
+@keyframes amount-wake-glow {
+  0% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+  28% {
+    filter: brightness(1.12)
+            drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+            drop-shadow(0 0 18px color-mix(in srgb, var(--primary) var(--mix-xs), transparent));
+  }
+  100% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+}
+
+@keyframes amount-wake-glow-dark {
+  0% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+  28% {
+    filter: brightness(1.16)
+            drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent))
+            drop-shadow(0 0 22px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+  }
+  100% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+}
+
+.page-enter .summary-amount,
+.page-enter .sub-summary-amount,
+.page-enter .pt-summary-amount,
+.page-enter .asset-balance,
+.page-enter .debt-balance,
+.page-enter .goal-saved,
+.page-enter .ct-stat-value,
+.page-enter .hs-score-num {
+  animation: amount-wake-glow 1.2s var(--ease-out) var(--dur-delay-sm) 1;
+}
+
+[data-theme="dark"] .page-enter .summary-amount,
+[data-theme="dark"] .page-enter .sub-summary-amount,
+[data-theme="dark"] .page-enter .pt-summary-amount,
+[data-theme="dark"] .page-enter .asset-balance,
+[data-theme="dark"] .page-enter .debt-balance,
+[data-theme="dark"] .page-enter .goal-saved,
+[data-theme="dark"] .page-enter .ct-stat-value,
+[data-theme="dark"] .page-enter .hs-score-num {
+  animation: amount-wake-glow-dark 1.3s var(--ease-out) var(--dur-delay-sm) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter .summary-amount,
+  .page-enter .sub-summary-amount,
+  .page-enter .pt-summary-amount,
+  .page-enter .asset-balance,
+  .page-enter .debt-balance,
+  .page-enter .goal-saved,
+  .page-enter .ct-stat-value,
+  .page-enter .hs-score-num,
+  [data-theme="dark"] .page-enter .summary-amount,
+  [data-theme="dark"] .page-enter .sub-summary-amount,
+  [data-theme="dark"] .page-enter .pt-summary-amount,
+  [data-theme="dark"] .page-enter .asset-balance,
+  [data-theme="dark"] .page-enter .debt-balance,
+  [data-theme="dark"] .page-enter .goal-saved,
+  [data-theme="dark"] .page-enter .ct-stat-value,
+  [data-theme="dark"] .page-enter .hs-score-num {
+    animation: none;
+  }
+}
