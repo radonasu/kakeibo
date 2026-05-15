@@ -57205,3 +57205,153 @@ details[open] .debt-archive-summary::before {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.36 — .summary-card :active / :focus-visible に lavender brand outer wash 投入
+   ============================================================
+   v28.94 で大型カード/リスト系 12 系統に投入した mobile tap parity
+   lavender outer wash を、最後まで未投入だった主役級「summary-card」
+   ファミリーにも展開。typed identity depression（v28.18 income-deep /
+   expense-deep / primary-dark inset）を完全保持しつつ、末尾 layer に
+   `0 0 14-18px primary-end mix-2xs/mix-xs` 外周 wash を append し
+   ホーム画面ヒーローカード 4 タイプ × {light, dark} × {tap, keyboard}
+   = 16 シナリオすべてで brand 共鳴が成立。
+
+   focus-visible 側も typed glow + focus-ring に lavender outer wash 4th layer
+   を append、keyboard ユーザーの :not(:active) state でも brand halo を獲得。
+
+   既存の transform / filter / inset 構造には触らず box-shadow のみ
+   EOF last-defined-wins で redefine する最小サージカル戦略。
+   ============================================================ */
+
+/* ── light :active — 5 selector group ── */
+.summary-card:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, black var(--mix-md), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.income:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.expense:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.balance.positive:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-dark) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.balance.negative:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-2xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── dark :active — 1 ティア boost ── */
+[data-theme="dark"] .summary-card:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, black var(--mix-lg), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.income:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--income-deep) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.expense:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.balance.positive:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--primary-darker) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.balance.negative:active {
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--expense-deep) var(--mix-3xl), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ── light .dash-sum-clickable:focus-visible:not(:active) — 4 typed group ── */
+.summary-card.income.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.expense.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.balance.positive.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.summary-card.balance.negative.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ── dark .dash-sum-clickable:focus-visible:not(:active) — 1 ティア boost ── */
+[data-theme="dark"] .summary-card.income.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.expense.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.balance.positive.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .summary-card.balance.negative.dash-sum-clickable:focus-visible:not(:active) {
+  box-shadow:
+    var(--shadow-summary-hover),
+    0 6px 24px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
