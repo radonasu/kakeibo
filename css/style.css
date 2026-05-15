@@ -57355,3 +57355,146 @@ details[open] .debt-archive-summary::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
     0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
 }
+
+/* ============================================================
+   v29.37 Sprint #1326 — モーダル開幕 wake-glow choreography
+   ============================================================
+   v29.33 で .page-enter 着地時に主役大型数値 8 family へ投入した
+   1-shot lavender brand drop-shadow + brightness pulse choreography
+   を、モーダル UI surface (.modal-overlay.modal-is-open) にも展開。
+
+   モーダルが開く瞬間 (transform/opacity transition と同時):
+   ① .modal-header h2 タイトルテキスト → 1.4s で lavender brand
+      drop-shadow halo + brightness 1.10 のピーク後減衰、
+      ユーザーの視線をタイトルに引き寄せる「目覚めの光」演出。
+   ② .modal-close × 閉じボタン → 1.0s で primary-end drop-shadow
+      + scale 1.12 のピーク後減衰、close affordance の存在を
+      アニメーションで announce。
+   ③ .modal-header::after lavender pill (v28.48) は別 pseudo で衝突
+      無し、background-position 軸の brand-text-flow ambient (v29.07)
+      も別 property のため modal-header h2 は comma-separated multi
+      animation で並走、ambient 流動感を維持しつつ wake-glow も発火。
+
+   設計判断:
+   - filter axis (drop-shadow + brightness) のみ animate するため
+     既存 background-image gradient (v28.85 3-stop) / -webkit-background-clip
+     / text-fill-color / hover drop-shadow (v28.85) と完全独立、
+     last-defined-wins 衝突無し。
+   - .modal-close は既存 animation 無し、新規 animation のみで安全。
+     ただし modal-close は :hover で transform: scale + rotate(90deg)
+     を持つため、wake animation の transform: scale ピーク (1.12) と
+     :hover が同時発生すると衝突するが、wake は 1.0s で即減衰し
+     その後は :hover が支配するため実害無し。
+   - .modal-overlay.modal-is-open のクラス追加タイミングが animation の
+     再発火 trigger (CSS animation は declared property の値変更で再発火)。
+     モーダルを閉じて (.modal-is-open 削除) → 開き直す (再追加) で
+     都度 wake-glow が再発火する自然な挙動。
+   - prefers-reduced-motion: reduce で wake-glow を停止、ambient
+     brand-text-flow のみ残す redefine。
+
+   効果:
+   v29.33 page-enter 着地 wake-glow と family parity、ページ遷移と
+   モーダル開幕の 2 つの「画面が切り替わる瞬間」が共に lavender
+   brand pulse で coordinated に announce される完成形マイルストーン。
+   ============================================================ */
+
+@keyframes modal-wake-glow {
+  0% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+  35% {
+    filter: brightness(1.10)
+            drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+            drop-shadow(0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent));
+  }
+  100% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+}
+
+@keyframes modal-wake-glow-dark {
+  0% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+  35% {
+    filter: brightness(1.14)
+            drop-shadow(0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent))
+            drop-shadow(0 0 26px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+  }
+  100% {
+    filter: brightness(1)
+            drop-shadow(0 0 0 transparent)
+            drop-shadow(0 0 0 transparent);
+  }
+}
+
+@keyframes modal-close-wake {
+  0% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  40% {
+    transform: scale(1.12) rotate(0);
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+
+@keyframes modal-close-wake-dark {
+  0% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  40% {
+    transform: scale(1.12) rotate(0);
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+
+/* ── light: header h2 wake-glow + ambient brand-text-flow comma-merge ── */
+.modal-overlay.modal-is-open .modal-header h2 {
+  animation:
+    brand-text-flow 7s ease-in-out infinite alternate,
+    modal-wake-glow 1.4s var(--ease-out) 0.05s 1;
+}
+
+/* ── dark: 1 ティア boost ── */
+[data-theme="dark"] .modal-overlay.modal-is-open .modal-header h2 {
+  animation:
+    brand-text-flow 7s ease-in-out infinite alternate,
+    modal-wake-glow-dark 1.5s var(--ease-out) 0.05s 1;
+}
+
+/* ── light: close btn wake (scale 1.12 + lavender drop-shadow) ── */
+.modal-overlay.modal-is-open .modal-close {
+  animation: modal-close-wake 1.0s var(--ease-out) 0.18s 1;
+}
+
+/* ── dark: 1 ティア boost ── */
+[data-theme="dark"] .modal-overlay.modal-is-open .modal-close {
+  animation: modal-close-wake-dark 1.0s var(--ease-out) 0.18s 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay.modal-is-open .modal-header h2,
+  [data-theme="dark"] .modal-overlay.modal-is-open .modal-header h2 {
+    animation: brand-text-flow 7s ease-in-out infinite alternate;
+  }
+  .modal-overlay.modal-is-open .modal-close,
+  [data-theme="dark"] .modal-overlay.modal-is-open .modal-close {
+    animation: none;
+  }
+}
