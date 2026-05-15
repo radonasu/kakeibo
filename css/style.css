@@ -56281,3 +56281,64 @@ body {
     inset 3px 0 0 var(--primary-end),
     0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
 }
+
+/* ============================================================
+   v29.29 Sprint #1318 (2026-05-15)
+   フォーム入力 "filled state" 蛍光ペン underline 視覚指標
+   family — 入力済フィールドを一目で識別できる subtle 下端
+   アクセント獲得マイルストーン。
+   既存：text 系 input / textarea family は rest 時 box-shadow
+   なし、:hover で primary ring + drop、:focus で focus-ring +
+   lavender halo の 3 段ラダーを持つが、「値が入っているか
+   どうか」を視覚化する idle 指標が皆無で、複数フィールドを
+   持つフォーム（取引追加・カテゴリ予算・カスタマイズ・
+   メンバー追加・テンプレート・MR編集・資産追加・FX レート
+   入力・設定 API キー等）で「どこを埋めたか」が分かりにくく、
+   セッション中断・再開時の継続性も損なわれていた。
+   本スプリント：input[placeholder]:not(:placeholder-shown)
+   :not(:focus):not(:hover):not(:disabled) で「値あり + idle」
+   状態を一意に捕捉し、`inset 0 -2px 0 0 primary mix-md`
+   （dark: primary-end mix-md）の下端 2px 蛍光ペン halo
+   underline を投入。フォームを一覧した際に「埋めた行」が
+   下端 lavender ハイライトで自然に浮き上がる scannable
+   completion 指標を獲得。
+   text/number/date/month/email/password/url/search + textarea
+   の標準型 + .filter-search (search) + textarea[placeholder]
+   全カバー、:hover/:focus 状態は :not() 排他で既存スタイル
+   完全継承、:disabled は v29.26 muted treatment 維持のため
+   除外、layout shift なし、CSS-only、ライト/ダーク両対応、
+   prefers-reduced-motion で transition のみ short-circuit。
+   ============================================================ */
+input[type="text"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="number"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="email"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="password"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="url"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="search"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+input[type="tel"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]) {
+  box-shadow: inset 0 -2px 0 0 color-mix(in srgb, var(--primary) var(--mix-md), transparent);
+  transition: box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+[data-theme="dark"] input[type="text"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="number"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="email"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="password"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="url"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="search"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] input[type="tel"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+[data-theme="dark"] textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]) {
+  box-shadow: inset 0 -2px 0 0 color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  input[type="text"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="number"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="email"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="password"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="url"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="search"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  input[type="tel"][placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]),
+  textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled):not([readonly]) {
+    transition: none;
+  }
+}
