@@ -56493,3 +56493,196 @@ textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disab
 [data-theme="dark"] .form-group:hover:not(:focus-within) > label {
   color: color-mix(in srgb, var(--primary-end) 55%, var(--text-muted));
 }
+
+/* ============================================================
+   v29.32 Sprint #1321 (2026-05-15)
+   details/summary chevron family bouncy spring rotation +
+   hover/active scale feedback + [open] lavender brand text-shadow halo 統一
+   ────────────────────────────────────────────────────────────
+   ── 対象 7 chevron family ──
+   ① .stp-help-summary::before              (line 4492)
+   ② .modal-details summary::before         (line 5243)
+   ③ .goal-achieved-summary::before         (line 7519)
+   ④ .sub-inactive-section summary::before  (line 8927)
+   ⑤ .wl-archive-summary::before            (line 10222)
+   ⑥ .ch-archive-summary::before            (line 11297)
+   ⑦ .debt-archive-summary::before          (line 13324)
+
+   ── 既存（v29.31 以前）状況 ──
+   全 7 family が `content: '▶'` Unicode chevron + transition:
+   transform var(--dur-base) var(--ease-out)（200ms 直線的 ease-out）
+   で rotate(0deg)→rotate(90deg) する単調回転。hover/active 時の
+   chevron スケール feedback なし、[open] 状態でも chevron 自体の
+   視覚的アクセントなし。
+
+   ── 本 sprint で投入する 3 機能 ──
+   ① 弾性スプリング回転: transition を var(--dur-base) var(--ease-out)
+      → var(--dur-medium) var(--ease-bounce)（350ms 弾性 overshoot）
+      に格上げ。chevron が「ぐにっ」と弾力的に回転し最終角を
+      微オーバーシュートして着地する dramatic motion を獲得。
+   ② hover scale(1.15) リフト + active scale(0.82) 押下 feedback:
+      非 [open] / [open] 4 状態に分けて transform を合成
+      （rotate × scale）。マウスホバー時 +15% 拡大、押下時 -18% 縮小で
+      物理的タッチ feedback を chevron 単体に獲得。
+   ③ [open] 状態 lavender brand text-shadow halo: 展開中の chevron に
+      v28.40-v28.83 で確立した lavender brand family の dual-color
+      text-shadow（light: primary mix-sm 6px + primary-end mix-xs 12px /
+      dark: primary-end mix-md 8px + mix-sm 16px）を獲得、color も
+      primary（light）/ primary-end（dark）に shift し「開いている」
+      状態が一目で識別可能に。
+
+   ── 効果 ──
+   1. 折りたたみセクション展開/収納の操作が物理的弾性感を持つ
+      micro-interaction として完成、bouncy spring 回転で「触っている」
+      感触が向上。
+   2. hover/active scale feedback で「クリック可能 → 押している」の
+      触覚的フィードバックが chevron 単体で完結。
+   3. [open] lavender halo で展開中セクションが視覚的にハイライト
+      され、v28.x lavender brand family の details/summary surface への
+      正式展開。設定 API ヘルプ / 取引メモ詳細 / 達成済み目標 /
+      非アクティブサブスク / wishlist アーカイブ / challenge アーカイブ /
+      debt アーカイブの 7 折りたたみ section UX が共鳴。
+
+   ── カスケード安全 ──
+   既存 transition / [open] rotate ルールを EOF redefine の
+   last-defined wins で上書き。`flex` レイアウト内 ::before は
+   transform 適用可能（block-formatting context）。
+   prefers-reduced-motion で transform を rotate のみに短絡 +
+   duration を dur-fast に絞り bounce 感を無効化。
+   ============================================================ */
+
+/* ① transition replacement — 7 family 弾性スプリング回転 + text-shadow transition 追加 */
+.stp-help-summary::before,
+.modal-details summary::before,
+.goal-achieved-summary::before,
+.sub-inactive-section summary::before,
+.wl-archive-summary::before,
+.ch-archive-summary::before,
+.debt-archive-summary::before {
+  transition: transform var(--dur-medium) var(--ease-bounce),
+              text-shadow var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* ② hover scale(1.15) lift — 非 [open] 状態 */
+.stp-help-summary:hover::before,
+.modal-details summary:hover::before,
+.goal-achieved-summary:hover::before,
+.sub-inactive-section summary:hover::before,
+.wl-archive-summary:hover::before,
+.ch-archive-summary:hover::before,
+.debt-archive-summary:hover::before {
+  transform: scale(1.15);
+}
+
+/* ③ hover scale(1.15) lift — [open] 状態（rotate 合成） */
+.stp-help-details[open] .stp-help-summary:hover::before,
+.modal-details[open] summary:hover::before,
+details[open] .goal-achieved-summary:hover::before,
+.sub-inactive-section[open] summary:hover::before,
+details[open] .wl-archive-summary:hover::before,
+details[open] .ch-archive-summary:hover::before,
+details[open] .debt-archive-summary:hover::before {
+  transform: rotate(var(--rotate-chevron)) scale(1.15);
+}
+
+/* ④ active scale(0.82) press — 非 [open] 状態 */
+.stp-help-summary:active::before,
+.modal-details summary:active::before,
+.goal-achieved-summary:active::before,
+.sub-inactive-section summary:active::before,
+.wl-archive-summary:active::before,
+.ch-archive-summary:active::before,
+.debt-archive-summary:active::before {
+  transform: scale(0.82);
+  transition-duration: var(--dur-faster);
+}
+
+/* ⑤ active scale(0.82) press — [open] 状態（rotate 合成） */
+.stp-help-details[open] .stp-help-summary:active::before,
+.modal-details[open] summary:active::before,
+details[open] .goal-achieved-summary:active::before,
+.sub-inactive-section[open] summary:active::before,
+details[open] .wl-archive-summary:active::before,
+details[open] .ch-archive-summary:active::before,
+details[open] .debt-archive-summary:active::before {
+  transform: rotate(var(--rotate-chevron)) scale(0.82);
+  transition-duration: var(--dur-faster);
+}
+
+/* ⑥ [open] 状態 lavender brand text-shadow halo + color shift（light） */
+.stp-help-details[open] .stp-help-summary::before,
+.modal-details[open] summary::before,
+details[open] .goal-achieved-summary::before,
+.sub-inactive-section[open] summary::before,
+details[open] .wl-archive-summary::before,
+details[open] .ch-archive-summary::before,
+details[open] .debt-archive-summary::before {
+  color: var(--primary);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑦ [data-theme="dark"] 1-tier boost — primary-end 重心 dual-layer halo */
+[data-theme="dark"] .stp-help-details[open] .stp-help-summary::before,
+[data-theme="dark"] .modal-details[open] summary::before,
+[data-theme="dark"] details[open] .goal-achieved-summary::before,
+[data-theme="dark"] .sub-inactive-section[open] summary::before,
+[data-theme="dark"] details[open] .wl-archive-summary::before,
+[data-theme="dark"] details[open] .ch-archive-summary::before,
+[data-theme="dark"] details[open] .debt-archive-summary::before {
+  color: var(--primary-end);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑧ prefers-reduced-motion: skip scale wobble + bouncy overshoot */
+@media (prefers-reduced-motion: reduce) {
+  .stp-help-summary::before,
+  .modal-details summary::before,
+  .goal-achieved-summary::before,
+  .sub-inactive-section summary::before,
+  .wl-archive-summary::before,
+  .ch-archive-summary::before,
+  .debt-archive-summary::before {
+    transition: transform var(--dur-fast) var(--ease-out),
+                text-shadow var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+  .stp-help-summary:hover::before,
+  .modal-details summary:hover::before,
+  .goal-achieved-summary:hover::before,
+  .sub-inactive-section summary:hover::before,
+  .wl-archive-summary:hover::before,
+  .ch-archive-summary:hover::before,
+  .debt-archive-summary:hover::before,
+  .stp-help-summary:active::before,
+  .modal-details summary:active::before,
+  .goal-achieved-summary:active::before,
+  .sub-inactive-section summary:active::before,
+  .wl-archive-summary:active::before,
+  .ch-archive-summary:active::before,
+  .debt-archive-summary:active::before {
+    transform: none;
+  }
+  .stp-help-details[open] .stp-help-summary:hover::before,
+  .modal-details[open] summary:hover::before,
+  details[open] .goal-achieved-summary:hover::before,
+  .sub-inactive-section[open] summary:hover::before,
+  details[open] .wl-archive-summary:hover::before,
+  details[open] .ch-archive-summary:hover::before,
+  details[open] .debt-archive-summary:hover::before,
+  .stp-help-details[open] .stp-help-summary:active::before,
+  .modal-details[open] summary:active::before,
+  details[open] .goal-achieved-summary:active::before,
+  .sub-inactive-section[open] summary:active::before,
+  details[open] .wl-archive-summary:active::before,
+  details[open] .ch-archive-summary:active::before,
+  details[open] .debt-archive-summary:active::before {
+    transform: rotate(var(--rotate-chevron));
+  }
+}
