@@ -56441,3 +56441,55 @@ textarea[placeholder]:not(:placeholder-shown):not(:focus):not(:hover):not(:disab
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.31 Sprint #1320 (2026-05-15)
+   .form-group:hover プレビュー階層獲得マイルストーン —
+   v29.30 で投入した `.form-group:focus-within::before` 左端
+   lavender アクセントバー（idle 不可視 → focus 完全表示）に
+   対して、間の :hover を「プレビュー階層」として中間状態
+   (opacity 0.45 / scaleY 0.65) で立ち上がらせ、idle → hover
+   preview → focus の 3 段階モーションラダーを獲得する family。
+
+   既存（v29.30）:
+   - idle: opacity 0 / scaleY 0.3 (完全非表示)
+   - :focus-within: opacity 1 / scaleY 1 + 8-10px halo (完全表示)
+
+   本スプリント追加:
+   - :hover:not(:focus-within): opacity 0.45 / scaleY 0.65
+     （部分表示・halo なし）→ マウスを置いた時点で
+     「ここを focus すると lavender bar が完成する」予兆を見せる
+   - :hover:not(:focus-within) > label: text-muted → primary
+     の中間 55% mix で label color preview を同期。focus 完全色
+     より控えめだが、ホバー時点で「次に focus する場所」が
+     視覚的に予告される。
+   - dark variant も対称 1 ティア boost (primary-end 基調)。
+
+   :not(:focus-within) guard で focus 中ホバー時の二重発火を
+   排除し v29.30 の focus 視覚を完全保持。既存 ::before の
+   transition (opacity/transform/box-shadow) がそのまま
+   hover/focus 遷移を担うため新規 keyframe 不要、CSS-only、
+   prefers-reduced-motion で transition のみ短絡。
+
+   効果：
+   ① 入力前にフォームを scan する時点で「次にどこを focus
+   するか」のアフォーダンスが提供される（クリック前予兆）
+   ② idle / hover preview / focus の 3 段階で「フォーム入力
+   への引き込み」モーション言語が成立、フォーカス入力体験の
+   流れが滑らかになる
+   ③ ホバー時の左端 bar 部分点灯 + label color preview の
+   二重視覚指標で「ここに入力する」誘導が明確化
+   ④ 多フィールドフォーム（取引追加・カテゴリ予算・サブスク
+   追加・FX レート・設定 API キー等 17+ モーダル）の入力前
+   scanning UX が hover preview tier で滑らかに底上げ
+   ============================================================ */
+.form-group:hover:not(:focus-within)::before {
+  opacity: 0.45;
+  transform: scaleY(0.65);
+}
+.form-group:hover:not(:focus-within) > label {
+  color: color-mix(in srgb, var(--primary) 55%, var(--text-muted));
+}
+[data-theme="dark"] .form-group:hover:not(:focus-within) > label {
+  color: color-mix(in srgb, var(--primary-end) 55%, var(--text-muted));
+}
