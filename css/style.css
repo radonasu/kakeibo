@@ -59336,3 +59336,157 @@ details[open] .debt-archive-summary::before {
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.51 (Sprint #1340) — デスクトップサイドバー上部ブランド
+   エリア #sidebar-brand に v29.50 #mobile-header と同型の
+   lavender brand atmospheric decoration (orb + gradient pill +
+   brand-name dual-layer text-shadow halo) を投入。
+   ────────────────────────────────────────────────────────────
+   ── 動機 ──
+   v29.50 (Sprint #1339) でモバイル frame surface 2 系統
+   (#mobile-header sticky top + #bottom-nav fixed bottom) に
+   atmospheric decoration を投入完了。デスクトップ側の常駐
+   frame surface である #sidebar (画面左の固定 dark column)
+   の上部 #sidebar-brand エリア (brand-icon gradient avatar +
+   brand-name + account-switcher を含む sidebar top section、
+   line 910 / padding sp-5 sp-4 sp-4 / border-bottom on-dark-
+   divider 1px) は、これまで完全に「装飾なし flat dark
+   surface」のままで lavender atmosphere は皆無。
+   ── 投入内容 ──
+   ① #sidebar-brand { position: relative; overflow: hidden; }
+      で pseudo-element 配置基準確立 + orb の右上はみ出し
+      クリップ (sidebar-w 240px 内に閉じ込め)
+   ② #sidebar-brand::before = top-right 160x160px radial-
+      gradient lavender orb (mobile-header::before と同型・
+      同寸法・同色強度・同 animation 共有)
+   ③ #sidebar-brand::after = 既存 border-bottom (on-dark-
+      divider 1px) 真下に重畳する 5-stop horizontal gradient
+      pill (v28.48 modal-header / v29.43 page-header / v29.50
+      mobile-header と同形 family)、dual-layer outer wash
+      box-shadow
+   ④ #sidebar-brand > * { z-index: 1 } で .brand-row /
+      .account-switcher を orb 前面に維持
+   ⑤ .brand-name に idle dual-layer text-shadow (primary-end
+      mix-xs 8px + primary mix-2xs 14px、#mobile-title v29.50
+      と同型)、#sidebar-brand:hover で 1 ティア boost
+   ⑥ #sidebar-brand:hover::after で box-shadow 1 ティア boost
+      (10/18px → 14/26px primary-end)、affordance 強化
+   ⑦ prefers-reduced-motion で orb animation 停止 +
+      text-shadow / box-shadow transition 無効化
+   ── カスケード安全 ──
+   - line 895 #sidebar base (position:fixed, sidebar-bg dark,
+     box-shadow inset white 0.18) / line 910 #sidebar-brand
+     base (padding + border-bottom) と完全独立した
+     additive pseudo-element 追加
+   - sidebar-bg は light/dark mode 共通で常に dark (#0f172a)
+     なので [data-theme] 分岐不要、最初から dark variant
+     強度 (mix-md / mix-lg / mix-2xl) を使用
+   - brand-row / account-switcher は元々 position 指定なし
+     だが、z-index:1 のため position: relative を付与
+   - 既存 .brand-icon gradient avatar (line 922-935) /
+     .brand-name (line 937-945) は完全保持、text-shadow
+     のみ append
+   - mobile では #sidebar transform: translateX(-100%) で
+     hidden、open 時のみ orb / pill が visible になる
+   ── 効果 ──
+   ⓐ デスクトップ常駐 sidebar の最上部に lavender 大気球が
+      呼吸 (orb-breath 5s)、ブランド ID の視覚的存在感が
+      確立
+   ⓑ #sidebar-brand 下端境界が単純 1px on-dark-divider から
+      gradient pill + dual-layer glow halo に格上げ、サイ
+      ドバー「ブランドゾーン↔ナビゲーションゾーン」の
+      視覚分離が rich 化
+   ⓒ デスクトップ #sidebar-brand / モバイル #mobile-header
+      の両 frame surface 上部装飾が同型 family で結ばれ、
+      brand identity の cross-viewport coherence が完成
+   ⓓ ホバー時にエリア全体 (orb / pill / brand-name)
+      が連動して intensify、interactive affordance を獲得
+   ============================================================ */
+
+#sidebar-brand {
+  position: relative;
+  overflow: hidden;
+}
+
+#sidebar-brand::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  animation: header-orb-breath 5s ease-in-out infinite;
+}
+
+#sidebar-brand > * {
+  position: relative;
+  z-index: 1;
+}
+
+#sidebar-brand::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 18%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 82%,
+    transparent 100%
+  );
+  border-radius: var(--radius-nano);
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out);
+}
+
+#sidebar-brand:hover::after {
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+#sidebar-brand .brand-name {
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+#sidebar-brand:hover .brand-name {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar-brand::before {
+    animation: none;
+    transform: scale(1);
+  }
+  #sidebar-brand .brand-name,
+  #sidebar-brand::after {
+    transition: none;
+  }
+}
