@@ -59753,3 +59753,70 @@ details[open] .debt-archive-summary::before {
   .tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); }
   .tx-tag-filter-all:active { transform: scale(var(--scale-chip-active)); }
 }
+
+/* ============================================================
+   v29.55 — Sprint #1344: ナビゲーション icon family hover/active 微回転 wobble tactile
+   ------------------------------------------------------------
+   v29.52 (header icon 4 family) / v29.53 (list action btn-icon 25 selector) /
+   v29.54 (チップ 4 family) で投入した rotation tactile を、
+   アプリ全体の「移動」階層を司る 2 大 navigation surface family にも展開し、
+   ヘッダー → リスト行 → チップ → ナビゲーションでモーション言語が完全統一する
+   完成形マイルストーン。
+
+   対象 family × 各々 :hover / :active = 4 selector group:
+     ① .nav-item:hover .nav-icon (サイドバー nav icon, 既存 scale-icon-hover 1.12)
+     ② .nav-item:active .nav-icon (active snap-back, scale-icon-active 0.88)
+     ③ .bottom-nav-item:not(.active):hover .bottom-nav-icon (モバイル nav, scale-hover-chip 1.06)
+     ④ .bottom-nav-item:not(.active):active .bottom-nav-icon (snap-back, scale-icon-active 0.88)
+
+   戦略:
+     - 既存 transform (scale ladder) を完全保持しつつ末尾に rotate(-5deg) append
+       (ナビ icon は頻繁にタップされるため chip と同じ控えめゾーン、ただし
+        action btn icon (-12deg) の半分 ≒ -5deg で中庸位置にバランス)
+     - :active は rotate(0deg) snap-back で「タップで姿勢を戻す」物理応答
+     - light: -5deg / dark: -6deg で 1 ティア boost
+     - transform-origin: center で対称回転
+     - .nav-item.active / .bottom-nav-item.active 既存 scale 強調状態は触らず、
+       通常 hover の非アクティブ nav icon のみに集中（active emphasis を保護）
+     - prefers-reduced-motion で rotation 解除し既存 transform のみ復元
+   ============================================================ */
+
+/* ── light :hover — 2 selector (rotation append, base scale 保持) ── */
+.nav-item:hover .nav-icon {
+  transform: scale(var(--scale-icon-hover)) rotate(-5deg);
+  transform-origin: center;
+}
+.bottom-nav-item:not(.active):hover .bottom-nav-icon {
+  background: var(--surface-hover);
+  transform: scale(var(--scale-hover-chip)) rotate(-5deg);
+  transform-origin: center;
+}
+
+/* ── light :active — 2 selector (rotate(0) snap-back, base scale 保持) ── */
+.nav-item:active .nav-icon {
+  transform: scale(var(--scale-icon-active)) rotate(0deg);
+  transform-origin: center;
+}
+.bottom-nav-item:not(.active):active .bottom-nav-icon {
+  background: var(--border);
+  transform: scale(var(--scale-icon-active)) rotate(0deg);
+  transform-origin: center;
+}
+
+/* ── dark :hover — 1 ティア boost (-5deg → -6deg) ── */
+[data-theme="dark"] .nav-item:hover .nav-icon {
+  transform: scale(var(--scale-icon-hover)) rotate(-6deg);
+  transform-origin: center;
+}
+[data-theme="dark"] .bottom-nav-item:not(.active):hover .bottom-nav-icon {
+  transform: scale(var(--scale-hover-chip)) rotate(-6deg);
+  transform-origin: center;
+}
+
+/* prefers-reduced-motion 安全弁: rotation を除去し既存 transform のみ復元 */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item:hover .nav-icon { transform: scale(var(--scale-icon-hover)); }
+  .nav-item:active .nav-icon { transform: scale(var(--scale-icon-active)); }
+  .bottom-nav-item:not(.active):hover .bottom-nav-icon { transform: scale(var(--scale-hover-chip)); }
+  .bottom-nav-item:not(.active):active .bottom-nav-icon { transform: scale(var(--scale-icon-active)); }
+}
