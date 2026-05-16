@@ -58156,3 +58156,244 @@ details[open] .debt-archive-summary::before {
 [data-theme="dark"] .cal-dow.sat {
   text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
 }
+
+/* ============================================================
+   v29.43 (Sprint #1332, 2026-05-16) — Page Header Lavender
+   Brand Atmosphere — .page-header decorative orb + bottom
+   accent line + .page-title left vertical accent bar 統一
+
+   全ページ最上部「page-header」コンテナと .page-title に
+   v28.40-v29.42 で確立した lavender brand family を新ディメン
+   ションで投入するマイルストーン。kakeibo PWA で全ページ
+   （ダッシュボード / 取引 / カレンダー / 予算 / 資産 / 負債 /
+   目標 / レポート / カテゴリ / 設定 等）の最上部にある
+   page-header に「右上 lavender orb 大気 + 下端 5-stop gradient
+   pill フレーム + page-title 左端 vertical accent bar」の
+   3 ディメンション装飾が一斉に立ち上がる。
+
+   ── 既存状態 ──
+   .page-header (line 1343) = flex space-between コンテナのみ装飾なし
+   .page-title (line 1352, v22.89 line 19890) = gradient text のみ
+   .page-title::after (line 48681, v28.51) = 5-stop pill 横アクセント
+   ::before pseudo は両方とも未使用 (free)
+   page-header 自体は完全 flat な構造体だった
+
+   ── 本スプリント投入 ──
+   ① .page-header { position: relative; } で pseudo 配置の基準確立
+   ② .page-header::before — top-right 200x200px radial-gradient
+      lavender orb (light: primary-end mix-2xs core / dark: mix-md core)
+      → page-header-orb-breath 5s ease-in-out 無限呼吸 (scale 0.96-1.04
+      / opacity 0.7-1) で「右上に lavender 大気球が浮く」装飾
+   ③ .page-header::after — bottom 5-stop horizontal gradient pill
+      (v28.48 modal-header / v29.42 cal-dow-row family と完全同形)
+      で page-header コンテナ全体の下端境界線 (page-title::after が
+      タイトル直下の局所線、これは page-header コンテナ全幅の上位線)
+   ④ .page-title { position: relative; padding-left: 3px+sp-2; }
+   ⑤ .page-title::before — 左端 vertical 3px gradient accent bar
+      (v29.41 md/ci/ch-section-title::before family と完全同形)、
+      height: 0.85em + top: 50% translateY で title 高さに整合
+   ⑥ .page-header:hover で orb intensity boost (opacity 1, blur 1px)
+      + pill halo を mix-2xs→mix-sm に 1 ティア boost + title-bar
+      box-shadow boost
+   ⑦ dark mode 1 ティア boost — orb を primary-end mix-md, pill を
+      全 stop primary-end mono-lavender, title-bar を primary-end 中心
+   ⑧ prefers-reduced-motion で orb animation 無効化、static 値固定
+
+   ── 効果 ──
+   ⓐ 全ページ最上部に「右上 lavender orb 大気」が呼吸する
+      atmospheric decoration が常駐
+   ⓑ page-header コンテナ全幅の「下端境界線」が 5-stop lavender
+      pill に格上げされ modal-header / cal-dow-row と共鳴する
+      brand frame family が成立
+   ⓒ ページタイトルの左に vertical lavender accent bar が立ち、
+      v29.41 サブセクション見出し family (md/ci/ch-section-title)
+      と「上位/下位の見出し階層」が brand 色で結ばれる
+   ⓓ page-title gradient text (v22.89) + page-title::after pill
+      (v28.51) + page-title::before vertical bar (v29.43) で
+      タイトル単体が「3-decoration brand identity」完成形に到達
+
+   ── カスケード安全 ──
+   line 1343 base .page-header / line 1352 base .page-title /
+   line 19890 .page-title gradient text / line 48681
+   .page-title::after pill とは独立した pseudo 追加 + position:
+   relative 付与のため衝突なし。.page-title::after は display:
+   block で flow 内、.page-title::before は position: absolute で
+   layout shift なし。.page-header::before/after は position:
+   absolute で .page-header flex 計算に影響なし。
+
+   ── アクセシビリティ ──
+   prefers-reduced-motion で orb breath を停止、static state 保持。
+   ============================================================ */
+
+.page-header {
+  position: relative;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  animation: page-header-orb-breath 5s ease-in-out infinite;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--sp-2));
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 18%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 82%,
+    transparent 100%
+  );
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out);
+}
+
+@keyframes page-header-orb-breath {
+  0%, 100% { opacity: 0.7; transform: scale(0.96); }
+  50%      { opacity: 1;   transform: scale(1.04); }
+}
+
+.page-header:hover::before {
+  opacity: 1;
+  filter: blur(1px);
+}
+
+.page-header:hover::after {
+  opacity: 1;
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* .page-title 左端 vertical accent bar (v29.41 md/ci/ch-section-title family) */
+.page-title {
+  position: relative;
+  padding-left: calc(3px + var(--sp-2));
+  transition:
+    padding var(--dur-fast) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out);
+}
+
+.page-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0.85em;
+  border-radius: var(--radius-pill, 999px);
+  background: linear-gradient(
+    180deg,
+    var(--primary-end) 0%,
+    var(--primary) 50%,
+    var(--primary-end) 100%
+  );
+  box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  pointer-events: none;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.page-header:hover .page-title::before {
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+/* ── ダーク 1 ティア boost ────────────────────────────────── */
+[data-theme="dark"] .page-header::before {
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 35%,
+    transparent 70%
+  );
+  opacity: 0.95;
+}
+
+[data-theme="dark"] .page-header::after {
+  height: 2.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 18%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 82%,
+    transparent 100%
+  );
+  opacity: 0.95;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+[data-theme="dark"] .page-header:hover::after {
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+[data-theme="dark"] .page-title::before {
+  background: linear-gradient(
+    180deg,
+    var(--primary-end) 0%,
+    color-mix(in srgb, var(--primary-end) 70%, var(--primary)) 50%,
+    var(--primary-end) 100%
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+[data-theme="dark"] .page-header:hover .page-title::before {
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 20px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-header::before {
+    animation: none;
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  [data-theme="dark"] .page-header::before {
+    opacity: 0.95;
+  }
+  .page-title,
+  .page-title::before,
+  .page-header::after {
+    transition: none;
+  }
+}
