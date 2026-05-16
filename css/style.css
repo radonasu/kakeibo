@@ -59548,3 +59548,111 @@ details[open] .debt-archive-summary::before {
   #global-fab:hover  { transform: scale(var(--scale-icon-hover)); }
   #global-fab:active { transform: scale(var(--scale-press-md)); }
 }
+
+/* ============================================================
+   v29.53 (Sprint #1342) — リスト行 action btn-icon family
+   semantic rotation tactile feedback 統一
+   v29.52 で header icon 4 family に投入した rotate tactile を、
+   全 list row / card action ボタン群にも展開:
+   - 編集 (✏️ pencil)    → :hover rotate(-12deg) "writing tilt"
+   - 削除 (🗑️ trash)     → :hover rotate( 12deg) "trash shake"
+   - 複製 (📋 dup)       → :hover rotate(-8deg)  "subtle nudge"
+   - 名前変更 (rename)   → :hover rotate(-10deg) "subtle tilt"
+   :active は全て rotate(0) snap-back + 既存 scale-icon-active。
+   既存 scale / box-shadow / background / color は完全保持、
+   transform のみ EOF redefine で last-defined-wins。
+   ============================================================ */
+
+/* edit family (10 selectors): pencil tilt -12deg */
+.edit-tx:hover,
+.edit-cat:hover,
+.edit-tpl:hover,
+.edit-mem:hover,
+.asset-edit:hover,
+.debt-edit:hover,
+.ev-edit:hover,
+.goal-edit:hover,
+.pt-edit-btn:hover,
+.sub-edit-btn:hover {
+  transform: rotate(-12deg) scale(var(--scale-icon-hover));
+}
+
+/* delete family (13 selectors): trash shake +12deg */
+.delete-tx:hover,
+.delete-cat:hover,
+.delete-tpl:hover,
+.delete-mem:hover,
+.delete-acc:hover,
+.asset-delete:hover,
+.debt-delete:hover,
+.ev-delete:hover,
+.goal-delete:hover,
+.pt-delete-btn:hover,
+.sub-delete-btn:hover,
+.asset-del-entry:hover,
+.debt-del-entry:hover {
+  transform: rotate(12deg) scale(var(--scale-icon-hover));
+}
+
+/* dup family: subtle nudge -8deg */
+.dup-tx:hover {
+  transform: rotate(-8deg) scale(var(--scale-icon-hover));
+}
+
+/* rename family: subtle tilt -10deg */
+.rename-acc:hover {
+  transform: rotate(-10deg) scale(var(--scale-icon-hover));
+}
+
+/* :active snap-back to rotate(0) + scale-icon-active for all 25 selectors */
+.edit-tx:active,
+.edit-cat:active,
+.edit-tpl:active,
+.edit-mem:active,
+.asset-edit:active,
+.debt-edit:active,
+.ev-edit:active,
+.goal-edit:active,
+.pt-edit-btn:active,
+.sub-edit-btn:active,
+.delete-tx:active,
+.delete-cat:active,
+.delete-tpl:active,
+.delete-mem:active,
+.delete-acc:active,
+.asset-delete:active,
+.debt-delete:active,
+.ev-delete:active,
+.goal-delete:active,
+.pt-delete-btn:active,
+.sub-delete-btn:active,
+.asset-del-entry:active,
+.debt-del-entry:active,
+.dup-tx:active,
+.rename-acc:active {
+  transform: rotate(0deg) scale(var(--scale-icon-active));
+}
+
+/* prefers-reduced-motion 安全弁: 回転を除去し scale のみに戻す */
+@media (prefers-reduced-motion: reduce) {
+  .edit-tx:hover, .edit-cat:hover, .edit-tpl:hover, .edit-mem:hover,
+  .asset-edit:hover, .debt-edit:hover, .ev-edit:hover, .goal-edit:hover,
+  .pt-edit-btn:hover, .sub-edit-btn:hover,
+  .delete-tx:hover, .delete-cat:hover, .delete-tpl:hover, .delete-mem:hover, .delete-acc:hover,
+  .asset-delete:hover, .debt-delete:hover, .ev-delete:hover, .goal-delete:hover,
+  .pt-delete-btn:hover, .sub-delete-btn:hover,
+  .asset-del-entry:hover, .debt-del-entry:hover,
+  .dup-tx:hover, .rename-acc:hover {
+    transform: scale(var(--scale-icon-hover));
+  }
+  .edit-tx:active, .edit-cat:active, .edit-tpl:active, .edit-mem:active,
+  .asset-edit:active, .debt-edit:active, .ev-edit:active, .goal-edit:active,
+  .pt-edit-btn:active, .sub-edit-btn:active,
+  .delete-tx:active, .delete-cat:active, .delete-tpl:active, .delete-mem:active, .delete-acc:active,
+  .asset-delete:active, .debt-delete:active, .ev-delete:active, .goal-delete:active,
+  .pt-delete-btn:active, .sub-delete-btn:active,
+  .asset-del-entry:active, .debt-del-entry:active,
+  .dup-tx:active, .rename-acc:active {
+    transform: scale(var(--scale-icon-active));
+  }
+}
