@@ -58552,3 +58552,97 @@ details[open] .debt-archive-summary::before {
     right: var(--sp-3);
   }
 }
+
+/* ============================================================
+   v29.45 — FAB + ボトムナビ active アイコン
+   lavender brand micro-interaction family upgrade (Sprint #1334)
+   ------------------------------------------------------------
+   ① #global-fab:hover — rotate(12deg) 弾性 tilt + lavender outer wash 4th layer
+   ② #global-fab:active — rotate(-15deg) counter-tilt squeeze + lavender residual
+   ③ @keyframes fab-pulse — primary 単色 ring を primary+primary-end dual-color ripple に
+   ④ ダーク 1 ティア boost — FAB :hover/:active の lavender 強化
+   ⑤ .bottom-nav-item.active .bottom-nav-icon svg — single-color
+      drop-shadow を primary inner + primary-end outer の dual-color halo に拡張
+   ⑥ prefers-reduced-motion: reduce — rotation のみ無効化、halo は維持
+   ============================================================ */
+
+/* ① #global-fab :hover — 既存 scale 1.12 + 3-layer box-shadow に
+   rotate(12deg) 弾性 tilt + lavender outer wash 4th layer を append */
+#global-fab:hover {
+  transform: scale(var(--scale-icon-hover)) rotate(12deg);
+  box-shadow:
+    0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent),
+    0 3px 8px var(--black-14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 0 24px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  filter: brightness(1.06);
+}
+
+/* ② #global-fab :active — squeeze + counter-tilt rotate(-15deg) feedback */
+#global-fab:active {
+  transform: scale(var(--scale-press-md)) rotate(-15deg);
+  filter: brightness(var(--brightness-press));
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.20),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ @keyframes fab-pulse — 旧 primary 単色 ring を
+   primary 内側 + primary-end 外側の dual-color ripple に格上げ */
+@keyframes fab-pulse {
+  0% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      0 0 0 0 color-mix(in srgb, var(--primary) var(--mix-2xl), transparent),
+      0 0 0 0 color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  }
+  60% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      0 0 0 12px transparent,
+      0 0 0 22px transparent;
+  }
+  100% {
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--primary) var(--mix-3xl), transparent),
+      0 2px 6px var(--black-12),
+      0 0 0 0 transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+/* ④ ダーク 1 ティア boost — FAB :hover/:active の lavender layer 強化 */
+[data-theme="dark"] #global-fab:hover {
+  box-shadow:
+    0 6px 24px color-mix(in srgb, var(--primary) var(--mix-5xl), transparent),
+    0 3px 8px var(--black-14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 0 28px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] #global-fab:active {
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.24),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* ⑤ ボトムナビ active icon svg — single-color drop-shadow を
+   primary 内側 + primary-end 外側の dual-color halo に拡張 */
+.bottom-nav-item.active .bottom-nav-icon svg {
+  filter:
+    drop-shadow(0 0 6px color-mix(in srgb, var(--primary) var(--mix-md), transparent))
+    drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+[data-theme="dark"] .bottom-nav-item.active .bottom-nav-icon svg {
+  filter:
+    drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--primary) var(--mix-sm), transparent));
+}
+
+/* ⑥ prefers-reduced-motion: reduce — rotation feedback のみ無効化、
+   scale/halo は維持してアクセシビリティ準拠 */
+@media (prefers-reduced-motion: reduce) {
+  #global-fab:hover { transform: scale(var(--scale-icon-hover)); }
+  #global-fab:active { transform: scale(var(--scale-press-md)); }
+}
