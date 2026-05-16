@@ -59034,3 +59034,129 @@ details[open] .debt-archive-summary::before {
     animation-delay: calc(2 * var(--dur-stagger-xl));
   }
 }
+
+/* ============================================================
+   v29.49 Sprint #1338 — サイドバーフッター brand identity 統一
+   ============================================================
+   今まで一切微調整されていなかったサイドバー下端の常時表示エリ
+   ア (.sidebar-user-card / .sidebar-offline-badge) に v28.48
+   modal-header / v29.43 page-header family と共鳴する lavender
+   brand 視覚効果を投入。サイドバーは常時ダーク bg のため絵作り
+   は dark 中心、[data-theme="dark"] 時に 1 ティア boost。
+
+   ① .sidebar-user-card に position:relative + transition 投入、
+      :hover / :focus-within (logout button focus 連動) で
+      translateY(-1px) lift + border-color lavender mix-xs +
+      box-shadow dual-layer (primary mix-2xs inner + primary-end
+      mix-2xs outer wash)
+
+   ② .sidebar-user-card::before に top edge 5-stop horizontal
+      gradient pill (transparent → primary mix-md 22% →
+      primary-end mix-lg 50% → primary mix-md 78% → transparent)
+      を追加、idle opacity 0.55、:hover で opacity 0.95 + lavender
+      outer glow
+
+   ③ .sidebar-offline-badge に transition 投入、:hover で
+      color brighten + translateY(-1px) + text-shadow lavender
+      dual-layer halo
+
+   ④ [data-theme="dark"] 1 ティア boost (mix-2xs → mix-xs / pill
+      mono-lavender / box-shadow blur 拡大 / pill height 1.5→2px)
+
+   ⑤ prefers-reduced-motion で transform 解除、color/halo は保持
+   ============================================================ */
+.sidebar-user-card {
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-bounce),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.sidebar-user-card::before {
+  content: '';
+  position: absolute;
+  left: var(--sp-3);
+  right: var(--sp-3);
+  top: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.sidebar-user-card:hover,
+.sidebar-user-card:focus-within {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-xs), var(--on-dark-bg));
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+.sidebar-user-card:hover::before,
+.sidebar-user-card:focus-within::before {
+  opacity: 0.95;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+[data-theme="dark"] .sidebar-user-card::before {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .sidebar-user-card:hover,
+[data-theme="dark"] .sidebar-user-card:focus-within {
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--on-dark-bg));
+  box-shadow:
+    0 3px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+[data-theme="dark"] .sidebar-user-card:hover::before,
+[data-theme="dark"] .sidebar-user-card:focus-within::before {
+  opacity: 1;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+.sidebar-offline-badge {
+  position: relative;
+  transition: color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-bounce),
+              text-shadow var(--dur-fast) var(--ease-out);
+}
+
+.sidebar-offline-badge:hover {
+  color: var(--sidebar-text);
+  transform: translateY(-1px);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+[data-theme="dark"] .sidebar-offline-badge:hover {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-user-card:hover,
+  .sidebar-user-card:focus-within,
+  .sidebar-offline-badge:hover {
+    transform: none;
+  }
+}
