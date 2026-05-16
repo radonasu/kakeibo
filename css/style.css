@@ -58397,3 +58397,158 @@ details[open] .debt-archive-summary::before {
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.44 Sprint #1333 (2026-05-16)
+   パネルヘッダー/フッター separator family — lavender brand
+   gradient pill 拡張マイルストーン
+
+   v28.48 (modal-header::after) / v29.42 (cal-dow-row::after) /
+   v29.43 (page-header::after) で確立した「border-bottom 上に
+   重畳する 5-stop horizontal gradient pill」family を、これまで
+   solid border のみだった 4 panel separator surface に展開：
+
+   ① .cal-events-header::after  — 日付クリック時に表示される
+      カレンダー下のイベント一覧パネルヘッダー（タイトル + 件数バッジ
+      + ◀ ▶ ナビ）の border-bottom 上に 5-stop pill 重畳
+   ② .cal-events-totals::before — 同パネルのフッター（収支ピル行）
+      の border-top 上にミラー pill 重畳
+   ③ .notif-panel-header::after — 通知ベルアイコンタップで表示される
+      通知パネルヘッダー（タイトル + 既読化ボタン）の border-bottom
+      上に 5-stop pill 重畳
+   ④ .notif-panel-footer::before — 同パネルのフッター（テキスト案内）
+      の border-top 上にミラー pill 重畳
+
+   ライト: transparent 0% → primary mix-md 22% → primary-end mix-lg
+   50% → primary mix-md 78% → transparent 100% (height 2px,
+   opacity 0.7)
+   ダーク: 1 ティア boost — 全 stop primary-end ベースの mono-lavender
+   gradient + outer halo box-shadow + height 2.5px + opacity 0.95
+
+   親要素は既に display:flex なので position:relative を追加し
+   絶対配置疑似要素を border 上に重畳。pointer-events:none で
+   既存 hit-target に影響なし。
+
+   ── カスケード安全 ──
+   line 8236 (.cal-events-header) / line 8367 (.cal-events-totals)
+   / line 15789 (.notif-panel-header) / line 15842 (.notif-panel-footer)
+   に対し EOF append で position:relative + ::after/::before 新規
+   定義のため衝突なし。既存 border-bottom / border-top の solid line
+   は保持され gradient pill が上に重畳する 2-layer 構造。
+   ============================================================ */
+
+.cal-events-header,
+.cal-events-totals,
+.notif-panel-header,
+.notif-panel-footer {
+  position: relative;
+}
+
+/* ① .cal-events-header::after — 下端 gradient pill */
+.cal-events-header::after {
+  content: "";
+  position: absolute;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  bottom: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ② .cal-events-totals::before — 上端 gradient pill (mirror) */
+.cal-events-totals::before {
+  content: "";
+  position: absolute;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  top: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ③ .notif-panel-header::after — 下端 gradient pill */
+.notif-panel-header::after {
+  content: "";
+  position: absolute;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  bottom: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ④ .notif-panel-footer::before — 上端 gradient pill (mirror) */
+.notif-panel-footer::before {
+  content: "";
+  position: absolute;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  top: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── ダーク 1 ティア boost ────────────────────────────────── */
+[data-theme="dark"] .cal-events-header::after,
+[data-theme="dark"] .cal-events-totals::before,
+[data-theme="dark"] .notif-panel-header::after,
+[data-theme="dark"] .notif-panel-footer::before {
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+/* モバイル時の左右余白追従 */
+@media (max-width: 640px) {
+  .cal-events-header::after,
+  .cal-events-totals::before,
+  .notif-panel-header::after,
+  .notif-panel-footer::before {
+    left: var(--sp-3);
+    right: var(--sp-3);
+  }
+}
