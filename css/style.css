@@ -60638,3 +60638,282 @@ kbd:active {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.61 Sprint #1350: .insight-item typed family + 5 emoji-btn /
+   5 color-btn ピッカー UI hover 状態 lavender brand 統一
+
+   v28.40-v29.60 で確立した lavender (--primary-end) dual-color
+   halo brand family を、以下の単色 typed accent halo のみだった
+   主要 UI surface に展開：
+
+   ① ダッシュボード insight-item 4 typed variant (info/alert/
+      success/warning) の :hover ─ 既存 typed accent box-shadow
+      + inset 3px typed bar の上に lavender outer wash layer を
+      append し dual-color halo 化。
+   ② カラー/絵文字ピッカー 10 family (5 color-btn +
+      5 emoji-btn/chip) の :hover ─ 既存 single-color primary
+      drop-shadow を「primary inner halo + primary-end outer
+      wash」dual-color halo に拡張。
+   ③ .color-swatch / .ev-emoji-chip :active 状態に lavender
+      residual outer wash を末尾 layer に append。
+
+   v28.40-v28.46 (大型カード/btn/form input focus) と
+   v29.45-v29.60 (FAB/section-tab/nav/chip/type-toggle/kbd)
+   で確立した lavender brand 統一を、ダッシュボード診断
+   panel と全モーダルのアイコン/色選択ピッカーにも完全展開
+   する完成形マイルストーン。
+   ============================================================ */
+
+/* ① .insight-item.insight-info:hover (light) — 既存 3-layer
+       (shadow-row-hover + primary mix-xs 10px + inset 3px primary bar)
+       に lavender 4th layer outer wash append → 4-layer halo */
+.insight-item.insight-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--primary),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .insight-item.insight-alert:hover (light) */
+.insight-item.insight-alert:hover {
+  background: color-mix(in srgb, var(--danger-text) var(--mix-nano), var(--surface-hover));
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--danger-text),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ .insight-item.insight-success:hover (light) */
+.insight-item.insight-success:hover {
+  background: color-mix(in srgb, var(--success) var(--mix-nano), var(--surface-hover));
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--success),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ .insight-item.insight-warning:hover (light) */
+.insight-item.insight-warning:hover {
+  background: color-mix(in srgb, var(--warning) var(--mix-nano), var(--surface-hover));
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ .insight-item.insight-info:hover (dark) — 既存 4-layer の末尾に
+       lavender 5th layer outer wash append → 5-layer halo */
+[data-theme="dark"] .insight-item.insight-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    inset 4px 0 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--primary-end),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑥ .insight-item.insight-alert:hover (dark) */
+[data-theme="dark"] .insight-item.insight-alert:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    inset 4px 0 12px color-mix(in srgb, var(--danger-text) var(--mix-md), transparent),
+    inset 3px 0 0 var(--danger-text),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑦ .insight-item.insight-success:hover (dark) */
+[data-theme="dark"] .insight-item.insight-success:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    inset 4px 0 12px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    inset 3px 0 0 var(--success),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑧ .insight-item.insight-warning:hover (dark) */
+[data-theme="dark"] .insight-item.insight-warning:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+    inset 4px 0 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ⑨〜⑬ 5 color-btn family :hover (light) ─ 既存 single primary halo
+        → primary inner halo + primary-end outer wash dual-color halo */
+.color-swatch:hover {
+  transform: scale(var(--scale-hover-lg));
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.goal-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.pt-color-btn:hover {
+  transform: scale(var(--scale-hover));
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ch-color-btn:hover {
+  transform: scale(var(--scale-color-hover));
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑭〜⑱ 5 emoji-btn family :hover (light) ─ dual-color halo 化 */
+.goal-emoji-btn:hover {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.sub-emoji-btn:hover {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.pt-emoji-btn:hover {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ch-emoji-btn:hover {
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.ev-emoji-chip:hover {
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  border-color: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  transform: scale(var(--scale-hover-chip));
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑲〜㉓ 5 color-btn family :hover (dark) ─ 1 ティア boost
+         primary-end inner halo + primary outer wash */
+[data-theme="dark"] .color-swatch:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .goal-color-btn:hover {
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .sub-color-btn:hover {
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .pt-color-btn:hover {
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .ch-color-btn:hover {
+  box-shadow:
+    var(--shadow-badge),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ㉔〜㉘ 5 emoji-btn family :hover (dark) ─ dual-color halo */
+[data-theme="dark"] .goal-emoji-btn:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .sub-emoji-btn:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .pt-emoji-btn:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .ch-emoji-btn:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .ev-emoji-chip:hover {
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ㉙ .color-swatch:active (light + dark) ─ 既存 inset 黒 0.20 凹みに
+        lavender residual outer wash 末尾 layer 追加 */
+.color-swatch:active {
+  transform: scale(var(--scale-rest));
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.20),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .color-swatch:active {
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.36),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ㉚ .ev-emoji-chip:active (light + dark) ─ 既存 inset primary 凹みに
+        lavender residual outer wash 末尾 layer 追加 */
+.ev-emoji-chip:active {
+  background: color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  filter: brightness(var(--brightness-press-soft));
+  transform: scale(var(--scale-chip-active));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .ev-emoji-chip:active {
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ㉛ prefers-reduced-motion 安全弁: transform のみ無効化、halo は維持 */
+@media (prefers-reduced-motion: reduce) {
+  .color-swatch:hover,
+  .color-swatch:active,
+  .goal-color-btn:hover,
+  .sub-color-btn:hover,
+  .pt-color-btn:hover,
+  .ch-color-btn:hover,
+  .ev-emoji-chip:hover,
+  .ev-emoji-chip:active {
+    transform: none;
+  }
+}
