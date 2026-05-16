@@ -58646,3 +58646,168 @@ details[open] .debt-archive-summary::before {
   #global-fab:hover { transform: scale(var(--scale-icon-hover)); }
   #global-fab:active { transform: scale(var(--scale-press-md)); }
 }
+
+/* ============================================================
+   v29.46 Sprint #1335 (2026-05-16)
+   header surface family — ::before 装飾 lavender orb 拡張
+   ------------------------------------------------------------
+   v29.43 で .page-header に投入した「top-right 装飾 radial lavender
+   orb (5s breath animation) + ::after gradient pill」family を、
+   v29.44 で gradient pill のみ獲得済みだった 3 header surface に
+   ::before orb を追加して atmospheric decoration family に合流：
+
+   ① .modal-header:not(.sim-modal-header)::before — 17+ モーダル
+      ヘッダー（取引追加 / 月詳細 / 設定 / 各種詳細 etc.）の右上
+      にラベンダー大気球を配置。modal の overflow:hidden により
+      モーダル枠内にソフトにトリミングされ「角の atmospheric tuck」演出
+   ② .cal-events-header::before — カレンダー日付クリック時に出現する
+      イベント一覧パネルのヘッダー右上に同型 orb
+   ③ .notif-panel-header::before — ベルアイコンタップで開く通知
+      パネルのヘッダー右上に同型 orb
+
+   ── 効果 ──
+   ⓐ モーダルが開くたびにヘッダー右上に lavender 大気が呼吸する
+      → 全モーダル UI に v29.43 page-header と共鳴する brand atmosphere
+   ⓑ カレンダー詳細パネル + 通知パネルの 2 floating panel ヘッダーも
+      同型 orb を獲得し family 統一
+   ⓒ 既存 ::after gradient pill (v28.48 modal / v29.44 cal/notif) と
+      組み合わさり、header surface が「上半 orb + 下端 pill」の
+      dual-decoration brand identity 完成形に到達
+
+   ── 実装の鍵 ──
+   - .modal-header / .cal-events-header / .notif-panel-header は flex
+     layout なので、orb は position:absolute (pointer-events:none) で
+     flow に影響なし。> * に z-index:1 を付与してテキスト/アイコンが
+     orb の上に来るよう layer 整理
+   - 親 .modal / .cal-events-panel / .notif-panel すべてに overflow:hidden
+     があるため orb 外周は自然にラウンド角でトリミングされる
+   - ダーク 1 ティア boost — orb intensity を primary-end mix-2xs → mix-md
+     に強化、暗背景で lavender が際立つ
+   - prefers-reduced-motion で animation 停止、static state 保持
+
+   ── カスケード安全 ──
+   既存 ::after pill (line 48510 modal / line 58448 cal-events / line
+   58488 notif) とは独立した ::before 追加。modal-close (右上、z-index 1)
+   は flex 子なので orb と重ねても > * z-index:1 で前面に乗る。
+   ============================================================ */
+
+@keyframes header-orb-breath {
+  0%, 100% { opacity: 0.7; transform: scale(0.96); }
+  50%      { opacity: 1;   transform: scale(1.04); }
+}
+
+/* ① .modal-header:not(.sim-modal-header) — orb 設置 + 子要素 z-index 整理 */
+.modal-header:not(.sim-modal-header)::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  animation: header-orb-breath 5s ease-in-out infinite;
+}
+.modal-header:not(.sim-modal-header) > * {
+  position: relative;
+  z-index: 1;
+}
+.modal-header:not(.sim-modal-header):hover::before {
+  opacity: 1;
+  filter: blur(1px);
+}
+
+/* ② .cal-events-header — orb 設置 + 子要素 z-index 整理 */
+.cal-events-header::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  right: -24px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  animation: header-orb-breath 5s ease-in-out infinite;
+}
+.cal-events-header > * {
+  position: relative;
+  z-index: 1;
+}
+.cal-events-header:hover::before {
+  opacity: 1;
+  filter: blur(1px);
+}
+
+/* ③ .notif-panel-header — orb 設置 + 子要素 z-index 整理 */
+.notif-panel-header::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  right: -24px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  animation: header-orb-breath 5s ease-in-out infinite;
+}
+.notif-panel-header > * {
+  position: relative;
+  z-index: 1;
+}
+.notif-panel-header:hover::before {
+  opacity: 1;
+  filter: blur(1px);
+}
+
+/* ── ダーク 1 ティア boost — orb intensity を mix-md core にアップ ── */
+[data-theme="dark"] .modal-header:not(.sim-modal-header)::before,
+[data-theme="dark"] .cal-events-header::before,
+[data-theme="dark"] .notif-panel-header::before {
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 35%,
+    transparent 70%
+  );
+  opacity: 0.95;
+}
+
+/* prefers-reduced-motion — orb breath 停止、static state 保持 */
+@media (prefers-reduced-motion: reduce) {
+  .modal-header:not(.sim-modal-header)::before,
+  .cal-events-header::before,
+  .notif-panel-header::before {
+    animation: none;
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  [data-theme="dark"] .modal-header:not(.sim-modal-header)::before,
+  [data-theme="dark"] .cal-events-header::before,
+  [data-theme="dark"] .notif-panel-header::before {
+    opacity: 0.95;
+  }
+}
