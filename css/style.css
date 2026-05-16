@@ -59921,3 +59921,107 @@ details[open] .debt-archive-summary::before {
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.57 Sprint #1346 (2026-05-17)
+   セクションタブアイコン rotation tactile 投入 +
+   空状態メッセージテキスト lavender brand dual-color halo 拡張
+   ──
+   既存状態:
+   - .section-tab:hover .tab-icon (line 7163): transform: scale(var(--scale-hover))
+     のみ (rotation 無し) — v29.52 header icon / v29.53 list action btn-icon /
+     v29.54 chip family / v29.55 nav-item icon に投入された rotation tactile
+     family で唯一未到達の主要 navigation icon surface
+   - .empty-{month/asset/goal/debt}-msg + .tx-empty-msg + .{wl/ch/sub/pt}-empty p
+     (line 41985-42006, v26.10): primary 単色 text-shadow halo のみ
+     (light: mix-2xs 8px / dark: primary-end mix-xs 10px) — v28.40-v28.44 で
+     summary card 系/大型金額/ラベル/補助/行・テーブル等に投入された
+     lavender brand dual-color halo family が空状態テキストに未到達
+   ──
+   本スプリント追加:
+   ① .section-tab:not(.is-active):hover .tab-icon に rotate(-5deg)
+      wobble を append (既存 scale ladder 完全保持) — v29.55 と完全同型
+   ② .section-tab:not(.is-active):active .tab-icon に rotate(0deg)
+      snap-back を append
+   ③ ダーク 1 ティア boost (-5deg → -6deg)
+   ④ アクティブタブの .is-active .tab-icon (section-tab-icon-pop
+      animation が transform 制御中) には触れず保護
+   ⑤ 9 空状態メッセージテキスト (.empty-month-msg / .empty-asset-msg /
+      .empty-goal-msg / .empty-debt-msg / .tx-empty-msg /
+      .wl-empty p / .ch-empty p / .sub-empty p / .pt-empty p) の
+      text-shadow を単色 → primary inner + primary-end (lavender)
+      outer wash の dual-color dual-layer halo に拡張
+   ⑥ ライト/ダーク両モード対応 (dark 1 ティア boost)
+   ⑦ prefers-reduced-motion 安全弁
+   ──
+   効果:
+   - 全セクションタブの非アクティブ hover で「scale ladder + -5deg
+     wobble」の弾性触感を獲得、v29.52 header icon (4 family) /
+     v29.53 list action btn-icon (25 selector) / v29.54 chip (4 family) /
+     v29.55 nav-item icon (2 family) と合わせアプリ内 6 大 navigation/
+     action icon surface family が rotation tactile 完全同期マイルストーン
+   - 空状態メッセージ 9 系統が summary card 系 (v28.40-v28.44 family) と
+     同じ lavender brand dual-color halo family に合流、空状態演出全体
+     (アイコン breath halo v28.67 + メッセージ dual-color halo v29.57) が
+     brand 統一に到達する完成形マイルストーン
+   ──
+   実装ノート:
+   - section-tab :not(.is-active) selector で specificity (0,3,1) を獲得し
+     既存 (0,2,1) の .section-tab:hover .tab-icon を非アクティブ時のみ上書き
+     (last-defined-wins + specificity boost の両層で確実に勝つ)
+   - 空状態 text-shadow は v26.10 既存ルール (specificity 0,1,0 × 9) を
+     EOF redefine で last-defined wins 上書き (specificity 同 0,1,0)
+   ============================================================ */
+
+/* ① .section-tab:not(.is-active):hover .tab-icon — rotation wobble append */
+.section-tab:not(.is-active):hover .tab-icon {
+  transform: scale(var(--scale-hover)) rotate(-5deg);
+  transform-origin: center;
+}
+.section-tab:not(.is-active):active .tab-icon {
+  transform: scale(var(--scale-rest)) rotate(0deg);
+  transform-origin: center;
+}
+
+/* ② ダーク 1 ティア boost (-5deg → -6deg) */
+[data-theme="dark"] .section-tab:not(.is-active):hover .tab-icon {
+  transform: scale(var(--scale-hover)) rotate(-6deg);
+  transform-origin: center;
+}
+
+/* ③ 9 空状態メッセージテキスト — dual-color lavender brand halo */
+.empty-month-msg,
+.empty-asset-msg,
+.empty-goal-msg,
+.empty-debt-msg,
+.tx-empty-msg,
+.wl-empty p,
+.ch-empty p,
+.sub-empty p,
+.pt-empty p {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .empty-month-msg,
+[data-theme="dark"] .empty-asset-msg,
+[data-theme="dark"] .empty-goal-msg,
+[data-theme="dark"] .empty-debt-msg,
+[data-theme="dark"] .tx-empty-msg,
+[data-theme="dark"] .wl-empty p,
+[data-theme="dark"] .ch-empty p,
+[data-theme="dark"] .sub-empty p,
+[data-theme="dark"] .pt-empty p {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+               0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* prefers-reduced-motion 安全弁: rotation を除去し既存 scale のみ復元 */
+@media (prefers-reduced-motion: reduce) {
+  .section-tab:not(.is-active):hover .tab-icon,
+  [data-theme="dark"] .section-tab:not(.is-active):hover .tab-icon {
+    transform: scale(var(--scale-hover));
+  }
+  .section-tab:not(.is-active):active .tab-icon {
+    transform: scale(var(--scale-rest));
+  }
+}
