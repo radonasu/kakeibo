@@ -59656,3 +59656,100 @@ details[open] .debt-archive-summary::before {
     transform: scale(var(--scale-icon-active));
   }
 }
+
+/* ============================================================
+   v29.54 — Sprint #1343: チップ family 4 系統 hover/active 微回転 tilt tactile
+   ------------------------------------------------------------
+   v29.52 でヘッダー icon ボタン 4 family、v29.53 でリスト行 action btn-icon
+   family 25 selector に投入した「rotation tactile」micro-interaction を、
+   家計簿で最も頻繁にタップされる小型 pill-shape UI element「チップ family」
+   にも展開する完成形マイルストーン。
+
+   対象 4 family × 各々 :hover / :active = 9 selector group:
+     ① .cat-chip:hover (+ .cat-chip.selected:hover) / :active
+     ② .tx-tag-chip:hover / :active
+     ③ .tx-tag-filter-chip:hover:not(.active) / :active
+     ④ .tx-tag-filter-all:hover:not(.active) / :active
+
+   戦略:
+     - 既存 :hover transform (translateY / scale) を完全保持しつつ、末尾に
+       rotate(-2deg) を append（chip は btn-icon 比で大きい surface のため
+       -12deg → -2deg と控えめに設定し overflow / 隣接要素干渉を回避）
+     - :active は rotate(0deg) で snap-back し「タップで姿勢を戻す」物理応答
+     - light: -2deg / dark: -2.5deg で 1 ティア boost
+     - transform-origin: center で対称回転
+     - .active 状態のチップ（既に scale ladder 130%+ で最大強調）には適用せず、
+       通常 hover の chip のみに集中（active filter の最大 emphasis を保護）
+     - prefers-reduced-motion で rotation 解除し既存 transform のみ復元
+   ============================================================ */
+
+/* ── light :hover — 5 selector group (rotation append, base transform 保持) ── */
+.cat-chip:hover {
+  transform: translateY(var(--translate-lift-xs)) rotate(-2deg) scale(1.02);
+  transform-origin: center;
+}
+.cat-chip.selected:hover {
+  transform: translateY(var(--translate-lift-sm)) rotate(-2deg) scale(1.02);
+  transform-origin: center;
+}
+.tx-tag-chip:hover {
+  transform: scale(var(--scale-hover-chip)) rotate(-2deg);
+  transform-origin: center;
+}
+.tx-tag-filter-chip:hover:not(.active) {
+  transform: scale(var(--scale-hover-sm)) rotate(-2deg);
+  transform-origin: center;
+}
+.tx-tag-filter-all:hover:not(.active) {
+  transform: scale(var(--scale-hover-sm)) rotate(-2deg);
+  transform-origin: center;
+}
+
+/* ── light :active — 4 selector group (rotate(0) snap-back) ── */
+.cat-chip:active {
+  transform: translateY(var(--translate-press-down)) rotate(0deg) scale(0.98);
+}
+.tx-tag-chip:active {
+  transform: scale(var(--scale-rest)) rotate(0deg);
+}
+.tx-tag-filter-chip:active {
+  transform: scale(var(--scale-chip-active)) rotate(0deg);
+}
+.tx-tag-filter-all:active {
+  transform: scale(var(--scale-chip-active)) rotate(0deg);
+}
+
+/* ── dark :hover — 1 ティア boost (-2deg → -2.5deg / scale 1.02 → 1.025) ── */
+[data-theme="dark"] .cat-chip:hover {
+  transform: translateY(var(--translate-lift-xs)) rotate(-2.5deg) scale(1.025);
+  transform-origin: center;
+}
+[data-theme="dark"] .cat-chip.selected:hover {
+  transform: translateY(var(--translate-lift-sm)) rotate(-2.5deg) scale(1.025);
+  transform-origin: center;
+}
+[data-theme="dark"] .tx-tag-chip:hover {
+  transform: scale(var(--scale-hover-chip)) rotate(-2.5deg);
+  transform-origin: center;
+}
+[data-theme="dark"] .tx-tag-filter-chip:hover:not(.active) {
+  transform: scale(var(--scale-hover-sm)) rotate(-2.5deg);
+  transform-origin: center;
+}
+[data-theme="dark"] .tx-tag-filter-all:hover:not(.active) {
+  transform: scale(var(--scale-hover-sm)) rotate(-2.5deg);
+  transform-origin: center;
+}
+
+/* prefers-reduced-motion 安全弁: rotation を除去し既存 transform のみ復元 */
+@media (prefers-reduced-motion: reduce) {
+  .cat-chip:hover { transform: translateY(var(--translate-lift-xs)); }
+  .cat-chip.selected:hover { transform: translateY(var(--translate-lift-sm)); }
+  .tx-tag-chip:hover { transform: scale(var(--scale-hover-chip)); }
+  .tx-tag-filter-chip:hover:not(.active) { transform: scale(var(--scale-hover-sm)); }
+  .tx-tag-filter-all:hover:not(.active) { transform: scale(var(--scale-hover-sm)); }
+  .cat-chip:active { transform: translateY(var(--translate-press-down)); }
+  .tx-tag-chip:active { transform: scale(var(--scale-rest)); }
+  .tx-tag-filter-chip:active { transform: scale(var(--scale-chip-active)); }
+  .tx-tag-filter-all:active { transform: scale(var(--scale-chip-active)); }
+}
