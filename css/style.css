@@ -57872,3 +57872,153 @@ details[open] .debt-archive-summary::before {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.41 (Sprint #1330, 2026-05-16) — Sub-Section Title Family
+   Lavender Brand Typography Polish — 3 caps/semi 見出し系統
+   (.md-section-title / .ci-section-title / .ch-section-title) に
+   左端 vertical gradient accent bar + 微弱 lavender text-shadow halo
+   を投入し、v28.85 (.page-title / .modal-header h2 brand gradient)
+   族の hierarchy を 1 段下の sub-section heading layer に展開。
+   ============================================================
+   ── 設計細部 ──
+   ① ::before 左端 accent bar — 3px 幅 / 縦 100% / vertical 3-stop
+      gradient (primary-end → primary → primary-end) で v28.49
+      nav-side-bar-breath family と統一の縦軸 brand 配色。caption と
+      bar 間に sp-2 gap、文字 padding-left で右シフト。
+   ② subtle text-shadow halo — rest で 0 0 8px primary-end mix-nano
+      の蛍光ペン式呼吸 halo、:hover で dual-layer (primary mix-2xs
+      inner + primary-end mix-xs outer) に boost。
+   ③ .md-section-title の border-bottom solid → border-image 5-stop
+      gradient pill (transparent → primary mix-md 8% → primary-end
+      mix-lg 50% → primary mix-md 92% → transparent) に格上げ。
+      v28.48 modal-header bottom edge gradient と完全同形。
+   ④ transition: padding/border/text-shadow を dur-fast ease-out で
+      smooth swap、prefers-reduced-motion で transition のみ無効化。
+   ⑤ dark mode 1 ティア boost — bar opacity 維持で intensity 強化、
+      text-shadow を primary-end mix-2xs (rest) / mix-md (hover) に
+      格上げ、border-image を primary-end 中心の対称 gradient に変更。
+
+   ── 影響 ──
+   - 月詳細モーダル (.md-section-title × 3 セクション「支出カテゴリ」
+     「収入カテゴリ」「メモ」)
+   - 比較モーダル (.ci-section-title)
+   - チャレンジ画面 (.ch-section-title)
+   ============================================================ */
+
+.md-section-title,
+.ci-section-title,
+.ch-section-title {
+  position: relative;
+  padding-left: calc(3px + var(--sp-2));
+  transition:
+    padding var(--dur-fast) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent);
+}
+
+.md-section-title::before,
+.ci-section-title::before,
+.ch-section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1em;
+  border-radius: var(--radius-pill, 999px);
+  background: linear-gradient(
+    180deg,
+    var(--primary-end) 0%,
+    var(--primary) 50%,
+    var(--primary-end) 100%
+  );
+  box-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transition:
+    box-shadow var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.md-section-title:hover,
+.ci-section-title:hover,
+.ch-section-title:hover {
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+.md-section-title:hover::before,
+.ci-section-title:hover::before,
+.ch-section-title:hover::before {
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* .md-section-title only: solid border-bottom → 5-stop gradient pill
+   (v28.48 modal-header bottom edge family と完全同形) */
+.md-section-title {
+  border-bottom: var(--bw-thin) solid transparent;
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 8%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 92%,
+    transparent 100%
+  ) 1;
+}
+
+/* ── ダーク 1 ティア boost ────────────────────────────────── */
+[data-theme="dark"] .md-section-title,
+[data-theme="dark"] .ci-section-title,
+[data-theme="dark"] .ch-section-title {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .md-section-title::before,
+[data-theme="dark"] .ci-section-title::before,
+[data-theme="dark"] .ch-section-title::before {
+  background: linear-gradient(
+    180deg,
+    var(--primary-end) 0%,
+    color-mix(in srgb, var(--primary-end) 70%, var(--primary)) 50%,
+    var(--primary-end) 100%
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .md-section-title:hover,
+[data-theme="dark"] .ci-section-title:hover,
+[data-theme="dark"] .ch-section-title:hover {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .md-section-title:hover::before,
+[data-theme="dark"] .ci-section-title:hover::before,
+[data-theme="dark"] .ch-section-title:hover::before {
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .md-section-title {
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 8%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 92%,
+    transparent 100%
+  ) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-section-title,
+  .ci-section-title,
+  .ch-section-title,
+  .md-section-title::before,
+  .ci-section-title::before,
+  .ch-section-title::before {
+    transition: none;
+  }
+}
