@@ -59160,3 +59160,179 @@ details[open] .debt-archive-summary::before {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.50 (Sprint #1339) — モバイル最頻 frame surface 2 系統
+   (#mobile-header + #bottom-nav) に v29.43 page-header family
+   atmospheric decoration (orb + gradient pill) 投入
+   ────────────────────────────────────────────────────────────
+   ── 投入 ──
+   ① #mobile-header (sticky top bar, dark sidebar-bg 固定):
+      - ::after = bottom edge 5-stop horizontal gradient pill
+        (v28.48 modal-header / v29.43 page-header family と同形)
+        を box-shadow の真下に重畳、border の代替的視覚分離
+      - ::before = top-right 160x160px radial-gradient lavender orb
+        (header-orb-breath 5s 呼吸 共有 keyframe)、dark bg 上で
+        lavender atmosphere 大気球がヘッダー右上に常駐
+      - #mobile-title に subtle text-shadow halo (dual-layer
+        primary-end + primary)、:hover (#mobile-header hover) で
+        intensify
+      - > * { z-index: 1 } で flex 子要素 (hamburger / title /
+        bell / dark-toggle) を orb 前面に維持
+      - dark bg 固定なので [data-theme] 分岐は不要、最初から
+        dark variant 強度 (mix-md / mix-lg) を使用
+   ② #bottom-nav (fixed bottom bar, theme-aware glass surface):
+      - ::after = top-center 200x60px elliptical radial orb
+        (atmosphere、bottom-nav-item.active::before 既存 indicator
+        とは別レイヤー、より広く / より淡く)、center 上方に
+        lavender 大気がふわっと出る
+      - ::before 既存 v28.49 active item indicator と衝突回避の
+        ため、bottom-nav level では ::after orb のみ追加
+        (top-edge pill は v28.49 で active item 個別 indicator
+        に既に統一済み、二重は冗長)
+      - > * { z-index: 1 } で .bottom-nav-item を orb 前面に維持
+      - prefers-reduced-motion で orb breath 停止
+      - dark mode 1 ティア boost (orb intensity primary-end mix-md
+        → primary-end mix-lg)
+   ── カスケード安全 ──
+   - line 1185 #mobile-header base (sidebar-bg + box-shadow +
+     position: sticky) / line 4963 #bottom-nav base (glass +
+     border-top + position: fixed) と独立した pseudo 追加
+   - 両者とも positioning context (sticky/fixed) 確立済みなので
+     position: relative 追加は不要
+   - line 5010 .bottom-nav-item.active::before (top edge 5-stop
+     active indicator) は item z-index:1 で orb の上に乗る
+   - mobile-header の box-shadow (line 1198) / bottom-nav の
+     box-shadow (line 42799) は完全保持、pseudo を additive 重畳
+   ── 効果 ──
+   ⓐ モバイルで常駐表示される 2 大 frame surface (画面最上/最下)
+      が v29.43 page-header / v29.46 panel header family と
+      共鳴する lavender brand atmosphere に到達
+   ⓑ desktop sidebar (常時表示) / mobile mobile-header+bottom-nav
+      (常時表示) の両系統が brand identity で結ばれ、PWA としての
+      mobile UX が visual coherence を獲得
+   ============================================================ */
+
+/* ── #mobile-header lavender atmosphere ────────────────────── */
+#mobile-header::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 35%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  animation: header-orb-breath 5s ease-in-out infinite;
+}
+
+#mobile-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+#mobile-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 18%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 82%,
+    transparent 100%
+  );
+  border-radius: var(--radius-nano);
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out);
+}
+
+#mobile-header:hover::after {
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 26px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+#mobile-title {
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+#mobile-header:hover #mobile-title {
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ── #bottom-nav lavender atmosphere orb ───────────────────── */
+#bottom-nav::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 70px;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-nano), transparent) 40%,
+    transparent 75%
+  );
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  animation: header-orb-breath 6s ease-in-out infinite;
+}
+
+#bottom-nav > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] #bottom-nav::after {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent) 40%,
+    transparent 75%
+  );
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mobile-header::before,
+  #bottom-nav::after {
+    animation: none;
+    transform: scale(1);
+  }
+  #bottom-nav::after {
+    transform: translateX(-50%) scale(1);
+  }
+  #mobile-title,
+  #mobile-header::after {
+    transition: none;
+  }
+}
