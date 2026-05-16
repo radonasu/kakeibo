@@ -58912,3 +58912,125 @@ details[open] .debt-archive-summary::before {
     transform: translateX(var(--translate-slide));
   }
 }
+
+/* ============================================================
+   v29.48 Sprint #1337 — サマリーカード周期 shimmer sweep
+   ============================================================
+   ダッシュボード上 3 .summary-card (income/expense/balance.positive
+   /balance.negative) に対角白光帯が 7s 周期で sweep する continuous
+   micro-interaction を獲得。3カードを 2.3s ずつずらした staggered
+   shimmer により視覚静寂を回避し「グラデが呼吸する」生気を獲得。
+
+   下層 = 既存 type-gradient（無変更）、上層 = 115deg 細幅 white
+   highlight (0.18) + 両肩 transparent、background-size 250% 100% で
+   background-position[0] を -120% → 220% に sweep。
+   ダーク 1 ティア boost (white 0.18 → 0.24)。
+   prefers-reduced-motion で shimmer を画面外で freeze。
+
+   既存の sum-card-in 入場 / nth-child stagger / hover box-shadow /
+   active inset depression / summary-amount text-shadow halo は完全
+   保持、background-image stack 拡張と animation list 追加のみの最小
+   サージカル戦略。
+   ============================================================ */
+.summary-card.income {
+  background:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.18) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: -120% 0, 0 0;
+}
+.summary-card.expense {
+  background:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.18) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: -120% 0, 0 0;
+}
+.summary-card.balance.positive {
+  background:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.18) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: -120% 0, 0 0;
+}
+.summary-card.balance.negative {
+  background:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.18) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: -120% 0, 0 0;
+}
+
+@keyframes summary-card-shimmer {
+  0%, 100% { background-position: -120% 0, 0 0; }
+  50%      { background-position:  220% 0, 0 0; }
+}
+
+.summary-card.income,
+.summary-card.expense,
+.summary-card.balance.positive,
+.summary-card.balance.negative {
+  animation: sum-card-in var(--dur-lift) var(--ease-bounce) both,
+             summary-card-shimmer 7s ease-in-out infinite;
+  animation-delay: 0s, 1.8s;
+}
+.summary-cards .summary-card.income:nth-child(2),
+.summary-cards .summary-card.expense:nth-child(2),
+.summary-cards .summary-card.balance.positive:nth-child(2),
+.summary-cards .summary-card.balance.negative:nth-child(2) {
+  animation-delay: var(--dur-stagger-xl), 4.1s;
+}
+.summary-cards .summary-card.income:nth-child(3),
+.summary-cards .summary-card.expense:nth-child(3),
+.summary-cards .summary-card.balance.positive:nth-child(3),
+.summary-cards .summary-card.balance.negative:nth-child(3) {
+  animation-delay: calc(2 * var(--dur-stagger-xl)), 6.4s;
+}
+
+/* ダーク 1 ティア boost — shimmer band 0.18 → 0.24 */
+[data-theme="dark"] .summary-card.income {
+  background-image:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.24) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--income) 0%, var(--income-end) 100%);
+}
+[data-theme="dark"] .summary-card.expense {
+  background-image:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.24) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+}
+[data-theme="dark"] .summary-card.balance.positive {
+  background-image:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.24) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--primary) 0%, var(--primary-end) 100%);
+}
+[data-theme="dark"] .summary-card.balance.negative {
+  background-image:
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.24) 50%, transparent 62%),
+    linear-gradient(var(--grad-diagonal), var(--expense) 0%, var(--expense-end) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summary-card.income,
+  .summary-card.expense,
+  .summary-card.balance.positive,
+  .summary-card.balance.negative {
+    animation: sum-card-in var(--dur-lift) var(--ease-bounce) both;
+    background-position: 220% 0, 0 0;  /* shimmer をオフスクリーン右で freeze */
+  }
+  .summary-cards .summary-card.income:nth-child(2),
+  .summary-cards .summary-card.expense:nth-child(2),
+  .summary-cards .summary-card.balance.positive:nth-child(2),
+  .summary-cards .summary-card.balance.negative:nth-child(2) {
+    animation-delay: var(--dur-stagger-xl);
+  }
+  .summary-cards .summary-card.income:nth-child(3),
+  .summary-cards .summary-card.expense:nth-child(3),
+  .summary-cards .summary-card.balance.positive:nth-child(3),
+  .summary-cards .summary-card.balance.negative:nth-child(3) {
+    animation-delay: calc(2 * var(--dur-stagger-xl));
+  }
+}
