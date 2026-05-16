@@ -60434,3 +60434,207 @@ details[open] .debt-archive-summary::before {
     transform: none;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   v29.60 / Sprint #1349 — kbd 3D 物理キー化 + キーボードショートカット
+                          ヘルプモーダル lavender brand atmosphere
+   ════════════════════════════════════════════════════════════════════
+   ① kbd 要素 11+ 個 (キーボード help モーダル) と .kb-g-hint-top kbd
+      (G キー連続押下インジケータ) を「平坦な矩形」から「物理キー」へ
+      格上げ: 縦方向 2-stop linear-gradient bg + inset top white highlight
+      + 外側 1-2px drop-shadow で浮遊感 + 微弱 text-shadow で刻印感。
+   ② kbd:hover で v28.40-v28.46 lavender brand family の dual-color halo
+      (primary inner + primary-end outer wash) を獲得、ボタン以外で
+      初めて kbd surface もブランド共鳴 family に合流。
+   ③ kbd:active で press-down 圧迫 (translateY +1px / shadow 圧縮)、
+      実物理キーの押下感を再現。
+   ④ .kb-g-hint popup container を single-color primary halo →
+      primary inner + primary-end outer wash の dual-color halo に拡張。
+   ⑤ .kb-group-title bottom border を solid → 5-stop horizontal gradient
+      pill (v28.48 / v29.42-v29.44 separator family と同形) に置換。
+   ⑥ ダーク mode 1 ティア boost (intensity / blur 拡張)、
+      prefers-reduced-motion 対応で transition 解除。
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ① kbd base 3D physical key (light) ─ last-defined-wins で line 16854 base 上書き */
+kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, white var(--mix-xs), var(--surface)) 0%,
+    var(--surface-2) 50%,
+    color-mix(in srgb, var(--border) var(--mix-2xs), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-md), transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--border) var(--mix-md), transparent),
+    0 1px 2px color-mix(in srgb, black var(--mix-xs), transparent),
+    0 2px 4px color-mix(in srgb, black var(--mix-2xs), transparent);
+  text-shadow: 0 1px 0 color-mix(in srgb, white var(--mix-md), transparent);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-press) var(--ease-bounce),
+    color var(--dur-fast) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out);
+}
+
+/* ② kbd:hover lavender brand dual-color halo */
+kbd:hover {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, white var(--mix-sm), var(--surface)) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-nano), var(--surface-2)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-2)) 100%);
+  color: var(--primary);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-lg), transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 4px color-mix(in srgb, black var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  text-shadow:
+    0 1px 0 color-mix(in srgb, white var(--mix-lg), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ③ kbd:active press-down 圧迫感 */
+kbd:active {
+  transform: translateY(1px);
+  background: linear-gradient(180deg,
+    var(--surface-2) 0%,
+    color-mix(in srgb, var(--border) var(--mix-2xs), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, black var(--mix-sm), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-2xs), transparent),
+    0 0 0 transparent;
+}
+
+/* ④ kbd dark mode 3D physical key — 1 ティア boost */
+[data-theme="dark"] kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-2)) 50%,
+    color-mix(in srgb, black var(--mix-xs), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-sm), transparent),
+    inset 0 -1px 0 color-mix(in srgb, black var(--mix-md), transparent),
+    0 1px 2px color-mix(in srgb, black var(--mix-md), transparent),
+    0 2px 6px color-mix(in srgb, black var(--mix-sm), transparent);
+  text-shadow: 0 1px 0 color-mix(in srgb, black var(--mix-md), transparent);
+}
+[data-theme="dark"] kbd:hover {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-sm), var(--surface-2)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-2xs), var(--surface-2)) 100%);
+  color: var(--primary-end);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-md), transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 2px 6px color-mix(in srgb, black var(--mix-md), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  text-shadow:
+    0 1px 0 color-mix(in srgb, black var(--mix-md), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+[data-theme="dark"] kbd:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 1px 3px color-mix(in srgb, black var(--mix-lg), transparent),
+    inset 0 -1px 0 color-mix(in srgb, white var(--mix-2xs), transparent);
+}
+
+/* ⑤ .kb-g-hint-top kbd 特別バリアント (G キー単独強調 — primary 既存 tint 保持) */
+.kb-g-hint-top kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, white var(--mix-sm), color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface))) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-lg), transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  text-shadow:
+    0 1px 0 color-mix(in srgb, white var(--mix-md), transparent),
+    0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .kb-g-hint-top kbd {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), var(--surface-2)) 0%,
+    color-mix(in srgb, var(--primary) var(--mix-sm), var(--surface-2)) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-xs), var(--surface-2)) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white var(--mix-md), transparent),
+    inset 0 -1px 0 color-mix(in srgb, black var(--mix-md), transparent),
+    0 2px 8px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  color: color-mix(in srgb, white var(--mix-3xl), var(--primary-end));
+  text-shadow:
+    0 1px 0 color-mix(in srgb, black var(--mix-md), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
+
+/* ⑥ .kb-g-hint popup container — single primary halo → dual-color halo */
+.kb-g-hint {
+  box-shadow:
+    0 4px 20px var(--black-14),
+    0 0 0 4px color-mix(in srgb, var(--primary) var(--mix-faint), transparent),
+    0 0 24px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 36px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .kb-g-hint {
+  box-shadow:
+    0 4px 24px color-mix(in srgb, black var(--mix-2xl), transparent),
+    0 0 0 4px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent),
+    0 0 28px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 44px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  border-color: color-mix(in srgb, var(--primary-end) var(--mix-xl), var(--border));
+}
+
+/* ⑦ .kb-group-title bottom border — solid → 5-stop horizontal gradient pill */
+.kb-group-title {
+  position: relative;
+  border-bottom-color: transparent;
+}
+.kb-group-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  border-radius: var(--radius-bar);
+}
+[data-theme="dark"] .kb-group-title::after {
+  height: 2.5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 78%,
+    transparent 100%);
+  opacity: 0.95;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ⑧ prefers-reduced-motion 安全弁: kbd transition 全解除 + kb-group-title pill 静止 */
+@media (prefers-reduced-motion: reduce) {
+  kbd {
+    transition: none;
+  }
+  kbd:hover {
+    transform: none;
+  }
+  kbd:active {
+    transform: none;
+  }
+}
