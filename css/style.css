@@ -59820,3 +59820,104 @@ details[open] .debt-archive-summary::before {
   .bottom-nav-item:not(.active):hover .bottom-nav-icon { transform: scale(var(--scale-hover-chip)); }
   .bottom-nav-item:not(.active):active .bottom-nav-icon { transform: scale(var(--scale-icon-active)); }
 }
+
+/* ============================================================
+   v29.56 Sprint #1345 (2026-05-17)
+   フォーム入力 focus chain lavender brand 統一強化 — ラベル
+   text-shadow dual-color 化 + 金額入力 ¥ prefix lavender halo 獲得 +
+   :hover preview tier text-shadow 投入
+   ──
+   既存状態 (v22.x / v28.45 / v29.30-v29.31):
+   - .form-group:focus-within > label: 単色 text-shadow glow
+     (light: primary mix-sm 8px / dark: primary-end mix-md 10px)
+   - .amount-input-wrap:focus-within .amount-prefix: color: primary
+     のみ (text-shadow 無し)
+   - .form-group:hover:not(:focus-within) > label: color preview
+     のみ (55% mix / text-shadow 無し)
+   ──
+   本スプリント追加:
+   ① .form-group:focus-within > label の text-shadow を dual-layer
+      lavender brand halo に拡張 (primary inner + primary-end outer wash)
+      v28.41/v28.42 summary label/sub-text 系と同型の dual-color 視覚
+   ② .amount-input-wrap:focus-within .amount-prefix に text-shadow
+      lavender halo を獲得 (¥ シンボルが focus 時に primary 色変化
+      +淡い lavender halo で立体的に光る)
+   ③ .form-group:hover:not(:focus-within) > label に subtle
+      text-shadow preview tier (focus より弱め単色 hint) 追加 —
+      v29.31 hover preview philosophy に整合
+   ④ .amount-input-wrap:hover:not(:focus-within) .amount-prefix に
+      color preview (55% mix) 投入 — focus 前に「ここに金額入力」
+      アフォーダンス強化
+   ⑤ ライト/ダーク両モード対応 (dark 1 ティア boost)
+   ⑥ prefers-reduced-motion で text-shadow transition のみ無効化
+   ──
+   効果:
+   - 17+ モーダルの全フォーム入力で focus 時に「ラベル halo +
+     左端 lavender bar (v29.30) + 入力 box-shadow halo (v28.45) +
+     ¥ prefix halo (新規)」の 4 層 lavender 視覚指標が結ばれ、
+     フォーカス先がより明確に視認される
+   - hover 時にもラベル text-shadow が薄く preview 点灯し、
+     focus 前段階で「ここに入力する」予兆が強化
+   - kakeibo PWA で最も多い「金額入力」体験が ¥ シンボル halo で
+     視覚的に立ち上がる完成形マイルストーン
+   ──
+   実装ノート:
+   - 既存ルール (line 20115 v22.89/v22.x) を v29.56 EOF redefine で
+     last-defined-wins 上書き (specificity 同 0,2,0 + > combinator)
+   - .amount-prefix focus halo は line 1715 既存 color: primary を
+     保持し text-shadow のみ append (specificity 0,2,0)
+   - hover preview は :not(:focus-within) guard で focus 時の
+     二重発火を排除
+   ============================================================ */
+
+/* ① .form-group:focus-within > label — text-shadow dual-color lavender halo */
+.form-group:focus-within > label {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .form-group:focus-within > label {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .amount-input-wrap:focus-within .amount-prefix — lavender text-shadow halo */
+.amount-input-wrap:focus-within .amount-prefix {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+               0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .amount-input-wrap:focus-within .amount-prefix {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+               0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.amount-prefix {
+  transition: color var(--dur-fast) var(--ease-out),
+              text-shadow var(--dur-fast) var(--ease-out);
+}
+
+/* ③ .form-group:hover:not(:focus-within) > label — subtle text-shadow preview */
+.form-group:hover:not(:focus-within) > label {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .form-group:hover:not(:focus-within) > label {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+.form-group > label {
+  transition: color var(--dur-fast) var(--ease-out),
+              text-shadow var(--dur-fast) var(--ease-out);
+}
+
+/* ④ .amount-input-wrap:hover:not(:focus-within) .amount-prefix — color preview */
+.amount-input-wrap:hover:not(:focus-within) .amount-prefix {
+  color: color-mix(in srgb, var(--primary) 55%, var(--text-muted));
+}
+[data-theme="dark"] .amount-input-wrap:hover:not(:focus-within) .amount-prefix {
+  color: color-mix(in srgb, var(--primary-end) 55%, var(--text-muted));
+}
+
+/* prefers-reduced-motion 安全弁: text-shadow/color transition を無効化 */
+@media (prefers-reduced-motion: reduce) {
+  .form-group > label,
+  .amount-prefix {
+    transition: none;
+  }
+}
