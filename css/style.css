@@ -57736,3 +57736,139 @@ details[open] .debt-archive-summary::before {
     animation: none;
   }
 }
+
+/* ============================================================
+   v29.40 (Sprint #1329, 2026-05-16) — Identity & Utility Icon
+   Hover Rotation Family — 5 emoji-based surfaces にホバー時
+   弾性 rotate + scale micro-interaction を投入。
+   ============================================================
+   v29.32 (details/summary chevron 弾性スプリング回転) family を、
+   これまで transform 系 hover が一切無かった 5 utility / identity
+   絵文字アイコン surface に展開。既存 breath halo (v28.60
+   ident-glow-breath-primary) / text-shadow glow (v23.87 / v23.88 /
+   v23.85) / background hover (v22.x base) と完全共存し、transform
+   プロパティのみ拡張する surgical 戦略。
+
+   ── 対象 5 系統 ──
+   ① .btn-dark-toggle (sidebar #dark-toggle-side + mobile header
+      #dark-toggle-mobile = 2 DOM instances) — hover rotate(20deg)
+      scale(1.12) tilt-and-grow / active rotate(-180deg) scale(0.88)
+      半周 spin-press。テーマ切替ボタンに「天体が回る」satisfying
+      触感 feedback を獲得。
+   ② #hamburger (モバイルヘッダーメニュー開閉ボタン) — hover
+      rotate(-10deg) scale(1.08) tilt-grow / active rotate(10deg)
+      scale(0.92) counter-tilt press。モバイル UX 起点の高頻度
+      タップ surface に視覚 feedback を獲得。
+   ③ .brand-icon (サイドバー上部 💰 ロゴ 38px gradient bg) —
+      hover rotate(-8deg) scale(1.08) signature tilt + lavender
+      drop-shadow halo。既存 ident-glow-breath-primary breath と
+      共存。
+   ④ .sidebar-avatar (サイドバー user identity 24px gradient bg) —
+      hover rotate(8deg) scale(1.08) 逆向き counter-tilt (brand-icon
+      と対称) + lavender drop-shadow halo。
+   ⑤ .md-calendar-icon (月詳細モーダル 📅 アイコン) — hover
+      rotate(12deg) scale(1.1) calendar wiggle + lavender
+      drop-shadow halo。
+
+   ── 設計細部 ──
+   - transition: transform 350ms cubic-bezier(.34,1.56,.64,1)
+     (= --ease-bounce 弾性 overshoot) — v29.32 chevron family と
+     完全同じ呼吸感。
+   - filter (drop-shadow halo) は 200ms ease-out で smooth fade-in。
+   - prefers-reduced-motion で transition: none + transform: none に
+     fallback、視覚的 hover effect は完全停止。
+   - 既存 transition プロパティリスト (.btn-dark-toggle line 5267 /
+     27354 / #hamburger line 27418) に transform を append する形で
+     redefine、background / color / box-shadow / filter / text-shadow
+     既存遷移は完全保持。
+   ============================================================ */
+
+/* ── ① .btn-dark-toggle (2 DOM instances) ──────────────── */
+.btn-dark-toggle {
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-press) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out),
+    transform 350ms var(--ease-bounce);
+}
+.btn-dark-toggle:hover {
+  transform: rotate(20deg) scale(1.12);
+}
+.btn-dark-toggle:active {
+  transform: rotate(-180deg) scale(0.88);
+}
+
+/* ── ② #hamburger (mobile header menu trigger) ─────────── */
+#hamburger {
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-press) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out),
+    transform 350ms var(--ease-bounce);
+}
+#hamburger:hover {
+  transform: rotate(-10deg) scale(1.08);
+}
+#hamburger:active {
+  transform: rotate(10deg) scale(0.92);
+}
+
+/* ── ③ .brand-icon (sidebar 💰 logo) ───────────────────── */
+.brand-icon {
+  transition: transform 350ms var(--ease-bounce), filter 200ms var(--ease-out);
+}
+.brand-icon:hover {
+  transform: rotate(-8deg) scale(1.08);
+  filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
+
+/* ── ④ .sidebar-avatar (sidebar user identity) ─────────── */
+.sidebar-avatar {
+  transition: transform 350ms var(--ease-bounce), filter 200ms var(--ease-out);
+}
+.sidebar-avatar:hover {
+  transform: rotate(8deg) scale(1.08);
+  filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
+
+/* ── ⑤ .md-calendar-icon (month detail 📅 icon) ────────── */
+.md-calendar-icon {
+  transition: transform 350ms var(--ease-bounce), filter 200ms var(--ease-out);
+}
+.md-calendar-icon:hover {
+  transform: rotate(12deg) scale(1.1);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent));
+}
+
+/* ── ダーク 1 ティア boost (drop-shadow halo 強化) ──────── */
+[data-theme="dark"] .brand-icon:hover {
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+[data-theme="dark"] .sidebar-avatar:hover {
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+[data-theme="dark"] .md-calendar-icon:hover {
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-dark-toggle,
+  #hamburger,
+  .brand-icon,
+  .sidebar-avatar,
+  .md-calendar-icon {
+    transition: none;
+  }
+  .btn-dark-toggle:hover,
+  .btn-dark-toggle:active,
+  #hamburger:hover,
+  #hamburger:active,
+  .brand-icon:hover,
+  .sidebar-avatar:hover,
+  .md-calendar-icon:hover {
+    transform: none;
+  }
+}
