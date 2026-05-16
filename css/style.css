@@ -60025,3 +60025,198 @@ details[open] .debt-archive-summary::before {
     transform: scale(var(--scale-rest));
   }
 }
+
+/* ============================================================
+   v29.58 Sprint #1347: 取引追加モーダル type-toggle family
+   (.type-btn 基底 + .type-btn.expense-btn / .income-btn 既定状態 +
+    .type-toggle label hover + radio hover) を v28.40-v28.46 lavender
+   brand family に合流させ、家計簿で最も頻繁にタップされる
+   「収入/支出/振替」切替 UI に dual-color halo を獲得させる
+   ----------------------------------------------------------------
+   既存:
+   - .type-btn:hover (基底)          → box-shadow: focus-ring 単層のみ
+   - .type-btn.expense-btn:hover     → expense mix-sm ring + expense mix-xs 10px halo
+                                       + expense mix-sm 8px text-shadow (single-color)
+   - .type-btn.income-btn:hover      → income 同型 single-color
+   - .type-btn:focus-visible         → focus-ring 単層
+   - .type-toggle label:hover        → primary mix-xs 10px box-shadow + primary mix-2xs 8px text-shadow
+   - .type-toggle input[radio]:hover → primary mix-sm 3px drop-shadow 単層
+   - .type-btn:active                → 単層 typed inset + brightness press
+
+   v29.58 後 (EOF redefine, last-defined-wins):
+   - .type-btn:hover (基底):  既存 ring に lavender 12px primary-end mix-xs outer wash を 2nd layer
+                              append + primary-end mix-2xs 6px text-shadow append。
+   - .type-btn.expense-btn:hover: 既存 2-layer (ring + halo) に lavender 18px primary-end mix-xs outer
+                                  wash 3rd layer append + text-shadow を expense inner +
+                                  primary-end mix-2xs outer の dual-color に拡張。
+   - .type-btn.income-btn:hover:  同形 income variant。
+   - .type-btn:focus-visible:     focus-ring + lavender 14px primary-end mix-xs outer wash 2nd layer。
+   - .type-toggle label:hover:    既存 primary halo に primary-end 14px mix-2xs outer wash 2nd layer append +
+                                  text-shadow dual-layer 化 (primary 8px inner + primary-end 12px outer)。
+   - .type-toggle input[radio]:hover: 既存 primary mix-sm drop-shadow に primary-end mix-xs
+                                      6px 2nd drop-shadow append (dual-color halo)。
+   - .type-btn:active:            既存 inset 凹みに primary-end mix-2xs 10px outer wash residual append。
+   - dark mode (1 ティア boost): lavender 強度を mix-xs→mix-sm / mix-2xs→mix-xs / blur 半径 +2-4px。
+
+   visible effect: 取引追加モーダル ([ + ] FAB → 表示) の上部「収入 / 支出 / 振替」
+   切替ボタン群が rest/hover/focus/active 全状態で lavender brand outer wash を獲得し、
+   v28.46 .btn-primary/.btn-ghost/.btn-danger hover、v28.55 .cat-chip/.tx-tag-filter-chip hover、
+   v28.69 .section-tab hover、v28.70 checkbox/.dw-slider checked と通底する lavender brand
+   surface family に「取引種別 toggle」も合流。家計簿 PWA の主要切替 UI 4 系統
+   (section-tab / nav / chip / type-toggle) 全てが lavender brand halo で
+   揃う完成形マイルストーン。CSS-only、JS / HTML 変更なし。
+   ============================================================ */
+
+/* ① .type-btn:hover (基底 — selected されていない neutral 状態) */
+.type-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .type-btn:focus-visible — focus-ring + lavender outer wash */
+.type-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ③ .type-btn.expense-btn:hover — expense + lavender 3rd layer + dual-color text-shadow */
+.type-btn.expense-btn:hover {
+  background: var(--expense-light);
+  color: var(--expense);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 4px 10px color-mix(in srgb, var(--expense) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  transform: translateY(var(--translate-lift-sm));
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ .type-btn.income-btn:hover — income + lavender 3rd layer + dual-color text-shadow */
+.type-btn.income-btn:hover {
+  background: var(--income-light);
+  color: var(--income);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    0 4px 10px color-mix(in srgb, var(--income) var(--mix-xs), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  transform: translateY(var(--translate-lift-sm));
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ .type-btn:active — 既存 inset 凹みに primary-end residual outer wash append */
+.type-btn:active {
+  transform: scale(var(--scale-btn-active));
+  filter: brightness(var(--brightness-press-mid));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑥ .type-toggle label:hover (ev-modal radio 構成) — dual-color halo + dual-layer text-shadow */
+.type-toggle label:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑦ .type-toggle input[type="radio"]:hover — dual-color drop-shadow */
+.type-toggle input[type="radio"]:hover {
+  transform: scale(1.08);
+  filter:
+    drop-shadow(0 1px 3px color-mix(in srgb, var(--primary) var(--mix-sm), transparent))
+    drop-shadow(0 0 6px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent));
+}
+
+/* ⑧ dark mode 1 ティア boost — lavender 強度 boost (mix-xs→mix-sm / blur +2-4px) */
+[data-theme="dark"] .type-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .type-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+[data-theme="dark"] .type-btn.expense-btn:hover {
+  background: var(--expense-light);
+  color: var(--expense);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+    0 4px 10px color-mix(in srgb, var(--expense) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  transform: translateY(var(--translate-lift-sm));
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--expense) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .type-btn.income-btn:hover {
+  background: var(--income-light);
+  color: var(--income);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) color-mix(in srgb, var(--income) var(--mix-md), transparent),
+    0 4px 10px color-mix(in srgb, var(--income) var(--mix-sm), transparent),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+  transform: translateY(var(--translate-lift-sm));
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--income) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .type-btn:active {
+  transform: scale(var(--scale-btn-active));
+  filter: brightness(var(--brightness-press-mid));
+  box-shadow:
+    inset 0 2px 3px color-mix(in srgb, var(--primary) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .type-toggle label:hover {
+  transform: translateY(var(--translate-lift-xs));
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .type-toggle input[type="radio"]:hover {
+  transform: scale(1.08);
+  filter:
+    drop-shadow(0 1px 3px color-mix(in srgb, var(--primary) var(--mix-md), transparent))
+    drop-shadow(0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent));
+}
+
+/* ⑨ prefers-reduced-motion 安全弁: transform を rest 固定し halo はそのまま維持 */
+@media (prefers-reduced-motion: reduce) {
+  .type-btn.expense-btn:hover,
+  .type-btn.income-btn:hover,
+  [data-theme="dark"] .type-btn.expense-btn:hover,
+  [data-theme="dark"] .type-btn.income-btn:hover {
+    transform: none;
+  }
+  .type-toggle label:hover,
+  [data-theme="dark"] .type-toggle label:hover {
+    transform: none;
+  }
+  .type-toggle input[type="radio"]:hover,
+  [data-theme="dark"] .type-toggle input[type="radio"]:hover {
+    transform: none;
+  }
+}
