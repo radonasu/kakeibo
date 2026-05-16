@@ -58811,3 +58811,104 @@ details[open] .debt-archive-summary::before {
     opacity: 0.95;
   }
 }
+
+/* ============================================================
+   v29.47 — Sprint #1336: 大型カード/リスト 12 系統 hover に「微回転 tilt
+   + scale 微拡大」3D 立体感投入
+   ------------------------------------------------------------
+   v29.06 で同 12 系統に ::after sheen sweep を投入したが、card 本体の
+   hover transform は translateY(var(--translate-lift-xs)) (約 -2px) 単軸
+   の昇降のみ。今回はその上に rotate(-0.5deg) + scale(1.006) を重畳して
+   「カードが片端から持ち上がる」物理的 3D 質感を獲得する。
+
+   対象 12 family:
+     ① .asset-card  ② .goal-card  ③ .sub-card  ④ .pt-card
+     ⑤ .wl-card    ⑥ .ch-card   ⑦ .debt-card ⑧ .ev-card
+     ⑨ .opp-card   ⑩ .cat-card  ⑪ .rc-item  （以上 translateY 系）
+     ⑫ .ci-event-item （translateX 系）
+
+   戦略:
+     - :hover:not(:active) で hover 単独時のみ tilt 適用、:active 押下時
+       は既存 translateY(translate-press-down) 凹みを完全保持
+     - transform-origin: center bottom で「カード下端を支点に上端が
+       わずかに傾く」自然な持ち上げピボット
+     - light: rotate(-0.5deg) scale(1.006)
+     - dark: rotate(-0.7deg) scale(1.01) で 1 ティア boost
+     - prefers-reduced-motion で rotate/scale を解除し translateY のみ復元
+   ============================================================ */
+
+/* ── light :hover:not(:active) — 11 translateY 系 ── */
+.asset-card:hover:not(:active),
+.goal-card:hover:not(:active),
+.sub-card:hover:not(:active),
+.pt-card:hover:not(:active),
+.wl-card:hover:not(:active),
+.ch-card:hover:not(:active),
+.debt-card:hover:not(:active),
+.ev-card:hover:not(:active),
+.opp-card:hover:not(:active),
+.cat-card:hover:not(:active),
+.rc-item:hover:not(:active) {
+  transform: translateY(var(--translate-lift-xs)) rotate(-0.5deg) scale(1.006);
+  transform-origin: center bottom;
+}
+
+/* ── light :hover:not(:active) — 1 translateX 系 (.ci-event-item) ── */
+.ci-event-item:hover:not(:active) {
+  transform: translateX(var(--translate-slide)) rotate(-0.5deg) scale(1.006);
+  transform-origin: center bottom;
+}
+
+/* ── dark :hover:not(:active) — 1 ティア boost (translateY 系 11) ── */
+[data-theme="dark"] .asset-card:hover:not(:active),
+[data-theme="dark"] .goal-card:hover:not(:active),
+[data-theme="dark"] .sub-card:hover:not(:active),
+[data-theme="dark"] .pt-card:hover:not(:active),
+[data-theme="dark"] .wl-card:hover:not(:active),
+[data-theme="dark"] .ch-card:hover:not(:active),
+[data-theme="dark"] .debt-card:hover:not(:active),
+[data-theme="dark"] .ev-card:hover:not(:active),
+[data-theme="dark"] .opp-card:hover:not(:active),
+[data-theme="dark"] .cat-card:hover:not(:active),
+[data-theme="dark"] .rc-item:hover:not(:active) {
+  transform: translateY(var(--translate-lift-xs)) rotate(-0.7deg) scale(1.01);
+  transform-origin: center bottom;
+}
+
+/* ── dark :hover:not(:active) — 1 ティア boost (.ci-event-item) ── */
+[data-theme="dark"] .ci-event-item:hover:not(:active) {
+  transform: translateX(var(--translate-slide)) rotate(-0.7deg) scale(1.01);
+  transform-origin: center bottom;
+}
+
+/* prefers-reduced-motion — rotate/scale を解除し translateY/X のみ復元 */
+@media (prefers-reduced-motion: reduce) {
+  .asset-card:hover:not(:active),
+  .goal-card:hover:not(:active),
+  .sub-card:hover:not(:active),
+  .pt-card:hover:not(:active),
+  .wl-card:hover:not(:active),
+  .ch-card:hover:not(:active),
+  .debt-card:hover:not(:active),
+  .ev-card:hover:not(:active),
+  .opp-card:hover:not(:active),
+  .cat-card:hover:not(:active),
+  .rc-item:hover:not(:active),
+  [data-theme="dark"] .asset-card:hover:not(:active),
+  [data-theme="dark"] .goal-card:hover:not(:active),
+  [data-theme="dark"] .sub-card:hover:not(:active),
+  [data-theme="dark"] .pt-card:hover:not(:active),
+  [data-theme="dark"] .wl-card:hover:not(:active),
+  [data-theme="dark"] .ch-card:hover:not(:active),
+  [data-theme="dark"] .debt-card:hover:not(:active),
+  [data-theme="dark"] .ev-card:hover:not(:active),
+  [data-theme="dark"] .opp-card:hover:not(:active),
+  [data-theme="dark"] .cat-card:hover:not(:active),
+  [data-theme="dark"] .rc-item:hover:not(:active) {
+    transform: translateY(var(--translate-lift-xs));
+  }
+  .ci-event-item:hover:not(:active),
+  [data-theme="dark"] .ci-event-item:hover:not(:active) {
+    transform: translateX(var(--translate-slide));
+  }
+}
