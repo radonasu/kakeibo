@@ -60220,3 +60220,217 @@ details[open] .debt-archive-summary::before {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.59 Sprint #1348: ページネーション矢印ナビボタン 3 系統
+   (.month-nav-btn / .cal-nav-btn / .md-nav-btn) に directional
+   rotation tactile + lavender brand outer wash 2nd/3rd layer 投入
+   ----------------------------------------------------------------
+   既存:
+   - .month-nav-btn:hover : primary mix-sm 10px halo + scale-hover-chip
+   - .md-nav-btn:hover    : primary mix-sm 6px halo + scale-hover
+   - .cal-nav-btn (.btn-ghost 継承) : v28.46 lavender brand 既存反映済
+     transform 未指定 / 自前 rotation を append 可能
+
+   v29.59 後 (EOF redefine, last-defined-wins):
+   - 矢印 prev/next を [id$="-prev"] / [id$="-next"] 属性セレクタで分離し
+     prev:hover → rotate(-8deg) leftward emphasis (light) / rotate(-10deg) (dark)
+     next:hover → rotate(+8deg) rightward emphasis (light) / rotate(+10deg) (dark)
+   - 全 :active → rotate(0deg) snap-back
+   - .month-nav-btn:hover : 既存 2-layer halo に primary-end mix-xs 14px
+     outer wash 3rd layer append + text-shadow を primary inner + primary-end
+     outer の dual-color に拡張
+   - .md-nav-btn:hover : 既存 single-layer halo に primary-end mix-xs 12px
+     outer wash 2nd layer append + text-shadow dual-color halo 獲得
+   - prefers-reduced-motion で rotation 解除し既存 scale のみ復元
+   visible effect: 月切替 ◀ ▶ (取引/レポート/カレンダー/カテゴリ等の月ナビ +
+   モーダル内月ナビ) を hover すると矢印自体が指している方向に微回転 wobble +
+   lavender brand outer wash で v29.52-v29.55, v29.57 rotation tactile family
+   と通底する完成形マイルストーン。CSS-only、JS/HTML 変更なし。
+   ============================================================ */
+
+/* ① .month-nav-btn[id$="-prev"]:hover — leftward rotation + lavender 3rd layer */
+.month-nav-btn[id$="-prev"]:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  transform: scale(var(--scale-hover-chip)) rotate(-8deg);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .month-nav-btn[id$="-next"]:hover — rightward rotation + lavender 3rd layer */
+.month-nav-btn[id$="-next"]:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  transform: scale(var(--scale-hover-chip)) rotate(8deg);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ③ .month-nav-btn:active — rotate(0) snap-back + lavender residual outer wash */
+.month-nav-btn:active:not(:disabled) {
+  transform: scale(var(--scale-press-nav)) rotate(0deg);
+  filter: brightness(var(--brightness-press));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ④ .md-nav-btn[id="md-prev-btn"]:hover — leftward rotation + lavender 2nd layer */
+.md-nav-btn#md-prev-btn:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--primary-light, color-mix(in srgb, var(--primary) var(--mix-faint), transparent));
+  border-color: var(--primary);
+  transform: scale(var(--scale-hover)) rotate(-8deg);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑤ .md-nav-btn[id="md-next-btn"]:hover — rightward rotation + lavender 2nd layer */
+.md-nav-btn#md-next-btn:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--primary-light, color-mix(in srgb, var(--primary) var(--mix-faint), transparent));
+  border-color: var(--primary);
+  transform: scale(var(--scale-hover)) rotate(8deg);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑥ .md-nav-btn:active — rotate(0) snap-back + lavender residual */
+.md-nav-btn:active:not(:disabled) {
+  transform: scale(var(--scale-chip-active)) rotate(0deg);
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ⑦ .cal-nav-btn#cal-prev:hover — leftward rotation (btn-ghost halo は v28.46 既存維持) */
+.cal-nav-btn#cal-prev:hover {
+  transform: rotate(-8deg);
+}
+
+/* ⑧ .cal-nav-btn#cal-next:hover — rightward rotation */
+.cal-nav-btn#cal-next:hover {
+  transform: rotate(8deg);
+}
+
+/* ⑨ .cal-nav-btn (prev/next) :active — rotate(0) snap-back */
+.cal-nav-btn#cal-prev:active,
+.cal-nav-btn#cal-next:active {
+  transform: rotate(0deg);
+}
+
+/* ⑩ dark mode 1 ティア boost: 矢印 rotation amplitude -8deg→-10deg / +8deg→+10deg */
+[data-theme="dark"] .month-nav-btn[id$="-prev"]:hover:not(:disabled) {
+  border-color: var(--primary-end);
+  color: var(--primary-end);
+  background: var(--primary-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  transform: scale(var(--scale-hover-chip)) rotate(-10deg);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .month-nav-btn[id$="-next"]:hover:not(:disabled) {
+  border-color: var(--primary-end);
+  color: var(--primary-end);
+  background: var(--primary-light);
+  box-shadow:
+    0 0 0 var(--focus-ring-w) var(--focus-ring),
+    0 3px 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 18px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  transform: scale(var(--scale-hover-chip)) rotate(10deg);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .month-nav-btn:active:not(:disabled) {
+  transform: scale(var(--scale-press-nav)) rotate(0deg);
+  filter: brightness(var(--brightness-press));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 12px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .md-nav-btn#md-prev-btn:hover:not(:disabled) {
+  color: var(--primary-end);
+  background: var(--primary-light, color-mix(in srgb, var(--primary-end) var(--mix-faint), transparent));
+  border-color: var(--primary-end);
+  transform: scale(var(--scale-hover)) rotate(-10deg);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .md-nav-btn#md-next-btn:hover:not(:disabled) {
+  color: var(--primary-end);
+  background: var(--primary-light, color-mix(in srgb, var(--primary-end) var(--mix-faint), transparent));
+  border-color: var(--primary-end);
+  transform: scale(var(--scale-hover)) rotate(10deg);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 16px color-mix(in srgb, var(--primary) var(--mix-sm), transparent);
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .md-nav-btn:active:not(:disabled) {
+  transform: scale(var(--scale-chip-active)) rotate(0deg);
+  filter: brightness(var(--brightness-press-soft));
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    0 0 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .cal-nav-btn#cal-prev:hover {
+  transform: rotate(-10deg);
+}
+[data-theme="dark"] .cal-nav-btn#cal-next:hover {
+  transform: rotate(10deg);
+}
+
+/* ⑪ prefers-reduced-motion 安全弁: rotation 解除し scale のみ復元 */
+@media (prefers-reduced-motion: reduce) {
+  .month-nav-btn[id$="-prev"]:hover:not(:disabled),
+  .month-nav-btn[id$="-next"]:hover:not(:disabled),
+  [data-theme="dark"] .month-nav-btn[id$="-prev"]:hover:not(:disabled),
+  [data-theme="dark"] .month-nav-btn[id$="-next"]:hover:not(:disabled) {
+    transform: scale(var(--scale-hover-chip));
+  }
+  .md-nav-btn#md-prev-btn:hover:not(:disabled),
+  .md-nav-btn#md-next-btn:hover:not(:disabled),
+  [data-theme="dark"] .md-nav-btn#md-prev-btn:hover:not(:disabled),
+  [data-theme="dark"] .md-nav-btn#md-next-btn:hover:not(:disabled) {
+    transform: scale(var(--scale-hover));
+  }
+  .cal-nav-btn#cal-prev:hover,
+  .cal-nav-btn#cal-next:hover,
+  [data-theme="dark"] .cal-nav-btn#cal-prev:hover,
+  [data-theme="dark"] .cal-nav-btn#cal-next:hover {
+    transform: none;
+  }
+}
