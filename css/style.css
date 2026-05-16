@@ -59490,3 +59490,61 @@ details[open] .debt-archive-summary::before {
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.52 (Sprint #1341) — ヘッダー icon ボタン family hover/active 回転 tactile 統一
+   4 icon ボタン (#hamburger / .btn-dark-toggle / .btn-notif-bell / #global-fab) の
+   hover/active に rotate を加えて触感を獲得。既存 scale / box-shadow / filter /
+   background は無変更。EOF redefine で last-defined-wins。
+   ============================================================ */
+
+/* #hamburger: -12deg tilt + scale 1.08 hover / snap-back 0.94 press */
+#hamburger {
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-press) var(--ease-out),
+    transform var(--dur-medium) var(--ease-bounce);
+}
+#hamburger:hover  { transform: rotate(-12deg) scale(1.08); }
+#hamburger:active { transform: rotate(0deg)  scale(0.94); }
+
+/* .btn-dark-toggle: 22deg celestial spin + scale 1.1 hover / 0.92 press */
+.btn-dark-toggle {
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-press) var(--ease-out),
+    text-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-medium) var(--ease-bounce);
+}
+.btn-dark-toggle:hover  { transform: rotate(22deg) scale(1.1); }
+.btn-dark-toggle:active { transform: rotate(0deg)  scale(0.92); }
+
+/* .btn-notif-bell: 既存 scale を保ちつつ非 .has-unread の SVG にのみ subtle tilt
+   (.has-unread:hover svg には既存 notif-bell-ring keyframe 適用 — 共存) */
+.btn-notif-bell:not(.has-unread) svg {
+  transition:
+    transform var(--dur-press) var(--ease-bounce),
+    color var(--dur-faster) var(--ease-out);
+}
+.btn-notif-bell:not(.has-unread):hover  svg { transform: rotate(-10deg); }
+.btn-notif-bell:not(.has-unread):active svg { transform: rotate(0deg) scale(0.9); }
+
+/* #global-fab: + アイコン 90deg 回転で「× へ向かう」予兆 + 既存 scale 合成
+   :active は中間 45deg で snap (既存 inset depression / brightness は保持) */
+#global-fab:hover  { transform: scale(var(--scale-icon-hover)) rotate(90deg); }
+#global-fab:active { transform: scale(var(--scale-press-md)) rotate(45deg); }
+
+/* prefers-reduced-motion 安全弁: 回転を除去し既存 scale のみに戻す */
+@media (prefers-reduced-motion: reduce) {
+  #hamburger:hover,
+  #hamburger:active,
+  .btn-dark-toggle:hover,
+  .btn-dark-toggle:active { transform: none; }
+  .btn-notif-bell:not(.has-unread):hover  svg,
+  .btn-notif-bell:not(.has-unread):active svg { transform: none; }
+  #global-fab:hover  { transform: scale(var(--scale-icon-hover)); }
+  #global-fab:active { transform: scale(var(--scale-press-md)); }
+}
