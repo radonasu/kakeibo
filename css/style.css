@@ -57561,3 +57561,178 @@ details[open] .debt-archive-summary::before {
     animation: none;
   }
 }
+
+/* ============================================================
+   Sprint #1328 / v29.39
+   絵文字/カラーピッカー .selected rest state lavender brand outer halo
+   + 1-shot swatch-select-pop choreography
+   ------------------------------------------------------------
+   v26.40 (Sprint #1036) で .selected/.is-active/.active 絵文字ピッカー
+   btn 5 family の :hover / :focus-visible に primary 単色 inner halo を
+   投入。v26.41 (Sprint #1037) で color swatch family も同様に強化済。
+   しかし「rest 状態 (hover/focus を経由しない通常表示)」では box-shadow
+   が無く、選択中の identity が border-color + bg-tint だけで弱かった。
+   ピッカーモーダルを開いた瞬間に「今選択されているのはこれです」が
+   一目で分かるよう、v28.40-v29.38 lavender brand family と統一の
+   dual-color halo (primary inner + primary-end outer wash) を rest
+   state にも展開し、さらに class 適用瞬間に 1-shot pop アニメーション
+   (scale 1.18 punch + glow flash) を発火させて「選択完了」を物理的に
+   フィードバックする。
+
+   ① .color-swatch.selected         (汎用カラーパレット)
+   ② .goal-emoji-btn.selected       (目標絵文字)
+   ③ .goal-color-btn.selected       (目標カラー)
+   ④ .sub-emoji-btn.selected        (サブスク絵文字)
+   ⑤ .sub-color-btn.selected        (サブスクカラー)
+   ⑥ .pt-emoji-btn.is-active        (積立絵文字)
+   ⑦ .ch-emoji-btn.active           (チャレンジ絵文字)
+   ⑧ .ev-emoji-chip.selected        (イベント絵文字)
+
+   light: 0 2px 10px primary mix-sm + 0 0 18px primary-end mix-2xs
+   dark : 0 2px 14px primary-end mix-md + 0 0 22px primary mix-xs
+   ============================================================ */
+
+@keyframes swatch-select-pop {
+  0%   { transform: scale(var(--scale-rest)); filter: brightness(1.00); }
+  45%  { transform: scale(1.18); filter: brightness(1.15); }
+  72%  { transform: scale(0.96); filter: brightness(1.05); }
+  100% { transform: scale(var(--scale-rest)); filter: brightness(1.00); }
+}
+@keyframes swatch-select-pop-dark {
+  0%   { transform: scale(var(--scale-rest)); filter: brightness(1.00); }
+  45%  { transform: scale(1.18); filter: brightness(1.22); }
+  72%  { transform: scale(0.96); filter: brightness(1.08); }
+  100% { transform: scale(var(--scale-rest)); filter: brightness(1.00); }
+}
+
+/* ── ① .color-swatch.selected — rest 状態 dual-color halo + 1-shot pop ── */
+.color-swatch.selected {
+  border-color: var(--text);
+  transform: scale(var(--scale-hover));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ② .goal-emoji-btn.selected — rest dual-color halo + 1-shot pop ── */
+.goal-emoji-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(var(--scale-hover-md));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ③ .goal-color-btn.selected — rest dual-color halo + 1-shot pop ── */
+.goal-color-btn.selected {
+  border-color: var(--text);
+  transform: scale(var(--scale-hover));
+  outline: var(--bw-select) solid var(--surface);
+  outline-offset: var(--outline-offset-inner-lg);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ④ .sub-emoji-btn.selected — rest dual-color halo + 1-shot pop ── */
+.sub-emoji-btn.selected {
+  border-color: var(--primary);
+  background: var(--focus-ring);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ⑤ .sub-color-btn.selected — 既存 currentColor ring + 5px border halo を保持しつつ lavender outer wash を末尾追加 ── */
+.sub-color-btn.selected {
+  border-color: var(--surface);
+  transform: scale(var(--scale-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ⑥ .pt-emoji-btn.is-active — rest dual-color halo + 1-shot pop ── */
+.pt-emoji-btn.is-active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ⑦ .ch-emoji-btn.active — rest dual-color halo + 1-shot pop ── */
+.ch-emoji-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ⑧ .ev-emoji-chip.selected — rest dual-color halo + 1-shot pop ── */
+.ev-emoji-chip.selected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--primary) var(--mix-sm), transparent),
+              0 0 18px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  animation: swatch-select-pop 0.55s var(--ease-bounce) 1;
+}
+
+/* ── ダーク 1 ティア boost ────────────────────────────── */
+[data-theme="dark"] .color-swatch.selected,
+[data-theme="dark"] .goal-color-btn.selected {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  animation: swatch-select-pop-dark 0.55s var(--ease-bounce) 1;
+}
+[data-theme="dark"] .goal-emoji-btn.selected {
+  background: color-mix(in srgb, var(--primary) var(--mix-mid), transparent);
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  animation: swatch-select-pop-dark 0.55s var(--ease-bounce) 1;
+}
+[data-theme="dark"] .sub-emoji-btn.selected,
+[data-theme="dark"] .pt-emoji-btn.is-active,
+[data-theme="dark"] .ev-emoji-chip.selected {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  animation: swatch-select-pop-dark 0.55s var(--ease-bounce) 1;
+}
+[data-theme="dark"] .ch-emoji-btn.active {
+  background: var(--primary-light);
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+              0 0 22px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+  animation: swatch-select-pop-dark 0.55s var(--ease-bounce) 1;
+}
+[data-theme="dark"] .sub-color-btn.selected {
+  border-color: var(--surface);
+  transform: scale(var(--scale-hover));
+  box-shadow: 0 0 0 var(--focus-ring-w) currentColor,
+              0 0 0 5px var(--border),
+              0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  animation: swatch-select-pop-dark 0.55s var(--ease-bounce) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .color-swatch.selected,
+  .goal-emoji-btn.selected,
+  .goal-color-btn.selected,
+  .sub-emoji-btn.selected,
+  .sub-color-btn.selected,
+  .pt-emoji-btn.is-active,
+  .ch-emoji-btn.active,
+  .ev-emoji-chip.selected,
+  [data-theme="dark"] .color-swatch.selected,
+  [data-theme="dark"] .goal-emoji-btn.selected,
+  [data-theme="dark"] .goal-color-btn.selected,
+  [data-theme="dark"] .sub-emoji-btn.selected,
+  [data-theme="dark"] .sub-color-btn.selected,
+  [data-theme="dark"] .pt-emoji-btn.is-active,
+  [data-theme="dark"] .ch-emoji-btn.active,
+  [data-theme="dark"] .ev-emoji-chip.selected {
+    animation: none;
+  }
+}
