@@ -58022,3 +58022,137 @@ details[open] .debt-archive-summary::before {
     transition: none;
   }
 }
+
+/* ============================================================
+   v29.42 (Sprint #1331, 2026-05-16) — Calendar Weekday Header
+   Lavender Brand Atmosphere — .cal-dow-row + .cal-dow polish
+
+   カレンダータブ最上部「曜日ヘッダー行」(日 月 火 水 木 金 土)
+   を v28.40-v29.41 で確立した lavender brand family に合流させる
+   マイルストーン。
+
+   ── 既存状態 (line 7897-7914) ──
+   .cal-dow-row = flat surface-2 bg + thin solid border-bottom のみ
+   .cal-dow = text-muted 単色 + font-weight semi のみ
+   .cal-dow.sun/sat = expense/primary 色のみ (text-shadow 皆無)
+   月次カレンダーグリッド (.cal-cell) は v28.73 で hover lavender
+   brand halo を獲得済だが、頂部「曜日ヘッダー」は完全な flat surface
+   のまま brand family から取り残されていた。
+
+   ── 本スプリント投入 ──
+   ① .cal-dow-row bg 拡張 — solid surface-2 → 180deg 2-stop
+      gradient (surface-2 → primary-end mix-nano + surface-2)
+      で「下方向に lavender 微弱 tint」のブランド大気を獲得。
+   ② .cal-dow-row::after 5-stop gradient pill — v28.48
+      modal-header bottom edge family と完全同形の「両端
+      transparent → primary mix-md 22% → primary-end mix-lg 50%
+      → primary mix-md 78% → transparent 100%」を border-bottom 上に
+      重畳、曜日ヘッダーとカレンダーグリッド本体の境界線に
+      lavender brand accent line が走る。
+   ③ .cal-dow text-shadow halo (rest) — `0 0 6px primary mix-nano`
+      で全曜日ラベルに微弱な蛍光ペン halo を付与。
+   ④ .cal-dow.sun text-shadow boost — 既存 expense 色に
+      `0 0 8px expense mix-xs` の赤系 halo を append。
+   ⑤ .cal-dow.sat text-shadow boost — 既存 primary 色に
+      `0 0 8px primary mix-xs` の lavender halo を append。
+   ⑥ dark 1 ティア boost — bg gradient lavender mix を nano→2xs に
+      格上げ、pill opacity 0.7→0.95 + height 2px→2.5px + 中央 mix
+      を mix-lg→mix-xl に boost、text-shadow を mix-nano→mix-2xs
+      (rest) / mix-xs→mix-md (sun/sat) に格上げ。
+
+   ── 効果 ──
+   ⓐ カレンダータブを開くと、曜日ヘッダー行に下方向の lavender
+      微弱 tint が走り「ブランド大気」が立ち上がる
+   ⓑ 曜日ヘッダー直下の border-bottom が単色 → lavender pill に
+      格上げされ、modal-header bottom edge と共鳴する brand frame
+   ⓒ 全曜日ラベル (日月火水木金土) に微弱な halo がつき視認性
+      とブランド identity が向上、特に sun/sat の accent 色が
+      自色の text-shadow halo で「強調された」状態に到達
+   ⓓ .cal-cell (v28.73 hover halo) との「ヘッダー lavender 静的
+      tint + セル lavender hover halo」の上下対称が完成
+
+   ── カスケード安全 ──
+   line 7897 base .cal-dow-row / line 7904 base .cal-dow / line
+   7913-7914 .cal-dow.sun/.sat と独立した EOF redefine + ::after
+   pseudo 追加のため衝突なし。.cal-cell border 群とも独立。
+
+   ── アクセシビリティ ──
+   prefers-reduced-motion: なし (静的 visual のみで transition
+   なし、reduce 対応不要)。
+   ============================================================ */
+
+.cal-dow-row {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    var(--surface-2) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-nano), var(--surface-2)) 100%
+  );
+}
+
+.cal-dow-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--bw-thin));
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent) 50%,
+    color-mix(in srgb, var(--primary) var(--mix-md), transparent) 78%,
+    transparent 100%
+  );
+  border-radius: var(--radius-nano);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cal-dow {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--primary) var(--mix-nano), transparent);
+}
+
+.cal-dow.sun {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--expense) var(--mix-xs), transparent);
+}
+
+.cal-dow.sat {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) var(--mix-xs), transparent);
+}
+
+/* ── ダーク 1 ティア boost ────────────────────────────────── */
+[data-theme="dark"] .cal-dow-row {
+  background: linear-gradient(
+    180deg,
+    var(--surface-2) 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-2xs), var(--surface-2)) 100%
+  );
+}
+
+[data-theme="dark"] .cal-dow-row::after {
+  height: 2.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 22%,
+    color-mix(in srgb, var(--primary-end) var(--mix-xl), transparent) 50%,
+    color-mix(in srgb, var(--primary-end) var(--mix-md), transparent) 78%,
+    transparent 100%
+  );
+  opacity: 0.95;
+}
+
+[data-theme="dark"] .cal-dow {
+  text-shadow: 0 0 7px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+[data-theme="dark"] .cal-dow.sun {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--expense) var(--mix-md), transparent);
+}
+
+[data-theme="dark"] .cal-dow.sat {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+}
