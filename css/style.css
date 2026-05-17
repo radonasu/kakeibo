@@ -61096,3 +61096,94 @@ kbd:active {
     transform: none;
   }
 }
+
+/* ============================================================
+   v29.63 Sprint #1352: サマリーカード装飾円 hover parallax 移動 +
+   dual-color halo lavender brand 投入 + 装飾円 rest 軽量ドリフト breath
+   ============================================================
+   背景:
+   ダッシュボード最上段の summary 3 カード (.summary-card.income /
+   .expense / .balance.positive / .balance.negative) は最も視認頻度が
+   高い UI surface。装飾円ペア (::after 右上小円 / ::before 左下大円)
+   は v22.62 で hover scale 拡大 + v26.11 で白halo 獲得済だが、
+   ① 動きが「拡大のみ」で平面的、② halo が白単色のみで
+   v28.40 以降確立した lavender brand family と分離していた。
+   設計:
+   ① :hover::after に translate(-10px, 8px) parallax を追加（既存
+      scale(1.28) と同 transform に複合）。右上の小円が「カード中心側
+      へ寄り、下方向にずれる」逆位相 drift で奥行き感が肉眼で発生。
+      box-shadow を白 inner halo + primary-end (lavender) outer wash の
+      dual-color halo に拡張（24px white 0.22 → +44px primary-end mix-md）。
+   ② :hover::before に translate(12px, -10px) parallax を追加（既存
+      scale(1.22) と複合）。左下の大円が「カード中心側へ寄り、上方向に
+      ずれる」::after と完全に逆位相な drift で、2 円ペアが「中央に
+      引き寄せられる」収束 motion を獲得。box-shadow を白 inner +
+      lavender outer の dual-color halo に拡張。
+   ③ ダーク mode 1 ティア boost: lavender 半径 +6px / mix +1 階級
+      （mix-md → mix-lg）でダーク背景の brand atmosphere を補強。
+   ④ rest 状態にも極めて微弱な永続 drift breath（@keyframes
+      sum-deco-drift-after / -before）を投入し、装飾円が常にゆっくり
+      呼吸するように位置を ±2px 揺らす（8s 周期、ease-in-out）。
+      hover で animation-play-state: paused → transform 上書きで停止し
+      parallax 位置に snap、hover 解除後に breath 復帰。
+   ⑤ prefers-reduced-motion 安全弁: drift breath / parallax translate
+      とも transform を rest に固定、halo のみ残す。
+   transform / box-shadow / background のみ animate するため
+   compositor 上で軽量。既存 sheen sweep (v29.03) / decorative orbs の
+   z-index 階層 / hover lift 親 .summary-card transform は完全保持。
+   ============================================================ */
+
+/* rest 装飾円 軽量永続 drift breath */
+@keyframes sum-deco-drift-after {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-2px, 2px); }
+}
+@keyframes sum-deco-drift-before {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(2px, -2px); }
+}
+.summary-card::after  { animation: sum-deco-drift-after  8s ease-in-out infinite; }
+.summary-card::before { animation: sum-deco-drift-before 8s ease-in-out infinite; }
+
+/* hover 時の parallax drift + dual-color halo (white inner + lavender outer wash) */
+.summary-card:hover::after {
+  transform: translate(-10px, 8px) scale(1.28);
+  box-shadow:
+    0 0 24px rgba(255, 255, 255, 0.24),
+    0 0 44px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  background: rgba(255, 255, 255, 0.20);
+  animation: none;
+}
+.summary-card:hover::before {
+  transform: translate(12px, -10px) scale(1.22);
+  box-shadow:
+    0 0 28px rgba(255, 255, 255, 0.20),
+    0 0 48px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent);
+  background: rgba(255, 255, 255, 0.16);
+  animation: none;
+}
+
+/* ダーク mode 1 ティア boost: lavender 半径 +6px / mix-md → mix-lg */
+[data-theme="dark"] .summary-card:hover::after {
+  box-shadow:
+    0 0 24px rgba(255, 255, 255, 0.20),
+    0 0 50px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+[data-theme="dark"] .summary-card:hover::before {
+  box-shadow:
+    0 0 28px rgba(255, 255, 255, 0.18),
+    0 0 54px color-mix(in srgb, var(--primary-end) var(--mix-lg), transparent);
+}
+
+/* prefers-reduced-motion 安全弁: drift breath / parallax translate を停止、halo のみ残す */
+@media (prefers-reduced-motion: reduce) {
+  .summary-card::after,
+  .summary-card::before {
+    animation: none;
+  }
+  .summary-card:hover::after,
+  .summary-card:hover::before {
+    transform: scale(1);
+    animation: none;
+  }
+}
