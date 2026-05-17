@@ -7963,7 +7963,7 @@ function renderSidebarUser() {
         <div class="sidebar-avatar">${initial}</div>
         <div class="sidebar-user-info">
           <div class="sidebar-user-email" title="${esc2(email)}">${esc2(email)}</div>
-          <div class="sidebar-user-status">● 同期中</div>
+          <div class="sidebar-user-status">同期中</div>
         </div>
         <button class="btn-sidebar-logout" id="sidebar-logout-btn" title="ログアウト">⏏</button>
       </div>`;

@@ -61187,3 +61187,107 @@ kbd:active {
     animation: none;
   }
 }
+
+/* ============================================================
+   v29.64 Sprint #1353 — サイドバー online status "●" 永続呼吸 pulse +
+   .sidebar-user-status / .sidebar-offline-badge 文字 halo brand 統一
+   ============================================================
+   既存 v29.49 で .sidebar-user-card / .sidebar-offline-badge には
+   container 単位の lavender brand 視覚効果が投入済だが、その内部
+   テキスト「● 同期中」(.sidebar-user-status) と「オフラインモード」
+   (.sidebar-offline-badge) は flat color のままで「同期が生きて
+   動いている」「現在オフライン」状態をテキスト光で表現する余地が
+   残っていた。本 sprint で:
+
+   ① .sidebar-user-status::first-letter (= "●") に 2.4s 永続
+      status-dot-pulse keyframe を投入、success → light-green の
+      color breath + text-shadow halo の脈動を獲得。サイドバー
+      下端で常時微弱に脈打つ「ライブ同期」インジケータに格上げ
+   ② .sidebar-user-status 全体に dual-color text halo (success
+      inner + lavender outer wash)、:hover で intensify
+   ③ .sidebar-offline-badge::before に "●" 灰色ドット (text-faint)
+      を擬似要素で挿入、offline-dot-pulse keyframe (3.0s) で
+      ゆっくり脈動、「現在オフライン」を視覚的に表現
+   ④ ダーク mode 1 ティア boost (mix-xs → mix-sm / blur +2-4px)
+   ⑤ prefers-reduced-motion 安全弁 (animation 停止、halo は保持)
+   ============================================================ */
+
+@keyframes sidebar-status-dot-pulse {
+  0%, 100% {
+    color: var(--success);
+    text-shadow: 0 0 4px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+  }
+  50% {
+    color: color-mix(in srgb, var(--success) 80%, white);
+    text-shadow:
+      0 0 9px color-mix(in srgb, var(--success) var(--mix-lg), transparent),
+      0 0 16px color-mix(in srgb, var(--success) var(--mix-sm), transparent);
+  }
+}
+
+@keyframes sidebar-offline-dot-pulse {
+  0%, 100% {
+    opacity: 0.55;
+    text-shadow: none;
+  }
+  50% {
+    opacity: 0.95;
+    text-shadow: 0 0 6px color-mix(in srgb, var(--text-faint) var(--mix-md), transparent);
+  }
+}
+
+.sidebar-user-status {
+  text-shadow:
+    0 0 4px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    0 0 10px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+  transition: text-shadow var(--dur-fast) var(--ease-out);
+}
+
+.sidebar-user-status::before {
+  content: '●';
+  display: inline-block;
+  margin-right: var(--sp-1);
+  vertical-align: baseline;
+  animation: sidebar-status-dot-pulse 2.4s ease-in-out infinite;
+}
+
+.sidebar-user-card:hover .sidebar-user-status,
+.sidebar-user-card:focus-within .sidebar-user-status {
+  text-shadow:
+    0 0 7px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+    0 0 15px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+[data-theme="dark"] .sidebar-user-status {
+  text-shadow:
+    0 0 5px color-mix(in srgb, var(--success) var(--mix-sm), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+[data-theme="dark"] .sidebar-user-card:hover .sidebar-user-status,
+[data-theme="dark"] .sidebar-user-card:focus-within .sidebar-user-status {
+  text-shadow:
+    0 0 9px color-mix(in srgb, var(--success) var(--mix-md), transparent),
+    0 0 20px color-mix(in srgb, var(--primary-end) var(--mix-sm), transparent);
+}
+
+.sidebar-offline-badge::before {
+  content: '●';
+  display: inline-block;
+  margin-right: var(--sp-1-5);
+  color: var(--text-faint);
+  font-size: var(--fs-2xs);
+  vertical-align: middle;
+  animation: sidebar-offline-dot-pulse 3s ease-in-out infinite;
+}
+
+[data-theme="dark"] .sidebar-offline-badge::before {
+  color: var(--sidebar-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-user-status::before,
+  .sidebar-offline-badge::before {
+    animation: none;
+  }
+}
