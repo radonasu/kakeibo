@@ -61291,3 +61291,146 @@ kbd:active {
     animation: none;
   }
 }
+
+/* ============================================================
+   v29.65 (Sprint #1354) — .notif-item typed family lavender
+   brand 統一 + .notif-item-title hover dual-color text halo
+   ────────────────────────────────────────────────────────────
+   ── 動機 ──
+   v29.61 (Sprint #1350) で .insight-item の 4 typed variant
+   (info/alert/success/warning) の :hover に lavender outer wash
+   2nd/3rd layer を append し dual-color halo brand family に
+   合流させた。.notif-item の 4 typed variant (notif-type-
+   danger/warning/success/info) は通知パネル (ベルアイコン
+   タップで表示) 内の主要 row surface で、.insight-item と
+   完全に並列の typed accent + inset 3px bar 構造を持つが、
+   v22.69 (light) / v28.01 (dark) 以降の typed accent halo
+   single-color のままで lavender brand family から取り残されて
+   いた。
+   さらに .notif-item-title (通知タイトルテキスト) は hover 時
+   text-shadow halo 皆無の flat surface だった (.insight-item
+   の title 系 v28.86 family と比較しても劣後)。
+   ── 投入内容 ──
+   ① .notif-item.notif-type-{danger/warning/success/info}:hover
+      light: 既存 3-layer (shadow-row-hover + typed mix-xs 10px
+      halo + inset 3px typed bar) に lavender 4th layer
+      (0 0 16px primary-end mix-2xs) outer wash append
+   ② 同 dark: 既存 3-layer (shadow-row-hover + typed-end mix-md
+      12px halo + inset 3px typed-end bar) に lavender 4th layer
+      (0 0 22px primary-end mix-xs) outer wash append
+   ③ .notif-item:hover .notif-item-title に dual-color text-shadow
+      (primary mix-2xs 6px inner + primary-end mix-nano 12px outer)
+      light / (primary-end mix-xs 8px + primary mix-2xs 14px) dark
+      の蛍光ペン halo 獲得
+   ④ .notif-item:hover .notif-item-icon に primary-end mix-2xs
+      8px box-shadow outer wash append + transition 拡張で hover
+      時に icon container に微弱 lavender ambient halo
+      (typed icon bg は完全保持、上に重畳のみ)
+   ⑤ prefers-reduced-motion 対応不要 (transition のみで keyframe
+      animation なし、halo は維持される)
+   ── カスケード安全 ──
+   - 既存 line 15911-15914 light typed hover / line 15916-15919
+     dark typed hover の box-shadow ルールを EOF redefine し
+     last-defined-wins で override、typed accent identity と
+     inset 3px bar / inset depression / background は完全保持
+   - .notif-item-title (line 15966) と .notif-item-icon (line
+     15941) の base style は無触、:hover descendant 経由でのみ
+     redefine
+   - .notif-item:not(.notif-read):hover background tint も独立
+   ── 効果 ──
+   ⓐ ベルアイコンタップで開く通知パネル内 4 typed notif row が
+      v29.61 .insight-item と通底する lavender brand halo family
+      に合流、家計簿 PWA の主要 typed-accent row surface 2 系統
+      (insight + notif) が完全 brand 共鳴へ
+   ⓑ 通知タイトル text-shadow halo 獲得で「読むべき通知」の
+      視認性が向上 + .insight-item title v28.86 family と統一
+   ⓒ icon container 周辺に lavender ambient halo が点灯し
+      typed icon と brand identity が共存する 2-color UI に
+   ============================================================ */
+
+/* ① .notif-item typed family :hover light — lavender outer wash 4th layer append */
+.notif-item.notif-type-danger:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--danger-text) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--expense),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.notif-item.notif-type-warning:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--warning) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.notif-item.notif-type-success:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--success) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--success),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+.notif-item.notif-type-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 10px color-mix(in srgb, var(--primary) var(--mix-xs), transparent),
+    inset 3px 0 0 var(--primary),
+    0 0 16px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+
+/* ② .notif-item typed family :hover dark — lavender outer wash 4th layer (1 ティア boost) */
+[data-theme="dark"] .notif-item.notif-type-danger:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--expense-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--expense-end),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .notif-item.notif-type-warning:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--warning) var(--mix-md), transparent),
+    inset 3px 0 0 var(--warning),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .notif-item.notif-type-success:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--income-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--income-end),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+[data-theme="dark"] .notif-item.notif-type-info:hover {
+  box-shadow:
+    var(--shadow-row-hover),
+    0 2px 12px color-mix(in srgb, var(--primary-end) var(--mix-md), transparent),
+    inset 3px 0 0 var(--primary-end),
+    0 0 22px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
+
+/* ③ .notif-item-title — hover で dual-color lavender brand text halo 獲得 */
+.notif-item-title {
+  transition: text-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.notif-item:hover .notif-item-title {
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent),
+    0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-nano), transparent);
+}
+[data-theme="dark"] .notif-item:hover .notif-item-title {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent),
+    0 0 14px color-mix(in srgb, var(--primary) var(--mix-2xs), transparent);
+}
+
+/* ④ .notif-item-icon — hover で typed icon bg 維持 + lavender ambient outer wash 重畳
+   (既存 transition は line 19293 で transform/filter を保持、ここでは box-shadow を append) */
+.notif-item-icon {
+  transition: transform var(--dur-fast) var(--ease-bounce), filter var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.notif-item:hover .notif-item-icon {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary-end) var(--mix-2xs), transparent);
+}
+[data-theme="dark"] .notif-item:hover .notif-item-icon {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary-end) var(--mix-xs), transparent);
+}
